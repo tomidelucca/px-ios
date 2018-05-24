@@ -174,51 +174,75 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
         // Add floating total row
         var floatingButtonView: UIView!
-        floatingButtonView = getFloatingButtonView()
+        floatingButtonView = getFloatingTotalRowView()
         self.view.addSubview(floatingButtonView)
-        PXLayout.setHeight(owner: floatingButtonView, height: 82 + PXLayout.getSafeAreaBottomInset()/2).isActive = true
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
         PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
         PXLayout.put(view: floatingButtonView, onBottomOf: self.collectionSearch).isActive = true
     }
 
-    fileprivate func getFloatingButtonView() -> UIView {
+    fileprivate func getFloatingTotalRowView() -> UIView {
 
+        let title = getTitle()
+        let disclaimer = getDisclaimer()
+        let mainValue = getMainValue()
+        let secondaryValue = getSecondaryValue()
 
-        let amountFontSize: CGFloat = PXLayout.M_FONT
-        let centsFontSize: CGFloat = PXLayout.XXXS_FONT
-        let currency = MercadoPagoContext.getCurrency()
-
-
-        let oldAmount = Utils.getAttributedAmount((self.viewModel.discount?.amountWithoutDiscount)!, currency: currency, color: UIColor.red, fontSize: PXLayout.XXS_FONT, baselineOffset: 4)
-
-        oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
-
-
-
-
-        let currencySymbol = currency.getCurrencySymbolOrDefault()
-        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
-        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-
-        let discountAmount = self.viewModel.discount?.amount_off.toAttributedString()
-
-        let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .black, fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
-
-        oldAmount.append(" ".toAttributedString())
-        oldAmount.append(attributedAmount)
-
-
-        let action = PXComponentAction(label: "Descuento") {
-            PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: self.viewModel.discount!), title: self.viewModel.discount?.getDescription())
-        }
-        let props = PXTotalRowProps(title: "Total".toAttributedString(), value: oldAmount, action: action, actionValue:  discountAmount)
+        let props = PXTotalRowProps(title: title, disclaimer: disclaimer, mainValue: mainValue, secondaryValue: secondaryValue)
         let total = PXTotalRowComponent(props: props)
         let totalView = total.render()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        totalView.addGestureRecognizer(tap)
         return totalView
     }
 
+    func handleTap() {
+        PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: self.viewModel.discount!), title: self.viewModel.discount?.getDescription())
+    }
+
+    func getTitle() -> NSAttributedString? {
+        if let discount = self.viewModel.discount {
+            if discount.amount_off != "0" {
+                let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
+                let string = NSAttributedString(string: discount.amount_off, attributes: attributes)
+                return string
+            } else if discount.percent_off != "0" {
+                let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
+                let string = NSAttributedString(string: discount.percent_off, attributes: attributes)
+                return string
+            }
+        }
+
+        let defaultTitleString = "Total a pagar"
+        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+        let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: attributes)
+        return defaultTitleAttributedString
+    }
+
+    func getDisclaimer() -> NSAttributedString? {
+        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+        let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
+        return string
+    }
+
+    func getMainValue() -> NSAttributedString? {
+        let amountFontSize: CGFloat = PXLayout.L_FONT
+        let centsFontSize: CGFloat = PXLayout.XXXS_FONT
+        let currency = MercadoPagoContext.getCurrency()
+
+        return Utils.getAttributedAmount(self.viewModel.amount, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, negativeAmount: false)
+    }
+
+    func getSecondaryValue() -> NSAttributedString? {
+        if let discount = self.viewModel.discount {
+            let oldAmount = Utils.getAttributedAmount(discount.amountWithoutDiscount, currency: currency, color: UIColor.UIColorFromRGB(0xa3a3a3), fontSize: PXLayout.XXS_FONT, baselineOffset: 0)
+
+            oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
+            return oldAmount
+        }
+        return nil
+    }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {
         return { () -> Void in

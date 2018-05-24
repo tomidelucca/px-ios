@@ -8,9 +8,16 @@
 
 import Foundation
 
-struct PXTotalRowRenderer {
+class PXTotalRowRenderer {
+
+    var component: PXTotalRowComponent?
 
     func render(_ totalRowComponent: PXTotalRowComponent) -> UIView {
+        component = totalRowComponent
+        let ROW_HEIGHT: CGFloat = 67
+        let PRIMARY_VALUE_HEIGHT: CGFloat = 19
+        let SECONDARY_HEIGHT: CGFloat = 14
+
         let totalRowView = PXTotalRowView()
         totalRowView.translatesAutoresizingMaskIntoConstraints = false
         totalRowView.backgroundColor = .white
@@ -19,55 +26,87 @@ struct PXTotalRowRenderer {
         totalRowView.layer.shadowRadius = 4
         totalRowView.layer.shadowOpacity = 0.25
 
-        if let action = totalRowComponent.props.action {
-            let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.setTitle(action.label, for: .normal)
-            button.setTitleColor(.red, for: .normal)
-            button.add(for: .touchUpInside, action.action)
-            button.layer.borderWidth = 1
-            totalRowView.discountAction = button
-            totalRowView.addSubviewToBottom(button, withMargin: PXLayout.XS_MARGIN)
-            PXLayout.pinTop(view: button, withMargin: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.pinLeft(view: button, withMargin: PXLayout.S_MARGIN).isActive = true
-
-            if let actionValue = totalRowComponent.props.actionValue {
-                let actionValueLabel = UILabel()
-                actionValueLabel.translatesAutoresizingMaskIntoConstraints = false
-                actionValueLabel.attributedText = actionValue
-                totalRowView.discountValueLabel = actionValueLabel
-                totalRowView.addSubview(actionValueLabel)
-                PXLayout.centerVertically(view: actionValueLabel, to: button).isActive = true
-                PXLayout.pinRight(view: actionValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
-            }
+        if let title = totalRowComponent.props.title {
+            let titleLabel = buildLabelWith(title)
+            titleLabel.numberOfLines = 2
+            totalRowView.titleLabel = titleLabel
+            totalRowView.addSubview(titleLabel)
+            PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.setHeight(owner: titleLabel, height: SECONDARY_HEIGHT).isActive = true
         }
 
+        if let disclaimer = totalRowComponent.props.disclaimer {
+            let disclaimerLabel = buildLabelWith(disclaimer)
+            disclaimerLabel.numberOfLines = 1
+            totalRowView.disclaimerLabel = disclaimerLabel
+            totalRowView.addSubview(disclaimerLabel)
+            PXLayout.pinLeft(view: disclaimerLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.setHeight(owner: disclaimerLabel, height: SECONDARY_HEIGHT).isActive = true
+        }
 
-        let titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.attributedText = totalRowComponent.props.title
-        totalRowView.titleLabel = titleLabel
-        totalRowView.addSubviewToBottom(titleLabel, withMargin: PXLayout.XS_MARGIN)
-        titleLabel.layer.borderWidth = 1
-        PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
-        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+        if let mainValue = totalRowComponent.props.mainValue {
+            let mainValueLabel = buildLabelWith(mainValue)
+            mainValueLabel.numberOfLines = 1
+            totalRowView.mainValueLabel = mainValueLabel
+            totalRowView.addSubview(mainValueLabel)
+            PXLayout.pinRight(view: mainValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.setHeight(owner: mainValueLabel, height: PRIMARY_VALUE_HEIGHT).isActive = true
+        }
 
-        let valueLabel = UILabel()
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        valueLabel.attributedText = totalRowComponent.props.value
-        totalRowView.valueLabel = valueLabel
-        totalRowView.addSubview(valueLabel)
-        PXLayout.centerVertically(view: valueLabel, to: titleLabel).isActive = true
-        PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+        if let secondaryValue = totalRowComponent.props.secondaryValue {
+            let secondaryValueLabel = buildLabelWith(secondaryValue)
+            secondaryValueLabel.numberOfLines = 1
+            totalRowView.secondaryValueLabel = secondaryValueLabel
+            totalRowView.addSubview(secondaryValueLabel)
+            PXLayout.pinRight(view: secondaryValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.setHeight(owner: secondaryValueLabel, height: SECONDARY_HEIGHT).isActive = true
+        }
+
+        PXLayout.setHeight(owner: totalRowView, height: ROW_HEIGHT).isActive = true
+        layoutComponentsOf(totalRowView)
 
         return totalRowView
     }
+
+    @objc func ationTest() {
+        self.component?.props.action?()
+    }
+
+    func layoutComponentsOf(_ view: PXTotalRowView) {
+
+        if let title = view.titleLabel, let disclaimer = view.disclaimerLabel {
+            PXLayout.pinTop(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.put(view: disclaimer, onBottomOf: title, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: disclaimer, withMargin: PXLayout.S_MARGIN).isActive = true
+        } else if let title = view.titleLabel, view.disclaimerLabel == nil {
+            PXLayout.centerVertically(view: title).isActive = true
+        } else if let disclaimer = view.disclaimerLabel, view.titleLabel == nil {
+            PXLayout.centerVertically(view: disclaimer).isActive = true
+        }
+
+        if let mainValue = view.mainValueLabel, let secondaryValue = view.secondaryValueLabel {
+            PXLayout.pinTop(view: secondaryValue, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.put(view: mainValue, onBottomOf: secondaryValue, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: mainValue, withMargin: PXLayout.S_MARGIN).isActive = true
+        } else if let mainValue = view.mainValueLabel, view.secondaryValueLabel == nil {
+            PXLayout.centerVertically(view: mainValue).isActive = true
+        } else if let secondaryValue = view.secondaryValueLabel, view.mainValueLabel == nil {
+            PXLayout.centerVertically(view: secondaryValue).isActive = true
+        }
+    }
+
+    func buildLabelWith(_ text: NSAttributedString) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = text
+        return label
+    }
+
 }
 
 class PXTotalRowView: PXComponentView {
-    public var discountAction: UIButton?
-    public var discountValueLabel: UILabel?
-    public var discountDetailLabel: UILabel?
     public var titleLabel: UILabel?
-    public var valueLabel: UILabel?
+    public var disclaimerLabel: UILabel?
+    public var mainValueLabel: UILabel?
+    public var secondaryValueLabel: UILabel?
 }

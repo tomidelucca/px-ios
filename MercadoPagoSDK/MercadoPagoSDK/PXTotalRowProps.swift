@@ -9,14 +9,16 @@
 import Foundation
 
 final class PXTotalRowProps: NSObject {
-    var title: NSAttributedString
-    var value: NSAttributedString
-    var action: PXComponentAction?
-    var actionValue: NSAttributedString?
-    init(title: NSAttributedString, value: NSAttributedString, action: PXComponentAction? = nil, actionValue: NSAttributedString? = nil) {
+    var title: NSAttributedString?
+    var disclaimer: NSAttributedString?
+    var mainValue: NSAttributedString?
+    var secondaryValue: NSAttributedString?
+    var action: (() -> Void)?
+
+    init(title: NSAttributedString?, disclaimer: NSAttributedString?, mainValue: NSAttributedString?, secondaryValue: NSAttributedString?) {
         self.title = title
-        self.value = value
-        self.action = action
-        self.actionValue = actionValue
+        self.disclaimer = disclaimer
+        self.mainValue = mainValue
+        self.secondaryValue = secondaryValue
     }
 }

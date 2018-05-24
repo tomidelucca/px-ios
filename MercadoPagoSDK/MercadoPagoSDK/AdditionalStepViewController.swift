@@ -53,6 +53,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.titleCellHeight = 44
 
         if self.viewModel.showFloatingTotalRow() {
+            getTableViewPinBottomContraint()?.isActive = false
             renderViews()
         } else {
             getTableViewPinBottomContraint()?.isActive = true
@@ -68,9 +69,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
 
     fileprivate func renderViews() {
-
-        getTableViewPinBottomContraint()?.isActive = false
-
         var floatingButtonView: UIView!
         floatingButtonView = getFloatingButtonView()
         self.view.addSubview(floatingButtonView)
@@ -111,7 +109,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         let action = PXComponentAction(label: "Descuento") {
             PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: self.viewModel.discount!), title: self.viewModel.discount?.getDescription())
         }
-        let props = PXTotalRowProps(title: "Total".toAttributedString(), value: oldAmount, action: action, actionValue:  discountAmount)
+
+        let props = PXTotalRowProps(title: "Total".toAttributedString(), disclaimer: "disclaimer".toAttributedString(), mainValue: "main".toAttributedString(), secondaryValue: "secondary".toAttributedString())
         let total = PXTotalRowComponent(props: props)
         let totalView = total.render()
         return totalView
