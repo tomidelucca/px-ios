@@ -13,6 +13,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         case finish
         case screenReviewOneTap
         case screenSecurityCode
+        case serviceCreateESCCardToken
     }
 
     var paymentData: PaymentData
@@ -23,15 +24,15 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     var payerCosts: [PayerCost]?
 
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
-    let reviewScreenPreference = ReviewScreenPreference()
+    let reviewScreenPreference: ReviewScreenPreference
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
-
+        self.reviewScreenPreference = reviewScreenPreference
         super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.getSelectedPayerCost() {
@@ -44,6 +45,9 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         }
         if needSecurityCode() {
             return .screenSecurityCode
+        }
+        if needCreateESCToken() {
+            return .serviceCreateESCCardToken
         }
         return .finish
     }
@@ -128,6 +132,18 @@ extension OneTapFlowViewModel {
             return true
         }
         return false
+    }
+
+    func needCreateESCToken() -> Bool {
+
+        guard let pm = self.paymentData.getPaymentMethod() else {
+            return false
+        }
+
+        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard
+        let savedCardWithESC = !paymentData.hasToken() && pm.isCard && hasSavedESC() && hasInstallmentsIfNeeded
+
+        return savedCardWithESC
     }
 
     func hasSavedESC() -> Bool {

@@ -7,9 +7,11 @@
 //
 
 import Foundation
+
 extension OneTapFlow {
+
     func showReviewAndConfirmScreenForOneTap() {
-        let reviewVC = PXReviewViewController(viewModel: viewModel.reviewConfirmViewModel(), showCustomComponents: false, callbackPaymentData: { [weak self] (paymentData: PaymentData) in
+        let reviewVC = PXOneTapViewController(viewModel: viewModel.reviewConfirmViewModel(), callbackPaymentData: { [weak self] (paymentData: PaymentData) in
 
             // Change payment method callback
             if let search = self?.viewModel.search {
