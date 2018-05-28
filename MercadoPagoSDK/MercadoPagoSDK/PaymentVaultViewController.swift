@@ -177,13 +177,13 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func getFloatingTotalRowView() -> UIView {
-
         let title = getTitle()
         let disclaimer = getDisclaimer()
         let mainValue = getMainValue()
         let secondaryValue = getSecondaryValue()
+        let showChevron = shouldShowChevron()
 
-        let props = PXTotalRowProps(title: title, disclaimer: disclaimer, mainValue: mainValue, secondaryValue: secondaryValue)
+        let props = PXTotalRowProps(title: title, disclaimer: disclaimer, mainValue: mainValue, secondaryValue: secondaryValue, showChevron: showChevron)
         let total = PXTotalRowComponent(props: props)
         let totalView = total.render()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -236,6 +236,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             return oldAmount
         }
         return nil
+    }
+
+    func shouldShowChevron() -> Bool {
+        return true
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {

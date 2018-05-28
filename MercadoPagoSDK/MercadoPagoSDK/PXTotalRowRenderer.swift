@@ -26,6 +26,18 @@ class PXTotalRowRenderer {
         totalRowView.layer.shadowRadius = 4
         totalRowView.layer.shadowOpacity = 0.25
 
+        if totalRowComponent.props.showChevron {
+            let chevronImageView = UIImageView()
+            chevronImageView.translatesAutoresizingMaskIntoConstraints = false
+            chevronImageView.backgroundColor = .red
+            totalRowView.chevron = chevronImageView
+            totalRowView.addSubview(chevronImageView)
+            PXLayout.setWidth(owner: chevronImageView, width: 12).isActive = true
+            PXLayout.setHeight(owner: chevronImageView, height: 12).isActive = true
+            PXLayout.centerVertically(view: chevronImageView).isActive = true
+            PXLayout.pinRight(view: chevronImageView, withMargin: PXLayout.S_MARGIN).isActive = true
+        }
+
         if let title = totalRowComponent.props.title {
             let titleLabel = buildLabelWith(title)
             titleLabel.numberOfLines = 2
@@ -49,7 +61,11 @@ class PXTotalRowRenderer {
             mainValueLabel.numberOfLines = 1
             totalRowView.mainValueLabel = mainValueLabel
             totalRowView.addSubview(mainValueLabel)
-            PXLayout.pinRight(view: mainValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            if let chevron = totalRowView.chevron {
+                PXLayout.pinRight(view: mainValueLabel, to: chevron, withMargin: PXLayout.S_MARGIN).isActive = true
+            } else {
+                PXLayout.pinRight(view: mainValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            }
             PXLayout.setHeight(owner: mainValueLabel, height: PRIMARY_VALUE_HEIGHT).isActive = true
         }
 
@@ -58,7 +74,11 @@ class PXTotalRowRenderer {
             secondaryValueLabel.numberOfLines = 1
             totalRowView.secondaryValueLabel = secondaryValueLabel
             totalRowView.addSubview(secondaryValueLabel)
-            PXLayout.pinRight(view: secondaryValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            if let chevron = totalRowView.chevron {
+                PXLayout.pinRight(view: secondaryValueLabel, to: chevron, withMargin: PXLayout.S_MARGIN).isActive = true
+            } else {
+                PXLayout.pinRight(view: secondaryValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            }
             PXLayout.setHeight(owner: secondaryValueLabel, height: SECONDARY_HEIGHT).isActive = true
         }
 
@@ -66,10 +86,6 @@ class PXTotalRowRenderer {
         layoutComponentsOf(totalRowView)
 
         return totalRowView
-    }
-
-    @objc func ationTest() {
-        self.component?.props.action?()
     }
 
     func layoutComponentsOf(_ view: PXTotalRowView) {
@@ -109,4 +125,5 @@ class PXTotalRowView: PXComponentView {
     public var disclaimerLabel: UILabel?
     public var mainValueLabel: UILabel?
     public var secondaryValueLabel: UILabel?
+    public var chevron: UIImageView?
 }

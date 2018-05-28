@@ -13,12 +13,13 @@ final class PXTotalRowProps: NSObject {
     var disclaimer: NSAttributedString?
     var mainValue: NSAttributedString?
     var secondaryValue: NSAttributedString?
-    var action: (() -> Void)?
+    var showChevron: Bool
 
-    init(title: NSAttributedString?, disclaimer: NSAttributedString?, mainValue: NSAttributedString?, secondaryValue: NSAttributedString?) {
+    init(title: NSAttributedString?, disclaimer: NSAttributedString?, mainValue: NSAttributedString?, secondaryValue: NSAttributedString?, showChevron: Bool = true) {
         self.title = title
         self.disclaimer = disclaimer
         self.mainValue = mainValue
         self.secondaryValue = secondaryValue
+        self.showChevron = showChevron
     }
 }
