@@ -192,40 +192,60 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     func handleTap() {
-        PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: self.viewModel.discount!), title: self.viewModel.discount?.getDescription())
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+            if let discount = self.viewModel.discount {
+                PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: discount), title: discount.getDescription())
+            } else {
+                // TODO: show modal to add a new discount
+            }
+        }
     }
 
     func getTitle() -> NSAttributedString? {
-        if let discount = self.viewModel.discount {
-            if discount.amount_off != "0" {
-                let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
-                let string = NSAttributedString(string: discount.amount_off, attributes: attributes)
-                return string
-            } else if discount.percent_off != "0" {
-                let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
-                let string = NSAttributedString(string: discount.percent_off, attributes: attributes)
-                return string
+        //TODO: Add translations
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
+            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
+
+            if let discount = self.viewModel.discount {
+                if discount.amount_off != "0" {
+                    let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
+                    string.append(NSAttributedString(string: discount.amount_off, attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
+                    return string
+                } else if discount.percent_off != "0" {
+                    let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
+                    string.append(NSAttributedString(string: discount.percent_off, attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
+                    return string
+                }
+            } else {
+                let defaultTitleString = "Ingresá tu cupón de descuento"
+                let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: addNewDiscountAttributes)
+                return defaultTitleAttributedString
             }
         }
-
         let defaultTitleString = "Total a pagar"
-        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
-        let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: attributes)
+        let defaultAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+        let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: defaultAttributes)
         return defaultTitleAttributedString
     }
 
     func getDisclaimer() -> NSAttributedString? {
-        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
-        let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
-        return string
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.viewModel.discount {
+            let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+            let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
+            return string
+        }
+        return nil
     }
 
     func getMainValue() -> NSAttributedString? {
         let amountFontSize: CGFloat = PXLayout.L_FONT
-        let centsFontSize: CGFloat = PXLayout.XXXS_FONT
         let currency = MercadoPagoContext.getCurrency()
 
-        return Utils.getAttributedAmount(self.viewModel.amount, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, negativeAmount: false)
+        let amount: Double = 1520.80
+        return Utils.getAttributedAmount(amount, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: amountFontSize, baselineOffset: 0, negativeAmount: false)
     }
 
     func getSecondaryValue() -> NSAttributedString? {
@@ -239,7 +259,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     func shouldShowChevron() -> Bool {
-        return true
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+            return true
+        }
+        return false
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {

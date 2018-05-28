@@ -16,6 +16,7 @@ class PXTotalRowRenderer {
         component = totalRowComponent
         let ROW_HEIGHT: CGFloat = 67
         let PRIMARY_VALUE_HEIGHT: CGFloat = 19
+        let TITLE_HEIGHT: CGFloat = 20
         let SECONDARY_HEIGHT: CGFloat = 14
 
         let totalRowView = PXTotalRowView()
@@ -44,7 +45,7 @@ class PXTotalRowRenderer {
             totalRowView.titleLabel = titleLabel
             totalRowView.addSubview(titleLabel)
             PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.setHeight(owner: titleLabel, height: SECONDARY_HEIGHT).isActive = true
+            PXLayout.setHeight(owner: titleLabel, height: TITLE_HEIGHT).isActive = true
         }
 
         if let disclaimer = totalRowComponent.props.disclaimer {
@@ -62,7 +63,7 @@ class PXTotalRowRenderer {
             totalRowView.mainValueLabel = mainValueLabel
             totalRowView.addSubview(mainValueLabel)
             if let chevron = totalRowView.chevron {
-                PXLayout.pinRight(view: mainValueLabel, to: chevron, withMargin: PXLayout.S_MARGIN).isActive = true
+                PXLayout.pinRight(view: mainValueLabel, to: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
             } else {
                 PXLayout.pinRight(view: mainValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
             }
@@ -75,7 +76,7 @@ class PXTotalRowRenderer {
             totalRowView.secondaryValueLabel = secondaryValueLabel
             totalRowView.addSubview(secondaryValueLabel)
             if let chevron = totalRowView.chevron {
-                PXLayout.pinRight(view: secondaryValueLabel, to: chevron, withMargin: PXLayout.S_MARGIN).isActive = true
+                PXLayout.pinRight(view: secondaryValueLabel, to: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
             } else {
                 PXLayout.pinRight(view: secondaryValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
             }
