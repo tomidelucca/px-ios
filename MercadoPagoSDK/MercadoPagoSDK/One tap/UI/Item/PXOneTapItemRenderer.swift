@@ -10,6 +10,7 @@ import Foundation
 
 final class PXOneTapItemRenderer {
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
+    let CONTENT_TOTAL_WIDTH_PERCENT: CGFloat = 65.0
 
     // Image
     static let IMAGE_WIDTH: CGFloat = 64.0
@@ -66,7 +67,7 @@ final class PXOneTapItemRenderer {
 
         if let totalAmount = itemView.totalAmount {
             itemView.addSubviewToBottom(totalAmount, withMargin: PXLayout.XS_MARGIN)
-            PXLayout.matchWidth(ofView: totalAmount, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+            PXLayout.matchWidth(ofView: totalAmount, withPercentage: CONTENT_TOTAL_WIDTH_PERCENT).isActive = true
             PXLayout.centerHorizontally(view: totalAmount).isActive = true
         }
 
@@ -82,15 +83,17 @@ final class PXOneTapItemRenderer {
         itemView.pinLastSubviewToBottom(withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
 
         // Arrow image.
-        itemView.arrow = UIImageView(image: arrow)
+        if itemComponent.props.shouldShowArrow {
+            itemView.arrow = UIImageView(image: arrow)
 
-        if let arrow = itemView.arrow {
-            arrow.contentMode = .scaleAspectFit
-            itemView.addSubview(arrow)
-            PXLayout.setHeight(owner: arrow, height: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.setWidth(owner: arrow, width: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.centerVertically(view: arrow, to: itemView.totalAmount).isActive = true
-            PXLayout.pinRight(view: arrow, withMargin: PXLayout.XXL_MARGIN).isActive = true
+            if let arrow = itemView.arrow {
+                arrow.contentMode = .scaleAspectFit
+                itemView.addSubview(arrow)
+                PXLayout.setHeight(owner: arrow, height: PXLayout.XS_MARGIN).isActive = true
+                PXLayout.setWidth(owner: arrow, width: PXLayout.XXS_MARGIN).isActive = true
+                PXLayout.centerVertically(view: arrow, to: itemView.totalAmount).isActive = true
+                PXLayout.pinRight(view: arrow, withMargin: PXLayout.XXL_MARGIN).isActive = true
+            }
         }
         return itemView
     }
@@ -181,6 +184,7 @@ extension PXOneTapItemRenderer {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = color
+        label.adjustsFontSizeToFitWidth = true
         label.attributedText = attributedText
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 1

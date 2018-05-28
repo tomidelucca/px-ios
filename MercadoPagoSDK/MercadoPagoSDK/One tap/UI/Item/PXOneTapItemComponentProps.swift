@@ -16,8 +16,9 @@ final class PXOneTapItemComponentProps {
     let totalWithoutDiscount: Double?
     let discountDescription: String?
     let discountLimit: String?
+    let shouldShowArrow: Bool
 
-    init(title: String?, collectorImage: UIImage?, numberOfInstallments: Int?, installmentAmount: Double, totalWithoutDiscount: Double?, discountDescription: String?, discountLimit: String?) {
+    init(title: String?, collectorImage: UIImage?, numberOfInstallments: Int?, installmentAmount: Double, totalWithoutDiscount: Double?, discountDescription: String?, discountLimit: String?, shouldShowArrow: Bool = true) {
         self.collectorImage = collectorImage
         self.title = title
         self.installmentAmount = installmentAmount
@@ -25,5 +26,6 @@ final class PXOneTapItemComponentProps {
         self.discountDescription = discountDescription
         self.discountLimit = discountLimit
         self.numberOfInstallments = numberOfInstallments
+        self.shouldShowArrow = shouldShowArrow
     }
 }
