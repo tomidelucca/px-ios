@@ -92,7 +92,6 @@ final class PXOneTapItemRenderer {
             PXLayout.centerVertically(view: arrow, to: itemView.totalAmount).isActive = true
             PXLayout.pinRight(view: arrow, withMargin: PXLayout.XXL_MARGIN).isActive = true
         }
-
         return itemView
     }
 }
