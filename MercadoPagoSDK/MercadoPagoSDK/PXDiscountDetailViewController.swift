@@ -17,9 +17,11 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let baselineOffSet: Int = 6
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+    private let shouldShowTitle: Bool
 
-    init(discount: DiscountCoupon) {
+    init(discount: DiscountCoupon, shouldShowTitle: Bool = false) {
         self.discount = discount
+        self.shouldShowTitle = shouldShowTitle
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -38,6 +40,27 @@ extension PXDiscountDetailViewController {
 
     private func renderViews() {
         let contentView = PXComponentView()
+
+        if shouldShowTitle {
+            let headerText = getHeader()
+            let headerView = UIView()
+            headerView.translatesAutoresizingMaskIntoConstraints = false
+            headerView.backgroundColor = UIColor.UIColorFromRGB(0xf5f5f5)
+            contentView.addSubviewToBottom(headerView)
+            PXLayout.setHeight(owner: headerView, height: 40).isActive = true
+            PXLayout.pinLeft(view: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+            PXLayout.pinRight(view: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.numberOfLines = 0
+            label.attributedText = headerText
+            headerView.addSubview(label)
+            PXLayout.setHeight(owner: label, height: 16).isActive = true
+            PXLayout.centerVertically(view: label).isActive = true
+            PXLayout.pinLeft(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+        }
 
         if let title = getTitle() {
             buildAndAddLabel(to: contentView, margin: PXLayout.M_MARGIN, with: title, height: 20)
@@ -85,8 +108,14 @@ extension PXDiscountDetailViewController {
         PXLayout.setHeight(owner: line, height: height).isActive = true
         PXLayout.pinLeft(view: line, withMargin: sideMargin).isActive = true
         PXLayout.pinRight(view: line, withMargin: sideMargin).isActive = true
-//        line.alpha = 0.6
+        line.alpha = 0.6
         line.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+    }
+
+    func getHeader() -> NSAttributedString {
+        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+        let string = NSAttributedString(string: "Descuento", attributes: attributes)
+        return string
     }
 
     func getTitle() -> NSAttributedString? {
