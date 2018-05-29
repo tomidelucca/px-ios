@@ -182,12 +182,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let props = PXTotalRowProps(title: title, disclaimer: disclaimer, mainValue: mainValue, secondaryValue: secondaryValue, showChevron: showChevron)
         let total = PXTotalRowComponent(props: props)
         let totalView = total.render()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))
         totalView.addGestureRecognizer(tap)
         return totalView
     }
 
-    func handleTap() {
+    func handleTotalRowTap() {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
             if let discount = self.viewModel.discount {
                 PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: discount), title: discount.getDescription())
