@@ -23,7 +23,7 @@ final class PXOneTapSummaryModalViewController: UIViewController {
         customView = bottomCustomView
     }
 
-    func setupView() {
+    private func setupView() {
         if let summaryProps = props, let smallSummaryView = PXSmallSummaryView(withProps: summaryProps, backgroundColor: .white).oneTapRender() as? PXSmallSummaryView {
 
             if let cView = customView {
@@ -45,6 +45,16 @@ final class PXOneTapSummaryModalViewController: UIViewController {
                 PXLayout.pinBottom(view: smallSummaryView).isActive = true
                 PXLayout.pinLeft(view: smallSummaryView).isActive = true
                 PXLayout.pinRight(view: smallSummaryView).isActive = true
+            }
+        } else {
+            if let cView = customView {
+                view.addSubview(cView)
+                PXLayout.pinTop(view: cView).isActive = true
+                PXLayout.pinLeft(view: cView).isActive = true
+                PXLayout.pinRight(view: cView).isActive = true
+                PXLayout.pinBottom(view: cView).isActive = true
+                cView.layoutIfNeeded()
+                PXLayout.setHeight(owner: cView, height: cView.frame.height).isActive = true
             }
         }
     }
