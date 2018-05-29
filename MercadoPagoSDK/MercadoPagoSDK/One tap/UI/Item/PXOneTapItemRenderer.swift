@@ -92,7 +92,7 @@ final class PXOneTapItemRenderer {
                 PXLayout.setHeight(owner: arrow, height: PXLayout.XS_MARGIN).isActive = true
                 PXLayout.setWidth(owner: arrow, width: PXLayout.XXS_MARGIN).isActive = true
                 PXLayout.centerVertically(view: arrow, to: itemView.totalAmount).isActive = true
-                PXLayout.pinRight(view: arrow, withMargin: PXLayout.XXL_MARGIN).isActive = true
+                PXLayout.pinRight(view: arrow, withMargin: PXLayout.XL_MARGIN).isActive = true
             }
         }
         return itemView
