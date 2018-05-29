@@ -76,6 +76,10 @@ extension PXReviewViewModel {
         return !isUserLogged()
     }
 
+    func shouldShowDiscountTermsAndCondition() -> Bool {
+        return true
+    }
+
     func shouldShowInstallmentSummary() -> Bool {
         return isPaymentMethodSelectedCard() && self.paymentData.getPaymentMethod()!.paymentTypeId != "debit_card" && paymentData.hasPayerCost() && paymentData.getPayerCost()!.installments != 1
     }
