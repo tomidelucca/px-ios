@@ -138,6 +138,12 @@ extension PXOneTapViewController {
             summaryViewController.setProps(summaryProps: summaryProps, bottomCustomView: getDiscountDetailView())
             //TODO: "Detalle" translation. Pedir a contenidos.
             PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle".localized)
+        } else {
+            if let discountView = getDiscountDetailView() {
+                let summaryViewController = PXOneTapSummaryModalViewController()
+                summaryViewController.setProps(summaryProps: nil, bottomCustomView: discountView)
+                PXComponentFactory.Modal.show(viewController: summaryViewController, title: nil)
+            }
         }
     }
 
