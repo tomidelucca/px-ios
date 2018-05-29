@@ -72,7 +72,7 @@ extension PXOneTapViewController {
 
         // Add item-price view.
         if let itemView = getItemComponentView() {
-            contentView.addSubviewToBottom(itemView, withMargin: PXLayout.XXL_MARGIN)
+            contentView.addSubviewToBottom(itemView)
             PXLayout.centerHorizontally(view: itemView).isActive = true
             PXLayout.matchWidth(ofView: itemView).isActive = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
@@ -96,6 +96,7 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         refreshContentViewSize()
+        centerContentView()
         contentView.animateContentOnY()
     }
 }
