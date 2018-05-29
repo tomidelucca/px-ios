@@ -11,14 +11,16 @@ import UIKit
 final class PXOneTapSummaryModalViewController: UIViewController {
 
     private var props: [PXSummaryRowProps]?
+    private var customView: UIView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
 
-    func setProps(summaryProps: [PXSummaryRowProps]?) {
+    func setProps(summaryProps: [PXSummaryRowProps]?, bottomCustomView:UIView?) {
         props = summaryProps
+        customView = bottomCustomView
     }
 
     func setupView() {

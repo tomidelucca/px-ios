@@ -128,7 +128,7 @@ extension PXOneTapViewController {
     @objc func shouldOpenSummary() {
         if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
             let summaryViewController = PXOneTapSummaryModalViewController()
-            summaryViewController.setProps(summaryProps: summaryProps)
+            summaryViewController.setProps(summaryProps: summaryProps, bottomCustomView: nil)
             //TODO: "Detalle" translation. Pedir a contenidos.
             PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle".localized)
         }
