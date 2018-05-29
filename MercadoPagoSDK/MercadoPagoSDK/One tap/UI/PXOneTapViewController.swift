@@ -39,6 +39,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationBar()
         setupUI()
     }
 
@@ -53,18 +54,21 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
 // MARK: UI Methods.
 extension PXOneTapViewController {
-    fileprivate func setupUI() {
+    private func setupNavigationBar() {
         navBarTextColor = ThemeManager.shared.labelTintColor()
         loadMPStyles()
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.whiteColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
+    }
+
+    fileprivate func setupUI() {
         if contentView.getSubviews().isEmpty {
             renderViews()
         }
     }
 
     fileprivate func renderViews() {
-        self.contentView.prepareForRender()
+        contentView.prepareForRender()
 
         // Add item-price view.
         if let itemView = getItemComponentView() {
@@ -90,8 +94,9 @@ extension PXOneTapViewController {
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
 
-        self.view.layoutIfNeeded()
-        super.refreshContentViewSize()
+        view.layoutIfNeeded()
+        refreshContentViewSize()
+        contentView.animateContentOnY()
     }
 }
 
