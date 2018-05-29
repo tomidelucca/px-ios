@@ -86,7 +86,7 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 50;
-    //dc = nil;
+    dc = nil;
 
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
