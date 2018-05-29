@@ -14,7 +14,8 @@ class PXTotalRowRenderer {
 
     func render(_ totalRowComponent: PXTotalRowComponent) -> UIView {
         component = totalRowComponent
-        let ROW_HEIGHT: CGFloat = 67
+        let CHEVRON_WIDTH: CGFloat = 12
+        let ROW_HEIGHT: CGFloat = 67 + PXLayout.getSafeAreaBottomInset()
         let PRIMARY_VALUE_HEIGHT: CGFloat = 19
         let TITLE_HEIGHT: CGFloat = 20
         let SECONDARY_HEIGHT: CGFloat = 14
@@ -30,11 +31,13 @@ class PXTotalRowRenderer {
         if totalRowComponent.props.showChevron {
             let chevronImageView = UIImageView()
             chevronImageView.translatesAutoresizingMaskIntoConstraints = false
-            chevronImageView.backgroundColor = .red
+            let image = MercadoPago.getImage("oneTapArrow")
+            chevronImageView.image = image
+            chevronImageView.contentMode = .scaleAspectFit
             totalRowView.chevron = chevronImageView
             totalRowView.addSubview(chevronImageView)
-            PXLayout.setWidth(owner: chevronImageView, width: 12).isActive = true
-            PXLayout.setHeight(owner: chevronImageView, height: 12).isActive = true
+            PXLayout.setWidth(owner: chevronImageView, width: CHEVRON_WIDTH).isActive = true
+            PXLayout.setHeight(owner: chevronImageView, height: CHEVRON_WIDTH).isActive = true
             PXLayout.centerVertically(view: chevronImageView).isActive = true
             PXLayout.pinRight(view: chevronImageView, withMargin: PXLayout.S_MARGIN).isActive = true
         }
@@ -105,7 +108,7 @@ class PXTotalRowRenderer {
         valueLabel.numberOfLines = 1
         view.addSubview(valueLabel)
         if let chevron = view.chevron {
-            PXLayout.pinRight(view: valueLabel, to: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
+            PXLayout.put(view: valueLabel, leftOf: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
         } else {
             PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
         }
