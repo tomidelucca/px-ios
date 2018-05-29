@@ -42,7 +42,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     var merchantBaseUrl: String!
     var merchantAccessToken: String!
     var publicKey: String!
-    var currency: Currency!
 
     var groupName: String?
 
@@ -86,7 +85,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate func initCommon() {
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
         self.publicKey = MercadoPagoContext.publicKey()
-        self.currency = MercadoPagoContext.getCurrency()
     }
 
     required  public init(coder aDecoder: NSCoder) {
@@ -151,8 +149,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         renderViews()
 
         self.hideLoading()
-
-
     }
 
     func getCollectionViewPinBottomContraint() -> NSLayoutConstraint? {
@@ -177,11 +173,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func getFloatingTotalRowView() -> UIView {
-        let title = getTitle()
-        let disclaimer = getDisclaimer()
-        let mainValue = getMainValue()
-        let secondaryValue = getSecondaryValue()
-        let showChevron = shouldShowChevron()
+        let title = self.viewModel.getTitle()
+        let disclaimer = self.viewModel.getDisclaimer()
+        let mainValue = self.viewModel.getMainValue()
+        let secondaryValue = self.viewModel.getSecondaryValue()
+        let showChevron = self.viewModel.shouldShowChevron()
 
         let props = PXTotalRowProps(title: title, disclaimer: disclaimer, mainValue: mainValue, secondaryValue: secondaryValue, showChevron: showChevron)
         let total = PXTotalRowComponent(props: props)
@@ -199,70 +195,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 // TODO: show modal to add a new discount
             }
         }
-    }
-
-    func getTitle() -> NSAttributedString? {
-        //TODO: Add translations
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
-            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
-
-            if let discount = self.viewModel.discount {
-                if discount.amount_off != "0" {
-                    let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: discount.amount_off, attributes: activeDiscountAttributes))
-                    string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
-                    return string
-                } else if discount.percent_off != "0" {
-                    let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: discount.percent_off, attributes: activeDiscountAttributes))
-                    string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
-                    return string
-                }
-            } else {
-                let defaultTitleString = "Ingresá tu cupón de descuento"
-                let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: addNewDiscountAttributes)
-                return defaultTitleAttributedString
-            }
-        }
-        let defaultTitleString = "Total a pagar"
-        let defaultAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
-        let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: defaultAttributes)
-        return defaultTitleAttributedString
-    }
-
-    func getDisclaimer() -> NSAttributedString? {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.viewModel.discount {
-            let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
-            let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
-            return string
-        }
-        return nil
-    }
-
-    func getMainValue() -> NSAttributedString? {
-        let amountFontSize: CGFloat = PXLayout.L_FONT
-        let currency = MercadoPagoContext.getCurrency()
-
-        let amount: Double = 1520.80
-        return Utils.getAttributedAmount(amount, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: amountFontSize, baselineOffset: 0, negativeAmount: false)
-    }
-
-    func getSecondaryValue() -> NSAttributedString? {
-        if let discount = self.viewModel.discount {
-            let oldAmount = Utils.getAttributedAmount(discount.amountWithoutDiscount, currency: currency, color: UIColor.UIColorFromRGB(0xa3a3a3), fontSize: PXLayout.XXS_FONT, baselineOffset: 0)
-
-            oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
-            return oldAmount
-        }
-        return nil
-    }
-
-    func shouldShowChevron() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            return true
-        }
-        return false
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {

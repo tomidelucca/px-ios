@@ -77,7 +77,10 @@ extension PXReviewViewModel {
     }
 
     func shouldShowDiscountTermsAndCondition() -> Bool {
-        return true
+        if self.discount != nil {
+            return true
+        }
+        return false
     }
 
     func shouldShowInstallmentSummary() -> Bool {

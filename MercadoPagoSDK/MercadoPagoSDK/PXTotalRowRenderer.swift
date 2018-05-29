@@ -58,29 +58,11 @@ class PXTotalRowRenderer {
         }
 
         if let mainValue = totalRowComponent.props.mainValue {
-            let mainValueLabel = buildLabelWith(mainValue)
-            mainValueLabel.numberOfLines = 1
-            totalRowView.mainValueLabel = mainValueLabel
-            totalRowView.addSubview(mainValueLabel)
-            if let chevron = totalRowView.chevron {
-                PXLayout.pinRight(view: mainValueLabel, to: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
-            } else {
-                PXLayout.pinRight(view: mainValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
-            }
-            PXLayout.setHeight(owner: mainValueLabel, height: PRIMARY_VALUE_HEIGHT).isActive = true
+            totalRowView.mainValueLabel = buildValueLabelIn(view: totalRowView, value: mainValue, height: PRIMARY_VALUE_HEIGHT)
         }
 
         if let secondaryValue = totalRowComponent.props.secondaryValue {
-            let secondaryValueLabel = buildLabelWith(secondaryValue)
-            secondaryValueLabel.numberOfLines = 1
-            totalRowView.secondaryValueLabel = secondaryValueLabel
-            totalRowView.addSubview(secondaryValueLabel)
-            if let chevron = totalRowView.chevron {
-                PXLayout.pinRight(view: secondaryValueLabel, to: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
-            } else {
-                PXLayout.pinRight(view: secondaryValueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
-            }
-            PXLayout.setHeight(owner: secondaryValueLabel, height: SECONDARY_HEIGHT).isActive = true
+            totalRowView.secondaryValueLabel = buildValueLabelIn(view: totalRowView, value: secondaryValue, height: SECONDARY_HEIGHT)
         }
 
         PXLayout.setHeight(owner: totalRowView, height: ROW_HEIGHT).isActive = true
@@ -90,7 +72,6 @@ class PXTotalRowRenderer {
     }
 
     func layoutComponentsOf(_ view: PXTotalRowView) {
-
         if let title = view.titleLabel, let disclaimer = view.disclaimerLabel {
             PXLayout.pinTop(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
             PXLayout.put(view: disclaimer, onBottomOf: title, withMargin: PXLayout.XXXS_MARGIN).isActive = true
@@ -119,6 +100,18 @@ class PXTotalRowRenderer {
         return label
     }
 
+    func buildValueLabelIn(view: PXTotalRowView, value: NSAttributedString, height: CGFloat) -> UILabel {
+        let valueLabel = buildLabelWith(value)
+        valueLabel.numberOfLines = 1
+        view.addSubview(valueLabel)
+        if let chevron = view.chevron {
+            PXLayout.pinRight(view: valueLabel, to: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
+        } else {
+            PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+        }
+        PXLayout.setHeight(owner: valueLabel, height: height).isActive = true
+        return valueLabel
+    }
 }
 
 class PXTotalRowView: PXComponentView {
