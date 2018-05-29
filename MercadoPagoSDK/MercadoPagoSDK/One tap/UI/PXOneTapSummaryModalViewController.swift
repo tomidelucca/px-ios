@@ -18,18 +18,34 @@ final class PXOneTapSummaryModalViewController: UIViewController {
         setupView()
     }
 
-    func setProps(summaryProps: [PXSummaryRowProps]?, bottomCustomView:UIView?) {
+    func setProps(summaryProps: [PXSummaryRowProps]?, bottomCustomView: UIView?) {
         props = summaryProps
         customView = bottomCustomView
     }
 
     func setupView() {
         if let summaryProps = props, let smallSummaryView = PXSmallSummaryView(withProps: summaryProps, backgroundColor: .white).oneTapRender() as? PXSmallSummaryView {
-            view.addSubview(smallSummaryView)
-            PXLayout.pinTop(view: smallSummaryView).isActive = true
-            PXLayout.pinBottom(view: smallSummaryView).isActive = true
-            PXLayout.pinLeft(view: smallSummaryView).isActive = true
-            PXLayout.pinRight(view: smallSummaryView).isActive = true
+
+            if let cView = customView {
+                view.addSubview(smallSummaryView)
+                PXLayout.pinTop(view: smallSummaryView).isActive = true
+                PXLayout.pinLeft(view: smallSummaryView).isActive = true
+                PXLayout.pinRight(view: smallSummaryView).isActive = true
+
+                view.addSubview(cView)
+                PXLayout.pinLeft(view: cView).isActive = true
+                PXLayout.pinRight(view: cView).isActive = true
+                PXLayout.pinBottom(view: cView).isActive = true
+                PXLayout.put(view: cView, onBottomOf: smallSummaryView).isActive = true
+                cView.layoutIfNeeded()
+                PXLayout.setHeight(owner: cView, height: cView.frame.height).isActive = true
+            } else {
+                view.addSubview(smallSummaryView)
+                PXLayout.pinTop(view: smallSummaryView).isActive = true
+                PXLayout.pinBottom(view: smallSummaryView).isActive = true
+                PXLayout.pinLeft(view: smallSummaryView).isActive = true
+                PXLayout.pinRight(view: smallSummaryView).isActive = true
+            }
         }
     }
 }

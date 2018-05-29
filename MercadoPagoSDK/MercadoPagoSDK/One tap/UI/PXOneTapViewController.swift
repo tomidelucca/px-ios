@@ -121,6 +121,13 @@ extension PXOneTapViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.oneTapRender()
     }
+
+    private func getDiscountDetailView() -> UIView? {
+        //TODO-(Nutria team): Make Discount detail view.
+        let discountDetailView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 400))
+        discountDetailView.backgroundColor = .red
+        return discountDetailView
+    }
 }
 
 // MARK: User Actions.
@@ -128,7 +135,7 @@ extension PXOneTapViewController {
     @objc func shouldOpenSummary() {
         if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
             let summaryViewController = PXOneTapSummaryModalViewController()
-            summaryViewController.setProps(summaryProps: summaryProps, bottomCustomView: nil)
+            summaryViewController.setProps(summaryProps: summaryProps, bottomCustomView: getDiscountDetailView())
             //TODO: "Detalle" translation. Pedir a contenidos.
             PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle".localized)
         }
