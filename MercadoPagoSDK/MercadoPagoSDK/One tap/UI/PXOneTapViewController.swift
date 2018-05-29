@@ -71,8 +71,10 @@ extension PXOneTapViewController {
             contentView.addSubviewToBottom(itemView, withMargin: PXLayout.XXL_MARGIN)
             PXLayout.centerHorizontally(view: itemView).isActive = true
             PXLayout.matchWidth(ofView: itemView).isActive = true
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
-            itemView.addGestureRecognizer(tapGesture)
+            if viewModel.shouldShowSummaryModal() {
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
+                itemView.addGestureRecognizer(tapGesture)
+            }
         }
 
         // Add payment method.

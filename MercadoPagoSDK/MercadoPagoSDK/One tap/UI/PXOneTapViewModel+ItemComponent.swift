@@ -10,8 +10,7 @@ import Foundation
 extension PXOneTapViewModel {
 
     func getItemComponent() -> PXOneTapItemComponent? {
-
-        let props = PXOneTapItemComponentProps(title: getIconTitle(), collectorImage: getCollectorIcon(), numberOfInstallments: getNumberOfInstallmentsForItem(), installmentAmount: getInstallmentAmountForItem(), totalWithoutDiscount: getAmountWithoutDiscount(), discountDescription: getDiscountDescription(), discountLimit: getDiscountLimit())
+        let props = PXOneTapItemComponentProps(title: getIconTitle(), collectorImage: getCollectorIcon(), numberOfInstallments: getNumberOfInstallmentsForItem(), installmentAmount: getInstallmentAmountForItem(), totalWithoutDiscount: getAmountWithoutDiscount(), discountDescription: getDiscountDescription(), discountLimit: getDiscountLimit(), shouldShowArrow: shouldShowSummaryModal())
         return PXOneTapItemComponent(props: props)
     }
 
