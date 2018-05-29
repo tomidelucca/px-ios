@@ -36,3 +36,10 @@ final class PXOneTapViewModel: PXReviewViewModel {
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: properties)
     }
 }
+
+extension PXOneTapViewModel {
+    func shouldShowSummaryModal() -> Bool {
+        let summaryModel = getSummaryViewModel(amount: preference.getAmount())
+        return summaryModel.details.count > 1
+    }
+}
