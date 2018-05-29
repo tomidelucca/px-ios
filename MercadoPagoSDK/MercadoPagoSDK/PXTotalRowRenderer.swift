@@ -15,7 +15,7 @@ class PXTotalRowRenderer {
     func render(_ totalRowComponent: PXTotalRowComponent) -> UIView {
         component = totalRowComponent
         let CHEVRON_WIDTH: CGFloat = 12
-        let ROW_HEIGHT: CGFloat = 67
+        let ROW_HEIGHT: CGFloat = 67 + PXLayout.getSafeAreaBottomInset()
         let PRIMARY_VALUE_HEIGHT: CGFloat = 19
         let TITLE_HEIGHT: CGFloat = 20
         let SECONDARY_HEIGHT: CGFloat = 14

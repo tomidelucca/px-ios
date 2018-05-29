@@ -191,8 +191,8 @@ extension PaymentVaultViewModel {
     func getTitle() -> NSAttributedString? {
         //TODO: Add translations
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
-            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
+            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
+            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
 
             if let discount = self.discount {
                 if discount.amount_off != "0" {
@@ -213,7 +213,7 @@ extension PaymentVaultViewModel {
             }
         }
         let defaultTitleString = "Total a pagar"
-        let defaultAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+        let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
         let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: defaultAttributes)
         return defaultTitleAttributedString
     }
@@ -221,7 +221,7 @@ extension PaymentVaultViewModel {
     func getDisclaimer() -> NSAttributedString? {
         //TOOD: agregar logica de tope de descuento
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.discount {
-            let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
             let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
             return string
         }

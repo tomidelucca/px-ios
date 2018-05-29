@@ -190,7 +190,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     func handleTotalRowTap() {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
             if let discount = self.viewModel.discount {
-                PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: discount), title: discount.getDescription())
+                PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(discount: discount), title: "Descuento")
             } else {
                 // TODO: show modal to add a new discount
             }
