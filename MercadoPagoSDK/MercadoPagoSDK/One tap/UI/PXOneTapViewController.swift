@@ -61,13 +61,13 @@ extension PXOneTapViewController {
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
     }
 
-    fileprivate func setupUI() {
+    private func setupUI() {
         if contentView.getSubviews().isEmpty {
             renderViews()
         }
     }
 
-    fileprivate func renderViews() {
+    private func renderViews() {
         contentView.prepareForRender()
 
         // Add item-price view.
@@ -157,14 +157,14 @@ extension PXOneTapViewController {
         callbackPaymentData(viewModel.getClearPaymentData())
     }
 
-    fileprivate func confirmPayment() {
+    private func confirmPayment() {
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.paymentData)
     }
 
-    fileprivate func cancelPayment() {
+    private func cancelPayment() {
         self.callbackExit()
     }
 }
