@@ -39,6 +39,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationBar()
         setupUI()
     }
 
@@ -53,22 +54,25 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
 // MARK: UI Methods.
 extension PXOneTapViewController {
-    fileprivate func setupUI() {
+    private func setupNavigationBar() {
         navBarTextColor = ThemeManager.shared.labelTintColor()
         loadMPStyles()
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.whiteColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
+    }
+
+    private func setupUI() {
         if contentView.getSubviews().isEmpty {
             renderViews()
         }
     }
 
-    fileprivate func renderViews() {
-        self.contentView.prepareForRender()
+    private func renderViews() {
+        contentView.prepareForRender()
 
         // Add item-price view.
         if let itemView = getItemComponentView() {
-            contentView.addSubviewToBottom(itemView, withMargin: PXLayout.XXL_MARGIN)
+            contentView.addSubviewToBottom(itemView)
             PXLayout.centerHorizontally(view: itemView).isActive = true
             PXLayout.matchWidth(ofView: itemView).isActive = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
@@ -90,8 +94,10 @@ extension PXOneTapViewController {
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
 
-        self.view.layoutIfNeeded()
-        super.refreshContentViewSize()
+        view.layoutIfNeeded()
+        refreshContentViewSize()
+        centerContentView()
+        contentView.animateContentOnY()
     }
 }
 
@@ -152,14 +158,14 @@ extension PXOneTapViewController {
         callbackPaymentData(viewModel.getClearPaymentData())
     }
 
-    fileprivate func confirmPayment() {
+    private func confirmPayment() {
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.paymentData)
     }
 
-    fileprivate func cancelPayment() {
+    private func cancelPayment() {
         self.callbackExit()
     }
 }
