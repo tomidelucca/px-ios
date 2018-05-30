@@ -228,4 +228,7 @@ open class MercadoPagoCheckout: NSObject {
         pxNavigationHandler.popToWhenFinish(viewController: viewController)
     }
 
+    public func setDiscount(_ discount : PXDiscount, withCampaign: PXCampaign){
+        
+    }
 }

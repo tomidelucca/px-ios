@@ -43,7 +43,7 @@ extension MercadoPagoCheckout {
                 return
             }
 
-            strongSelf.viewModel.paymentData.discount = discount
+          //  strongSelf.viewModel.paymentData.discount = discount TODO SET DISCOUNT WITH CAMPAIGN
             strongSelf.executeNextStep()
 
         }, failure: { [weak self] _ in

@@ -110,7 +110,7 @@ extension MercadoPagoCheckout {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.viewModel.paymentData.discount = discount
+           // strongSelf.viewModel.paymentData.discount = discount TODO SET DISCOUNT WITH CAMPAIGN
 
             strongSelf.getPayerCosts(updateCallback: {
 

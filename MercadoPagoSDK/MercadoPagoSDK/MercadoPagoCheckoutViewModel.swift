@@ -63,7 +63,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount,campaign: self.paymentData.campaign)
         }
     }
     var checkoutPreference: CheckoutPreference!
@@ -119,7 +119,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Payment plguin
     var paymentPlugin: PXPaymentPluginComponent?
-
+    
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
         self.checkoutPreference = checkoutPreference
@@ -157,6 +157,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     func hasError() -> Bool {
         return MercadoPagoCheckoutViewModel.error != nil
+    }
+    
+    public func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
+        self.paymentData.setDiscount(discount, withCampaign: campaign)
     }
 
     public func getPaymentPreferences() -> PaymentPreference? {
@@ -236,7 +240,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             guard let object = self else {
                 return
             }
-            object.paymentData.discount = discount
+            // object.paymentData.discount = discount // TODO SET DISCOUNT WITH CAMPAIGN
         })
     }
 

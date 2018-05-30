@@ -14,7 +14,7 @@ internal struct PXAmountHelper {
     internal let preference: CheckoutPreference
     internal let paymentData: PaymentData
     internal let discount: PXDiscount?
- //   internal let campaign: PXCampaign
+    internal let campaign: PXCampaign?
 
     var preferenceAmount : Double {
         get {

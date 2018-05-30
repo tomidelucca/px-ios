@@ -17,8 +17,9 @@ import MercadoPagoServices
     public var token: Token?
     public var payer: Payer?
     public var transactionDetails: TransactionDetails?
-    public var discount: PXDiscount?
-
+    public private(set) var discount: PXDiscount?
+    public private(set) var campaign: PXCampaign?
+    
     private let paymentTypesWithoutInstallments = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
 
     /**
@@ -44,6 +45,7 @@ import MercadoPagoServices
         copyObj.payerCost = payerCost
         copyObj.transactionDetails = transactionDetails
         copyObj.discount = discount
+        copyObj.campaign = campaign
         copyObj.payer = payer
         return copyObj
     }
@@ -219,7 +221,16 @@ import MercadoPagoServices
             obj["discount"] = discount.toJSONDictionary()
         }
 
+        if let campaign = self.campaign {
+            obj["campaign"] = try! campaign.toJSONString()
+        }
+        
         return obj
+    }
+    
+    public func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
+        self.discount = discount
+        self.campaign = campaign
     }
 
 }
