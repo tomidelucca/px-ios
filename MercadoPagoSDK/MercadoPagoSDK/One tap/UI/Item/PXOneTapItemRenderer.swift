@@ -92,7 +92,7 @@ final class PXOneTapItemRenderer {
                 PXLayout.setHeight(owner: arrow, height: PXLayout.XS_MARGIN).isActive = true
                 PXLayout.setWidth(owner: arrow, width: PXLayout.XXS_MARGIN).isActive = true
                 PXLayout.centerVertically(view: arrow, to: itemView.totalAmount).isActive = true
-                PXLayout.pinRight(view: arrow, withMargin: PXLayout.XXL_MARGIN).isActive = true
+                PXLayout.pinRight(view: arrow, withMargin: PXLayout.XL_MARGIN).isActive = true
             }
         }
         return itemView
@@ -172,10 +172,10 @@ extension PXOneTapItemRenderer {
         label.text = text
         label.textColor = color
         label.lineBreakMode = .byTruncatingTail
-        label.numberOfLines = 1
+        label.numberOfLines = 2
         label.font = font
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        let height = UILabel.requiredHeight(forText: text, withFont: font, inNumberOfLines: 1, inWidth: screenWidth)
+        let height = UILabel.requiredHeight(forText: text, withFont: font, inNumberOfLines: 2, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         return label
     }

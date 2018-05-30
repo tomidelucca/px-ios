@@ -131,4 +131,21 @@ import Foundation
         }
         self.layoutIfNeeded()
     }
+
+    func isEmpty() -> Bool {
+        return self.contentView.subviews.count == 0
+    }
+}
+
+extension PXComponentView {
+    func animateContentOnY() {
+        if #available(iOS 10.0, *) {
+            let animatorInit = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1.4, animations: { [weak self] in
+                self?.contentView.transform = CGAffineTransform(translationX: 0, y: -4)
+            })
+            animatorInit.startAnimation()
+        } else {
+            // No animation for iOS 9 or minor.
+        }
+    }
 }
