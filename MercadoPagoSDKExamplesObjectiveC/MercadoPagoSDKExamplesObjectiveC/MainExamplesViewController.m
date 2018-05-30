@@ -75,7 +75,7 @@
     //Setear PaymentCallback
 
     [self setPaymentCallback];
-
+/*
     DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
     
     NSNumber *externalDiscount = [NSNumber numberWithDouble:2.00];
@@ -87,13 +87,13 @@
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 50;
     dc = nil;
-
+*/
+    
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
     self.pref.preferenceId = @"243962506-b6476e8b-a1a4-40cb-bfec-9954bff4a143";
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
-    accessToken:nil
-                                                  checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
+    accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     
     // Set default color or theme.

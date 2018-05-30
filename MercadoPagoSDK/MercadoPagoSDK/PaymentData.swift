@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 @objcMembers public class PaymentData: NSObject, NSCopying {
 
@@ -16,7 +17,7 @@ import UIKit
     public var token: Token?
     public var payer: Payer?
     public var transactionDetails: TransactionDetails?
-    public var discount: DiscountCoupon?
+    public var discount: PXDiscount?
 
     private let paymentTypesWithoutInstallments = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
 
@@ -215,7 +216,7 @@ import UIKit
         }
 
         if let discount = self.discount {
-            obj["discount"] = discount.toJSON()
+            obj["discount"] = discount.toJSONDictionary()
         }
 
         return obj

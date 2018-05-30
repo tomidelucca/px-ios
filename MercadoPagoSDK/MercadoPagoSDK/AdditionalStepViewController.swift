@@ -87,7 +87,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         let currency = MercadoPagoContext.getCurrency()
 
 
-        let oldAmount = Utils.getAttributedAmount((self.viewModel.discount?.amountWithoutDiscount)!, currency: currency, color: UIColor.red, fontSize: PXLayout.XXS_FONT, baselineOffset: 4)
+        let oldAmount = Utils.getAttributedAmount(self.viewModel.amountHelper.amountWithoutDiscount, currency: currency, color: UIColor.red, fontSize: PXLayout.XXS_FONT, baselineOffset: 4)
 
         oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
 
@@ -98,16 +98,16 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
 
-        let discountAmount = self.viewModel.discount?.amount_off.toAttributedString()
+        let discountAmount = String(describing: self.viewModel.amountHelper.amountOff).toAttributedString()
 
-        let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .black, fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
+        let attributedAmount = Utils.getAttributedAmount(self.viewModel.amountHelper.amountToPay, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .black, fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
 
         oldAmount.append(" ".toAttributedString())
         oldAmount.append(attributedAmount)
 
 
         let action = PXComponentAction(label: "Descuento") {
-            PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: self.viewModel.discount!), title: self.viewModel.discount?.getDescription())
+            PXComponentFactory.Modal.show(viewController: CouponDetailViewController(amountHelper: self.viewModel.amountHelper), title: self.viewModel.amountHelper.discount?.description)
         }
 
         let props = PXTotalRowProps(title: "Total".toAttributedString(), disclaimer: "disclaimer".toAttributedString(), mainValue: "main".toAttributedString(), secondaryValue: "secondary".toAttributedString())

@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 final class CouponDetailViewController: MercadoPagoUIViewController {
 
     override open var screenName: String { return "DISCOUNT_SUMMARY" }
 
-    private var dCoupon: DiscountCoupon?
+    private var amountHelper: PXAmountHelper
 
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productAmount: UILabel!
@@ -26,9 +27,9 @@ final class CouponDetailViewController: MercadoPagoUIViewController {
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
 
-    init(coupon: DiscountCoupon) {
+    init(amountHelper: PXAmountHelper) {
+        self.amountHelper = amountHelper
         super.init(nibName: "CouponDetailViewController", bundle: MercadoPago.getBundle())
-        dCoupon = coupon
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -45,25 +46,19 @@ final class CouponDetailViewController: MercadoPagoUIViewController {
 extension CouponDetailViewController {
 
     private func populateDiscountData() {
-
-        guard let discountCoupon = dCoupon else {
+        guard let discount = self.amountHelper.discount else{
             return
         }
-
         totalTitle.text = "Total".localized
         productTitle.text = "Producto".localized
         productTitle.textColor = fontColor
         discountTitle.textColor = discountFontColor
         totalTitle.textColor = fontColor
-
-        if let concept = discountCoupon.concept {
-            discountTitle.text = concept
-        }
-
-        let amount: Double = discountCoupon.amountWithoutDiscount
+        discountTitle.text = discount.concept
+        let amount: Double = self.amountHelper.amountWithoutDiscount
         let currency = MercadoPagoContext.getCurrency()
         productAmount.attributedText = Utils.getAttributedAmount(amount, currency: currency, color: fontColor, fontSize: fontSize, baselineOffset: baselineOffSet)
-        discountAmount.attributedText = Utils.getAttributedAmount(Double(discountCoupon.coupon_amount)!, currency: currency, color: discountFontColor, fontSize: fontSize, baselineOffset: baselineOffSet, negativeAmount: true)
-        totalAmount.attributedText = Utils.getAttributedAmount( amount - Double(discountCoupon.coupon_amount)!, currency: currency, color: fontColor, fontSize: fontSize, baselineOffset: baselineOffSet)
+        discountAmount.attributedText = Utils.getAttributedAmount(self.amountHelper.amountOff, currency: currency, color: discountFontColor, fontSize: fontSize, baselineOffset: baselineOffSet, negativeAmount: true)
+        totalAmount.attributedText = Utils.getAttributedAmount( self.amountHelper.amountToPay , currency: currency, color: fontColor, fontSize: fontSize, baselineOffset: baselineOffSet)
     }
 }

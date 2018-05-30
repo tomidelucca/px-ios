@@ -12,7 +12,7 @@ import Foundation
 extension PXOneTapViewModel {
 
     func getPaymentMethodComponent() -> PXPaymentMethodComponent? {
-        guard let pm = paymentData.getPaymentMethod() else {
+        guard let pm = self.amountHelper.paymentData.getPaymentMethod() else {
             return nil
         }
 
@@ -27,7 +27,7 @@ extension PXOneTapViewModel {
         let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
 
         if pm.isCard {
-            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
+            if let lastFourDigits = (self.amountHelper.paymentData.token?.lastFourDigits) {
                 let text = "\(paymentMethodName) ···· \(lastFourDigits)"
                 title = text.toAttributedString()
             } else if let card = paymentOptionSelected as? CustomerPaymentMethod {
@@ -40,7 +40,7 @@ extension PXOneTapViewModel {
             title = paymentMethodName.toAttributedString()
         }
 
-        if let payerCost = paymentData.getPayerCost() {
+        if let payerCost = self.amountHelper.paymentData.getPayerCost() {
             // Installments.
             let numberOfInstallments: Int = payerCost.installments
             let installmentAmount: Double = payerCost.installmentAmount

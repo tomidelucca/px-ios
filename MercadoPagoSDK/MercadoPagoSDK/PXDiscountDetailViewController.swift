@@ -7,18 +7,19 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 final class PXDiscountDetailViewController: MercadoPagoUIViewController {
 
     override open var screenName: String { return "DISCOUNT_SUMMARY" }
 
-    private var discount: DiscountCoupon
+    private var discount: PXDiscount
     private let fontSize: CGFloat = 18.0
     private let baselineOffSet: Int = 6
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
 
-    init(discount: DiscountCoupon) {
+    init(discount: PXDiscount) {
         self.discount = discount
         super.init(nibName: nil, bundle: nil)
     }
@@ -91,14 +92,14 @@ extension PXDiscountDetailViewController {
 
     func getTitle() -> NSAttributedString? {
         let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x333333)]
-        if discount.amount_off != "0" {
+        if let amountOff = discount.amountOff {
             let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
-            string.append(NSAttributedString(string: discount.amount_off, attributes: activeDiscountAttributes))
+            string.append(NSAttributedString(string: amountOff.stringValue, attributes: activeDiscountAttributes))
             string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
             return string
-        } else if discount.percent_off != "0" {
+        } else if let percentOff = discount.percentOff {
             let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
-            string.append(NSAttributedString(string: discount.percent_off, attributes: activeDiscountAttributes))
+            string.append(NSAttributedString(string: percentOff.stringValue, attributes: activeDiscountAttributes))
             string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
             return string
         }

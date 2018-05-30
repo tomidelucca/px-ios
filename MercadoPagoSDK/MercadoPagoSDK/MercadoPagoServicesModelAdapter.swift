@@ -363,18 +363,6 @@ extension MercadoPagoServicesAdapter {
         return identificationType
     }
 
-    open func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount, amount: Double) -> DiscountCoupon {
-        let discountCoupon = DiscountCoupon(discountId: UInt(pxDiscount.id) ?? 0)
-        discountCoupon.name = pxDiscount.name
-        discountCoupon.percent_off = pxDiscount.percentOff?.cleanString ?? "0"
-        discountCoupon.amount_off = pxDiscount.amountOff?.cleanString ?? "0"
-        discountCoupon.coupon_amount = pxDiscount.couponAmount?.cleanString ?? "0"
-        discountCoupon.currency_id = pxDiscount.currencyId
-        discountCoupon.concept = pxDiscount.concept()
-        discountCoupon.amountWithoutDiscount = amount
-        return discountCoupon
-    }
-
     open func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
         let payment = Payment()
         payment.binaryMode = pxPayment.binaryMode

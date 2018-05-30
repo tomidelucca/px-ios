@@ -11,7 +11,7 @@ import UIKit
 extension PXResultViewModel {
 
     open func getBodyComponentProps() -> PXBodyProps {
-        let props = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion(), callback: getBodyAction())
+        let props = PXBodyProps(paymentResult: self.paymentResult, amount: self.amountHelper.amountToPay, instruction: getInstrucion(), callback: getBodyAction())
         return props
     }
 

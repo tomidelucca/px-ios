@@ -140,7 +140,7 @@ extension PXOneTapViewController {
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
-        self.callbackConfirm(self.viewModel.paymentData)
+        self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
     fileprivate func cancelPayment() {

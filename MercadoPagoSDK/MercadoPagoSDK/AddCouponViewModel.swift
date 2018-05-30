@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 class AddCouponViewModel: NSObject {
 
-    var amount: Double!
-    var coupon: DiscountCoupon?
+    private let amountHelper: PXAmountHelper
+    var coupon: PXDiscount?
     var email: String!
     var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
@@ -20,14 +21,14 @@ class AddCouponViewModel: NSObject {
     let DISCOUNT_ERROR_CAMPAIGN_DOESNT_MATCH = "campaign-doesnt-match"
     let DISCOUNT_ERROR_CAMPAIGN_EXPIRED = "campaign-expired"
 
-    init(amount: Double, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
-        self.amount = amount
+    init(amountHelper: PXAmountHelper, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+        self.amountHelper = amountHelper
         self.email = email
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
     }
 
     func getCoupon(code: String, success: @escaping () -> Void, failure: @escaping ((_ errorMessage: String) -> Void)) {
-        self.mercadoPagoServicesAdapter.getCodeDiscount(amount: self.amount, payerEmail: self.email, couponCode: code, callback: { [weak self] (discount) in
+        self.mercadoPagoServicesAdapter.getCodeDiscount(amount: self.amountHelper.amountToPay, payerEmail: self.email, couponCode: code, callback: { [weak self] (discount) in
 
             if let coupon = discount {
                 self?.coupon = coupon

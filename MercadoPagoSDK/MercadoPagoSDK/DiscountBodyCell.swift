@@ -18,19 +18,18 @@ class DiscountBodyCell: UIView {
 
     let margin: CGFloat = 5.0
     var topMargin: CGFloat!
-    var coupon: DiscountCoupon?
+    private let amountHelper: PXAmountHelper
     var amount: Double!
     var hideArrow: Bool = false
 
     static let HEIGHT: CGFloat = 86.0
 
-    init(frame: CGRect, coupon: DiscountCoupon?, amount: Double, addBorder: Bool = true, topMargin: CGFloat = 20.0, hideArrow: Bool = false) {
+    init(amountHelper: PXAmountHelper, frame: CGRect, addBorder: Bool = true, topMargin: CGFloat = 20.0, hideArrow: Bool = false) {
+        self.amountHelper = amountHelper
         super.init(frame: frame)
-        self.coupon = coupon
-        self.amount = amount
         self.topMargin = topMargin
         self.hideArrow = hideArrow
-        if self.coupon == nil {
+        if self.amountHelper.discount == nil {
             loadNoCouponView()
         } else {
             loadCouponView()
@@ -101,7 +100,7 @@ class DiscountBodyCell: UIView {
     func loadCouponView() {
         let currency = MercadoPagoContext.getCurrency()
         let screenWidth = frame.size.width
-        guard let coupon = self.coupon else {
+        guard let coupon = self.amountHelper.discount else {
             return
         }
         let tituloLabel = MPLabel(frame: CGRect(x: margin, y: topMargin, width: (frame.size.width - 2 * margin), height: 20) )
@@ -110,10 +109,10 @@ class DiscountBodyCell: UIView {
         let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 16), NSAttributedStringKey.foregroundColor: LABEL_COLOR]
         let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
         let space = NSMutableAttributedString(string: " ".localized, attributes: normalAttributes)
-        let oldAmount = Utils.getAttributedAmount( coupon.amountWithoutDiscount, currency: currency, color: LABEL_COLOR, fontSize: 16, baselineOffset: 4)
+        let oldAmount = Utils.getAttributedAmount( self.amountHelper.amountWithoutDiscount, currency: currency, color: LABEL_COLOR, fontSize: 16, baselineOffset: 4)
 
         oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
-        let newAmount = Utils.getAttributedAmount( coupon.newAmount(), currency: currency, color: DISCOUNT_COLOR, fontSize: 16, baselineOffset: 4)
+        let newAmount = Utils.getAttributedAmount( self.amountHelper.amountToPay, currency: currency, color: DISCOUNT_COLOR, fontSize: 16, baselineOffset: 4)
         result.append(total)
         result.append(oldAmount)
         result.append(space)
@@ -131,11 +130,7 @@ class DiscountBodyCell: UIView {
 
         let detailLabel = MPLabel()
         detailLabel.textAlignment = .center
-        if let concept = coupon.concept {
-           detailLabel.text = concept
-        } else {
-           detailLabel.text = "Descuento".localized
-        }
+        detailLabel.text = coupon.concept
         detailLabel.textColor = DISCOUNT_COLOR
         detailLabel.font = Utils.getFont(size: 16)
         let discountAmountLabel = MPLabel()

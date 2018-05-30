@@ -8,6 +8,7 @@
 
 import UIKit
 import MercadoPagoPXTracking
+import MercadoPagoServices
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -125,8 +126,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     @objc func updateCoupon(_ notification: Notification) {
-        if let discount = notification.userInfo?["coupon"] as? DiscountCoupon {
-            self.viewModel.discount = discount
+        if let discount = notification.userInfo?["coupon"] as? PXDiscount {
+            self.viewModel.amountHelper = PXAmountHelper(preference: self.viewModel.amountHelper.preference, paymentData: self.viewModel.amountHelper.paymentData, discount: discount)
             self.collectionSearch.reloadData()
         }
     }
@@ -189,7 +190,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     func handleTotalRowTap() {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            if let discount = self.viewModel.discount {
+            if let discount = self.viewModel.amountHelper.discount {
                 PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(discount: discount), title: "Descuento")
             } else {
                 // TODO: show modal to add a new discount

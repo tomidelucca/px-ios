@@ -10,11 +10,13 @@ import Foundation
 import MercadoPagoServices
 
 internal extension PXDiscount {
-    internal func getDescription() -> String {
-        if getDiscountDescription() != "" {
-            return getDiscountDescription() + "discount_coupon_detail_description".localized_beta
-        } else {
-            return ""
+    override open var description : String {
+        get {
+            if getDiscountDescription() != "" {
+                return getDiscountDescription() + "discount_coupon_detail_description".localized_beta
+            } else {
+                return ""
+            }
         }
     }
     
@@ -44,7 +46,35 @@ internal extension PXDiscount {
         }
         return text
     }
-    internal func concept() -> String {
-        return getDiscountReviewDescription()
+    var concept : String {
+        get {
+            return getDiscountReviewDescription()
+        }
+    }
+    
+    func toJSONDictionary() -> [String: Any] {
+        
+        var obj: [String: Any] = [
+            "id": self.id,
+            "percent_off": self.percentOff ?? 0,
+            "amount_off": self.amountOff ??  0,
+            "coupon_amount": self.couponAmount ?? 0
+        ]
+        
+        if let name = self.name {
+            obj["name"] = name
+        }
+        
+        if let currencyId = self.currencyId {
+            obj["currency_id"] = currencyId
+        }
+
+        obj["concept"] = self.concept
+
+        if let campaignId = self.id {
+            obj["campaign_id"] = campaignId
+        }
+        
+        return obj
     }
 }
