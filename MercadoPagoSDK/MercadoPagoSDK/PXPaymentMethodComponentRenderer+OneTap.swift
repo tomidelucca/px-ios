@@ -13,7 +13,7 @@ extension PXPaymentMethodComponentRenderer {
         let arrowImage: UIImage? = MercadoPago.getImage("oneTapArrow")
         var defaultHeight: CGFloat = 84
         let leftRightMargin = PXLayout.S_MARGIN
-        let interMargin = PXLayout.S_MARGIN
+        let interMargin = PXLayout.XS_MARGIN
         let pmView = PXOneTapPaymentMethodView()
         let cftColor = UIColor(red: 0.29, green: 0.29, blue: 0.29, alpha: 0.3) // Not in MLUI
 
