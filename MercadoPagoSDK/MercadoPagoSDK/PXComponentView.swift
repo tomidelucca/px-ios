@@ -131,6 +131,10 @@ import Foundation
         }
         self.layoutIfNeeded()
     }
+
+    func isEmpty() -> Bool {
+        return self.contentView.subviews.count == 0
+    }
 }
 
 extension PXComponentView {
