@@ -8,15 +8,15 @@
 
 import Foundation
 
-struct PXTotalRowRenderer {
+class PXTotalRowRenderer {
+
+    let CHEVRON_WIDTH: CGFloat = 12
+    let ROW_HEIGHT: CGFloat = 67 + PXLayout.getSafeAreaBottomInset()
+    let PRIMARY_VALUE_HEIGHT: CGFloat = 19
+    let TITLE_HEIGHT: CGFloat = 40
+    let SECONDARY_HEIGHT: CGFloat = 14
 
     func render(_ totalRowComponent: PXTotalRowComponent) -> UIView {
-        let CHEVRON_WIDTH: CGFloat = 12
-        let ROW_HEIGHT: CGFloat = 67 + PXLayout.getSafeAreaBottomInset()
-        let PRIMARY_VALUE_HEIGHT: CGFloat = 19
-        let TITLE_HEIGHT: CGFloat = 20
-        let SECONDARY_HEIGHT: CGFloat = 14
-
         let totalRowView = PXTotalRowView()
         totalRowView.translatesAutoresizingMaskIntoConstraints = false
         totalRowView.backgroundColor = .white
@@ -45,7 +45,6 @@ struct PXTotalRowRenderer {
             totalRowView.titleLabel = titleLabel
             totalRowView.addSubview(titleLabel)
             PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.setHeight(owner: titleLabel, height: TITLE_HEIGHT).isActive = true
         }
 
         if let disclaimer = totalRowComponent.props.disclaimer {
@@ -58,7 +57,10 @@ struct PXTotalRowRenderer {
         }
 
         if let mainValue = totalRowComponent.props.mainValue {
-            totalRowView.mainValueLabel = buildValueLabelIn(view: totalRowView, value: mainValue, height: PRIMARY_VALUE_HEIGHT)
+            let mainValueLabel = buildValueLabelIn(view: totalRowView, value: mainValue, height: PRIMARY_VALUE_HEIGHT)
+            totalRowView.mainValueLabel = mainValueLabel
+            let requiredWidth = mainValue.widthWithConstrainedHeight(height: PRIMARY_VALUE_HEIGHT)
+            PXLayout.setWidth(owner: mainValueLabel, width: requiredWidth + PXLayout.XXS_MARGIN).isActive = true
         }
 
         if let secondaryValue = totalRowComponent.props.secondaryValue {
@@ -73,10 +75,12 @@ struct PXTotalRowRenderer {
 
     func layoutComponentsOf(_ view: PXTotalRowView) {
         if let title = view.titleLabel, let disclaimer = view.disclaimerLabel {
+            PXLayout.setHeight(owner: title, height: TITLE_HEIGHT).isActive = true
             PXLayout.pinTop(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
             PXLayout.put(view: disclaimer, onBottomOf: title, withMargin: PXLayout.XXXS_MARGIN).isActive = true
             PXLayout.pinBottom(view: disclaimer, withMargin: PXLayout.S_MARGIN).isActive = true
         } else if let title = view.titleLabel, view.disclaimerLabel == nil {
+            PXLayout.setHeight(owner: title, height: TITLE_HEIGHT*2).isActive = true
             PXLayout.centerVertically(view: title).isActive = true
         } else if let disclaimer = view.disclaimerLabel, view.titleLabel == nil {
             PXLayout.centerVertically(view: disclaimer).isActive = true
@@ -90,6 +94,10 @@ struct PXTotalRowRenderer {
             PXLayout.centerVertically(view: mainValue).isActive = true
         } else if let secondaryValue = view.secondaryValueLabel, view.mainValueLabel == nil {
             PXLayout.centerVertically(view: secondaryValue).isActive = true
+        }
+
+        if let title = view.titleLabel, view.disclaimerLabel == nil, let mainValue = view.mainValueLabel, view.secondaryValueLabel == nil {
+            PXLayout.put(view: title, leftOf: mainValue, withMargin: PXLayout.XXS_MARGIN).isActive = true
         }
     }
 
