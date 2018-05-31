@@ -13,7 +13,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
 
     override open var screenName: String { return "DISCOUNT_SUMMARY" }
 
-    private var discount: PXDiscount
+    private var amountHelper: PXAmountHelper
     private let fontSize: CGFloat = 18.0
     private let baselineOffSet: Int = 6
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
@@ -21,8 +21,8 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let shouldShowTitle: Bool
     let contentView: PXComponentView = PXComponentView()
 
-    init(discount: PXDiscount, shouldShowTitle: Bool = false) {
-        self.discount = discount
+    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
+        self.amountHelper = amountHelper
         self.shouldShowTitle = shouldShowTitle
         super.init(nibName: nil, bundle: nil)
     }
@@ -131,12 +131,12 @@ extension PXDiscountDetailViewController {
 
     func getTitle() -> NSAttributedString? {
         let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x333333)]
-        if let amountOff = discount.amountOff {
+        if let amountOff = amountHelper.discount?.amountOff {
             let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
             string.append(NSAttributedString(string: amountOff.stringValue, attributes: activeDiscountAttributes))
             string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
             return string
-        } else if let percentOff = discount.percentOff {
+        } else if let percentOff = amountHelper.discount?.percentOff {
             let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
             string.append(NSAttributedString(string: percentOff.stringValue, attributes: activeDiscountAttributes))
             string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
@@ -146,10 +146,14 @@ extension PXDiscountDetailViewController {
     }
 
     func getDisclaimer() -> NSAttributedString? {
-        //TOOD: agregar logica de tope de descuento
-        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
-        let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
-        return string
+        if let maxCouponAmount = amountHelper.maxCouponAmount {
+            let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+            let string = NSAttributedString(string: "Tope de descuento $ \(maxCouponAmount)", attributes: attributes)
+            //TODO: amount con centavos
+            return string
+        }
+
+        return nil
     }
 
     func getDescription() -> NSAttributedString? {

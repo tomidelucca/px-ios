@@ -174,27 +174,17 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func getFloatingTotalRowView() -> UIView {
-        let title = self.viewModel.getTitle()
-        let disclaimer = self.viewModel.getDisclaimer()
-        let mainValue = self.viewModel.getMainValue()
-        let secondaryValue = self.viewModel.getSecondaryValue()
-        let showChevron = self.viewModel.shouldShowChevron()
-
-        let props = PXTotalRowProps(title: title, disclaimer: disclaimer, mainValue: mainValue, secondaryValue: secondaryValue, showChevron: showChevron)
-        let total = PXTotalRowComponent(props: props)
-        let totalView = total.render()
+        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper)
+        let view = component.render()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))
-        totalView.addGestureRecognizer(tap)
-        return totalView
+        view.addGestureRecognizer(tap)
+        return view
     }
 
     func handleTotalRowTap() {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            if let discount = self.viewModel.amountHelper.discount {
-                PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(discount: discount), title: "Descuento")
-            } else {
-                // TODO: show modal to add a new discount
-            }
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.viewModel.amountHelper.discount != nil {
+            //TODO: translations
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: self.viewModel.amountHelper), title: "Descuento")
         }
     }
 

@@ -213,8 +213,7 @@ extension PaymentVaultViewModel {
     }
 
     func getDisclaimer() -> NSAttributedString? {
-        //TOOD: agregar logica de tope de descuento
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.amountHelper.discount {
+        if self.amountHelper.maxCouponAmount != nil {
             let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
             let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
             return string
@@ -225,7 +224,7 @@ extension PaymentVaultViewModel {
     func getMainValue() -> NSAttributedString? {
         let amountFontSize: CGFloat = PXLayout.L_FONT
 
-        //TOOD: amount con centavos
+        //TODO: amount con centavos
         return Utils.getAttributedAmount(self.amountHelper.amountToPay, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: amountFontSize, baselineOffset: 0, negativeAmount: false)
     }
 

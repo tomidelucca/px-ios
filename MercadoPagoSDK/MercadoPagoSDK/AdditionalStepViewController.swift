@@ -70,7 +70,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     fileprivate func renderViews() {
         var floatingButtonView: UIView!
-        floatingButtonView = getFloatingButtonView()
+        floatingButtonView = getFloatingTotalRowView()
         self.view.addSubview(floatingButtonView)
         PXLayout.setHeight(owner: floatingButtonView, height: 82 + PXLayout.getSafeAreaBottomInset()/2).isActive = true
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
@@ -79,41 +79,19 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         PXLayout.put(view: floatingButtonView, onBottomOf: self.tableView).isActive = true
     }
 
-    fileprivate func getFloatingButtonView() -> UIView {
+    fileprivate func getFloatingTotalRowView() -> UIView {
+        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper)
+        let view = component.render()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))
+        view.addGestureRecognizer(tap)
+        return view
+    }
 
-
-        let amountFontSize: CGFloat = PXLayout.M_FONT
-        let centsFontSize: CGFloat = PXLayout.XXXS_FONT
-        let currency = MercadoPagoContext.getCurrency()
-
-
-        let oldAmount = Utils.getAttributedAmount(self.viewModel.amountHelper.amountWithoutDiscount, currency: currency, color: UIColor.red, fontSize: PXLayout.XXS_FONT, baselineOffset: 4)
-
-        oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
-
-
-
-
-        let currencySymbol = currency.getCurrencySymbolOrDefault()
-        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
-        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-
-        let discountAmount = String(describing: self.viewModel.amountHelper.amountOff).toAttributedString()
-
-        let attributedAmount = Utils.getAttributedAmount(self.viewModel.amountHelper.amountToPay, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .black, fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
-
-        oldAmount.append(" ".toAttributedString())
-        oldAmount.append(attributedAmount)
-
-
-        let action = PXComponentAction(label: "Descuento") {
-            PXComponentFactory.Modal.show(viewController: CouponDetailViewController(amountHelper: self.viewModel.amountHelper), title: self.viewModel.amountHelper.discount?.description)
+    func handleTotalRowTap() {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.viewModel.amountHelper.discount != nil {
+            //TODO: translations
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: self.viewModel.amountHelper), title: "Descuento")
         }
-
-        let props = PXTotalRowProps(title: "Total".toAttributedString(), disclaimer: "disclaimer".toAttributedString(), mainValue: "main".toAttributedString(), secondaryValue: "secondary".toAttributedString())
-        let total = PXTotalRowComponent(props: props)
-        let totalView = total.render()
-        return totalView
     }
 
     override func loadMPStyles() {

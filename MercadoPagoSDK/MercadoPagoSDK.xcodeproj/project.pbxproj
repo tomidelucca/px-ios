@@ -457,7 +457,6 @@
 		53EB434E1F601D09009510BC /* AvailableCardsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EB434D1F601D09009510BC /* AvailableCardsViewModelTests.swift */; };
 		554BD3642062BEC700F6C631 /* MPCustomRowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554BD3632062BEC700F6C631 /* MPCustomRowDelegate.swift */; };
 		554BD3652062C08B00F6C631 /* MPCustomRowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554BD3632062BEC700F6C631 /* MPCustomRowDelegate.swift */; };
-		560A9120879F97A96BBF4C43 /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0216F960B6A1E5A242690BB /* Pods_MercadoPagoSDKTests.framework */; };
 		76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */; };
@@ -751,6 +750,7 @@
 		FC8A9BF4202CA38700FD7D7C /* Localizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */; };
 		FC8A9BF5202CA38700FD7D7C /* Localizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */; };
 		FC94A1CC1E93E98000D9BC17 /* BankInsterestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */; };
+		FC98A75220C0659E00A791AC /* PXTotalRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98A75120C0659E00A791AC /* PXTotalRowBuilder.swift */; };
 		FC9CC17F204DBC8F002BBF9D /* PXImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CC17E204DBC8F002BBF9D /* PXImageService.swift */; };
 		FC9CC180204DBC8F002BBF9D /* PXImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CC17E204DBC8F002BBF9D /* PXImageService.swift */; };
 		FCA47E4C1E92925B003DB787 /* BankInsterestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */; };
@@ -1255,6 +1255,7 @@
 		FC7E149A1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewModelTest.swift; sourceTree = "<group>"; };
 		FC814BF31E54BEE100475474 /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-PE"; path = "es-PE.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FC8A9BF6202CA38700FD7D7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Localizable_en.plist; sourceTree = "<group>"; };
+		FC98A75120C0659E00A791AC /* PXTotalRowBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTotalRowBuilder.swift; sourceTree = "<group>"; };
 		FC9CC17E204DBC8F002BBF9D /* PXImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXImageService.swift; sourceTree = "<group>"; };
 		FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInsterestTableViewCell.swift; sourceTree = "<group>"; };
 		FCA47E4B1E92925B003DB787 /* BankInsterestTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankInsterestTableViewCell.xib; sourceTree = "<group>"; };
@@ -1299,7 +1300,6 @@
 				4B6954AF20A3687200CCF735 /* MercadoPagoServices.framework in Frameworks */,
 				4B6954AD20A3678600CCF735 /* MLUI.framework in Frameworks */,
 				4B0E72AA1FA8F9E8006A3853 /* MercadoPagoPXTracking.framework in Frameworks */,
-				560A9120879F97A96BBF4C43 /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2481,6 +2481,7 @@
 		FC1A2AED20B5A4AB0046FECA /* Total Row */ = {
 			isa = PBXGroup;
 			children = (
+				FC98A75120C0659E00A791AC /* PXTotalRowBuilder.swift */,
 				FC1A2AF020B5A4E50046FECA /* PXTotalRowComponent.swift */,
 				FC1A2AF920B5A50B0046FECA /* PXTotalRowProps.swift */,
 				FC1A2AF320B5A4F30046FECA /* PXTotalRowRenderer.swift */,
@@ -3172,6 +3173,7 @@
 				0F98837B1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				0F98837D1AD2AB6000F750F0 /* Item.swift in Sources */,
 				4BAA56251DB6B58D00501061 /* CardTypeTableViewCell.swift in Sources */,
+				FC98A75220C0659E00A791AC /* PXTotalRowBuilder.swift in Sources */,
 				4B08CD9D1F20F66700FE800A /* SavedESCCardToken.swift in Sources */,
 				235A326D204B424C002D1F54 /* PXReviewTitleComponentRenderer.swift in Sources */,
 				155954EC1F87CD200086854B /* PayerInfoViewController.swift in Sources */,

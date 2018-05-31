@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PXTotalRowComponent: PXComponentizable {
+class PXTotalRowComponent: PXComponentizable {
     var props: PXTotalRowProps
 
     init(props: PXTotalRowProps) {

@@ -128,7 +128,7 @@ extension PXOneTapViewController {
 
     private func getDiscountDetailView() -> UIView? {
         if let discount = self.viewModel.amountHelper.discount {
-            let discountDetailVC = PXDiscountDetailViewController(discount: discount, shouldShowTitle: true)
+            let discountDetailVC = PXDiscountDetailViewController(amountHelper: self.viewModel.amountHelper, shouldShowTitle: true)
             return discountDetailVC.getContentView()
         }
         return nil
