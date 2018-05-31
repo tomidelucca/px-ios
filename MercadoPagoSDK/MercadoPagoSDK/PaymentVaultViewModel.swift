@@ -7,15 +7,13 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 class PaymentVaultViewModel: NSObject {
 
+    internal var amountHelper: PXAmountHelper
     var groupName: String?
-
-    var amount: Double
-    var paymentPreference: PaymentPreference?
     var email: String
-
     var paymentMethodOptions: [PaymentMethodOption]
     var customerPaymentOptions: [CardInformation]?
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
@@ -24,23 +22,19 @@ class PaymentVaultViewModel: NSObject {
 
     var displayItems = [PaymentOptionDrawable]()
 
-    var discount: DiscountCoupon?
-
     var currency: Currency!
 
     var customerId: String?
 
-    var couponCallback: ((DiscountCoupon) -> Void)?
+    var couponCallback: ((PXDiscount) -> Void)?
     var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
     internal var isRoot = true
 
-    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], groupName: String? = nil, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
-        self.amount = amount
+    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((PXDiscount) -> Void)? = nil) {
+        self.amountHelper = amountHelper
         self.email = email
         self.groupName = groupName
-        self.discount = discount
-        self.paymentPreference = paymentPrefence
         self.paymentMethodOptions = paymentMethodOptions
         self.customerPaymentOptions = customerPaymentOptions
         self.paymentMethodPlugins = paymentMethodPlugins
@@ -194,15 +188,15 @@ extension PaymentVaultViewModel {
             let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
 
-            if let discount = self.discount {
-                if discount.amount_off != "0" {
+            if let discount = self.amountHelper.discount {
+                if let amountOff = discount.amountOff, amountOff > 0.0 {
                     let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: discount.amount_off, attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: String(describing: amountOff), attributes: activeDiscountAttributes))
                     string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
                     return string
-                } else if discount.percent_off != "0" {
+                }else if let percentOff = discount.percentOff, percentOff > 0.0 {
                     let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: discount.percent_off, attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: String(describing: percentOff), attributes: activeDiscountAttributes))
                     string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
                     return string
                 }
@@ -220,7 +214,7 @@ extension PaymentVaultViewModel {
 
     func getDisclaimer() -> NSAttributedString? {
         //TOOD: agregar logica de tope de descuento
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.discount {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.amountHelper.discount {
             let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
             let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
             return string
@@ -232,12 +226,12 @@ extension PaymentVaultViewModel {
         let amountFontSize: CGFloat = PXLayout.L_FONT
 
         //TOOD: amount con centavos
-        return Utils.getAttributedAmount(self.amount, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: amountFontSize, baselineOffset: 0, negativeAmount: false)
+        return Utils.getAttributedAmount(self.amountHelper.amountToPay, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: amountFontSize, baselineOffset: 0, negativeAmount: false)
     }
 
     func getSecondaryValue() -> NSAttributedString? {
-        if let discount = self.discount {
-            let oldAmount = Utils.getAttributedAmount(discount.amountWithoutDiscount, currency: currency, color: UIColor.UIColorFromRGB(0xa3a3a3), fontSize: PXLayout.XXS_FONT, baselineOffset: 0)
+        if self.amountHelper.discount != nil {
+            let oldAmount = Utils.getAttributedAmount(amountHelper.amountWithoutDiscount, currency: currency, color: UIColor.UIColorFromRGB(0xa3a3a3), fontSize: PXLayout.XXS_FONT, baselineOffset: 0)
 
             oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
             return oldAmount

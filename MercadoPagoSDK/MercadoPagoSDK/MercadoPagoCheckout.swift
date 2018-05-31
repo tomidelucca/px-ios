@@ -8,6 +8,7 @@
 
 import UIKit
 import MercadoPagoPXTracking
+import MercadoPagoServices
 
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
@@ -15,8 +16,9 @@ open class MercadoPagoCheckout: NSObject {
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var pxNavigationHandler: PXNavigationHandler
+    
 
-    public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+    public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
 
@@ -25,7 +27,7 @@ open class MercadoPagoCheckout: NSObject {
 
         ThemeManager.shared.initialize()
 
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount: discount)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
 
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
 
@@ -226,4 +228,7 @@ open class MercadoPagoCheckout: NSObject {
         pxNavigationHandler.popToWhenFinish(viewController: viewController)
     }
 
+    public func setDiscount(_ discount : PXDiscount, withCampaign: PXCampaign){
+        
+    }
 }

@@ -22,7 +22,14 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     let search: PaymentMethodSearch
     var readyToPay: Bool = false
     var payerCosts: [PayerCost]?
-
+    
+    // In order to ensure data updated create new instance for every usage
+    private var amountHelper: PXAmountHelper {
+        get {
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
+        }
+    }
+    
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
     let reviewScreenPreference: ReviewScreenPreference
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
@@ -69,7 +76,7 @@ extension OneTapFlowViewModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentOptionSelected: paymentOptionSelected, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
+        return PXOneTapViewModel(amountHelper:self.amountHelper , paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
     }
 }
 
@@ -91,15 +98,6 @@ extension OneTapFlowViewModel {
         }
     }
 
-    internal func getAmount() -> Double {
-        if let payerCost = paymentData.getPayerCost() {
-            return payerCost.totalAmount
-        } else if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
-            return discount.newAmount()
-        } else {
-            return checkoutPreference.getAmount()
-        }
-    }
 }
 
 // MARK: Flow logic

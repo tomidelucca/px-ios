@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 @objcMembers
 open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDelegate {
@@ -18,18 +19,20 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     var toolbar: PXToolbar?
     var errorLabel: MPLabel?
     var viewModel: AddCouponViewModel!
+    private let amountHelper : PXAmountHelper
+    var callback : ((_ coupon: PXDiscount) -> Void)?
 
-    var callback : ((_ coupon: DiscountCoupon) -> Void)?
-
-    init(amount: Double, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: (() -> Void)? = nil) {
+    init(amountHelper: PXAmountHelper, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ coupon: PXDiscount) -> Void), callbackCancel: (() -> Void)? = nil) {
+        self.amountHelper = amountHelper
         super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
         self.callbackCancel = callbackCancel
-        self.viewModel = AddCouponViewModel(amount: amount, email: email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        self.viewModel = AddCouponViewModel(amountHelper: amountHelper, email: email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    init (viewModel: AddCouponViewModel, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: (() -> Void)? = nil) {
-      super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
+    init (amountHelper: PXAmountHelper,viewModel: AddCouponViewModel, callback : @escaping ((_ coupon: PXDiscount) -> Void), callbackCancel: (() -> Void)? = nil) {
+        self.amountHelper = amountHelper
+        super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
         self.callbackCancel = callbackCancel
         self.viewModel = viewModel
@@ -92,8 +95,8 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         self.viewModel.getCoupon(code: couponCode, success: { () in
             self.hideLoading()
             if let coupon = self.viewModel.coupon {
-                let couponDetailVC = CouponDetailViewController(coupon: coupon)
-                PXComponentFactory.Modal.show(viewController: couponDetailVC, title: coupon.getDescription(), dismissBlock: { [weak self]  () in
+                let couponDetailVC = CouponDetailViewController(amountHelper: self.amountHelper)
+                PXComponentFactory.Modal.show(viewController: couponDetailVC, title: coupon.description, dismissBlock: { [weak self]  () in
                     self?.callbackAndExit()
                 })
             }

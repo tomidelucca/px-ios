@@ -231,7 +231,7 @@ extension PXReviewViewController {
 
     fileprivate func getCFTComponentView() -> UIView? {
         if viewModel.hasPayerCostAddionalInfo() {
-            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
+            let cftView = PXCFTComponentView(withCFTValue: self.viewModel.amountHelper.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
             return cftView
         }
         return nil
@@ -306,7 +306,7 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
-        self.callbackConfirm(self.viewModel.paymentData)
+        self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
     fileprivate func cancelPayment() {

@@ -127,7 +127,7 @@ extension PXOneTapViewController {
     }
 
     private func getDiscountDetailView() -> UIView? {
-        if let discount = self.viewModel.discount {
+        if let discount = self.viewModel.amountHelper.discount {
             let discountDetailVC = PXDiscountDetailViewController(discount: discount, shouldShowTitle: true)
             return discountDetailVC.getContentView()
         }
@@ -163,7 +163,7 @@ extension PXOneTapViewController {
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
-        self.callbackConfirm(self.viewModel.paymentData)
+        self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
     private func cancelPayment() {
