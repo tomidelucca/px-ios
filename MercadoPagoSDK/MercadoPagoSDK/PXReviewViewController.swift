@@ -261,7 +261,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getDiscountTermsAndConditionView() -> PXDiscountTermsAndConditionView {
-        let discountTermsAndConditionView = PXDiscountTermsAndConditionView()
+        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: self.viewModel.amountHelper)
         return discountTermsAndConditionView
     }
 
