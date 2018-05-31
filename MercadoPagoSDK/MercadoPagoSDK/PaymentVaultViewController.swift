@@ -174,7 +174,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func getFloatingTotalRowView() -> UIView {
-        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper)
+        let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper, shouldShowChevron: PXTotalRowBuilder.shouldAddActionToRow())
         let view = component.render()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))
         view.addGestureRecognizer(tap)
@@ -182,10 +182,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     func handleTotalRowTap() {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.viewModel.amountHelper.discount != nil {
-            //TODO: translations
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: self.viewModel.amountHelper), title: "Descuento")
-        }
+        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {

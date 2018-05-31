@@ -214,5 +214,12 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Al pagar, declaro que soy mayor de edad y acepto los Términos y Condiciones.</string>
 	</dict>
+	<key>discount_detail_modal_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Mi descuento</string>
+	</dict>
 </dict>
 </plist>

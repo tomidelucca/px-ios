@@ -10,13 +10,12 @@ import Foundation
 
 final class PXTotalRowBuilder: PXTotalRowComponent {
 
-    init(amountHelper: PXAmountHelper) {
+    init(amountHelper: PXAmountHelper, shouldShowChevron: Bool = false) {
         let currency = MercadoPagoContext.getCurrency()
         var title: NSAttributedString?
         var disclaimer: NSAttributedString?
         var mainValue: NSAttributedString?
         var secondaryValue: NSAttributedString?
-        var shouldShowChevron: Bool = false
 
         //////////////// TITLE ////////////////
             //TODO: Add translations
@@ -79,16 +78,22 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             secondaryValue = oldAmount
         }
 
-        //////////////// SHOULD SHOW CHEVRON ////////////////
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            shouldShowChevron = true
-        } else {
-            shouldShowChevron = false
-        }
-
         //////////////// PROPS INIT ////////////////
         let props = PXTotalRowProps(title: title, disclaimer: disclaimer, mainValue: mainValue, secondaryValue: secondaryValue, showChevron: shouldShowChevron)
 
         super.init(props: props)
+    }
+
+    static func shouldAddActionToRow() -> Bool {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+            return true
+        }
+        return false
+    }
+
+    static func handleTap(amountHelper: PXAmountHelper) {
+        if amountHelper.discount != nil {
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
+        }
     }
 }
