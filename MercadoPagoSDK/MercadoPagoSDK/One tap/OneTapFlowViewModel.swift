@@ -135,7 +135,7 @@ extension OneTapFlowViewModel {
     }
 
     func needCreateESCToken() -> Bool {
-
+        
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
