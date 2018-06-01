@@ -22,7 +22,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let currency = MercadoPagoContext.getCurrency()
     let contentView: PXComponentView = PXComponentView()
 
-    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = true) {
+    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
         self.amountHelper = amountHelper
         self.shouldShowTitle = shouldShowTitle
         super.init(nibName: nil, bundle: nil)
@@ -132,7 +132,7 @@ extension PXDiscountDetailViewController {
 
     func getTitle() -> NSAttributedString? {
         let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
-        if let amountOff = amountHelper.discount?.amountOff {
+        if let amountOff = amountHelper.discount?.amountOff, amountOff > 0 {
 
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: activeDiscountAttributes, amount: amountOff, currency: currency, negativeAmount: true)
             let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
@@ -140,7 +140,7 @@ extension PXDiscountDetailViewController {
 
             return attributedString
 
-        } else if let percentOff = amountHelper.discount?.percentOff {
+        } else if let percentOff = amountHelper.discount?.percentOff, percentOff > 0 {
 
             let percentageAttributedString = Utils.getAttributedPercentage(withAttributes: activeDiscountAttributes, amount: percentOff, addPercentageSymbol: true, negativeAmount: false)
             let string: String = ("total_row_title_percent_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)

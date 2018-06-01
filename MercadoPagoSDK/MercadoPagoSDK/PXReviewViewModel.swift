@@ -172,7 +172,7 @@ extension PXReviewViewModel {
             var interest = 0.0
 
             if let discountAmount = self.amountHelper.paymentData.discount?.couponAmount {
-                interest = self.amountHelper.amountToPay - (self.amountHelper.preferenceAmount - self.amountHelper.amountOff)
+                interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmount + self.amountHelper.amountOff
             } else {
                 interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmount
             }

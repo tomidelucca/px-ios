@@ -106,8 +106,8 @@
     [self.mpCheckout setTheme: meliExampleTheme];
 
     
-    PXDiscount* discount = [[PXDiscount alloc] initWithId:@"123" name:@"nada" percentOff:0 amountOff:5 couponAmount:5 currencyId:@"ARG"];
-    PXCampaign* campaign = [[PXCampaign alloc] initWithId:123 code:@"sad" name:@"Campaña" maxCouponAmount:3];
+    PXDiscount* discount = [[PXDiscount alloc] initWithId:@"123" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
+    PXCampaign* campaign = [[PXCampaign alloc] initWithId:123 code:@"sad" name:@"Campaña" maxCouponAmount:7];
     
     [self.mpCheckout setDiscount:discount withCampaign:campaign];
     
