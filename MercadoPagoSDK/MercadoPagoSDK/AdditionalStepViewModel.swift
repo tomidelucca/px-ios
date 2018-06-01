@@ -11,7 +11,6 @@ import UIKit
 import MercadoPagoPXTracking
 import MercadoPagoServices
 
-@objcMembers
 open class AdditionalStepViewModel: NSObject {
 
     var bundle: Bundle? = MercadoPago.getBundle()
@@ -31,11 +30,11 @@ open class AdditionalStepViewModel: NSObject {
     open var callback: ((_ result: NSObject) -> Void)!
     open var maxFontSize: CGFloat { return 24 }
     open var couponCallback: ((PXDiscount) -> Void)?
-    internal let amountHelper : PXAmountHelper
+    let amountHelper: PXAmountHelper
 
     open var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(amountHelper : PXAmountHelper, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, showBankInsterestWarning: Bool = false, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], email: String? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(amountHelper: PXAmountHelper, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, showBankInsterestWarning: Bool = false, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], email: String? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.amountHelper = amountHelper
         self.screenTitle = screenTitle
         self.token = token
@@ -176,7 +175,7 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
-    init(amountHelper : PXAmountHelper, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(amountHelper: PXAmountHelper, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         super.init(amountHelper : amountHelper, screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
@@ -194,7 +193,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
-    init(amountHelper : PXAmountHelper, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], email: String? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(amountHelper: PXAmountHelper, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], email: String? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         super.init(amountHelper : amountHelper, screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, email: email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 

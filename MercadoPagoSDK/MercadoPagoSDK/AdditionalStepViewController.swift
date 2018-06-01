@@ -60,7 +60,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         }
     }
 
-    func getTableViewPinBottomContraint() -> NSLayoutConstraint? {
+    private func getTableViewPinBottomContraint() -> NSLayoutConstraint? {
         let filteredConstraints = self.view.constraints.filter { $0.identifier == "table_view_pin_bottom" }
         if let bottomContraint = filteredConstraints.first {
             return bottomContraint
@@ -68,18 +68,16 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         return nil
     }
 
-    fileprivate func renderViews() {
-        var floatingButtonView: UIView!
-        floatingButtonView = getFloatingTotalRowView()
-        self.view.addSubview(floatingButtonView)
-        PXLayout.setHeight(owner: floatingButtonView, height: 82 + PXLayout.getSafeAreaBottomInset()/2).isActive = true
-        PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
-        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
-        PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
-        PXLayout.put(view: floatingButtonView, onBottomOf: self.tableView).isActive = true
+    private func renderViews() {
+        let floatingRowView = getFloatingTotalRowView()
+        self.view.addSubview(floatingRowView)
+        PXLayout.matchWidth(ofView: floatingRowView).isActive = true
+        PXLayout.centerHorizontally(view: floatingRowView).isActive = true
+        PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
+        PXLayout.put(view: floatingRowView, onBottomOf: self.tableView).isActive = true
     }
 
-    fileprivate func getFloatingTotalRowView() -> UIView {
+    private func getFloatingTotalRowView() -> UIView {
         let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper, shouldShowChevron: PXTotalRowBuilder.shouldAddActionToRow())
         let view = component.render()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))

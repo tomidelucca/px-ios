@@ -221,5 +221,54 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Meu desconto</string>
 	</dict>
+	<key>discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Os descontos não são acumulativos. Aplicamos o mais alto para este pagamento.</string>
+	</dict>
+	<key>discount_detail_modal_disclaimer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Limite de desconto %1$s</string>
+	</dict>
+	<key>total_row_title_add_coupon</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Você tem um cupom de desconto?</string>
+	</dict>
+	<key>total_row_disclaimer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Com limite de desconto</string>
+	</dict>
+	<key>total_row_title_percent_off</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>%1$s OFF</string>
+	</dict>
+	<key>total_row_title_amount_off</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>%1$s OFF</string>
+	</dict>
+	<key>total_row_title_default</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Total a pagar</string>
+	</dict>
 </dict>
 </plist>

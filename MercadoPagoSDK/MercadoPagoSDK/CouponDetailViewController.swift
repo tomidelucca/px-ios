@@ -46,7 +46,7 @@ final class CouponDetailViewController: MercadoPagoUIViewController {
 extension CouponDetailViewController {
 
     private func populateDiscountData() {
-        guard let discount = self.amountHelper.discount else{
+        guard let discount = self.amountHelper.discount else {
             return
         }
         totalTitle.text = "Total".localized

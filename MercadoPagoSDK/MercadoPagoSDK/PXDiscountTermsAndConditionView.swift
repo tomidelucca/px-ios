@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
+final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 
     private var amountHelper: PXAmountHelper
 
