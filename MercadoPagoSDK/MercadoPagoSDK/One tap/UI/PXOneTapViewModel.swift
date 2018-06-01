@@ -12,12 +12,8 @@ import MercadoPagoPXTracking
 final class PXOneTapViewModel: PXReviewViewModel {
 
     // Tracking overrides.
-    override var screenName: String { return TrackingUtil.ScreenName.REVIEW_AND_CONFIRM_ONE_TAP }
+    override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
     override var screenId: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
-
-    override func trackChangePaymentMethodEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_CHANGE_PAYMENT_METHOD, screenId: screenId, screenName: screenName)
-    }
 
     override func trackConfirmActionEvent() {
         //TODO: Ver si podemos negociar un evento de pagar mas descriptivo.
@@ -38,7 +34,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
     }
 }
 
-//MARK: - Extra events
+// MARK: - Extra events
 extension PXOneTapViewModel {
     func trackTapSummaryDetailEvent() {
         MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_SUMMARY_DETAIL, screenId: screenId, screenName: screenName)
@@ -46,9 +42,5 @@ extension PXOneTapViewModel {
 
     func trackTapBackEvent() {
         MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_BACK, screenId: screenId, screenName: screenName)
-    }
-
-    func trackTapDiscountTermAndConditionEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_TC_DISCOUNT, screenId: screenId, screenName: screenName)
     }
 }

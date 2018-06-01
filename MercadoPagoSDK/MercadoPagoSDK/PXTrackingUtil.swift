@@ -9,25 +9,18 @@
 import Foundation
 import MercadoPagoPXTracking
 
-//MARK: - Screens
+// MARK: - Screens
 extension TrackingUtil {
-    //TODO: Revisar las screen id y name. (La semantica)
     enum ScreenId {
         static let REVIEW_AND_CONFIRM_ONE_TAP = "/express"
-    }
-
-    enum ScreenName {
-        static let REVIEW_AND_CONFIRM_ONE_TAP = "ONE_TAP"
+        static let DISCOUNT_TERM_CONDITION = "/discount_terms_conditions"
     }
 }
 
-//MARK: - Events
+// MARK: - Events
 extension TrackingUtil {
     struct Event {
-        //OLD: "/one_tap_change"
-        static let TAP_CHANGE_PAYMENT_METHOD = "TAP_CHANGE_PAYMENT_METHOD"
-        static let TAP_SUMMARY_DETAIL = "TAP_SUMMARY_DETAIL"
-        static let TAP_BACK = "TAP_BACK"
-        static let TAP_TC_DISCOUNT = "TAP_TC_DISCOUNT"
+        static let TAP_SUMMARY_DETAIL = "/open_summary_detail" //TODO: Ver con MeliData
+        static let TAP_BACK = "/back_action" //TODO: Ver con MeliData
     }
 }
