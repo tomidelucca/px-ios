@@ -426,7 +426,7 @@ extension MercadoPagoServicesAdapter {
     open func getOrderFromPXOrder(_ pxOrder: PXOrder?) -> Order {
         let order = Order()
         if let pxOrder = pxOrder {
-            order.orderId = Int(pxOrder.id ?? "0") ?? 0 //TODO AUGUSTO: ARREGLAR ESTO
+            order.orderId = Int(pxOrder.id ?? "0") ?? 0 //TODO: FIX
             order.type = pxOrder.type
         }
         return order

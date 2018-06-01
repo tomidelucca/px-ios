@@ -19,6 +19,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
     private let shouldShowTitle: Bool
+    private let currency = MercadoPagoContext.getCurrency()
     let contentView: PXComponentView = PXComponentView()
 
     init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
@@ -125,22 +126,27 @@ extension PXDiscountDetailViewController {
 
     func getHeader() -> NSAttributedString {
         let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
-        let string = NSAttributedString(string: "Descuento", attributes: attributes)
+        let string = NSAttributedString(string: "discount_detail_modal_title".localized_beta, attributes: attributes)
         return string
     }
 
     func getTitle() -> NSAttributedString? {
         let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x333333)]
         if let amountOff = amountHelper.discount?.amountOff {
-            let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
-            string.append(NSAttributedString(string: amountOff.stringValue, attributes: activeDiscountAttributes))
-            string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
-            return string
+
+            let amountAttributedString = Utils.getAttributedAmount(withAttributes: activeDiscountAttributes, amount: amountOff, currency: currency, negativeAmount: true)
+            let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
+            let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
+
+            return attributedString
+
         } else if let percentOff = amountHelper.discount?.percentOff {
-            let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
-            string.append(NSAttributedString(string: percentOff.stringValue, attributes: activeDiscountAttributes))
-            string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
-            return string
+
+            let percentageAttributedString = Utils.getAttributedPercentage(withAttributes: activeDiscountAttributes, amount: percentOff, addPercentageSymbol: true, negativeAmount: false)
+            let string: String = ("total_row_title_percent_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)
+            let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
+
+            return attributedString
         }
         return nil
     }
@@ -148,9 +154,12 @@ extension PXDiscountDetailViewController {
     func getDisclaimer() -> NSAttributedString? {
         if let maxCouponAmount = amountHelper.maxCouponAmount {
             let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
-            let string = NSAttributedString(string: "Tope de descuento $ \(maxCouponAmount)", attributes: attributes)
-            //TODO: amount con centavos
-            return string
+
+            let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)
+            let string: String = ("discount_detail_modal_disclaimer".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
+            let attributedString = NSMutableAttributedString(string: string, attributes: attributes)
+
+            return attributedString
         }
 
         return nil

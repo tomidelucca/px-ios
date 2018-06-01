@@ -18,64 +18,77 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         var secondaryValue: NSAttributedString?
 
         //////////////// TITLE ////////////////
-            //TODO: Add translations
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
-            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
+            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                                            NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
+
+            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                                            NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
 
             if let discount = amountHelper.discount {
-                if let amountOff = discount.amountOff, amountOff > 0.0 {
-                    let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: String(describing: amountOff), attributes: activeDiscountAttributes))
-                    string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
-                    title = string
-                } else if let percentOff = discount.percentOff, percentOff > 0.0 {
-                    let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: String(describing: percentOff), attributes: activeDiscountAttributes))
-                    string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
-                    title = string
+                if let amountOff = discount.amountOff {
+
+                    let amountAttributedString = Utils.getAttributedAmount(withAttributes: activeDiscountAttributes, amount: amountOff, currency: currency, negativeAmount: true)
+                    let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
+                    let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
+
+                    title = attributedString
+
+                } else if let percentOff = discount.percentOff {
+
+                    let percentageAttributedString = Utils.getAttributedPercentage(withAttributes: activeDiscountAttributes, amount: percentOff, addPercentageSymbol: true, negativeAmount: false)
+                    let string: String = ("total_row_title_percent_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)
+                    let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
+
+                    title = attributedString
                 }
             } else {
-                let defaultTitleString = "Ingresá tu cupón de descuento"
+                let defaultTitleString = "total_row_title_add_coupon".localized_beta
                 let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: addNewDiscountAttributes)
                 title = defaultTitleAttributedString
             }
         } else {
-            let defaultTitleString = "Total a pagar"
-            let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+            let defaultTitleString = "total_row_title_default".localized_beta
+            let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                                     NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+
             let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: defaultAttributes)
             title = defaultTitleAttributedString
         }
 
         //////////////// DISCLAIMER ////////////////
         if amountHelper.maxCouponAmount != nil {
-            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
-            let string = NSAttributedString(string: "con tope de descuento", attributes: attributes)
+            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                              NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+
+            let string = NSAttributedString(string: "total_row_disclaimer".localized_beta, attributes: attributes)
             disclaimer = string
         }
 
         //////////////// MAIN VALUE ////////////////
-        let amountFontSize: CGFloat = PXLayout.L_FONT
-        //TODO: amount con centavos
-        let string = Utils.getAttributedAmount(amountHelper.amountToPay, currency: currency, color: UIColor.UIColorFromRGB(0x333333), fontSize: amountFontSize, centsFontSize: amountFontSize, baselineOffset: 0, negativeAmount: false)
-
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .right
-        string.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraph, range: NSRange(location: 0, length: string.length))
+        let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.L_FONT),
+                          NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x333333),
+                          NSAttributedStringKey.paragraphStyle: paragraph]
+
+        let string = Utils.getAttributedAmount(withAttributes: attributes, amount: amountHelper.amountToPay, currency: currency, negativeAmount: false)
 
         mainValue = string
 
         //////////////// SECONDARY VALUE ////////////////
         if amountHelper.discount != nil {
-            let oldAmount = Utils.getAttributedAmount(amountHelper.amountWithoutDiscount, currency: currency, color: UIColor.UIColorFromRGB(0xa3a3a3), fontSize: PXLayout.XXS_FONT, baselineOffset: 0)
-
-            oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
 
             let paragraph = NSMutableParagraphStyle()
             paragraph.alignment = .right
-            oldAmount.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraph, range: NSRange(location: 0, length: oldAmount.length))
+            let attributes: [NSAttributedStringKey:Any] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                              NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0xa3a3a3),
+                              NSAttributedStringKey.paragraphStyle: paragraph,
+                              NSAttributedStringKey.strikethroughStyle: 1]
 
-            secondaryValue = oldAmount
+            let string = Utils.getAttributedAmount(withAttributes: attributes, amount: amountHelper.amountWithoutDiscount, currency: currency, negativeAmount: false)
+
+            secondaryValue = string
         }
 
         //////////////// PROPS INIT ////////////////
