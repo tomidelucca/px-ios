@@ -24,14 +24,14 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
 
             if let discount = amountHelper.discount {
-                if let amountOff = discount.amountOff, amountOff > 0.0 {
+                if discount.amountOff > 0.0 {
                     let string = NSMutableAttributedString(string: "- $ ", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: String(describing: amountOff), attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: String(describing: discount.amountOff), attributes: activeDiscountAttributes))
                     string.append(NSAttributedString(string: " OFF", attributes: activeDiscountAttributes))
                     title = string
-                } else if let percentOff = discount.percentOff, percentOff > 0.0 {
+                } else if discount.percentOff > 0.0 {
                     let string = NSMutableAttributedString(string: "", attributes: activeDiscountAttributes)
-                    string.append(NSAttributedString(string: String(describing: percentOff), attributes: activeDiscountAttributes))
+                    string.append(NSAttributedString(string: String(describing: discount.percentOff), attributes: activeDiscountAttributes))
                     string.append(NSAttributedString(string: "% OFF", attributes: activeDiscountAttributes))
                     title = string
                 }

@@ -187,6 +187,8 @@ extension MercadoPagoCheckout {
 
     func showPaymentResultScreen() {
 
+        _ = self.viewModel.saveOrDeleteESC()
+        
         if self.viewModel.businessResult != nil {
             self.showBusinessResultScreen()
             return
@@ -194,8 +196,6 @@ extension MercadoPagoCheckout {
         if self.viewModel.paymentResult == nil {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
-
-       _ = self.viewModel.saveOrDeleteESC()
 
         var congratsViewController: MercadoPagoUIViewController
 

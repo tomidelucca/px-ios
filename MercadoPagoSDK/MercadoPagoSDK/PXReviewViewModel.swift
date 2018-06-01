@@ -156,8 +156,8 @@ extension PXReviewViewModel {
             }
         }
 
-        if let discount = self.amountHelper.paymentData.discount , let couponAmount = discount.couponAmount {
-            let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: couponAmount)
+        if let discount = self.amountHelper.paymentData.discount {
+            let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: discount.couponAmount)
 
             if summary.details[SummaryType.DISCOUNT] != nil {
                 summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)

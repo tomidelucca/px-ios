@@ -22,27 +22,22 @@ internal extension PXDiscount {
     
     internal func getDiscountDescription() -> String {
         let currency = MercadoPagoContext.getCurrency()
-        if let percentOff = self.percentOff, percentOff != 0 {
-            return String(describing: percentOff) + " %"
-        } else if let amountOff = self.amountOff, amountOff != 0 {
-            return currency.symbol + String(describing: amountOff)
+        if self.percentOff != 0 {
+            return String(describing: self.percentOff) + " %"
+        } else if self.amountOff != 0 {
+            return currency.symbol + String(describing: self.amountOff)
         } else {
             return ""
         }
     }
     internal func getDiscountAmount() -> Double? {
-        if let percentOff = self.percentOff, percentOff != 0 {
-            return percentOff // Deberia devolver el monto que se descuenta
-        } else if let amountOff = self.amountOff, amountOff != 0 {
-            return amountOff
-        }
-        return nil
+        return self.couponAmount
     }
     
     internal func getDiscountReviewDescription() -> String {
         let text  = "discount_coupon_detail_default_concept".localized_beta
-         if let percentOff = self.percentOff, percentOff != 0 {
-            return text + " " + String(describing: percentOff) + " %"
+         if self.percentOff != 0 {
+            return text + " " + String(describing: self.percentOff) + " %"
         }
         return text
     }

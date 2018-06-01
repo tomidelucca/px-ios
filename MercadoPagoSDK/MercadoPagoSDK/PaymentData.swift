@@ -19,7 +19,6 @@ import MercadoPagoServices
     public var transactionDetails: TransactionDetails?
     public private(set) var discount: PXDiscount?
     public private(set) var campaign: PXCampaign?
-    
     private let paymentTypesWithoutInstallments = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
 
     /**

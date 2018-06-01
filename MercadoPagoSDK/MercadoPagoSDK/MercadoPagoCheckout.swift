@@ -56,9 +56,12 @@ open class MercadoPagoCheckout: NSObject {
 
     public func start() {
         pxNavigationHandler.presentInitLoading()
-        MercadoPagoCheckout.currentCheckout = self
+//        MercadoPagoCheckout.currentCheckout = self
+//                self.setDiscount(PXDiscount(id: "12344", name: "descuento de patito", percentOff: 10, amountOff: 0, couponAmount: 5, currencyId: "ARS"), withCampaign: PXCampaign(id: 12344, code: nil, name: nil, discountType: nil, value: nil, endDate: nil, minPaymentAmount: nil, maxPaymentAmount: nil, maxCouponAmount: 10, totalAmountLimit: nil, maxCoupons: nil, maxCouponsByCode: nil, maxRedeemPerUser: nil, siteId: nil, marketplace: nil, codeType: nil, maxUserAmountPerCampaign: nil, labels: nil, paymentMethodsIds: nil, paymentTypesIds: nil, cardIssuersIds: nil, shippingModes: nil, clientId: nil, tags: nil, multipleCodeLimit: nil, codeCount: nil, couponAmount: nil, collectors: nil))
         executeNextStep()
+
     }
+    
 
     public func setPaymentResult(paymentResult: PaymentResult) {
         self.viewModel.paymentResult = paymentResult
@@ -98,7 +101,7 @@ open class MercadoPagoCheckout: NSObject {
     func initialize() {
         initMercadPagoPXTracking()
         // Disable init:trackScreen for v4.0
-        // TODO-v4.1: Change trackScreen by trackEvent, in order to get convertion insights
+        // TODO-v4.1: Cxhange trackScreen by trackEvent, in order to get convertion insights
         // MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
         pxNavigationHandler.suscribeToNavigationFlow()
@@ -228,7 +231,7 @@ open class MercadoPagoCheckout: NSObject {
         pxNavigationHandler.popToWhenFinish(viewController: viewController)
     }
 
-    public func setDiscount(_ discount : PXDiscount, withCampaign: PXCampaign){
-        
+    public func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
+        self.viewModel.setDiscount(discount, withCampaign: campaign)
     }
 }

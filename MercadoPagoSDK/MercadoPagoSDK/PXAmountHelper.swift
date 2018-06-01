@@ -46,10 +46,7 @@ internal struct PXAmountHelper {
             guard let discount = self.discount else {
                 return 0
             }
-            if let amountOff = discount.amountOff, amountOff != 0 {
-                return amountOff
-            }
-            return 0
+            return discount.couponAmount
         }
     }
 
