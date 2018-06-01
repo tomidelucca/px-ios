@@ -163,7 +163,7 @@ extension PXDiscountDetailViewController {
 
     func getFooterMessage() -> NSAttributedString? {
         let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
-        let string = NSAttributedString(string: "Aplicamos el mejor descuento disponible", attributes: attributes)
+        let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
         return string
     }
 }

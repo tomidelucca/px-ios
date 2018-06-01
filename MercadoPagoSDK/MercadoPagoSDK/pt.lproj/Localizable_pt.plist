@@ -221,5 +221,12 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Meu desconto</string>
 	</dict>
+	<key>discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Os descontos não são acumulativos. Aplicamos o mais alto para este pagamento.</string>
+	</dict>
 </dict>
 </plist>
