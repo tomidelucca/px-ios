@@ -16,7 +16,6 @@ final class PXOneTapViewModel: PXReviewViewModel {
     override var screenId: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
 
     override func trackConfirmActionEvent() {
-        //TODO: Ver si podemos negociar un evento de pagar mas descriptivo.
         MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName)
     }
 
