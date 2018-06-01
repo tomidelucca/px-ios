@@ -9,11 +9,11 @@
 import Foundation
 
 final class PXTotalRowProps: NSObject {
-    var title: NSAttributedString?
-    var disclaimer: NSAttributedString?
-    var mainValue: NSAttributedString?
-    var secondaryValue: NSAttributedString?
-    var showChevron: Bool
+    let title: NSAttributedString?
+    let disclaimer: NSAttributedString?
+    let mainValue: NSAttributedString?
+    let secondaryValue: NSAttributedString?
+    let showChevron: Bool
 
     init(title: NSAttributedString?, disclaimer: NSAttributedString?, mainValue: NSAttributedString?, secondaryValue: NSAttributedString?, showChevron: Bool = true) {
         self.title = title

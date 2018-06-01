@@ -9,8 +9,7 @@
 import UIKit
 import MercadoPagoServices
 
-@objcMembers
-open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDelegate {
+final class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
@@ -19,7 +18,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     var toolbar: PXToolbar?
     var errorLabel: MPLabel?
     var viewModel: AddCouponViewModel!
-    private let amountHelper : PXAmountHelper
+    private let amountHelper: PXAmountHelper
     var callback : ((_ coupon: PXDiscount) -> Void)?
 
     init(amountHelper: PXAmountHelper, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ coupon: PXDiscount) -> Void), callbackCancel: (() -> Void)? = nil) {
@@ -30,7 +29,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         self.viewModel = AddCouponViewModel(amountHelper: amountHelper, email: email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    init (amountHelper: PXAmountHelper,viewModel: AddCouponViewModel, callback : @escaping ((_ coupon: PXDiscount) -> Void), callbackCancel: (() -> Void)? = nil) {
+    init (amountHelper: PXAmountHelper, viewModel: AddCouponViewModel, callback : @escaping ((_ coupon: PXDiscount) -> Void), callbackCancel: (() -> Void)? = nil) {
         self.amountHelper = amountHelper
         super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
         self.callback = callback

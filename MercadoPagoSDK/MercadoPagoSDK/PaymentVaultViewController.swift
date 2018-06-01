@@ -164,13 +164,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         getCollectionViewPinBottomContraint()?.isActive = false
 
         // Add floating total row
-        var floatingButtonView: UIView!
-        floatingButtonView = getFloatingTotalRowView()
-        self.view.addSubview(floatingButtonView)
-        PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
-        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
-        PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
-        PXLayout.put(view: floatingButtonView, onBottomOf: self.collectionSearch).isActive = true
+        let floatingRowView = getFloatingTotalRowView()
+        self.view.addSubview(floatingRowView)
+        PXLayout.matchWidth(ofView: floatingRowView).isActive = true
+        PXLayout.centerHorizontally(view: floatingRowView).isActive = true
+        PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
+        PXLayout.put(view: floatingRowView, onBottomOf: self.collectionSearch).isActive = true
     }
 
     fileprivate func getFloatingTotalRowView() -> UIView {

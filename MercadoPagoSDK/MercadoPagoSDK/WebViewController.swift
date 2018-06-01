@@ -14,7 +14,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     var name: String?
     var navBarTitle: String!
     @IBOutlet weak var webView: UIWebView!
-    var loadingVC: PXLoadingViewController
+    private var loadingVC: PXLoadingViewController
 
     init( url: URL, screenName: String, navigationBarTitle: String) {
         self.url = url

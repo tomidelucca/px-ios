@@ -751,6 +751,7 @@
 		FC8A9BF5202CA38700FD7D7C /* Localizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */; };
 		FC94A1CC1E93E98000D9BC17 /* BankInsterestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */; };
 		FC98A75220C0659E00A791AC /* PXTotalRowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98A75120C0659E00A791AC /* PXTotalRowBuilder.swift */; };
+		FC98A75820C1AED000A791AC /* PXTotalRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC98A75720C1AED000A791AC /* PXTotalRowView.swift */; };
 		FC9CC17F204DBC8F002BBF9D /* PXImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CC17E204DBC8F002BBF9D /* PXImageService.swift */; };
 		FC9CC180204DBC8F002BBF9D /* PXImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9CC17E204DBC8F002BBF9D /* PXImageService.swift */; };
 		FCA47E4C1E92925B003DB787 /* BankInsterestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */; };
@@ -1256,6 +1257,7 @@
 		FC814BF31E54BEE100475474 /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-PE"; path = "es-PE.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FC8A9BF6202CA38700FD7D7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Localizable_en.plist; sourceTree = "<group>"; };
 		FC98A75120C0659E00A791AC /* PXTotalRowBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTotalRowBuilder.swift; sourceTree = "<group>"; };
+		FC98A75720C1AED000A791AC /* PXTotalRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTotalRowView.swift; sourceTree = "<group>"; };
 		FC9CC17E204DBC8F002BBF9D /* PXImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXImageService.swift; sourceTree = "<group>"; };
 		FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInsterestTableViewCell.swift; sourceTree = "<group>"; };
 		FCA47E4B1E92925B003DB787 /* BankInsterestTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankInsterestTableViewCell.xib; sourceTree = "<group>"; };
@@ -2485,6 +2487,7 @@
 				FC1A2AF020B5A4E50046FECA /* PXTotalRowComponent.swift */,
 				FC1A2AF920B5A50B0046FECA /* PXTotalRowProps.swift */,
 				FC1A2AF320B5A4F30046FECA /* PXTotalRowRenderer.swift */,
+				FC98A75720C1AED000A791AC /* PXTotalRowView.swift */,
 			);
 			name = "Total Row";
 			sourceTree = "<group>";
@@ -3076,6 +3079,7 @@
 				815409451FD59F1C00B245BC /* PXReceiptComponent.swift in Sources */,
 				0F9883691AD2AB6000F750F0 /* Currency.swift in Sources */,
 				0F9883971AD2AB6000F750F0 /* Token.swift in Sources */,
+				FC98A75820C1AED000A791AC /* PXTotalRowView.swift in Sources */,
 				15661C5C1FCDCC48007FD7B7 /* PXBodyViewModelHelper.swift in Sources */,
 				4BAA55E71DB0012300501061 /* AdditionalStepViewController.swift in Sources */,
 				155954F11F87CD200086854B /* InputComponent.swift in Sources */,

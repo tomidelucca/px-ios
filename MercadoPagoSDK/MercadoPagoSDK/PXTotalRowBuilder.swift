@@ -20,10 +20,10 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         //////////////// TITLE ////////////////
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
             let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                                            NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x3483fa)]
+                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.secondaryColor()]
 
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                                            NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x39b54a)]
+                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 
             if let discount = amountHelper.discount {
                 if let amountOff = discount.amountOff {
@@ -50,7 +50,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         } else {
             let defaultTitleString = "total_row_title_default".localized_beta
             let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                                     NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+                                     NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
             let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: defaultAttributes)
             title = defaultTitleAttributedString
@@ -59,7 +59,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         //////////////// DISCLAIMER ////////////////
         if amountHelper.maxCouponAmount != nil {
             let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                              NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+                              NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
 
             let string = NSAttributedString(string: "total_row_disclaimer".localized_beta, attributes: attributes)
             disclaimer = string
@@ -69,7 +69,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .right
         let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.L_FONT),
-                          NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x333333),
+                          NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor(),
                           NSAttributedStringKey.paragraphStyle: paragraph]
 
         let string = Utils.getAttributedAmount(withAttributes: attributes, amount: amountHelper.amountToPay, currency: currency, negativeAmount: false)
@@ -82,7 +82,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let paragraph = NSMutableParagraphStyle()
             paragraph.alignment = .right
             let attributes: [NSAttributedStringKey:Any] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                              NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0xa3a3a3),
+                              NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor(),
                               NSAttributedStringKey.paragraphStyle: paragraph,
                               NSAttributedStringKey.strikethroughStyle: 1]
 

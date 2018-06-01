@@ -14,7 +14,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     override open var screenName: String { return "DISCOUNT_SUMMARY" }
 
     private var amountHelper: PXAmountHelper
-    private let fontSize: CGFloat = 18.0
+    private let fontSize: CGFloat = PXLayout.S_FONT
     private let baselineOffSet: Int = 6
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
@@ -22,7 +22,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let currency = MercadoPagoContext.getCurrency()
     let contentView: PXComponentView = PXComponentView()
 
-    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
+    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = true) {
         self.amountHelper = amountHelper
         self.shouldShowTitle = shouldShowTitle
         super.init(nibName: nil, bundle: nil)
@@ -121,17 +121,17 @@ extension PXDiscountDetailViewController {
         PXLayout.pinLeft(view: line, withMargin: sideMargin).isActive = true
         PXLayout.pinRight(view: line, withMargin: sideMargin).isActive = true
         line.alpha = 0.6
-        line.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        line.backgroundColor = ThemeManager.shared.greyColor()
     }
 
     func getHeader() -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x666666)]
+        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
         let string = NSAttributedString(string: "discount_detail_modal_title".localized_beta, attributes: attributes)
         return string
     }
 
     func getTitle() -> NSAttributedString? {
-        let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x333333)]
+        let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
         if let amountOff = amountHelper.discount?.amountOff {
 
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: activeDiscountAttributes, amount: amountOff, currency: currency, negativeAmount: true)
@@ -153,7 +153,7 @@ extension PXDiscountDetailViewController {
 
     func getDisclaimer() -> NSAttributedString? {
         if let maxCouponAmount = amountHelper.maxCouponAmount {
-            let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+            let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
 
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)
             let string: String = ("discount_detail_modal_disclaimer".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
@@ -171,7 +171,7 @@ extension PXDiscountDetailViewController {
     }
 
     func getFooterMessage() -> NSAttributedString? {
-        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: UIColor.UIColorFromRGB(0x999999)]
+        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
         let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
         return string
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXTotalRowRenderer {
+final class PXTotalRowRenderer {
 
     let CHEVRON_WIDTH: CGFloat = 12
     let ROW_HEIGHT: CGFloat = 67 + PXLayout.getSafeAreaBottomInset()
@@ -120,12 +120,4 @@ class PXTotalRowRenderer {
         PXLayout.setHeight(owner: valueLabel, height: height).isActive = true
         return valueLabel
     }
-}
-
-class PXTotalRowView: PXComponentView {
-    public var titleLabel: UILabel?
-    public var disclaimerLabel: UILabel?
-    public var mainValueLabel: UILabel?
-    public var secondaryValueLabel: UILabel?
-    public var chevron: UIImageView?
 }

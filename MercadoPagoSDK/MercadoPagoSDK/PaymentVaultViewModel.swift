@@ -22,7 +22,7 @@ class PaymentVaultViewModel: NSObject {
 
     var displayItems = [PaymentOptionDrawable]()
 
-    var currency: Currency!
+    var currency: Currency = MercadoPagoContext.getCurrency()
 
     var customerId: String?
 
@@ -44,7 +44,6 @@ class PaymentVaultViewModel: NSObject {
 
         super.init()
         self.populateDisplayItemsDrawable()
-        self.currency = MercadoPagoContext.getCurrency()
     }
 }
 
