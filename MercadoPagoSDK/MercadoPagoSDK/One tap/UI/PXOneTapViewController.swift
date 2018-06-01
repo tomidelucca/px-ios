@@ -43,6 +43,13 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         setupUI()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isMovingToParentViewController {
+            viewModel.trackTapBackEvent()
+        }
+    }
+
     override func trackInfo() {
         self.viewModel.trackInfo()
     }
