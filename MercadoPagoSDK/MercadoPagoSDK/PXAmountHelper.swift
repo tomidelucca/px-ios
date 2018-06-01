@@ -24,23 +24,17 @@ internal struct PXAmountHelper {
 
     var amountToPay: Double {
         get {
-            if let couponAmount = discount?.couponAmount {
-                return amountWithoutDiscount - couponAmount
-            } else {
-                return amountWithoutDiscount
-            }
-        }
-    }
-
-    var amountWithoutDiscount: Double {
-        get {
             if let payerCost = paymentData.payerCost {
                 return payerCost.totalAmount
+            }
+            if let couponAmount = discount?.couponAmount {
+                return preferenceAmount - couponAmount
             } else {
                 return preferenceAmount
             }
         }
     }
+
     var amountOff: Double {
         get {
             guard let discount = self.discount else {
