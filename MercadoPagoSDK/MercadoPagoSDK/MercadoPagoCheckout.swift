@@ -54,6 +54,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
+        MercadoPagoCheckout.currentCheckout = self
         pxNavigationHandler.presentInitLoading()
         executeNextStep()
     }
