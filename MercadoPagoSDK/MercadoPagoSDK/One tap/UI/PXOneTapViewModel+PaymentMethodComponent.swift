@@ -62,7 +62,7 @@ extension PXOneTapViewModel {
 
         // CFT.
         if let payerCost = self.amountHelper.paymentData.getPayerCost(), let cftValue = payerCost.getCFTValue(), payerCost.hasCFTValue() {
-            cftText = cftValue.toAttributedString()
+            cftText = "CFT: \(cftValue)".toAttributedString()
         }
 
         let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: subtitleRight, descriptionDetail: cftText, disclaimer: nil, action: nil, backgroundColor: backgroundColor, lightLabelColor: lightLabelColor, boldLabelColor: boldLabelColor)

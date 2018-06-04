@@ -11,8 +11,8 @@ import MercadoPagoPXTracking
 
 final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Tracking
-    override var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM_ONE_TAP }
-    override var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM_ONE_TAP }
+    override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
+    override var screenId: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
 
     // MARK: Definitions
     lazy var itemViews = [UIView]()
@@ -41,6 +41,13 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewWillAppear(animated)
         setupNavigationBar()
         setupUI()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isMovingToParentViewController {
+            viewModel.trackTapBackEvent()
+        }
     }
 
     override func trackInfo() {
@@ -138,6 +145,7 @@ extension PXOneTapViewController {
 // MARK: User Actions.
 extension PXOneTapViewController {
     @objc func shouldOpenSummary() {
+        viewModel.trackTapSummaryDetailEvent()
         if viewModel.shouldShowSummaryModal() {
             if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
                 let summaryViewController = PXOneTapSummaryModalViewController()

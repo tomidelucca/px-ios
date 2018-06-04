@@ -56,10 +56,7 @@ open class MercadoPagoCheckout: NSObject {
 
     public func start() {
         pxNavigationHandler.presentInitLoading()
-//        MercadoPagoCheckout.currentCheckout = self
-//                self.setDiscount(PXDiscount(id: "12344", name: "descuento de patito", percentOff: 10, amountOff: 0, couponAmount: 5, currencyId: "ARS"), withCampaign: PXCampaign(id: 12344, code: nil, name: nil, discountType: nil, value: nil, endDate: nil, minPaymentAmount: nil, maxPaymentAmount: nil, maxCouponAmount: 10, totalAmountLimit: nil, maxCoupons: nil, maxCouponsByCode: nil, maxRedeemPerUser: nil, siteId: nil, marketplace: nil, codeType: nil, maxUserAmountPerCampaign: nil, labels: nil, paymentMethodsIds: nil, paymentTypesIds: nil, cardIssuersIds: nil, shippingModes: nil, clientId: nil, tags: nil, multipleCodeLimit: nil, codeCount: nil, couponAmount: nil, collectors: nil))
         executeNextStep()
-
     }
     
 
