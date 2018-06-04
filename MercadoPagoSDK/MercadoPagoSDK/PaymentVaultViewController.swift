@@ -126,7 +126,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     @objc func updateCoupon(_ notification: Notification) {
-        if let discount = notification.userInfo?["coupon"] as? PXDiscount {
+        if (notification.userInfo?["coupon"] as? PXDiscount) != nil {
             self.viewModel.amountHelper = PXAmountHelper(preference: self.viewModel.amountHelper.preference, paymentData: self.viewModel.amountHelper.paymentData, discount: self.viewModel.amountHelper.discount, campaign: self.viewModel.amountHelper.campaign)
             self.collectionSearch.reloadData()
         }

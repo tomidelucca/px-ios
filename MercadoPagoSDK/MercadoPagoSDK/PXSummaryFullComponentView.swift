@@ -24,7 +24,7 @@ final class PXSummaryFullComponentView: PXComponentView {
     fileprivate static let TOTAL_TITLE = "Total".localized
     fileprivate let customSummaryTitle: String
     fileprivate var requiredHeight: CGFloat = PXLayout.L_MARGIN
-    private let amountHelper : PXAmountHelper
+    private let amountHelper: PXAmountHelper
 
     init(width: CGFloat, summaryViewModel: Summary, amountHelper: PXAmountHelper, backgroundColor: UIColor, customSummaryTitle: String) {
         self.summary = summaryViewModel

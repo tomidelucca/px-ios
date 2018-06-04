@@ -223,11 +223,11 @@ import MercadoPagoServices
         if let campaign = self.campaign {
             obj["campaign"] = try! campaign.toJSONString()
         }
-        
+
         return obj
     }
-    
-    public func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
+
+    public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
         self.discount = discount
         self.campaign = campaign
     }

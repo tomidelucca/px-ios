@@ -16,7 +16,6 @@ open class MercadoPagoCheckout: NSObject {
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var pxNavigationHandler: PXNavigationHandler
-    
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
@@ -61,7 +60,6 @@ open class MercadoPagoCheckout: NSObject {
         executeNextStep()
 
     }
-    
 
     public func setPaymentResult(paymentResult: PaymentResult) {
         self.viewModel.paymentResult = paymentResult
@@ -231,7 +229,7 @@ open class MercadoPagoCheckout: NSObject {
         pxNavigationHandler.popToWhenFinish(viewController: viewController)
     }
 
-    public func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
+    public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
         self.viewModel.setDiscount(discount, withCampaign: campaign)
     }
 }

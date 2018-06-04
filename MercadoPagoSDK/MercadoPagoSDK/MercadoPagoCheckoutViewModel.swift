@@ -63,7 +63,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount,campaign: self.paymentData.campaign)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
         }
     }
     var checkoutPreference: CheckoutPreference!
@@ -119,7 +119,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Payment plguin
     var paymentPlugin: PXPaymentPluginComponent?
-    
+
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
         self.checkoutPreference = checkoutPreference
@@ -141,7 +141,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             }
         }
         self.paymentResult = paymentResult
- 
+
         if !String.isNullOrEmpty(self.checkoutPreference.preferenceId) {
             needLoadPreference = true
         } else {
@@ -158,8 +158,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func hasError() -> Bool {
         return MercadoPagoCheckoutViewModel.error != nil
     }
-    
-    func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
+
+    func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
         self.paymentData.setDiscount(discount, withCampaign: campaign)
     }
 
@@ -236,8 +236,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let paymentMethodsOptions = getPaymentMethodsOptions(paymentMethodPluginsToShow)
         PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS, value: paymentMethodsOptions)
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
-            guard let object = self else {
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
+            if self == nil {
                 return
             }
             // object.paymentData.discount = discount // TODO SET DISCOUNT WITH CAMPAIGN
@@ -300,7 +300,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func resultViewModel() -> PXResultViewModel {
-        return PXResultViewModel(amountHelper: self.amountHelper,paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, paymentResultScreenPreference: self.paymentResultScreenPreference)
+        return PXResultViewModel(amountHelper: self.amountHelper, paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, paymentResultScreenPreference: self.paymentResultScreenPreference)
     }
 
     //SEARCH_PAYMENT_METHODS

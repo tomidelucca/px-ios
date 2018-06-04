@@ -157,7 +157,6 @@ class Utils {
             percentage = percentage.replacingOccurrences(of: decimalSeparator + cents, with: "")
         }
 
-
         var symbols = ""
         if negativeAmount {
             symbols = "- "

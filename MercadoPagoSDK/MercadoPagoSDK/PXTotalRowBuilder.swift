@@ -26,7 +26,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 
             if let discount = amountHelper.discount {
-                if discount.amountOff != 0{
+                if discount.amountOff != 0 {
 
                     let amountAttributedString = Utils.getAttributedAmount(withAttributes: activeDiscountAttributes, amount: discount.amountOff, currency: currency, negativeAmount: true)
                     let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
@@ -81,7 +81,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
 
             let paragraph = NSMutableParagraphStyle()
             paragraph.alignment = .right
-            let attributes: [NSAttributedStringKey:Any] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
+            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                               NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor(),
                               NSAttributedStringKey.paragraphStyle: paragraph,
                               NSAttributedStringKey.strikethroughStyle: 1]

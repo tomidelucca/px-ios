@@ -23,7 +23,7 @@ class PXReviewViewModel: NSObject {
     var paymentOptionSelected: PaymentMethodOption
     var reviewScreenPreference: ReviewScreenPreference
 
-    public init(amountHelper: PXAmountHelper,/* checkoutPreference: CheckoutPreference, paymentData: PaymentData,*/ paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    public init(amountHelper: PXAmountHelper, /* checkoutPreference: CheckoutPreference, paymentData: PaymentData,*/ paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
       //  self.preference = checkoutPreference
@@ -168,10 +168,10 @@ extension PXReviewViewModel {
             summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
             summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
         }
-        if let payerCost = self.amountHelper.paymentData.payerCost {
+        if self.amountHelper.paymentData.payerCost != nil {
             var interest = 0.0
 
-            if let discountAmount = self.amountHelper.paymentData.discount?.couponAmount {
+            if (self.amountHelper.paymentData.discount?.couponAmount) != nil {
                 interest = self.amountHelper.amountToPay - (self.amountHelper.preferenceAmount - self.amountHelper.amountOff)
             } else {
                 interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmount

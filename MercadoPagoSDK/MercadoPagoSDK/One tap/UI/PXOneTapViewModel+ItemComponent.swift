@@ -10,7 +10,7 @@ import Foundation
 extension PXOneTapViewModel {
 
     func getItemComponent() -> PXOneTapItemComponent? {
-        let amountWithoutDiscount : Double? = isNoPayerCostAndDiscount() ? self.amountHelper.preferenceAmount : nil
+        let amountWithoutDiscount: Double? = isNoPayerCostAndDiscount() ? self.amountHelper.preferenceAmount : nil
         let props = PXOneTapItemComponentProps(title: getIconTitle(), collectorImage: getCollectorIcon(), numberOfInstallments: getNumberOfInstallmentsForItem(), installmentAmount: getInstallmentAmountForItem(), totalWithoutDiscount: amountWithoutDiscount, discountDescription: getDiscountDescription(), discountLimit: getDiscountLimit(), shouldShowArrow: shouldShowSummaryModal())
         return PXOneTapItemComponent(props: props)
     }
@@ -35,13 +35,13 @@ extension PXOneTapViewModel {
             // If there is more than one installment, don't show total amount without discount
             if let payerCost = self.amountHelper.paymentData.payerCost {
                 return payerCost.installments == 1
-            }else{
+            } else {
                 return true
             }
         }
         return false
     }
-    
+
     private func getDiscountDescription() -> String? {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.amountHelper.discount {
             return "\(discount.getDiscountDescription()) OFF"
