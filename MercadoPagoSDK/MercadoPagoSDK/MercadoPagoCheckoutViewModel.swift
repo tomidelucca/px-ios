@@ -159,7 +159,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return MercadoPagoCheckoutViewModel.error != nil
     }
     
-    public func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
+    func setDiscount(_ discount : PXDiscount, withCampaign campaign: PXCampaign){
         self.paymentData.setDiscount(discount, withCampaign: campaign)
     }
 
