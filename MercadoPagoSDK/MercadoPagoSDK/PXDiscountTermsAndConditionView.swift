@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoPXTracking
 
 final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 
@@ -15,7 +16,7 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     init(amountHelper: PXAmountHelper) {
         self.amountHelper = amountHelper
         super.init()
-        self.SCREEN_NAME = "DISCOUNT_TERMS_AND_CONDITIONS"
+        self.SCREEN_NAME = TrackingUtil.ScreenId.DISCOUNT_TERM_CONDITION
         self.SCREEN_TITLE = "Términos y Condiciones"
     }
 
