@@ -26,22 +26,10 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 
             if let discount = amountHelper.discount {
-                if discount.amountOff != 0 {
+                let string = discount.getDiscountDescription()
+                let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
+                title = attributedString
 
-                    let amountAttributedString = Utils.getAttributedAmount(withAttributes: activeDiscountAttributes, amount: discount.amountOff, currency: currency, negativeAmount: true)
-                    let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
-                    let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
-
-                    title = attributedString
-
-                } else if discount.percentOff != 0 {
-
-                    let percentageAttributedString = Utils.getAttributedPercentage(withAttributes: activeDiscountAttributes, amount: discount.percentOff, addPercentageSymbol: true, negativeAmount: false)
-                    let string: String = ("total_row_title_percent_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)
-                    let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
-
-                    title = attributedString
-                }
             } else {
                 let defaultTitleString = "total_row_title_add_coupon".localized_beta
                 let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: addNewDiscountAttributes)

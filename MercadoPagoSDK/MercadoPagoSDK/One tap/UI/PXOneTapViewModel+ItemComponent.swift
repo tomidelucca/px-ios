@@ -44,7 +44,7 @@ extension PXOneTapViewModel {
 
     private func getDiscountDescription() -> String? {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.amountHelper.discount {
-            return "\(discount.getDiscountDescription()) OFF"
+            return discount.getDiscountDescription()
         }
         return nil
     }
