@@ -23,9 +23,13 @@ internal extension PXDiscount {
     internal func getDiscountDescription() -> String {
         let currency = MercadoPagoContext.getCurrency()
         if self.percentOff != 0 {
-            return String(describing: self.percentOff) + " %"
+            let percentageAttributedString = Utils.getAttributedPercentage(withAttributes: [:], amount: self.percentOff, addPercentageSymbol: true, negativeAmount: false)
+            let string: String = ("total_row_title_percent_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)
+            return string
         } else if self.amountOff != 0 {
-            return currency.symbol + String(describing: self.amountOff)
+            let amountAttributedString = Utils.getAttributedAmount(withAttributes: [:], amount: self.amountOff, currency: currency, negativeAmount: true)
+            let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
+            return string
         } else {
             return ""
         }

@@ -58,7 +58,6 @@ open class MercadoPagoCheckout: NSObject {
         pxNavigationHandler.presentInitLoading()
         executeNextStep()
     }
-    
 
     public func setPaymentResult(paymentResult: PaymentResult) {
         self.viewModel.paymentResult = paymentResult
