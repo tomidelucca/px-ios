@@ -20,7 +20,7 @@ extension TrackingUtil {
 // MARK: - Events
 extension TrackingUtil {
     struct Event {
-        static let TAP_SUMMARY_DETAIL = "/open_summary_detail" //TODO: Ver con MeliData
-        static let TAP_BACK = "/back_action" //TODO: Ver con MeliData
+        static let TAP_SUMMARY_DETAIL = "/open_summary_detail"
+        static let TAP_BACK = "/back_action"
     }
 }
