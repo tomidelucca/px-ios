@@ -163,6 +163,11 @@ class PXResultViewController: PXComponentContainerViewController {
         }
         return bodyView.frame.height == 0
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+    }
 }
 
 // Components
