@@ -18,23 +18,18 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         var secondaryValue: NSAttributedString?
 
         //////////////// TITLE ////////////////
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
-            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.secondaryColor()]
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = amountHelper.discount {
+
+            //Add new discount attributes
+//            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
+//                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.secondaryColor()]
 
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 
-            if let discount = amountHelper.discount {
-                let string = discount.getDiscountDescription()
-                let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
-                title = attributedString
-
-            } else {
-                let defaultTitleString = "total_row_title_add_coupon".localized_beta
-                let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: addNewDiscountAttributes)
-                title = defaultTitleAttributedString
-            }
+            let string = discount.getDiscountDescription()
+            let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
+            title = attributedString
         } else {
             let defaultTitleString = "total_row_title_default".localized_beta
             let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),

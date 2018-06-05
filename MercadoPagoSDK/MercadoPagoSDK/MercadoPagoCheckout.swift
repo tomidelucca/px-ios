@@ -228,6 +228,15 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        self.viewModel.setDiscount(discount, withCampaign: campaign)
+        if shouldApplyDiscount() {
+            self.viewModel.setDiscount(discount, withCampaign: campaign)
+        }
+    }
+
+    private func shouldApplyDiscount() -> Bool {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.viewModel.paymentPlugin != nil {
+            return true
+        }
+        return false
     }
 }

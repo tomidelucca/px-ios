@@ -79,7 +79,7 @@ extension PXDiscountDetailViewController {
         }
 
         if let disclaimer = getDisclaimer() {
-            buildAndAddLabel(to: self.contentView, margin: PXLayout.XXS_MARGIN, with: disclaimer, height: 19)
+            buildAndAddLabel(to: self.contentView, margin: PXLayout.XXXS_MARGIN, with: disclaimer, height: 19)
         }
 
         if let description = getDescription() {
@@ -132,22 +132,13 @@ extension PXDiscountDetailViewController {
 
     func getTitle() -> NSAttributedString? {
         let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
-        if let amountOff = amountHelper.discount?.amountOff, amountOff > 0 {
 
-            let amountAttributedString = Utils.getAttributedAmount(withAttributes: activeDiscountAttributes, amount: amountOff, currency: currency, negativeAmount: true)
-            let string: String = ("total_row_title_amount_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
+        if let discount = amountHelper.discount {
+            let string = discount.getDiscountDescription()
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
-
-            return attributedString
-
-        } else if let percentOff = amountHelper.discount?.percentOff, percentOff > 0 {
-
-            let percentageAttributedString = Utils.getAttributedPercentage(withAttributes: activeDiscountAttributes, amount: percentOff, addPercentageSymbol: true, negativeAmount: false)
-            let string: String = ("total_row_title_percent_off".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: percentageAttributedString.string)
-            let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
-
             return attributedString
         }
+        
         return nil
     }
 
