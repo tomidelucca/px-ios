@@ -38,6 +38,22 @@ class PXResultViewController: PXComponentContainerViewController {
         self.viewModel.trackInfo()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        view.layoutIfNeeded()
+        if contentView.getSubviews().isEmpty {
+            renderViews()
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+    }
+
     func renderViews() {
 
         self.contentView.prepareForRender()
@@ -152,17 +168,6 @@ class PXResultViewController: PXComponentContainerViewController {
             return true
         }
         return bodyView.frame.height == 0
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
-        self.scrollView.showsVerticalScrollIndicator = false
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.view.layoutIfNeeded()
-        if contentView.getSubviews().isEmpty {
-            renderViews()
-        }
     }
 }
 
