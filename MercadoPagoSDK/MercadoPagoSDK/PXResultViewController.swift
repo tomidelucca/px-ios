@@ -48,6 +48,11 @@ class PXResultViewController: PXComponentContainerViewController {
         }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
+    }
+
     func renderViews() {
 
         self.contentView.prepareForRender()
