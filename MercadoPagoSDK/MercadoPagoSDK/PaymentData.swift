@@ -232,4 +232,9 @@ import MercadoPagoServices
         self.campaign = campaign
     }
 
+    public func clearDiscount() {
+        self.discount = nil
+        self.campaign = nil
+    }
+
 }

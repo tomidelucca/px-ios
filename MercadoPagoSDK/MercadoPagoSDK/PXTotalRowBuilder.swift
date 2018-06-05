@@ -80,8 +80,8 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         super.init(props: props)
     }
 
-    static func shouldAddActionToRow() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+    static func shouldAddActionToRow(amountHelper: PXAmountHelper) -> Bool {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
             return true
         }
         return false

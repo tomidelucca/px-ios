@@ -54,6 +54,9 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
+        if !shouldApplyDiscount() {
+            self.viewModel.clearDiscount()
+        }
         MercadoPagoCheckout.currentCheckout = self
         pxNavigationHandler.presentInitLoading()
         executeNextStep()
@@ -228,9 +231,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        if shouldApplyDiscount() {
-            self.viewModel.setDiscount(discount, withCampaign: campaign)
-        }
+        self.viewModel.setDiscount(discount, withCampaign: campaign)
     }
 
     private func shouldApplyDiscount() -> Bool {

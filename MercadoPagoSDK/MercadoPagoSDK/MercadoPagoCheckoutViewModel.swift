@@ -163,6 +163,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentData.setDiscount(discount, withCampaign: campaign)
     }
 
+    func clearDiscount() {
+        self.paymentData.clearDiscount()
+    }
+
     public func getPaymentPreferences() -> PaymentPreference? {
         return self.checkoutPreference.paymentPreference
     }
