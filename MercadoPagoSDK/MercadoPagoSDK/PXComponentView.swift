@@ -32,7 +32,6 @@ import Foundation
         super.addSubview(topGuideView)
         super.addSubview(bottomGuideView)
         super.addSubview(contentView)
-        self.contentView.layer.borderWidth = 2
         PXLayout.pinTop(view: topGuideView).isActive = true
         PXLayout.pinBottom(view: bottomGuideView).isActive = true
 
