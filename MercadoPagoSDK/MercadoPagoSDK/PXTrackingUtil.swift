@@ -9,6 +9,14 @@
 import Foundation
 import MercadoPagoPXTracking
 
+// MARK: - Metadata/Params
+extension TrackingUtil {
+    struct Metadata {
+        static let INSTALLMENTS = "installments"
+        static let HAS_DISCOUNT = "has_discount"
+    }
+}
+
 // MARK: - Screens
 extension TrackingUtil {
     enum ScreenId {
