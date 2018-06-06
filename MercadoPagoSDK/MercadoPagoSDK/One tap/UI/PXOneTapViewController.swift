@@ -89,7 +89,7 @@ extension PXOneTapViewController {
 
         // Add payment method.
         if let paymentMethodView = getPaymentMethodComponentView() {
-            contentView.addSubviewToBottom(paymentMethodView, withMargin: PXLayout.M_MARGIN)
+            contentView.addSubviewToBottom(paymentMethodView, withMargin: PXLayout.S_MARGIN)
             PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             let paymentMethodTapAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldChangePaymentMethod))
@@ -113,9 +113,9 @@ extension PXOneTapViewController {
         PXLayout.centerHorizontally(view: footerView).isActive = true
 
         view.layoutIfNeeded()
-        refreshContentViewSize()
-        centerContentView()
-        contentView.animateContentOnY()
+        //refreshContentViewSize()
+        //centerContentView()
+        //contentView.animateContentOnY()
     }
 }
 

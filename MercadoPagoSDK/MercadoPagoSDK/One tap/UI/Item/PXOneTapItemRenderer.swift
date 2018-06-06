@@ -57,7 +57,7 @@ final class PXOneTapItemRenderer {
         itemView.amountWithoutDiscount = buildAmountWithoutDiscount(with: itemComponent.props.totalWithoutDiscount, labelColor: ThemeManager.shared.greyColor())
 
         if let amountWithoutDiscount = itemView.amountWithoutDiscount {
-            itemView.addSubviewToBottom(amountWithoutDiscount, withMargin: PXLayout.S_MARGIN)
+            itemView.addSubviewToBottom(amountWithoutDiscount, withMargin: PXLayout.XS_MARGIN)
             PXLayout.centerHorizontally(view: amountWithoutDiscount).isActive = true
             PXLayout.matchWidth(ofView: amountWithoutDiscount, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
@@ -66,7 +66,7 @@ final class PXOneTapItemRenderer {
         itemView.totalAmount = buildItemAmount(with: itemComponent.props.installmentAmount, numberOfInstallments: itemComponent.props.numberOfInstallments, labelColor: ThemeManager.shared.boldLabelTintColor())
 
         if let totalAmount = itemView.totalAmount {
-            itemView.addSubviewToBottom(totalAmount, withMargin: PXLayout.XS_MARGIN)
+            itemView.addSubviewToBottom(totalAmount, withMargin: PXLayout.XXS_MARGIN)
             PXLayout.matchWidth(ofView: totalAmount, withPercentage: CONTENT_TOTAL_WIDTH_PERCENT).isActive = true
             PXLayout.centerHorizontally(view: totalAmount).isActive = true
         }
@@ -75,7 +75,7 @@ final class PXOneTapItemRenderer {
         itemView.discountDescription = buildDiscountDescription(with: itemComponent.props.discountDescription, discountLimit: itemComponent.props.discountLimit)
 
         if let discountDescription = itemView.discountDescription {
-            itemView.addSubviewToBottom(discountDescription, withMargin: PXLayout.XS_MARGIN)
+            itemView.addSubviewToBottom(discountDescription, withMargin: PXLayout.XXS_MARGIN)
             PXLayout.centerHorizontally(view: discountDescription).isActive = true
             PXLayout.matchWidth(ofView: discountDescription, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
