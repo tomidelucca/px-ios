@@ -38,7 +38,7 @@ extension PXOneTapViewModel {
     func trackTapSummaryDetailEvent() {
         var properties: [String: String] = [String: String]()
         properties[TrackingUtil.Metadata.HAS_DISCOUNT] = hasDiscount().description
-        properties[TrackingUtil.Metadata.INSTALLMENTS] = paymentData.getNumberOfInstallments().stringValue
+        properties[TrackingUtil.Metadata.INSTALLMENTS] = amountHelper.paymentData.getNumberOfInstallments().stringValue
         MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_SUMMARY_DETAIL, screenId: screenId, screenName: screenName, properties: properties)
     }
 
