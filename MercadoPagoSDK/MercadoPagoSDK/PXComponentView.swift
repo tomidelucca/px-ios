@@ -14,6 +14,10 @@ import Foundation
     private var bottomGuideView = UIView()
     private var contentView = UIView()
     private lazy var carryMarginY: CGFloat = 0
+    var heightConstraint: NSLayoutConstraint?
+    var matchGuidesHeightContraint: NSLayoutConstraint?
+    var topGuideZeroHeightContraint: NSLayoutConstraint?
+    var bottomGuideZeroHeightContraint: NSLayoutConstraint?
 
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -28,9 +32,19 @@ import Foundation
         super.addSubview(topGuideView)
         super.addSubview(bottomGuideView)
         super.addSubview(contentView)
+        self.contentView.layer.borderWidth = 2
         PXLayout.pinTop(view: topGuideView).isActive = true
         PXLayout.pinBottom(view: bottomGuideView).isActive = true
-        PXLayout.matchHeight(ofView: topGuideView, toView: bottomGuideView).isActive = true
+
+        matchGuidesHeightContraint = PXLayout.matchHeight(ofView: topGuideView, toView: bottomGuideView)
+        matchGuidesHeightContraint?.isActive = true
+
+        topGuideZeroHeightContraint = PXLayout.setHeight(owner: topGuideView, height: 0)
+        topGuideZeroHeightContraint?.isActive = false
+
+        bottomGuideZeroHeightContraint = PXLayout.setHeight(owner: bottomGuideView, height: 0)
+        bottomGuideZeroHeightContraint?.isActive = false
+
         PXLayout.centerHorizontally(view: contentView).isActive = true
         PXLayout.centerHorizontally(view: topGuideView).isActive = true
         PXLayout.centerHorizontally(view: bottomGuideView).isActive = true
@@ -39,6 +53,34 @@ import Foundation
         PXLayout.matchWidth(ofView: contentView).isActive = true
         PXLayout.matchWidth(ofView: topGuideView).isActive = true
         PXLayout.matchWidth(ofView: bottomGuideView).isActive = true
+    }
+
+    public func pinContentViewToTop() {
+        topGuideZeroHeightContraint?.isActive = true
+        bottomGuideZeroHeightContraint?.isActive = false
+        matchGuidesHeightContraint?.isActive = false
+    }
+
+    public func pinContentViewToBottom() {
+        topGuideZeroHeightContraint?.isActive = false
+        bottomGuideZeroHeightContraint?.isActive = true
+        matchGuidesHeightContraint?.isActive = false
+    }
+
+    public func centerContentViewVertically() {
+        topGuideZeroHeightContraint?.isActive = false
+        bottomGuideZeroHeightContraint?.isActive = false
+        matchGuidesHeightContraint?.isActive = true
+    }
+
+    func fixHeight(height: CGFloat) {
+        if let heightConstraint = self.heightConstraint {
+            heightConstraint.constant = height
+        } else {
+            self.heightConstraint = PXLayout.setHeight(owner: self, height: height)
+            self.heightConstraint?.isActive = true
+        }
+        self.layoutIfNeeded()
     }
 
     func prepareForRender() {
@@ -119,17 +161,6 @@ import Foundation
 
     func getCarryMarginY() -> CGFloat {
         return carryMarginY
-    }
-
-    var heightConstraint: NSLayoutConstraint?
-    func fixHeight(height: CGFloat) {
-        if let heightConstraint = self.heightConstraint {
-            heightConstraint.constant = height
-        } else {
-            self.heightConstraint = PXLayout.setHeight(owner: self, height: height)
-            self.heightConstraint?.isActive = true
-        }
-        self.layoutIfNeeded()
     }
 
     func isEmpty() -> Bool {
