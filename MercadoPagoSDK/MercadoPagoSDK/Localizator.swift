@@ -44,7 +44,7 @@ private class Localizator {
                 assertionFailure("Missing translation for: \(string)")
             #endif
 
-            return ""
+            return string
         }
 
         return localizedString
