@@ -102,9 +102,13 @@ DEPENDENCIES:
   - MercadoPagoServices (from `../../px-ios_services/`)
   - MLUI (= 4.0.0)
 
-EXTERNAL SOURCES:
-  MercadoPagoServices:
-    :path: ../../px-ios_services/
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FXBlurView
+    - JRSwizzle
+    - MercadoPagoPXTracking
+    - MercadoPagoServices
+    - MLUI
 
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
@@ -115,4 +119,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b2b626cf0276357cfe22942e28298196ae166432
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

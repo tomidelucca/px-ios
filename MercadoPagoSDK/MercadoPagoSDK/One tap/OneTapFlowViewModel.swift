@@ -42,7 +42,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         self.reviewScreenPreference = reviewScreenPreference
         super.init()
 
-        if let payerCost = search.oneTap?.oneTapCard?.getSelectedPayerCost() {
+        if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
             updateCheckoutModel(payerCost: payerCost)
         }
     }
