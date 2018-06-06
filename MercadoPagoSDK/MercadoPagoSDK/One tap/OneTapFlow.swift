@@ -85,7 +85,10 @@ extension OneTapFlow {
                 selectedPaymentOption = paymentMethodPlugin
             } else {
                 // Check if can autoselect customer card
-                let customOptionsFound = search.customerPaymentMethods!.filter { (cardInformation: CardInformation) -> Bool in
+                guard let customerPaymentMethods = search.customerPaymentMethods else {
+                    return nil
+                }
+                let customOptionsFound = customerPaymentMethods.filter { (cardInformation: CardInformation) -> Bool in
                     return cardInformation.getCardId() == search.oneTap?.oneTapCard?.cardId
                 }
                 if let customerPaymentMethod = customOptionsFound.first, let customerPaymentOption = customerPaymentMethod as? PaymentMethodOption {
