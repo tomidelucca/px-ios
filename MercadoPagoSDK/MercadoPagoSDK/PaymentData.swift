@@ -219,11 +219,7 @@ import MercadoPagoServices
         if let discount = self.discount {
             obj["discount"] = discount.toJSONDictionary()
         }
-
-        if let campaign = self.campaign {
-            obj["campaign"] = try! campaign.toJSONString()
-        }
-
+        
         return obj
     }
 
