@@ -10,7 +10,7 @@ target 'MercadoPagoSDK' do
   pod 'MercadoPagoServices', '1.0.8'
   
   # MELI UI
-  pod 'MLUI', '4.0.0'
+  pod 'MLUI', '~> 4.0'
 
   target 'MercadoPagoSDKTests' do
     inherit! :search_paths
