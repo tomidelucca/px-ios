@@ -18,6 +18,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
     private lazy var footerView: UIView = UIView()
+    private var discountTermsConditionView: PXDiscountTermsAndConditionView?
 
     // MARK: Callbacks
     var callbackPaymentData: ((PaymentData) -> Void)
@@ -95,6 +96,16 @@ extension PXOneTapViewController {
             paymentMethodView.addGestureRecognizer(paymentMethodTapAction)
         }
 
+        // Add discount terms and conditions.
+        if self.viewModel.shouldShowDiscountTermsAndCondition() {
+            let discountTCView = getDiscountTermsAndConditionView()
+            discountTermsConditionView = discountTCView
+            contentView.addSubviewToBottom(discountTCView, withMargin: PXLayout.S_MARGIN)
+            PXLayout.matchWidth(ofView: discountTCView).isActive = true
+            PXLayout.centerHorizontally(view: discountTCView).isActive = true
+            discountTCView.delegate = self
+        }
+
         // Add footer payment button.
         footerView = getFooterView()
         contentView.addSubviewToBottom(footerView)
@@ -140,10 +151,15 @@ extension PXOneTapViewController {
         }
         return nil
     }
+
+    private func getDiscountTermsAndConditionView() -> PXDiscountTermsAndConditionView {
+        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: self.viewModel.amountHelper, shouldAddMargins: false)
+        return discountTermsAndConditionView
+    }
 }
 
 // MARK: User Actions.
-extension PXOneTapViewController {
+extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     @objc func shouldOpenSummary() {
         viewModel.trackTapSummaryDetailEvent()
         if viewModel.shouldShowSummaryModal() {
@@ -176,5 +192,11 @@ extension PXOneTapViewController {
 
     private func cancelPayment() {
         self.callbackExit()
+    }
+
+    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
+        let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
+        webVC.title = title
+        self.navigationController?.pushViewController(webVC, animated: true)
     }
 }

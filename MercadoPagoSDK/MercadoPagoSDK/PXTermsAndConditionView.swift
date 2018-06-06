@@ -21,8 +21,7 @@ class PXTermsAndConditionView: PXComponentView {
 
     weak var delegate: PXTermsAndConditionViewDelegate?
 
-    override init() {
-
+    init(shouldAddMargins: Bool = true) {
         super.init()
 
         translatesAutoresizingMaskIntoConstraints = false
@@ -47,8 +46,14 @@ class PXTermsAndConditionView: PXComponentView {
         let PERCENT_WIDTH: CGFloat = 90.0
         PXLayout.matchWidth(ofView: termsAndConditionsText, toView: self, withPercentage: PERCENT_WIDTH).isActive = true
         PXLayout.centerHorizontally(view: termsAndConditionsText).isActive = true
-        PXLayout.pinTop(view: termsAndConditionsText, withMargin: PXLayout.S_MARGIN).isActive = true
-        PXLayout.pinBottom(view: termsAndConditionsText, withMargin: PXLayout.S_MARGIN).isActive = true
+
+        var topAndBottomMargins = PXLayout.S_MARGIN
+        if !shouldAddMargins {
+            topAndBottomMargins = PXLayout.ZERO_MARGIN
+        }
+
+        PXLayout.pinTop(view: termsAndConditionsText, withMargin: topAndBottomMargins).isActive = true
+        PXLayout.pinBottom(view: termsAndConditionsText, withMargin: topAndBottomMargins).isActive = true
 
         let screenWidth = PXLayout.getScreenWidth()
         let dynamicSize: CGSize = termsAndConditionsText.sizeThatFits(CGSize(width: screenWidth, height: CGFloat.greatestFiniteMagnitude))

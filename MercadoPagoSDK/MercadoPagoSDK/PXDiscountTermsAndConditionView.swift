@@ -13,9 +13,9 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 
     private var amountHelper: PXAmountHelper
 
-    init(amountHelper: PXAmountHelper) {
+    init(amountHelper: PXAmountHelper, shouldAddMargins: Bool = true) {
         self.amountHelper = amountHelper
-        super.init()
+        super.init(shouldAddMargins: shouldAddMargins)
         self.SCREEN_NAME = TrackingUtil.ScreenId.DISCOUNT_TERM_CONDITION
         self.SCREEN_TITLE = "Términos y Condiciones"
     }
@@ -25,7 +25,7 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     }
 
     override func getTyCText() -> NSMutableAttributedString {
-        let termsAndConditionsText = "Descuento exclusivo de Mercado Libre.\nVer condiciones".localized
+        let termsAndConditionsText = "review_discount_terms_and_conditions".localized_beta
         let highlightedText = "Ver condiciones".localized
 
         let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]

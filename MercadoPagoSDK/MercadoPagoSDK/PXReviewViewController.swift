@@ -106,7 +106,6 @@ extension PXReviewViewController {
             contentView.addSubviewToBottom(discountTCView)
             PXLayout.matchWidth(ofView: discountTCView).isActive = true
             PXLayout.centerHorizontally(view: discountTCView).isActive = true
-            contentView.addSubviewToBottom(discountTCView)
             discountTCView.delegate = self
         }
 
