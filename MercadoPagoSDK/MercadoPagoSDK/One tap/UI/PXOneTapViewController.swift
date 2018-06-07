@@ -137,7 +137,7 @@ extension PXOneTapViewController {
     }
 
     private func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Pagar".localized) { [weak self] in
+        let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
             self?.confirmPayment()
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
