@@ -48,6 +48,7 @@ extension PXPaymentMethodComponentRenderer {
         title.textColor = component.props.boldLabelColor
         title.textAlignment = .left
         title.numberOfLines = 2
+        title.adjustsFontSizeToFitWidth = true
         if let pmTitle = pmView.paymentMethodTitle, let pmIcon = pmView.paymentMethodIcon {
             PXLayout.put(view: pmTitle, rightOf: pmIcon, withMargin: interMargin).isActive = true
             PXLayout.pinRight(view: pmTitle, to: arrowImageView, withMargin: PXLayout.S_MARGIN).isActive = true
@@ -59,7 +60,7 @@ extension PXPaymentMethodComponentRenderer {
             detailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmView.addSubview(detailLabel)
             detailLabel.attributedText = detailText
-            detailLabel.font = Utils.getFont(size: PXLayout.XXS_FONT)
+            detailLabel.font = Utils.getLightFont(size: PXLayout.XXS_FONT)
             detailLabel.textColor = component.props.lightLabelColor
             detailLabel.textAlignment = .left
             PXLayout.setHeight(owner: detailLabel, height: PXLayout.M_FONT).isActive = true

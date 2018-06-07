@@ -113,9 +113,10 @@ extension PXOneTapViewController {
         PXLayout.centerHorizontally(view: footerView).isActive = true
 
         view.layoutIfNeeded()
-        //refreshContentViewSize()
-        //centerContentView()
-        //contentView.animateContentOnY()
+        refreshContentViewSize()
+        if centerContentView() {
+            contentView.animateContentOnY()
+        }
     }
 }
 
