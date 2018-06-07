@@ -50,7 +50,9 @@ extension PXOneTapViewModel {
     }
 
     private func getDiscountLimit() -> String? {
-        // TODO: Añadir tope de descuento
+        if amountHelper.maxCouponAmount != nil {
+            return "one_tap_discount_disclaimer".localized_beta
+        }
         return nil
     }
 

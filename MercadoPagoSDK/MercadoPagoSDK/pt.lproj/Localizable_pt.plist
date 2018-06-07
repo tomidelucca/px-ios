@@ -256,6 +256,13 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Com limite de desconto</string>
 	</dict>
+	<key>one_tap_discount_disclaimer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>com limite de desconto</string>
+	</dict>
 	<key>total_row_title_percent_off</key>
 	<dict>
 		<key>comment</key>
