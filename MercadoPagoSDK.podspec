@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     s.dependency 'MercadoPagoPXTracking', '2.1.2'
     s.dependency 'MercadoPagoServices', '1.0.10'
-    s.dependency 'MLUI', '4.1.0'
+    s.dependency 'MLUI', '~> 4.0'
   end
 
 end
