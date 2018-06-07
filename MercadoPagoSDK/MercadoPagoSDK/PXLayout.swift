@@ -35,6 +35,8 @@ class PXLayout: NSObject {
 
     static let DEFAULT_CONTRAINT_ACTIVE = true
 
+    static let NAV_BAR_HEIGHT: CGFloat = 44
+
     static func checkContraintActivation(_ constraint: NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
         constraint.isActive = isActive
         return constraint
@@ -240,9 +242,9 @@ extension PXLayout {
         return bottomDeltaMargin
     }
 
-    static func getSafeAreaTopInset() -> CGFloat {
+    static func getSafeAreaTopInset(topDeltaMargin: CGFloat = 0) -> CGFloat {
         // iPhoneX or any device with safe area inset > 0
-        var topDeltaMargin: CGFloat = 0
+        var topDeltaMargin: CGFloat = topDeltaMargin
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.keyWindow
             let topSafeAreaInset = window?.safeAreaInsets.top
@@ -251,6 +253,11 @@ extension PXLayout {
             }
         }
         return topDeltaMargin
+    }
+
+    static func getStatusBarHeight() -> CGFloat {
+        let defaultStatusBarHeight: CGFloat = 20
+        return getSafeAreaTopInset(topDeltaMargin: defaultStatusBarHeight)
     }
 }
 
