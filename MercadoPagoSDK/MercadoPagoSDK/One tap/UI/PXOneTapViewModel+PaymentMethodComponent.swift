@@ -43,11 +43,13 @@ extension PXOneTapViewModel {
 
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.amountHelper.discount != nil {
             // With discount
-            let amount: String = Utils.getAmountFormatted(amount: self.amountHelper.preferenceAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
-            subtitleRight = amount.toAttributedString()
+            if let pCost = self.amountHelper.paymentData.payerCost, pCost.installments > 1 {
+                let amount: String = Utils.getAmountFormatted(amount: self.amountHelper.preferenceAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
+                subtitleRight = amount.toAttributedString()
 
-            let amountWithDiscount: String = Utils.getAmountFormatted(amount: getTotalAmount(), thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: true)
-            subtitle = amountWithDiscount.toAttributedString()
+                let amountWithDiscount: String = Utils.getAmountFormatted(amount: getTotalAmount(), thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: true)
+                subtitle = amountWithDiscount.toAttributedString()
+            }
         } else {
             // Without discount
             if let pCost = self.amountHelper.paymentData.payerCost, pCost.installments > 1 {

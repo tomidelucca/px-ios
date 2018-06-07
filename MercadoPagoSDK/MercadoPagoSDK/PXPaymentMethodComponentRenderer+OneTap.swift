@@ -11,7 +11,7 @@ import Foundation
 extension PXPaymentMethodComponentRenderer {
     func oneTapRender(component: PXPaymentMethodComponent) -> PXOneTapPaymentMethodView {
         let arrowImage: UIImage? = MercadoPago.getImage("oneTapArrow")
-        var defaultHeight: CGFloat = 84
+        var defaultHeight: CGFloat = 80
         let leftRightMargin = PXLayout.S_MARGIN
         let interMargin = PXLayout.XS_MARGIN
         let pmView = PXOneTapPaymentMethodView()
@@ -26,18 +26,6 @@ extension PXPaymentMethodComponentRenderer {
         PXLayout.centerVertically(view: arrowImageView).isActive = true
         PXLayout.pinRight(view: arrowImageView, withMargin: PXLayout.S_MARGIN).isActive = true
 
-        // PamentMethod Icon.
-        let paymentMethodIcon = component.getPaymentMethodIconComponent()
-        pmView.paymentMethodIcon = paymentMethodIcon.render()
-        pmView.paymentMethodIcon?.layer.cornerRadius = IMAGE_WIDTH/2
-        if let pmIcon = pmView.paymentMethodIcon {
-            pmView.addSubview(pmIcon)
-            PXLayout.pinLeft(view: pmIcon, withMargin: leftRightMargin).isActive = true
-            PXLayout.setHeight(owner: pmIcon, height: IMAGE_HEIGHT).isActive = true
-            PXLayout.setWidth(owner: pmIcon, width: IMAGE_WIDTH).isActive = true
-            PXLayout.pinTop(view: pmIcon, to: pmView, withMargin: PXLayout.S_MARGIN).isActive = true
-        }
-
         // PamentMethod Title.
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -49,9 +37,21 @@ extension PXPaymentMethodComponentRenderer {
         title.textAlignment = .left
         title.numberOfLines = 2
         title.adjustsFontSizeToFitWidth = true
-        if let pmTitle = pmView.paymentMethodTitle, let pmIcon = pmView.paymentMethodIcon {
-            PXLayout.put(view: pmTitle, rightOf: pmIcon, withMargin: interMargin).isActive = true
+        if let pmTitle = pmView.paymentMethodTitle {
+            PXLayout.pinLeft(view: pmTitle, to: pmView, withMargin: PXLayout.XXXL_MARGIN + PXLayout.L_MARGIN).isActive = true
             PXLayout.pinRight(view: pmTitle, to: arrowImageView, withMargin: PXLayout.S_MARGIN).isActive = true
+        }
+
+        // PamentMethod Icon.
+        let paymentMethodIcon = component.getPaymentMethodIconComponent()
+        pmView.paymentMethodIcon = paymentMethodIcon.render()
+        pmView.paymentMethodIcon?.layer.cornerRadius = IMAGE_WIDTH/2
+        if let pmIcon = pmView.paymentMethodIcon {
+            pmView.addSubview(pmIcon)
+            PXLayout.pinLeft(view: pmIcon, withMargin: leftRightMargin).isActive = true
+            PXLayout.setHeight(owner: pmIcon, height: IMAGE_HEIGHT).isActive = true
+            PXLayout.setWidth(owner: pmIcon, width: IMAGE_WIDTH).isActive = true
+            PXLayout.pinTop(view: pmIcon, to: pmView, withMargin: PXLayout.S_MARGIN).isActive = true
         }
 
         // PaymentMethod Subtitle.
@@ -72,8 +72,12 @@ extension PXPaymentMethodComponentRenderer {
             pmTitle.layoutIfNeeded()
             defaultHeight += pmTitle.frame.height - PXLayout.XXXS_MARGIN
         } else {
-            if let pmTitle = pmView.paymentMethodTitle {
+            if let pmTitle = pmView.paymentMethodTitle, component.props.descriptionDetail == nil {
                 PXLayout.centerVertically(view: pmTitle, to: pmView).isActive = true
+            } else {
+                if let pmTitle = pmView.paymentMethodTitle {
+                    PXLayout.pinTop(view: pmTitle, withMargin: PXLayout.S_MARGIN).isActive = true
+                }
             }
         }
 
@@ -92,18 +96,26 @@ extension PXPaymentMethodComponentRenderer {
         }
 
         // CFT label.
-        if let subtitleLabel = pmView.paymentMethodSubtitle, let cftAttr = component.props.descriptionDetail {
+        if let cftAttr = component.props.descriptionDetail {
             let cftLabel = UILabel()
             cftLabel.translatesAutoresizingMaskIntoConstraints = false
-            pmView.addSubview(cftLabel)
+
+            if let _ = pmView.paymentMethodSubtitle {
+                pmView.addSubviewToBottom(cftLabel, withMargin: PXLayout.XXS_MARGIN)
+            } else {
+                if let title = pmView.paymentMethodTitle {
+                    pmView.addSubview(cftLabel)
+                    PXLayout.put(view: cftLabel, onBottomOf: title, withMargin: PXLayout.XXS_MARGIN).isActive = true
+                }
+            }
+
             cftLabel.attributedText = cftAttr
             cftLabel.font = Utils.getFont(size: PXLayout.M_FONT)
             cftLabel.textColor = cftColor
             cftLabel.textAlignment = .left
             PXLayout.setHeight(owner: cftLabel, height: PXLayout.M_FONT).isActive = true
-            PXLayout.pinLeft(view: cftLabel, to: subtitleLabel, withMargin: 0).isActive = true
-            PXLayout.pinBottom(view: cftLabel, to: pmView, withMargin: PXLayout.S_MARGIN).isActive = true
-            defaultHeight += PXLayout.M_MARGIN
+            PXLayout.pinLeft(view: cftLabel, to: title, withMargin: 0).isActive = true
+            defaultHeight += PXLayout.XS_MARGIN
         }
 
         // Bordered line color.
@@ -113,7 +125,8 @@ extension PXPaymentMethodComponentRenderer {
         pmView.backgroundColor = component.props.backgroundColor
         pmView.translatesAutoresizingMaskIntoConstraints = false
 
-        PXLayout.setHeight(owner: pmView, height: defaultHeight).isActive = true
+        pmView.pinLastSubviewToBottom(withMargin: PXLayout.XS_MARGIN)?.isActive = true
+
         return pmView
     }
 }

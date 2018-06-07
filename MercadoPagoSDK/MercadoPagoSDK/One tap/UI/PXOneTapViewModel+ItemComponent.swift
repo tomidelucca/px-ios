@@ -60,7 +60,7 @@ extension PXOneTapViewModel {
 
     private func getIconTitle() -> String {
         if self.amountHelper.preference.hasMultipleItems() {
-            return "Producto con titulo muy muy muy muy muy muy muy largo"
+            return "Productos".localized
         } else if let firstItemTitle = self.amountHelper.preference.items.first?.title {
             return firstItemTitle
         } else {
