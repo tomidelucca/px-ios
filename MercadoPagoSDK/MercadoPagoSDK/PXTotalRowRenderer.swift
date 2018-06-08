@@ -67,7 +67,6 @@ final class PXTotalRowRenderer {
             totalRowView.secondaryValueLabel = buildValueLabelIn(view: totalRowView, value: secondaryValue, height: SECONDARY_HEIGHT)
         }
 
-        totalRowView.pinContentViewToTop()
         PXLayout.setHeight(owner: totalRowView, height: ROW_HEIGHT).isActive = true
         layoutComponentsOf(totalRowView)
 
