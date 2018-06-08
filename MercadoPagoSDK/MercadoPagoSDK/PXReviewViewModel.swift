@@ -337,14 +337,12 @@ extension PXReviewViewModel {
     private func buildOneTapItemComponent(item: Item) -> PXItemComponent? {
         let itemQuantiy = item.quantity
         let itemPrice = item.unitPrice
-        let itemTitle = getItemTitle(item: item)
-        let itemDescription = getItemDescription(item: item)
-        let amountTitle = reviewScreenPreference.getAmountTitle()
-        let quantityTile = reviewScreenPreference.getQuantityLabel()
+        let itemTitle = item.title
+        let itemDescription = item.itemDescription
 
         let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
 
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: nil, itemTheme: itemTheme)
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
         return PXItemComponent(props: itemProps)
     }
 }
