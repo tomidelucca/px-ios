@@ -335,8 +335,8 @@ extension PXReviewViewModel {
 
     // HotFix: TODO - Move to OneTapViewModel
     private func buildOneTapItemComponent(item: Item) -> PXItemComponent? {
-        let itemQuantiy = getItemQuantity(item: item)
-        let itemPrice = getItemPrice(item: item)
+        let itemQuantiy = item.quantity
+        let itemPrice = item.unitPrice
         let itemTitle = getItemTitle(item: item)
         let itemDescription = getItemDescription(item: item)
         let amountTitle = reviewScreenPreference.getAmountTitle()

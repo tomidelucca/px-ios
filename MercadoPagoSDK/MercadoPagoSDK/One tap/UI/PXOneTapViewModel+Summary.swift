@@ -29,7 +29,11 @@ extension PXOneTapViewModel {
                 var totalAmount: Double = amountPrice
                 var titleWithQty = title
                 if let qty = itemComponent.props.quantity {
-                    titleWithQty = "\(qty) \(title)"
+                    if qty > 1 {
+                        titleWithQty = "\(qty) \(title)"
+                    } else {
+                        titleWithQty = "\(title)"
+                    }
                     totalAmount = amountPrice * Double(qty)
                 }
 

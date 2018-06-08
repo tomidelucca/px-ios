@@ -167,7 +167,6 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
             if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
                 let summaryViewController = PXOneTapSummaryModalViewController()
                 summaryViewController.setProps(summaryProps: summaryProps, bottomCustomView: getDiscountDetailView())
-                //TODO: "Detalle" translation. Pedir a contenidos.
                 PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle".localized)
             } else {
                 if let discountView = getDiscountDetailView() {
