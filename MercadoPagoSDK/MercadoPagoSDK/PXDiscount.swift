@@ -32,6 +32,7 @@ internal extension PXDiscount {
             return string
         }
     }
+
     internal func getDiscountAmount() -> Double? {
         return self.couponAmount
     }
