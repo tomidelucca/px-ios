@@ -110,7 +110,7 @@ extension PXPaymentMethodComponentRenderer {
             }
 
             cftLabel.attributedText = cftAttr
-            cftLabel.font = Utils.geLightFont(size: PXLayout.M_FONT)
+            cftLabel.font = Utils.getLightFont(size: PXLayout.M_FONT)
             cftLabel.textColor = cftColor
             cftLabel.textAlignment = .left
             PXLayout.setHeight(owner: cftLabel, height: PXLayout.M_FONT).isActive = true
