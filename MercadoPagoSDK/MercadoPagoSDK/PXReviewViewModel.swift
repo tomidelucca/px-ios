@@ -277,6 +277,19 @@ extension PXReviewViewModel {
 // MARK: Item component
 extension PXReviewViewModel {
 
+    // HotFix: TODO - Move to OneTapViewModel
+    func buildOneTapItemComponents() -> [PXItemComponent] {
+        var pxItemComponents = [PXItemComponent]()
+        if reviewScreenPreference.isItemsEnable() {
+            for item in self.amountHelper.preference.items {
+                if let itemComponent = buildOneTapItemComponent(item: item) {
+                    pxItemComponents.append(itemComponent)
+                }
+            }
+        }
+        return pxItemComponents
+    }
+
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
         if reviewScreenPreference.isItemsEnable() { // Items can be disable
@@ -317,6 +330,21 @@ extension PXReviewViewModel {
         let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
 
         let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: collectorIcon, itemTheme: itemTheme)
+        return PXItemComponent(props: itemProps)
+    }
+
+    // HotFix: TODO - Move to OneTapViewModel
+    private func buildOneTapItemComponent(item: Item) -> PXItemComponent? {
+        let itemQuantiy = getItemQuantity(item: item)
+        let itemPrice = getItemPrice(item: item)
+        let itemTitle = getItemTitle(item: item)
+        let itemDescription = getItemDescription(item: item)
+        let amountTitle = reviewScreenPreference.getAmountTitle()
+        let quantityTile = reviewScreenPreference.getQuantityLabel()
+
+        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: nil, itemTheme: itemTheme)
         return PXItemComponent(props: itemProps)
     }
 }

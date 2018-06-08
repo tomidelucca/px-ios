@@ -10,7 +10,7 @@ import Foundation
 
 extension PXOneTapViewModel {
     func shouldShowSummaryModal() -> Bool {
-        let itemsCount = buildItemComponents().count
+        let itemsCount = buildOneTapItemComponents().count
         return itemsCount > 0 || hasDiscount()
     }
 
@@ -20,7 +20,7 @@ extension PXOneTapViewModel {
 
     func getSummaryProps() -> [PXSummaryRowProps]? {
         let currency: Currency = MercadoPagoContext.getCurrency()
-        let itemComponentsModel = buildItemComponents()
+        let itemComponentsModel = buildOneTapItemComponents()
 
         var props = [PXSummaryRowProps]()
         for itemComponent in itemComponentsModel {
