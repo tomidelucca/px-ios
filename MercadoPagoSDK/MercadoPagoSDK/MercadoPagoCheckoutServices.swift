@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 extension MercadoPagoCheckout {
 
@@ -37,13 +38,13 @@ extension MercadoPagoCheckout {
 
     func getDirectDiscount() {
         self.pxNavigationHandler.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.amountHelper.amountToPay, payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (_) in
+        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.amountHelper.amountToPay, payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (discount) in
 
             guard let strongSelf = self else {
                 return
             }
 
-          //  strongSelf.viewModel.paymentData.discount = discount TODO SET DISCOUNT WITH CAMPAIGN
+            strongSelf.viewModel.discount = discount
             strongSelf.executeNextStep()
 
         }, failure: { [weak self] _ in
@@ -54,6 +55,35 @@ extension MercadoPagoCheckout {
 
             strongSelf.executeNextStep()
 
+        })
+    }
+
+    func getCampaigns() {
+        self.pxNavigationHandler.presentLoading()
+        self.viewModel.mercadoPagoServicesAdapter.getCampaigns(callback: { [weak self] (pxCampaigns) in
+
+            guard let strongSelf = self else {
+                return
+            }
+
+            if let discount = strongSelf.viewModel.discount, let campaigns = pxCampaigns {
+                let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
+                    return campaign.id.stringValue == discount.id
+                }
+                if let firstFilteredCampaign = filteredCampaigns.first {
+                    strongSelf.setDiscount(discount, withCampaign: firstFilteredCampaign)
+                }
+            }
+
+            strongSelf.executeNextStep()
+
+        }, failure: { [weak self] _ in
+
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.executeNextStep()
         })
     }
 

@@ -306,6 +306,10 @@ extension MercadoPagoCheckoutViewModel {
         return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
     }
 
+    func needToSearchCampaign() -> Bool {
+        return isDiscountEnable() && self.checkoutPreference != nil && self.directDiscountSearched && self.discount != nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && !self.campaignSearched
+    }
+
     func needToCreatePayment() -> Bool {
         if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
             return readyToPay

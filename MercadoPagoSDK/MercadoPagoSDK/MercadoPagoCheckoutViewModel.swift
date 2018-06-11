@@ -15,6 +15,7 @@ public enum CheckoutStep: String {
     case ACTION_VALIDATE_PREFERENCE
     case SERVICE_GET_PREFERENCE
     case SERVICE_GET_DIRECT_DISCOUNT
+    case SERVICE_GET_CAMPAIGNS
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
     case SERVICE_GET_IDENTIFICATION_TYPES
@@ -91,6 +92,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
 
+    var discount: PXDiscount?
+
     open var payerCosts: [PayerCost]?
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
@@ -106,6 +109,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var readyToPay: Bool = false
     var initWithPaymentData = false
     var directDiscountSearched = false
+    var campaignSearched = false
     var savedESCCardToken: SavedESCCardToken?
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
@@ -414,9 +418,15 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             needLoadPreference = false
             return .SERVICE_GET_PREFERENCE
         }
+
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SERVICE_GET_DIRECT_DISCOUNT
+        }
+
+        if needToSearchCampaign() {
+            self.campaignSearched = true
+            return .SERVICE_GET_CAMPAIGNS
         }
 
         if shouldExitCheckout() {
