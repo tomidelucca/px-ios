@@ -50,8 +50,7 @@ extension PXOneTapViewModel {
     }
 
     private func getDiscountLimit() -> String? {
-        // TODO: Añadir tope de descuento
-        return nil
+        return "total_row_disclaimer".localized_beta
     }
 
     private func getCollectorIcon() -> UIImage? {

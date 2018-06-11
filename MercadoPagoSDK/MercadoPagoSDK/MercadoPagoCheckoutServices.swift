@@ -82,7 +82,7 @@ extension MercadoPagoCheckout {
 
     func getPaymentMethodSearch() {
         self.pxNavigationHandler.presentLoading()
-      
+
         let paymentMethodPluginsToShow = viewModel.paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
         var pluginIds = [String]()
         for plugin in paymentMethodPluginsToShow {
@@ -95,7 +95,6 @@ extension MercadoPagoCheckout {
         let oneTapInfo: MercadoPagoServicesAdapter.PaymentSearchOneTapInfo = (cardIdsWithEsc, pluginIds)
 
         self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, defaultPaymentMethod: self.viewModel.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { [weak self] (paymentMethodSearch) in
-
 
             guard let strongSelf = self else {
                 return
@@ -461,4 +460,193 @@ extension MercadoPagoCheckout {
 
         })
     }
+}
+
+protocol PaymentErrorHandler: NSObjectProtocol {
+    func escError()
+    func identificationError()
+    func exitCheckout()
+}
+
+internal final class PaymentFlow {
+
+    let paymentData: PaymentData
+    let checkoutPreference: CheckoutPreference
+    let binaryMode: Bool
+    let paymentPlugin: PXPaymentPluginComponent?
+    let paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?
+    let navigationHandler: PXNavigationHandler
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+
+    let finishWithPaymentCallback: ((Payment) -> Void)
+    let finishWithPaymentResultCallback: ((PaymentResult) -> Void)
+    weak var paymentErrorHandler: PaymentErrorHandler?
+
+    var shouldShowLoading: Bool = true
+
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, binaryMode: Bool, paymentPlugin: PXPaymentPluginComponent?, paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?, navigationHandler: PXNavigationHandler, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, finishWithPaymentCallback: @escaping ((Payment) -> Void), finishWithPaymentResultCallback: @escaping ((PaymentResult) -> Void), paymentErrorHandler: PaymentErrorHandler) {
+        self.paymentData = paymentData
+        self.checkoutPreference = checkoutPreference
+        self.binaryMode = binaryMode
+        self.paymentPlugin = paymentPlugin
+        self.paymentClosure = paymentClosure
+        self.navigationHandler = navigationHandler
+        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+
+        self.finishWithPaymentCallback = finishWithPaymentCallback
+        self.finishWithPaymentResultCallback = finishWithPaymentResultCallback
+        self.paymentErrorHandler = paymentErrorHandler
+    }
+
+    deinit {
+        #if DEBUG
+        print("DEINIT FLOW - \(self)")
+        #endif
+    }
+
+    func setShowLoading(_ showloading: Bool) {
+        shouldShowLoading = showloading
+    }
+
+    func start() {
+        executeNextStep()
+    }
+
+    func executeNextStep() {
+        switch self.nextStep() {
+        case .defaultPayment:
+            createPayment()
+        case .paymentPlugin:
+            createPayment()
+        }
+    }
+
+    enum Steps: String {
+        case paymentPlugin
+        case defaultPayment
+    }
+
+    public func nextStep() -> Steps {
+        if needToCreatePaymentForPaymentPlugin() {
+            return .paymentPlugin
+        }
+        return .defaultPayment
+    }
+
+    func needToCreatePaymentForPaymentPlugin() -> Bool {
+        if paymentPlugin == nil {
+            return false
+        }
+        _ = copyViewModelAndAssignToCheckoutStore()
+
+        if let shouldSkip = paymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
+            return false
+        }
+
+        return true
+    }
+
+    func createClosurePayment() {
+        if copyViewModelAndAssignToCheckoutStore() {
+            paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        }
+        let (status, statusDetail, receiptId) = paymentClosure!()
+
+        if statusDetail == RejectedStatusDetail.INVALID_ESC {
+            paymentErrorHandler?.escError()
+            return
+        }
+
+        // TODO: Ver esto
+//        if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
+//            paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
+//        }
+
+        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: receiptId, statementDescription: nil)
+        finishWithPaymentResultCallback(paymentResult)
+    }
+
+    func createPayment() {
+        if shouldShowLoading {
+            self.navigationHandler.presentLoading()
+        }
+
+        var paymentBody: [String: Any]
+        if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: checkoutPreference.preferenceId, paymentData: paymentData, binaryMode: binaryMode)
+            paymentBody = mpPayment.toJSON()
+        } else {
+            paymentBody = paymentData.toJSON()
+        }
+
+        var createPaymentQuery: [String: String]? = [:]
+        if let paymentAdditionalInfo = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo() as? [String: String] {
+            createPaymentQuery = paymentAdditionalInfo
+        } else {
+            createPaymentQuery = nil
+        }
+
+        mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { [weak self] (payment) in
+
+            self?.finishWithPaymentCallback(payment)
+
+            }, failure: { [weak self] (error) in
+
+                let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
+
+                // ESC error
+                if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
+                    self?.paymentErrorHandler?.escError()
+
+                // Identification number error
+                } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
+                    self?.paymentErrorHandler?.identificationError()
+
+                } else {
+                    // Generic error screen
+                    self?.navigationHandler.showErrorScreen(error: mpError, callbackCancel: self?.paymentErrorHandler?.exitCheckout, errorCallback: { [weak self] () in
+                        self?.createPayment()
+                    })
+                }
+
+        })
+    }
+
+    func copyViewModelAndAssignToCheckoutStore() -> Bool {
+        // Set a copy of CheckoutVM in HookStore
+        if let newPaymentData = paymentData.copy() as? PaymentData {
+            PXCheckoutStore.sharedInstance.paymentData = newPaymentData
+            // TODO: ver si esto es un problmea
+            //PXCheckoutStore.sharedInstance.paymentOptionSelected = mercadoPagoCheckoutViewModel.paymentOptionSelected
+        }
+        // TODO: Hacer copia de esto
+        PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference
+        return true
+    }
+
+    static func readyForPayment(paymentData: PaymentData) -> Bool {
+        return paymentData.isComplete()
+    }
+
+}
+
+extension MercadoPagoCheckout: PaymentErrorHandler {
+    func escError() {
+        viewModel.prepareForInvalidPaymentWithESC()
+    }
+
+    func identificationError() {
+        self.viewModel.paymentData.clearCollectedData()
+        let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal...".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
+        self.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] () in
+            self?.viewModel.prepareForNewSelection()
+            self?.executeNextStep()
+
+        })
+    }
+
+    func exitCheckout() {
+        finish()
+    }
+
 }

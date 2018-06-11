@@ -88,6 +88,10 @@ open class MercadoPagoCheckout: NSObject {
         self.viewModel.paymentPlugin = paymentPlugin
     }
 
+    public func setPaymentClosure(closure: @escaping (() -> (status: String, statusDetail: String, receiptId: String? ))) {
+        self.viewModel.paymentClosure = closure
+    }
+
     public func resume() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()

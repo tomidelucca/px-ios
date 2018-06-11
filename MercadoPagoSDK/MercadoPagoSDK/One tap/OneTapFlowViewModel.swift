@@ -78,6 +78,18 @@ extension OneTapFlowViewModel {
     func reviewConfirmViewModel() -> PXOneTapViewModel {
         return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
     }
+
+    func paymentFlow(navigationHandler: PXNavigationHandler) -> PaymentFlow {
+        return PaymentFlow(paymentData: paymentData, checkoutPreference: checkoutPreference, binaryMode: false, paymentPlugin: paymentPlugin, paymentClosure: { () -> (status: String, statusDetail: String, receiptId: String?) in
+            return ("aprroved", "approved", "")
+        }, navigationHandler: navigationHandler, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, finishWithPaymentCallback: { (payment) in
+            self.viewModel.updateCheckoutModel(payment: payment)
+            self.executeNextStep()
+        }, finishWithPaymentResultCallback: { (paymentResult) in
+            self.setPaymentResult(paymentResult: paymentResult)
+            self.executeNextStep()
+        }, paymentErrorHandler: self)
+    }
 }
 
 // MARK: Update view models

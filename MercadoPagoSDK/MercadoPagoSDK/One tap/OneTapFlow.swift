@@ -15,6 +15,9 @@ final class OneTapFlow: PXFlow {
     let cancelOneTapCallback: (() -> Void)
     let exitCheckoutCallback: (() -> Void)
 
+    var paymentFlow: PaymentFlow?
+    var finishOneTapWithPaymentResultCallback: ((PaymentResult) -> Void)?
+
     init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, finishOneTap: @escaping ((PaymentData) -> Void), cancelOneTap: @escaping (() -> Void), exitCheckout: @escaping (() -> Void)) {
         pxNavigationHandler = navigationController
         finishOneTapCallback = finishOneTap
@@ -27,6 +30,11 @@ final class OneTapFlow: PXFlow {
         #if DEBUG
             print("DEINIT FLOW - \(self)")
         #endif
+    }
+
+    func setPaymentFlow(paymentFlow: PaymentFlow, callback: ((PaymentResult) -> Void)) {
+        self.paymentFlow = paymentFlow
+        self.finishOneTapWithPaymentResultCallback = callback
     }
 
     func start() {
