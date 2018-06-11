@@ -120,7 +120,11 @@ import UIKit
     }
 
     open static func setLanguage(string: String) {
-        sharedInstance.language = string
+        var languange = string
+        if languange == "" {
+            languange = "es"
+        }
+        sharedInstance.language = languange
     }
 
     open static func getLanguage() -> String {
