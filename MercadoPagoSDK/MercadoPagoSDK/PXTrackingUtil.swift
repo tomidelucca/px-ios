@@ -9,13 +9,26 @@
 import Foundation
 import MercadoPagoPXTracking
 
+// MARK: - Metadata/Params
 extension TrackingUtil {
-    //Screen IDs
-    open static let SCREEN_ID_REVIEW_AND_CONFIRM_ONE_TAP = "/express"
+    struct Metadata {
+        static let INSTALLMENTS = "installments"
+        static let HAS_DISCOUNT = "has_discount"
+    }
+}
 
-    //Screen Names
-    open static let SCREEN_NAME_REVIEW_AND_CONFIRM_ONE_TAP = "ONE_TAP"
+// MARK: - Screens
+extension TrackingUtil {
+    enum ScreenId {
+        static let REVIEW_AND_CONFIRM_ONE_TAP = "/express"
+        static let DISCOUNT_TERM_CONDITION = "/discount_terms_conditions"
+    }
+}
 
-    // MARK: Action events
-    open static let ACTION_ONE_TAP_CHANGE_PAYMENT_METHOD = "/one_tap_change"
+// MARK: - Events
+extension TrackingUtil {
+    struct Event {
+        static let TAP_SUMMARY_DETAIL = "/open_summary_detail"
+        static let TAP_BACK = "/back_action"
+    }
 }

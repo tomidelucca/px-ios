@@ -120,7 +120,11 @@ import UIKit
     }
 
     open static func setLanguage(string: String) {
-        sharedInstance.language = string
+        var languange = string
+        if String.isNullOrEmpty(string) {
+            languange = "es"
+        }
+        sharedInstance.language = languange
     }
 
     open static func getLanguage() -> String {
@@ -178,16 +182,16 @@ import UIKit
     open class func setPayerAccessToken(_ payerAccessToken: String) {
 
         sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
-        _ = CardFrontView()
-        _ = CardBackView()
+//        _ = CardFrontView()
+//        _ = CardBackView()
 
     }
 
     open class func setPublicKey(_ public_key: String) {
 
         sharedInstance.public_key = public_key.trimSpaces()
-        _ = CardFrontView()
-        _ = CardBackView()
+//        _ = CardFrontView()
+//        _ = CardBackView()
 
     }
 

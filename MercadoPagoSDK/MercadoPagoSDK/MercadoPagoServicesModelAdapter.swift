@@ -363,18 +363,6 @@ extension MercadoPagoServicesAdapter {
         return identificationType
     }
 
-    open func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount, amount: Double) -> DiscountCoupon {
-        let discountCoupon = DiscountCoupon(discountId: UInt(pxDiscount.id) ?? 0)
-        discountCoupon.name = pxDiscount.name
-        discountCoupon.percent_off = pxDiscount.percentOff?.cleanString ?? "0"
-        discountCoupon.amount_off = pxDiscount.amountOff?.cleanString ?? "0"
-        discountCoupon.coupon_amount = pxDiscount.couponAmount?.cleanString ?? "0"
-        discountCoupon.currency_id = pxDiscount.currencyId
-        discountCoupon.concept = pxDiscount.concept
-        discountCoupon.amountWithoutDiscount = amount
-        return discountCoupon
-    }
-
     open func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
         let payment = Payment()
         payment.binaryMode = pxPayment.binaryMode
@@ -438,7 +426,7 @@ extension MercadoPagoServicesAdapter {
     open func getOrderFromPXOrder(_ pxOrder: PXOrder?) -> Order {
         let order = Order()
         if let pxOrder = pxOrder {
-            order.orderId = Int(pxOrder.id ?? "0") ?? 0 //TODO AUGUSTO: ARREGLAR ESTO
+            order.orderId = Int(pxOrder.id ?? "0") ?? 0 //TODO: FIX
             order.type = pxOrder.type
         }
         return order
@@ -599,19 +587,8 @@ extension MercadoPagoServicesAdapter {
 
     open func getOneTapCardFromPXOneTapCard(_ pxOneTapCard: PXOneTapCard) -> OneTapCard {
         let cardId = pxOneTapCard.cardId
-        let cardDescription = pxOneTapCard.cardDescription
-        let issuer = getIssuerFromPXIssuer(pxOneTapCard.issuer)
-        let lastFourDigits = pxOneTapCard.lastFourDigits
-        let installments = pxOneTapCard.installments ?? 1
-        var payerCosts: [PayerCost] = []
-        if let pxPayerCosts = pxOneTapCard.payerCosts {
-            for pxPayerCost in pxPayerCosts {
-                if let payerCost = getPayerCostFromPXPayerCost(pxPayerCost) {
-                    payerCosts = Array.safeAppend(payerCosts, payerCost)
-                }
-            }
-        }
-        let oneTapCard = OneTapCard(cardId: cardId, cardDescription: cardDescription, issuer: issuer, lastFourDigits: lastFourDigits, installments: installments, payerCosts: payerCosts)
+        var payerCost: PayerCost? = getPayerCostFromPXPayerCost(pxOneTapCard.selectedPayerCost)
+        let oneTapCard = OneTapCard(cardId: cardId, selectedPayerCost: payerCost)
         return oneTapCard
     }
 

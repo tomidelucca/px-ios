@@ -23,19 +23,26 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     var readyToPay: Bool = false
     var payerCosts: [PayerCost]?
 
+    // In order to ensure data updated create new instance for every usage
+    private var amountHelper: PXAmountHelper {
+        get {
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
+        }
+    }
+
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
-    let reviewScreenPreference = ReviewScreenPreference()
+    let reviewScreenPreference: ReviewScreenPreference
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
-
+        self.reviewScreenPreference = reviewScreenPreference
         super.init()
 
-        if let payerCost = search.oneTap?.oneTapCard?.getSelectedPayerCost() {
+        if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
             updateCheckoutModel(payerCost: payerCost)
         }
     }
@@ -69,7 +76,7 @@ extension OneTapFlowViewModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentOptionSelected: paymentOptionSelected, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
     }
 }
 
@@ -91,15 +98,6 @@ extension OneTapFlowViewModel {
         }
     }
 
-    internal func getAmount() -> Double {
-        if let payerCost = paymentData.getPayerCost() {
-            return payerCost.totalAmount
-        } else if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
-            return discount.newAmount()
-        } else {
-            return checkoutPreference.getAmount()
-        }
-    }
 }
 
 // MARK: Flow logic
@@ -117,7 +115,7 @@ extension OneTapFlowViewModel {
     }
 
     func needSecurityCode() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod() else {
+        guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
 
@@ -125,7 +123,7 @@ extension OneTapFlowViewModel {
             return false
         }
 
-        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !pm.isCreditCard
+        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
@@ -136,12 +134,12 @@ extension OneTapFlowViewModel {
 
     func needCreateESCToken() -> Bool {
 
-        guard let pm = self.paymentData.getPaymentMethod() else {
+        guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
 
-        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard
-        let savedCardWithESC = !paymentData.hasToken() && pm.isCard && hasSavedESC() && hasInstallmentsIfNeeded
+        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !paymentMethod.isCreditCard
+        let savedCardWithESC = !paymentData.hasToken() && paymentMethod.isCard && hasSavedESC() && hasInstallmentsIfNeeded
 
         return savedCardWithESC
     }

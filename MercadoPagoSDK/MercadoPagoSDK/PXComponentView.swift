@@ -13,6 +13,11 @@ import Foundation
     private var topGuideView = UIView()
     private var bottomGuideView = UIView()
     private var contentView = UIView()
+    private lazy var carryMarginY: CGFloat = 0
+    var heightConstraint: NSLayoutConstraint?
+    var matchGuidesHeightContraint: NSLayoutConstraint?
+    var topGuideZeroHeightContraint: NSLayoutConstraint?
+    var bottomGuideZeroHeightContraint: NSLayoutConstraint?
 
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -29,7 +34,16 @@ import Foundation
         super.addSubview(contentView)
         PXLayout.pinTop(view: topGuideView).isActive = true
         PXLayout.pinBottom(view: bottomGuideView).isActive = true
-        PXLayout.matchHeight(ofView: topGuideView, toView: bottomGuideView).isActive = true
+
+        matchGuidesHeightContraint = PXLayout.matchHeight(ofView: topGuideView, toView: bottomGuideView)
+        matchGuidesHeightContraint?.isActive = true
+
+        topGuideZeroHeightContraint = PXLayout.setHeight(owner: topGuideView, height: 0)
+        topGuideZeroHeightContraint?.isActive = false
+
+        bottomGuideZeroHeightContraint = PXLayout.setHeight(owner: bottomGuideView, height: 0)
+        bottomGuideZeroHeightContraint?.isActive = false
+
         PXLayout.centerHorizontally(view: contentView).isActive = true
         PXLayout.centerHorizontally(view: topGuideView).isActive = true
         PXLayout.centerHorizontally(view: bottomGuideView).isActive = true
@@ -38,6 +52,34 @@ import Foundation
         PXLayout.matchWidth(ofView: contentView).isActive = true
         PXLayout.matchWidth(ofView: topGuideView).isActive = true
         PXLayout.matchWidth(ofView: bottomGuideView).isActive = true
+    }
+
+    public func pinContentViewToTop() {
+        topGuideZeroHeightContraint?.isActive = true
+        bottomGuideZeroHeightContraint?.isActive = false
+        matchGuidesHeightContraint?.isActive = false
+    }
+
+    public func pinContentViewToBottom() {
+        topGuideZeroHeightContraint?.isActive = false
+        bottomGuideZeroHeightContraint?.isActive = true
+        matchGuidesHeightContraint?.isActive = false
+    }
+
+    public func centerContentViewVertically() {
+        topGuideZeroHeightContraint?.isActive = false
+        bottomGuideZeroHeightContraint?.isActive = false
+        matchGuidesHeightContraint?.isActive = true
+    }
+
+    func fixHeight(height: CGFloat) {
+        if let heightConstraint = self.heightConstraint {
+            heightConstraint.constant = height
+        } else {
+            self.heightConstraint = PXLayout.setHeight(owner: self, height: height)
+            self.heightConstraint?.isActive = true
+        }
+        self.layoutIfNeeded()
     }
 
     func prepareForRender() {
@@ -67,6 +109,7 @@ import Foundation
         } else {
             putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
         }
+        carryMarginY += margin
     }
 
     @objc override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
@@ -86,6 +129,7 @@ import Foundation
         guard let firstView = self.contentView.subviews.first else {
             return nil
         }
+        carryMarginY += margin
         return PXLayout.pinTop(view: firstView, to: self.contentView, withMargin: margin)
     }
 
@@ -94,6 +138,7 @@ import Foundation
         guard let lastView = self.contentView.subviews.last else {
             return nil
         }
+        carryMarginY += margin
         return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
     }
 
@@ -102,6 +147,7 @@ import Foundation
         if !self.contentView.subviews.contains(view) {
             return nil
         }
+        carryMarginY += margin
         for actualView in self.contentView.subviews.reversed() where actualView != view {
             return PXLayout.put(view: view, onBottomOf: actualView, withMargin: margin)
         }
@@ -112,14 +158,24 @@ import Foundation
         return self.contentView.subviews
     }
 
-    var heightConstraint: NSLayoutConstraint?
-    func fixHeight(height: CGFloat) {
-        if let heightConstraint = self.heightConstraint {
-            heightConstraint.constant = height
+    func getCarryMarginY() -> CGFloat {
+        return carryMarginY
+    }
+
+    func isEmpty() -> Bool {
+        return self.contentView.subviews.count == 0
+    }
+}
+
+extension PXComponentView {
+    func animateContentOnY() {
+        if #available(iOS 10.0, *) {
+            let animatorInit = UIViewPropertyAnimator(duration: 0.6, dampingRatio: 1.4, animations: { [weak self] in
+                self?.contentView.transform = CGAffineTransform(translationX: 0, y: -4)
+            })
+            animatorInit.startAnimation()
         } else {
-            self.heightConstraint = PXLayout.setHeight(owner: self, height: height)
-            self.heightConstraint?.isActive = true
+            // No animation for iOS 9 or minor.
         }
-        self.layoutIfNeeded()
     }
 }

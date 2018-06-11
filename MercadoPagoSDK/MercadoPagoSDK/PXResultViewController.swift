@@ -37,15 +37,20 @@ class PXResultViewController: PXComponentContainerViewController {
     override func trackInfo() {
         self.viewModel.trackInfo()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
         self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.showsHorizontalScrollIndicator = false
         if contentView.getSubviews().isEmpty {
-            renderViews()       
+            renderViews()
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .plain, target: nil, action: nil)
     }
 
     func renderViews() {

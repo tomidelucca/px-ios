@@ -110,7 +110,7 @@ extension MercadoPagoCheckout {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.viewModel.paymentData.discount = discount
+           // strongSelf.viewModel.paymentData.discount = discount TODO SET DISCOUNT WITH CAMPAIGN
 
             strongSelf.getPayerCosts(updateCallback: {
 
@@ -187,6 +187,8 @@ extension MercadoPagoCheckout {
 
     func showPaymentResultScreen() {
 
+        _ = self.viewModel.saveOrDeleteESC()
+
         if self.viewModel.businessResult != nil {
             self.showBusinessResultScreen()
             return
@@ -194,8 +196,6 @@ extension MercadoPagoCheckout {
         if self.viewModel.paymentResult == nil {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
-
-       _ = self.viewModel.saveOrDeleteESC()
 
         var congratsViewController: MercadoPagoUIViewController
 
@@ -224,7 +224,7 @@ extension MercadoPagoCheckout {
         guard let businessResult = self.viewModel.businessResult else {
             return
         }
-        let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData, amount: self.viewModel.getAmount())
+        let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData, amountHelper: self.viewModel.amountHelper)
         let congratsViewController = PXResultViewController(viewModel: viewModel) { _ in}
         self.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
 
@@ -303,7 +303,7 @@ extension MercadoPagoCheckout {
         guard let search = viewModel.search, let paymentOtionSelected = viewModel.paymentOptionSelected else {
             return
         }
-        let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, finishOneTap: { [weak self] (paymentData) in
+        let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, finishOneTap: { [weak self] (paymentData) in
             guard let strongSelf = self else {
                 return
             }

@@ -35,6 +35,8 @@ class PXLayout: NSObject {
 
     static let DEFAULT_CONTRAINT_ACTIVE = true
 
+    static let NAV_BAR_HEIGHT: CGFloat = 44
+
     static func checkContraintActivation(_ constraint: NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
         constraint.isActive = isActive
         return constraint
@@ -144,6 +146,32 @@ class PXLayout: NSObject {
         ))
     }
 
+    //Vista 1 a la izquierda de vista 2
+    static func put(view: UIView, leftOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
+        return checkContraintActivation(NSLayoutConstraint(
+            item: view,
+            attribute: .right,
+            relatedBy: .equal,
+            toItem: view2,
+            attribute: .left,
+            multiplier: 1.0,
+            constant: -margin
+        ))
+    }
+
+    //Vista 1 a la derecha de vista 2
+    static func put(view: UIView, rightOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
+        return checkContraintActivation(NSLayoutConstraint(
+            item: view,
+            attribute: .left,
+            relatedBy: .equal,
+            toItem: view2,
+            attribute: .right,
+            multiplier: 1.0,
+            constant: margin
+        ))
+    }
+
     //Centrado horizontal
     static func centerHorizontally(view: UIView, to container: UIView? = nil) -> NSLayoutConstraint {
         var superView: UIView!
@@ -214,9 +242,9 @@ extension PXLayout {
         return bottomDeltaMargin
     }
 
-    static func getSafeAreaTopInset() -> CGFloat {
+    static func getSafeAreaTopInset(topDeltaMargin: CGFloat = 0) -> CGFloat {
         // iPhoneX or any device with safe area inset > 0
-        var topDeltaMargin: CGFloat = 0
+        var topDeltaMargin: CGFloat = topDeltaMargin
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.keyWindow
             let topSafeAreaInset = window?.safeAreaInsets.top
@@ -225,6 +253,11 @@ extension PXLayout {
             }
         }
         return topDeltaMargin
+    }
+
+    static func getStatusBarHeight() -> CGFloat {
+        let defaultStatusBarHeight: CGFloat = 20
+        return getSafeAreaTopInset(topDeltaMargin: defaultStatusBarHeight)
     }
 }
 
