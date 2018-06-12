@@ -656,6 +656,8 @@
 		FC1A2AF520B5A4F30046FECA /* PXTotalRowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A2AF320B5A4F30046FECA /* PXTotalRowRenderer.swift */; };
 		FC1A2AFA20B5A50B0046FECA /* PXTotalRowProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A2AF920B5A50B0046FECA /* PXTotalRowProps.swift */; };
 		FC1A2AFB20B5A50B0046FECA /* PXTotalRowProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A2AF920B5A50B0046FECA /* PXTotalRowProps.swift */; };
+		FC1F067F20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */; };
+		FC1F068020D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */; };
 		FC20C9D21F05580E003A018C /* ArrayExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC20C9D11F05580E003A018C /* ArrayExtensionsTest.swift */; };
 		FC239B002045D01800286B01 /* PXComponentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC239AFF2045D01800286B01 /* PXComponentAction.swift */; };
 		FC239B012045D01800286B01 /* PXComponentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC239AFF2045D01800286B01 /* PXComponentAction.swift */; };
@@ -1187,6 +1189,7 @@
 		FC1A2AF020B5A4E50046FECA /* PXTotalRowComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTotalRowComponent.swift; sourceTree = "<group>"; };
 		FC1A2AF320B5A4F30046FECA /* PXTotalRowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTotalRowRenderer.swift; sourceTree = "<group>"; };
 		FC1A2AF920B5A50B0046FECA /* PXTotalRowProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTotalRowProps.swift; sourceTree = "<group>"; };
+		FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDiscountCodeInputViewController.swift; sourceTree = "<group>"; };
 		FC20C9D11F05580E003A018C /* ArrayExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTest.swift; sourceTree = "<group>"; };
 		FC239AFF2045D01800286B01 /* PXComponentAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentAction.swift; sourceTree = "<group>"; };
 		FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconComponent.swift; sourceTree = "<group>"; };
@@ -1603,6 +1606,7 @@
 				FC2E9B9720A5EB2300D43B1E /* PXUIImageView.swift */,
 				231AB99A20ADF416006DC5A0 /* PXXibRenderer.swift */,
 				FC511EAE20BCE7C1006F098C /* PXDiscountDetailViewController.swift */,
+				FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -3046,6 +3050,7 @@
 				FC3FC8421FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */,
 				FC3FC8701FBE11FF00CF29E1 /* PXInstructionsReferenceRenderer.swift in Sources */,
 				4B08AC8820AC6E7D008AF845 /* PXOneTapItemRenderer.swift in Sources */,
+				FC1F067F20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift in Sources */,
 				232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */,
 				15AE1DA91F608BB500B0DAF8 /* SummaryType.swift in Sources */,
 				23BABFFC20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift in Sources */,
@@ -3488,6 +3493,7 @@
 				FC3FC84A1FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */,
 				4BEF9B5B1FE2ECD2002ADAFF /* MercadoPagoCheckoutViewModel+Plugins.swift in Sources */,
 				4B40DAB01E3781EB00B65B9D /* FlowPreferenceTest.swift in Sources */,
+				FC1F068020D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift in Sources */,
 				4B161A2E20067C930009A7D9 /* MockConfigPaymentMethodPlugin.swift in Sources */,
 				81F090E5201784BE008A69C1 /* PXContainedActionButtonRenderer.swift in Sources */,
 				4B53C5FA1E4B3FDD00D6190A /* PaymentData.swift in Sources */,
