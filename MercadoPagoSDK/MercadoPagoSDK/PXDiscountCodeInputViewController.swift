@@ -14,11 +14,6 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
 
     override open var screenName: String { return "DISCOUNT_SUMMARY" }
 
-    private let fontSize: CGFloat = PXLayout.S_FONT
-    private let baselineOffSet: Int = 6
-    private let fontColor = ThemeManager.shared.boldLabelTintColor()
-    private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
-    private let currency = MercadoPagoContext.getCurrency()
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
@@ -44,6 +39,7 @@ extension PXDiscountCodeInputViewController {
     private func renderViews() {
         let TITLE_LABEL_HEIGHT: CGFloat = 30
 
+        //Build title
         if let title = getTitle() {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -68,11 +64,19 @@ extension PXDiscountCodeInputViewController {
         PXLayout.pinLeft(view: textfield, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinRight(view: textfield, withMargin: PXLayout.M_MARGIN).isActive = true
 
+        //Spinner
+        let spinner = PXComponentFactory.Spinner.newSmall(color1: ThemeManager.shared.secondaryColor(), color2: ThemeManager.shared.secondaryColor())
+        self.spinner = spinner
+        self.contentView.addSubview(spinner)
+        PXLayout.pinRight(view: spinner, to: textfield, withMargin: 5).isActive = true
+        PXLayout.pinTop(view: spinner, to: textfield, withMargin: 10).isActive = true
+
         //Build action button
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.buttonTitle = "Continuar"
-        self.contentView.addSubviewToBottom(button, withMargin: PXLayout.S_MARGIN)
+        self.contentView.addSubview(button)
+        PXLayout.put(view: button, onBottomOf: textfield, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.centerHorizontally(view: button).isActive = true
         PXLayout.pinLeft(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinRight(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -83,12 +87,6 @@ extension PXDiscountCodeInputViewController {
                 self.showError(with: "Complete este campo")
             }
         }
-
-        //Spinner
-        let spinner = PXComponentFactory.Spinner.newSmall(color1: ThemeManager.shared.secondaryColor(), color2: ThemeManager.shared.secondaryColor())
-        self.spinner = spinner
-        self.contentView.addSubviewToBottom(spinner, withMargin: 20)
-        PXLayout.centerHorizontally(view: spinner).isActive = true
 
         self.contentView.pinLastSubviewToBottom(withMargin: PXLayout.M_MARGIN)?.isActive = true
         self.view.addSubview(contentView)
@@ -122,16 +120,51 @@ extension PXDiscountCodeInputViewController {
     }
 
     private func transitionToSuccess() {
-        if let superView = self.view.superview?.superview {
-            superView.backgroundColor = .red
-            let view2 = PXDiscountCodeInputSuccessView(title: "Exitos".toAttributedString(), message: "hola".toAttributedString(), icon: UIImage(), action: PXComponentAction(label: "hola", action: {
-                print("hola2")
-            }))
-            view2.translatesAutoresizingMaskIntoConstraints = false
-            view2.frame = superView.bounds
-            UIView.transition(from: superView, to: view2, duration: 0.5, options: .transitionFlipFromRight, completion: nil)
-        }
+
+        self.textfield?.resignFirstResponder()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            let successView = self.buildPXDiscountCodeInputSuccessView(with: self.view.frame)
+            self.view.backgroundColor = .white
+            successView.backgroundColor = .white
+            self.view.superview?.backgroundColor = .clear
+            self.view.superview?.superview?.backgroundColor = .clear
+            self.view.superview?.superview?.superview?.backgroundColor = .clear
+
+            UIView.transition(from: self.view, to: successView, duration: 0.5, options: .transitionFlipFromRight, completion: nil)
+        })
     }
+
+    func buildPXDiscountCodeInputSuccessView(with frame: CGRect) -> PXDiscountCodeInputSuccessView {
+        let view = PXDiscountCodeInputSuccessView(frame: self.view.frame)
+
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+
+        let titleAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.L_FONT),
+                               NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor(),
+                               NSAttributedStringKey.paragraphStyle: paragraph]
+
+        let messageAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XS_FONT),
+                                 NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor(),
+                                 NSAttributedStringKey.paragraphStyle: paragraph]
+
+        let titleString = "¡Excelente!"
+        let titleAttributedString = NSMutableAttributedString(string: titleString, attributes: titleAttributes)
+
+        let messageString = "Ahora paga tu compra y obtén - $ 100 de descuento."
+        let messageAttributedString = NSMutableAttributedString(string: messageString, attributes: messageAttributes)
+
+        let image = MercadoPago.getImage("codeInputSuccess")
+
+        let action = PXComponentAction(label: "Continuar") {
+            print("hola")
+        }
+
+        view.setProps(title: titleAttributedString, message: messageAttributedString, icon: image!, action: action)
+        return view
+    }
+
 }
 
 // MARK: Services
@@ -170,44 +203,4 @@ extension PXDiscountCodeInputViewController {
         }
     }
 
-}
-
-class PXDiscountCodeInputSuccessView: PXComponentView {
-
-    let title: NSAttributedString
-    let message: NSAttributedString
-    let icon: UIImage
-    let action: PXComponentAction
-
-    init(title: NSAttributedString, message: NSAttributedString, icon: UIImage, action: PXComponentAction) {
-        self.title = title
-        self.message = message
-        self.icon = icon
-        self.action = action
-        super.init()
-        self.renderViews()
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func renderViews() {
-        self.backgroundColor = .white
-
-        let TITLE_LABEL_HEIGHT: CGFloat = 27
-
-        //Build title
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.attributedText = title
-        self.addSubviewToBottom(label, withMargin: PXLayout.XL_MARGIN)
-        PXLayout.centerHorizontally(view: label).isActive = true
-        PXLayout.pinLeft(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.setHeight(owner: label, height: TITLE_LABEL_HEIGHT).isActive = true
-
-        self.pinLastSubviewToBottom(withMargin: PXLayout.M_MARGIN)?.isActive = true
-    }
 }
