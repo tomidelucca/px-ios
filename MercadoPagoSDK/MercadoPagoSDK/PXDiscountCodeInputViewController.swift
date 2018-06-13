@@ -119,12 +119,12 @@ extension PXDiscountCodeInputViewController {
         }
     }
 
-    private func transitionToSuccess() {
+    private func transitionToSuccess(with discount: PXDiscount) {
 
         self.textfield?.resignFirstResponder()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            let successView = self.buildPXDiscountCodeInputSuccessView(with: self.view.frame)
+            let successView = self.buildPXDiscountCodeInputSuccessView(with: discount, frame: self.view.frame)
             self.view.backgroundColor = .white
             successView.backgroundColor = .white
             self.view.superview?.backgroundColor = .clear
@@ -135,7 +135,7 @@ extension PXDiscountCodeInputViewController {
         })
     }
 
-    func buildPXDiscountCodeInputSuccessView(with frame: CGRect) -> PXDiscountCodeInputSuccessView {
+    func buildPXDiscountCodeInputSuccessView(with discount: PXDiscount, frame: CGRect) -> PXDiscountCodeInputSuccessView {
         let view = PXDiscountCodeInputSuccessView(frame: self.view.frame)
 
         let paragraph = NSMutableParagraphStyle()
@@ -152,7 +152,8 @@ extension PXDiscountCodeInputViewController {
         let titleString = "¡Excelente!"
         let titleAttributedString = NSMutableAttributedString(string: titleString, attributes: titleAttributes)
 
-        let messageString = "Ahora paga tu compra y obtén - $ 100 de descuento."
+        let discountDescription = discount.getDiscountDescription()
+        let messageString = "Ahora paga tu compra y obtén \(discountDescription) de descuento."
         let messageAttributedString = NSMutableAttributedString(string: messageString, attributes: messageAttributes)
 
         let image = MercadoPago.getImage("codeInputSuccess")
@@ -179,14 +180,13 @@ extension PXDiscountCodeInputViewController {
                     return
                 }
 
-                strongSelf.spinner?.hide()
-                strongSelf.transitionToSuccess()
-
                 if let discount = discount, let campaigns = mercadoPagoCheckout.viewModel.campaigns {
                     let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
                         return campaign.id.stringValue == discount.id
                     }
                     if let firstFilteredCampaign = filteredCampaigns.first {
+                        strongSelf.spinner?.hide()
+                        strongSelf.transitionToSuccess(with: discount)
                         mercadoPagoCheckout.setDiscount(discount, withCampaign: firstFilteredCampaign)
                     }
                 }

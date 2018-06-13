@@ -28,7 +28,6 @@ class PXDiscountCodeInputSuccessView: UIView {
 
         let TITLE_LABEL_HEIGHT: CGFloat = 27
         let ICON_HEIGHT: CGFloat = 48
-        let BUTTON_HEIGHT: CGFloat = 50
 
         //Build image view
         if let icon = icon {
@@ -83,7 +82,6 @@ class PXDiscountCodeInputSuccessView: UIView {
                 action.action()
             }
             PXLayout.pinBottom(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.setHeight(owner: button, height: BUTTON_HEIGHT).isActive = true
         }
     }
 }

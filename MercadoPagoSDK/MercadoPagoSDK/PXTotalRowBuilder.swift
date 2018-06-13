@@ -91,10 +91,11 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
     }
 
     static func handleTap(amountHelper: PXAmountHelper) {
-        if amountHelper.discount != nil {
-
+        if amountHelper.discount == nil {
+            //TODO should show input
             PXComponentFactory.Modal.show(viewController: PXDiscountCodeInputViewController(), title: nil)
-//            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
+        } else {
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
         }
     }
 }
