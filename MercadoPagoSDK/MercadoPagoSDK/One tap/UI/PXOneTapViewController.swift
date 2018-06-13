@@ -24,15 +24,17 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var callbackPaymentData: ((PaymentData) -> Void)
     var callbackConfirm: ((PaymentData) -> Void)
     var callbackExit: (() -> Void)
+    var finishButtonAnimation: (() -> Void)
 
     var loadingButtonComponent: PXAnimatedButton?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
+        self.finishButtonAnimation = finishButtonAnimation
         super.init()
     }
 
@@ -44,6 +46,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewWillAppear(animated)
         setupNavigationBar()
         setupUI()
+
+        PXNotificationManager.SuscribeTo.stopAnimatingButton(loadingButtonComponent, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -51,6 +55,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         if isMovingToParentViewController {
             viewModel.trackTapBackEvent()
         }
+        PXNotificationManager.UnsuscribeTo.stopAnimatingButton(loadingButtonComponent)
     }
 
     override func trackInfo() {
@@ -142,17 +147,17 @@ extension PXOneTapViewController {
     private func getFooterView() -> UIView? {
         let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
             self?.confirmPayment()
-//            if self?.viewModel.shouldAnimatePayButton ?? false {
-//                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
-//            }
+            if self?.viewModel.shouldAnimatePayButton ?? false {
+                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            }
 
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
         let footerComponent = PXFooterComponent(props: footerProps)
-        if let footerView = footerComponent.oneTapRender() as? PXFooterView {
-//            loadingButtonComponent = footerView.animatedButton
-//            loadingButtonComponent?.animationDelegate = self
-//            loadingButtonComponent?.layer.cornerRadius = 4
+        if let footerView = footerComponent.oneTapRender() as? PXFooterAnimatedView {
+            loadingButtonComponent = footerView.animatedButton
+            loadingButtonComponent?.animationDelegate = self
+            loadingButtonComponent?.layer.cornerRadius = 4
             return footerView
         }
         return nil
@@ -228,6 +233,7 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.view.alpha = 0
         }) { finish in
+            self.finishButtonAnimation()
             self.dismiss(animated: false, completion: nil)
         }
     }

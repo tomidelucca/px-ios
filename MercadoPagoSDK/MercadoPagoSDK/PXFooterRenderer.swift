@@ -62,7 +62,7 @@ final class PXFooterRenderer: NSObject {
         let button = PXAnimatedButton()
         button.backgroundColor = color
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.titleLabel?.text = footerAction.label
+        button.setTitle(footerAction.label, for: .normal)
         button.add(for: .touchUpInside, footerAction.action)
         return button
     }

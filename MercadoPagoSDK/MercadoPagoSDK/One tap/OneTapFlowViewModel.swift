@@ -23,6 +23,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     let search: PaymentMethodSearch
     var readyToPay: Bool = false
     var payerCosts: [PayerCost]?
+    var paymentResult: PaymentResult?
 
     // Payment flow
     var paymentFlow: PaymentFlow?
@@ -123,7 +124,6 @@ extension OneTapFlowViewModel {
     }
 
     func needSecurityCode() -> Bool {
-        return false
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
@@ -142,7 +142,6 @@ extension OneTapFlowViewModel {
     }
 
     func needCreateESCToken() -> Bool {
-        return false
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
@@ -162,7 +161,7 @@ extension OneTapFlowViewModel {
 
     func hasSavedESC() -> Bool {
         // TODO: Remove
-        return false
+        return true
         if let card = paymentOptionSelected as? CardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }

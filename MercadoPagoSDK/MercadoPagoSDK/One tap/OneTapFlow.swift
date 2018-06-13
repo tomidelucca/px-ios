@@ -38,10 +38,15 @@ final class OneTapFlow: PXFlow {
         guard let paymentFlow = viewModel.paymentFlow else {
             return
         }
-//        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: viewModel.finishOneTapWithPaymentResultCallback!)
-//        paymentFlow.start()
+        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
+//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10), execute: {
+//                PXNotificationManager.Post.stopAnimatingButton()
+//                self?.viewModel.paymentResult = paymentResult
+//            })
+        })
+        paymentFlow.start()
 
-        self.viewModel.finishOneTapWithPaymentResultCallback!(PaymentResult(status: "approved", statusDetail: "", paymentData: viewModel.paymentData, payerEmail: nil, paymentId: nil, statementDescription: nil))
+//        self.viewModel.finishOneTapWithPaymentResultCallback?(PaymentResult(status: "approved", statusDetail: "String", paymentData: viewModel.paymentData, payerEmail: nil, paymentId: nil, statementDescription: nil))
     }
 
     func start() {

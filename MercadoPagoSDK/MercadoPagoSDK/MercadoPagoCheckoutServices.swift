@@ -505,28 +505,7 @@ internal final class PaymentFlow {
     }
 
     func start() {
-        guard let paymentData = paymentData, let checkoutPreference = checkoutPreference else {
-            return
-        }
-        //        if copyViewModelAndAssignToCheckoutStore() {
-        //            paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
-        //        }
-        let (status, statusDetail, receiptId) = paymentClosure!()
-
-        if statusDetail == RejectedStatusDetail.INVALID_ESC {
-            paymentErrorHandler?.escError()
-            return
-        }
-
-        // TODO: Ver esto
-        //        if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
-        //            paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
-        //        }
-
-        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: receiptId, statementDescription: nil)
-        finishWithPaymentResultCallback?(paymentResult)
-        return
-        //executeNextStep()
+        executeNextStep()
     }
 
     func executeNextStep() {
@@ -556,12 +535,11 @@ internal final class PaymentFlow {
         if paymentPlugin == nil {
             return false
         }
-        // TODO: DESCOMENTAR ESTO
-        //_ = copyViewModelAndAssignToCheckoutStore()
+        _ = copyViewModelAndAssignToCheckoutStore()
 
-//        if let shouldSkip = paymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
-//            return false
-//        }
+        if let shouldSkip = paymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
+            return false
+        }
 
         return true
     }
@@ -570,9 +548,9 @@ internal final class PaymentFlow {
         guard let paymentData = paymentData, let checkoutPreference = checkoutPreference else {
             return
         }
-//        if copyViewModelAndAssignToCheckoutStore() {
-//            paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
-//        }
+        if copyViewModelAndAssignToCheckoutStore() {
+            paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        }
         let (status, statusDetail, receiptId) = paymentClosure!()
 
         if statusDetail == RejectedStatusDetail.INVALID_ESC {

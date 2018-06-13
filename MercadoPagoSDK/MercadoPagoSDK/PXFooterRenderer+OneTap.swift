@@ -11,12 +11,12 @@ import Foundation
 extension PXFooterRenderer {
     func oneTapRender(_ footer: PXFooterComponent) -> UIView {
         // TODO: Hacer una view con un animated button
-        let fooView = PXFooterView()
+        let fooView = PXFooterAnimatedView()
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .clear
         if let principalAction = footer.props.buttonAction {
-            let animatedButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
-            fooView.principalButton = animatedButton
+            let animatedButton = self.buildAnimatedButton(with: principalAction, color: footer.props.primaryColor)
+            fooView.animatedButton = animatedButton
             fooView.addSubview(animatedButton)
             PXLayout.pinTop(view: animatedButton, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinLeft(view: animatedButton, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -29,5 +29,5 @@ extension PXFooterRenderer {
 }
 
 final internal class PXFooterAnimatedView: UIView {
-    var animatedButton: PXPrimaryButton?
+    var animatedButton: PXAnimatedButton?
 }

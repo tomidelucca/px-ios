@@ -305,8 +305,8 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let paymentFlow = PaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentClosure: { () -> (status: String, statusDetail: String, receiptId: String?) in
-            return ("aprroved", "approved", "")
+        let paymentFlow = PaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentClosure: { [weak self] () -> (status: String, statusDetail: String, receiptId: String?)  in
+            return ("approved", "approved", "")
         }, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
 
         let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, finishOneTap: { [weak self] (paymentData) in

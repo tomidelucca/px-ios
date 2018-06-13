@@ -37,7 +37,7 @@ extension PXAnimatedButton {
         isUserInteractionEnabled = false
     }
 
-    func animateFinishSuccess() {
+    @objc func animateFinishSuccess() {
         let successColor = ThemeManager.shared.successColor()
         let successCheckImage = MercadoPago.getImage("sheetSuccess")
 
