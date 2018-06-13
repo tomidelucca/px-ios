@@ -304,6 +304,10 @@ extension MercadoPagoCheckout {
             return
         }
 
+        let paymentFlow = PaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentClosure: { () -> (status: String, statusDetail: String, receiptId: String?) in
+            return ("aprroved", "approved", "")
+        }, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
+
         let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, finishOneTap: { [weak self] (paymentData) in
             guard let strongSelf = self else {
                 return
@@ -319,9 +323,10 @@ extension MercadoPagoCheckout {
                 self?.finish()
         })
 
-        onetapFlow.setPaymentFlow(paymentFlow: paymentFlow, callback: { (PaymentResult) in
-            self.setPaymentResult(paymentResult: PaymentResult)
-            executeNextStep()
+        onetapFlow.setPaymentFlow(paymentFlow: paymentFlow, callback: { (paymentResult) in
+            // TODO: Agregar weak self
+            self.setPaymentResult(paymentResult: paymentResult)
+            self.executeNextStep()
         })
         onetapFlow.start()
     }

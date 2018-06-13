@@ -9,20 +9,25 @@
 import Foundation
 
 extension PXFooterRenderer {
-    func oneTapRender(_ footer: PXFooterComponent) -> PXFooterView {
+    func oneTapRender(_ footer: PXFooterComponent) -> UIView {
+        // TODO: Hacer una view con un animated button
         let fooView = PXFooterView()
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .clear
         if let principalAction = footer.props.buttonAction {
-            let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
-            fooView.principalButton = principalButton
-            fooView.addSubview(principalButton)
-            PXLayout.pinTop(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinLeft(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinRight(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            let animatedButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
+            fooView.principalButton = animatedButton
+            fooView.addSubview(animatedButton)
+            PXLayout.pinTop(view: animatedButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinLeft(view: animatedButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: animatedButton, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.setHeight(owner: fooView, height: BUTTON_HEIGHT+PXLayout.XXL_MARGIN).isActive = true
-            PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
+            PXLayout.setHeight(owner: animatedButton, height: BUTTON_HEIGHT).isActive = true
         }
         return fooView
     }
+}
+
+final internal class PXFooterAnimatedView: UIView {
+    var animatedButton: PXPrimaryButton?
 }

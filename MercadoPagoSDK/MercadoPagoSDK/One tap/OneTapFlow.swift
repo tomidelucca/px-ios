@@ -15,9 +15,6 @@ final class OneTapFlow: PXFlow {
     let cancelOneTapCallback: (() -> Void)
     let exitCheckoutCallback: (() -> Void)
 
-    var paymentFlow: PaymentFlow?
-    var finishOneTapWithPaymentResultCallback: ((PaymentResult) -> Void)?
-
     init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, finishOneTap: @escaping ((PaymentData) -> Void), cancelOneTap: @escaping (() -> Void), exitCheckout: @escaping (() -> Void)) {
         pxNavigationHandler = navigationController
         finishOneTapCallback = finishOneTap
@@ -32,9 +29,25 @@ final class OneTapFlow: PXFlow {
         #endif
     }
 
-    func setPaymentFlow(paymentFlow: PaymentFlow, callback: ((PaymentResult) -> Void)) {
-        self.paymentFlow = paymentFlow
-        self.finishOneTapWithPaymentResultCallback = callback
+    func setPaymentFlow(paymentFlow: PaymentFlow, callback: @escaping ((PaymentResult) -> Void)) {
+        viewModel.paymentFlow = paymentFlow
+        viewModel.finishOneTapWithPaymentResultCallback = callback
+    }
+
+    func setPaymentFlow() {
+        guard let paymentFlow = viewModel.paymentFlow else {
+            return
+        }
+        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { (paymentResult) in
+                // Avisar al boton que termine de animar
+                // Devoler paymentResult
+            // TODO: weak self y force
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                self.viewModel.finishOneTapWithPaymentResultCallback!(paymentResult)
+            })
+
+        })
+        paymentFlow.start()
     }
 
     func start() {
@@ -49,6 +62,8 @@ final class OneTapFlow: PXFlow {
             self.showSecurityCodeScreen()
         case .serviceCreateESCCardToken:
             self.createCardToken()
+        case .payment:
+            self.setPaymentFlow()
         case .finish:
             self.finishFlow()
         }

@@ -58,6 +58,15 @@ final class PXFooterRenderer: NSObject {
         return button
     }
 
+    func buildAnimatedButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> PXAnimatedButton {
+        let button = PXAnimatedButton()
+        button.backgroundColor = color
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.text = footerAction.label
+        button.add(for: .touchUpInside, footerAction.action)
+        return button
+    }
+
     func buildLinkButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> PXSecondaryButton {
         let linkButton = PXSecondaryButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false

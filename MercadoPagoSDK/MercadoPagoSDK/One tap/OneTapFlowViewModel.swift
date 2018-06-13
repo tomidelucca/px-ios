@@ -14,6 +14,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         case screenReviewOneTap
         case screenSecurityCode
         case serviceCreateESCCardToken
+        case payment
     }
 
     var paymentData: PaymentData
@@ -22,6 +23,10 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     let search: PaymentMethodSearch
     var readyToPay: Bool = false
     var payerCosts: [PayerCost]?
+
+    // Payment flow
+    var paymentFlow: PaymentFlow?
+    var finishOneTapWithPaymentResultCallback: ((PaymentResult) -> Void)?
 
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {
@@ -56,6 +61,9 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         if needCreateESCToken() {
             return .serviceCreateESCCardToken
         }
+        if needCreatePayment() {
+            return .payment
+        }
         return .finish
     }
 }
@@ -76,19 +84,7 @@ extension OneTapFlowViewModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
-    }
-
-    func paymentFlow(navigationHandler: PXNavigationHandler) -> PaymentFlow {
-        return PaymentFlow(paymentData: paymentData, checkoutPreference: checkoutPreference, binaryMode: false, paymentPlugin: paymentPlugin, paymentClosure: { () -> (status: String, statusDetail: String, receiptId: String?) in
-            return ("aprroved", "approved", "")
-        }, navigationHandler: navigationHandler, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, finishWithPaymentCallback: { (payment) in
-            self.viewModel.updateCheckoutModel(payment: payment)
-            self.executeNextStep()
-        }, finishWithPaymentResultCallback: { (paymentResult) in
-            self.setPaymentResult(paymentResult: paymentResult)
-            self.executeNextStep()
-        }, paymentErrorHandler: self)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference, shouldAnimatePayButton: hasSavedESC())
     }
 }
 
@@ -127,6 +123,7 @@ extension OneTapFlowViewModel {
     }
 
     func needSecurityCode() -> Bool {
+        return false
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
@@ -145,7 +142,7 @@ extension OneTapFlowViewModel {
     }
 
     func needCreateESCToken() -> Bool {
-
+        return false
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
@@ -156,7 +153,16 @@ extension OneTapFlowViewModel {
         return savedCardWithESC
     }
 
+    func needCreatePayment() -> Bool {
+        if !readyToPay {
+            return false
+        }
+        return paymentData.isComplete(shouldCheckForToken: false) && paymentFlow != nil
+    }
+
     func hasSavedESC() -> Bool {
+        // TODO: Remove
+        return false
         if let card = paymentOptionSelected as? CardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }

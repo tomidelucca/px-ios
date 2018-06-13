@@ -18,19 +18,14 @@ class PXReviewViewModel: NSObject {
     public static var CUSTOMER_ID = ""
 
     internal var amountHelper: PXAmountHelper
-//    var preference: CheckoutPreference
-//    var paymentData: PaymentData!
     var paymentOptionSelected: PaymentMethodOption
     var reviewScreenPreference: ReviewScreenPreference
 
-    public init(amountHelper: PXAmountHelper, /* checkoutPreference: CheckoutPreference, paymentData: PaymentData,*/ paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
-      //  self.preference = checkoutPreference
-      //  self.paymentData = paymentData
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
-        super.init()
     }
 
     // MARK: Tracking logic

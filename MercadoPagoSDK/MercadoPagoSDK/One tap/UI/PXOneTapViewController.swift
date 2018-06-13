@@ -25,6 +25,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var callbackConfirm: ((PaymentData) -> Void)
     var callbackExit: (() -> Void)
 
+    var loadingButtonComponent: PXAnimatedButton?
+
     // MARK: Lifecycle/Publics
     init(viewModel: PXOneTapViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
         self.viewModel = viewModel
@@ -107,10 +109,11 @@ extension PXOneTapViewController {
         }
 
         // Add footer payment button.
-        footerView = getFooterView()
-        contentView.addSubviewToBottom(footerView)
-        PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.centerHorizontally(view: footerView).isActive = true
+        if let footerView = getFooterView() {
+            contentView.addSubviewToBottom(footerView)
+            PXLayout.matchWidth(ofView: footerView).isActive = true
+            PXLayout.centerHorizontally(view: footerView).isActive = true
+        }
 
         view.layoutIfNeeded()
         refreshContentViewSize()
@@ -136,13 +139,23 @@ extension PXOneTapViewController {
         return nil
     }
 
-    private func getFooterView() -> UIView {
+    private func getFooterView() -> UIView? {
         let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
             self?.confirmPayment()
+            if self?.viewModel.shouldAnimatePayButton ?? false {
+                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            }
+
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
         let footerComponent = PXFooterComponent(props: footerProps)
-        return footerComponent.oneTapRender()
+        if let footerView = footerComponent.oneTapRender() as? PXFooterView {
+//            loadingButtonComponent = footerView.animatedButton
+//            loadingButtonComponent?.animationDelegate = self
+            loadingButtonComponent?.layer.cornerRadius = 4
+            return footerView
+        }
+        return nil
     }
 
     private func getDiscountDetailView() -> UIView? {
@@ -162,6 +175,10 @@ extension PXOneTapViewController {
 // MARK: User Actions.
 extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     @objc func shouldOpenSummary() {
+
+        loadingButtonComponent?.animateFinishSuccess()
+
+        return
         viewModel.trackTapSummaryDetailEvent()
         if viewModel.shouldShowSummaryModal() {
             if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
@@ -199,5 +216,20 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
         let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
         webVC.title = title
         self.navigationController?.pushViewController(webVC, animated: true)
+    }
+}
+
+// MARK: Payment Button animation delegate
+@available(iOS 9.0, *)
+extension PXOneTapViewController: PXAnimatedButtonDelegate {
+    func expandAnimationInProgress() {
+    }
+
+    func didFinishAnimation() {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.view.alpha = 0
+        }) { finish in
+            self.dismiss(animated: false, completion: nil)
+        }
     }
 }

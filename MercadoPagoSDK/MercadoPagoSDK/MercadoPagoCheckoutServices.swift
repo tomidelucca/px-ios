@@ -470,32 +470,32 @@ protocol PaymentErrorHandler: NSObjectProtocol {
 
 internal final class PaymentFlow {
 
-    let paymentData: PaymentData
-    let checkoutPreference: CheckoutPreference
+    var paymentData: PaymentData?
+    var checkoutPreference: CheckoutPreference?
     let binaryMode: Bool
     let paymentPlugin: PXPaymentPluginComponent?
     let paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?
     let navigationHandler: PXNavigationHandler
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    let finishWithPaymentCallback: ((Payment) -> Void)
-    let finishWithPaymentResultCallback: ((PaymentResult) -> Void)
+    var finishWithPaymentResultCallback: ((PaymentResult) -> Void)?
     weak var paymentErrorHandler: PaymentErrorHandler?
 
     var shouldShowLoading: Bool = true
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, binaryMode: Bool, paymentPlugin: PXPaymentPluginComponent?, paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?, navigationHandler: PXNavigationHandler, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, finishWithPaymentCallback: @escaping ((Payment) -> Void), finishWithPaymentResultCallback: @escaping ((PaymentResult) -> Void), paymentErrorHandler: PaymentErrorHandler) {
-        self.paymentData = paymentData
-        self.checkoutPreference = checkoutPreference
-        self.binaryMode = binaryMode
+    init(paymentPlugin: PXPaymentPluginComponent?, paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PaymentErrorHandler) {
         self.paymentPlugin = paymentPlugin
         self.paymentClosure = paymentClosure
         self.navigationHandler = navigationHandler
+        self.binaryMode = binaryMode
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
-
-        self.finishWithPaymentCallback = finishWithPaymentCallback
-        self.finishWithPaymentResultCallback = finishWithPaymentResultCallback
         self.paymentErrorHandler = paymentErrorHandler
+    }
+
+    func setData(paymentData: PaymentData, checkoutPreference: CheckoutPreference, finishWithPaymentResultCallback: @escaping ((PaymentResult) -> Void)) {
+        self.paymentData = paymentData
+        self.checkoutPreference = checkoutPreference
+        self.finishWithPaymentResultCallback = finishWithPaymentResultCallback
     }
 
     deinit {
@@ -517,7 +517,7 @@ internal final class PaymentFlow {
         case .defaultPayment:
             createPayment()
         case .paymentPlugin:
-            createPayment()
+            createClosurePayment()
         }
     }
 
@@ -529,8 +529,9 @@ internal final class PaymentFlow {
     public func nextStep() -> Steps {
         if needToCreatePaymentForPaymentPlugin() {
             return .paymentPlugin
+        } else {
+            return .defaultPayment
         }
-        return .defaultPayment
     }
 
     func needToCreatePaymentForPaymentPlugin() -> Bool {
@@ -547,6 +548,9 @@ internal final class PaymentFlow {
     }
 
     func createClosurePayment() {
+        guard let paymentData = paymentData, let checkoutPreference = checkoutPreference else {
+            return
+        }
         if copyViewModelAndAssignToCheckoutStore() {
             paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
@@ -563,12 +567,12 @@ internal final class PaymentFlow {
 //        }
 
         let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: receiptId, statementDescription: nil)
-        finishWithPaymentResultCallback(paymentResult)
+        finishWithPaymentResultCallback?(paymentResult)
     }
 
     func createPayment() {
-        if shouldShowLoading {
-            self.navigationHandler.presentLoading()
+        guard let paymentData = paymentData, let checkoutPreference = checkoutPreference else {
+            return
         }
 
         var paymentBody: [String: Any]
@@ -587,8 +591,12 @@ internal final class PaymentFlow {
         }
 
         mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { [weak self] (payment) in
-
-            self?.finishWithPaymentCallback(payment)
+            guard let paymentData = self?.paymentData else {
+                // return?
+                return
+            }
+            let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
+            self?.finishWithPaymentResultCallback?(paymentResult)
 
             }, failure: { [weak self] (error) in
 
@@ -614,7 +622,7 @@ internal final class PaymentFlow {
 
     func copyViewModelAndAssignToCheckoutStore() -> Bool {
         // Set a copy of CheckoutVM in HookStore
-        if let newPaymentData = paymentData.copy() as? PaymentData {
+        if let newPaymentData = paymentData?.copy() as? PaymentData {
             PXCheckoutStore.sharedInstance.paymentData = newPaymentData
             // TODO: ver si esto es un problmea
             //PXCheckoutStore.sharedInstance.paymentOptionSelected = mercadoPagoCheckoutViewModel.paymentOptionSelected

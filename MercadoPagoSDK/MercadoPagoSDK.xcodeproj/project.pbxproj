@@ -305,6 +305,10 @@
 		4B161A2A200546050009A7D9 /* PaymentPluginFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B161A29200546050009A7D9 /* PaymentPluginFlowTest.swift */; };
 		4B161A2E20067C930009A7D9 /* MockConfigPaymentMethodPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B161A2D20067C930009A7D9 /* MockConfigPaymentMethodPlugin.swift */; };
 		4B1CA5951FFE94BC00F576AA /* PaymentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1CA5941FFE94BC00F576AA /* PaymentStatus.swift */; };
+		4B1EE15C20D0142800560838 /* PXPogressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15B20D0142800560838 /* PXPogressView.swift */; };
+		4B1EE15D20D0142800560838 /* PXPogressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15B20D0142800560838 /* PXPogressView.swift */; };
+		4B1EE15F20D0145F00560838 /* PXAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */; };
+		4B1EE16020D0145F00560838 /* PXAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */; };
 		4B277F661E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */; };
 		4B277F671E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */; };
 		4B277F691E38F00D00AF5DF8 /* ServicePreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B277F681E38F00D00AF5DF8 /* ServicePreferenceTest.swift */; };
@@ -969,6 +973,8 @@
 		4B161A29200546050009A7D9 /* PaymentPluginFlowTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPluginFlowTest.swift; sourceTree = "<group>"; };
 		4B161A2D20067C930009A7D9 /* MockConfigPaymentMethodPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConfigPaymentMethodPlugin.swift; sourceTree = "<group>"; };
 		4B1CA5941FFE94BC00F576AA /* PaymentStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentStatus.swift; sourceTree = "<group>"; };
+		4B1EE15B20D0142800560838 /* PXPogressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPogressView.swift; sourceTree = "<group>"; };
+		4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAnimatedButton.swift; sourceTree = "<group>"; };
 		4B241A991E01A7E00059640C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Additions.swift"; sourceTree = "<group>"; };
 		4B277F681E38F00D00AF5DF8 /* ServicePreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicePreferenceTest.swift; sourceTree = "<group>"; };
@@ -1582,6 +1588,7 @@
 		15AE1DAB1F61B8BA00B0DAF8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				4B1EE15A20D0140A00560838 /* Animated Button */,
 				FC3918B2208E19E200B75366 /* Bank Deals */,
 				81F090DF20177E1A008A69C1 /* ReviewAndConfirm */,
 				FCF24589201901EF00CAF717 /* Common Components */,
@@ -1858,6 +1865,15 @@
 				4B6954C020A4BA0800CCF735 /* PXTrackingUtil.swift */,
 			);
 			name = Constants;
+			sourceTree = "<group>";
+		};
+		4B1EE15A20D0140A00560838 /* Animated Button */ = {
+			isa = PBXGroup;
+			children = (
+				4B1EE15B20D0142800560838 /* PXPogressView.swift */,
+				4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */,
+			);
+			path = "Animated Button";
 			sourceTree = "<group>";
 		};
 		4B48541A20482588001C0921 /* Item */ = {
@@ -2716,7 +2732,6 @@
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
 				4BCA62FA1EBA48D8006D8131 /* SwiftLint */,
-				49D3E723B51FA0C203822348 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2737,7 +2752,6 @@
 				0F9883121AD2A97A00F750F0 /* Frameworks */,
 				7622E33F1DF5F5F900490C4E /* Headers */,
 				F9E0B11D8F72856EC5E5936F /* [CP] Embed Pods Frameworks */,
-				35A447939DF78A61C703AD1A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2904,21 +2918,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		35A447939DF78A61C703AD1A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		453400CF7B9E303EBB1250C7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2935,21 +2934,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		49D3E723B51FA0C203822348 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4BCA62FA1EBA48D8006D8131 /* SwiftLint */ = {
@@ -3109,6 +3093,7 @@
 				15AE1DA01F607BA000B0DAF8 /* ItemsReview.swift in Sources */,
 				4BEF81001E538CCE00797CD1 /* PaymentResultScreenPreference.swift in Sources */,
 				81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */,
+				4B1EE15F20D0145F00560838 /* PXAnimatedButton.swift in Sources */,
 				4B08AC8E20AC6EC5008AF845 /* PXOneTapItemContainerView.swift in Sources */,
 				4BE805BC20AB563C001F5C0F /* PXFlow.swift in Sources */,
 				812BA9BE1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift in Sources */,
@@ -3231,6 +3216,7 @@
 				76128AC11DD10BA600D3B3CD /* MercadoPagoUIScrollViewController.swift in Sources */,
 				1553AF331E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
 				7619E9451DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */,
+				4B1EE15C20D0142800560838 /* PXPogressView.swift in Sources */,
 				76EEF75D1D674BA80095D5A5 /* CardInformation.swift in Sources */,
 				815409481FD5A74B00B245BC /* PXReceiptRenderer.swift in Sources */,
 				0F9883321AD2AB3C00F750F0 /* CustomServer.swift in Sources */,
@@ -3467,6 +3453,7 @@
 				765E7CAF1E736A32003AE4CD /* WalletIntegrationTest.swift in Sources */,
 				15AE1D9B1F6073AB00B0DAF8 /* SummaryDetail.swift in Sources */,
 				4B0BAC431F1E81C60097103E /* MercadoPagoCheckoutScreens.swift in Sources */,
+				4B1EE15D20D0142800560838 /* PXPogressView.swift in Sources */,
 				766012E31CEB963300897F9D /* MPSDKError.swift in Sources */,
 				237A1A012050048400B0C2D2 /* PXSummaryCompactComponentView.swift in Sources */,
 				76DDF97B1E8AE8C900EEB66D /* ServicePreference.swift in Sources */,
@@ -3629,6 +3616,7 @@
 				4B6954C220A4BA0800CCF735 /* PXTrackingUtil.swift in Sources */,
 				0F98837A1AD2AB6000F750F0 /* Installment.swift in Sources */,
 				FCF723F5202CB2D9002F125C /* Localizator.swift in Sources */,
+				4B1EE16020D0145F00560838 /* PXAnimatedButton.swift in Sources */,
 				237A19F92050046F00B0C2D2 /* PXReviewTitleComponent.swift in Sources */,
 				4BD1E8671FB38096002B3F75 /* PXSDKSettings.swift in Sources */,
 				4B08CD9B1F20E2B400FE800A /* ESCFlowsTests.swift in Sources */,
