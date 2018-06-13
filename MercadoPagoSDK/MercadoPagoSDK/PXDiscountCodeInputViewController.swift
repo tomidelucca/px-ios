@@ -8,8 +8,9 @@
 
 import UIKit
 import MercadoPagoServices
+import MLUI
 
-final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, UITextFieldDelegate {
+final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTitledTextFieldDelegate {
 
     override open var screenName: String { return "DISCOUNT_SUMMARY" }
 
@@ -19,14 +20,21 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, UITe
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
     private let currency = MercadoPagoContext.getCurrency()
     let contentView: PXComponentView = PXComponentView()
-    private var textfield: HoshiTextField?
-    private var errorLabel: UILabel?
+    private var textfield: MLTitledSingleLineTextField?
+    private var spinner: MLSpinner?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
         if self.contentView.isEmpty() {
             renderViews()
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            self.textfield!.becomeFirstResponder()
+        })
     }
 }
 
@@ -35,8 +43,6 @@ extension PXDiscountCodeInputViewController {
 
     private func renderViews() {
         let TITLE_LABEL_HEIGHT: CGFloat = 30
-        let TEXTFIELD_HEIGHT: CGFloat = 35
-        let ERROR_LABEL_HEIGHT: CGFloat = 16
 
         if let title = getTitle() {
             let label = UILabel()
@@ -51,30 +57,16 @@ extension PXDiscountCodeInputViewController {
         }
 
         //Build input textfield
-        let textfield = HoshiTextField()
+        let textfield = MLTitledSingleLineTextField()
         self.textfield = textfield
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.delegate = self
         textfield.autocapitalizationType = .allCharacters
-        textfield.font = Utils.getFont(size: PXLayout.S_FONT)
-        textfield.autocorrectionType = UITextAutocorrectionType.no
+//        textfield.autocorrectionType = UITextAutocorrectionType.no
         self.contentView.addSubviewToBottom(textfield, withMargin: PXLayout.XXL_MARGIN)
         PXLayout.centerHorizontally(view: textfield).isActive = true
         PXLayout.pinLeft(view: textfield, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinRight(view: textfield, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.setHeight(owner: textfield, height: TEXTFIELD_HEIGHT).isActive = true
-
-        //Build error Label
-        let label = UILabel()
-        self.errorLabel = label
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.isHidden = true
-        self.contentView.addSubviewToBottom(label, withMargin: PXLayout.XXXS_MARGIN)
-        PXLayout.centerHorizontally(view: label).isActive = true
-        PXLayout.pinLeft(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.setHeight(owner: label, height: ERROR_LABEL_HEIGHT).isActive = true
 
         //Build action button
         let button = PXPrimaryButton()
@@ -85,13 +77,18 @@ extension PXDiscountCodeInputViewController {
         PXLayout.pinLeft(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinRight(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
         button.add(for: .touchUpInside) {
-            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXXS_FONT),
-                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.rejectedColor()]
-
-            let string = "Revisa este dato"
-            let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
-            self.showError(with: attributedString)
+            if textfield.text.isNotEmpty {
+                self.getCodeDiscount(with: textfield.text)
+            } else {
+                self.showError(with: "Complete este campo")
+            }
         }
+
+        //Spinner
+        let spinner = PXComponentFactory.Spinner.newSmall(color1: ThemeManager.shared.secondaryColor(), color2: ThemeManager.shared.secondaryColor())
+        self.spinner = spinner
+        self.contentView.addSubviewToBottom(spinner, withMargin: 20)
+        PXLayout.centerHorizontally(view: spinner).isActive = true
 
         self.contentView.pinLastSubviewToBottom(withMargin: PXLayout.M_MARGIN)?.isActive = true
         self.view.addSubview(contentView)
@@ -99,11 +96,9 @@ extension PXDiscountCodeInputViewController {
         PXLayout.matchHeight(ofView: contentView).isActive = true
         PXLayout.centerHorizontally(view: contentView).isActive = true
         PXLayout.centerVertically(view: contentView).isActive = true
-
-        self.hideError()
     }
 
-    func getTitle() -> NSAttributedString? {
+    private func getTitle() -> NSAttributedString? {
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
 
@@ -116,30 +111,25 @@ extension PXDiscountCodeInputViewController {
         return attributedString
     }
 
-    func showError(with text: NSAttributedString) {
+    private func getErrorMessage() -> String {
+        return "Revisa este dato"
+    }
+
+    private func showError(with text: String) {
         if let textfield = textfield {
-            textfield.borderInactiveColor = ThemeManager.shared.rejectedColor()
-            textfield.borderActiveColor = ThemeManager.shared.rejectedColor()
-            textfield.setNeedsDisplay()
-            textfield.resignFirstResponder()
-            textfield.becomeFirstResponder()
-        }
-        if let errorLabel = errorLabel {
-            errorLabel.attributedText = text
-            errorLabel.isHidden = false
+            textfield.errorDescription = text
         }
     }
 
-    func hideError() {
-        if let textfield = textfield {
-            textfield.borderInactiveColor = ThemeManager.shared.secondaryColor()
-            textfield.borderActiveColor = ThemeManager.shared.secondaryColor()
-            textfield.setNeedsDisplay()
-            textfield.resignFirstResponder()
-            textfield.becomeFirstResponder()
-        }
-        if let errorLabel = errorLabel {
-            errorLabel.isHidden = true
+    private func transitionToSuccess() {
+        if let superView = self.view.superview?.superview {
+            superView.backgroundColor = .red
+            let view2 = PXDiscountCodeInputSuccessView(title: "Exitos".toAttributedString(), message: "hola".toAttributedString(), icon: UIImage(), action: PXComponentAction(label: "hola", action: {
+                print("hola2")
+            }))
+            view2.translatesAutoresizingMaskIntoConstraints = false
+            view2.frame = superView.bounds
+            UIView.transition(from: superView, to: view2, duration: 0.5, options: .transitionFlipFromRight, completion: nil)
         }
     }
 }
@@ -149,21 +139,75 @@ extension PXDiscountCodeInputViewController {
 
     func getCodeDiscount(with code: String) {
         if let mercadoPagoCheckout = MercadoPagoCheckout.currentCheckout {
+            self.spinner?.show()
             mercadoPagoCheckout.viewModel.mercadoPagoServicesAdapter.getCodeDiscount(amount: mercadoPagoCheckout.viewModel.amountHelper.amountToPay, payerEmail: mercadoPagoCheckout.viewModel.checkoutPreference.payer.email, couponCode: code, callback: { [weak self] (discount) in
 
-//                guard let strongSelf = self else {
-//                    return
-//                }
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.spinner?.hide()
+                strongSelf.transitionToSuccess()
+
+                if let discount = discount, let campaigns = mercadoPagoCheckout.viewModel.campaigns {
+                    let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
+                        return campaign.id.stringValue == discount.id
+                    }
+                    if let firstFilteredCampaign = filteredCampaigns.first {
+                        mercadoPagoCheckout.setDiscount(discount, withCampaign: firstFilteredCampaign)
+                    }
+                }
 
                 }, failure: { [weak self] _ in
 
-//                    guard let strongSelf = self else {
-//                        return
-//                    }
-//
-//                    strongSelf.executeNextStep()
+                    guard let strongSelf = self else {
+                        return
+                    }
+
+                    strongSelf.spinner?.hide()
+                    strongSelf.showError(with: strongSelf.getErrorMessage())
             })
         }
     }
 
+}
+
+class PXDiscountCodeInputSuccessView: PXComponentView {
+
+    let title: NSAttributedString
+    let message: NSAttributedString
+    let icon: UIImage
+    let action: PXComponentAction
+
+    init(title: NSAttributedString, message: NSAttributedString, icon: UIImage, action: PXComponentAction) {
+        self.title = title
+        self.message = message
+        self.icon = icon
+        self.action = action
+        super.init()
+        self.renderViews()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func renderViews() {
+        self.backgroundColor = .white
+
+        let TITLE_LABEL_HEIGHT: CGFloat = 27
+
+        //Build title
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.attributedText = title
+        self.addSubviewToBottom(label, withMargin: PXLayout.XL_MARGIN)
+        PXLayout.centerHorizontally(view: label).isActive = true
+        PXLayout.pinLeft(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.setHeight(owner: label, height: TITLE_LABEL_HEIGHT).isActive = true
+
+        self.pinLastSubviewToBottom(withMargin: PXLayout.M_MARGIN)?.isActive = true
+    }
 }
