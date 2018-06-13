@@ -219,7 +219,7 @@ import MercadoPagoServices
         if let discount = self.discount {
             obj["discount"] = discount.toJSONDictionary()
         }
-        
+
         return obj
     }
 
