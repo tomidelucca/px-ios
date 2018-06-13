@@ -272,6 +272,19 @@ extension PXReviewViewModel {
 // MARK: Item component
 extension PXReviewViewModel {
 
+    // HotFix: TODO - Move to OneTapViewModel
+    func buildOneTapItemComponents() -> [PXItemComponent] {
+        var pxItemComponents = [PXItemComponent]()
+        if reviewScreenPreference.isItemsEnable() {
+            for item in self.amountHelper.preference.items {
+                if let itemComponent = buildOneTapItemComponent(item: item) {
+                    pxItemComponents.append(itemComponent)
+                }
+            }
+        }
+        return pxItemComponents
+    }
+
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
         if reviewScreenPreference.isItemsEnable() { // Items can be disable
@@ -312,6 +325,19 @@ extension PXReviewViewModel {
         let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
 
         let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: collectorIcon, itemTheme: itemTheme)
+        return PXItemComponent(props: itemProps)
+    }
+
+    // HotFix: TODO - Move to OneTapViewModel
+    private func buildOneTapItemComponent(item: Item) -> PXItemComponent? {
+        let itemQuantiy = item.quantity
+        let itemPrice = item.unitPrice
+        let itemTitle = item.title
+        let itemDescription = item.itemDescription
+
+        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: "", quantityTitle: "", collectorImage: nil, itemTheme: itemTheme)
         return PXItemComponent(props: itemProps)
     }
 }
