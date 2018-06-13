@@ -13,29 +13,14 @@ extension OneTapFlow {
     func showReviewAndConfirmScreenForOneTap() {
         let reviewVC = PXOneTapViewController(viewModel: viewModel.reviewConfirmViewModel(), callbackPaymentData: { [weak self] (paymentData: PaymentData) in
 
-            // Change payment method callback
-            if let search = self?.viewModel.search {
-                search.deleteCheckoutDefaultOption()
-            }
             self?.cancelFlow()
-
-            if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
-                MercadoPagoCheckoutViewModel.changePaymentMethodCallback?()
-            }
             return
 
             }, callbackConfirm: {(paymentData: PaymentData) in
                 self.viewModel.updateCheckoutModel(paymentData: paymentData)
 
                 // Deletes default one tap option in payment method search
-                self.viewModel.search.deleteCheckoutDefaultOption()
-
-                if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
-                    MercadoPagoCheckoutViewModel.paymentDataCallback = MercadoPagoCheckoutViewModel.paymentDataConfirmCallback
-                    self.finishFlow()
-                } else {
-                    self.executeNextStep()
-                }
+                self.executeNextStep()
 
         }, callbackExit: { [weak self] () -> Void in
             guard let strongSelf = self else {

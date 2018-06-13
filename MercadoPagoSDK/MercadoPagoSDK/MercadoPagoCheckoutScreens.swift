@@ -215,7 +215,8 @@ extension MercadoPagoCheckout {
                 strongSelf.finish()
             }
         })
-        self.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
+        //self.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
+        self.pxNavigationHandler.navigationController.pushViewController(congratsViewController, animated: false)
 
     }
 
@@ -323,10 +324,10 @@ extension MercadoPagoCheckout {
                 self?.finish()
         })
 
-        onetapFlow.setPaymentFlow(paymentFlow: paymentFlow, callback: { (paymentResult) in
+        onetapFlow.setPaymentFlow(paymentFlow: paymentFlow, callback: { [weak self] (paymentResult) in
             // TODO: Agregar weak self
-            self.setPaymentResult(paymentResult: paymentResult)
-            self.executeNextStep()
+            self?.setPaymentResult(paymentResult: paymentResult)
+            self?.executeNextStep()
         })
         onetapFlow.start()
     }

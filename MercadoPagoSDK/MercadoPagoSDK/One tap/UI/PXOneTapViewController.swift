@@ -142,9 +142,9 @@ extension PXOneTapViewController {
     private func getFooterView() -> UIView? {
         let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
             self?.confirmPayment()
-            if self?.viewModel.shouldAnimatePayButton ?? false {
-                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
-            }
+//            if self?.viewModel.shouldAnimatePayButton ?? false {
+//                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+//            }
 
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
@@ -152,7 +152,7 @@ extension PXOneTapViewController {
         if let footerView = footerComponent.oneTapRender() as? PXFooterView {
 //            loadingButtonComponent = footerView.animatedButton
 //            loadingButtonComponent?.animationDelegate = self
-            loadingButtonComponent?.layer.cornerRadius = 4
+//            loadingButtonComponent?.layer.cornerRadius = 4
             return footerView
         }
         return nil
