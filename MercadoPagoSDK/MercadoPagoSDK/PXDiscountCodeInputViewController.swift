@@ -140,7 +140,6 @@ extension PXDiscountCodeInputViewController {
 
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
-
         let titleAttributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.L_FONT),
                                NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor(),
                                NSAttributedStringKey.paragraphStyle: paragraph]
