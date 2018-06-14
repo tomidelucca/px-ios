@@ -19,9 +19,14 @@ extension PXNotificationManager {
             notificationCenter.addObserver(observer, selector: selector, name: .attemptToClose, object: nil)
         }
 
-        static func stopAnimatingButton(_ observer: Any, selector: Selector) {
+        static func animateButtonForSuccess(_ observer: Any, selector: Selector) {
             let notificationCenter = NotificationCenter.default
-            notificationCenter.addObserver(observer, selector: selector, name: .stopAnimatingButton, object: nil)
+            notificationCenter.addObserver(observer, selector: selector, name: .animateButtonForSuccess, object: nil)
+        }
+
+        static func animateButtonForError(_ observer: Any, selector: Selector) {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.addObserver(observer, selector: selector, name: .animateButtonForError, object: nil)
         }
     }
 }
@@ -33,9 +38,14 @@ extension PXNotificationManager {
             notificationCenter.removeObserver(observer, name: .attemptToClose, object: nil)
         }
 
-        static func stopAnimatingButton(_ observer: Any) {
+        static func animateButtonForSuccess(_ observer: Any) {
             let notificationCenter = NotificationCenter.default
-            notificationCenter.removeObserver(observer, name: .stopAnimatingButton, object: nil)
+            notificationCenter.removeObserver(observer, name: .animateButtonForSuccess, object: nil)
+        }
+
+        static func animateButtonForError(_ observer: Any) {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.removeObserver(observer, name: .animateButtonForError, object: nil)
         }
     }
 }
@@ -47,14 +57,20 @@ extension PXNotificationManager {
             notificationCenter.post(name: .attemptToClose, object: nil)
         }
 
-        static func stopAnimatingButton() {
+        static func animateButtonForSuccess() {
             let notificationCenter = NotificationCenter.default
-            notificationCenter.post(name: .stopAnimatingButton, object: nil)
+            notificationCenter.post(name: .animateButtonForSuccess, object: nil)
+        }
+
+        static func animateButtonForError() {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.post(name: .animateButtonForError, object: nil)
         }
     }
 }
 
 internal extension NSNotification.Name {
     static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
-    static let stopAnimatingButton = Notification.Name(rawValue: "PXStopAnimatingButton ")
+    static let animateButtonForSuccess = Notification.Name(rawValue: "PXAnimateButtonForSucces")
+    static let animateButtonForError = Notification.Name(rawValue: "PXAnimateButtonForError")
 }

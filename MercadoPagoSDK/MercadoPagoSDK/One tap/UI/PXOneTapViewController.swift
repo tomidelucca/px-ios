@@ -47,7 +47,9 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         setupNavigationBar()
         setupUI()
 
-        PXNotificationManager.SuscribeTo.stopAnimatingButton(loadingButtonComponent, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
+        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
+
+        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent, selector: #selector(loadingButtonComponent?.animateFinishError))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,7 +57,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         if isMovingToParentViewController {
             viewModel.trackTapBackEvent()
         }
-        PXNotificationManager.UnsuscribeTo.stopAnimatingButton(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
     }
 
     override func trackInfo() {
@@ -230,10 +233,10 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
     }
 
     func didFinishAnimation() {
+        self.finishButtonAnimation()
         UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.view.alpha = 0
         }) { finish in
-            self.finishButtonAnimation()
             self.dismiss(animated: false, completion: nil)
         }
     }

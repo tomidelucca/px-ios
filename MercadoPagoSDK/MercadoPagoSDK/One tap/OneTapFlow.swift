@@ -39,9 +39,13 @@ final class OneTapFlow: PXFlow {
             return
         }
         paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10), execute: {
-//                PXNotificationManager.Post.stopAnimatingButton()
-//                self?.viewModel.paymentResult = paymentResult
+//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+            if paymentResult.isApproved() {
+                PXNotificationManager.Post.animateButtonForSuccess()
+            } else {
+                PXNotificationManager.Post.animateButtonForError()
+            }
+                self?.viewModel.paymentResult = paymentResult
 //            })
         })
         paymentFlow.start()
