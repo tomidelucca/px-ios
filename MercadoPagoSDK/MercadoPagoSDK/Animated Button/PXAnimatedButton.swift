@@ -55,6 +55,7 @@ extension PXAnimatedButton {
                        completion: { _ in
 
                         UIView.animate(withDuration: 0.3, animations: {
+                            self.progressView?.alpha = 0
                             self.backgroundColor = successColor
                         }, completion: { _ in
 
@@ -121,6 +122,7 @@ extension PXAnimatedButton {
                        completion: { _ in
 
                         UIView.animate(withDuration: 0.3, animations: {
+                            self.progressView?.alpha = 0
                             self.backgroundColor = successColor
                         }, completion: { _ in
 

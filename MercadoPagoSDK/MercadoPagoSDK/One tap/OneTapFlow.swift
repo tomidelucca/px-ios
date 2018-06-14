@@ -39,18 +39,21 @@ final class OneTapFlow: PXFlow {
             return
         }
         paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
-//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+            sleep(2)
             if paymentResult.isApproved() {
                 PXNotificationManager.Post.animateButtonForSuccess()
             } else {
                 PXNotificationManager.Post.animateButtonForError()
             }
                 self?.viewModel.paymentResult = paymentResult
-//            })
         })
         paymentFlow.start()
 
-//        self.viewModel.finishOneTapWithPaymentResultCallback?(PaymentResult(status: "approved", statusDetail: "String", paymentData: viewModel.paymentData, payerEmail: nil, paymentId: nil, statementDescription: nil))
+//        PXNotificationManager.Post.animateButtonForSuccess()
+//         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
+//            self.viewModel.finishOneTapWithPaymentResultCallback?(PaymentResult(status: "approved", statusDetail: "String", paymentData: self.viewModel.paymentData, payerEmail: nil, paymentId: nil, statementDescription: nil))
+//                //PXNotificationManager.Post.animateButtonForSuccess()
+//            })
     }
 
     func start() {
