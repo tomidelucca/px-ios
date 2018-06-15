@@ -28,6 +28,11 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.addObserver(observer, selector: selector, name: .animateButtonForError, object: nil)
         }
+
+        static func animateButtonForWarning(_ observer: Any, selector: Selector) {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.addObserver(observer, selector: selector, name: .animateButtonForWarning, object: nil)
+        }
     }
 }
 
@@ -46,6 +51,11 @@ extension PXNotificationManager {
         static func animateButtonForError(_ observer: Any) {
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(observer, name: .animateButtonForError, object: nil)
+        }
+
+        static func animateButtonForWarning(_ observer: Any) {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.removeObserver(observer, name: .animateButtonForWarning, object: nil)
         }
     }
 }
@@ -66,6 +76,11 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.post(name: .animateButtonForError, object: nil)
         }
+
+        static func animateButtonForWarning() {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.post(name: .animateButtonForWarning, object: nil)
+        }
     }
 }
 
@@ -73,4 +88,5 @@ internal extension NSNotification.Name {
     static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
     static let animateButtonForSuccess = Notification.Name(rawValue: "PXAnimateButtonForSucces")
     static let animateButtonForError = Notification.Name(rawValue: "PXAnimateButtonForError")
+    static let animateButtonForWarning = Notification.Name(rawValue: "PXAnimateButtonForWarning")
 }

@@ -305,8 +305,8 @@
 		4B161A2A200546050009A7D9 /* PaymentPluginFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B161A29200546050009A7D9 /* PaymentPluginFlowTest.swift */; };
 		4B161A2E20067C930009A7D9 /* MockConfigPaymentMethodPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B161A2D20067C930009A7D9 /* MockConfigPaymentMethodPlugin.swift */; };
 		4B1CA5951FFE94BC00F576AA /* PaymentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1CA5941FFE94BC00F576AA /* PaymentStatus.swift */; };
-		4B1EE15C20D0142800560838 /* PXPogressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15B20D0142800560838 /* PXPogressView.swift */; };
-		4B1EE15D20D0142800560838 /* PXPogressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15B20D0142800560838 /* PXPogressView.swift */; };
+		4B1EE15C20D0142800560838 /* PXProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15B20D0142800560838 /* PXProgressView.swift */; };
+		4B1EE15D20D0142800560838 /* PXProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15B20D0142800560838 /* PXProgressView.swift */; };
 		4B1EE15F20D0145F00560838 /* PXAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */; };
 		4B1EE16020D0145F00560838 /* PXAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */; };
 		4B277F661E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */; };
@@ -973,7 +973,7 @@
 		4B161A29200546050009A7D9 /* PaymentPluginFlowTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPluginFlowTest.swift; sourceTree = "<group>"; };
 		4B161A2D20067C930009A7D9 /* MockConfigPaymentMethodPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConfigPaymentMethodPlugin.swift; sourceTree = "<group>"; };
 		4B1CA5941FFE94BC00F576AA /* PaymentStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentStatus.swift; sourceTree = "<group>"; };
-		4B1EE15B20D0142800560838 /* PXPogressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPogressView.swift; sourceTree = "<group>"; };
+		4B1EE15B20D0142800560838 /* PXProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXProgressView.swift; sourceTree = "<group>"; };
 		4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAnimatedButton.swift; sourceTree = "<group>"; };
 		4B241A991E01A7E00059640C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Additions.swift"; sourceTree = "<group>"; };
@@ -1870,7 +1870,7 @@
 		4B1EE15A20D0140A00560838 /* Animated Button */ = {
 			isa = PBXGroup;
 			children = (
-				4B1EE15B20D0142800560838 /* PXPogressView.swift */,
+				4B1EE15B20D0142800560838 /* PXProgressView.swift */,
 				4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */,
 			);
 			path = "Animated Button";
@@ -3216,7 +3216,7 @@
 				76128AC11DD10BA600D3B3CD /* MercadoPagoUIScrollViewController.swift in Sources */,
 				1553AF331E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
 				7619E9451DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */,
-				4B1EE15C20D0142800560838 /* PXPogressView.swift in Sources */,
+				4B1EE15C20D0142800560838 /* PXProgressView.swift in Sources */,
 				76EEF75D1D674BA80095D5A5 /* CardInformation.swift in Sources */,
 				815409481FD5A74B00B245BC /* PXReceiptRenderer.swift in Sources */,
 				0F9883321AD2AB3C00F750F0 /* CustomServer.swift in Sources */,
@@ -3453,7 +3453,7 @@
 				765E7CAF1E736A32003AE4CD /* WalletIntegrationTest.swift in Sources */,
 				15AE1D9B1F6073AB00B0DAF8 /* SummaryDetail.swift in Sources */,
 				4B0BAC431F1E81C60097103E /* MercadoPagoCheckoutScreens.swift in Sources */,
-				4B1EE15D20D0142800560838 /* PXPogressView.swift in Sources */,
+				4B1EE15D20D0142800560838 /* PXProgressView.swift in Sources */,
 				766012E31CEB963300897F9D /* MPSDKError.swift in Sources */,
 				237A1A012050048400B0C2D2 /* PXSummaryCompactComponentView.swift in Sources */,
 				76DDF97B1E8AE8C900EEB66D /* ServicePreference.swift in Sources */,

@@ -53,8 +53,9 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         if isMovingToParentViewController {
             viewModel.trackTapBackEvent()
         }
-//        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
-//        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
     }
 
     override func trackInfo() {
@@ -163,6 +164,8 @@ extension PXOneTapViewController {
 
         PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
 
+        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
+
         return loadingButtonComponent
 
 //        let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
@@ -200,10 +203,6 @@ extension PXOneTapViewController {
 // MARK: User Actions.
 extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     @objc func shouldOpenSummary() {
-
-        loadingButtonComponent?.animateFinishSuccess()
-
-        return
         viewModel.trackTapSummaryDetailEvent()
         if viewModel.shouldShowSummaryModal() {
             if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
@@ -251,5 +250,9 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
 
     func didFinishAnimation() {
         self.finishButtonAnimation()
+    }
+
+    func progressButtonAnimationTimeOut() {
+
     }
 }

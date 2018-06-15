@@ -8,7 +8,12 @@
 
 import Foundation
 
-final class PXPogressView: UIView {
+protocol ProgressViewDelegate {
+    func didFinishProgress()
+    func progressTimeOut()
+}
+
+final class ProgressView: UIView {
 
     fileprivate var timer: Timer?
 
@@ -19,16 +24,15 @@ final class PXPogressView: UIView {
     fileprivate let progressViewEndX: CGFloat
     fileprivate var progressViewDeltaIncrement: CGFloat = 0
 
-    fileprivate var timeOutProgressClousure :  (() -> Void)?
-    // var finishProgressClousure :  (() -> Void)?
+    var progressDelegate: ProgressViewDelegate?
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     init(forView: UIView, loadingColor: UIColor = UIColor.white) {
-        progressViewHeight = forView.bounds.height
-        progressViewEndX = forView.bounds.width
+        progressViewHeight = forView.frame.height
+        progressViewEndX = forView.frame.width
         progressViewDeltaIncrement = progressViewEndX / deltaIncrementFraction
 
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: progressViewHeight))
@@ -39,60 +43,58 @@ final class PXPogressView: UIView {
 
         forView.layer.masksToBounds = true
         forView.addSubview(self)
+
+        initTimer(customSelector: #selector(ProgressView.increment))
     }
 
     @objc fileprivate func increment() {
 
-        let newWidth =  self.bounds.width + deltaIncrementFraction
+        let newWidth =  self.frame.width + deltaIncrementFraction
 
-        let newFrame = CGRect(x: 0, y: 0, width: (self.bounds.width + deltaIncrementFraction), height: self.bounds.height)
+        let newFrame = CGRect(x: 0, y: 0, width: (self.frame.width + deltaIncrementFraction), height: self.frame.height)
 
         UIView.animate(withDuration: 0.3, animations: {
             self.frame = newFrame
-        }) { _ in
+        }) { completed in
             if newWidth >= self.progressViewEndX {
                 self.stopTimer()
-                self.timeOutProgressClousure?()
-                self.timeOutProgressClousure = nil
+                self.progressDelegate?.progressTimeOut()
             }
         }
     }
 }
 
 // MARK: Timer.
-extension PXPogressView {
+extension ProgressView {
 
-    private func initTimer(everySecond: TimeInterval = 0.2, customSelector: Selector) {
-        timer = Timer.scheduledTimer(timeInterval: everySecond, target: self, selector: customSelector, userInfo: nil, repeats: true)
+    fileprivate func initTimer(everySecond: TimeInterval = 0.6, customSelector: Selector) {
+        timer = Timer.scheduledTimer(timeInterval: everySecond, target: self,   selector: customSelector, userInfo: nil, repeats: true)
     }
 
-    private func stopTimer() {
+    fileprivate func stopTimer() {
         timer?.invalidate()
         timer = nil
     }
 }
 
-// MARK: Public methods.
-extension PXPogressView {
-
-    func start(timeOutBlock: @escaping (() -> Void)) {
-        self.timeOutProgressClousure = timeOutBlock
-        initTimer(customSelector: #selector(PXPogressView.increment))
-    }
+//MARK: Public methods.
+extension ProgressView {
 
     func doReset() {
-        let newFrame = CGRect(x: 0, y: 0, width: 0, height: self.bounds.height)
+        let newFrame = CGRect(x: 0, y: 0, width: 0, height: self.frame.height)
         self.frame = newFrame
     }
 
     func doComplete(completion: @escaping (_ finish: Bool) -> Void) {
-        let newFrame = CGRect(x: 0, y: 0, width: progressViewEndX, height: self.bounds.height)
+        let newFrame = CGRect(x: 0, y: 0, width: progressViewEndX, height: self.frame.height)
         UIView.animate(withDuration: 0.5, animations: {
             self.frame = newFrame
-        }) { _ in
+        }) { completed in
             self.stopTimer()
-            // self.progressDelegate?.didFinishProgress()
+            self.progressDelegate?.didFinishProgress()
             completion(true)
         }
     }
 }
+
+

@@ -36,6 +36,7 @@ extension OneTapFlow {
                     })
                     return
                 }
+                self.viewModel.search.deleteCheckoutDefaultOption()
                 self.viewModel.finishOneTapWithPaymentResultCallback?(paymentResult)
         })
 
