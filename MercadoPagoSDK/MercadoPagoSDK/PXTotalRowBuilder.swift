@@ -26,14 +26,14 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let string = discount.getDiscountDescription()
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
             title = attributedString
-        } /*else if let mercadoPagoCheckout = MercadoPagoCheckout.currentCheckout, mercadoPagoCheckout.viewModel.needToAddCodeInput() {
+        } else if let currentCheckout = MercadoPagoCheckout.currentCheckout, currentCheckout.viewModel.shouldShowDiscountInput() {
             let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.secondaryColor()]
 
             let string = "total_row_title_add_coupon".localized_beta
             let attributedString = NSAttributedString(string: string, attributes: addNewDiscountAttributes)
             title = attributedString
-        } */else {
+        } else {
             let defaultTitleString = "total_row_title_default".localized_beta
             let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                      NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
@@ -91,11 +91,10 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
     }
 
     static func handleTap(amountHelper: PXAmountHelper) {
-        if amountHelper.discount == nil {
-            //TODO should show input
-            PXComponentFactory.Modal.show(viewController: PXDiscountCodeInputViewController(), title: nil)
-        } else {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
+        } else if let currentCheckout = MercadoPagoCheckout.currentCheckout, currentCheckout.viewModel.shouldShowDiscountInput() {
+            PXComponentFactory.Modal.show(viewController: PXDiscountCodeInputViewController(), title: nil)
         }
     }
 }
