@@ -380,3 +380,9 @@ extension MercadoPagoCheckoutViewModel {
          return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
 }
+
+public enum CodeType: String {
+    case NONE = "none"
+    case SINGLE = "single"
+    case MULTIPLE = "multiple"
+}
