@@ -53,9 +53,16 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         if isMovingToParentViewController {
             viewModel.trackTapBackEvent()
         }
-        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if viewModel.shouldAnimatePayButton {
+            PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
+            PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
+            PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
+        }
     }
 
     override func trackInfo() {
@@ -160,30 +167,13 @@ extension PXOneTapViewController {
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
 
-        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
-
-        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
-
-        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
+        if viewModel.shouldAnimatePayButton {
+            PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
+            PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
+            PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
+        }
 
         return loadingButtonComponent
-
-//        let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
-//            self?.confirmPayment()
-//            if self?.viewModel.shouldAnimatePayButton ?? false {
-//                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
-//            }
-//
-//        }
-//        let footerProps = PXFooterProps(buttonAction: payAction)
-//        let footerComponent = PXFooterComponent(props: footerProps)
-//        if let footerView = footerComponent.oneTapRender() as? PXFooterAnimatedView {
-//            loadingButtonComponent = footerView.animatedButton
-//            loadingButtonComponent?.animationDelegate = self
-//            loadingButtonComponent?.layer.cornerRadius = 4
-//            return footerView
-//        }
-//        return nil
     }
 
     private func getDiscountDetailView() -> UIView? {

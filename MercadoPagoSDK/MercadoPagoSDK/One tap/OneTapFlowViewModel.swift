@@ -156,7 +156,7 @@ extension OneTapFlowViewModel {
         if !readyToPay {
             return false
         }
-        return paymentData.isComplete(shouldCheckForToken: false) && paymentFlow != nil
+        return paymentData.isComplete(shouldCheckForToken: false) && paymentFlow != nil && paymentResult == nil
     }
 
     func hasSavedESC() -> Bool {
@@ -166,5 +166,12 @@ extension OneTapFlowViewModel {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
         return false
+    }
+
+    func needToShowLoading() -> Bool {
+        if paymentFlow != nil && hasSavedESC() {
+            return false
+        }
+        return true
     }
 }

@@ -34,31 +34,6 @@ final class OneTapFlow: PXFlow {
         viewModel.finishOneTapWithPaymentResultCallback = callback
     }
 
-    func setPaymentFlow() {
-        guard let paymentFlow = viewModel.paymentFlow else {
-            return
-        }
-        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
-                if paymentResult.isApproved() {
-                    PXNotificationManager.Post.animateButtonForSuccess()
-                } else if paymentResult.isError() {
-                    PXNotificationManager.Post.animateButtonForError()
-                } else if paymentResult.isWarning() {
-                    PXNotificationManager.Post.animateButtonForWarning()
-                }
-                    self?.viewModel.paymentResult = paymentResult
-            })
-        })
-        paymentFlow.start()
-
-//        PXNotificationManager.Post.animateButtonForSuccess()
-//         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
-//            self.viewModel.finishOneTapWithPaymentResultCallback?(PaymentResult(status: "approved", statusDetail: "String", paymentData: self.viewModel.paymentData, payerEmail: nil, paymentId: nil, statementDescription: nil))
-//                //PXNotificationManager.Post.animateButtonForSuccess()
-//            })
-    }
-
     func start() {
         executeNextStep()
     }
@@ -72,7 +47,7 @@ final class OneTapFlow: PXFlow {
         case .serviceCreateESCCardToken:
             self.createCardToken()
         case .payment:
-            self.setPaymentFlow()
+            self.startPaymentFlow()
         case .finish:
             self.finishFlow()
         }
@@ -87,7 +62,12 @@ final class OneTapFlow: PXFlow {
     // Finish one tap and continue with checkout
     func finishFlow() {
         viewModel.search.deleteCheckoutDefaultOption()
-        finishOneTapCallback(viewModel.paymentData)
+
+        if let paymentResult = viewModel.paymentResult, let paymentResultCallback = viewModel.finishOneTapWithPaymentResultCallback {
+            paymentResultCallback(paymentResult)
+        } else {
+            finishOneTapCallback(viewModel.paymentData)
+        }
     }
 
     // Exit checkout
@@ -136,6 +116,36 @@ extension OneTapFlow {
                 }}
         }
         return selectedPaymentOption
+    }
+}
+// MARK: PaymentFlow
+extension OneTapFlow {
+    func startPaymentFlow() {
+        guard let paymentFlow = viewModel.paymentFlow else {
+            return
+        }
+        if viewModel.needToShowLoading() {
+            self.pxNavigationHandler.presentLoading()
+        }
+        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+                self?.viewModel.paymentResult = paymentResult
+                // TODO: REMOVE FORCE
+                if (self?.viewModel.needToShowLoading())! {
+                    self?.executeNextStep()
+                } else {
+                    if paymentResult.isApproved() {
+                        PXNotificationManager.Post.animateButtonForSuccess()
+                    } else if paymentResult.isError() {
+                        PXNotificationManager.Post.animateButtonForError()
+                    } else if paymentResult.isWarning() {
+                        PXNotificationManager.Post.animateButtonForWarning()
+                    }
+                }
+
+            })
+        })
+        paymentFlow.start()
     }
 }
 

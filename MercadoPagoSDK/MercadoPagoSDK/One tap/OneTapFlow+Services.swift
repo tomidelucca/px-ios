@@ -31,7 +31,9 @@ extension OneTapFlow {
     }
 
     func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
-//        self.pxNavigationHandler.presentLoading()
+        if viewModel.needToShowLoading() {
+            self.pxNavigationHandler.presentLoading()
+        }
 
         let cardInformation = viewModel.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
@@ -53,7 +55,10 @@ extension OneTapFlow {
     }
 
     func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
-//        self.pxNavigationHandler.presentLoading()
+        if viewModel.needToShowLoading() {
+            self.pxNavigationHandler.presentLoading()
+        }
+
         self.viewModel.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
