@@ -50,6 +50,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     var installments: Int?
     var viewModel: PaymentVaultViewModel!
 
+    private var floatingRowView: UIView?
+
     var bundle = MercadoPago.getBundle()
 
     var titleSectionReference: PaymentVaultTitleCollectionViewCell?
@@ -161,10 +163,15 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func renderViews() {
+        if let currentFloatingRowView = self.floatingRowView {
+            currentFloatingRowView.removeFromSuperview()
+        }
+
         getCollectionViewPinBottomContraint()?.isActive = false
 
         // Add floating total row
         let floatingRowView = getFloatingTotalRowView()
+        self.floatingRowView = floatingRowView
         self.view.addSubview(floatingRowView)
         PXLayout.matchWidth(ofView: floatingRowView).isActive = true
         PXLayout.centerHorizontally(view: floatingRowView).isActive = true

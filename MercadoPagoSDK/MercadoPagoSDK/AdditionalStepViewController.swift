@@ -20,6 +20,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     override open var screenName: String { return viewModel.getScreenName() }
     override open var screenId: String { return viewModel.getScreenId() }
 
+    private var floatingRowView: UIView?
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -69,7 +71,12 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
 
     private func renderViews() {
+        if let currentFloatingRowView = self.floatingRowView {
+            currentFloatingRowView.removeFromSuperview()
+        }
+
         let floatingRowView = getFloatingTotalRowView()
+        self.floatingRowView = floatingRowView
         self.view.addSubview(floatingRowView)
         PXLayout.matchWidth(ofView: floatingRowView).isActive = true
         PXLayout.centerHorizontally(view: floatingRowView).isActive = true
