@@ -111,7 +111,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var readyToPay: Bool = false
     var initWithPaymentData = false
     var directDiscountSearched = false
-    var campaignSearched = false
     var savedESCCardToken: SavedESCCardToken?
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
@@ -422,7 +421,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         if needToSearchCampaign() {
-            self.campaignSearched = true
             return .SERVICE_GET_CAMPAIGNS
         }
 

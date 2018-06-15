@@ -317,15 +317,15 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: self.campaigns, CodeType.NONE.rawValue) != nil && isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && self.campaignSearched
+        return filterCampaignsByCodeType(campaigns: self.campaigns, "none") != nil && isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && !Array.isNullOrEmpty(self.campaigns)
     }
 
     func needToSearchCampaign() -> Bool {
-        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && !self.campaignSearched
+        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && self.campaigns == nil
     }
 
     func needToApplyDiscount() -> Bool {
-        return isDiscountEnable() && self.checkoutPreference != nil && self.directDiscountSearched && self.campaignSearched && self.discount != nil && self.campaigns != nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && self.paymentData.campaign == nil && self.paymentData.discount == nil
+        return isDiscountEnable() && self.checkoutPreference != nil && self.directDiscountSearched && self.discount != nil && self.campaigns != nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && self.paymentData.campaign == nil && self.paymentData.discount == nil
     }
 
     func needToCreatePayment() -> Bool {
