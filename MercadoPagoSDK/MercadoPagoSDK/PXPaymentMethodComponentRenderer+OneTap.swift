@@ -65,7 +65,7 @@ extension PXPaymentMethodComponentRenderer {
             detailLabel.textAlignment = .left
             PXLayout.setHeight(owner: detailLabel, height: PXLayout.M_FONT).isActive = true
             PXLayout.pinLeft(view: detailLabel, to: pmTitle).isActive = true
-            PXLayout.pinTop(view: pmTitle, to: pmIcon, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinTop(view: pmTitle, to: pmIcon).isActive = true
             PXLayout.put(view: detailLabel, onBottomOf: pmTitle, withMargin: PXLayout.XXXS_MARGIN).isActive = true
             PXLayout.setWidth(owner: detailLabel, width: detailLabel.intrinsicContentSize.width).isActive = true
             pmView.paymentMethodSubtitle = detailLabel
@@ -125,7 +125,7 @@ extension PXPaymentMethodComponentRenderer {
         pmView.backgroundColor = component.props.backgroundColor
         pmView.translatesAutoresizingMaskIntoConstraints = false
 
-        pmView.pinLastSubviewToBottom(withMargin: PXLayout.XS_MARGIN)?.isActive = true
+        pmView.pinLastSubviewToBottom(withMargin: PXLayout.S_MARGIN)?.isActive = true
 
         return pmView
     }
