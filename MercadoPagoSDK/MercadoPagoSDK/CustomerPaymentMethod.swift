@@ -15,7 +15,6 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     var paymentMethodId: String!
     var paymentMethodTypeId: String!
     var firstSixDigits: String!
-    var invested: Bool?
     var comment: String?
 
     var securityCode: SecurityCode = SecurityCode()
@@ -26,12 +25,11 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
         super.init()
     }
 
-    public init(id: String, paymentMethodId: String, paymentMethodTypeId: String, description: String, invested: Bool?, comment: String?) {
+    public init(id: String, paymentMethodId: String, paymentMethodTypeId: String, description: String, comment: String?) {
         self._id = id
         self.paymentMethodId = paymentMethodId
         self.paymentMethodTypeId = paymentMethodTypeId
         self._description = description
-        self.invested = invested
         self.comment = comment
     }
 
@@ -55,10 +53,6 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
         }
         if json["first_six_digits"] != nil && !(json["first_six_digits"]! is NSNull) {
             customerPaymentMethod.firstSixDigits = json["first_six_digits"] as! String
-        }
-
-        if json["invested"] != nil && !(json["invested"]! is NSNull) {
-            customerPaymentMethod.invested = json["invested"] as? Bool
         }
 
         if json["comment"] != nil && !(json["comment"]! is NSNull) {
