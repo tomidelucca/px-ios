@@ -55,8 +55,8 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
             customerPaymentMethod.firstSixDigits = json["first_six_digits"] as! String
         }
 
-        if json["comment"] != nil && !(json["comment"]! is NSNull) {
-            customerPaymentMethod.comment = json["comment"] as? String
+        if let comment = json["comment"], !(comment is NSNull) {
+            customerPaymentMethod.comment = comment as? String
         }
 
         return customerPaymentMethod
