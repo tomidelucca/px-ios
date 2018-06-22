@@ -27,6 +27,7 @@ import UIKit
     open var maxAllowedAmount: Double!
     open var merchantAccountId: String?
     open var externalPaymentPluginImageData: NSData?
+    open var paymentMethodDescription: String? = nil
 
     public override init() {
         super.init()

@@ -480,7 +480,7 @@ extension MercadoPagoServicesAdapter {
     open func getPayerFromPXPayer(_ pxPayer: PXPayer?) -> Payer {
         let payer = Payer()
         if let pxPayer = pxPayer {
-            payer.email = pxPayer.email
+            payer.email = pxPayer.email ?? ""
             payer.payerId = pxPayer.id
             payer.identification = getIdentificationFromPXIdentification(pxPayer.identification)
             payer.entityType = getEntityTypeFromId(pxPayer.entityType)
