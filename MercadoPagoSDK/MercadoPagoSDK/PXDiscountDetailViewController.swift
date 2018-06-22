@@ -138,7 +138,7 @@ extension PXDiscountDetailViewController {
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
             return attributedString
         }
-        
+
         return nil
     }
 
