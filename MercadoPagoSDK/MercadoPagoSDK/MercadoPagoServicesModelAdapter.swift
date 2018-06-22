@@ -586,7 +586,8 @@ extension MercadoPagoServicesAdapter {
         let paymentMethodId: String = pxCustomOptionSearchItem.paymentMethodId ?? ""
         let paymentMethodTypeId: String = pxCustomOptionSearchItem.paymentTypeId ?? ""
         let description: String = pxCustomOptionSearchItem._description ?? ""
-        let customerPaymentMethod = CustomerPaymentMethod(id: id, paymentMethodId: paymentMethodId, paymentMethodTypeId: paymentMethodTypeId, description: description)
+        let comment: String? = pxCustomOptionSearchItem.comment
+        let customerPaymentMethod = CustomerPaymentMethod(id: id, paymentMethodId: paymentMethodId, paymentMethodTypeId: paymentMethodTypeId, description: description, comment: comment)
         return customerPaymentMethod
     }
 

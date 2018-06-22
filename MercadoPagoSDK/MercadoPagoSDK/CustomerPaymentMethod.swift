@@ -15,6 +15,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     var paymentMethodId: String!
     var paymentMethodTypeId: String!
     var firstSixDigits: String!
+    var comment: String?
 
     var securityCode: SecurityCode = SecurityCode()
     var paymentMethod: PaymentMethod!
@@ -24,11 +25,12 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
         super.init()
     }
 
-    public init(id: String, paymentMethodId: String, paymentMethodTypeId: String, description: String) {
+    public init(id: String, paymentMethodId: String, paymentMethodTypeId: String, description: String, comment: String?) {
         self._id = id
         self.paymentMethodId = paymentMethodId
         self.paymentMethodTypeId = paymentMethodTypeId
         self._description = description
+        self.comment = comment
     }
 
     open class func fromJSON(_ json: NSDictionary) -> CustomerPaymentMethod {
@@ -51,6 +53,10 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
         }
         if json["first_six_digits"] != nil && !(json["first_six_digits"]! is NSNull) {
             customerPaymentMethod.firstSixDigits = json["first_six_digits"] as! String
+        }
+
+        if let comment = json["comment"], !(comment is NSNull) {
+            customerPaymentMethod.comment = comment as? String
         }
 
         return customerPaymentMethod
@@ -166,7 +172,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     }
 
     public func getComment() -> String {
-        return ""
+        return comment ?? ""
     }
 
     public func canBeClone() -> Bool {
