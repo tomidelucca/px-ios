@@ -92,6 +92,6 @@ extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
     }
 
     public func getSubtitle() -> String? {
-        return paymentMethodPluginDescription
+        return ""
     }
 }
