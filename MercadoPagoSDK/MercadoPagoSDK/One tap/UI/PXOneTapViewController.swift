@@ -79,8 +79,11 @@ extension PXOneTapViewController {
     private func setupNavigationBar() {
         navBarTextColor = ThemeManager.shared.labelTintColor()
         loadMPStyles()
+        self.navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.whiteColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
+        self.navigationController!.navigationBar.backgroundColor =  UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     }
 
     private func setupUI() {
@@ -216,8 +219,7 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 
     private func confirmPayment() {
         self.viewModel.trackConfirmActionEvent()
-        //self.hideNavBar()
-        //self.hideBackButton()
+        self.hideBackButton()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
