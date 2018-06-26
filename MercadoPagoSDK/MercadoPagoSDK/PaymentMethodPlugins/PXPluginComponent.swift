@@ -17,7 +17,7 @@ import Foundation
     @objc optional func support(pluginStore: PXCheckoutStore) -> Bool
 
     @objc optional func createPaymentWithBusinessResult(pluginStore: PXCheckoutStore) -> PXBusinessResult
-    func createPayment(pluginStore: PXCheckoutStore, handler: PXPaymentFlowHandler) -> String
+    func createPayment(pluginStore: PXCheckoutStore, handler: PXPaymentFlowHandler) -> PXPaymentPluginResult
 }
 
 @objc public protocol PXPluginComponent: PXCustomComponentizable {
