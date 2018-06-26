@@ -68,7 +68,7 @@ final class ProgressView: UIView {
 extension ProgressView {
 
     fileprivate func initTimer(everySecond: TimeInterval = 0.6, customSelector: Selector) {
-        timer = Timer.scheduledTimer(timeInterval: everySecond, target: self,   selector: customSelector, userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: everySecond, target: self, selector: customSelector, userInfo: nil, repeats: true)
     }
 
     fileprivate func stopTimer() {
@@ -77,7 +77,7 @@ extension ProgressView {
     }
 }
 
-//MARK: Public methods.
+// MARK: Public methods.
 extension ProgressView {
 
     func doReset() {
@@ -96,5 +96,3 @@ extension ProgressView {
         }
     }
 }
-
-
