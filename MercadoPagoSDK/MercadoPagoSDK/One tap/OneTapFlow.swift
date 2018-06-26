@@ -29,7 +29,7 @@ final class OneTapFlow: PXFlow {
         #endif
     }
 
-    func setPaymentFlow(paymentFlow: PaymentFlow, callback: @escaping ((PaymentResult) -> Void)) {
+    func setPaymentFlow(paymentFlow: PXPaymentFlow, callback: @escaping ((PaymentResult) -> Void)) {
         viewModel.paymentFlow = paymentFlow
         viewModel.finishOneTapWithPaymentResultCallback = callback
     }
@@ -128,10 +128,11 @@ extension OneTapFlow {
             self.pxNavigationHandler.presentLoading()
         }
         paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
+            // TODO:: REMOVE
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
                 self?.viewModel.paymentResult = paymentResult
                 // TODO: REMOVE FORCE
-                if (self?.viewModel.needToShowLoading())! {
+                if self?.viewModel.needToShowLoading() ?? false {
                     self?.executeNextStep()
                 } else {
                     if paymentResult.isApproved() {

@@ -305,11 +305,7 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let paymentFlow = PaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentClosure: { [weak self] () -> (status: String, statusDetail: String, receiptId: String?)  in
-            return (PaymentStatus.APPROVED, "", "")
-            //return (PaymentStatus.REJECTED, RejectedStatusDetail.HIGH_RISK, "")
-            //return (PaymentStatus.REJECTED, RejectedStatusDetail.CARD_DISABLE, "")
-        }, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
+        let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
 
         let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, finishOneTap: { [weak self] (paymentData) in
             guard let strongSelf = self else {

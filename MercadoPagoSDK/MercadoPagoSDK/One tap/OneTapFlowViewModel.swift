@@ -26,7 +26,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     var paymentResult: PaymentResult?
 
     // Payment flow
-    var paymentFlow: PaymentFlow?
+    var paymentFlow: PXPaymentFlow?
     var finishOneTapWithPaymentResultCallback: ((PaymentResult) -> Void)?
 
     // In order to ensure data updated create new instance for every usage

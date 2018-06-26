@@ -462,19 +462,23 @@ extension MercadoPagoCheckout {
     }
 }
 
+@objc public protocol PXPaymentFlowHandler: NSObjectProtocol {
+    @objc func showErrorScreen(message: String, errorDetails: String)
+}
+
 protocol PaymentErrorHandler: NSObjectProtocol {
     func escError()
     func identificationError()
     func exitCheckout()
 }
 
-internal final class PaymentFlow {
+// TODO: Make internal
+public final class PXPaymentFlow: NSObject {
 
     var paymentData: PaymentData?
     var checkoutPreference: CheckoutPreference?
     let binaryMode: Bool
     let paymentPlugin: PXPaymentPluginComponent?
-    let paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?
     let navigationHandler: PXNavigationHandler
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
@@ -483,9 +487,8 @@ internal final class PaymentFlow {
 
     var shouldShowLoading: Bool = true
 
-    init(paymentPlugin: PXPaymentPluginComponent?, paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PaymentErrorHandler) {
+    init(paymentPlugin: PXPaymentPluginComponent?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PaymentErrorHandler) {
         self.paymentPlugin = paymentPlugin
-        self.paymentClosure = paymentClosure
         self.navigationHandler = navigationHandler
         self.binaryMode = binaryMode
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
@@ -523,7 +526,7 @@ internal final class PaymentFlow {
         case defaultPayment
     }
 
-    public func nextStep() -> Steps {
+    func nextStep() -> Steps {
         if needToCreatePaymentForPaymentPlugin() {
             return .paymentPlugin
         } else {
@@ -551,19 +554,19 @@ internal final class PaymentFlow {
         if copyViewModelAndAssignToCheckoutStore() {
             paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
-        let (status, statusDetail, receiptId) = paymentClosure!()
+        let status: String = paymentPlugin?.createPayment(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandler) ?? "approved"
 
-        if statusDetail == RejectedStatusDetail.INVALID_ESC {
-            paymentErrorHandler?.escError()
-            return
-        }
+//        if statusDetail == RejectedStatusDetail.INVALID_ESC {
+//            paymentErrorHandler?.escError()
+//            return
+//        }
 
         // TODO: Ver esto
 //        if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
 //            paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
 //        }
 
-        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: receiptId, statementDescription: nil)
+        let paymentResult = PaymentResult(status: status, statusDetail: "", paymentData: paymentData, payerEmail: nil, paymentId: "", statementDescription: nil)
         finishWithPaymentResultCallback?(paymentResult)
         return
     }
@@ -609,10 +612,7 @@ internal final class PaymentFlow {
                     self?.paymentErrorHandler?.identificationError()
 
                 } else {
-                    // Generic error screen
-                    self?.navigationHandler.showErrorScreen(error: mpError, callbackCancel: self?.paymentErrorHandler?.exitCheckout, errorCallback: { [weak self] () in
-                        self?.createPayment()
-                    })
+                    self?.showErrorScreen(error: mpError)
                 }
 
         })
@@ -636,6 +636,22 @@ internal final class PaymentFlow {
 
 }
 
+extension PXPaymentFlow: PXPaymentFlowHandler {
+    public func showErrorScreen(message: String, errorDetails: String) {
+        let error = MPSDKError(message: message, errorDetail: errorDetails, retry: true)
+        showErrorScreen(error: error)
+    }
+
+    func showErrorScreen(error: MPSDKError) {
+        self.navigationHandler.showErrorScreen(error: error, callbackCancel: self.paymentErrorHandler?.exitCheckout, errorCallback: { [weak self] () in
+
+            // TODO: decidir el closure
+            self?.createClosurePayment()
+
+        })
+    }
+}
+
 extension MercadoPagoCheckout: PaymentErrorHandler {
     func escError() {
         viewModel.prepareForInvalidPaymentWithESC()
@@ -654,5 +670,4 @@ extension MercadoPagoCheckout: PaymentErrorHandler {
     func exitCheckout() {
         finish()
     }
-
 }

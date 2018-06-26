@@ -220,6 +220,7 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     private func confirmPayment() {
         self.viewModel.trackConfirmActionEvent()
         self.hideBackButton()
+        self.hideNavBar()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 

@@ -16,9 +16,8 @@ import Foundation
 @objc public protocol PXPaymentPluginComponent: PXPluginComponent {
     @objc optional func support(pluginStore: PXCheckoutStore) -> Bool
 
-    @objc optional func createPayment(pluginStore: PXCheckoutStore) -> PXBusinessResult
-    // @objc optional func createPayment(pluginStore: PXCheckoutStore) -> (String, String, String)
-    // objeto de respuesta, pasarle un delegate que maneje el error?
+    @objc optional func createPaymentWithBusinessResult(pluginStore: PXCheckoutStore) -> PXBusinessResult
+    func createPayment(pluginStore: PXCheckoutStore, handler: PXPaymentFlowHandler) -> String
 }
 
 @objc public protocol PXPluginComponent: PXCustomComponentizable {
