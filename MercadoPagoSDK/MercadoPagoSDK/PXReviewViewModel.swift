@@ -140,12 +140,13 @@ extension PXReviewViewModel {
     func getSummaryViewModel(amount: Double) -> Summary {
 
         var summary: Summary
-
+        let charge = self.amountHelper.chargeRuleAmount
+        
         // TODO: Check Double type precision.
-        if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= PXReviewViewModel.ERROR_DELTA {
+        if abs(amount - (self.reviewScreenPreference.getSummaryTotalAmount() + charge)) <= PXReviewViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
-                summary.addAmountDetail(detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmountWithCharges), type: SummaryType.PRODUCT)
+                summary.addAmountDetail(detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount), type: SummaryType.PRODUCT)
             }
         } else {
             summary = getDefaultSummary()
@@ -156,6 +157,12 @@ extension PXReviewViewModel {
             }
         }
 
+        if charge > 0 {
+            let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
+            let chargesSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: chargesAmountDetail)
+            summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
+        }
+        
         if let discount = self.amountHelper.paymentData.discount {
             let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: discount.couponAmount)
 
@@ -195,7 +202,7 @@ extension PXReviewViewModel {
     }
 
     func getDefaultSummary() -> Summary {
-        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmountWithCharges)) //TODO AMOUNT
+        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount))
 
         return Summary(details: [SummaryType.PRODUCT: productSummaryDetail])
     }
