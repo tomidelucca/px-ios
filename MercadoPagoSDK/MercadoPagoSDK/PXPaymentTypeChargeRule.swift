@@ -1,5 +1,5 @@
 //
-//  PXPaymentMethodChargeRule.swift
+//  PXPaymentTypeChargeRule.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 13/6/18.
@@ -9,13 +9,13 @@
 import UIKit
 
 @objc
-public class PXPaymentMethodChargeRule: NSObject {
+public class PXPaymentTypeChargeRule: NSObject {
 
     let paymentMethdodId: String
     let amountCharge: Double
     
    @objc
-    init(paymentMethdodId: String, amountCharge: Double) {
+    public init(paymentMethdodId: String, amountCharge: Double) {
         self.paymentMethdodId = paymentMethdodId
         self.amountCharge = amountCharge
         super.init()

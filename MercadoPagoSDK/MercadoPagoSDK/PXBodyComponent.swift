@@ -58,7 +58,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
             }
         }
         if self.props.amountHelper.discount != nil {
-            var amount = self.props.amountHelper.preferenceAmount
+            var amount = self.props.amountHelper.preferenceAmountWithCharges
 
             if let payerCostTotalAmount = self.props.paymentResult.paymentData?.payerCost?.totalAmount {
                 amount = payerCostTotalAmount + self.props.amountHelper.amountOff

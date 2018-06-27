@@ -142,7 +142,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
 
         if self.amountHelper.discount != nil {
-            var amount = self.amountHelper.preferenceAmount
+            var amount = self.amountHelper.preferenceAmountWithCharges
 
             if let payerCostTotalAmount = self.paymentData.payerCost?.totalAmount {
                 amount = payerCostTotalAmount + self.amountHelper.amountOff

@@ -35,7 +35,7 @@ class PXReviewViewModel: NSObject {
 
     // MARK: Tracking logic
     func trackConfirmActionEvent() {
-        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmount)]
+        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmountWithCharges)]
 
         if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
             properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
@@ -145,7 +145,7 @@ extension PXReviewViewModel {
         if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= PXReviewViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
-                summary.addAmountDetail(detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount), type: SummaryType.PRODUCT)
+                summary.addAmountDetail(detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmountWithCharges), type: SummaryType.PRODUCT)
             }
         } else {
             summary = getDefaultSummary()
@@ -172,9 +172,9 @@ extension PXReviewViewModel {
             var interest = 0.0
 
             if (self.amountHelper.paymentData.discount?.couponAmount) != nil {
-                interest = self.amountHelper.amountToPay - (self.amountHelper.preferenceAmount - self.amountHelper.amountOff)
+                interest = self.amountHelper.amountToPay - (self.amountHelper.preferenceAmountWithCharges - self.amountHelper.amountOff)
             } else {
-                interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmount
+                interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmountWithCharges
             }
 
             if interest > 0 {
@@ -195,7 +195,7 @@ extension PXReviewViewModel {
     }
 
     func getDefaultSummary() -> Summary {
-        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount))
+        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmountWithCharges)) //TODO AMOUNT
 
         return Summary(details: [SummaryType.PRODUCT: productSummaryDetail])
     }
@@ -251,8 +251,7 @@ extension PXReviewViewModel {
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
 
         var customTitle = "Productos".localized
-        let totalAmount: Double = self.amountHelper.preferenceAmount
-
+        let totalAmount: Double = self.amountHelper.preferenceAmountWithCharges//TODO AMOUNT
         if let prefDetail = reviewScreenPreference.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
             customTitle = prefDetail.title
         } else {

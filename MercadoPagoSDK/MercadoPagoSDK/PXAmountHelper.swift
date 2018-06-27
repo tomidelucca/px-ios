@@ -15,20 +15,7 @@ internal struct PXAmountHelper {
     internal let paymentData: PaymentData
     internal let discount: PXDiscount?
     internal let campaign: PXCampaign?
-    internal let chargeRules: [PXPaymentMethodChargeRule]?
-
-    
-    internal var pmChargeAmount: Double {
-        get {
-            guard let chargesRules = chargeRules else{
-                return 0.0
-            }
-            if chargesRules.count == 0 {
-                return 0.0
-            }
-            return chargesRules[0].amountCharge
-        }
-    }
+    internal let chargeRules: [PXPaymentTypeChargeRule]?
     
     var preferenceAmount: Double {
         get {
@@ -36,15 +23,21 @@ internal struct PXAmountHelper {
         }
     }
 
+    var preferenceAmountWithCharges: Double {
+        get {
+            return preferenceAmount + chargeRuleAmount
+        }
+    }
+    
     var amountToPay: Double {
         get {
             if let payerCost = paymentData.payerCost {
                 return payerCost.totalAmount
             }
             if let couponAmount = discount?.couponAmount {
-                return preferenceAmount - couponAmount + pmChargeAmount
+                return preferenceAmount - couponAmount + chargeRuleAmount
             } else {
-                return preferenceAmount + pmChargeAmount
+                return preferenceAmount + chargeRuleAmount
             }
         }
     }
@@ -64,6 +57,20 @@ internal struct PXAmountHelper {
                 return maxCouponAmount
             }
             return nil
+        }
+    }
+    
+    internal var chargeRuleAmount: Double {
+        get {
+            guard let rules = chargeRules else{
+                return 0
+            }
+            for rule in rules {
+                if rule.paymentMethdodId == paymentData.paymentMethod?.paymentTypeId {
+                    return rule.amountCharge
+                }
+            }
+            return 0
         }
     }
 }

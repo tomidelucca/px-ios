@@ -15,7 +15,7 @@ final class OneTapFlow: PXFlow {
     let cancelOneTapCallback: (() -> Void)
     let exitCheckoutCallback: (() -> Void)
 
-    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, chargeRules:[PXPaymentMethodChargeRule]?, finishOneTap: @escaping ((PaymentData) -> Void), cancelOneTap: @escaping (() -> Void), exitCheckout: @escaping (() -> Void)) {
+    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, chargeRules:[PXPaymentTypeChargeRule]?, finishOneTap: @escaping ((PaymentData) -> Void), cancelOneTap: @escaping (() -> Void), exitCheckout: @escaping (() -> Void)) {
         pxNavigationHandler = navigationController
         finishOneTapCallback = finishOneTap
         cancelOneTapCallback = cancelOneTap
