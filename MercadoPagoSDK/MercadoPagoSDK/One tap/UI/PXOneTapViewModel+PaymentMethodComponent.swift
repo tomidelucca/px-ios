@@ -19,7 +19,7 @@ extension PXOneTapViewModel {
         let paymentMethodName = pm.name ?? ""
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
-        var subtitle: NSAttributedString? = nil
+        var subtitle: NSAttributedString? = pm.paymentMethodDescription?.toAttributedString()
         var cftText: NSAttributedString? = nil
         var subtitleRight: NSMutableAttributedString? = nil
         let backgroundColor = ThemeManager.shared.whiteColor()

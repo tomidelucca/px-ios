@@ -216,7 +216,7 @@ extension PXReviewViewModel {
 
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
-        var subtitle: NSAttributedString? = nil
+        var subtitle: NSAttributedString? = pm.paymentMethodDescription?.toAttributedString()
         var accreditationTime: NSAttributedString? = nil
         var action = withAction
         let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
@@ -238,7 +238,7 @@ extension PXReviewViewModel {
         if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
             subtitle = paymentMethodIssuerName.toAttributedString()
         }
-
+       
         if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
             action = nil
         }

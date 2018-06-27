@@ -133,11 +133,11 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = MercadoPagoContext.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.amountHelper.amountToPay, forCurrency: currency)
-        var amountDetail: NSMutableAttributedString?
+        var subtitle: NSMutableAttributedString?  = pm.paymentMethodDescription?.toAttributedString()
         if let payerCost = self.paymentData.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
-                amountDetail = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
+                subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
             }
         }
 
@@ -151,11 +151,11 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.strikethroughStyle: 1]
             let preferenceAmountString = Utils.getAttributedAmount(withAttributes: attributes, amount: amount, currency: currency, negativeAmount: false)
 
-            if amountDetail == nil {
-                amountDetail = preferenceAmountString
+            if subtitle == nil {
+                subtitle = preferenceAmountString
             } else {
-                amountDetail?.append(String.NON_BREAKING_LINE_SPACE.toAttributedString())
-                amountDetail?.append(preferenceAmountString)
+                subtitle?.append(String.NON_BREAKING_LINE_SPACE.toAttributedString())
+                subtitle?.append(preferenceAmountString)
             }
 
         }
@@ -183,7 +183,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
