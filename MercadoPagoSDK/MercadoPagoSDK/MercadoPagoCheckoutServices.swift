@@ -11,7 +11,7 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func getCheckoutPreference() {
-        self.pxNavigationHandler.presentLoading()
+        //self.pxNavigationHandler.presentLoading()
         self.viewModel.mercadoPagoServicesAdapter.getCheckoutPreference(checkoutPreferenceId: self.viewModel.checkoutPreference.preferenceId, callback: { [weak self] (checkoutPreference) in
 
             guard let strongSelf = self else {
@@ -36,7 +36,7 @@ extension MercadoPagoCheckout {
     }
 
     func getDirectDiscount() {
-        self.pxNavigationHandler.presentLoading()
+        //self.pxNavigationHandler.presentLoading()
         self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.amountHelper.amountToPay, payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (_) in
 
             guard let strongSelf = self else {
@@ -81,7 +81,7 @@ extension MercadoPagoCheckout {
     }
 
     func getPaymentMethodSearch() {
-        self.pxNavigationHandler.presentLoading()
+        //self.pxNavigationHandler.presentLoading()
 
         let paymentMethodPluginsToShow = viewModel.paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
         var pluginIds = [String]()
@@ -401,8 +401,6 @@ extension MercadoPagoCheckout {
     }
 
     func getInstructions() {
-       // self.presentLoading() // Remove loading because two continue loadings doesn't work with payment plugin
-
         guard let paymentResult = self.viewModel.paymentResult else {
             fatalError("Get Instructions - Payment Result does no exist")
         }

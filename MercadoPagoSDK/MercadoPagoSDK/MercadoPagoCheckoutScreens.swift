@@ -319,4 +319,8 @@ extension MercadoPagoCheckout {
         })
         onetapFlow.start()
     }
+
+    func startInitFlow() {
+        
+    }
 }

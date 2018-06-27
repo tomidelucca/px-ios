@@ -48,7 +48,6 @@ public enum CheckoutStep: String {
 @objcMembers
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
-    var startedCheckout = false
     static var servicePreference = ServicePreference()
     static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
@@ -117,15 +116,16 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
     var needPaymentMethodPluginInit = true
 
-    // Payment plguin
+    // Payment plugin
     var paymentPlugin: PXPaymentPluginComponent?
+
+    private var initFlow: InitFlow?
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData {
             if pm.isComplete() {
-                self.startedCheckout = true
                 self.paymentData = pm
                 self.directDiscountSearched = true
                 if paymentResult == nil {
@@ -402,10 +402,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     public func nextStep() -> CheckoutStep {
 
-        if !startedCheckout {
-            startedCheckout = true
+        if let initialFlow = initFlow, initialFlow.getStatus() != .finished {
             return .START
         }
+
         if hasError() {
             return .SCREEN_ERROR
         }

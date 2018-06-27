@@ -7,6 +7,13 @@
 //
 
 import Foundation
+
+enum PXFlowStatus {
+    case ready
+    case running
+    case finished
+}
+
 protocol PXFlow {
     var pxNavigationHandler: PXNavigationHandler { get }
 
@@ -24,3 +31,5 @@ protocol PXFlowModel {
     associatedtype Steps
     func nextStep() -> Steps
 }
+
+

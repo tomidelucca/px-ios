@@ -58,7 +58,7 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.clearDiscount()
         }
         MercadoPagoCheckout.currentCheckout = self
-        pxNavigationHandler.presentInitLoading()
+        //pxNavigationHandler.presentInitLoading()
         executeNextStep()
     }
 
@@ -99,12 +99,11 @@ open class MercadoPagoCheckout: NSObject {
 
     func initialize() {
         initMercadPagoPXTracking()
-        // Disable init:trackScreen for v4.0
-        // TODO-v4.1: Cxhange trackScreen by trackEvent, in order to get convertion insights
-        // MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
         pxNavigationHandler.suscribeToNavigationFlow()
-        PXNotificationManager.SuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout, selector: #selector(closeCheckout))
+        if let currentCheckout = MercadoPagoCheckout.currentCheckout {
+            PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
+        }
     }
 
     func executeNextStep() {
