@@ -12,10 +12,6 @@ import MercadoPagoServices
 public enum CheckoutStep: String {
     case START
     case ACTION_FINISH
-    case ACTION_VALIDATE_PREFERENCE
-    case SERVICE_GET_PREFERENCE
-    case SERVICE_GET_DIRECT_DISCOUNT
-    case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
     case SERVICE_GET_IDENTIFICATION_TYPES
     case SCREEN_PAYMENT_METHOD_SELECTION
@@ -41,7 +37,6 @@ public enum CheckoutStep: String {
     case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
     case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
     case SCREEN_PAYMENT_PLUGIN_PAYMENT
-    case SERVICE_PAYMENT_METHOD_PLUGIN_INIT
     case FLOW_ONE_TAP
 }
 
@@ -100,7 +95,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var errorCallback: (() -> Void)?
 
-    var needLoadPreference: Bool = false
     var preferenceValidated: Bool = false
     var readyToPay: Bool = false
     var initWithPaymentData = false
@@ -123,6 +117,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
+
+        var preferenceLoaded: Bool = false
+
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData {
             if pm.isComplete() {
@@ -143,11 +140,18 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentResult = paymentResult
 
         if !String.isNullOrEmpty(self.checkoutPreference.preferenceId) {
-            needLoadPreference = true
+            preferenceLoaded = true
         } else {
             self.paymentData.payer = self.checkoutPreference.getPayer()
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
+
+        // Create init flow.
+        initFlow = InitFlow(navigationController: PXNavigationHandler.init(navigationController: UINavigationController()), preferenceLoadStatus: preferenceLoaded, finishCallback: {
+            print("FINISH InitFlow")
+        }, errorCallback: {
+            print("ERROR InitFlow")
+        })
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -402,18 +406,20 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     public func nextStep() -> CheckoutStep {
 
-        if let initialFlow = initFlow, initialFlow.getStatus() != .finished {
+        if let initialFlow = initFlow, (initialFlow.getStatus() == .ready
+            || initialFlow.getStatus() == .running) {
             return .START
+        } else {
+            if initFlow == nil {
+                return .START
+            }
         }
 
         if hasError() {
             return .SCREEN_ERROR
         }
 
-        if needLoadPreference {
-            needLoadPreference = false
-            return .SERVICE_GET_PREFERENCE
-        }
+        //juan
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SERVICE_GET_DIRECT_DISCOUNT

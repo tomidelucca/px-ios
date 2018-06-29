@@ -11,16 +11,19 @@ import Foundation
 final class InitFlow: PXFlow {
 
     let pxNavigationHandler: PXNavigationHandler
-    let viewModel: InitFlowViewModel
+    private let model: InitFlowModel
     private var status: PXFlowStatus = .ready
 
     private let finishInitCallback: (() -> Void)
     private let errorInitCallback: (() -> Void)
 
-    init(navigationController: PXNavigationHandler, finishCallback: @escaping (() -> Void), errorCallback: @escaping (() -> Void)) {
+    init(navigationController: PXNavigationHandler, preferenceLoadStatus:Bool, finishCallback: @escaping (() -> Void), errorCallback: @escaping (() -> Void)) {
         pxNavigationHandler = navigationController
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
+
+        model = InitFlowModel()
+        model.setPreferenceLoadStatus(loaded: preferenceLoadStatus)
     }
 
     deinit {

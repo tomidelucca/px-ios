@@ -31,5 +31,3 @@ protocol PXFlowModel {
     associatedtype Steps
     func nextStep() -> Steps
 }
-
-
