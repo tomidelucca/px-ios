@@ -8,22 +8,25 @@
 
 import Foundation
 
+typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
+
+internal protocol InitFlowProtocol: NSObjectProtocol {
+    func didFinishInitFlow()
+}
+
 final class InitFlow: PXFlow {
-
     let pxNavigationHandler: PXNavigationHandler
-    private let model: InitFlowModel
-    private var status: PXFlowStatus = .ready
+    let model: InitFlowModel
 
+    private var status: PXFlowStatus = .ready
     private let finishInitCallback: (() -> Void)
     private let errorInitCallback: (() -> Void)
 
-    init(navigationController: PXNavigationHandler, preferenceLoadStatus:Bool, finishCallback: @escaping (() -> Void), errorCallback: @escaping (() -> Void)) {
+    init(navigationController: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping (() -> Void), errorCallback: @escaping (() -> Void)) {
         pxNavigationHandler = navigationController
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
-
-        model = InitFlowModel()
-        model.setPreferenceLoadStatus(loaded: preferenceLoadStatus)
+        model = InitFlowModel(flowProperties: flowProperties)
     }
 
     deinit {
@@ -38,11 +41,27 @@ final class InitFlow: PXFlow {
     }
 
     func executeNextStep() {
-
+        switch model.nextStep() {
+        case .SERVICE_GET_PREFERENCE:
+            getCheckoutPreference()
+        case .ACTION_VALIDATE_PREFERENCE:
+            validatePreference()
+        case .SERVICE_GET_DIRECT_DISCOUNT:
+            getDirectDiscount()
+        case .SERVICE_GET_PAYMENT_METHODS:
+            getPaymentMethodSearch()
+        case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
+            initPaymentMethodPlugins()
+        case .FINISH:
+            finishFlow()
+        case .ERROR: break
+            //
+        }
     }
 
     func finishFlow() {
         status = .finished
+        finishInitCallback()
     }
 
     func cancelFlow() {}

@@ -12,7 +12,6 @@ import MercadoPagoServices
 public enum CheckoutStep: String {
     case START
     case ACTION_FINISH
-    case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
     case SERVICE_GET_IDENTIFICATION_TYPES
     case SCREEN_PAYMENT_METHOD_SELECTION
     case SCREEN_CARD_FORM
@@ -77,6 +76,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var customPaymentOptions: [CardInformation]?
     var identificationTypes: [IdentificationType]?
 
+    var search: PaymentMethodSearch?
+
     var rootVC = true
 
     var binaryMode: Bool = false
@@ -95,10 +96,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var errorCallback: (() -> Void)?
 
-    var preferenceValidated: Bool = false
     var readyToPay: Bool = false
     var initWithPaymentData = false
-    var directDiscountSearched = false
     var savedESCCardToken: SavedESCCardToken?
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
@@ -108,23 +107,25 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
-    var needPaymentMethodPluginInit = true
 
     // Payment plugin
     var paymentPlugin: PXPaymentPluginComponent?
 
-    private var initFlow: InitFlow?
+    // Init Flow
+    var initFlow: InitFlow?
+    private weak var initFlowProtocol: InitFlowProtocol?
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
 
         var preferenceLoaded: Bool = false
+        var directDiscountSearched: Bool = false
 
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData {
             if pm.isComplete() {
                 self.paymentData = pm
-                self.directDiscountSearched = true
+                directDiscountSearched = true
                 if paymentResult == nil {
                     self.initWithPaymentData = true
                 } else {
@@ -146,12 +147,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
 
-        // Create init flow.
-        initFlow = InitFlow(navigationController: PXNavigationHandler.init(navigationController: UINavigationController()), preferenceLoadStatus: preferenceLoaded, finishCallback: {
-            print("FINISH InitFlow")
-        }, errorCallback: {
-            print("ERROR InitFlow")
-        })
+        // Create Init Flow
+        createInitFlow(directDiscountSearched: directDiscountSearched, preferenceLoaded: preferenceLoaded)
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -419,12 +416,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SCREEN_ERROR
         }
 
-        //juan
-        if needToSearchDirectDiscount() {
-            self.directDiscountSearched = true
-            return .SERVICE_GET_DIRECT_DISCOUNT
-        }
-
         if shouldExitCheckout() {
             return .ACTION_FINISH
         }
@@ -435,19 +426,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if shouldShowCongrats() {
             return .SCREEN_PAYMENT_RESULT
-        }
-
-        if needValidatePreference() {
-            preferenceValidated = true
-            return .ACTION_VALIDATE_PREFERENCE
-        }
-
-        if needToInitPaymentMethodPlugins() {
-            return .SERVICE_PAYMENT_METHOD_PLUGIN_INIT
-        }
-
-        if needSearch() {
-            return .SERVICE_GET_PAYMENT_METHODS
         }
 
         if needOneTapFlow() {
@@ -544,8 +522,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         return .ACTION_FINISH
     }
-
-    var search: PaymentMethodSearch?
 
     fileprivate func autoselectOnlyPaymentMethod() {
         guard let search = self.search else {
@@ -693,22 +669,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             cardInformation.setupPaymentMethod(paymentMethod)
             self.paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
         }
-    }
-    func getDefaultPaymentMethodId() -> String? {
-        return self.checkoutPreference.getDefaultPaymentMethodId()
-    }
-
-    func getExcludedPaymentTypesIds() -> Set<String>? {
-        if self.checkoutPreference.siteId == "MLC" || self.checkoutPreference.siteId == "MCO" || self.checkoutPreference.siteId == "MLV" {
-            self.checkoutPreference.addExcludedPaymentType("atm")
-            self.checkoutPreference.addExcludedPaymentType("bank_transfer")
-            self.checkoutPreference.addExcludedPaymentType("ticket")
-        }
-        return self.checkoutPreference.getExcludedPaymentTypesIds()
-    }
-
-    func getExcludedPaymentMethodsIds() -> Set<String>? {
-        return self.checkoutPreference.getExcludedPaymentMethodsIds()
     }
 
     func entityTypesFinder(inDict: NSDictionary, forKey: String) -> [EntityType]? {
@@ -878,5 +838,37 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
         MercadoPagoCheckoutViewModel.error = nil
+    }
+}
+
+//MARK: Init Flow
+extension MercadoPagoCheckoutViewModel {
+    private func createInitFlow(directDiscountSearched: Bool, preferenceLoaded: Bool) {
+        // Create init flow props.
+        let initFlowNavigation = PXNavigationHandler.init(navigationController: UINavigationController())
+        let initFlowProperties: InitFlowProperties
+        initFlowProperties.checkoutPreference = self.checkoutPreference
+        initFlowProperties.paymentData = self.paymentData
+        initFlowProperties.paymentResult = self.paymentResult
+        initFlowProperties.paymentMethodPlugins = self.paymentMethodPlugins
+        initFlowProperties.paymentPlugin = self.paymentPlugin
+        initFlowProperties.paymentMethodSearchResult = self.search
+        initFlowProperties.directDiscountSearchStatus = directDiscountSearched
+        initFlowProperties.loadPreferenceStatus = preferenceLoaded
+
+        // Create init flow.
+        initFlow = InitFlow(navigationController: initFlowNavigation, flowProperties: initFlowProperties, finishCallback: {
+            self.initFlowProtocol?.didFinishInitFlow()
+        }, errorCallback: {
+            print("ERROR InitFlow")
+        })
+    }
+
+    func setInitFlowProtocol(flowInitProtocol: InitFlowProtocol) {
+        initFlowProtocol = flowInitProtocol
+    }
+
+    func startInitFlow() {
+        initFlow?.start()
     }
 }

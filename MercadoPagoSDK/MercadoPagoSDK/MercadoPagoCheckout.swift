@@ -54,12 +54,19 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
+        viewModel.setInitFlowProtocol(flowInitProtocol: self)
+
         if !shouldApplyDiscount() {
-            self.viewModel.clearDiscount()
+            viewModel.clearDiscount()
         }
         MercadoPagoCheckout.currentCheckout = self
-        //pxNavigationHandler.presentInitLoading()
-        executeNextStep()
+
+        if let flowInit = viewModel.initFlow, flowInit.getStatus() == .ready {
+            executeNextStep()
+        } else {
+            pxNavigationHandler.presentInitLoading()
+            executeNextStep()
+        }
     }
 
     public func setPaymentResult(paymentResult: PaymentResult) {
@@ -97,28 +104,19 @@ open class MercadoPagoCheckout: NSObject {
         self.pxNavigationHandler.navigationController.popViewController(animated: animated)
     }
 
-    func initialize() {
+    private func initialize() {
         initMercadPagoPXTracking()
-        executeNextStep()
         pxNavigationHandler.suscribeToNavigationFlow()
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
+        viewModel.startInitFlow()
     }
 
     func executeNextStep() {
-
         switch self.viewModel.nextStep() {
         case .START :
             self.initialize()
-        case .SERVICE_GET_PREFERENCE:
-            self.getCheckoutPreference()
-        case .ACTION_VALIDATE_PREFERENCE:
-            self.validatePreference()
-        case .SERVICE_GET_DIRECT_DISCOUNT:
-            self.getDirectDiscount()
-        case .SERVICE_GET_PAYMENT_METHODS:
-            self.getPaymentMethodSearch()
         case .SCREEN_PAYMENT_METHOD_SELECTION:
             self.showPaymentMethodsScreen()
         case .SCREEN_CARD_FORM:
@@ -169,20 +167,10 @@ open class MercadoPagoCheckout: NSObject {
             self.showPaymentMethodPluginConfigScreen()
         case .SCREEN_PAYMENT_PLUGIN_PAYMENT: //PROCESADORA
             self.showPaymentPluginScreen()
-        case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
-            self.initPaymentMethodPlugins()
         case .FLOW_ONE_TAP:
             self.startOneTapFlow()
         default: break
         }
-    }
-
-    func validatePreference() {
-        let errorMessage = self.viewModel.checkoutPreference.validate()
-        if errorMessage != nil {
-            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { () -> Void in })
-        }
-        self.executeNextStep()
     }
 
     private func executePaymentDataCallback() {
@@ -230,13 +218,20 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        self.viewModel.setDiscount(discount, withCampaign: campaign)
+        viewModel.setDiscount(discount, withCampaign: campaign)
     }
 
     private func shouldApplyDiscount() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.viewModel.paymentPlugin != nil {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
             return true
         }
         return false
+    }
+}
+
+// MARK: Init flow Protocol
+extension MercadoPagoCheckout: InitFlowProtocol {
+    func didFinishInitFlow() {
+        executeNextStep()
     }
 }
