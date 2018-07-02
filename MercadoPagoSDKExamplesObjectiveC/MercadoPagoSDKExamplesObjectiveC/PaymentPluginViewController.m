@@ -59,7 +59,6 @@
     //[handler showErrorScreenWithMessage:@"" errorDetails:@"" retry:false];
     PXPaymentPluginResult* result = [[PXPaymentPluginResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
     return result;
-
 }
 
 @end

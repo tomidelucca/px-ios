@@ -470,16 +470,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SCREEN_HOOK_BEFORE_PAYMENT
         }
 
-        if needToCreatePaymentForPaymentPlugin() {
-            readyToPay = false
-            return .SCREEN_PAYMENT_PLUGIN_PAYMENT
-        }
-
-        if needToCreatePaymentForPaymentMethodPlugin() {
-            readyToPay = false
-            return .SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
-        }
-
         if needToCreatePayment() {
             readyToPay = false
             return .SERVICE_POST_PAYMENT

@@ -21,6 +21,8 @@ class PXReviewViewModel: NSObject {
     var paymentOptionSelected: PaymentMethodOption
     var reviewScreenPreference: ReviewScreenPreference
 
+    var shouldAnimatePayButton: Bool = true
+
     public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper

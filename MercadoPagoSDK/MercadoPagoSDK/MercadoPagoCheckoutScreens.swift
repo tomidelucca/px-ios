@@ -160,6 +160,12 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.cancel()
+            }, finishButtonAnimation: {
+                guard let paymentResult = self.viewModel.paymentResult else {
+                    // TODO: Ver este caso
+                    return
+                }
+                self.executeNextStep()
         })
 
         self.pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
@@ -305,7 +311,12 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
+        var paymentMethodPaymentPlugin: PXPaymentPluginComponent?
+        if let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
+            paymentMethodPaymentPlugin = plugin.paymentPlugin
+        }
+
+        let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
 
         let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, finishOneTap: { [weak self] (paymentData) in
             guard let strongSelf = self else {

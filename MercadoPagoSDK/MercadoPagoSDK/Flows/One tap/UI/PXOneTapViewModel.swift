@@ -10,10 +10,9 @@ import Foundation
 import MercadoPagoPXTracking
 
 final class PXOneTapViewModel: PXReviewViewModel {
-    let shouldAnimatePayButton: Bool
     public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), shouldAnimatePayButton: Bool) {
-        self.shouldAnimatePayButton = shouldAnimatePayButton
         super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
+        self.shouldAnimatePayButton = shouldAnimatePayButton
     }
 
     // Tracking overrides.

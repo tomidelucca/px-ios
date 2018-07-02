@@ -348,56 +348,28 @@ extension MercadoPagoCheckout {
 
     func createPayment() {
 //        self.pxNavigationHandler.presentLoading()
-//
-//        var paymentBody: [String: Any]
-//        if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-//            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference.preferenceId, paymentData: self.viewModel.paymentData, binaryMode: self.viewModel.binaryMode)
-//            paymentBody = mpPayment.toJSON()
-//        } else {
-//            paymentBody = self.viewModel.paymentData.toJSON()
-//        }
-//
-//        var createPaymentQuery: [String: String]? = [:]
-//        if let paymentAdditionalInfo = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo() as? [String: String] {
-//            createPaymentQuery = paymentAdditionalInfo
-//        } else {
-//            createPaymentQuery = nil
-//        }
-//
-//        self.viewModel.mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { [weak self] (payment) in
-//
-//            guard let strongSelf = self else {
-//                return
-//            }
-//
-//            strongSelf.viewModel.updateCheckoutModel(payment: payment)
-//            strongSelf.executeNextStep()
-//
-//            }, failure: { [weak self] (error) in
-//
-//            guard let strongSelf = self else {
-//                return
-//            }
-//
-//            let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
-//
-//            if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
-//                strongSelf.viewModel.prepareForInvalidPaymentWithESC()
-//            } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
-//                self?.viewModel.paymentData.clearCollectedData()
-//                let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal...".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
-//                strongSelf.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] () in
-//                    self?.viewModel.prepareForNewSelection()
-//                    self?.executeNextStep()
-//                })
-//            } else {
-//                strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] () in
-//                    self?.createPayment()
-//                })
-//            }
-//            strongSelf.executeNextStep()
-//
-//        })
+
+        var paymentMethodPaymentPlugin: PXPaymentPluginComponent?
+        if let paymentOtionSelected = viewModel.paymentOptionSelected, let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
+            paymentMethodPaymentPlugin = plugin.paymentPlugin
+        }
+
+        let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self as PXPaymentErrorHandler)
+        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
+            // TODO:: REMOVE
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+                self?.viewModel.paymentResult = paymentResult
+//                self?.executeNextStep()
+                if paymentResult.isApproved() {
+                    PXNotificationManager.Post.animateButtonForSuccess()
+                } else if paymentResult.isError() {
+                    PXNotificationManager.Post.animateButtonForError()
+                } else if paymentResult.isWarning() {
+                    PXNotificationManager.Post.animateButtonForWarning()
+                }
+            })
+        })
+        paymentFlow.start()
     }
 
     func getInstructions() {

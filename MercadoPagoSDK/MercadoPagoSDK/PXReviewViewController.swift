@@ -28,14 +28,18 @@ class PXReviewViewController: PXComponentContainerViewController {
     var callbackPaymentData: ((PaymentData) -> Void)
     var callbackConfirm: ((PaymentData) -> Void)
     var callbackExit: (() -> Void)
+    var finishButtonAnimation: (() -> Void)
+
+    var loadingButtonComponent: PXAnimatedButton?
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, showCustomComponents: Bool = true, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, showCustomComponents: Bool = true, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.showCustomComponents = showCustomComponents
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
+        self.finishButtonAnimation = finishButtonAnimation
         super.init()
     }
 
@@ -50,6 +54,16 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         self.checkFloatingButtonVisibility()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if viewModel.shouldAnimatePayButton {
+            PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
+            PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
+            PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
+        }
     }
 
     override func trackInfo() {
@@ -237,26 +251,47 @@ extension PXReviewViewController {
     }
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
-        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: { [weak self] in
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: { [weak self] in
             guard let strongSelf = self else {
                 return
             }
            strongSelf.confirmPayment()
-        }))
+            if self?.viewModel.shouldAnimatePayButton ?? false {
+                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            }
+            }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
+        loadingButtonComponent = (containedButtonView as! PXContainedActionButtonView).button
+        if viewModel.shouldAnimatePayButton {
+            PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
+            PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
+            PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
+        }
+
         return containedButtonView
     }
 
     fileprivate func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.confirmPayment()
+
+        let payAction = PXComponentAction(label: "Pagar".localized) { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
-        let footerProps = PXFooterProps(buttonAction: payAction)
+            strongSelf.confirmPayment()
+            if self?.viewModel.shouldAnimatePayButton ?? false {
+                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            }
+        }
+        let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
         let footerComponent = PXFooterComponent(props: footerProps)
-        return footerComponent.render()
+        let footerView =  PXFooterRenderer().render(footerComponent)
+        loadingButtonComponent = footerView.principalButton
+        if viewModel.shouldAnimatePayButton {
+            PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
+            PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
+            PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
+        }
+            return footerView
     }
 
     fileprivate func getDiscountTermsAndConditionView() -> PXDiscountTermsAndConditionView {
@@ -290,10 +325,10 @@ extension PXReviewViewController {
     func checkFloatingButtonVisibility() {
        if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1
-            self.footerView.alpha = 0
+            self.footerView?.alpha = 0
         } else {
             self.floatingButtonView.alpha = 0
-            self.footerView.alpha = 1
+            self.footerView?.alpha = 1
         }
     }
 }
@@ -302,6 +337,7 @@ extension PXReviewViewController {
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func confirmPayment() {
+        title = ""
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
@@ -316,5 +352,21 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
         let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
         webVC.title = title
         self.navigationController?.pushViewController(webVC, animated: true)
+    }
+}
+
+// MARK: Payment Button animation delegate
+@available(iOS 9.0, *)
+extension PXReviewViewController: PXAnimatedButtonDelegate {
+    func expandAnimationInProgress() {
+
+    }
+
+    func didFinishAnimation() {
+        self.finishButtonAnimation()
+    }
+
+    func progressButtonAnimationTimeOut() {
+
     }
 }

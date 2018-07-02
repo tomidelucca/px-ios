@@ -14,6 +14,7 @@ internal final class PXPaymentFlow: NSObject {
     var checkoutPreference: CheckoutPreference?
     let binaryMode: Bool
     let paymentPlugin: PXPaymentPluginComponent?
+    let paymentMethodPaymentPlugin: PXPaymentPluginComponent?
     let navigationHandler: PXNavigationHandler
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
@@ -22,8 +23,9 @@ internal final class PXPaymentFlow: NSObject {
 
     var shouldShowLoading: Bool = true
 
-    init(paymentPlugin: PXPaymentPluginComponent?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandler) {
+    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandler) {
         self.paymentPlugin = paymentPlugin
+        self.paymentMethodPaymentPlugin = paymentMethodPaymentPlugin
         self.navigationHandler = navigationHandler
         self.binaryMode = binaryMode
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
@@ -51,19 +53,24 @@ internal final class PXPaymentFlow: NSObject {
         switch self.nextStep() {
         case .defaultPayment:
             createPayment()
+        case .paymentMethodPaymentPlugin:
+            createPaymentForPaymentMethodPaymentPlugin()
         case .paymentPlugin:
-            createClosurePayment()
+            createPaymentForPaymentPlugin()
         }
     }
 
     enum Steps: String {
         case paymentPlugin
+        case paymentMethodPaymentPlugin
         case defaultPayment
     }
 
     func nextStep() -> Steps {
         if needToCreatePaymentForPaymentPlugin() {
             return .paymentPlugin
+        } else if needToCreatePaymentForPaymentMethodPaymentPlugin() {
+            return .paymentMethodPaymentPlugin
         } else {
             return .defaultPayment
         }
@@ -82,14 +89,63 @@ internal final class PXPaymentFlow: NSObject {
         return true
     }
 
-    func createClosurePayment() {
+    func needToCreatePaymentForPaymentMethodPaymentPlugin() -> Bool {
+        if paymentMethodPaymentPlugin == nil {
+            return false
+        }
+        _ = copyViewModelAndAssignToCheckoutStore()
+
+        if let shouldSkip = paymentMethodPaymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
+            return false
+        }
+        return true
+    }
+
+    func createPaymentForPaymentPlugin() {
         guard let paymentData = paymentData, let checkoutPreference = checkoutPreference else {
             return
         }
         if copyViewModelAndAssignToCheckoutStore() {
             paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
-        guard let paymentPluginResult =  paymentPlugin?.createPayment(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandler) else {
+
+        var paymentPluginResult: PXPaymentPluginResult?
+        var bussinessResult: PXBusinessResult?
+
+        if let createPayment = paymentPlugin?.createPayment {
+            paymentPluginResult = createPayment(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandler)
+        } else if let createPaymentForBussinessResult = paymentPlugin?.createPaymentWithBusinessResult {
+            bussinessResult = createPaymentForBussinessResult(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandler)
+        } else {
+            self.showErrorScreen(message: "Hubo un error".localized, errorDetails: "", retry: false)
+            return
+        }
+
+        // TODO: ver bussniss result
+        if paymentPluginResult?.statusDetail == RejectedStatusDetail.INVALID_ESC {
+            paymentErrorHandler?.escError()
+            return
+        }
+
+        // TODO: Ver esto
+        //        if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
+        //            paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
+        //        }
+
+        // TODO: Ver bussniess result
+        let paymentResult = PaymentResult(status: paymentPluginResult?.status ?? "approved", statusDetail: paymentPluginResult?.statusDetail ?? "", paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult?.receiptId, statementDescription: nil)
+        finishWithPaymentResultCallback?(paymentResult)
+        return
+    }
+
+    func createPaymentForPaymentMethodPaymentPlugin() {
+        guard let paymentData = paymentData, let checkoutPreference = checkoutPreference else {
+            return
+        }
+        if copyViewModelAndAssignToCheckoutStore() {
+            paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        }
+        guard let paymentPluginResult =  paymentMethodPaymentPlugin?.createPayment?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandler) else {
             self.showErrorScreen(message: "Hubo un error".localized, errorDetails: "", retry: false)
             return
         }
@@ -184,7 +240,7 @@ extension PXPaymentFlow: PXPaymentFlowHandler {
         self.navigationHandler.showErrorScreen(error: error, callbackCancel: self.paymentErrorHandler?.exitCheckout, errorCallback: { [weak self] () in
 
             // TODO: decidir el closure
-            self?.createClosurePayment()
+            self?.createPaymentForPaymentPlugin()
 
         })
     }
