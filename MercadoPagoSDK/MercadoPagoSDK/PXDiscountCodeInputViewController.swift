@@ -17,6 +17,16 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
+    let protocolable: PXDiscountInputable?
+
+    init(protocol2: PXDiscountInputable? = nil) {
+        self.protocolable = protocol2
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +69,11 @@ extension PXDiscountCodeInputViewController {
         textfield.delegate = self
         textfield.autocapitalizationType = .allCharacters
 //        textfield.autocorrectionType = UITextAutocorrectionType.no
+
+
+//        textfield.textInputControl().autocorrectionType = UITextAutocorrectionType.no
+
+
         self.contentView.addSubviewToBottom(textfield, withMargin: PXLayout.XXL_MARGIN)
         PXLayout.centerHorizontally(view: textfield).isActive = true
         PXLayout.pinLeft(view: textfield, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -164,7 +179,6 @@ extension PXDiscountCodeInputViewController {
         view.setProps(title: titleAttributedString, message: messageAttributedString, icon: image!, action: action)
         return view
     }
-
 }
 
 // MARK: Services
@@ -184,9 +198,15 @@ extension PXDiscountCodeInputViewController {
                         return campaign.id.stringValue == discount.id
                     }
                     if let firstFilteredCampaign = filteredCampaigns.first {
-                        strongSelf.spinner?.hide()
-                        strongSelf.transitionToSuccess(with: discount)
-                        mercadoPagoCheckout.setDiscount(discount, withCampaign: firstFilteredCampaign)
+                        strongSelf.protocolable?.completionServices(success: { (result) in
+                            strongSelf.spinner?.hide()
+                            if result == true {
+                                strongSelf.transitionToSuccess(with: discount)
+                                mercadoPagoCheckout.setDiscount(discount, withCampaign: firstFilteredCampaign)
+                            } else {
+                                strongSelf.showError(with: "grupos fallo")
+                            }
+                        })
                     }
                 }
 
@@ -202,4 +222,8 @@ extension PXDiscountCodeInputViewController {
         }
     }
 
+}
+
+protocol PXDiscountInputable {
+    func completionServices(success: @escaping (Bool) -> Void)
 }

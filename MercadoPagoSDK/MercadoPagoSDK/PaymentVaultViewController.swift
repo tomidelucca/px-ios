@@ -31,7 +31,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 @objcMembers
-open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PXDiscountInputable {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
@@ -152,8 +152,13 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.isUserInteractionEnabled = false
             view.addSubview(temporalView)
         }
-        renderFloatingBottomView()
+//        renderFloatingBottomView()
         hideLoading()
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        renderFloatingBottomView()
     }
 
     func getCollectionViewPinBottomContraint() -> NSLayoutConstraint? {
@@ -187,7 +192,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     func handleTotalRowTap() {
-        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
+        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, protocol2: self)
+    }
+
+    func completionServices(success: @escaping (Bool) -> Void) {
+        success(true)
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {

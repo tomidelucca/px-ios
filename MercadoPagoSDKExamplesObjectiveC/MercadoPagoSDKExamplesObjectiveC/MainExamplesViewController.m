@@ -95,8 +95,8 @@
     
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
-    self.pref.preferenceId = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-648a260d-6fd9-4ad7-9284-90f22262c18d"
+    self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c";
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2"
     accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     //PXDiscount* discount = [[PXDiscount alloc] init];
@@ -110,16 +110,16 @@
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"123" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:123 code:@"sad" name:@"Campaña" maxCouponAmount:7];
     
-    [self.mpCheckout setDiscount:discount withCampaign:campaign];
-    
+//    [self.mpCheckout setDiscount:discount withCampaign:campaign];
+
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
     //[self setHooks];
     
-    [self setPaymentMethodPlugins];
+//    [self setPaymentMethodPlugins];
 
-    //[self setPaymentPlugin];
+//    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
 //    [self setPaymentResultScreenPreference];

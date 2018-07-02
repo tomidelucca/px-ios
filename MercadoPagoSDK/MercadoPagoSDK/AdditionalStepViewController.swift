@@ -9,7 +9,12 @@
 import UIKit
 
 @objcMembers
-open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource {
+open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource, PXDiscountInputable {
+
+    func completionServices(success: @escaping (Bool) -> Void) {
+        success(true)
+    }
+
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -93,7 +98,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
 
     func handleTotalRowTap() {
-        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
+        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, protocol2: self)
     }
 
     override func loadMPStyles() {

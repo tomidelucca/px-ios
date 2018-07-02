@@ -90,11 +90,12 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         return false
     }
 
-    static func handleTap(amountHelper: PXAmountHelper) {
+    static func handleTap(amountHelper: PXAmountHelper, protocol2: PXDiscountInputable?) {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
         } else if let currentCheckout = MercadoPagoCheckout.currentCheckout, currentCheckout.viewModel.shouldShowDiscountInput() {
-            PXComponentFactory.Modal.show(viewController: PXDiscountCodeInputViewController(), title: nil)
+            let input = PXDiscountCodeInputViewController(protocol2: protocol2)
+            PXComponentFactory.Modal.show(viewController: input, title: nil)
         }
     }
 }
