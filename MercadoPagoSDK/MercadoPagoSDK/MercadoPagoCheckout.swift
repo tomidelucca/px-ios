@@ -10,8 +10,21 @@ import UIKit
 import MercadoPagoPXTracking
 import MercadoPagoServices
 
+@objc
+public protocol PXCheckoutLifecycleProtocol: NSObjectProtocol {
+    func lazyInitDidFinish()
+    func lazyInitError()
+}
+
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
+
+    private enum InitMode {
+        case normal
+        case lazy
+    }
+    private var initMode: InitMode = .normal
+    private var lifecycleProtocol: PXCheckoutLifecycleProtocol?
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
@@ -30,9 +43,9 @@ open class MercadoPagoCheckout: NSObject {
 
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
 
-        MercadoPagoCheckoutViewModel.flowPreference.disableESC()
-
         pxNavigationHandler = PXNavigationHandler(navigationController: navigationController)
+
+        MercadoPagoCheckoutViewModel.flowPreference.disableESC()
     }
 
     public func setTheme(_ theme: PXTheme) {
@@ -54,19 +67,38 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
-        viewModel.setInitFlowProtocol(flowInitProtocol: self)
-
-        if !shouldApplyDiscount() {
-            viewModel.clearDiscount()
-        }
-        MercadoPagoCheckout.currentCheckout = self
-
-        if let flowInit = viewModel.initFlow, flowInit.getStatus() == .ready {
-            executeNextStep()
+        commondInit()
+        if initMode == .lazy {
+            if viewModel.initFlow?.getStatus() == .finished {
+                executeNextStep()
+            } else {
+                if viewModel.initFlow?.getStatus() == .running {
+                    return
+                } else {
+                    pxNavigationHandler.presentInitLoading()
+                    executeNextStep()
+                }
+            }
         } else {
             pxNavigationHandler.presentInitLoading()
             executeNextStep()
         }
+    }
+
+    public func lazyStart(lifecycleDelegate: PXCheckoutLifecycleProtocol) {
+        viewModel.initFlow?.shouldRestart()
+        lifecycleProtocol = lifecycleDelegate
+        initMode = .lazy
+        commondInit()
+        executeNextStep()
+    }
+
+    private func commondInit() {
+        viewModel.setInitFlowProtocol(flowInitProtocol: self)
+        if !shouldApplyDiscount() {
+            viewModel.clearDiscount()
+        }
+        MercadoPagoCheckout.currentCheckout = self
     }
 
     public func setPaymentResult(paymentResult: PaymentResult) {
@@ -110,14 +142,17 @@ open class MercadoPagoCheckout: NSObject {
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
+        print("p - initialize - startInitFlow")
         viewModel.startInitFlow()
     }
 
     func executeNextStep() {
         switch self.viewModel.nextStep() {
         case .START :
+            print("p - START")
             self.initialize()
         case .SCREEN_PAYMENT_METHOD_SELECTION:
+            print("p - SCREEN_PAYMENT_METHOD_SELECTION")
             self.showPaymentMethodsScreen()
         case .SCREEN_CARD_FORM:
             self.showCardForm()
@@ -232,6 +267,18 @@ open class MercadoPagoCheckout: NSObject {
 // MARK: Init flow Protocol
 extension MercadoPagoCheckout: InitFlowProtocol {
     func didFinishInitFlow() {
-        executeNextStep()
+        if initMode == .lazy {
+            lifecycleProtocol?.lazyInitDidFinish()
+        } else {
+            executeNextStep()
+        }
+    }
+
+    func didFailInitFlow() {
+        if initMode == .lazy {
+            lifecycleProtocol?.lazyInitError()
+        } else {
+            executeNextStep()
+        }
     }
 }

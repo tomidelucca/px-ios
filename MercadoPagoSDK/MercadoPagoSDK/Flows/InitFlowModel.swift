@@ -22,17 +22,28 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     private let serviceAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
     private let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
+
     let paymentResult: PaymentResult?
-    var paymentData: PaymentData
     let paymentPlugin: PXPaymentPluginComponent?
     let paymentMethodPlugins: [PXPaymentMethodPlugin]
+    var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
+
     var checkoutPreference: CheckoutPreference
-    var paymentMethodSearch: PaymentMethodSearch?
+    var paymentData: PaymentData
+
+    private var paymentMethodSearch: PaymentMethodSearch?
+    private var paymentMethodOptions: [PaymentMethodOption]?
+    private var paymentOptionSelected: PaymentMethodOption?
+    private var availablePaymentMethods: [PaymentMethod]?
+    private var rootPaymentMethodOptions: [PaymentMethodOption]?
+    private var customPaymentOptions: [CardInformation]?
+
     private var shouldLoadPreference: Bool = false
     private var directDiscountSearched: Bool = false
     private var preferenceValidated: Bool = false
     private var needPaymentMethodPluginInit = true
     private var errorCallback: (() -> Void)?
+
     var amountHelper: PXAmountHelper {
         get {
             return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
@@ -92,19 +103,80 @@ extension InitFlowModel {
     func updateModel(paymentMethodsResponse: PaymentMethodSearch?) {
         paymentMethodSearch = paymentMethodsResponse
     }
+
+    func updateCheckoutModel(paymentMethodsResponse: PaymentMethodSearch) {
+
+        self.paymentMethodSearch = paymentMethodsResponse
+
+        guard let paymentMethodSearch = self.paymentMethodSearch else {
+            return
+        }
+
+        self.rootPaymentMethodOptions = paymentMethodSearch.groups
+        self.paymentMethodOptions = self.rootPaymentMethodOptions
+        self.availablePaymentMethods = paymentMethodSearch.paymentMethods
+
+        if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
+            if !MercadoPagoContext.accountMoneyAvailable() {
+                self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
+                    return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+                })
+            } else {
+                self.customPaymentOptions = paymentMethodSearch.customerPaymentMethods
+            }
+        }
+
+        let totalPaymentMethodSearchCount = paymentMethodSearch.getPaymentOptionsCount()
+        self.paymentMethodPluginsToShow = getPluginPaymentMethodToShow()
+        let totalPaymentMethodsToShow =  totalPaymentMethodSearchCount + paymentMethodPluginsToShow.count
+
+        if totalPaymentMethodsToShow == 0 {
+            self.setErrorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
+            })
+        } else if totalPaymentMethodsToShow == 1 {
+            autoselectOnlyPaymentMethod()
+        }
+    }
+
+    private func getPluginPaymentMethodToShow() -> [PXPaymentMethodPlugin] {
+        //_ = copyViewModelAndAssignToCheckoutStore() //TODO-JUAN: Ver el copy asssign.
+        return paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
+    }
+
+    private func autoselectOnlyPaymentMethod() {
+
+        guard let paymentMethodSearch = self.paymentMethodSearch else {
+            return
+        }
+
+        if !paymentMethodSearch.paymentMethods.isEmpty, !paymentMethodSearch.paymentMethods[0].isCard {
+            // TODO JUAN
+            // self.reviewScreenPreference.disableChangeMethodOption()
+        }
+
+        if !Array.isNullOrEmpty(paymentMethodSearch.groups) && paymentMethodSearch.groups.count == 1 {
+            self.updateCheckoutModel(paymentOptionSelected: paymentMethodSearch.groups[0])
+        } else if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) && paymentMethodSearch.customerPaymentMethods?.count == 1 {
+            guard let customOption = paymentMethodSearch.customerPaymentMethods![0] as? PaymentMethodOption else {
+                fatalError("Cannot conver customerPaymentMethod to PaymentMethodOption")
+            }
+            self.updateCheckoutModel(paymentOptionSelected: customOption)
+        } else if  !Array.isNullOrEmpty(paymentMethodPluginsToShow) && paymentMethodPluginsToShow.count == 1 {
+            self.updateCheckoutModel(paymentOptionSelected: paymentMethodPluginsToShow[0])
+        }
+    }
 }
 
 // MARK: nextStep - State machine
 extension InitFlowModel {
     func nextStep() -> Steps {
+        if hasError() {
+            return .ERROR
+        }
+
         if needLoadPreference() {
             shouldLoadPreference = false
             return .SERVICE_GET_PREFERENCE
-        }
-
-        if needToSearchDirectDiscount() {
-            directDiscountSearched = true
-            return .SERVICE_GET_DIRECT_DISCOUNT
         }
 
         if needValidatePreference() {
@@ -118,6 +190,11 @@ extension InitFlowModel {
 
         if needSearch() {
             return .SERVICE_GET_PAYMENT_METHODS
+        }
+
+        if needToSearchDirectDiscount() {
+            directDiscountSearched = true
+            return .SERVICE_GET_DIRECT_DISCOUNT
         }
 
         return .FINISH
@@ -151,5 +228,9 @@ extension InitFlowModel {
 
     private func isDiscountEnabled() -> Bool {
         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
+    }
+
+    private func hasError() -> Bool {
+        return MercadoPagoCheckoutViewModel.error != nil
     }
 }

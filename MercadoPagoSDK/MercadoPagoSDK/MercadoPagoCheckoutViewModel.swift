@@ -402,7 +402,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func nextStep() -> CheckoutStep {
-
         if let initialFlow = initFlow, (initialFlow.getStatus() == .ready
             || initialFlow.getStatus() == .running) {
             return .START
@@ -841,11 +840,11 @@ extension MercadoPagoCheckoutViewModel {
     }
 }
 
-//MARK: Init Flow
+// MARK: Init Flow
 extension MercadoPagoCheckoutViewModel {
     private func createInitFlow(directDiscountSearched: Bool, preferenceLoaded: Bool) {
         // Create init flow props.
-        let initFlowNavigation = PXNavigationHandler.init(navigationController: UINavigationController())
+        let initFlowNavHandler = PXNavigationHandler.init(navigationController: UINavigationController())
         let initFlowProperties: InitFlowProperties
         initFlowProperties.checkoutPreference = self.checkoutPreference
         initFlowProperties.paymentData = self.paymentData
@@ -857,10 +856,10 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.loadPreferenceStatus = preferenceLoaded
 
         // Create init flow.
-        initFlow = InitFlow(navigationController: initFlowNavigation, flowProperties: initFlowProperties, finishCallback: {
+        initFlow = InitFlow(navigationHandler: initFlowNavHandler, flowProperties: initFlowProperties, finishCallback: {
             self.initFlowProtocol?.didFinishInitFlow()
         }, errorCallback: {
-            print("ERROR InitFlow")
+            self.initFlowProtocol?.didFailInitFlow()
         })
     }
 

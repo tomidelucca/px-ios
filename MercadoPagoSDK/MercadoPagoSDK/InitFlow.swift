@@ -12,6 +12,7 @@ typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: Ch
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
     func didFinishInitFlow()
+    func didFailInitFlow()
 }
 
 final class InitFlow: PXFlow {
@@ -22,8 +23,8 @@ final class InitFlow: PXFlow {
     private let finishInitCallback: (() -> Void)
     private let errorInitCallback: (() -> Void)
 
-    init(navigationController: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping (() -> Void), errorCallback: @escaping (() -> Void)) {
-        pxNavigationHandler = navigationController
+    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping (() -> Void), errorCallback: @escaping (() -> Void)) {
+        pxNavigationHandler = navigationHandler
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
         model = InitFlowModel(flowProperties: flowProperties)
@@ -36,26 +37,35 @@ final class InitFlow: PXFlow {
     }
 
     func start() {
-        status = .running
-        executeNextStep()
+        if status != .running {
+            status = .running
+            executeNextStep()
+        }
     }
 
     func executeNextStep() {
         switch model.nextStep() {
         case .SERVICE_GET_PREFERENCE:
+            print("p - SERVICE_GET_PREFERENCE")
             getCheckoutPreference()
         case .ACTION_VALIDATE_PREFERENCE:
+            print("p - ACTION_VALIDATE_PREFERENCE")
             validatePreference()
         case .SERVICE_GET_DIRECT_DISCOUNT:
+            print("p - SERVICE_GET_DIRECT_DISCOUNT")
             getDirectDiscount()
         case .SERVICE_GET_PAYMENT_METHODS:
+            print("p - SERVICE_GET_PAYMENT_METHODS")
             getPaymentMethodSearch()
         case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
+            print("p - SERVICE_PAYMENT_METHOD_PLUGIN_INIT")
             initPaymentMethodPlugins()
         case .FINISH:
+            print("p - FINISH - INIT FLOW")
             finishFlow()
-        case .ERROR: break
-            //
+        case .ERROR:
+            print("p - ERROR - INIT FLOW")
+            cancelFlow()
         }
     }
 
@@ -64,12 +74,23 @@ final class InitFlow: PXFlow {
         finishInitCallback()
     }
 
-    func cancelFlow() {}
+    func cancelFlow() {
+        status = .finished
+        errorInitCallback()
+    }
+
     func exitCheckout() {}
 }
 
+// MARK: - Getters
 extension InitFlow {
     func getStatus() -> PXFlowStatus {
         return status
+    }
+
+    func shouldRestart() {
+        if status != .running {
+            status = .ready
+        }
     }
 }

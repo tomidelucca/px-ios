@@ -233,7 +233,6 @@ extension MercadoPagoCheckout {
     func showErrorScreen() {
         pxNavigationHandler.showErrorScreen(error: MercadoPagoCheckoutViewModel.error, callbackCancel: finish, errorCallback: self.viewModel.errorCallback)
         MercadoPagoCheckoutViewModel.error = nil
-
     }
 
     func showFinancialInstitutionsScreen() {
@@ -318,9 +317,5 @@ extension MercadoPagoCheckout {
                 self?.finish()
         })
         onetapFlow.start()
-    }
-
-    func startInitFlow() {
-        
     }
 }
