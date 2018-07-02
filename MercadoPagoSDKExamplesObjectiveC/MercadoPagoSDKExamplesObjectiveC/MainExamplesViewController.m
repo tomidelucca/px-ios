@@ -15,6 +15,7 @@
 #import "FirstHookViewController.h"
 #import "SecondHookViewController.h"
 #import "ThirdHookViewController.h"
+
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
@@ -94,8 +95,8 @@
     
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
-    self.pref.preferenceId = @"243962506-b6476e8b-a1a4-40cb-bfec-9954bff4a143";
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
+    self.pref.preferenceId = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-648a260d-6fd9-4ad7-9284-90f22262c18d"
     accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     //PXDiscount* discount = [[PXDiscount alloc] init];
@@ -168,7 +169,7 @@
 
     [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    //[self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentPlugin {

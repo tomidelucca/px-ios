@@ -761,11 +761,19 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func saveOrDeleteESC() -> Bool {
-        guard let paymetResult = self.paymentResult, let token = paymentResult?.paymentData?.getToken() else {
+        guard let token = paymentData.getToken() else {
+            return false
+        }
+        var isApprovedPayment: Bool = true
+        if self.paymentResult != nil {
+            isApprovedPayment = self.paymentResult!.isApproved()
+        } else if self.businessResult != nil {
+            isApprovedPayment = self.businessResult!.isApproved()
+        } else {
             return false
         }
         if token.hasCardId() {
-            if paymetResult.isApproved() && token.hasESC() {
+            if isApprovedPayment && token.hasESC() {
                 return mpESCManager.saveESC(cardId: token.cardId, esc: token.esc!)
             } else {
                 mpESCManager.deleteESC(cardId: token.cardId)

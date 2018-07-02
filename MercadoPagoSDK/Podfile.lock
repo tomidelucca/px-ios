@@ -2,7 +2,7 @@ PODS:
   - FXBlurView (1.6.4)
   - JRSwizzle (1.0)
   - MercadoPagoPXTracking (2.1.2)
-  - MercadoPagoServices (1.0.10):
+  - MercadoPagoServices (1.0.14):
     - MercadoPagoPXTracking (= 2.1.2)
   - MLUI (4.1.0):
     - MLUI/ActionButton (= 4.1.0)
@@ -99,16 +99,16 @@ PODS:
 
 DEPENDENCIES:
   - MercadoPagoPXTracking (= 2.1.2)
-  - MercadoPagoServices (= 1.0.10)
+  - MercadoPagoServices (= 1.0.14)
   - MLUI (~> 4.0)
 
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   MercadoPagoPXTracking: 844e3fa9a8b7cb9eedff4d2bf5f696a25b6b57d6
-  MercadoPagoServices: b087039eb1edc84e798be38d2cd77aa7191dd3c2
+  MercadoPagoServices: f5198f5b14675844a667af8f5de919f9d40c6c93
   MLUI: 0ebd9d1c2104f2d2714dfc9d6a04985355abdbb5
 
-PODFILE CHECKSUM: acf8c75728a8761f8bcf3297b6132f807a296993
+PODFILE CHECKSUM: f43eed167aa48b07e92097cd0e4db833b4945bfe
 
 COCOAPODS: 1.4.0
