@@ -55,7 +55,7 @@
     self.pluginNavigationHandler = navigationHandler;
 }
 
-- (PXPaymentPluginResult * _Nonnull)createPaymentWithPluginStore:(PXCheckoutStore * _Nonnull)store handler:(id <PXPaymentFlowHandler>)handler {
+- (PXPaymentPluginResult * _Nonnull)createPaymentWithPluginStore:(PXCheckoutStore * _Nonnull)store handler:(id <PXPaymentFlowHandlerProtocol>)handler {
     //[handler showErrorScreenWithMessage:@"" errorDetails:@"" retry:false];
     PXPaymentPluginResult* result = [[PXPaymentPluginResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
     return result;

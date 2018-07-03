@@ -12,9 +12,9 @@ final class OneTapFlow: NSObject, PXFlow {
     let model: OneTapFlowModel
     let pxNavigationHandler: PXNavigationHandler
 
-    weak var resultHandler: PXOneTapResultHandler?
+    weak var resultHandler: PXOneTapResultHandlerProtocol?
 
-    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, oneTapResultHandler: PXOneTapResultHandler) {
+    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, oneTapResultHandler: PXOneTapResultHandlerProtocol) {
         pxNavigationHandler = navigationController
         resultHandler = oneTapResultHandler
         model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
@@ -126,7 +126,7 @@ extension OneTapFlow {
     }
 }
 
-extension OneTapFlow: PXPaymentResultHandler {
+extension OneTapFlow: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(paymentResult: PaymentResult) {
         self.model.paymentResult = paymentResult
         if self.model.needToShowLoading() {

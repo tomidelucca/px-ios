@@ -352,7 +352,7 @@ extension MercadoPagoCheckout {
             paymentMethodPaymentPlugin = plugin.paymentPlugin
         }
 
-        let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self as PXPaymentErrorHandler)
+        let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
         paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
         paymentFlow.start()
     }
@@ -416,33 +416,5 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
 
         })
-    }
-}
-
-extension MercadoPagoCheckout: PXPaymentErrorHandler {
-    func escError() {
-        viewModel.prepareForInvalidPaymentWithESC()
-    }
-
-    func identificationError() {
-        self.viewModel.paymentData.clearCollectedData()
-        let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal...".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
-        self.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] () in
-            self?.viewModel.prepareForNewSelection()
-            self?.executeNextStep()
-
-        })
-    }
-}
-
-extension MercadoPagoCheckout: PXPaymentResultHandler {
-    func finishPaymentFlow(paymentResult: PaymentResult) {
-        self.viewModel.paymentResult = paymentResult
-        PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
-    }
-
-    func finishPaymentFlow(businessResult: PXBusinessResult) {
-        self.viewModel.businessResult = businessResult
-        PXAnimatedButton.animateButtonWith(businessResult: businessResult)
     }
 }

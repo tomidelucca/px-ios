@@ -28,7 +28,7 @@ class OneTapFlowModel: NSObject, PXFlowModel {
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
-    weak var paymentResultHandler: PXPaymentResultHandler?
+    weak var paymentResultHandler: PXPaymentResultHandlerProtocol?
 
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {

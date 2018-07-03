@@ -18,12 +18,12 @@ internal final class PXPaymentFlow: NSObject {
     let navigationHandler: PXNavigationHandler
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    weak var resultHandler: PXPaymentResultHandler?
-    weak var paymentErrorHandler: PXPaymentErrorHandler?
+    weak var resultHandler: PXPaymentResultHandlerProtocol?
+    weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
 
     var shouldShowLoading: Bool = true
 
-    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandler) {
+    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol) {
         self.paymentPlugin = paymentPlugin
         self.paymentMethodPaymentPlugin = paymentMethodPaymentPlugin
         self.navigationHandler = navigationHandler
@@ -32,7 +32,7 @@ internal final class PXPaymentFlow: NSObject {
         self.paymentErrorHandler = paymentErrorHandler
     }
 
-    func setData(paymentData: PaymentData, checkoutPreference: CheckoutPreference, resultHandler: PXPaymentResultHandler) {
+    func setData(paymentData: PaymentData, checkoutPreference: CheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
         self.paymentData = paymentData
         self.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
@@ -113,9 +113,9 @@ internal final class PXPaymentFlow: NSObject {
         var bussinessResult: PXBusinessResult?
 
         if let createPayment = paymentPlugin?.createPayment {
-            paymentPluginResult = createPayment(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandler)
+            paymentPluginResult = createPayment(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
         } else if let createPaymentForBussinessResult = paymentPlugin?.createPaymentWithBusinessResult {
-            bussinessResult = createPaymentForBussinessResult(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandler)
+            bussinessResult = createPaymentForBussinessResult(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
         } else {
             self.showErrorScreen(message: "Hubo un error".localized, errorDetails: "", retry: false)
             return
@@ -145,7 +145,7 @@ internal final class PXPaymentFlow: NSObject {
         if copyViewModelAndAssignToCheckoutStore() {
             paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
-        guard let paymentPluginResult =  paymentMethodPaymentPlugin?.createPayment?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandler) else {
+        guard let paymentPluginResult =  paymentMethodPaymentPlugin?.createPayment?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol) else {
             self.showErrorScreen(message: "Hubo un error".localized, errorDetails: "", retry: false)
             return
         }
@@ -230,7 +230,7 @@ internal final class PXPaymentFlow: NSObject {
 
 }
 
-extension PXPaymentFlow: PXPaymentFlowHandler {
+extension PXPaymentFlow: PXPaymentFlowHandlerProtocol {
     public func showErrorScreen(message: String, errorDetails: String, retry: Bool = true) {
         let error = MPSDKError(message: message, errorDetail: errorDetails, retry: retry)
         showErrorScreen(error: error)

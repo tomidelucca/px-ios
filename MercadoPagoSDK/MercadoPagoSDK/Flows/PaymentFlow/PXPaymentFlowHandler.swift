@@ -7,6 +7,6 @@
 //
 
 import Foundation
-@objc public protocol PXPaymentFlowHandler: NSObjectProtocol {
+@objc public protocol PXPaymentFlowHandlerProtocol: NSObjectProtocol {
     @objc func showErrorScreen(message: String, errorDetails: String, retry: Bool)
 }
