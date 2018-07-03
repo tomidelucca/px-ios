@@ -75,6 +75,7 @@ open class MercadoPagoCheckout: NSObject {
                 if viewModel.initFlow?.getStatus() == .running {
                     return
                 } else {
+                    // Lazy with "ready" to run.
                     pxNavigationHandler.presentInitLoading()
                     executeNextStep()
                 }
@@ -98,7 +99,6 @@ open class MercadoPagoCheckout: NSObject {
         if !shouldApplyDiscount() {
             viewModel.clearDiscount()
         }
-        MercadoPagoCheckout.currentCheckout = self
     }
 
     public func setPaymentResult(paymentResult: PaymentResult) {
@@ -138,6 +138,7 @@ open class MercadoPagoCheckout: NSObject {
 
     private func initialize() {
         initMercadPagoPXTracking()
+        MercadoPagoCheckout.currentCheckout = self
         pxNavigationHandler.suscribeToNavigationFlow()
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))

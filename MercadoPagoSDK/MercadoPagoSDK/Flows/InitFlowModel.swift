@@ -89,7 +89,7 @@ extension InitFlowModel {
         properties.paymentMethodSearchResult = paymentMethodsResponse
     }
 
-    func getPaymentMethods() -> PaymentMethodSearch? {
+    func getPaymentMethodSearch() -> PaymentMethodSearch? {
         return properties.paymentMethodSearchResult
     }
 }

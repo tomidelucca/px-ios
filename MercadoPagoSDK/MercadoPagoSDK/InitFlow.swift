@@ -64,8 +64,8 @@ final class InitFlow: PXFlow {
 
     func finishFlow() {
         status = .finished
-        if let paymentMethods = model.getPaymentMethods() {
-            finishInitCallback(paymentMethods)
+        if let paymentMethodsSearch = model.getPaymentMethodSearch() {
+            finishInitCallback(paymentMethodsSearch)
         } else {
             cancelFlow()
         }

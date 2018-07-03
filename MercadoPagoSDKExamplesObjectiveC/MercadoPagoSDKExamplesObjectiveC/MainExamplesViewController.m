@@ -132,7 +132,7 @@
 
 
     [self.mpCheckout lazyStartWithLifecycleDelegate: self];
-    // [self.mpCheckout start];
+    //[self.mpCheckout start];
 }
 
 -(void)setHooks {
