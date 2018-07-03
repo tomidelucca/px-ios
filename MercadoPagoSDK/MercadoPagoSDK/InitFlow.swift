@@ -8,20 +8,12 @@
 
 import Foundation
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
-
-internal protocol InitFlowProtocol: NSObjectProtocol {
-    func didFinishInitFlow()
-    func didFailInitFlow()
-}
-
 final class InitFlow: PXFlow {
     let pxNavigationHandler: PXNavigationHandler
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
     private let finishInitCallback: ((PaymentMethodSearch) -> Void)
-
     private let errorInitCallback: (() -> Void)
 
     init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping (() -> Void)) {

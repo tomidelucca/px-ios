@@ -10,14 +10,14 @@ import Foundation
 
 extension InitFlow {
     func getCheckoutPreference() {
-        model.getService().getCheckoutPreference(checkoutPreferenceId: model.checkoutPreference.preferenceId, callback: { [weak self] (checkoutPreference) in
+        model.getService().getCheckoutPreference(checkoutPreferenceId: model.properties.checkoutPreference.preferenceId, callback: { [weak self] (checkoutPreference) in
 
             guard let strongSelf = self else {
                 return
             }
 
-            strongSelf.model.checkoutPreference = checkoutPreference
-            strongSelf.model.paymentData.payer = checkoutPreference.getPayer()
+            strongSelf.model.properties.checkoutPreference = checkoutPreference
+            strongSelf.model.properties.paymentData.payer = checkoutPreference.getPayer()
             strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) in
@@ -34,7 +34,7 @@ extension InitFlow {
     }
 
     func validatePreference() {
-        let errorMessage = model.checkoutPreference.validate()
+        let errorMessage = model.properties.checkoutPreference.validate()
         if errorMessage != nil {
             model.setErrorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { () -> Void in })
         }
@@ -42,7 +42,7 @@ extension InitFlow {
     }
 
     func getDirectDiscount() {
-        model.getService().getDirectDiscount(amount: model.amountHelper.amountToPay, payerEmail: model.checkoutPreference.payer.email, callback: { [weak self] (_) in
+        model.getService().getDirectDiscount(amount: model.amountHelper.amountToPay, payerEmail: model.properties.checkoutPreference.payer.email, callback: { [weak self] (_) in
 
             guard let strongSelf = self else {
                 return
@@ -61,8 +61,8 @@ extension InitFlow {
     }
 
     func initPaymentMethodPlugins() {
-        if !model.paymentMethodPlugins.isEmpty {
-            initPlugin(plugins: model.paymentMethodPlugins, index: model.paymentMethodPlugins.count - 1)
+        if !model.properties.paymentMethodPlugins.isEmpty {
+            initPlugin(plugins: model.properties.paymentMethodPlugins, index: model.properties.paymentMethodPlugins.count - 1)
         } else {
             executeNextStep()
         }
@@ -85,7 +85,7 @@ extension InitFlow {
     }
 
     func getPaymentMethodSearch() {
-        let paymentMethodPluginsToShow = model.paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
+        let paymentMethodPluginsToShow = model.properties.paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
         var pluginIds = [String]()
         for plugin in paymentMethodPluginsToShow {
             pluginIds.append(plugin.getId())

@@ -9,6 +9,13 @@
 import Foundation
 import MercadoPagoServices
 
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
+
+internal protocol InitFlowProtocol: NSObjectProtocol {
+    func didFinishInitFlow()
+    func didFailInitFlow()
+}
+
 final class InitFlowModel: NSObject, PXFlowModel {
     internal enum Steps: String {
         case ERROR
@@ -23,35 +30,20 @@ final class InitFlowModel: NSObject, PXFlowModel {
     private let serviceAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
     private let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
 
-    let paymentResult: PaymentResult?
-    let paymentPlugin: PXPaymentPluginComponent?
-    let paymentMethodPlugins: [PXPaymentMethodPlugin]
-
-    var checkoutPreference: CheckoutPreference
-    var paymentData: PaymentData
-
-    private var paymentMethodSearch: PaymentMethodSearch?
-    private var shouldLoadPreference: Bool = false
-    private var directDiscountSearched: Bool = false
     private var preferenceValidated: Bool = false
     private var needPaymentMethodPluginInit = true
     private var errorCallback: (() -> Void)?
 
+    var properties: InitFlowProperties
+
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
+            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign)
         }
     }
 
     init(flowProperties: InitFlowProperties) {
-        self.paymentData = flowProperties.paymentData.copy() as? PaymentData ?? flowProperties.paymentData
-        self.checkoutPreference = flowProperties.checkoutPreference
-        self.paymentResult = flowProperties.paymentResult
-        self.paymentPlugin = flowProperties.paymentPlugin
-        self.paymentMethodPlugins = flowProperties.paymentMethodPlugins
-        self.paymentMethodSearch = flowProperties.paymentMethodSearchResult
-        self.shouldLoadPreference = flowProperties.loadPreferenceStatus
-        self.directDiscountSearched = flowProperties.directDiscountSearchStatus
+        self.properties = flowProperties
         super.init()
     }
 }
@@ -76,29 +68,29 @@ extension InitFlowModel {
     }
 
     func getExcludedPaymentTypesIds() -> Set<String>? {
-        if checkoutPreference.siteId == "MLC" || checkoutPreference.siteId == "MCO" ||
-            checkoutPreference.siteId == "MLV" {
-            checkoutPreference.addExcludedPaymentType("atm")
-            checkoutPreference.addExcludedPaymentType("bank_transfer")
-            checkoutPreference.addExcludedPaymentType("ticket")
+        if properties.checkoutPreference.siteId == "MLC" || properties.checkoutPreference.siteId == "MCO" ||
+            properties.checkoutPreference.siteId == "MLV" {
+            properties.checkoutPreference.addExcludedPaymentType("atm")
+            properties.checkoutPreference.addExcludedPaymentType("bank_transfer")
+            properties.checkoutPreference.addExcludedPaymentType("ticket")
         }
-        return checkoutPreference.getExcludedPaymentTypesIds()
+        return properties.checkoutPreference.getExcludedPaymentTypesIds()
     }
 
     func getDefaultPaymentMethodId() -> String? {
-        return checkoutPreference.getDefaultPaymentMethodId()
+        return properties.checkoutPreference.getDefaultPaymentMethodId()
     }
 
     func getExcludedPaymentMethodsIds() -> Set<String>? {
-        return checkoutPreference.getExcludedPaymentMethodsIds()
+        return properties.checkoutPreference.getExcludedPaymentMethodsIds()
     }
 
     func updateInitModel(paymentMethodsResponse: PaymentMethodSearch?) {
-        paymentMethodSearch = paymentMethodsResponse
+        properties.paymentMethodSearchResult = paymentMethodsResponse
     }
 
     func getPaymentMethods() -> PaymentMethodSearch? {
-        return paymentMethodSearch
+        return properties.paymentMethodSearchResult
     }
 }
 
@@ -110,7 +102,7 @@ extension InitFlowModel {
         }
 
         if needLoadPreference() {
-            shouldLoadPreference = false
+            properties.loadPreferenceStatus = false
             return .SERVICE_GET_PREFERENCE
         }
 
@@ -128,7 +120,7 @@ extension InitFlowModel {
         }
 
         if needToSearchDirectDiscount() {
-            directDiscountSearched = true
+            properties.directDiscountSearchStatus = true
             return .SERVICE_GET_DIRECT_DISCOUNT
         }
 
@@ -139,26 +131,26 @@ extension InitFlowModel {
 // MARK: Needs methods
 extension InitFlowModel {
     private func needLoadPreference() -> Bool {
-        return shouldLoadPreference
+        return properties.loadPreferenceStatus
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return isDiscountEnabled() && checkoutPreference != nil && !directDiscountSearched && paymentData.discount == nil && paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
+        return isDiscountEnabled() && !properties.directDiscountSearchStatus && properties.paymentData.discount == nil && properties.paymentResult == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil)
     }
 
     private func needValidatePreference() -> Bool {
-        return !shouldLoadPreference && !preferenceValidated
+        return !properties.loadPreferenceStatus && !preferenceValidated
     }
 
     private func needToInitPaymentMethodPlugins() -> Bool {
-        if paymentMethodPlugins.isEmpty {
+        if properties.paymentMethodPlugins.isEmpty {
             return false
         }
         return needPaymentMethodPluginInit
     }
 
     private func needSearch() -> Bool {
-        return paymentMethodSearch == nil
+        return properties.paymentMethodSearchResult == nil
     }
 
     private func isDiscountEnabled() -> Bool {
