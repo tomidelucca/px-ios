@@ -28,15 +28,6 @@ extension OneTapFlow {
             }
             strongSelf.cancelFlow()
             }, finishButtonAnimation: {
-                guard let paymentResult = self.viewModel.paymentResult else {
-                    // TODO: Ver este caso
-//                    self.pxNavigationHandler.showErrorScreen(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: true), callbackCancel: {
-//                        self.startPaymentFlow()
-//                    }, errorCallback: {
-//                        self.exitCheckout()
-//                    })
-                    return
-                }
                 self.executeNextStep()
         })
 

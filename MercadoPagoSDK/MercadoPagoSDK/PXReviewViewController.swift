@@ -59,11 +59,9 @@ class PXReviewViewController: PXComponentContainerViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if viewModel.shouldAnimatePayButton {
-            PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
-            PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
-            PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
-        }
+        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
     }
 
     override func trackInfo() {
@@ -252,21 +250,14 @@ extension PXReviewViewController {
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-           strongSelf.confirmPayment()
-            if self?.viewModel.shouldAnimatePayButton ?? false {
-                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
-            }
+            self?.confirmPayment()
+            self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingButtonComponent = (containedButtonView as! PXContainedActionButtonView).button
-        if viewModel.shouldAnimatePayButton {
-            PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
-            PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
-            PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
-        }
+        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
+        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
+        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
 
         return containedButtonView
     }
@@ -274,23 +265,16 @@ extension PXReviewViewController {
     fileprivate func getFooterView() -> UIView {
 
         let payAction = PXComponentAction(label: "Pagar".localized) { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.confirmPayment()
-            if self?.viewModel.shouldAnimatePayButton ?? false {
-                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
-            }
+            self?.confirmPayment()
+            self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
         }
         let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
         let footerComponent = PXFooterComponent(props: footerProps)
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton
-        if viewModel.shouldAnimatePayButton {
-            PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
-            PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
-            PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
-        }
+        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
+        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
+        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
             return footerView
     }
 
