@@ -94,8 +94,8 @@
     
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
-    self.pref.preferenceId = @"243962506-b6476e8b-a1a4-40cb-bfec-9954bff4a143";
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
+    self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee"
     accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     //PXDiscount* discount = [[PXDiscount alloc] init];
@@ -116,7 +116,7 @@
 
     //[self setHooks];
     
-    [self setPaymentMethodPlugins];
+    //[self setPaymentMethodPlugins];
 
     //[self setPaymentPlugin];
 

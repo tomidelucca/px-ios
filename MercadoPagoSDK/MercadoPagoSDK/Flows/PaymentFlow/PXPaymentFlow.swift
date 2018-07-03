@@ -185,13 +185,13 @@ internal final class PXPaymentFlow: NSObject {
             createPaymentQuery = nil
         }
 
-        mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { [weak self] (payment) in
-            guard let paymentData = self?.paymentData else {
+        mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { (payment) in
+            guard let paymentData = self.paymentData else {
                 // return?
                 return
             }
             let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
-            self?.finishWithPaymentResultCallback?(paymentResult)
+            self.finishWithPaymentResultCallback?(paymentResult)
 
             }, failure: { [weak self] (error) in
 

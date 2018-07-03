@@ -357,10 +357,9 @@ extension MercadoPagoCheckout {
         let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self as PXPaymentErrorHandler)
         paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
             // TODO:: REMOVE
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
                 self?.viewModel.paymentResult = paymentResult
-//                self?.executeNextStep()
-                if paymentResult.isApproved() {
+                if paymentResult.isAccepted() {
                     PXNotificationManager.Post.animateButtonForSuccess()
                 } else if paymentResult.isError() {
                     PXNotificationManager.Post.animateButtonForError()
@@ -368,7 +367,7 @@ extension MercadoPagoCheckout {
                     PXNotificationManager.Post.animateButtonForWarning()
                 }
             })
-        })
+//        })
         paymentFlow.start()
     }
 
