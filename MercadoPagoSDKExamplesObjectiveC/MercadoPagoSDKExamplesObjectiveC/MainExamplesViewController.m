@@ -130,7 +130,9 @@
     //Setear ReviewScreenPrefernce
 //    [self setReviewScreenPreference];
 
-    [self.mpCheckout start];
+
+    [self.mpCheckout lazyStartWithLifecycleDelegate: self];
+    // [self.mpCheckout start];
 }
 
 -(void)setHooks {
@@ -373,6 +375,16 @@
         NSLog(@"%@", paymentResult.status);
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
+}
+
+- (void)lazyInitDidFinish {
+    NSLog(@"lazyInitDidFinish");
+    [self.mpCheckout start];
+}
+
+- (void)lazyInitError {
+    // Retry once(?)
+    NSLog(@"lazyInitError");
 }
 
 @end
