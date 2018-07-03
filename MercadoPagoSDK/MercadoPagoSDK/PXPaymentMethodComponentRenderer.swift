@@ -50,6 +50,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
 
         if let detailText = component.props.subtitle {
             let detailLabel = UILabel()
+            detailLabel.numberOfLines = 2
             detailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(detailLabel)
             pmBodyView.subtitleLabel = detailLabel
@@ -57,7 +58,6 @@ class PXPaymentMethodComponentRenderer: NSObject {
             detailLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
             detailLabel.textColor = component.props.lightLabelColor
             detailLabel.textAlignment = .center
-            PXLayout.setHeight(owner: detailLabel, height: 18.0).isActive = true
             pmBodyView.putOnBottomOfLastView(view: detailLabel, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: detailLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinRight(view: detailLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
