@@ -856,7 +856,8 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.loadPreferenceStatus = preferenceLoaded
 
         // Create init flow.
-        initFlow = InitFlow(navigationHandler: initFlowNavHandler, flowProperties: initFlowProperties, finishCallback: {
+        initFlow = InitFlow(navigationHandler: initFlowNavHandler, flowProperties: initFlowProperties, finishCallback: { paymentMethodSearchResponse in
+            self.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
             self.initFlowProtocol?.didFinishInitFlow()
         }, errorCallback: {
             self.initFlowProtocol?.didFailInitFlow()

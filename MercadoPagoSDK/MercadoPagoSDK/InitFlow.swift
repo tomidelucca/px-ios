@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
     func didFinishInitFlow()
@@ -20,10 +20,11 @@ final class InitFlow: PXFlow {
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
-    private let finishInitCallback: (() -> Void)
+    private let finishInitCallback: ((PaymentMethodSearch) -> Void)
+
     private let errorInitCallback: (() -> Void)
 
-    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping (() -> Void), errorCallback: @escaping (() -> Void)) {
+    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping (() -> Void)) {
         pxNavigationHandler = navigationHandler
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
@@ -71,7 +72,11 @@ final class InitFlow: PXFlow {
 
     func finishFlow() {
         status = .finished
-        finishInitCallback()
+        if let paymentMethods = model.getPaymentMethods() {
+            finishInitCallback(paymentMethods)
+        } else {
+            cancelFlow()
+        }
     }
 
     func cancelFlow() {

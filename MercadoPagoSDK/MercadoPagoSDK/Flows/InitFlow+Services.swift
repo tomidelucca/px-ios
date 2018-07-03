@@ -101,7 +101,7 @@ extension InitFlow {
                 return
             }
 
-            strongSelf.model.updateModel(paymentMethodsResponse: paymentMethodSearch)
+            strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
             strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) in
