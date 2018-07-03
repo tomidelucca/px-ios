@@ -19,7 +19,18 @@ extension MercadoPagoCheckout {
             MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
         }
 
-        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
+
+        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { (discount, campaign) -> Bool in
+
+            if true {
+                self.setDiscount(discount, withCampaign: campaign)
+                return true
+            } else {
+                return false
+            }
+
+
+        }, callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
                 return
@@ -102,7 +113,11 @@ extension MercadoPagoCheckout {
 
             self?.viewModel.updateCheckoutModel(payerCost: payerCost)
             self?.executeNextStep()
-        })
+        }) { (discount, campaign) -> Bool in
+
+            
+            return true
+        }
 
         weak var strongPayerCostViewController = payerCostStep
 

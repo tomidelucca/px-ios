@@ -7,14 +7,10 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 @objcMembers
-open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource, PXDiscountInputable {
-
-    func completionServices(success: @escaping (Bool) -> Void) {
-        success(true)
-    }
-
+open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -24,6 +20,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     override open var screenName: String { return viewModel.getScreenName() }
     override open var screenId: String { return viewModel.getScreenId() }
+
+    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis,cam in return false}
 
     private var floatingRowView: UIView?
 
@@ -98,7 +96,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
 
     func handleTotalRowTap() {
-        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, protocol2: self)
+        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, discountValidationCallback: discountValidationCallback)
     }
 
     override func loadMPStyles() {
@@ -120,9 +118,12 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         fatalError("init(coder:) has not been implemented")
     }
 
-    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void)) {
+    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void), discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool)? = nil) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
+        if let discountValidationCallback = discountValidationCallback {
+            self.discountValidationCallback = discountValidationCallback
+        }
         super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
     }
 

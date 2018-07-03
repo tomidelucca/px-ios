@@ -31,7 +31,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 @objcMembers
-open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PXDiscountInputable {
+open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
@@ -50,8 +50,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     var installments: Int?
     var viewModel: PaymentVaultViewModel!
 
-    private var floatingRowView: UIView?
-
     var bundle = MercadoPago.getBundle()
 
     var titleSectionReference: PaymentVaultTitleCollectionViewCell?
@@ -64,16 +62,18 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate var defaultOptionSelected = false
 
     fileprivate var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
+    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis,cam in return false}
 
     private var floatingBottomRowView: UIView?
 
-    init(viewModel: PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
+    init(viewModel: PaymentVaultViewModel, discountValidationCallback: @escaping (PXDiscount, PXCampaign) -> Bool, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
         self.viewModel = viewModel
         if let groupName = self.viewModel.groupName {
             self.groupName = groupName
         }
+        self.discountValidationCallback = discountValidationCallback
         self.callback = callback
     }
 
@@ -152,13 +152,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.isUserInteractionEnabled = false
             view.addSubview(temporalView)
         }
-//        renderFloatingBottomView()
-        hideLoading()
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         renderFloatingBottomView()
+        hideLoading()
     }
 
     func getCollectionViewPinBottomContraint() -> NSLayoutConstraint? {
@@ -172,14 +167,19 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     private func renderFloatingBottomView() {
         if floatingBottomRowView == nil {
             floatingBottomRowView = getFloatingTotalRowView()
-            if let floatingRowView = floatingBottomRowView {
-                getCollectionViewPinBottomContraint()?.isActive = false
-                view.addSubview(floatingRowView)
-                PXLayout.matchWidth(ofView: floatingRowView).isActive = true
-                PXLayout.centerHorizontally(view: floatingRowView).isActive = true
-                PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
-                PXLayout.put(view: floatingRowView, onBottomOf: collectionSearch).isActive = true
-            }
+        } else {
+            floatingBottomRowView?.removeFromSuperview()
+            floatingBottomRowView = getFloatingTotalRowView()
+        }
+
+        if let floatingRowView = floatingBottomRowView {
+            getCollectionViewPinBottomContraint()?.isActive = false
+            view.addSubview(floatingRowView)
+            PXLayout.matchWidth(ofView: floatingRowView).isActive = true
+            PXLayout.centerHorizontally(view: floatingRowView).isActive = true
+            PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
+            PXLayout.put(view: floatingRowView, onBottomOf: collectionSearch).isActive = true
+            view.layoutIfNeeded()
         }
     }
 
@@ -192,11 +192,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     func handleTotalRowTap() {
-        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, protocol2: self)
-    }
-
-    func completionServices(success: @escaping (Bool) -> Void) {
-        success(true)
+        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, discountValidationCallback: discountValidationCallback)
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {

@@ -17,10 +17,10 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
-    let protocolable: PXDiscountInputable?
+    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis,cam in return false}
 
-    init(protocol2: PXDiscountInputable? = nil) {
-        self.protocolable = protocol2
+    init(discountValidationCallback: @escaping (PXDiscount, PXCampaign) -> Bool) {
+        self.discountValidationCallback = discountValidationCallback
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -198,15 +198,13 @@ extension PXDiscountCodeInputViewController {
                         return campaign.id.stringValue == discount.id
                     }
                     if let firstFilteredCampaign = filteredCampaigns.first {
-                        strongSelf.protocolable?.completionServices(success: { (result) in
-                            strongSelf.spinner?.hide()
-                            if result == true {
-                                strongSelf.transitionToSuccess(with: discount)
-                                mercadoPagoCheckout.setDiscount(discount, withCampaign: firstFilteredCampaign)
-                            } else {
-                                strongSelf.showError(with: "grupos fallo")
-                            }
-                        })
+                        let discountValidated = strongSelf.discountValidationCallback(discount, firstFilteredCampaign)
+                        strongSelf.spinner?.hide()
+                        if discountValidated {
+                            strongSelf.transitionToSuccess(with: discount)
+                        } else {
+                            strongSelf.showError(with: "grupos fallo")
+                        }
                     }
                 }
 
@@ -224,6 +222,6 @@ extension PXDiscountCodeInputViewController {
 
 }
 
-protocol PXDiscountInputable {
-    func completionServices(success: @escaping (Bool) -> Void)
+protocol PXDiscountValitable {
+    func discountValidation(discountValidation: @escaping (PXDiscount, PXCampaign) -> Bool)
 }
