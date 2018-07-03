@@ -60,7 +60,6 @@ import UIKit
         self.bottomCustomView = bottomCustomView
         super.init()
     }
-
 }
 
 // MARK: Getters
@@ -104,5 +103,19 @@ extension PXBusinessResult {
     }
     public func mustShowPaymentMethod() -> Bool {
         return self.showPaymentMethod
+    }
+}
+
+extension PXBusinessResult {
+    internal func isAccepted() -> Bool {
+        return self.status == .APPROVED
+    }
+
+    internal func isWarning() -> Bool {
+        return self.status == .PENDING || self.status == .IN_PROGRESS
+    }
+
+    internal func isError() -> Bool {
+        return self.status == .REJECTED
     }
 }

@@ -318,26 +318,48 @@ extension MercadoPagoCheckout {
 
         let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
 
-        let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, finishOneTap: { [weak self] (paymentData) in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-            strongSelf.executeNextStep()
+        let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, oneTapResultHandler: self)
 
-            }, cancelOneTap: { [weak self] in
-                self?.viewModel.prepareForNewSelection()
-                self?.executeNextStep()
-            }, exitCheckout: {
-                [weak self] in
-                self?.finish()
-        })
-
-        onetapFlow.setPaymentFlow(paymentFlow: paymentFlow, callback: { [weak self] (paymentResult) in
-            // TODO: Agregar weak self
-            self?.setPaymentResult(paymentResult: paymentResult)
-            self?.executeNextStep()
-        })
+        onetapFlow.setPaymentFlow(paymentFlow: paymentFlow)
         onetapFlow.start()
     }
+}
+
+extension MercadoPagoCheckout: PXOneTapResultHandler {
+    func finishOneTap(paymentData: PaymentData) {
+        self.viewModel.updateCheckoutModel(paymentData: paymentData)
+        self.executeNextStep()
+    }
+
+    func cancelOneTap() {
+        self.viewModel.prepareForNewSelection()
+        self.executeNextStep()
+    }
+
+    func exitCheckout() {
+        self.finish()
+    }
+
+    func finishOneTap(paymentResult: PaymentResult) {
+        self.setPaymentResult(paymentResult: paymentResult)
+        self.executeNextStep()
+    }
+
+    func finishOneTap(businessResult: PXBusinessResult) {
+        self.viewModel.businessResult = businessResult
+        self.executeNextStep()
+    }
+}
+
+protocol PXOneTapResultHandler: NSObjectProtocol {
+    func finishOneTap(paymentResult: PaymentResult)
+    func finishOneTap(businessResult: PXBusinessResult)
+    func finishOneTap(paymentData: PaymentData)
+    func cancelOneTap()
+    func exitCheckout()
+}
+
+protocol PXPaymentResultHandler: NSObjectProtocol {
+    func finishPaymentFlow(paymentResult: PaymentResult)
+    func finishPaymentFlow(businessResult: PXBusinessResult)
 }

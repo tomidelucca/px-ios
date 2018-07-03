@@ -397,8 +397,8 @@
 		4BCDAC3B1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */; };
 		4BCF602620A327B400ECEE81 /* OneTapFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602520A327B400ECEE81 /* OneTapFlow.swift */; };
 		4BCF602720A327B400ECEE81 /* OneTapFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602520A327B400ECEE81 /* OneTapFlow.swift */; };
-		4BCF602920A327DF00ECEE81 /* OneTapFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602820A327DF00ECEE81 /* OneTapFlowViewModel.swift */; };
-		4BCF602A20A327DF00ECEE81 /* OneTapFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602820A327DF00ECEE81 /* OneTapFlowViewModel.swift */; };
+		4BCF602920A327DF00ECEE81 /* OneTapFlowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602820A327DF00ECEE81 /* OneTapFlowModel.swift */; };
+		4BCF602A20A327DF00ECEE81 /* OneTapFlowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602820A327DF00ECEE81 /* OneTapFlowModel.swift */; };
 		4BCF602C20A3285F00ECEE81 /* OneTapFlow+Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602B20A3285F00ECEE81 /* OneTapFlow+Screens.swift */; };
 		4BCF602D20A3285F00ECEE81 /* OneTapFlow+Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602B20A3285F00ECEE81 /* OneTapFlow+Screens.swift */; };
 		4BCF602F20A3288500ECEE81 /* OneTapFlow+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF602E20A3288500ECEE81 /* OneTapFlow+Services.swift */; };
@@ -406,6 +406,8 @@
 		4BD1E8671FB38096002B3F75 /* PXSDKSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3ECE51FB37B0300AAFD38 /* PXSDKSettings.swift */; };
 		4BD84D721F1E48FB002219D4 /* MercadoPagoCheckoutServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD84D711F1E48FB002219D4 /* MercadoPagoCheckoutServices.swift */; };
 		4BD84D741F1E4910002219D4 /* MercadoPagoCheckoutScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD84D731F1E4910002219D4 /* MercadoPagoCheckoutScreens.swift */; };
+		4BDC087020EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC086F20EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift */; };
+		4BDC087120EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC086F20EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift */; };
 		4BDE2D451E37B4AC00C1D614 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
 		4BE2B16B1FCDDC5D007C58F2 /* HooksFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE2B16A1FCDDC5D007C58F2 /* HooksFlowTest.swift */; };
 		4BE2B16D1FCDDCB7007C58F2 /* MockedHookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE2B16C1FCDDCB7007C58F2 /* MockedHookViewController.swift */; };
@@ -1043,11 +1045,12 @@
 		4BC24E871FE419FD003C43F0 /* MockPaymentPluginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPaymentPluginViewController.swift; sourceTree = "<group>"; };
 		4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewScreenPreferenceTest.swift; sourceTree = "<group>"; };
 		4BCF602520A327B400ECEE81 /* OneTapFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTapFlow.swift; sourceTree = "<group>"; };
-		4BCF602820A327DF00ECEE81 /* OneTapFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTapFlowViewModel.swift; sourceTree = "<group>"; };
+		4BCF602820A327DF00ECEE81 /* OneTapFlowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTapFlowModel.swift; sourceTree = "<group>"; };
 		4BCF602B20A3285F00ECEE81 /* OneTapFlow+Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OneTapFlow+Screens.swift"; sourceTree = "<group>"; };
 		4BCF602E20A3288500ECEE81 /* OneTapFlow+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OneTapFlow+Services.swift"; sourceTree = "<group>"; };
 		4BD84D711F1E48FB002219D4 /* MercadoPagoCheckoutServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckoutServices.swift; sourceTree = "<group>"; };
 		4BD84D731F1E4910002219D4 /* MercadoPagoCheckoutScreens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckoutScreens.swift; sourceTree = "<group>"; };
+		4BDC086F20EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PXAnimatedButton+CongratsLogic.swift"; sourceTree = "<group>"; };
 		4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicePreference.swift; sourceTree = "<group>"; };
 		4BE2B16A1FCDDC5D007C58F2 /* HooksFlowTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HooksFlowTest.swift; sourceTree = "<group>"; };
 		4BE2B16C1FCDDCB7007C58F2 /* MockedHookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockedHookViewController.swift; sourceTree = "<group>"; };
@@ -1883,6 +1886,7 @@
 			children = (
 				4B1EE15B20D0142800560838 /* PXProgressView.swift */,
 				4B1EE15E20D0145F00560838 /* PXAnimatedButton.swift */,
+				4BDC086F20EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift */,
 			);
 			path = "Animated Button";
 			sourceTree = "<group>";
@@ -1915,7 +1919,7 @@
 			isa = PBXGroup;
 			children = (
 				4BCF602520A327B400ECEE81 /* OneTapFlow.swift */,
-				4BCF602820A327DF00ECEE81 /* OneTapFlowViewModel.swift */,
+				4BCF602820A327DF00ECEE81 /* OneTapFlowModel.swift */,
 				4BCF602B20A3285F00ECEE81 /* OneTapFlow+Screens.swift */,
 				4BCF602E20A3288500ECEE81 /* OneTapFlow+Services.swift */,
 				23625A3520AB059B0069AE30 /* UI */,
@@ -3026,6 +3030,7 @@
 				4BF30E7820E27BF9008CB089 /* PXPaymentFlowHandler.swift in Sources */,
 				FC65A1EF208F6C30000A0DA0 /* PXBankDealDetailsViewController.swift in Sources */,
 				7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */,
+				4BDC087020EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift in Sources */,
 				FC1A2AF120B5A4E50046FECA /* PXTotalRowComponent.swift in Sources */,
 				81F090E120177EDA008A69C1 /* PXContainedActionButtonComponent.swift in Sources */,
 				15AE1DAD1F61B98200B0DAF8 /* PXComponent.swift in Sources */,
@@ -3147,7 +3152,7 @@
 				2352B753207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */,
 				FC3FC8681FBE118100CF29E1 /* PXInstructionsReferencesRenderer.swift in Sources */,
 				4BF30E7620E27B3A008CB089 /* PXPaymentFlow.swift in Sources */,
-				4BCF602920A327DF00ECEE81 /* OneTapFlowViewModel.swift in Sources */,
+				4BCF602920A327DF00ECEE81 /* OneTapFlowModel.swift in Sources */,
 				FC3FC8651FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift in Sources */,
 				534D84201F546FA000C2C6F9 /* AvailableCardsViewController.swift in Sources */,
 				FC05808E20A5D90200BBECB8 /* PXBankDealCollectionCell.swift in Sources */,
@@ -3507,7 +3512,7 @@
 				4BCF602720A327B400ECEE81 /* OneTapFlow.swift in Sources */,
 				0F98839A1AD2AB6000F750F0 /* TransactionDetails.swift in Sources */,
 				53EB434E1F601D09009510BC /* AvailableCardsViewModelTests.swift in Sources */,
-				4BCF602A20A327DF00ECEE81 /* OneTapFlowViewModel.swift in Sources */,
+				4BCF602A20A327DF00ECEE81 /* OneTapFlowModel.swift in Sources */,
 				4B277F671E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */,
 				4BF30E7C20E27C34008CB089 /* PXPaymentFlowHandler.swift in Sources */,
 				FC3FC84A1FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */,
@@ -3671,6 +3676,7 @@
 				FC1A2AF220B5A4E50046FECA /* PXTotalRowComponent.swift in Sources */,
 				231AB99C20ADF416006DC5A0 /* PXXibRenderer.swift in Sources */,
 				769A73611DF736D30089A1BF /* Utils.swift in Sources */,
+				4BDC087120EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift in Sources */,
 				23F5FEDE205030BE005382E9 /* PXItemComponentProps.swift in Sources */,
 				4B8D73521E780F8F009C1209 /* SummaryRow.swift in Sources */,
 				0F9883781AD2AB6000F750F0 /* IdentificationType.swift in Sources */,

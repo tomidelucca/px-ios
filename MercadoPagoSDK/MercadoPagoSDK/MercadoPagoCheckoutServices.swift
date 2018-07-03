@@ -347,27 +347,13 @@ extension MercadoPagoCheckout {
     }
 
     func createPayment() {
-//        self.pxNavigationHandler.presentLoading()
-
         var paymentMethodPaymentPlugin: PXPaymentPluginComponent?
         if let paymentOtionSelected = viewModel.paymentOptionSelected, let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
             paymentMethodPaymentPlugin = plugin.paymentPlugin
         }
 
         let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self as PXPaymentErrorHandler)
-        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
-            // TODO:: REMOVE
-//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
-                self?.viewModel.paymentResult = paymentResult
-                if paymentResult.isAccepted() {
-                    PXNotificationManager.Post.animateButtonForSuccess()
-                } else if paymentResult.isError() {
-                    PXNotificationManager.Post.animateButtonForError()
-                } else if paymentResult.isWarning() {
-                    PXNotificationManager.Post.animateButtonForWarning()
-                }
-            })
-//        })
+        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
         paymentFlow.start()
     }
 
@@ -447,8 +433,16 @@ extension MercadoPagoCheckout: PXPaymentErrorHandler {
 
         })
     }
+}
 
-    func exitCheckout() {
-        finish()
+extension MercadoPagoCheckout: PXPaymentResultHandler {
+    func finishPaymentFlow(paymentResult: PaymentResult) {
+        self.viewModel.paymentResult = paymentResult
+        PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
+    }
+
+    func finishPaymentFlow(businessResult: PXBusinessResult) {
+        self.viewModel.businessResult = businessResult
+        PXAnimatedButton.animateButtonWith(businessResult: businessResult)
     }
 }

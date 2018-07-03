@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class OneTapFlowViewModel: NSObject, PXFlowModel {
+class OneTapFlowModel: NSObject, PXFlowModel {
 
     enum Steps: String {
         case finish
@@ -24,10 +24,11 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
     var readyToPay: Bool = false
     var payerCosts: [PayerCost]?
     var paymentResult: PaymentResult?
+    var businessResult: PXBusinessResult?
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
-    var finishOneTapWithPaymentResultCallback: ((PaymentResult) -> Void)?
+    weak var paymentResultHandler: PXPaymentResultHandler?
 
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {
@@ -70,7 +71,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
 }
 
 // MARK: Create view model
-extension OneTapFlowViewModel {
+extension OneTapFlowModel {
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
             fatalError("Cannot convert payment option selected to CardInformation")
@@ -90,7 +91,7 @@ extension OneTapFlowViewModel {
 }
 
 // MARK: Update view models
-extension OneTapFlowViewModel {
+extension OneTapFlowModel {
     func updateCheckoutModel(paymentData: PaymentData) {
         self.paymentData = paymentData
         self.readyToPay = true
@@ -110,7 +111,7 @@ extension OneTapFlowViewModel {
 }
 
 // MARK: Flow logic
-extension OneTapFlowViewModel {
+extension OneTapFlowModel {
     func needReviewAndConfirmForOneTap() -> Bool {
         if readyToPay {
             return false

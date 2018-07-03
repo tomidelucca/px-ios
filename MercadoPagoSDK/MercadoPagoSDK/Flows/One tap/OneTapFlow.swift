@@ -7,31 +7,27 @@
 //
 
 import Foundation
-final class OneTapFlow: PXFlow {
+final class OneTapFlow: NSObject, PXFlow {
 
-    let viewModel: OneTapFlowViewModel
+    let model: OneTapFlowModel
     let pxNavigationHandler: PXNavigationHandler
-    let finishOneTapCallback: ((PaymentData) -> Void)
-    let cancelOneTapCallback: (() -> Void)
-    let exitCheckoutCallback: (() -> Void)
 
-    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, finishOneTap: @escaping ((PaymentData) -> Void), cancelOneTap: @escaping (() -> Void), exitCheckout: @escaping (() -> Void)) {
+    weak var resultHandler: PXOneTapResultHandler?
+
+    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, oneTapResultHandler: PXOneTapResultHandler) {
         pxNavigationHandler = navigationController
-        finishOneTapCallback = finishOneTap
-        cancelOneTapCallback = cancelOneTap
-        exitCheckoutCallback = exitCheckout
-        viewModel = OneTapFlowViewModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
+        resultHandler = oneTapResultHandler
+        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
     }
 
     deinit {
         #if DEBUG
-            print("DEINIT FLOW - \(self)")
+        print("DEINIT FLOW - \(self)")
         #endif
     }
 
-    func setPaymentFlow(paymentFlow: PXPaymentFlow, callback: @escaping ((PaymentResult) -> Void)) {
-        viewModel.paymentFlow = paymentFlow
-        viewModel.finishOneTapWithPaymentResultCallback = callback
+    func setPaymentFlow(paymentFlow: PXPaymentFlow) {
+        model.paymentFlow = paymentFlow
     }
 
     func start() {
@@ -39,7 +35,7 @@ final class OneTapFlow: PXFlow {
     }
 
     func executeNextStep() {
-        switch self.viewModel.nextStep() {
+        switch self.model.nextStep() {
         case .screenReviewOneTap:
             self.showReviewAndConfirmScreenForOneTap()
         case .screenSecurityCode:
@@ -55,24 +51,26 @@ final class OneTapFlow: PXFlow {
 
     // Cancel one tap and go to checkout
     func cancelFlow() {
-        viewModel.search.deleteCheckoutDefaultOption()
-        cancelOneTapCallback()
+        model.search.deleteCheckoutDefaultOption()
+        resultHandler?.cancelOneTap()
     }
 
     // Finish one tap and continue with checkout
     func finishFlow() {
-        viewModel.search.deleteCheckoutDefaultOption()
+        model.search.deleteCheckoutDefaultOption()
 
-        if let paymentResult = viewModel.paymentResult, let paymentResultCallback = viewModel.finishOneTapWithPaymentResultCallback {
-            paymentResultCallback(paymentResult)
+        if let paymentResult = model.paymentResult {
+            resultHandler?.finishOneTap(paymentResult: paymentResult)
+        } else if let businessResult = model.businessResult {
+            resultHandler?.finishOneTap(businessResult: businessResult)
         } else {
-            finishOneTapCallback(viewModel.paymentData)
+            resultHandler?.finishOneTap(paymentData: model.paymentData)
         }
     }
 
     // Exit checkout
     func exitCheckout() {
-        exitCheckoutCallback()
+        resultHandler?.exitCheckout()
     }
 }
 
@@ -83,11 +81,7 @@ extension OneTapFlow {
     ///   - search: payment method search item
     ///   - paymentMethodPlugins: payment Methods plugins that can be show
     /// - Returns: selected payment option if possible
-    static func autoSelectOneTapOption(search: PaymentMethodSearch, paymentMethodPlugins: [PXPaymentMethodPlugin], forceTest: Bool = false) -> PaymentMethodOption? {
-
-        if forceTest {
-            return MockPaymentOption()
-        }
+    static func autoSelectOneTapOption(search: PaymentMethodSearch, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
 
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
@@ -121,63 +115,36 @@ extension OneTapFlow {
 // MARK: PaymentFlow
 extension OneTapFlow {
     func startPaymentFlow() {
-        guard let paymentFlow = viewModel.paymentFlow else {
+        guard let paymentFlow = model.paymentFlow else {
             return
         }
-        if viewModel.needToShowLoading() {
+        if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
-        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, finishWithPaymentResultCallback: { [weak self] (paymentResult) in
-            // TODO:: REMOVE
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
-                self?.viewModel.paymentResult = paymentResult
-                // TODO: REMOVE FORCE
-                if self?.viewModel.needToShowLoading() ?? false {
-                    self?.executeNextStep()
-                } else {
-                    if paymentResult.isApproved() {
-                        PXNotificationManager.Post.animateButtonForSuccess()
-                    } else if paymentResult.isError() {
-                        PXNotificationManager.Post.animateButtonForError()
-                    } else if paymentResult.isWarning() {
-                        PXNotificationManager.Post.animateButtonForWarning()
-                    }
-                }
-
-            })
-        })
+        paymentFlow.setData(paymentData: model.paymentData, checkoutPreference: model.checkoutPreference, resultHandler: self)
         paymentFlow.start()
     }
 }
 
-// TODO: Only for test flow. Remove before merge.
-class MockPaymentOption: PaymentMethodOption {
-
-    func getId() -> String {
-        return "rapipago"
+extension OneTapFlow: PXPaymentResultHandler {
+    func finishPaymentFlow(paymentResult: PaymentResult) {
+        self.model.paymentResult = paymentResult
+        if self.model.needToShowLoading() {
+            self.executeNextStep()
+        } else {
+            PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
+        }
     }
 
-    func getDescription() -> String {
-        return "Rapipago mocked payment method"
-    }
-
-    func getComment() -> String {
-        return ""
-    }
-
-    func hasChildren() -> Bool {
-        return false
-    }
-
-    func getChildren() -> [PaymentMethodOption]? {
-        return nil
-    }
-
-    func isCard() -> Bool {
-        return false
-    }
-
-    func isCustomerPaymentMethod() -> Bool {
-        return false
+    func finishPaymentFlow(businessResult: PXBusinessResult) {
+        // TODO: Remove
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+            self.model.businessResult = businessResult
+            if self.model.needToShowLoading() {
+                self.executeNextStep()
+            } else {
+                PXAnimatedButton.animateButtonWith(businessResult: businessResult)
+            }
+        })
     }
 }

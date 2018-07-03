@@ -9,13 +9,13 @@
 import Foundation
 extension OneTapFlow {
     func createCardToken(cardInformation: CardInformation? = nil, securityCode: String? = nil) {
-        guard let cardInfo = viewModel.paymentOptionSelected as? CardInformation else {
+        guard let cardInfo = model.paymentOptionSelected as? CardInformation else {
             return
         }
-        if self.viewModel.mpESCManager.hasESCEnable() {
+        if self.model.mpESCManager.hasESCEnable() {
             var savedESCCardToken: SavedESCCardToken
 
-            let esc = self.viewModel.mpESCManager.getESC(cardId: cardInfo.getCardId())
+            let esc = self.model.mpESCManager.getESC(cardId: cardInfo.getCardId())
 
             if !String.isNullOrEmpty(esc) {
                 savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc)
@@ -31,41 +31,41 @@ extension OneTapFlow {
     }
 
     func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
-        if viewModel.needToShowLoading() {
+        if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
 
-        let cardInformation = viewModel.paymentOptionSelected as! CardInformation
+        let cardInformation = model.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
-        self.viewModel.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
+        self.model.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
                 token.lastFourDigits = cardInformation.getCardLastForDigits()
             }
-            self?.viewModel.updateCheckoutModel(token: token)
+            self?.model.updateCheckoutModel(token: token)
             self?.executeNextStep()
 
             }, failure: { [weak self] (error) in
                 let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-                self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.exitCheckoutCallback, errorCallback: { [weak self] () in
+                self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.resultHandler?.exitCheckout, errorCallback: { [weak self] () in
                     self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
                 })
         })
     }
 
     func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
-        if viewModel.needToShowLoading() {
+        if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
 
-        self.viewModel.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
+        self.model.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
-                let cardInformation = self?.viewModel.paymentOptionSelected as? CardInformation
+                let cardInformation = self?.model.paymentOptionSelected as? CardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
-            self?.viewModel.updateCheckoutModel(token: token)
+            self?.model.updateCheckoutModel(token: token)
             self?.executeNextStep()
 
             }, failure: { [weak self] (error) in
@@ -74,10 +74,10 @@ extension OneTapFlow {
 
                 if let apiException = error.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) ||  apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
 
-                    self?.viewModel.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
+                    self?.model.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
                     self?.executeNextStep()
                 } else {
-                    self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.exitCheckoutCallback, errorCallback: { [weak self] () in
+                    self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.resultHandler?.exitCheckout, errorCallback: { [weak self] () in
                         self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
                     })
 

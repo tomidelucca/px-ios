@@ -11,13 +11,13 @@ import Foundation
 extension OneTapFlow {
 
     func showReviewAndConfirmScreenForOneTap() {
-        let reviewVC = PXOneTapViewController(viewModel: viewModel.reviewConfirmViewModel(), callbackPaymentData: { [weak self] (paymentData: PaymentData) in
+        let reviewVC = PXOneTapViewController(viewModel: model.reviewConfirmViewModel(), callbackPaymentData: { [weak self] (paymentData: PaymentData) in
 
             self?.cancelFlow()
             return
 
             }, callbackConfirm: {(paymentData: PaymentData) in
-                self.viewModel.updateCheckoutModel(paymentData: paymentData)
+                self.model.updateCheckoutModel(paymentData: paymentData)
 
                 // Deletes default one tap option in payment method search
                 self.executeNextStep()
@@ -35,7 +35,7 @@ extension OneTapFlow {
     }
 
     func showSecurityCodeScreen() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
+        let securityCodeVc = SecurityCodeViewController(viewModel: model.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
             self?.createCardToken(cardInformation: cardInformation as? CardInformation, securityCode: securityCode)
         })
         self.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)

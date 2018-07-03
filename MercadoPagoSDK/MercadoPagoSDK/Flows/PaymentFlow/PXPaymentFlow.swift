@@ -18,7 +18,7 @@ internal final class PXPaymentFlow: NSObject {
     let navigationHandler: PXNavigationHandler
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    var finishWithPaymentResultCallback: ((PaymentResult) -> Void)?
+    weak var resultHandler: PXPaymentResultHandler?
     weak var paymentErrorHandler: PXPaymentErrorHandler?
 
     var shouldShowLoading: Bool = true
@@ -32,10 +32,10 @@ internal final class PXPaymentFlow: NSObject {
         self.paymentErrorHandler = paymentErrorHandler
     }
 
-    func setData(paymentData: PaymentData, checkoutPreference: CheckoutPreference, finishWithPaymentResultCallback: @escaping ((PaymentResult) -> Void)) {
+    func setData(paymentData: PaymentData, checkoutPreference: CheckoutPreference, resultHandler: PXPaymentResultHandler) {
         self.paymentData = paymentData
         self.checkoutPreference = checkoutPreference
-        self.finishWithPaymentResultCallback = finishWithPaymentResultCallback
+        self.resultHandler = resultHandler
     }
 
     deinit {
@@ -134,7 +134,7 @@ internal final class PXPaymentFlow: NSObject {
 
         // TODO: Ver bussniess result
         let paymentResult = PaymentResult(status: paymentPluginResult?.status ?? "approved", statusDetail: paymentPluginResult?.statusDetail ?? "", paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult?.receiptId, statementDescription: nil)
-        finishWithPaymentResultCallback?(paymentResult)
+        resultHandler?.finishPaymentFlow(paymentResult: paymentResult)
         return
     }
 
@@ -161,7 +161,7 @@ internal final class PXPaymentFlow: NSObject {
         //        }
 
         let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
-        finishWithPaymentResultCallback?(paymentResult)
+        resultHandler?.finishPaymentFlow(paymentResult: paymentResult)
         return
     }
 
@@ -191,7 +191,7 @@ internal final class PXPaymentFlow: NSObject {
                 return
             }
             let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
-            self.finishWithPaymentResultCallback?(paymentResult)
+            self.resultHandler?.finishPaymentFlow(paymentResult: paymentResult)
 
             }, failure: { [weak self] (error) in
 
