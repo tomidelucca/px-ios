@@ -16,7 +16,6 @@ internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry:
 internal protocol InitFlowProtocol: NSObjectProtocol {
     func didFinishInitFlow()
     func didFailInitFlow(flowError: InitFlowError)
-    func shouldRetry()
 }
 
 final class InitFlowModel: NSObject, PXFlowModel {
@@ -121,6 +120,7 @@ extension InitFlowModel {
     func nextStep() -> Steps {
 
         if let retryStep = pendingRetryStep {
+            pendingRetryStep = nil
             return retryStep
         }
 

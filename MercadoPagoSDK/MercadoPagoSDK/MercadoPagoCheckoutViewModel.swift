@@ -113,7 +113,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Init Flow
     var initFlow: InitFlow?
-    private weak var initFlowProtocol: InitFlowProtocol?
+    weak var initFlowProtocol: InitFlowProtocol?
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
@@ -753,7 +753,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return false
     }
 
-    private func isPreferenceLoaded() -> Bool {
+    func isPreferenceLoaded() -> Bool {
         return !String.isNullOrEmpty(self.checkoutPreference.preferenceId)
     }
 }
@@ -835,40 +835,5 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
         MercadoPagoCheckoutViewModel.error = nil
-    }
-}
-
-// MARK: Init Flow
-extension MercadoPagoCheckoutViewModel {
-    private func createInitFlow() {
-        // Create init flow props.
-        let initFlowNavHandler = PXNavigationHandler.init(navigationController: UINavigationController())
-        let initFlowProperties: InitFlowProperties
-        initFlowProperties.checkoutPreference = self.checkoutPreference
-        initFlowProperties.paymentData = self.paymentData
-        initFlowProperties.paymentResult = self.paymentResult
-        initFlowProperties.paymentMethodPlugins = self.paymentMethodPlugins
-        initFlowProperties.paymentPlugin = self.paymentPlugin
-        initFlowProperties.paymentMethodSearchResult = self.search
-        initFlowProperties.directDiscountSearchStatus = paymentData.isComplete()
-        initFlowProperties.loadPreferenceStatus = isPreferenceLoaded()
-
-        // Create init flow.
-        initFlow = InitFlow(navigationHandler: initFlowNavHandler, flowProperties: initFlowProperties, finishCallback: { paymentMethodSearchResponse in
-            self.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-            self.initFlowProtocol?.didFinishInitFlow()
-        }, errorCallback: { initFlowError in
-            self.initFlowProtocol?.didFailInitFlow(flowError: initFlowError)
-        }, retryCallback: {
-             self.initFlowProtocol?.shouldRetry()
-        })
-    }
-
-    func setInitFlowProtocol(flowInitProtocol: InitFlowProtocol) {
-        initFlowProtocol = flowInitProtocol
-    }
-
-    func startInitFlow() {
-        initFlow?.start()
     }
 }

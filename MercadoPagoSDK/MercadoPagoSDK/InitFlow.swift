@@ -15,13 +15,11 @@ final class InitFlow: PXFlow {
     private var status: PXFlowStatus = .ready
     private let finishInitCallback: ((PaymentMethodSearch) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
-    private let retryInitCallback: (() -> Void)
 
-    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping ((InitFlowError) -> Void), retryCallback: @escaping (() -> Void)) {
+    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
         pxNavigationHandler = navigationHandler
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
-        retryInitCallback = retryCallback
         model = InitFlowModel(flowProperties: flowProperties)
     }
 
@@ -41,25 +39,18 @@ final class InitFlow: PXFlow {
     func executeNextStep() {
         switch model.nextStep() {
         case .SERVICE_GET_PREFERENCE:
-            print("p - SERVICE_GET_PREFERENCE")
             getCheckoutPreference()
         case .ACTION_VALIDATE_PREFERENCE:
-            print("p - ACTION_VALIDATE_PREFERENCE")
             validatePreference()
         case .SERVICE_GET_DIRECT_DISCOUNT:
-            print("p - SERVICE_GET_DIRECT_DISCOUNT")
             getDirectDiscount()
         case .SERVICE_GET_PAYMENT_METHODS:
-            print("p - SERVICE_GET_PAYMENT_METHODS")
             getPaymentMethodSearch()
         case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
-            print("p - SERVICE_PAYMENT_METHOD_PLUGIN_INIT")
             initPaymentMethodPlugins()
         case .FINISH:
-            print("p - FINISH - INIT FLOW")
             finishFlow()
         case .ERROR:
-            print("p - ERROR - INIT FLOW")
             cancelFlow()
         }
     }
@@ -84,11 +75,9 @@ final class InitFlow: PXFlow {
 
 // MARK: - Getters
 extension InitFlow {
-
-    func shouldRetry(step: InitFlowModel.Steps) {
+    func setFlowRetry(step: InitFlowModel.Steps) {
         status = .ready
         model.setPendingRetry(forStep: step)
-        retryInitCallback()
     }
 
     func disposePendingRetry() {
@@ -99,7 +88,7 @@ extension InitFlow {
         return status
     }
 
-    func shouldRestart() {
+    func restart() {
         if status != .running {
             status = .ready
         }

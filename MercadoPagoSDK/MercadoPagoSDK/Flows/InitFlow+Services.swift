@@ -11,7 +11,6 @@ import Foundation
 extension InitFlow {
     func getCheckoutPreference() {
         model.getService().getCheckoutPreference(checkoutPreferenceId: model.properties.checkoutPreference.preferenceId, callback: { [weak self] (checkoutPreference) in
-
             guard let strongSelf = self else {
                 return
             }
@@ -41,7 +40,6 @@ extension InitFlow {
 
     func getDirectDiscount() {
         model.getService().getDirectDiscount(amount: model.amountHelper.amountToPay, payerEmail: model.properties.checkoutPreference.payer.email, callback: { [weak self] (_) in
-
             guard let strongSelf = self else {
                 return
             }
@@ -54,7 +52,6 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-
                 let customError = InitFlowError(errorStep: .SERVICE_GET_DIRECT_DISCOUNT, shouldRetry: true)
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
@@ -109,7 +106,6 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-
                 let customError = InitFlowError(errorStep: .SERVICE_GET_PAYMENT_METHODS, shouldRetry: true)
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()

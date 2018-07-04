@@ -20,12 +20,14 @@ public protocol PXCheckoutLifecycleProtocol: NSObjectProtocol {
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
 
-    private enum InitMode {
+    enum InitMode {
         case normal
         case lazy
     }
-    private var initMode: InitMode = .normal
-    private var lifecycleProtocol: PXCheckoutLifecycleProtocol?
+
+    // Init
+    var initMode: InitMode = .normal
+    var lifecycleProtocol: PXCheckoutLifecycleProtocol?
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
@@ -88,7 +90,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func lazyStart(lifecycleDelegate: PXCheckoutLifecycleProtocol) {
-        viewModel.initFlow?.shouldRestart()
+        viewModel.initFlow?.restart()
         lifecycleProtocol = lifecycleDelegate
         initMode = .lazy
         commondInit()
@@ -144,17 +146,14 @@ open class MercadoPagoCheckout: NSObject {
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
-        print("p - initialize - startInitFlow")
         viewModel.startInitFlow()
     }
 
     func executeNextStep() {
         switch self.viewModel.nextStep() {
         case .START :
-            print("p - START")
             self.initialize()
         case .SCREEN_PAYMENT_METHOD_SELECTION:
-            print("p - SCREEN_PAYMENT_METHOD_SELECTION")
             self.showPaymentMethodsScreen()
         case .SCREEN_CARD_FORM:
             self.showCardForm()
@@ -263,39 +262,5 @@ open class MercadoPagoCheckout: NSObject {
             return true
         }
         return false
-    }
-}
-
-// MARK: Init flow Protocol
-extension MercadoPagoCheckout: InitFlowProtocol {
-
-    func didFailInitFlow(flowError: InitFlowError) {
-        if initMode == .lazy {
-            lifecycleProtocol?.lazyInitFailure(errorDetail: ("Error - \(flowError.errorStep.rawValue)"))
-            if let showLazyErrors = lifecycleProtocol?.shouldShowLazyInitErrors?(), showLazyErrors {
-                PXComponentFactory.SnackBar.showShortDurationMessage(message: "Error - \(flowError.errorStep.rawValue)")
-            }
-        } else {
-            let customError = MPSDKError(message: "Error", errorDetail: flowError.errorStep.rawValue, retry: flowError.shouldRetry)
-            viewModel.errorInputs(error: customError, errorCallback: {
-                if flowError.shouldRetry {
-                    self.viewModel.initFlow?.shouldRetry(step: flowError.errorStep)
-                }
-            })
-            executeNextStep()
-        }
-    }
-
-    func didFinishInitFlow() {
-        if initMode == .lazy {
-            lifecycleProtocol?.lazyInitDidFinish()
-        } else {
-            executeNextStep()
-        }
-    }
-
-    func shouldRetry() {
-        executeNextStep()
-        viewModel.initFlow?.disposePendingRetry()
     }
 }

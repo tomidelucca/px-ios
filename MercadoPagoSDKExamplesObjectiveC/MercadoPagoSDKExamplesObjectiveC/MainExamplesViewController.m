@@ -370,7 +370,6 @@
 }
 
 -(void)invokeCallbackPaymentResult:(MPCustomCell *)button {
-
     [[self.dineroEnCuentaCell getDelegate] invokeCallbackWithPaymentResultWithRowCallback:^(PaymentResult *paymentResult) {
         NSLog(@"%@", paymentResult.status);
         [self.navigationController popToRootViewControllerAnimated:NO];
@@ -389,7 +388,7 @@
 
 // Optional sign
 - (BOOL)shouldShowLazyInitErrors {
-    return YES;
+    return NO;
 }
 
 @end

@@ -196,6 +196,8 @@
 		232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		232FA92C1F06D30F002F7E39 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
+		235036EE20ED37E6000A0794 /* MercadopagoCheckout+InitFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235036ED20ED37E6000A0794 /* MercadopagoCheckout+InitFlow.swift */; };
+		235036F020ED38E1000A0794 /* MercadopagoCheckoutViewModel+InitFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235036EF20ED38E1000A0794 /* MercadopagoCheckoutViewModel+InitFlow.swift */; };
 		2351EEED20AD9CC100741028 /* PXSummaryRowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2351EEEC20AD9CC100741028 /* PXSummaryRowComponent.swift */; };
 		2351EEEE20AD9CC100741028 /* PXSummaryRowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2351EEEC20AD9CC100741028 /* PXSummaryRowComponent.swift */; };
 		2351EEF120AD9DB000741028 /* PXOneTapSummaryRowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2351EEEF20AD9DB000741028 /* PXOneTapSummaryRowRenderer.swift */; };
@@ -918,6 +920,8 @@
 		232FA9291F06D2E2002F7E39 /* ApiException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiException.swift; sourceTree = "<group>"; };
 		232FA92B1F06D30F002F7E39 /* Cause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cause.swift; sourceTree = "<group>"; };
 		233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXThemeObjects.swift; sourceTree = "<group>"; };
+		235036ED20ED37E6000A0794 /* MercadopagoCheckout+InitFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MercadopagoCheckout+InitFlow.swift"; path = "Flows/MercadopagoCheckout+InitFlow.swift"; sourceTree = "<group>"; };
+		235036EF20ED38E1000A0794 /* MercadopagoCheckoutViewModel+InitFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MercadopagoCheckoutViewModel+InitFlow.swift"; path = "Flows/MercadopagoCheckoutViewModel+InitFlow.swift"; sourceTree = "<group>"; };
 		2351EEEC20AD9CC100741028 /* PXSummaryRowComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PXSummaryRowComponent.swift; path = Components/PXSummaryRowComponent.swift; sourceTree = "<group>"; };
 		2351EEEF20AD9DB000741028 /* PXOneTapSummaryRowRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PXOneTapSummaryRowRenderer.swift; path = Components/PXOneTapSummaryRowRenderer.swift; sourceTree = "<group>"; };
 		2351EEF020AD9DB000741028 /* PXOneTapSummaryRowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PXOneTapSummaryRowView.xib; path = Components/PXOneTapSummaryRowView.xib; sourceTree = "<group>"; };
@@ -1720,6 +1724,8 @@
 				2329022720E284640086B105 /* InitFlow.swift */,
 				23F7DC9920E4201A00DA7DA3 /* InitFlowModel.swift */,
 				23230ADE20EA3F84008DA980 /* InitFlow+Services.swift */,
+				235036ED20ED37E6000A0794 /* MercadopagoCheckout+InitFlow.swift */,
+				235036EF20ED38E1000A0794 /* MercadopagoCheckoutViewModel+InitFlow.swift */,
 			);
 			name = Flows;
 			sourceTree = "<group>";
@@ -3106,6 +3112,7 @@
 				FC65A1E9208E4907000A0DA0 /* PXBankDealComponent.swift in Sources */,
 				158F17701D34141B00E7EBDA /* MercadoPagoContext.swift in Sources */,
 				FC114D6B1E6DECEF00640196 /* Cellable.swift in Sources */,
+				235036F020ED38E1000A0794 /* MercadopagoCheckoutViewModel+InitFlow.swift in Sources */,
 				0F9883831AD2AB6000F750F0 /* Payer.swift in Sources */,
 				534D842A1F5593BC00C2C6F9 /* CardNotAvailableErrorView.swift in Sources */,
 				155954F01F87CD200086854B /* PayerInfoViewModel.swift in Sources */,
@@ -3185,6 +3192,7 @@
 				4B1CA5951FFE94BC00F576AA /* PaymentStatus.swift in Sources */,
 				4BEA05CD209B7A9B007D74FD /* PXNavigationHandler.swift in Sources */,
 				0F9883631AD2AB6000F750F0 /* CardNumber.swift in Sources */,
+				235036EE20ED37E6000A0794 /* MercadopagoCheckout+InitFlow.swift in Sources */,
 				4B08AC8520AC6E62008AF845 /* PXOneTapItemComponent.swift in Sources */,
 				4BEF9B571FE2EB2D002ADAFF /* PXPluginComponent.swift in Sources */,
 				763AD8081CD3FE1F0039E09B /* PXLoadingComponent.swift in Sources */,
