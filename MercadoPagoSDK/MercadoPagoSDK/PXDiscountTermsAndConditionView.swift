@@ -50,8 +50,8 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     }
 
     func getTyCURL() -> String {
-        if let discountID = self.amountHelper.discount?.id {
-            return "https://api.mercadolibre.com/campaigns/\(discountID)/terms_and_conditions?format_type=html"
+        if let campaignID = self.amountHelper.campaign?.id {
+            return "https://api.mercadolibre.com/campaigns/\(campaignID)/terms_and_conditions?format_type=html"
         }
         return ""
     }
