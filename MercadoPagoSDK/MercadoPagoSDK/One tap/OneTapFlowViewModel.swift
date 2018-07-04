@@ -41,6 +41,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
+        self.chargeRules = chargeRules
         super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {

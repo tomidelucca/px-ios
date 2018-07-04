@@ -113,7 +113,7 @@
     [self.mpCheckout setDiscount:discount withCampaign:campaign];
     
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
-    PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"credit_card" amountCharge:10.5];
+    PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"payment_method_plugin" amountCharge:10.5];
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
