@@ -17,10 +17,12 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
-    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis,cam in return false}
+    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis, cam in return false}
+    private var closeModalCallback: (() -> Void)!
 
-    init(discountValidationCallback: @escaping (PXDiscount, PXCampaign) -> Bool) {
+    init(discountValidationCallback: @escaping (PXDiscount, PXCampaign) -> Bool, closeModalCallback: @escaping (() -> Void)) {
         self.discountValidationCallback = discountValidationCallback
+        self.closeModalCallback = closeModalCallback
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -173,7 +175,7 @@ extension PXDiscountCodeInputViewController {
         let image = MercadoPago.getImage("codeInputSuccess")
 
         let action = PXComponentAction(label: "Continuar") {
-            print("hola")
+            self.closeModalCallback()
         }
 
         view.setProps(title: titleAttributedString, message: messageAttributedString, icon: image!, action: action)

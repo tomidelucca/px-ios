@@ -62,7 +62,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate var defaultOptionSelected = false
 
     fileprivate var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
-    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis,cam in return false}
+    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis, cam in return false}
 
     private var floatingBottomRowView: UIView?
 

@@ -21,7 +21,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     override open var screenName: String { return viewModel.getScreenName() }
     override open var screenId: String { return viewModel.getScreenId() }
 
-    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis,cam in return false}
+    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis, cam in return false}
 
     private var floatingRowView: UIView?
 

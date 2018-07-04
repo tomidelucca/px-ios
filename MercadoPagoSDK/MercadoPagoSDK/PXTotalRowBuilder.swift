@@ -95,8 +95,10 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
         } else if let currentCheckout = MercadoPagoCheckout.currentCheckout, currentCheckout.viewModel.shouldShowDiscountInput() {
-            let input = PXDiscountCodeInputViewController(discountValidationCallback: discountValidationCallback)
-            PXComponentFactory.Modal.show(viewController: input, title: nil)
+            let inputVC = PXDiscountCodeInputViewController(discountValidationCallback: discountValidationCallback) {
+                print("hola hola")
+            }
+            PXComponentFactory.Modal.show(viewController: inputVC, title: nil)
         }
     }
 }
