@@ -14,6 +14,7 @@ import MercadoPagoServices
 public protocol PXCheckoutLifecycleProtocol: NSObjectProtocol {
     func lazyInitDidFinish()
     func lazyInitFailure(errorDetail: String)
+    @objc optional func shouldShowLazyInitErrors() -> Bool
 }
 
 @objcMembers
@@ -271,6 +272,9 @@ extension MercadoPagoCheckout: InitFlowProtocol {
     func didFailInitFlow(flowError: InitFlowError) {
         if initMode == .lazy {
             lifecycleProtocol?.lazyInitFailure(errorDetail: ("Error - \(flowError.errorStep.rawValue)"))
+            if let showLazyErrors = lifecycleProtocol?.shouldShowLazyInitErrors?(), showLazyErrors {
+                PXComponentFactory.SnackBar.showShortDurationMessage(message: "Error - \(flowError.errorStep.rawValue)")
+            }
         } else {
             let customError = MPSDKError(message: "Error", errorDetail: flowError.errorStep.rawValue, retry: flowError.shouldRetry)
             viewModel.errorInputs(error: customError, errorCallback: {
