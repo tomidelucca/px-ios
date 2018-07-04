@@ -63,6 +63,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
 
+    private var floatingBottomRowView: UIView?
+
     init(viewModel: PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
@@ -134,22 +136,22 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.hideNavBar()
-        self.navigationController!.navigationBar.shadowImage = nil
-        self.extendedLayoutIncludesOpaqueBars = true
 
-        self.collectionSearch.allowsSelection = true
-        self.getCustomerCards()
-        self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
-        if self.loadingGroups {
-            let temporalView = UIView.init(frame: CGRect(x: 0, y: navBarHeigth + statusBarHeigth, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        hideNavBar()
+        navigationController!.navigationBar.shadowImage = nil
+        extendedLayoutIncludesOpaqueBars = true
+
+        collectionSearch.allowsSelection = true
+        getCustomerCards()
+        hideNavBarCallback = hideNavBarCallbackDisplayTitle()
+        if loadingGroups {
+            let temporalView = UIView.init(frame: CGRect(x: 0, y: navBarHeigth + statusBarHeigth, width: view.frame.size.width, height: view.frame.size.height))
             temporalView.backgroundColor?.withAlphaComponent(0)
             temporalView.isUserInteractionEnabled = false
-            self.view.addSubview(temporalView)
+            view.addSubview(temporalView)
         }
-        renderViews()
-
-        self.hideLoading()
+        renderFloatingBottomView()
+        hideLoading()
     }
 
     func getCollectionViewPinBottomContraint() -> NSLayoutConstraint? {
@@ -160,19 +162,21 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         return nil
     }
 
-    fileprivate func renderViews() {
-        getCollectionViewPinBottomContraint()?.isActive = false
-
-        // Add floating total row
-        let floatingRowView = getFloatingTotalRowView()
-        self.view.addSubview(floatingRowView)
-        PXLayout.matchWidth(ofView: floatingRowView).isActive = true
-        PXLayout.centerHorizontally(view: floatingRowView).isActive = true
-        PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
-        PXLayout.put(view: floatingRowView, onBottomOf: self.collectionSearch).isActive = true
+    private func renderFloatingBottomView() {
+        if floatingBottomRowView == nil {
+            floatingBottomRowView = getFloatingTotalRowView()
+            if let floatingRowView = floatingBottomRowView {
+                getCollectionViewPinBottomContraint()?.isActive = false
+                view.addSubview(floatingRowView)
+                PXLayout.matchWidth(ofView: floatingRowView).isActive = true
+                PXLayout.centerHorizontally(view: floatingRowView).isActive = true
+                PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
+                PXLayout.put(view: floatingRowView, onBottomOf: collectionSearch).isActive = true
+            }
+        }
     }
 
-    fileprivate func getFloatingTotalRowView() -> UIView {
+    private func getFloatingTotalRowView() -> UIView {
         let component = PXTotalRowBuilder(amountHelper: self.viewModel.amountHelper, shouldShowChevron: PXTotalRowBuilder.shouldAddActionToRow(amountHelper: self.viewModel.amountHelper))
         let view = component.render()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTotalRowTap))
