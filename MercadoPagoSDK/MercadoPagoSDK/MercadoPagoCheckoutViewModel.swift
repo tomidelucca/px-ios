@@ -118,14 +118,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
 
-        var preferenceLoaded: Bool = false
-        var directDiscountSearched: Bool = false
-
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData {
             if pm.isComplete() {
                 self.paymentData = pm
-                directDiscountSearched = true
                 if paymentResult == nil {
                     self.initWithPaymentData = true
                 } else {
@@ -140,15 +136,13 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
         self.paymentResult = paymentResult
 
-        if !String.isNullOrEmpty(self.checkoutPreference.preferenceId) {
-            preferenceLoaded = true
-        } else {
+        if !isPreferenceLoaded() {
             self.paymentData.payer = self.checkoutPreference.getPayer()
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
 
         // Create Init Flow
-        createInitFlow(directDiscountSearched: directDiscountSearched, preferenceLoaded: preferenceLoaded)
+        createInitFlow()
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -758,6 +752,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
         return false
     }
+
+    private func isPreferenceLoaded() -> Bool {
+        return !String.isNullOrEmpty(self.checkoutPreference.preferenceId)
+    }
 }
 
 extension MercadoPagoCheckoutViewModel {
@@ -842,7 +840,7 @@ extension MercadoPagoCheckoutViewModel {
 
 // MARK: Init Flow
 extension MercadoPagoCheckoutViewModel {
-    private func createInitFlow(directDiscountSearched: Bool, preferenceLoaded: Bool) {
+    private func createInitFlow() {
         // Create init flow props.
         let initFlowNavHandler = PXNavigationHandler.init(navigationController: UINavigationController())
         let initFlowProperties: InitFlowProperties
@@ -852,15 +850,17 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.paymentMethodPlugins = self.paymentMethodPlugins
         initFlowProperties.paymentPlugin = self.paymentPlugin
         initFlowProperties.paymentMethodSearchResult = self.search
-        initFlowProperties.directDiscountSearchStatus = directDiscountSearched
-        initFlowProperties.loadPreferenceStatus = preferenceLoaded
+        initFlowProperties.directDiscountSearchStatus = paymentData.isComplete()
+        initFlowProperties.loadPreferenceStatus = isPreferenceLoaded()
 
         // Create init flow.
         initFlow = InitFlow(navigationHandler: initFlowNavHandler, flowProperties: initFlowProperties, finishCallback: { paymentMethodSearchResponse in
             self.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
             self.initFlowProtocol?.didFinishInitFlow()
-        }, errorCallback: {
-            self.initFlowProtocol?.didFailInitFlow()
+        }, errorCallback: { initFlowError in
+            self.initFlowProtocol?.didFailInitFlow(flowError: initFlowError)
+        }, retryCallback: {
+             self.initFlowProtocol?.shouldRetry()
         })
     }
 

@@ -131,8 +131,8 @@
 //    [self setReviewScreenPreference];
 
 
-    [self.mpCheckout lazyStartWithLifecycleDelegate: self];
-    //[self.mpCheckout start];
+    //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
+    [self.mpCheckout start];
 }
 
 -(void)setHooks {
@@ -382,9 +382,9 @@
     [self.mpCheckout start];
 }
 
-- (void)lazyInitError {
-    // Retry once(?)
-    NSLog(@"lazyInitError");
+- (void)lazyInitFailureWithErrorDetail:(NSString *)errorDetail {
+    NSLog(@"lazyInitFailureWithErrorDetail");
+    NSLog(@"%@", errorDetail);
 }
 
 @end

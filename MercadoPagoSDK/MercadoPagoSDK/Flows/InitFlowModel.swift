@@ -11,20 +11,23 @@ import MercadoPagoServices
 
 internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
 
+internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool)
+
 internal protocol InitFlowProtocol: NSObjectProtocol {
     func didFinishInitFlow()
-    func didFailInitFlow()
+    func didFailInitFlow(flowError: InitFlowError)
+    func shouldRetry()
 }
 
 final class InitFlowModel: NSObject, PXFlowModel {
-    internal enum Steps: String {
-        case ERROR
-        case SERVICE_GET_PREFERENCE
-        case ACTION_VALIDATE_PREFERENCE
-        case SERVICE_GET_DIRECT_DISCOUNT
-        case SERVICE_GET_PAYMENT_METHODS
-        case SERVICE_PAYMENT_METHOD_PLUGIN_INIT
-        case FINISH
+    enum Steps: String {
+        case ERROR = "Error"
+        case SERVICE_GET_PREFERENCE = "Obtener datos de preferencia"
+        case ACTION_VALIDATE_PREFERENCE = "Validación de preferencia"
+        case SERVICE_GET_DIRECT_DISCOUNT = "Obtener discount"
+        case SERVICE_GET_PAYMENT_METHODS = "Obtener payment methods"
+        case SERVICE_PAYMENT_METHOD_PLUGIN_INIT = "Init de plugins"
+        case FINISH = "Finish step"
     }
 
     private let serviceAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
@@ -32,7 +35,8 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     private var preferenceValidated: Bool = false
     private var needPaymentMethodPluginInit = true
-    private var errorCallback: (() -> Void)?
+    private var flowError: InitFlowError?
+    private var pendingRetryStep: Steps?
 
     var properties: InitFlowProperties
 
@@ -58,9 +62,27 @@ extension InitFlowModel {
         return mpESCManager
     }
 
-    func setErrorInputs(error: MPSDKError, errorCallback: (() -> Void)?) {
-        MercadoPagoCheckoutViewModel.error = error
-        self.errorCallback = errorCallback
+    func getError() -> InitFlowError {
+        if let error = flowError {
+            return error
+        }
+        return InitFlowError(errorStep: .ERROR, shouldRetry: false)
+    }
+
+    func setError(error: InitFlowError) {
+        flowError = error
+    }
+
+    func resetError() {
+        flowError = nil
+    }
+
+    func setPendingRetry(forStep: Steps) {
+        pendingRetryStep = forStep
+    }
+
+    func removePendingRetry() {
+        pendingRetryStep = nil
     }
 
     func paymentMethodPluginDidLoaded() {
@@ -97,6 +119,11 @@ extension InitFlowModel {
 // MARK: nextStep - State machine
 extension InitFlowModel {
     func nextStep() -> Steps {
+
+        if let retryStep = pendingRetryStep {
+            return retryStep
+        }
+
         if hasError() {
             return .ERROR
         }
@@ -158,6 +185,6 @@ extension InitFlowModel {
     }
 
     private func hasError() -> Bool {
-        return MercadoPagoCheckoutViewModel.error != nil
+        return flowError != nil
     }
 }

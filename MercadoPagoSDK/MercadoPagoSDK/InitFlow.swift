@@ -14,12 +14,14 @@ final class InitFlow: PXFlow {
 
     private var status: PXFlowStatus = .ready
     private let finishInitCallback: ((PaymentMethodSearch) -> Void)
-    private let errorInitCallback: (() -> Void)
+    private let errorInitCallback: ((InitFlowError) -> Void)
+    private let retryInitCallback: (() -> Void)
 
-    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping (() -> Void)) {
+    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping ((InitFlowError) -> Void), retryCallback: @escaping (() -> Void)) {
         pxNavigationHandler = navigationHandler
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
+        retryInitCallback = retryCallback
         model = InitFlowModel(flowProperties: flowProperties)
     }
 
@@ -73,7 +75,8 @@ final class InitFlow: PXFlow {
 
     func cancelFlow() {
         status = .finished
-        errorInitCallback()
+        errorInitCallback(model.getError())
+        model.resetError()
     }
 
     func exitCheckout() {}
@@ -81,6 +84,17 @@ final class InitFlow: PXFlow {
 
 // MARK: - Getters
 extension InitFlow {
+
+    func shouldRetry(step: InitFlowModel.Steps) {
+        status = .ready
+        model.setPendingRetry(forStep: step)
+        retryInitCallback()
+    }
+
+    func disposePendingRetry() {
+        model.removePendingRetry()
+    }
+
     func getStatus() -> PXFlowStatus {
         return status
     }

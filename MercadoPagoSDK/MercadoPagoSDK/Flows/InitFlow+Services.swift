@@ -21,14 +21,11 @@ extension InitFlow {
             strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) in
-
                 guard let strongSelf = self else {
                     return
                 }
-
-                strongSelf.model.setErrorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PREFERENCE.rawValue), errorCallback: { [weak self] () -> Void in
-                    self?.getCheckoutPreference()
-                })
+                let customError = InitFlowError(errorStep: .SERVICE_GET_PREFERENCE, shouldRetry: true)
+                strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
     }
@@ -36,7 +33,8 @@ extension InitFlow {
     func validatePreference() {
         let errorMessage = model.properties.checkoutPreference.validate()
         if errorMessage != nil {
-            model.setErrorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { () -> Void in })
+            let customError = InitFlowError(errorStep: .ACTION_VALIDATE_PREFERENCE, shouldRetry: false)
+            model.setError(error: customError)
         }
         executeNextStep()
     }
@@ -56,6 +54,9 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
+
+                let customError = InitFlowError(errorStep: .SERVICE_GET_DIRECT_DISCOUNT, shouldRetry: true)
+                strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
     }
@@ -105,13 +106,12 @@ extension InitFlow {
             strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) in
-
                 guard let strongSelf = self else {
                     return
                 }
-                strongSelf.model.setErrorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] () -> Void in
-                    self?.getPaymentMethodSearch()
-                })
+
+                let customError = InitFlowError(errorStep: .SERVICE_GET_PAYMENT_METHODS, shouldRetry: true)
+                strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
     }
