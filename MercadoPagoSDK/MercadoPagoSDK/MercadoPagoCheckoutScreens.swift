@@ -161,10 +161,6 @@ extension MercadoPagoCheckout {
 
             strongSelf.cancel()
             }, finishButtonAnimation: {
-                guard let paymentResult = self.viewModel.paymentResult else {
-                    // TODO: Ver este caso
-                    return
-                }
                 self.executeNextStep()
         })
 
