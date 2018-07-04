@@ -141,7 +141,7 @@ extension PXReviewViewModel {
 
         var summary: Summary
         let charge = self.amountHelper.chargeRuleAmount
-        
+
         // TODO: Check Double type precision.
         if abs(amount - (self.reviewScreenPreference.getSummaryTotalAmount() + charge)) <= PXReviewViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
@@ -162,7 +162,7 @@ extension PXReviewViewModel {
             let chargesSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: chargesAmountDetail)
             summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
         }
-        
+
         if let discount = self.amountHelper.paymentData.discount {
             let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: discount.couponAmount)
 
@@ -245,7 +245,7 @@ extension PXReviewViewModel {
         if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
             subtitle = paymentMethodIssuerName.toAttributedString()
         }
-       
+
         if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
             action = nil
         }

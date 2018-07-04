@@ -59,8 +59,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     static var finishFlowCallback: ((Payment?) -> Void)?
     var callbackCancel: (() -> Void)?
     static var changePaymentMethodCallback: (() -> Void)?
-    var chargeRules: [PXPaymentTypeChargeRule]? = nil
-    
+    var chargeRules: [PXPaymentTypeChargeRule]?
+
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {

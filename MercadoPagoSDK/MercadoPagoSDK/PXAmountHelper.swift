@@ -16,7 +16,7 @@ internal struct PXAmountHelper {
     internal let discount: PXDiscount?
     internal let campaign: PXCampaign?
     internal let chargeRules: [PXPaymentTypeChargeRule]?
-    
+
     var preferenceAmount: Double {
         get {
             return self.preference.getAmount()
@@ -28,7 +28,7 @@ internal struct PXAmountHelper {
             return preferenceAmount + chargeRuleAmount
         }
     }
-    
+
     var amountToPay: Double {
         get {
             if let payerCost = paymentData.payerCost {
@@ -59,10 +59,10 @@ internal struct PXAmountHelper {
             return nil
         }
     }
-    
+
     internal var chargeRuleAmount: Double {
         get {
-            guard let rules = chargeRules else{
+            guard let rules = chargeRules else {
                 return 0
             }
             for rule in rules {

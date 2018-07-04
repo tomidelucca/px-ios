@@ -113,8 +113,10 @@
     [self.mpCheckout setDiscount:discount withCampaign:campaign];
     
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
-    PXPaymentTypeChargeRule* charge = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"credit_card" amountCharge:10.5];
-    [chargesArray addObject:charge];
+    PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"credit_card" amountCharge:10.5];
+    PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
+    [chargesArray addObject:chargeCredit];
+    [chargesArray addObject:chargeDebit];
     [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
