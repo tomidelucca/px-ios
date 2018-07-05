@@ -14,6 +14,7 @@ public enum CheckoutStep: String {
     case ACTION_FINISH
     case ACTION_VALIDATE_PREFERENCE
     case SERVICE_GET_PREFERENCE
+    case SERVICE_GET_CAMPAIGNS
     case SERVICE_GET_DIRECT_DISCOUNT
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
@@ -91,6 +92,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
 
+    var campaigns: [PXCampaign]?
+    
     open var payerCosts: [PayerCost]?
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
@@ -414,6 +417,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             needLoadPreference = false
             return .SERVICE_GET_PREFERENCE
         }
+
+        if needToSearchCampaign() {
+            return .SERVICE_GET_CAMPAIGNS
+        }
+
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SERVICE_GET_DIRECT_DISCOUNT
@@ -592,7 +600,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if totalPaymentMethodsToShow == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
-        } else if totalPaymentMethodsToShow == 1 {
+        } else if totalPaymentMethodsToShow == 1, self.amountHelper.discount == nil {
             autoselectOnlyPaymentMethod()
         }
     }

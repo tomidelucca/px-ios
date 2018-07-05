@@ -20,10 +20,6 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         //////////////// TITLE ////////////////
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = amountHelper.discount {
 
-            //Add new discount attributes
-//            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-//                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.secondaryColor()]
-
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 

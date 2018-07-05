@@ -26,7 +26,7 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 
     override func getTyCText() -> NSMutableAttributedString {
         let termsAndConditionsText = "review_discount_terms_and_conditions".localized_beta
-        let highlightedText = "Ver condiciones".localized
+        let highlightedText = "review_discount_terms_and_conditions_link".localized_beta
 
         let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
