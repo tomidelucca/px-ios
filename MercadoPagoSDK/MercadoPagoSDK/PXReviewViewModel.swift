@@ -158,9 +158,11 @@ extension PXReviewViewModel {
         }
 
         if charge > 0 {
-            let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
-            let chargesSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: chargesAmountDetail)
-            summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
+            if let chargesTitle = self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE] {
+                let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
+                let chargesSummaryDetail = SummaryDetail(title:chargesTitle , detail: chargesAmountDetail)
+                summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
+            }
         }
 
         if let discount = self.amountHelper.paymentData.discount {
@@ -258,7 +260,7 @@ extension PXReviewViewModel {
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
 
         var customTitle = "Productos".localized
-        let totalAmount: Double = self.amountHelper.preferenceAmountWithCharges//TODO AMOUNT
+        let totalAmount: Double = self.amountHelper.preferenceAmountWithCharges
         if let prefDetail = reviewScreenPreference.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
             customTitle = prefDetail.title
         } else {
