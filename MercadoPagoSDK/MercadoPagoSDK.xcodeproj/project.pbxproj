@@ -164,6 +164,8 @@
 		15C6A3871F507E4600DBC32A /* ShoppingPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C6A3861F507E4600DBC32A /* ShoppingPreferenceTest.swift */; };
 		15D002A61EE989E900896A8C /* mpsdk_settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCEB90801EB8F3FA0096B1A2 /* mpsdk_settings.plist */; };
 		15D1BD562006714E003D0B67 /* PXComponentizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151ECC691FF55C42003F5E4B /* PXComponentizable.swift */; };
+		15D5173C20D165C200CC2D90 /* PXPaymentTypeChargeRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5173B20D165C200CC2D90 /* PXPaymentTypeChargeRule.swift */; };
+		15D5173D20D165C700CC2D90 /* PXPaymentTypeChargeRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5173B20D165C200CC2D90 /* PXPaymentTypeChargeRule.swift */; };
 		15D79A041CA96D6400623A84 /* MPLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D79A031CA96D6400623A84 /* MPLabel.swift */; };
 		15D79A051CA96D6400623A84 /* MPLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D79A031CA96D6400623A84 /* MPLabel.swift */; };
 		15D79A071CA986E300623A84 /* MPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D79A061CA986E300623A84 /* MPTextField.swift */; };
@@ -896,6 +898,7 @@
 		15AE1DB61F61BCEE00B0DAF8 /* TitleValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleValueView.swift; sourceTree = "<group>"; };
 		15AE1DBD1F672FAE00B0DAF8 /* DisclaimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
 		15C6A3861F507E4600DBC32A /* ShoppingPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingPreferenceTest.swift; sourceTree = "<group>"; };
+		15D5173B20D165C200CC2D90 /* PXPaymentTypeChargeRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentTypeChargeRule.swift; sourceTree = "<group>"; };
 		15D79A031CA96D6400623A84 /* MPLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPLabel.swift; sourceTree = "<group>"; };
 		15D79A061CA986E300623A84 /* MPTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTextField.swift; sourceTree = "<group>"; };
 		15D79A091CA9B6B900623A84 /* MPButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPButton.swift; sourceTree = "<group>"; };
@@ -1322,6 +1325,7 @@
 		0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */ = {
 			isa = PBXGroup;
 			children = (
+				15D5173A20D15E0D00CC2D90 /* Comisiones */,
 				4B6954B220A385D100CCF735 /* One tap */,
 				FC73AB42202B877600537C9F /* Translations */,
 				4B1CA5911FFE943200F576AA /* Constants */,
@@ -1620,6 +1624,14 @@
 				76EF21E61E52C07700718ED2 /* ReviewScreenPreference.swift */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		15D5173A20D15E0D00CC2D90 /* Comisiones */ = {
+			isa = PBXGroup;
+			children = (
+				15D5173B20D165C200CC2D90 /* PXPaymentTypeChargeRule.swift */,
+			);
+			name = Comisiones;
 			sourceTree = "<group>";
 		};
 		15DA7E621CDA3C630068896E /* Utils */ = {
@@ -2732,7 +2744,7 @@
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
 				4BCA62FA1EBA48D8006D8131 /* SwiftLint */,
-				399D9759F277E16F0F53C708 /* [CP] Copy Pods Resources */,
+				B22D6800D315C1371E92046B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2753,7 +2765,7 @@
 				0F9883121AD2A97A00F750F0 /* Frameworks */,
 				7622E33F1DF5F5F900490C4E /* Headers */,
 				F9E0B11D8F72856EC5E5936F /* [CP] Embed Pods Frameworks */,
-				23AF031AFD0F37E4EBDDB37F /* [CP] Copy Pods Resources */,
+				1D6D3E11F43B41BC286B57B3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2902,7 +2914,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		23AF031AFD0F37E4EBDDB37F /* [CP] Copy Pods Resources */ = {
+		1D6D3E11F43B41BC286B57B3 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2933,21 +2945,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		399D9759F277E16F0F53C708 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		453400CF7B9E303EBB1250C7 /* [CP] Check Pods Manifest.lock */ = {
@@ -2981,6 +2978,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\necho \"Swiftlint disabled\"\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		B22D6800D315C1371E92046B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		F9E0B11D8F72856EC5E5936F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3221,6 +3233,7 @@
 				FC3FC8611FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift in Sources */,
 				23CF4ED02099603100EC9399 /* PXDefaultMLStyleSheet.swift in Sources */,
 				150786A31CD7CD1E0034C5B1 /* IdentificationCardView.swift in Sources */,
+				15D5173C20D165C200CC2D90 /* PXPaymentTypeChargeRule.swift in Sources */,
 				FC1A2AF420B5A4F30046FECA /* PXTotalRowRenderer.swift in Sources */,
 				231EB53120ABBAD20022D8DF /* PXOneTapViewModel+PaymentMethodComponent.swift in Sources */,
 				4B811DD71FCDCDF6000611AD /* PXHookComponent.swift in Sources */,
@@ -3455,6 +3468,7 @@
 				7622E3261DF5EE6F00490C4E /* MercadoPagoUIScrollViewController.swift in Sources */,
 				15D79A081CA986E300623A84 /* MPTextField.swift in Sources */,
 				4BEF9B581FE2EB2D002ADAFF /* PXPluginComponent.swift in Sources */,
+				15D5173D20D165C700CC2D90 /* PXPaymentTypeChargeRule.swift in Sources */,
 				4B4E231F20004093007E8FDD /* XCTestCase+Additions.swift in Sources */,
 				2352B754207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */,
 				156A743D1F59CE61006BC4A7 /* AvailableCardsDetailView.swift in Sources */,

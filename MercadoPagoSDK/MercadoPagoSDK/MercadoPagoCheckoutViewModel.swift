@@ -16,7 +16,6 @@ public enum CheckoutStep: String {
     case SERVICE_GET_PREFERENCE
     case SERVICE_GET_CAMPAIGNS
     case SERVICE_GET_DIRECT_DISCOUNT
-    case APPLY_DISCOUNT
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
     case SERVICE_GET_IDENTIFICATION_TYPES
@@ -61,11 +60,12 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     static var finishFlowCallback: ((Payment?) -> Void)?
     var callbackCancel: (() -> Void)?
     static var changePaymentMethodCallback: (() -> Void)?
+    var chargeRules: [PXPaymentTypeChargeRule]?
 
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules)
         }
     }
     var checkoutPreference: CheckoutPreference!
@@ -93,9 +93,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
 
-    var discount: PXDiscount?
     var campaigns: [PXCampaign]?
-
+    
     open var payerCosts: [PayerCost]?
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
@@ -427,10 +426,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SERVICE_GET_DIRECT_DISCOUNT
-        }
-
-        if needToApplyDiscount() {
-            return .APPLY_DISCOUNT
         }
 
         if shouldExitCheckout() {

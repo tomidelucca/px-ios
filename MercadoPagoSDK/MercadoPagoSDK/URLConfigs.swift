@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 @objcMembers open class URLConfigs: NSObject {
     static let MP_ALPHA_ENV = "/gamma"
@@ -14,7 +15,7 @@ import Foundation
     static var MP_PROD_ENV = "/v1"
     static var MP_SELECTED_ENV = MP_PROD_ENV
 
-    static var API_VERSION = "1.5"
+    static var API_VERSION = PXServicesURLConfigs.API_VERSION
 
     static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
 
@@ -23,7 +24,7 @@ import Foundation
     static let MP_ALPHA_API_BASE_URL: String =  "http://api.mp.internal.ml.com"
     static let MP_API_BASE_URL_PROD: String =  "https://api.mercadopago.com"
 
-    static let MP_API_BASE_URL: String =  MP_API_BASE_URL_PROD
+    static let MP_API_BASE_URL: String = MP_API_BASE_URL_PROD
 
     static let PAYMENTS = "/payments"
 
