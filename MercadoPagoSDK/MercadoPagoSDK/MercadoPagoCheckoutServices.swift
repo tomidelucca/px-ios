@@ -44,7 +44,7 @@ extension MercadoPagoCheckout {
                 return
             }
 
-            strongSelf.viewModel.discount = discount
+            strongSelf.attemptToApplyDiscount(discount: discount)
             strongSelf.executeNextStep()
 
         }, failure: { [weak self] _ in
@@ -79,8 +79,8 @@ extension MercadoPagoCheckout {
         })
     }
 
-    func applyDiscount() {
-        if let discount = self.viewModel.discount, let campaigns = self.viewModel.campaigns {
+    func attemptToApplyDiscount(discount: PXDiscount?) {
+        if let discount = discount, let campaigns = self.viewModel.campaigns {
             let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
                 return campaign.id.stringValue == discount.id
             }
@@ -88,7 +88,6 @@ extension MercadoPagoCheckout {
                 self.setDiscount(discount, withCampaign: firstFilteredCampaign)
             }
         }
-        self.executeNextStep()
     }
 
     func initPaymentMethodPlugins() {

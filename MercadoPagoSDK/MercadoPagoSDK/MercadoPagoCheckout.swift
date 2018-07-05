@@ -120,8 +120,6 @@ open class MercadoPagoCheckout: NSObject {
             self.getCampaigns()
         case .SERVICE_GET_DIRECT_DISCOUNT:
             self.getDirectDiscount()
-        case .APPLY_DISCOUNT:
-            self.applyDiscount()
         case .SERVICE_GET_PAYMENT_METHODS:
             self.getPaymentMethodSearch()
         case .SCREEN_PAYMENT_METHOD_SELECTION:
