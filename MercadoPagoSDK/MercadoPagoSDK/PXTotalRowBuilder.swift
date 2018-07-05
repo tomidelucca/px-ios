@@ -26,14 +26,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let string = discount.getDiscountDescription()
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
             title = attributedString
-        } /*else if let mercadoPagoCheckout = MercadoPagoCheckout.currentCheckout, mercadoPagoCheckout.viewModel.needToAddCodeInput() {
-            let addNewDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.secondaryColor()]
-
-            let string = "total_row_title_add_coupon".localized_beta
-            let attributedString = NSAttributedString(string: string, attributes: addNewDiscountAttributes)
-            title = attributedString
-        } */else {
+        } else {
             let defaultTitleString = "total_row_title_default".localized_beta
             let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                      NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
