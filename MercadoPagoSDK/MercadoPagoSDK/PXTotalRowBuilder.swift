@@ -65,7 +65,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
                               NSAttributedStringKey.paragraphStyle: paragraph,
                               NSAttributedStringKey.strikethroughStyle: 1]
 
-            let string = Utils.getAttributedAmount(withAttributes: attributes, amount: amountHelper.preferenceAmount, currency: currency, negativeAmount: false)
+            let string = Utils.getAttributedAmount(withAttributes: attributes, amount: amountHelper.preferenceAmountWithCharges, currency: currency, negativeAmount: false)
 
             secondaryValue = string
         }
