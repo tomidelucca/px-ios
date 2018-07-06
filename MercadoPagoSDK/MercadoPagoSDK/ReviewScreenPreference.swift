@@ -174,10 +174,6 @@ extension ReviewScreenPreference {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.DISCOUNT)
     }
 
-    public func addSummaryChargeDetail(amount: Double) {
-        self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.CHARGE)
-    }
-
     public func addSummaryTaxesDetail(amount: Double) {
         self.addDetail(detail: SummaryItemDetail(amount: amount), type: SummaryType.TAXES)
     }

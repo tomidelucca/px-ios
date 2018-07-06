@@ -10,7 +10,7 @@ import Foundation
 extension PXOneTapViewModel {
 
     func getItemComponent() -> PXOneTapItemComponent? {
-        let amountWithoutDiscount: Double? = isNoPayerCostAndDiscount() ? self.amountHelper.preferenceAmount : nil
+        let amountWithoutDiscount: Double? = isNoPayerCostAndDiscount() ? self.amountHelper.preferenceAmountWithCharges : nil
         let props = PXOneTapItemComponentProps(title: getIconTitle(), collectorImage: getCollectorIcon(), numberOfInstallments: getNumberOfInstallmentsForItem(), installmentAmount: getInstallmentAmountForItem(), totalWithoutDiscount: amountWithoutDiscount, discountDescription: getDiscountDescription(), discountLimit: getDiscountLimit(), shouldShowArrow: shouldShowSummaryModal())
         return PXOneTapItemComponent(props: props)
     }

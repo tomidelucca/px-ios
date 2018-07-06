@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 extension MercadoPagoCheckout {
 
@@ -37,13 +38,13 @@ extension MercadoPagoCheckout {
 
     func getDirectDiscount() {
         self.pxNavigationHandler.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.amountHelper.amountToPay, payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (_) in
+        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.amountHelper.amountToPay, payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (discount) in
 
             guard let strongSelf = self else {
                 return
             }
 
-          //  strongSelf.viewModel.paymentData.discount = discount TODO SET DISCOUNT WITH CAMPAIGN
+            strongSelf.attemptToApplyDiscount(discount: discount)
             strongSelf.executeNextStep()
 
         }, failure: { [weak self] _ in
@@ -55,6 +56,38 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
 
         })
+    }
+
+    func getCampaigns() {
+        self.pxNavigationHandler.presentLoading()
+        self.viewModel.mercadoPagoServicesAdapter.getCampaigns(callback: { [weak self] (pxCampaigns) in
+
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.viewModel.campaigns = pxCampaigns
+            strongSelf.executeNextStep()
+
+        }, failure: { [weak self] _ in
+
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.executeNextStep()
+        })
+    }
+
+    func attemptToApplyDiscount(discount: PXDiscount?) {
+        if let discount = discount, let campaigns = self.viewModel.campaigns {
+            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
+                return campaign.id.stringValue == discount.id
+            }
+            if let firstFilteredCampaign = filteredCampaigns.first {
+                self.setDiscount(discount, withCampaign: firstFilteredCampaign)
+            }
+        }
     }
 
     func initPaymentMethodPlugins() {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 extension MercadoPagoCheckoutViewModel {
 
@@ -302,8 +303,25 @@ extension MercadoPagoCheckoutViewModel {
         return self.isCheckoutComplete()
     }
 
+    func filterCampaignsByCodeType(campaigns: [PXCampaign]?, _ codeType: String) -> [PXCampaign]? {
+        if let campaigns = campaigns {
+            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
+                return campaign.codeType == codeType
+            }
+            if filteredCampaigns.isEmpty {
+                return nil
+            }
+            return filteredCampaigns
+        }
+        return nil
+    }
+
     func needToSearchDirectDiscount() -> Bool {
-        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
+        return filterCampaignsByCodeType(campaigns: self.campaigns, "none") != nil && isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && !Array.isNullOrEmpty(self.campaigns)
+    }
+
+    func needToSearchCampaign() -> Bool {
+        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && self.campaigns == nil
     }
 
     func needToCreatePayment() -> Bool {

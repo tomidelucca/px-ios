@@ -123,6 +123,8 @@ open class MercadoPagoCheckout: NSObject {
             self.getCheckoutPreference()
         case .ACTION_VALIDATE_PREFERENCE:
             self.validatePreference()
+        case .SERVICE_GET_CAMPAIGNS:
+            self.getCampaigns()
         case .SERVICE_GET_DIRECT_DISCOUNT:
             self.getDirectDiscount()
         case .SERVICE_GET_PAYMENT_METHODS:
@@ -238,7 +240,11 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        self.viewModel.setDiscount(discount, withCampaign: campaign)
+          self.viewModel.setDiscount(discount, withCampaign: campaign)
+    }
+
+    public func setChargeRules(chargeRules: [PXPaymentTypeChargeRule]) {
+        self.viewModel.chargeRules = chargeRules
     }
 
     private func shouldApplyDiscount() -> Bool {
@@ -246,5 +252,8 @@ open class MercadoPagoCheckout: NSObject {
             return true
         }
         return false
+    }
+    private func removeDiscount() {
+        self.viewModel.clearDiscount()
     }
 }

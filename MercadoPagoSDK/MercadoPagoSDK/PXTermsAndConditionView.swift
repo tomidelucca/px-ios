@@ -55,7 +55,7 @@ class PXTermsAndConditionView: PXComponentView {
         PXLayout.pinTop(view: termsAndConditionsText, withMargin: topAndBottomMargins).isActive = true
         PXLayout.pinBottom(view: termsAndConditionsText, withMargin: topAndBottomMargins).isActive = true
 
-        let screenWidth = PXLayout.getScreenWidth()
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: PERCENT_WIDTH)
         let dynamicSize: CGSize = termsAndConditionsText.sizeThatFits(CGSize(width: screenWidth, height: CGFloat.greatestFiniteMagnitude))
         PXLayout.setHeight(owner: termsAndConditionsText, height: dynamicSize.height).isActive = true
     }

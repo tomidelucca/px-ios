@@ -30,10 +30,12 @@ class OneTapFlowModel: NSObject, PXFlowModel {
     var paymentFlow: PXPaymentFlow?
     weak var paymentResultHandler: PXPaymentResultHandlerProtocol?
 
+    var chargeRules: [PXPaymentTypeChargeRule]?
+
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules)
         }
     }
 
@@ -41,12 +43,13 @@ class OneTapFlowModel: NSObject, PXFlowModel {
     let reviewScreenPreference: ReviewScreenPreference
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), chargeRules: [PXPaymentTypeChargeRule]?) {
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
+        self.chargeRules = chargeRules
         super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {

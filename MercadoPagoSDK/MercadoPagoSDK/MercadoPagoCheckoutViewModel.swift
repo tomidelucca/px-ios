@@ -14,6 +14,7 @@ public enum CheckoutStep: String {
     case ACTION_FINISH
     case ACTION_VALIDATE_PREFERENCE
     case SERVICE_GET_PREFERENCE
+    case SERVICE_GET_CAMPAIGNS
     case SERVICE_GET_DIRECT_DISCOUNT
     case SERVICE_GET_PAYMENT_METHODS
     case SERVICE_GET_CUSTOMER_PAYMENT_METHODS
@@ -59,11 +60,12 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     static var finishFlowCallback: ((Payment?) -> Void)?
     var callbackCancel: (() -> Void)?
     static var changePaymentMethodCallback: (() -> Void)?
+    var chargeRules: [PXPaymentTypeChargeRule]?
 
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules)
         }
     }
     var checkoutPreference: CheckoutPreference!
@@ -90,6 +92,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var payment: Payment?
     var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
+
+    var campaigns: [PXCampaign]?
 
     open var payerCosts: [PayerCost]?
     open var issuers: [Issuer]?
@@ -430,6 +434,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             needLoadPreference = false
             return .SERVICE_GET_PREFERENCE
         }
+
+        if needToSearchCampaign() {
+            return .SERVICE_GET_CAMPAIGNS
+        }
+
         if needToSearchDirectDiscount() {
             self.directDiscountSearched = true
             return .SERVICE_GET_DIRECT_DISCOUNT
@@ -598,7 +607,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if totalPaymentMethodsToShow == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
-        } else if totalPaymentMethodsToShow == 1 {
+        } else if totalPaymentMethodsToShow == 1, self.amountHelper.discount == nil {
             autoselectOnlyPaymentMethod()
         }
     }
@@ -767,11 +776,19 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func saveOrDeleteESC() -> Bool {
-        guard let paymetResult = self.paymentResult, let token = paymentResult?.paymentData?.getToken() else {
+        guard let token = paymentData.getToken() else {
+            return false
+        }
+        var isApprovedPayment: Bool = true
+        if self.paymentResult != nil {
+            isApprovedPayment = self.paymentResult!.isApproved()
+        } else if self.businessResult != nil {
+            isApprovedPayment = self.businessResult!.isApproved()
+        } else {
             return false
         }
         if token.hasCardId() {
-            if paymetResult.isApproved() && token.hasESC() {
+            if isApprovedPayment && token.hasESC() {
                 return mpESCManager.saveESC(cardId: token.cardId, esc: token.esc!)
             } else {
                 mpESCManager.deleteESC(cardId: token.cardId)

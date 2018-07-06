@@ -50,15 +50,15 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = MercadoPagoContext.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency)
-        var amountDetail: NSMutableAttributedString?
+        var subtitle: NSMutableAttributedString? = pm.paymentMethodDescription?.toAttributedString()
         if let payerCost = self.props.paymentResult.paymentData?.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
-                amountDetail = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
+                subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
             }
         }
         if self.props.amountHelper.discount != nil {
-            var amount = self.props.amountHelper.preferenceAmount
+            var amount = self.props.amountHelper.preferenceAmountWithCharges
 
             if let payerCostTotalAmount = self.props.paymentResult.paymentData?.payerCost?.totalAmount {
                 amount = payerCostTotalAmount + self.props.amountHelper.amountOff
@@ -67,11 +67,11 @@ open class PXBodyComponent: NSObject, PXComponentizable {
             let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.strikethroughStyle: 1]
             let preferenceAmountString = Utils.getAttributedAmount(withAttributes: attributes, amount: amount, currency: currency, negativeAmount: false)
 
-            if amountDetail == nil {
-                amountDetail = preferenceAmountString
+            if subtitle == nil {
+                subtitle = preferenceAmountString
             } else {
-                amountDetail?.append(String.NON_BREAKING_LINE_SPACE.toAttributedString())
-                amountDetail?.append(preferenceAmountString)
+                subtitle?.append(String.NON_BREAKING_LINE_SPACE.toAttributedString())
+                subtitle?.append(preferenceAmountString)
             }
 
         }
@@ -98,7 +98,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
 
         return PXPaymentMethodComponent(props: bodyProps)
     }

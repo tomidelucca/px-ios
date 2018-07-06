@@ -19,7 +19,7 @@ extension PXOneTapViewModel {
         let paymentMethodName = pm.name ?? ""
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
-        var subtitle: NSAttributedString? = nil
+        var subtitle: NSAttributedString? = pm.paymentMethodDescription?.toAttributedString()
         var cftText: NSAttributedString? = nil
         var subtitleRight: NSMutableAttributedString? = nil
         let backgroundColor = ThemeManager.shared.whiteColor()
@@ -44,7 +44,7 @@ extension PXOneTapViewModel {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.amountHelper.discount != nil {
             // With discount
             if let pCost = self.amountHelper.paymentData.payerCost, pCost.installments > 1 {
-                let amount: String = Utils.getAmountFormatted(amount: self.amountHelper.preferenceAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
+                let amount: String = Utils.getAmountFormatted(amount: self.amountHelper.preferenceAmountWithCharges, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
                 subtitleRight = amount.toAttributedString()
 
                 let amountWithDiscount: String = Utils.getAmountFormatted(amount: getTotalAmount(), thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: true)
