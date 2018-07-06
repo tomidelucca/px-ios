@@ -71,7 +71,7 @@ extension ProgressView {
         timer = Timer.scheduledTimer(timeInterval: everySecond, target: self, selector: customSelector, userInfo: nil, repeats: true)
     }
 
-    fileprivate func stopTimer() {
+    func stopTimer() {
         timer?.invalidate()
         timer = nil
     }

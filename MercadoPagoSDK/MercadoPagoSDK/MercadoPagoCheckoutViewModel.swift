@@ -121,6 +121,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentPlugin: PXPaymentPluginComponent?
     var paymentClosure: (() -> (status: String, statusDetail: String, receiptId: String?))?
 
+    var paymentFlow: PXPaymentFlow?
+
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
         super.init()
         self.checkoutPreference = checkoutPreference

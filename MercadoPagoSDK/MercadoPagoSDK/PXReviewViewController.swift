@@ -31,6 +31,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     var finishButtonAnimation: (() -> Void)
 
     var loadingButtonComponent: PXAnimatedButton?
+    var loadingFloatingButtonComponent: PXAnimatedButton?
 
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, showCustomComponents: Bool = true, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
@@ -62,6 +63,10 @@ class PXReviewViewController: PXComponentContainerViewController {
         PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
         PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
         PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
+
+        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingFloatingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingFloatingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingFloatingButtonComponent)
     }
 
     override func trackInfo() {
@@ -86,7 +91,7 @@ extension PXReviewViewController {
         }
     }
 
-    fileprivate func renderViews() {
+    private func renderViews() {
 
         self.contentView.prepareForRender()
 
@@ -251,13 +256,13 @@ extension PXReviewViewController {
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: { [weak self] in
             self?.confirmPayment()
-            self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            self?.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
-        loadingButtonComponent = (containedButtonView as! PXContainedActionButtonView).button
-        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
-        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
-        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
+        loadingFloatingButtonComponent = (containedButtonView as! PXContainedActionButtonView).button
+        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingFloatingButtonComponent!, selector: #selector(loadingFloatingButtonComponent?.animateFinishSuccess))
+        PXNotificationManager.SuscribeTo.animateButtonForError(loadingFloatingButtonComponent!, selector: #selector(loadingFloatingButtonComponent?.animateFinishError))
+        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingFloatingButtonComponent!, selector: #selector(loadingFloatingButtonComponent?.animateFinishWarning))
 
         return containedButtonView
     }
@@ -321,11 +326,29 @@ extension PXReviewViewController {
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func confirmPayment() {
+        scrollView.isScrollEnabled = false
+        view.isUserInteractionEnabled = false
         title = ""
         self.viewModel.trackConfirmActionEvent()
-        self.hideNavBar()
+//        self.hideNavBar()
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
+    }
+
+    func resetButton() {
+        displayBackButton()
+        scrollView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
+        loadingButtonComponent?.progressView?.stopTimer()
+        loadingButtonComponent?.progressView?.doReset()
+        //loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
+
+        loadingFloatingButtonComponent?.progressView?.stopTimer()
+        loadingFloatingButtonComponent?.progressView?.doReset()
+        //loadingFloatingButtonComponent?.setTitle("Pagar".localized, for: .normal)
+        PXComponentFactory.SnackBar.showLongDurationMessage(message: "Hola Edi")
+
+        renderViews()
     }
 
     fileprivate func cancelPayment() {

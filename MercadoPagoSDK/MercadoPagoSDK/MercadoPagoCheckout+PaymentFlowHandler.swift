@@ -8,6 +8,14 @@
 
 import Foundation
 extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
+    func finishPaymentFlow(error: MPSDKError) {
+        guard let reviewScreen = pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController else {
+            return
+        }
+
+        reviewScreen.resetButton()
+    }
+
     func finishPaymentFlow(paymentResult: PaymentResult) {
         self.viewModel.paymentResult = paymentResult
         PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)

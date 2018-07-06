@@ -127,6 +127,10 @@ extension OneTapFlow {
 }
 
 extension OneTapFlow: PXPaymentResultHandlerProtocol {
+    func finishPaymentFlow(error: MPSDKError) {
+
+    }
+
     func finishPaymentFlow(paymentResult: PaymentResult) {
         self.model.paymentResult = paymentResult
         if self.model.needToShowLoading() {

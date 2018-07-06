@@ -204,12 +204,10 @@ internal final class PXPaymentFlow: NSObject {
 extension PXPaymentFlow: PXPaymentFlowHandlerProtocol {
     public func showErrorScreen(message: String, errorDetails: String, retry: Bool = true) {
         let error = MPSDKError(message: message, errorDetail: errorDetails, retry: retry)
-        showErrorScreen(error: error)
+        resultHandler?.finishPaymentFlow(error: error)
     }
 
     func showErrorScreen(error: MPSDKError) {
-        self.navigationHandler.showErrorScreen(error: error, callbackCancel: self.paymentErrorHandler?.exitCheckout, errorCallback: { () in
-            self.executeNextStep()
-        })
+        resultHandler?.finishPaymentFlow(error: error)
     }
 }

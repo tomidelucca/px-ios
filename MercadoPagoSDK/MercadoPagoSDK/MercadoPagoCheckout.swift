@@ -112,8 +112,11 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func executeNextStep() {
-
-        switch self.viewModel.nextStep() {
+        let nextStep = self.viewModel.nextStep()
+        #if DEBUG
+            print ("STEP \(nextStep.rawValue)")
+        #endif
+        switch nextStep {
         case .START :
             self.initialize()
         case .SERVICE_GET_PREFERENCE:
