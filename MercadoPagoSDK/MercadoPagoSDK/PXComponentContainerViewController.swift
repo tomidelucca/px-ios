@@ -10,12 +10,12 @@ import UIKit
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
 
-    fileprivate lazy var elasticHeader = UIView()
-    fileprivate lazy var customNavigationTitle: String = ""
-    fileprivate lazy var secondaryCustomNavigationTitle: String = ""
-    fileprivate lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.8
-    fileprivate lazy var NAVIGATION_BAR_SECONDARY_DELTA_Y: CGFloat = 0
-    fileprivate lazy var navigationTitleStatusStep: Int = 0
+    private lazy var elasticHeader = UIView()
+    private lazy var customNavigationTitle: String = ""
+    private lazy var secondaryCustomNavigationTitle: String = ""
+    private lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.8
+    private lazy var NAVIGATION_BAR_SECONDARY_DELTA_Y: CGFloat = 0
+    private lazy var navigationTitleStatusStep: Int = 0
 
     var scrollView: UIScrollView!
     var contentView = PXComponentView()
@@ -139,5 +139,9 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
                 (navigationItem.titleView as? UILabel)?.text = ""
             }
         }
+    }
+
+    func isNavBarHidden() -> Bool {
+        return navigationTitleStatusStep >= 2
     }
 }

@@ -43,17 +43,26 @@ extension PXNotificationManager {
             notificationCenter.removeObserver(observer, name: .attemptToClose, object: nil)
         }
 
-        static func animateButtonForSuccess(_ observer: Any) {
+        static func animateButtonForSuccess(_ observer: Any?) {
+            guard let observer = observer else {
+                return
+            }
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(observer, name: .animateButtonForSuccess, object: nil)
         }
 
-        static func animateButtonForError(_ observer: Any) {
+        static func animateButtonForError(_ observer: Any?) {
+            guard let observer = observer else {
+                return
+            }
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(observer, name: .animateButtonForError, object: nil)
         }
 
-        static func animateButtonForWarning(_ observer: Any) {
+        static func animateButtonForWarning(_ observer: Any?) {
+            guard let observer = observer else {
+                return
+            }
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(observer, name: .animateButtonForWarning, object: nil)
         }

@@ -24,16 +24,21 @@ final class ProgressView: UIView {
     fileprivate let progressViewEndX: CGFloat
     fileprivate var progressViewDeltaIncrement: CGFloat = 0
 
+    fileprivate let timeOut: TimeInterval
+    fileprivate let timerInterval: TimeInterval = 0.6
+    fileprivate var timerCounter = 0
+
     var progressDelegate: ProgressViewDelegate?
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(forView: UIView, loadingColor: UIColor = UIColor.white) {
+    init(forView: UIView, loadingColor: UIColor = UIColor.white, timeOut: TimeInterval = 15) {
         progressViewHeight = forView.frame.height
         progressViewEndX = forView.frame.width
         progressViewDeltaIncrement = progressViewEndX / deltaIncrementFraction
+        self.timeOut = timeOut
 
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: progressViewHeight))
 
@@ -44,19 +49,20 @@ final class ProgressView: UIView {
         forView.layer.masksToBounds = true
         forView.addSubview(self)
 
-        initTimer(customSelector: #selector(ProgressView.increment))
+        initTimer(everySecond: timerInterval, customSelector: #selector(ProgressView.increment))
     }
 
     @objc fileprivate func increment() {
+        timerCounter += 1
+        let incompleteWidth = self.progressViewEndX - self.frame.width
+        let newWidth =  self.frame.width + incompleteWidth / 6
 
-        let newWidth =  self.frame.width + deltaIncrementFraction
-
-        let newFrame = CGRect(x: 0, y: 0, width: (self.frame.width + deltaIncrementFraction), height: self.frame.height)
+        let newFrame = CGRect(x: 0, y: 0, width: (newWidth), height: self.frame.height)
 
         UIView.animate(withDuration: 0.3, animations: {
             self.frame = newFrame
         }) { completed in
-            if newWidth >= self.progressViewEndX {
+            if  Double(self.timerCounter) * self.timerInterval > self.timeOut {
                 self.stopTimer()
                 self.progressDelegate?.progressTimeOut()
             }
@@ -67,7 +73,7 @@ final class ProgressView: UIView {
 // MARK: Timer.
 extension ProgressView {
 
-    fileprivate func initTimer(everySecond: TimeInterval = 0.6, customSelector: Selector) {
+    fileprivate func initTimer(everySecond: TimeInterval = 0.5, customSelector: Selector) {
         timer = Timer.scheduledTimer(timeInterval: everySecond, target: self, selector: customSelector, userInfo: nil, repeats: true)
     }
 

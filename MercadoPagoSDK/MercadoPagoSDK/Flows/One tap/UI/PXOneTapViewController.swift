@@ -237,6 +237,10 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 // MARK: Payment Button animation delegate
 @available(iOS 9.0, *)
 extension PXOneTapViewController: PXAnimatedButtonDelegate {
+    func shakeDidFinish() {
+
+    }
+
     func expandAnimationInProgress() {
     }
 

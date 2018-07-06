@@ -13,6 +13,7 @@ protocol PXAnimatedButtonDelegate: NSObjectProtocol {
     func expandAnimationInProgress()
     func didFinishAnimation()
     func progressButtonAnimationTimeOut()
+    func shakeDidFinish()
 }
 
 internal class PXAnimatedButton: UIButton {
@@ -26,7 +27,7 @@ internal class PXAnimatedButton: UIButton {
     }
 }
 
-extension PXAnimatedButton: ProgressViewDelegate {
+extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func startLoading(loadingText: String, retryText: String) {
         progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.03, green: 0.33, blue: 0.85, alpha: 1.0))
         progressView?.progressDelegate = self
@@ -102,7 +103,6 @@ extension PXAnimatedButton: ProgressViewDelegate {
                                         })
                                     })
                                 }
-
                             })
             })
         })
@@ -125,9 +125,36 @@ extension PXAnimatedButton: ProgressViewDelegate {
         //  animationDelegate?.didFinishAnimation()
     }
 
+    func shake() {
+        resetButton()
+        setTitle("Reintentar", for: .normal)
+        UIView.animate(withDuration: 0.1, animations: {
+            self.backgroundColor = ThemeManager.shared.rejectedColor()
+        }, completion: { _ in
+            let animation = CABasicAnimation(keyPath: "position")
+            animation.duration = 0.2
+            animation.repeatCount = 4
+            animation.autoreverses = true
+            animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 3, y: self.center.y))
+            animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 3, y: self.center.y))
+
+            CATransaction.setCompletionBlock {
+                self.animationDelegate?.shakeDidFinish()
+            }
+            self.layer.add(animation, forKey: "position")
+
+            CATransaction.commit()
+        })
+    }
+
     func progressTimeOut() {
         progressView?.doReset()
-        //animationDelegate?.progressButtonAnimationTimeOut()
+        animationDelegate?.progressButtonAnimationTimeOut()
+    }
+
+    func resetButton() {
+        progressView?.stopTimer()
+        progressView?.doReset()
     }
 }
 
@@ -135,7 +162,7 @@ extension PXAnimatedButton {
     func getColor(style: FinishStyle) -> UIColor {
         switch style {
         case .success:
-           return ThemeManager.shared.successColor()
+            return ThemeManager.shared.successColor()
         case .error:
             return ThemeManager.shared.rejectedColor()
         case .warning:

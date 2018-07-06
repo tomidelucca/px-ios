@@ -55,18 +55,12 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         self.checkFloatingButtonVisibility()
+        self.navigationController?.navigationBar.layer.zPosition = 0
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
-
-        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingFloatingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingFloatingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingFloatingButtonComponent)
+        unsubscribeFromNotifications()
     }
 
     override func trackInfo() {
@@ -92,7 +86,7 @@ extension PXReviewViewController {
     }
 
     private func renderViews() {
-
+        unsubscribeFromNotifications()
         self.contentView.prepareForRender()
 
         // Add title view.
@@ -259,10 +253,8 @@ extension PXReviewViewController {
             self?.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
-        loadingFloatingButtonComponent = (containedButtonView as! PXContainedActionButtonView).button
-        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingFloatingButtonComponent!, selector: #selector(loadingFloatingButtonComponent?.animateFinishSuccess))
-        PXNotificationManager.SuscribeTo.animateButtonForError(loadingFloatingButtonComponent!, selector: #selector(loadingFloatingButtonComponent?.animateFinishError))
-        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingFloatingButtonComponent!, selector: #selector(loadingFloatingButtonComponent?.animateFinishWarning))
+        loadingFloatingButtonComponent = containedButtonView.button
+        subscribeLoadingButtonToNotifications(loadingButton: loadingFloatingButtonComponent)
 
         return containedButtonView
     }
@@ -277,9 +269,7 @@ extension PXReviewViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton
-        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
-        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
-        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
+        subscribeLoadingButtonToNotifications(loadingButton: loadingButtonComponent)
             return footerView
     }
 
@@ -306,6 +296,7 @@ extension PXReviewViewController {
         }
         return nil
     }
+
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
         self.checkFloatingButtonVisibility()
@@ -326,29 +317,24 @@ extension PXReviewViewController {
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func confirmPayment() {
+        self.navigationController?.navigationBar.layer.zPosition = -1
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
-        title = ""
         self.viewModel.trackConfirmActionEvent()
-//        self.hideNavBar()
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
     func resetButton() {
-        displayBackButton()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
-        loadingButtonComponent?.progressView?.stopTimer()
-        loadingButtonComponent?.progressView?.doReset()
-        //loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
-
-        loadingFloatingButtonComponent?.progressView?.stopTimer()
-        loadingFloatingButtonComponent?.progressView?.doReset()
-        //loadingFloatingButtonComponent?.setTitle("Pagar".localized, for: .normal)
-        PXComponentFactory.SnackBar.showLongDurationMessage(message: "Hola Edi")
-
-        renderViews()
+        loadingFloatingButtonComponent?.shake()
+        loadingButtonComponent?.shake()
+//        loadingButtonComponent?.resetButton()
+//        loadingFloatingButtonComponent?.resetButton()
+//        displayBackButton()
+//        scrollView.isScrollEnabled = true
+//        view.isUserInteractionEnabled = true
+//        PXComponentFactory.SnackBar.showLongDurationMessage(message: "Hubo un error")
+//        renderViews()
     }
 
     fileprivate func cancelPayment() {
@@ -365,8 +351,19 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 // MARK: Payment Button animation delegate
 @available(iOS 9.0, *)
 extension PXReviewViewController: PXAnimatedButtonDelegate {
-    func expandAnimationInProgress() {
+    func shakeDidFinish() {
+        displayBackButton()
+        scrollView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
+        renderViews()
+    }
 
+    func expandAnimationInProgress() {
+        if isNavBarHidden() {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.navigationController?.isNavigationBarHidden = true
+            })
+        }
     }
 
     func didFinishAnimation() {
@@ -374,6 +371,31 @@ extension PXReviewViewController: PXAnimatedButtonDelegate {
     }
 
     func progressButtonAnimationTimeOut() {
+        loadingButtonComponent?.resetButton()
+        loadingFloatingButtonComponent?.resetButton()
+        loadingFloatingButtonComponent?.shake()
+        loadingButtonComponent?.shake()
+    }
+}
 
+// MARK: Notifications
+extension PXReviewViewController {
+    func subscribeLoadingButtonToNotifications(loadingButton: PXAnimatedButton?) {
+        guard let loadingButton = loadingButton else {
+            return
+        }
+        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButton, selector: #selector(loadingButton.animateFinishSuccess))
+        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButton, selector: #selector(loadingButton.animateFinishError))
+        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButton, selector: #selector(loadingButton.animateFinishWarning))
+    }
+
+    func unsubscribeFromNotifications() {
+        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
+
+        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingFloatingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingFloatingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingFloatingButtonComponent)
     }
 }
