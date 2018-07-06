@@ -96,7 +96,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
 
     func handleTotalRowTap() {
-        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, discountValidationCallback: discountValidationCallback)
+//        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, discountValidationCallback: discountValidationCallback)
     }
 
     override func loadMPStyles() {

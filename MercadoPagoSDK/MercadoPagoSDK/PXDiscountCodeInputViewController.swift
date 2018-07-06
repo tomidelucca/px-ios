@@ -17,10 +17,10 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
-    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis, cam in return false}
+    private var discountValidationCallback:  (PXDiscount, PXCampaign, @escaping ()->Void, @escaping ()->Void) -> Void
     private var closeModalCallback: (() -> Void)!
 
-    init(discountValidationCallback: @escaping (PXDiscount, PXCampaign) -> Bool, closeModalCallback: @escaping (() -> Void)) {
+    init(discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping ()->Void, @escaping ()->Void) -> Void, closeModalCallback: @escaping (() -> Void)) {
         self.discountValidationCallback = discountValidationCallback
         self.closeModalCallback = closeModalCallback
         super.init(nibName: nil, bundle: nil)
@@ -200,13 +200,13 @@ extension PXDiscountCodeInputViewController {
                         return campaign.id.stringValue == discount.id
                     }
                     if let firstFilteredCampaign = filteredCampaigns.first {
-                        let discountValidated = strongSelf.discountValidationCallback(discount, firstFilteredCampaign)
-                        strongSelf.spinner?.hide()
-                        if discountValidated {
+                        strongSelf.discountValidationCallback(discount, firstFilteredCampaign, {
+                            strongSelf.spinner?.hide()
                             strongSelf.transitionToSuccess(with: discount)
-                        } else {
+                        }, {
+                            strongSelf.spinner?.hide()
                             strongSelf.showError(with: "grupos fallo")
-                        }
+                        })
                     }
                 }
 

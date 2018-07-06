@@ -19,16 +19,26 @@ extension MercadoPagoCheckout {
             MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
         }
 
+        var paymentMethodSelectionStep: PaymentVaultViewController!
+        paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
 
-        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { (discount, campaign) -> Bool in
-
-            if true {
-                self.setDiscount(discount, withCampaign: campaign)
-                return true
-            } else {
-                return false
+            guard let strongSelf = self else {
+                errorBlock()
+                return
             }
 
+            strongSelf.setDiscount(discount, withCampaign: campaign)
+
+            strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
+                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+                paymentMethodSelectionStep.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+                successBlock()
+                return
+            }, errorBlock: { (_) in
+                strongSelf.viewModel.clearDiscount()
+                errorBlock()
+                return
+            })
 
         }, callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
@@ -43,6 +53,8 @@ extension MercadoPagoCheckout {
         self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep, animated: true)
 
     }
+
+
     func showCardForm() {
         let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { [weak self](paymentMethods, cardToken) in
 
@@ -113,11 +125,15 @@ extension MercadoPagoCheckout {
 
             self?.viewModel.updateCheckoutModel(payerCost: payerCost)
             self?.executeNextStep()
-        }) { (discount, campaign) -> Bool in
+        }, discountValidationCallback: { (discount, campaign) -> Bool in
 
-            
-            return true
-        }
+                if true {
+                    self.setDiscount(discount, withCampaign: campaign)
+                    return true
+                } else {
+                    return false
+                }
+        })
 
         weak var strongPayerCostViewController = payerCostStep
 

@@ -116,6 +116,28 @@ extension MercadoPagoCheckout {
     func getPaymentMethodSearch() {
         self.pxNavigationHandler.presentLoading()
 
+        self.getPaymentMethodSearch(successBlock: { [weak self] (paymentMethodSearch) in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+            strongSelf.executeNextStep()
+        }) { [weak self] (error) in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] () -> Void in
+
+                self?.getPaymentMethodSearch()
+            })
+            strongSelf.executeNextStep()
+        }
+    }
+
+    func getPaymentMethodSearch(successBlock:@escaping (PaymentMethodSearch)->Void, errorBlock:@escaping (NSError)->Void) {
+
         let paymentMethodPluginsToShow = viewModel.paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
         var pluginIds = [String]()
         for plugin in paymentMethodPluginsToShow {
@@ -127,26 +149,10 @@ extension MercadoPagoCheckout {
         let exclusions: MercadoPagoServicesAdapter.PaymentSearchExclusions = (self.viewModel.getExcludedPaymentTypesIds(), self.viewModel.getExcludedPaymentMethodsIds())
         let oneTapInfo: MercadoPagoServicesAdapter.PaymentSearchOneTapInfo = (cardIdsWithEsc, pluginIds)
 
-        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, defaultPaymentMethod: self.viewModel.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { [weak self] (paymentMethodSearch) in
-
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
-            strongSelf.executeNextStep()
-
-        }, failure: { [weak self] (error) in
-
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.PAYMENT_METHOD_SEARCH.rawValue), errorCallback: { [weak self] () -> Void in
-
-                self?.getPaymentMethodSearch()
-            })
-            strongSelf.executeNextStep()
+        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, defaultPaymentMethod: self.viewModel.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { (paymentMethodSearch) in
+                successBlock(paymentMethodSearch)
+            }, failure: { (error) in
+                errorBlock(error)
         })
     }
 
