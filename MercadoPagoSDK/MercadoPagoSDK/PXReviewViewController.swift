@@ -23,24 +23,22 @@ class PXReviewViewController: PXComponentContainerViewController {
     var discountTermsConditionView: PXDiscountTermsAndConditionView?
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
-    fileprivate var showCustomComponents: Bool
 
     var callbackPaymentData: ((PaymentData) -> Void)
     var callbackConfirm: ((PaymentData) -> Void)
-    var callbackExit: (() -> Void)
     var finishButtonAnimation: (() -> Void)
 
     var loadingButtonComponent: PXAnimatedButton?
     var loadingFloatingButtonComponent: PXAnimatedButton?
+    let timeOutPayButton: TimeInterval
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, showCustomComponents: Bool = true, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
-        self.showCustomComponents = showCustomComponents
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
-        self.callbackExit = callbackExit
         self.finishButtonAnimation = finishButtonAnimation
+        self.timeOutPayButton = timeOutPayButton
         super.init()
     }
 
@@ -130,7 +128,7 @@ extension PXReviewViewController {
         }
 
         // Top Custom View
-        if showCustomComponents, let topCustomView = getTopCustomView() {
+        if let topCustomView = getTopCustomView() {
             topCustomView.addSeparatorLineToBottom(height: 1)
             topCustomView.clipsToBounds = true
             contentView.addSubviewToBottom(topCustomView)
@@ -147,7 +145,7 @@ extension PXReviewViewController {
         }
 
         // Bottom Custom View
-        if showCustomComponents, let bottomCustomView = getBottomCustomView() {
+        if let bottomCustomView = getBottomCustomView() {
             bottomCustomView.addSeparatorLineToBottom(height: 1)
             bottomCustomView.clipsToBounds = true
             contentView.addSubviewToBottom(bottomCustomView)
@@ -249,8 +247,11 @@ extension PXReviewViewController {
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: { [weak self] in
-            self?.confirmPayment()
-            self?.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.confirmPayment()
+            strongSelf.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: strongSelf.timeOutPayButton)
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
@@ -262,8 +263,11 @@ extension PXReviewViewController {
     fileprivate func getFooterView() -> UIView {
 
         let payAction = PXComponentAction(label: "Pagar".localized) { [weak self] in
-            self?.confirmPayment()
-            self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.confirmPayment()
+            strongSelf.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: strongSelf.timeOutPayButton)
         }
         let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
         let footerComponent = PXFooterComponent(props: footerProps)
@@ -335,10 +339,6 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 //        view.isUserInteractionEnabled = true
 //        PXComponentFactory.SnackBar.showLongDurationMessage(message: "Hubo un error")
 //        renderViews()
-    }
-
-    fileprivate func cancelPayment() {
-        self.callbackExit()
     }
 
     func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {

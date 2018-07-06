@@ -15,7 +15,6 @@ internal final class PXPaymentFlow: NSObject {
     let binaryMode: Bool
     let paymentPlugin: PXPaymentPluginComponent?
     let paymentMethodPaymentPlugin: PXPaymentPluginComponent?
-    let navigationHandler: PXNavigationHandler
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
     weak var resultHandler: PXPaymentResultHandlerProtocol?
@@ -23,10 +22,9 @@ internal final class PXPaymentFlow: NSObject {
 
     var shouldShowLoading: Bool = true
 
-    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, navigationHandler: PXNavigationHandler, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol) {
+    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol) {
         self.paymentPlugin = paymentPlugin
         self.paymentMethodPaymentPlugin = paymentMethodPaymentPlugin
-        self.navigationHandler = navigationHandler
         self.binaryMode = binaryMode
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         self.paymentErrorHandler = paymentErrorHandler
@@ -49,7 +47,6 @@ internal final class PXPaymentFlow: NSObject {
     }
 
     func executeNextStep() {
-        // TODO: Pode hacer pagos con bussiness result
         switch self.nextStep() {
         case .defaultPayment:
             createPayment()
@@ -80,7 +77,7 @@ internal final class PXPaymentFlow: NSObject {
         if paymentPlugin == nil {
             return false
         }
-        _ = copyViewModelAndAssignToCheckoutStore()
+        assignToCheckoutStore()
 
         if let shouldSkip = paymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
             return false
@@ -93,12 +90,8 @@ internal final class PXPaymentFlow: NSObject {
         if paymentMethodPaymentPlugin == nil {
             return false
         }
-        _ = copyViewModelAndAssignToCheckoutStore()
-
-        if let shouldSkip = paymentMethodPaymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
-            return false
-        }
-        return true
+        assignToCheckoutStore()
+        return self.paymentData?.paymentMethod?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
     }
 
     func createPaymentWithPlugin(plugin: PXPaymentPluginComponent?) {
@@ -106,9 +99,7 @@ internal final class PXPaymentFlow: NSObject {
             return
         }
 
-        if copyViewModelAndAssignToCheckoutStore() {
-            paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
-        }
+        paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
 
         if let createPayment = plugin.createPayment {
             let paymentPluginResult = createPayment(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
@@ -183,20 +174,25 @@ internal final class PXPaymentFlow: NSObject {
         })
     }
 
-    func copyViewModelAndAssignToCheckoutStore() -> Bool {
-        // Set a copy of CheckoutVM in HookStore
-        if let newPaymentData = paymentData?.copy() as? PaymentData {
-            PXCheckoutStore.sharedInstance.paymentData = newPaymentData
-            // TODO: ver si esto es un problmea
-            //PXCheckoutStore.sharedInstance.paymentOptionSelected = mercadoPagoCheckoutViewModel.paymentOptionSelected
+    func assignToCheckoutStore() {
+        if let paymentData = paymentData {
+            PXCheckoutStore.sharedInstance.paymentData = paymentData
         }
-        // TODO: Hacer copia de esto
         PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference
-        return true
     }
 
     static func readyForPayment(paymentData: PaymentData) -> Bool {
         return paymentData.isComplete()
+    }
+
+    func getPaymentTimeOut() -> TimeInterval {
+        if let paymentPluginTimeOut = paymentPlugin?.paymentTimeOut?() {
+            return paymentPluginTimeOut
+        } else if let paymentMethodPluginTimeOut = paymentMethodPaymentPlugin?.paymentTimeOut?() {
+            return paymentMethodPluginTimeOut
+        } else {
+            return mercadoPagoServicesAdapter.getTimeOut()
+        }
     }
 
 }

@@ -306,6 +306,19 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, reviewScreenPreference: reviewScreenPreference)
     }
 
+    func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
+        guard let paymentFlow = paymentFlow else {
+            var paymentMethodPaymentPlugin: PXPaymentPluginComponent?
+            if let paymentOtionSelected = paymentOptionSelected, let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
+                paymentMethodPaymentPlugin = plugin.paymentPlugin
+            }
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, binaryMode: binaryMode, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler)
+            self.paymentFlow = paymentFlow
+            return paymentFlow
+        }
+        return paymentFlow
+    }
+
     func resultViewModel() -> PXResultViewModel {
         return PXResultViewModel(amountHelper: self.amountHelper, paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, paymentResultScreenPreference: self.paymentResultScreenPreference)
     }

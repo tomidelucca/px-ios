@@ -28,8 +28,8 @@ internal class PXAnimatedButton: UIButton {
 }
 
 extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
-    func startLoading(loadingText: String, retryText: String) {
-        progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.03, green: 0.33, blue: 0.85, alpha: 1.0))
+    func startLoading(loadingText: String, retryText: String, timeOut: TimeInterval = 15.0) {
+        progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.03, green: 0.33, blue: 0.85, alpha: 1.0), timeOut: timeOut)
         progressView?.progressDelegate = self
         isEnabled = false
         setTitle(loadingText, for: .normal)
@@ -132,8 +132,8 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
             self.backgroundColor = ThemeManager.shared.rejectedColor()
         }, completion: { _ in
             let animation = CABasicAnimation(keyPath: "position")
-            animation.duration = 0.2
-            animation.repeatCount = 4
+            animation.duration = 0.1
+            animation.repeatCount = 8
             animation.autoreverses = true
             animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 3, y: self.center.y))
             animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 3, y: self.center.y))

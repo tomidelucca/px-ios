@@ -10,7 +10,6 @@ import Foundation
 
 extension PXFooterRenderer {
     func oneTapRender(_ footer: PXFooterComponent) -> UIView {
-        // TODO: Hacer una view con un animated button
         let fooView = PXFooterAnimatedView()
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .clear

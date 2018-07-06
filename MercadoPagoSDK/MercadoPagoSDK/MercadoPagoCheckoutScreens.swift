@@ -126,8 +126,9 @@ extension MercadoPagoCheckout {
     }
 
     func showReviewAndConfirmScreen() {
+        let timeOut = viewModel.createPaymentFlow(paymentErrorHandler: self).getPaymentTimeOut()
 
-        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), callbackPaymentData: { [weak self] (paymentData: PaymentData) in
+        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), timeOutPayButton: timeOut, callbackPaymentData: { [weak self] (paymentData: PaymentData) in
             guard let strongSelf = self else {
                 return
             }
@@ -154,13 +155,7 @@ extension MercadoPagoCheckout {
                 strongSelf.executeNextStep()
             }
 
-        }, callbackExit: { [weak self] () -> Void in
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.cancel()
-            }, finishButtonAnimation: {
+        }, finishButtonAnimation: {
                 self.executeNextStep()
         })
 
@@ -306,13 +301,7 @@ extension MercadoPagoCheckout {
         guard let search = viewModel.search, let paymentOtionSelected = viewModel.paymentOptionSelected else {
             return
         }
-
-        var paymentMethodPaymentPlugin: PXPaymentPluginComponent?
-        if let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
-            paymentMethodPaymentPlugin = plugin.paymentPlugin
-        }
-
-        let paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
+        let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
         let onetapFlow = OneTapFlow(navigationController: pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, oneTapResultHandler: self)
 

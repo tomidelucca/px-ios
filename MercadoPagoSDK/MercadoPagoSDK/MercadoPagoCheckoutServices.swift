@@ -347,14 +347,9 @@ extension MercadoPagoCheckout {
     }
 
     func createPayment() {
-        var paymentMethodPaymentPlugin: PXPaymentPluginComponent?
-        if let paymentOtionSelected = viewModel.paymentOptionSelected, let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
-            paymentMethodPaymentPlugin = plugin.paymentPlugin
-        }
-
-        viewModel.paymentFlow = PXPaymentFlow(paymentPlugin: viewModel.paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, navigationHandler: pxNavigationHandler, binaryMode: viewModel.binaryMode, mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentErrorHandler: self)
-        viewModel.paymentFlow?.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
-        viewModel.paymentFlow?.start()
+        let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
+        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
+        paymentFlow.start()
     }
 
     func getInstructions() {

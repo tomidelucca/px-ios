@@ -83,8 +83,6 @@ class PXNavigationHandler: NSObject {
         dismissLoading {  [weak self] in
             self?.navigationController.present(errorVC, animated: true, completion: {})
         }
-        // Todo: pensar esto
-                    self.navigationController.present(errorVC, animated: true, completion: {})
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,

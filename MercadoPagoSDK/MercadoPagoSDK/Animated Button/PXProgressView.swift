@@ -15,18 +15,18 @@ protocol ProgressViewDelegate {
 
 final class ProgressView: UIView {
 
-    fileprivate var timer: Timer?
+    private var timer: Timer?
 
-    fileprivate let progressAlpha: CGFloat = 0.35
-    fileprivate let deltaIncrementFraction: CGFloat = 18
+    private let progressAlpha: CGFloat = 0.35
+    private var deltaIncrementFraction: CGFloat = 6
 
-    fileprivate let progressViewHeight: CGFloat
-    fileprivate let progressViewEndX: CGFloat
-    fileprivate var progressViewDeltaIncrement: CGFloat = 0
+    private let progressViewHeight: CGFloat
+    private let progressViewEndX: CGFloat
+    private var progressViewDeltaIncrement: CGFloat = 0
 
-    fileprivate let timeOut: TimeInterval
-    fileprivate let timerInterval: TimeInterval = 0.6
-    fileprivate var timerCounter = 0
+    private let timeOut: TimeInterval
+    private let timerInterval: TimeInterval = 0.6
+    private var timerCounter = 0
 
     var progressDelegate: ProgressViewDelegate?
 
@@ -37,7 +37,7 @@ final class ProgressView: UIView {
     init(forView: UIView, loadingColor: UIColor = UIColor.white, timeOut: TimeInterval = 15) {
         progressViewHeight = forView.frame.height
         progressViewEndX = forView.frame.width
-        progressViewDeltaIncrement = progressViewEndX / deltaIncrementFraction
+        deltaIncrementFraction = CGFloat(timeOut * 0.4)
         self.timeOut = timeOut
 
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: progressViewHeight))
@@ -55,7 +55,7 @@ final class ProgressView: UIView {
     @objc fileprivate func increment() {
         timerCounter += 1
         let incompleteWidth = self.progressViewEndX - self.frame.width
-        let newWidth =  self.frame.width + incompleteWidth / 6
+        let newWidth =  self.frame.width + incompleteWidth / deltaIncrementFraction
 
         let newFrame = CGRect(x: 0, y: 0, width: (newWidth), height: self.frame.height)
 
