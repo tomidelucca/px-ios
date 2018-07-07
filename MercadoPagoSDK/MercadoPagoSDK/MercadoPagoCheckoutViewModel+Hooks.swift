@@ -14,7 +14,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        _ = copyViewModelAndAssignToCheckoutStore()
+        populateCheckoutStore()
 
         if let shouldSkip = hookSelected.shouldSkipHook?(hookStore: PXCheckoutStore.sharedInstance), shouldSkip {
             self.continueFrom(hook: hookSelected.hookForStep())

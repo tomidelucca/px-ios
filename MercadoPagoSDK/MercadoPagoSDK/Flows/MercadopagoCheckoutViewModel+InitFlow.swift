@@ -21,6 +21,8 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.paymentMethodPlugins = self.paymentMethodPlugins
         initFlowProperties.paymentPlugin = self.paymentPlugin
         initFlowProperties.paymentMethodSearchResult = self.search
+        initFlowProperties.chargeRules = self.chargeRules
+        initFlowProperties.campaigns = self.campaigns
         initFlowProperties.directDiscountSearchStatus = paymentData.isComplete()
         initFlowProperties.loadPreferenceStatus = isPreferenceLoaded()
 

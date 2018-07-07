@@ -173,6 +173,10 @@ import MercadoPagoServices
             }, failure: failure)
     }
 
+    open func getCampaigns(callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        mercadoPagoServices.getCampaigns(callback: callback, failure: failure)
+    }
+
     open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let url = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL()

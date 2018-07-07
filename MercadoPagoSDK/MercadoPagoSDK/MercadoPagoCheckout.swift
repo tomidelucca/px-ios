@@ -122,7 +122,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func getPXCheckoutStore() -> PXCheckoutStore {
-        _ = self.viewModel.copyViewModelAndAssignToCheckoutStore()
+        viewModel.populateCheckoutStore()
         return PXCheckoutStore.sharedInstance
     }
 
@@ -255,6 +255,11 @@ open class MercadoPagoCheckout: NSObject {
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
         viewModel.setDiscount(discount, withCampaign: campaign)
+          self.viewModel.setDiscount(discount, withCampaign: campaign)
+    }
+
+    public func setChargeRules(chargeRules: [PXPaymentTypeChargeRule]) {
+        viewModel.chargeRules = chargeRules
     }
 
     private func shouldApplyDiscount() -> Bool {
@@ -262,5 +267,8 @@ open class MercadoPagoCheckout: NSObject {
             return true
         }
         return false
+    }
+    private func removeDiscount() {
+        self.viewModel.clearDiscount()
     }
 }

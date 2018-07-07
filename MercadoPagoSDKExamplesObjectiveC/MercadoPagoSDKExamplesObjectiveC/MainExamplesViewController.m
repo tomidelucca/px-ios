@@ -107,11 +107,17 @@
     [self.mpCheckout setTheme: meliExampleTheme];
 
     
-    PXDiscount* discount = [[PXDiscount alloc] initWithId:@"123" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
-    PXCampaign* campaign = [[PXCampaign alloc] initWithId:123 code:@"sad" name:@"Campaña" maxCouponAmount:7];
+    PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
+    PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
     
     [self.mpCheckout setDiscount:discount withCampaign:campaign];
     
+    NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
+    PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"payment_method_plugin" amountCharge:10.5];
+    PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
+    [chargesArray addObject:chargeCredit];
+    [chargesArray addObject:chargeDebit];
+    [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
@@ -119,7 +125,7 @@
     
     [self setPaymentMethodPlugins];
 
-    //[self setPaymentPlugin];
+    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
 //    [self setPaymentResultScreenPreference];

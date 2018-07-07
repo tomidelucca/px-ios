@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServices
 
 extension InitFlow {
     func getCheckoutPreference() {
@@ -39,13 +40,12 @@ extension InitFlow {
     }
 
     func getDirectDiscount() {
-        model.getService().getDirectDiscount(amount: model.amountHelper.amountToPay, payerEmail: model.properties.checkoutPreference.payer.email, callback: { [weak self] (_) in
+        model.getService().getDirectDiscount(amount: model.amountHelper.amountToPay, payerEmail: model.properties.checkoutPreference.payer.email, callback: { [weak self] (discount) in
             guard let strongSelf = self else {
                 return
             }
 
-            // TODO: SET DISCOUNT WITH CAMPAIGN
-            // strongSelf.viewModel.paymentData.discount = discount
+            strongSelf.attemptToApplyDiscount(discount: discount)
             strongSelf.executeNextStep()
 
             }, failure: { [weak self] _ in
@@ -56,6 +56,36 @@ extension InitFlow {
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
+    }
+
+    func getCampaigns() {
+        model.getService().getCampaigns(callback: { [weak self] (pxCampaigns) in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.model.properties.campaigns = pxCampaigns
+            strongSelf.executeNextStep()
+
+            }, failure: { [weak self] _ in
+                guard let strongSelf = self else {
+                    return
+                }
+                let customError = InitFlowError(errorStep: .SERVICE_GET_CAMPAIGNS, shouldRetry: true)
+                strongSelf.model.setError(error: customError)
+                strongSelf.executeNextStep()
+        })
+    }
+
+    func attemptToApplyDiscount(discount: PXDiscount?) {
+        if let discount = discount, let campaigns = model.properties.campaigns {
+            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
+                return campaign.id.stringValue == discount.id
+            }
+            if let firstFilteredCampaign = filteredCampaigns.first {
+                model.properties.paymentData.setDiscount(discount, withCampaign: firstFilteredCampaign)
+            }
+        }
     }
 
     func initPaymentMethodPlugins() {
@@ -73,8 +103,7 @@ extension InitFlow {
                 self.executeNextStep()
             }
         } else {
-            // TODO-JUAN: Ver que hacer con el copyViewModelAndAssignToCheckoutStore
-            // _ = self.viewModel.copyViewModelAndAssignToCheckoutStore()
+            model.populateCheckoutStore()
             let plugin = plugins[index]
             plugin.initPaymentMethodPlugin(PXCheckoutStore.sharedInstance, { [weak self] _ in
                 self?.initPlugin(plugins: plugins, index: index - 1)

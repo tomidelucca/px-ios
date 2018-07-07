@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServices
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
 
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool)
 
@@ -23,6 +23,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
         case ERROR = "Error"
         case SERVICE_GET_PREFERENCE = "Obtener datos de preferencia"
         case ACTION_VALIDATE_PREFERENCE = "Validación de preferencia"
+        case SERVICE_GET_CAMPAIGNS = "Obtener campaigns"
         case SERVICE_GET_DIRECT_DISCOUNT = "Obtener discount"
         case SERVICE_GET_PAYMENT_METHODS = "Obtener payment methods"
         case SERVICE_PAYMENT_METHOD_PLUGIN_INIT = "Init de plugins"
@@ -41,7 +42,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign)
+            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign, chargeRules: self.properties.chargeRules)
         }
     }
 
@@ -113,6 +114,11 @@ extension InitFlowModel {
     func getPaymentMethodSearch() -> PaymentMethodSearch? {
         return properties.paymentMethodSearchResult
     }
+
+    func populateCheckoutStore() {
+        PXCheckoutStore.sharedInstance.paymentData = self.properties.paymentData
+        PXCheckoutStore.sharedInstance.checkoutPreference = self.properties.checkoutPreference
+    }
 }
 
 // MARK: nextStep - State machine
@@ -136,6 +142,10 @@ extension InitFlowModel {
         if needValidatePreference() {
             preferenceValidated = true
             return .ACTION_VALIDATE_PREFERENCE
+        }
+
+        if needToSearchCampaign() {
+            return .SERVICE_GET_CAMPAIGNS
         }
 
         if needToInitPaymentMethodPlugins() {
@@ -162,7 +172,11 @@ extension InitFlowModel {
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return isDiscountEnabled() && !properties.directDiscountSearchStatus && properties.paymentData.discount == nil && properties.paymentResult == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil)
+        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && isDiscountEnabled() && !properties.directDiscountSearchStatus && properties.paymentData.discount == nil && properties.paymentResult == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
+    }
+
+    func needToSearchCampaign() -> Bool {
+        return isDiscountEnabled() && !properties.directDiscountSearchStatus && properties.paymentResult == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
     }
 
     private func needValidatePreference() -> Bool {
@@ -186,5 +200,18 @@ extension InitFlowModel {
 
     private func hasError() -> Bool {
         return flowError != nil
+    }
+
+    private func filterCampaignsByCodeType(campaigns: [PXCampaign]?, _ codeType: String) -> [PXCampaign]? {
+        if let campaigns = campaigns {
+            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
+                return campaign.codeType == codeType
+            }
+            if filteredCampaigns.isEmpty {
+                return nil
+            }
+            return filteredCampaigns
+        }
+        return nil
     }
 }

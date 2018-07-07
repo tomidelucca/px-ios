@@ -56,7 +56,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules)
         }
     }
     var checkoutPreference: CheckoutPreference!
@@ -85,7 +85,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var payment: Payment?
     var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
-
+    
     open var payerCosts: [PayerCost]?
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
@@ -110,6 +110,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Payment plugin
     var paymentPlugin: PXPaymentPluginComponent?
+
+    // Discount and charges
+    var chargeRules: [PXPaymentTypeChargeRule]?
+    var campaigns: [PXCampaign]?
 
     // Init Flow
     var initFlow: InitFlow?
@@ -189,7 +193,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func getPluginPaymentMethodToShow() -> [PXPaymentMethodPlugin] {
-        _ = copyViewModelAndAssignToCheckoutStore()
+        populateCheckoutStore()
         return paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
     }
 
@@ -228,7 +232,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             groupName = optionSelected.getId()
         }
 
-        _ = copyViewModelAndAssignToCheckoutStore()
+        populateCheckoutStore()
         let paymentMethodPluginsToShow = paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
 
         // Get payment methods options for tracking in PaymentVault
@@ -567,7 +571,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if totalPaymentMethodsToShow == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
-        } else if totalPaymentMethodsToShow == 1 {
+        } else if totalPaymentMethodsToShow == 1, self.amountHelper.discount == nil {
             autoselectOnlyPaymentMethod()
         }
     }
@@ -665,7 +669,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func entityTypesFinder(inDict: NSDictionary, forKey: String) -> [EntityType]? {
-
         if let siteETsDictionary = inDict.value(forKey: forKey) as? NSDictionary {
             let entityTypesKeys = siteETsDictionary.allKeys
             var entityTypes = [EntityType]()
@@ -742,15 +745,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return false
     }
 
-    func copyViewModelAndAssignToCheckoutStore() -> Bool {
-        // Set a copy of CheckoutVM in HookStore
-        if self.copy() is MercadoPagoCheckoutViewModel {
-            PXCheckoutStore.sharedInstance.paymentData = self.paymentData
-            PXCheckoutStore.sharedInstance.paymentOptionSelected = self.paymentOptionSelected
-            PXCheckoutStore.sharedInstance.checkoutPreference = self.checkoutPreference
-            return true
-        }
-        return false
+    func populateCheckoutStore() {
+        PXCheckoutStore.sharedInstance.paymentData = self.paymentData
+        PXCheckoutStore.sharedInstance.paymentOptionSelected = self.paymentOptionSelected
+        PXCheckoutStore.sharedInstance.checkoutPreference = self.checkoutPreference
     }
 
     func isPreferenceLoaded() -> Bool {
