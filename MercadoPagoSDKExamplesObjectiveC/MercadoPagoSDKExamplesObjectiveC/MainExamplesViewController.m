@@ -392,9 +392,4 @@
     NSLog(@"%@", errorDetail);
 }
 
-// Optional sign
-- (BOOL)shouldShowLazyInitErrors {
-    return NO;
-}
-
 @end

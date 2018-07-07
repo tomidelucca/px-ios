@@ -14,7 +14,6 @@ import MercadoPagoServices
 public protocol PXCheckoutLifecycleProtocol: NSObjectProtocol {
     func lazyInitDidFinish()
     func lazyInitFailure(errorDetail: String)
-    @objc optional func shouldShowLazyInitErrors() -> Bool
 }
 
 @objcMembers

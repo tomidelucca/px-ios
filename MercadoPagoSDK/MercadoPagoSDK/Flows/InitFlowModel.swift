@@ -124,7 +124,6 @@ extension InitFlowModel {
 // MARK: nextStep - State machine
 extension InitFlowModel {
     func nextStep() -> Steps {
-
         if let retryStep = pendingRetryStep {
             pendingRetryStep = nil
             return retryStep

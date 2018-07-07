@@ -38,7 +38,6 @@ final class InitFlow: PXFlow {
 
     func executeNextStep() {
         let nextStep = model.nextStep()
-        print("Step: \(nextStep.rawValue)")
         switch nextStep {
         case .SERVICE_GET_PREFERENCE:
             getCheckoutPreference()
