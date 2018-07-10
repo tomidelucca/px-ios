@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 final class PXOneTapViewModel: PXReviewViewModel {
 

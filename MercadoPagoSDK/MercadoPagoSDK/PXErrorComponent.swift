@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 public class PXErrorComponent: NSObject, PXComponentizable {
     var props: PXErrorProps

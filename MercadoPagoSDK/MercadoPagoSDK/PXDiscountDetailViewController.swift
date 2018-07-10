@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 final class PXDiscountDetailViewController: MercadoPagoUIViewController {
 
