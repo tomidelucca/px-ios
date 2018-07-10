@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UIKit.UIGestureRecognizerSubclass
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
 
@@ -107,6 +108,14 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         view.layoutIfNeeded()
     }
 
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y <= 32 {
+            UIView.animate(withDuration: 0.25, animations: {
+                targetContentOffset.pointee.y = 32
+            })
+        }
+    }
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         handleNavigationBarEffect(scrollView)
         elasticHeader.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: -scrollView.contentOffset.y)
@@ -143,5 +152,15 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
 
     func isNavBarHidden() -> Bool {
         return navigationTitleStatusStep >= 2
+    }
+}
+
+extension PXComponentContainerViewController {
+    func animateContentView() {
+        contentView.pxSpruce.animate(PXSpruce.PXDefaultAnimation.appearAnimation, sortFunction: PXSpruce.PXDefaultAnimation.appearSortFunction)
+    }
+
+    func prepareForAnimation() {
+        contentView.pxSpruce.prepare(with: PXSpruce.PXDefaultAnimation.appearAnimation)
     }
 }

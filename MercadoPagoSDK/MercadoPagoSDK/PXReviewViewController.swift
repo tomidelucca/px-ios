@@ -53,12 +53,12 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         self.checkFloatingButtonVisibility()
-        self.navigationController?.navigationBar.layer.zPosition = 0
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         unsubscribeFromNotifications()
+        self.navigationController?.navigationBar.layer.zPosition = 0
     }
 
     override func trackInfo() {
@@ -246,12 +246,9 @@ extension PXReviewViewController {
     }
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
-        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.confirmPayment()
-            strongSelf.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: strongSelf.timeOutPayButton)
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: {
+            self.confirmPayment()
+            self.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
@@ -262,12 +259,9 @@ extension PXReviewViewController {
 
     fileprivate func getFooterView() -> UIView {
 
-        let payAction = PXComponentAction(label: "Pagar".localized) { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.confirmPayment()
-            strongSelf.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: strongSelf.timeOutPayButton)
+        let payAction = PXComponentAction(label: "Pagar".localized) {
+            self.confirmPayment()
+            self.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
         }
         let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
         let footerComponent = PXFooterComponent(props: footerProps)
@@ -303,7 +297,12 @@ extension PXReviewViewController {
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
-        self.checkFloatingButtonVisibility()
+
+        let loadinngButtonAnimated = loadingButtonComponent?.isAnimated() ?? false
+        let loadinngFloatingButtonAnimated = loadingFloatingButtonComponent?.isAnimated() ?? false
+        if !loadinngButtonAnimated && !loadinngFloatingButtonAnimated {
+            self.checkFloatingButtonVisibility()
+        }
     }
 
     func checkFloatingButtonVisibility() {
@@ -321,10 +320,12 @@ extension PXReviewViewController {
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func confirmPayment() {
+        // Fix navigation controller with expand navigation
         self.navigationController?.navigationBar.layer.zPosition = -1
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         self.viewModel.trackConfirmActionEvent()
+
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
@@ -332,13 +333,6 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
     func resetButton() {
         loadingFloatingButtonComponent?.shake()
         loadingButtonComponent?.shake()
-//        loadingButtonComponent?.resetButton()
-//        loadingFloatingButtonComponent?.resetButton()
-//        displayBackButton()
-//        scrollView.isScrollEnabled = true
-//        view.isUserInteractionEnabled = true
-//        PXComponentFactory.SnackBar.showLongDurationMessage(message: "Hubo un error")
-//        renderViews()
     }
 
     func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
@@ -352,10 +346,14 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 @available(iOS 9.0, *)
 extension PXReviewViewController: PXAnimatedButtonDelegate {
     func shakeDidFinish() {
+        self.navigationController?.navigationBar.layer.zPosition = 0
         displayBackButton()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
-        renderViews()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+            self.loadingFloatingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+        })
     }
 
     func expandAnimationInProgress() {
