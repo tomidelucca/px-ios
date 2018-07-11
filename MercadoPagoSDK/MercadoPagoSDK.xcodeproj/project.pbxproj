@@ -963,7 +963,6 @@
 		235A3278204D6F92002D1F54 /* PXTermsAndConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTermsAndConditionView.swift; sourceTree = "<group>"; };
 		236251CB1EF2D518005589AB /* PaymentResultTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultTest.swift; sourceTree = "<group>"; };
 		23675B5420A073E7008C4E1D /* PXComponentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentFactory.swift; sourceTree = "<group>"; };
-		2372588120AE600E00F46ED6 /* PXSmallSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSmallSummaryView.swift; sourceTree = "<group>"; };
 		2389DE1720F4D99A0053AF76 /* PXDefaultFullViewAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXDefaultFullViewAnimations.swift; sourceTree = "<group>"; };
 		2389DE1820F4D99A0053AF76 /* PXSpruce+UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PXSpruce+UIView+.swift"; sourceTree = "<group>"; };
 		2389DE1920F4D99A0053AF76 /* PXFullViewAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXFullViewAnimation.swift; sourceTree = "<group>"; };
@@ -1829,23 +1828,6 @@
 				FC511EAC20BCD2B8006F098C /* PXDiscountTermsAndConditionView.swift */,
 			);
 			name = TermsAndConditions;
-			sourceTree = "<group>";
-		};
-		23625A3520AB059B0069AE30 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				4B08AC9320AC9A4C008AF845 /* Item */,
-				23625A3220AB05550069AE30 /* PXOneTapViewModel.swift */,
-				23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */,
-				231EB53020ABBAD20022D8DF /* PXOneTapViewModel+PaymentMethodComponent.swift */,
-				23625A3620AB06380069AE30 /* PXOneTapViewController.swift */,
-				23C3893B20AC4574001EFDA9 /* PXOneTapPaymentMethodView.swift */,
-				4B08AC9020AC989C008AF845 /* PXOneTapViewModel+ItemComponent.swift */,
-				23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */,
-				23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */,
-				2351EEEB20AD9CA400741028 /* Components */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		2389DE1520F4D99A0053AF76 /* PXSpruce */ = {
@@ -3269,7 +3251,6 @@
 				15D79A071CA986E300623A84 /* MPTextField.swift in Sources */,
 				0F9883991AD2AB6000F750F0 /* TransactionDetails.swift in Sources */,
 				2389DE3220F4D99A0053AF76 /* PXLinearSortFunction.swift in Sources */,
-				2372588220AE600E00F46ED6 /* PXSmallSummaryView.swift in Sources */,
 				81ACC8211F9A88F700206F7B /* PXHeaderComponent.swift in Sources */,
 				15AE1D9D1F60763400B0DAF8 /* Summary.swift in Sources */,
 				15AE1D9A1F6073AB00B0DAF8 /* SummaryDetail.swift in Sources */,
@@ -3314,7 +3295,6 @@
 				4B1EE15F20D0145F00560838 /* PXAnimatedButton.swift in Sources */,
 				4BE805BC20AB563C001F5C0F /* PXFlow.swift in Sources */,
 				812BA9BE1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift in Sources */,
-				23AC323F20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift in Sources */,
 				2389DE3320F4D99A0053AF76 /* PXViewOperations.swift in Sources */,
 				23ECADC51EF1C7CC003E4539 /* ApiUtil.swift in Sources */,
 				7656CA1D1C7646600043BDB2 /* InstructionAction.swift in Sources */,
@@ -3388,13 +3368,11 @@
 				FCBA43CF20A5D6FE0049A503 /* PXBankDealComponentView.swift in Sources */,
 				0F9883571AD2AB6000F750F0 /* Address.swift in Sources */,
 				2389DE3C20F4D99A0053AF76 /* PXSpruce.swift in Sources */,
-				23625A3320AB05550069AE30 /* PXOneTapViewModel.swift in Sources */,
 				766012E71CEBA19700897F9D /* ErrorViewController.swift in Sources */,
 				FCBF134E1E7208900092B756 /* EntityType.swift in Sources */,
 				76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
 				15EEE1D91D89D477004D3A19 /* CardFormViewModel.swift in Sources */,
 				2389DE3120F4D99A0053AF76 /* PXDefaultSortFunction.swift in Sources */,
-				2351EEED20AD9CC100741028 /* PXSummaryRowComponent.swift in Sources */,
 				0F9883B51AD2AD0C00F750F0 /* Regex.swift in Sources */,
 				0F98837F1AD2AB6000F750F0 /* MerchantPayment.swift in Sources */,
 				811B4FD2201F87A40060026A /* PXMonospaceLabel.swift in Sources */,

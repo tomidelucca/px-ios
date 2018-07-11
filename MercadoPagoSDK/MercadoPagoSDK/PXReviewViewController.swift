@@ -28,8 +28,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     var callbackConfirm: ((PaymentData) -> Void)
     var finishButtonAnimation: (() -> Void)
 
-    var loadingButtonComponent: PXAnimatedButton?
-    var loadingFloatingButtonComponent: PXAnimatedButton?
+    weak var loadingButtonComponent: PXAnimatedButton?
+    weak var loadingFloatingButtonComponent: PXAnimatedButton?
     let timeOutPayButton: TimeInterval
 
     // MARK: Lifecycle - Publics
@@ -58,7 +58,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromNotifications()
-        self.navigationController?.navigationBar.layer.zPosition = 0
+        showNavBarForAnimation()
     }
 
     override func trackInfo() {
@@ -249,10 +249,10 @@ extension PXReviewViewController {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: {
             self.confirmPayment()
             self.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
+            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingFloatingButtonComponent)
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
-        subscribeLoadingButtonToNotifications(loadingButton: loadingFloatingButtonComponent)
 
         return containedButtonView
     }
@@ -262,12 +262,12 @@ extension PXReviewViewController {
         let payAction = PXComponentAction(label: "Pagar".localized) {
             self.confirmPayment()
             self.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
+            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
         }
         let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
         let footerComponent = PXFooterComponent(props: footerProps)
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton
-        subscribeLoadingButtonToNotifications(loadingButton: loadingButtonComponent)
             return footerView
     }
 
@@ -297,7 +297,6 @@ extension PXReviewViewController {
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
-
         let loadinngButtonAnimated = loadingButtonComponent?.isAnimated() ?? false
         let loadinngFloatingButtonAnimated = loadingFloatingButtonComponent?.isAnimated() ?? false
         if !loadinngButtonAnimated && !loadinngFloatingButtonAnimated {
@@ -320,12 +319,10 @@ extension PXReviewViewController {
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func confirmPayment() {
-        // Fix navigation controller with expand navigation
-        self.navigationController?.navigationBar.layer.zPosition = -1
+        hideNavBarForAnimation()
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         self.viewModel.trackConfirmActionEvent()
-
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
@@ -346,10 +343,11 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 @available(iOS 9.0, *)
 extension PXReviewViewController: PXAnimatedButtonDelegate {
     func shakeDidFinish() {
-        self.navigationController?.navigationBar.layer.zPosition = 0
+        showNavBarForAnimation()
         displayBackButton()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
+        unsubscribeFromNotifications()
         UIView.animate(withDuration: 0.3, animations: {
             self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
             self.loadingFloatingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
@@ -373,6 +371,14 @@ extension PXReviewViewController: PXAnimatedButtonDelegate {
         loadingFloatingButtonComponent?.resetButton()
         loadingFloatingButtonComponent?.shake()
         loadingButtonComponent?.shake()
+    }
+
+    func hideNavBarForAnimation() {
+        self.navigationController?.navigationBar.layer.zPosition = -1
+    }
+
+    func showNavBarForAnimation() {
+        self.navigationController?.navigationBar.layer.zPosition = 0
     }
 }
 

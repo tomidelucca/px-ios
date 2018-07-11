@@ -32,9 +32,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func startLoading(loadingText: String, retryText: String, timeOut: TimeInterval = 15.0) {
         progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.03, green: 0.33, blue: 0.85, alpha: 1.0), timeOut: timeOut)
         progressView?.progressDelegate = self
-        //isEnabled = false
         setTitle(loadingText, for: .normal)
-        //isUserInteractionEnabled = false
         animated = true
     }
 
