@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 open class PXBodyComponent: NSObject, PXComponentizable {
 

@@ -8,8 +8,8 @@
 
 import Foundation
 import UIKit
-import MercadoPagoPXTracking
-import MercadoPagoServices
+import MercadoPagoPXTrackingV4
+import MercadoPagoServicesV4
 
 open class AdditionalStepViewModel: NSObject {
 

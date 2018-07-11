@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@import MercadoPagoPXTracking;
+@import MercadoPagoPXTrackingV4;
 
 @interface MLMyMPPXTrackListener : NSObject <MPTrackListener>
 @end

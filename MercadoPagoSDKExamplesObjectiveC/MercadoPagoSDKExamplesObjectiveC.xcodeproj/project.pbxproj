@@ -571,16 +571,16 @@
 				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
 				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
-				"${BUILT_PRODUCTS_DIR}/MercadoPagoPXTracking/MercadoPagoPXTracking.framework",
-				"${BUILT_PRODUCTS_DIR}/MercadoPagoServices/MercadoPagoServices.framework",
+				"${BUILT_PRODUCTS_DIR}/MercadoPagoPXTrackingV4/MercadoPagoPXTrackingV4.framework",
+				"${BUILT_PRODUCTS_DIR}/MercadoPagoServicesV4/MercadoPagoServicesV4.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoPXTracking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoServices.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoPXTrackingV4.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoServicesV4.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

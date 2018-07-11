@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 @objcMembers public class PaymentData: NSObject, NSCopying {
 
