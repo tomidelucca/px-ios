@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'ESC' do |esc| 
-    esc.dependency 'MercadoPagoSDK/Default'  
+    esc.dependency 'MercadoPagoSDKV4/Default'  
     esc.dependency 'MLESCManager', '1.0.2' 
     esc.pod_target_xcconfig = { 
        'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE', 
