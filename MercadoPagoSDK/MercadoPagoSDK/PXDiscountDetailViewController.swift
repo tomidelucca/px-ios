@@ -75,21 +75,21 @@ extension PXDiscountDetailViewController {
         }
 
         if let title = getTitle() {
-            buildAndAddLabel(to: self.contentView, margin: PXLayout.M_MARGIN, with: title, height: 20)
+            buildAndAddLabel(to: self.contentView, margin: PXLayout.M_MARGIN, with: title, height: 20, accessibilityIdentifier: "discount_detail_title_label")
         }
 
         if let disclaimer = getDisclaimer() {
-            buildAndAddLabel(to: self.contentView, margin: PXLayout.XXXS_MARGIN, with: disclaimer, height: 19)
+            buildAndAddLabel(to: self.contentView, margin: PXLayout.XXXS_MARGIN, with: disclaimer, height: 19, accessibilityIdentifier: "discount_detail_disclaimer_label")
         }
 
         if let description = getDescription() {
-            buildAndAddLabel(to: self.contentView, margin: PXLayout.XXS_MARGIN, with: description, height: 34)
+            buildAndAddLabel(to: self.contentView, margin: PXLayout.XXS_MARGIN, with: description, height: 34, accessibilityIdentifier: "discount_detail_description_label")
         }
 
         buildSeparatorLine(in: self.contentView, topMargin: PXLayout.M_MARGIN, sideMargin: PXLayout.M_MARGIN, height: 1)
 
         if let footerMessage = getFooterMessage() {
-            buildAndAddLabel(to: self.contentView, margin: PXLayout.S_MARGIN, with: footerMessage)
+            buildAndAddLabel(to: self.contentView, margin: PXLayout.S_MARGIN, with: footerMessage, accessibilityIdentifier: "discount_detail_footer_label")
         }
 
         self.contentView.pinLastSubviewToBottom(withMargin: PXLayout.M_MARGIN)?.isActive = true
@@ -100,11 +100,12 @@ extension PXDiscountDetailViewController {
         PXLayout.centerVertically(view: contentView).isActive = true
     }
 
-    func buildAndAddLabel(to view: PXComponentView, margin: CGFloat, with text: NSAttributedString, height: CGFloat? = nil) {
+    func buildAndAddLabel(to view: PXComponentView, margin: CGFloat, with text: NSAttributedString, height: CGFloat? = nil, accessibilityIdentifier: String) {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.attributedText = text
+        label.accessibilityIdentifier = accessibilityIdentifier
         view.addSubviewToBottom(label, withMargin: margin)
         if let height = height {
             PXLayout.setHeight(owner: label, height: height).isActive = true

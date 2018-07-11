@@ -25,6 +25,7 @@ final class PXTotalRowRenderer {
         totalRowView.layer.shadowColor = UIColor.black.cgColor
         totalRowView.layer.shadowRadius = 4
         totalRowView.layer.shadowOpacity = 0.25
+        totalRowView.accessibilityIdentifier = "total_floating_row"
 
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,6 +38,7 @@ final class PXTotalRowRenderer {
 
         if totalRowComponent.props.showChevron {
             let chevronImageView = UIImageView()
+            chevronImageView.accessibilityIdentifier = "floating_row_chevron_image_view"
             chevronImageView.translatesAutoresizingMaskIntoConstraints = false
             let image = MercadoPago.getImage("oneTapArrow")
             chevronImageView.image = image
@@ -51,6 +53,7 @@ final class PXTotalRowRenderer {
 
         if let title = totalRowComponent.props.title {
             let titleLabel = buildLabelWith(title)
+            titleLabel.accessibilityIdentifier = "floating_row_title_label"
             titleLabel.numberOfLines = 2
             totalRowView.titleLabel = titleLabel
             contentView.addSubview(titleLabel)
@@ -59,6 +62,7 @@ final class PXTotalRowRenderer {
 
         if let disclaimer = totalRowComponent.props.disclaimer {
             let disclaimerLabel = buildLabelWith(disclaimer)
+            disclaimerLabel.accessibilityIdentifier = "floating_row_disclaimer_label"
             disclaimerLabel.numberOfLines = 1
             totalRowView.disclaimerLabel = disclaimerLabel
             contentView.addSubview(disclaimerLabel)
@@ -68,13 +72,16 @@ final class PXTotalRowRenderer {
 
         if let mainValue = totalRowComponent.props.mainValue {
             let mainValueLabel = buildValueLabelIn(view: totalRowView, value: mainValue, height: PRIMARY_VALUE_HEIGHT)
+            mainValueLabel.accessibilityIdentifier = "floating_row_main_value_label"
             totalRowView.mainValueLabel = mainValueLabel
             let requiredWidth = mainValue.widthWithConstrainedHeight(height: PRIMARY_VALUE_HEIGHT)
             PXLayout.setWidth(owner: mainValueLabel, width: requiredWidth + PXLayout.XXS_MARGIN).isActive = true
         }
 
         if let secondaryValue = totalRowComponent.props.secondaryValue {
-            totalRowView.secondaryValueLabel = buildValueLabelIn(view: totalRowView, value: secondaryValue, height: SECONDARY_HEIGHT)
+            let secondaryValueLabel = buildValueLabelIn(view: totalRowView, value: secondaryValue, height: SECONDARY_HEIGHT)
+            secondaryValueLabel.accessibilityIdentifier = "floating_row_secondary_value_label"
+            totalRowView.secondaryValueLabel = secondaryValueLabel
         }
 
         PXLayout.setHeight(owner: totalRowView, height: ROW_HEIGHT).isActive = true
