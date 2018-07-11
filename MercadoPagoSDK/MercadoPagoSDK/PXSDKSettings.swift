@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import MercadoPagoServices
-import MercadoPagoPXTracking
+import MercadoPagoServicesV4
+import MercadoPagoPXTrackingV4
 
 @objcMembers open class PXSDKSettings: NSObject {
 

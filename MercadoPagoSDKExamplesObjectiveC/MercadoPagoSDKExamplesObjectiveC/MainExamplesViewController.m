@@ -22,15 +22,10 @@
 #import "MLMyMPPXTrackListener.h"
 
 @import MercadoPagoSDK;
-@import MercadoPagoPXTracking;
-@import MercadoPagoServices;
-
-
-
+@import MercadoPagoPXTrackingV4;
+@import MercadoPagoServicesV4;
 
 @implementation MainExamplesViewController
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];

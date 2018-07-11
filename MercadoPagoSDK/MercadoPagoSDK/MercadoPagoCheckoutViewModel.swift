@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 public enum CheckoutStep: String {
     case START

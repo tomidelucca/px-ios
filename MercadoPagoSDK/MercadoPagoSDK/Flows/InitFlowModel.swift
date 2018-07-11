@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
 
