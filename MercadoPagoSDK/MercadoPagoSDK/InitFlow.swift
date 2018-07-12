@@ -23,6 +23,14 @@ final class InitFlow: PXFlow {
         model = InitFlowModel(flowProperties: flowProperties)
     }
 
+    func updateModel(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin]?) {
+        var pmPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
+        if let targetPlugins = paymentMethodPlugins {
+            pmPlugins = targetPlugins
+        }
+        model.update(paymentPlugin: paymentPlugin, paymentMethodPlugins: pmPlugins)
+    }
+
     deinit {
         #if DEBUG
             print("DEINIT FLOW - \(self)")

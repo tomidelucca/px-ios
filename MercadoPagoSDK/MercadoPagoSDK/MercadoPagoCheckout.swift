@@ -116,8 +116,9 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func setPaymentMethodPlugins(plugins: [PXPaymentMethodPlugin]) {
-        self.viewModel.paymentMethodPlugins = plugins
-        self.viewModel.paymentMethodPluginsToShow = plugins
+        viewModel.paymentMethodPlugins = plugins
+        viewModel.paymentMethodPluginsToShow = plugins
+        viewModel.updateInitFlow()
     }
 
     public func getPXCheckoutStore() -> PXCheckoutStore {
@@ -126,7 +127,8 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func setPaymentPlugin(paymentPlugin: PXPaymentPluginComponent) {
-        self.viewModel.paymentPlugin = paymentPlugin
+        viewModel.paymentPlugin = paymentPlugin
+        viewModel.updateInitFlow()
     }
 
     public func resume() {

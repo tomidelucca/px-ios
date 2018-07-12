@@ -50,6 +50,11 @@ final class InitFlowModel: NSObject, PXFlowModel {
         self.properties = flowProperties
         super.init()
     }
+
+    func update(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin]) {
+        properties.paymentPlugin = paymentPlugin
+        properties.paymentMethodPlugins = paymentMethodPlugins
+    }
 }
 
 // MARK: Public methods
