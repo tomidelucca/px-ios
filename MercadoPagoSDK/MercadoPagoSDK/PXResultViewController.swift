@@ -48,7 +48,8 @@ class PXResultViewController: PXComponentContainerViewController {
             super.prepareForAnimation()
             super.animateContentView()
         }
-        contentView.backgroundColor = viewModel.primaryResultColor()
+
+        //contentView.backgroundColor = viewModel.primaryResultColor()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,7 +72,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Receipt
         self.receiptView = self.buildReceiptView()
         if let receiptView = self.receiptView {
-            receiptView.addSeparatorLineToBottom(height: 1)
+//            receiptView.addSeparatorLineToBottom(height: 1)
             contentView.addSubviewToBottom(receiptView)
             PXLayout.matchWidth(ofView: receiptView).isActive = true
             self.view.layoutIfNeeded()

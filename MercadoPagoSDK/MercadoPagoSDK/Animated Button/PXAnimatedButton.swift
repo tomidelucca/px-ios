@@ -19,12 +19,19 @@ protocol PXAnimatedButtonDelegate: NSObjectProtocol {
 internal class PXAnimatedButton: UIButton {
     weak var animationDelegate: PXAnimatedButtonDelegate?
     var progressView: ProgressView?
-    var animated: Bool = false
+    var status: Status = .normal
 
     enum FinishStyle: Int {
         case warning
         case success
         case error
+    }
+
+    enum Status {
+        case normal
+        case loading
+        case expanding
+        case shaking
     }
 }
 
@@ -33,26 +40,23 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.03, green: 0.33, blue: 0.85, alpha: 1.0), timeOut: timeOut)
         progressView?.progressDelegate = self
         setTitle(loadingText, for: .normal)
-        animated = true
+        status = .loading
     }
 
     func finishAnimatingButton(style: FinishStyle) {
-        animated = true
+        status = .expanding
         let color: UIColor = getColor(style: style)
         let image = getImage(style: style)
 
-        let newFrame = CGRect(x: self.frame.midX - self.frame.height/2, y: self.frame.midY - self.frame.height/2, width: self.frame.height, height: self.frame.height)
-
-        var expandAnimationNotified = false
+        let newFrame = CGRect(x: self.frame.midX - self.frame.height / 2, y: self.frame.midY - self.frame.height / 2, width: self.frame.height, height: self.frame.height)
 
         progressView?.doComplete(completion: { success in
 
             UIView.animate(withDuration: 0.5,
                            animations: {
-                            //self.isUserInteractionEnabled = false
                             self.setTitle("", for: .normal)
                             self.frame = newFrame
-                            self.layer.cornerRadius = self.frame.height/2
+                            self.layer.cornerRadius = self.frame.height / 2
             },
                            completion: { _ in
 
@@ -62,13 +66,13 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                             }, completion: { _ in
 
                                 let scaleFactor: CGFloat = 0.40
-                                let successImage = UIImageView(frame: CGRect(x: newFrame.width/2 - (newFrame.width*scaleFactor)/2, y: newFrame.width/2 - (newFrame.width*scaleFactor)/2, width: newFrame.width*scaleFactor, height: newFrame.height*scaleFactor))
+                                let iconImage = UIImageView(frame: CGRect(x: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, y: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, width: newFrame.width * scaleFactor, height: newFrame.height * scaleFactor))
 
-                                successImage.image = image
-                                successImage.contentMode = .scaleAspectFit
-                                successImage.alpha = 0
+                                iconImage.image = image
+                                iconImage.contentMode = .scaleAspectFit
+                                iconImage.alpha = 0
 
-                                self.addSubview(successImage)
+                                self.addSubview(iconImage)
 
                                 // Ver que hacer en los otros casos
                                 if style == .success {
@@ -83,21 +87,18 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                                 }
 
                                 UIView.animate(withDuration: 0.6, animations: {
-                                    successImage.alpha = 1
-                                    successImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                                    iconImage.alpha = 1
+                                    iconImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                                 }) { _ in
 
                                     UIView.animate(withDuration: 0.4, animations: {
-                                        successImage.alpha = 0
+                                        iconImage.alpha = 0
                                     }, completion: { _ in
 
                                         self.superview?.layer.masksToBounds = false
+                                        self.animationDelegate?.expandAnimationInProgress()
                                         UIView.animate(withDuration: 0.5, animations: {
                                             self.transform = CGAffineTransform(scaleX: 50, y: 50)
-                                            if !expandAnimationNotified {
-                                                expandAnimationNotified = true
-                                                self.animationDelegate?.expandAnimationInProgress()
-                                            }
                                         }, completion: { _ in
                                             self.animationDelegate?.didFinishAnimation()
                                         })
@@ -122,14 +123,12 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
     func didFinishProgress() {
         progressView?.doReset()
-        animated = false
-        //  animationDelegate?.didFinishAnimation()
     }
 
     func shake() {
-        animated = false
+        status = .shaking
         resetButton()
-        setTitle("Reintentar", for: .normal)
+        setTitle("Reintentar".localized, for: .normal)
         UIView.animate(withDuration: 0.1, animations: {
             self.backgroundColor = ThemeManager.shared.rejectedColor()
         }, completion: { _ in
@@ -143,6 +142,10 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
             CATransaction.setCompletionBlock {
                 self.isUserInteractionEnabled = true
                 self.animationDelegate?.shakeDidFinish()
+                self.status = .normal
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.backgroundColor = ThemeManager.shared.getAccentColor()
+                })
             }
             self.layer.add(animation, forKey: "position")
 
@@ -153,17 +156,15 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func progressTimeOut() {
         progressView?.doReset()
         animationDelegate?.progressButtonAnimationTimeOut()
-        animated = false
     }
 
     func resetButton() {
         progressView?.stopTimer()
         progressView?.doReset()
-        animated = false
     }
 
     func isAnimated() -> Bool {
-        return animated
+        return status != .normal
     }
 }
 

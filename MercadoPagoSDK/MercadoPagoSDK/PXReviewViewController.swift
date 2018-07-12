@@ -319,7 +319,6 @@ extension PXReviewViewController {
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func confirmPayment() {
-        hideNavBarForAnimation()
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         self.viewModel.trackConfirmActionEvent()
@@ -359,6 +358,8 @@ extension PXReviewViewController: PXAnimatedButtonDelegate {
             UIView.animate(withDuration: 0.3, animations: {
                 self.navigationController?.isNavigationBarHidden = true
             })
+        } else {
+            hideNavBarForAnimation()
         }
     }
 
