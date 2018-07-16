@@ -12,6 +12,7 @@ final class PXTotalRowRenderer {
 
     let CHEVRON_WIDTH: CGFloat = 12
     let ROW_HEIGHT: CGFloat = 70 + PXLayout.getSafeAreaBottomInset()
+    let CONTENT_HEIGHT: CGFloat = 70
     let PRIMARY_VALUE_HEIGHT: CGFloat = 20
     let TITLE_HEIGHT: CGFloat = 40
     let SECONDARY_HEIGHT: CGFloat = 14
@@ -24,15 +25,26 @@ final class PXTotalRowRenderer {
         totalRowView.layer.shadowColor = UIColor.black.cgColor
         totalRowView.layer.shadowRadius = 4
         totalRowView.layer.shadowOpacity = 0.25
+        totalRowView.accessibilityIdentifier = "total_floating_row"
+
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        totalRowView.contentView = contentView
+        totalRowView.addSubview(contentView)
+        PXLayout.setHeight(owner: contentView, height: CONTENT_HEIGHT).isActive = true
+        PXLayout.matchWidth(ofView: contentView).isActive = true
+        PXLayout.centerHorizontally(view: contentView).isActive = true
+        PXLayout.pinTop(view: contentView).isActive = true
 
         if totalRowComponent.props.showChevron {
             let chevronImageView = UIImageView()
+            chevronImageView.accessibilityIdentifier = "floating_row_chevron_image_view"
             chevronImageView.translatesAutoresizingMaskIntoConstraints = false
             let image = MercadoPago.getImage("oneTapArrow")
             chevronImageView.image = image
             chevronImageView.contentMode = .scaleAspectFit
             totalRowView.chevron = chevronImageView
-            totalRowView.addSubview(chevronImageView)
+            contentView.addSubview(chevronImageView)
             PXLayout.setWidth(owner: chevronImageView, width: CHEVRON_WIDTH).isActive = true
             PXLayout.setHeight(owner: chevronImageView, height: CHEVRON_WIDTH).isActive = true
             PXLayout.centerVertically(view: chevronImageView).isActive = true
@@ -41,30 +53,35 @@ final class PXTotalRowRenderer {
 
         if let title = totalRowComponent.props.title {
             let titleLabel = buildLabelWith(title)
+            titleLabel.accessibilityIdentifier = "floating_row_title_label"
             titleLabel.numberOfLines = 2
             totalRowView.titleLabel = titleLabel
-            totalRowView.addSubview(titleLabel)
+            contentView.addSubview(titleLabel)
             PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
         }
 
         if let disclaimer = totalRowComponent.props.disclaimer {
             let disclaimerLabel = buildLabelWith(disclaimer)
+            disclaimerLabel.accessibilityIdentifier = "floating_row_disclaimer_label"
             disclaimerLabel.numberOfLines = 1
             totalRowView.disclaimerLabel = disclaimerLabel
-            totalRowView.addSubview(disclaimerLabel)
+            contentView.addSubview(disclaimerLabel)
             PXLayout.pinLeft(view: disclaimerLabel, withMargin: PXLayout.S_MARGIN).isActive = true
             PXLayout.setHeight(owner: disclaimerLabel, height: SECONDARY_HEIGHT).isActive = true
         }
 
         if let mainValue = totalRowComponent.props.mainValue {
             let mainValueLabel = buildValueLabelIn(view: totalRowView, value: mainValue, height: PRIMARY_VALUE_HEIGHT)
+            mainValueLabel.accessibilityIdentifier = "floating_row_main_value_label"
             totalRowView.mainValueLabel = mainValueLabel
             let requiredWidth = mainValue.widthWithConstrainedHeight(height: PRIMARY_VALUE_HEIGHT)
             PXLayout.setWidth(owner: mainValueLabel, width: requiredWidth + PXLayout.XXS_MARGIN).isActive = true
         }
 
         if let secondaryValue = totalRowComponent.props.secondaryValue {
-            totalRowView.secondaryValueLabel = buildValueLabelIn(view: totalRowView, value: secondaryValue, height: SECONDARY_HEIGHT)
+            let secondaryValueLabel = buildValueLabelIn(view: totalRowView, value: secondaryValue, height: SECONDARY_HEIGHT)
+            secondaryValueLabel.accessibilityIdentifier = "floating_row_secondary_value_label"
+            totalRowView.secondaryValueLabel = secondaryValueLabel
         }
 
         PXLayout.setHeight(owner: totalRowView, height: ROW_HEIGHT).isActive = true
@@ -80,7 +97,7 @@ final class PXTotalRowRenderer {
             PXLayout.put(view: disclaimer, onBottomOf: title, withMargin: PXLayout.XXXS_MARGIN).isActive = true
             PXLayout.pinBottom(view: disclaimer, withMargin: PXLayout.S_MARGIN).isActive = true
         } else if let title = view.titleLabel, view.disclaimerLabel == nil {
-            PXLayout.setHeight(owner: title, height: TITLE_HEIGHT*2).isActive = true
+            PXLayout.setHeight(owner: title, height: TITLE_HEIGHT).isActive = true
             PXLayout.centerVertically(view: title).isActive = true
         } else if let disclaimer = view.disclaimerLabel, view.titleLabel == nil {
             PXLayout.centerVertically(view: disclaimer).isActive = true
@@ -111,7 +128,7 @@ final class PXTotalRowRenderer {
     func buildValueLabelIn(view: PXTotalRowView, value: NSAttributedString, height: CGFloat) -> UILabel {
         let valueLabel = buildLabelWith(value)
         valueLabel.numberOfLines = 1
-        view.addSubview(valueLabel)
+        view.contentView?.addSubview(valueLabel)
         if let chevron = view.chevron {
             PXLayout.put(view: valueLabel, leftOf: chevron, withMargin: PXLayout.XS_MARGIN).isActive = true
         } else {

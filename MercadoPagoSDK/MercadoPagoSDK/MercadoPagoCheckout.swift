@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
-import MercadoPagoServices
+import MercadoPagoPXTrackingV4
+import MercadoPagoServicesV4
 
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
@@ -241,11 +241,9 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     private func shouldApplyDiscount() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), self.viewModel.paymentPlugin != nil {
-            return true
-        }
-        return false
+        return self.viewModel.paymentPlugin != nil
     }
+    
     private func removeDiscount() {
         self.viewModel.clearDiscount()
     }

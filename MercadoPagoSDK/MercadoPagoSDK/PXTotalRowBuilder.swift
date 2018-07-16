@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 final class PXTotalRowBuilder: PXTotalRowComponent {
 
@@ -19,7 +19,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         var secondaryValue: NSAttributedString?
 
         //////////////// TITLE ////////////////
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = amountHelper.discount {
+        if let discount = amountHelper.discount {
 
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
@@ -85,14 +85,14 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
     }
 
     static func shouldAddActionToRow(amountHelper: PXAmountHelper) -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
+        if amountHelper.discount != nil {
             return true
         }
         return false
     }
 
     static func handleTap(amountHelper: PXAmountHelper, discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping ()->Void, @escaping ()->Void) -> Void) {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
+        if amountHelper.discount != nil {
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
         } else if let currentCheckout = MercadoPagoCheckout.currentCheckout, currentCheckout.viewModel.shouldShowDiscountInput() {
             let inputVC = PXDiscountCodeInputViewController(discountValidationCallback: discountValidationCallback) {

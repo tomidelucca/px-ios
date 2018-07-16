@@ -14,4 +14,5 @@ class PXTotalRowView: PXComponentView {
     var mainValueLabel: UILabel?
     var secondaryValueLabel: UILabel?
     var chevron: UIImageView?
+    var contentView: UIView?
 }

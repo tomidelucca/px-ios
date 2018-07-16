@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoServices
+import MercadoPagoServicesV4
 import MLUI
 
 final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTitledTextFieldDelegate {
@@ -221,9 +221,4 @@ extension PXDiscountCodeInputViewController {
             })
         }
     }
-
-}
-
-protocol PXDiscountValitable {
-    func discountValidation(discountValidation: @escaping (PXDiscount, PXCampaign) -> Bool)
 }
