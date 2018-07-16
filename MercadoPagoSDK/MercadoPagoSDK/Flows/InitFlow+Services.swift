@@ -24,7 +24,7 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-                let customError = InitFlowError(errorStep: .SERVICE_GET_PREFERENCE, shouldRetry: true)
+                let customError = InitFlowError(errorStep: .SERVICE_GET_PREFERENCE, shouldRetry: true, requestOrigin: .GET_PREFERENCE)
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
@@ -33,7 +33,7 @@ extension InitFlow {
     func validatePreference() {
         let errorMessage = model.properties.checkoutPreference.validate()
         if errorMessage != nil {
-            let customError = InitFlowError(errorStep: .ACTION_VALIDATE_PREFERENCE, shouldRetry: false)
+            let customError = InitFlowError(errorStep: .ACTION_VALIDATE_PREFERENCE, shouldRetry: false, requestOrigin: nil)
             model.setError(error: customError)
         }
         executeNextStep()
@@ -52,7 +52,7 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-                let customError = InitFlowError(errorStep: .SERVICE_GET_DIRECT_DISCOUNT, shouldRetry: true)
+                let customError = InitFlowError(errorStep: .SERVICE_GET_DIRECT_DISCOUNT, shouldRetry: true, requestOrigin: .GET_DIRECT_DISCOUNT)
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
@@ -71,7 +71,7 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-                let customError = InitFlowError(errorStep: .SERVICE_GET_CAMPAIGNS, shouldRetry: true)
+                let customError = InitFlowError(errorStep: .SERVICE_GET_CAMPAIGNS, shouldRetry: true, requestOrigin: .GET_CAMPAIGNS)
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
@@ -135,7 +135,7 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-                let customError = InitFlowError(errorStep: .SERVICE_GET_PAYMENT_METHODS, shouldRetry: true)
+                let customError = InitFlowError(errorStep: .SERVICE_GET_PAYMENT_METHODS, shouldRetry: true, requestOrigin: .PAYMENT_METHOD_SEARCH)
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })

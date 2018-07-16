@@ -14,7 +14,11 @@ extension MercadoPagoCheckout: InitFlowProtocol {
         if initMode == .lazy {
             lifecycleProtocol?.lazyInitFailure(errorDetail: ("Error - \(flowError.errorStep.rawValue)"))
         } else {
-            let customError = MPSDKError(message: "Error", errorDetail: flowError.errorStep.rawValue, retry: flowError.shouldRetry)
+            var errorDetail = ""
+            #if DEBUG
+                errorDetail = flowError.errorStep.rawValue
+            #endif
+            let customError = MPSDKError(message: "Error".localized, errorDetail: errorDetail, retry: flowError.shouldRetry, requestOrigin: flowError.requestOrigin?.rawValue)
             viewModel.errorInputs(error: customError, errorCallback: { [weak self] in
                 if flowError.shouldRetry {
                     if self?.initMode == .normal {

@@ -11,7 +11,7 @@ import MercadoPagoServicesV4
 
 internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?)
 
-internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool)
+internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
     func didFinishInitFlow()
@@ -75,7 +75,7 @@ extension InitFlowModel {
         if let error = flowError {
             return error
         }
-        return InitFlowError(errorStep: .ERROR, shouldRetry: false)
+        return InitFlowError(errorStep: .ERROR, shouldRetry: false, requestOrigin: nil)
     }
 
     func setError(error: InitFlowError) {
