@@ -221,9 +221,4 @@ extension PXDiscountCodeInputViewController {
             })
         }
     }
-
-}
-
-protocol PXDiscountValitable {
-    func discountValidation(discountValidation: @escaping (PXDiscount, PXCampaign) -> Bool)
 }
