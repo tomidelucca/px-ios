@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoServices
+import MercadoPagoServicesV4
 import MLUI
 
 final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTitledTextFieldDelegate {
