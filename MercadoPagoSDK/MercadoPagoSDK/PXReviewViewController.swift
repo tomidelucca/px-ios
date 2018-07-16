@@ -253,6 +253,7 @@ extension PXReviewViewController {
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
+        loadingFloatingButtonComponent?.layer.cornerRadius = 4
 
         return containedButtonView
     }
@@ -268,7 +269,8 @@ extension PXReviewViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton
-            return footerView
+        loadingButtonComponent?.layer.cornerRadius = 4
+        return footerView
     }
 
     fileprivate func getDiscountTermsAndConditionView() -> PXDiscountTermsAndConditionView {
