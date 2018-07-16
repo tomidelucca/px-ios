@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 @objcMembers open class MercadoPagoServicesAdapter: NSObject {
 

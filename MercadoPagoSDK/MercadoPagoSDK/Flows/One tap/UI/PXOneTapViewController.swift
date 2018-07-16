@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Tracking

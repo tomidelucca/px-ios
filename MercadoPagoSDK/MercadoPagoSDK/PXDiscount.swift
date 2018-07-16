@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 internal extension PXDiscount {
     override open var description: String {

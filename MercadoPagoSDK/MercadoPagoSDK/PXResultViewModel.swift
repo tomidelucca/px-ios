@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 public class PXResultViewModel: PXResultViewModelInterface {
 

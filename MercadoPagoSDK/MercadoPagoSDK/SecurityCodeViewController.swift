@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 @objcMembers
 open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
