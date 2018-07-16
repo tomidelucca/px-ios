@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 // MARK: - Metadata/Params
 extension TrackingUtil {

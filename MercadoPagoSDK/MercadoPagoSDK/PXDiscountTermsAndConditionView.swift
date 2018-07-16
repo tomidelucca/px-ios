@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 
@@ -26,7 +26,7 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 
     override func getTyCText() -> NSMutableAttributedString {
         let termsAndConditionsText = "review_discount_terms_and_conditions".localized_beta
-        let highlightedText = "Ver condiciones".localized
+        let highlightedText = "review_discount_terms_and_conditions_link".localized_beta
 
         let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
@@ -50,8 +50,8 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     }
 
     func getTyCURL() -> String {
-        if let discountID = self.amountHelper.discount?.id {
-            return "https://api.mercadolibre.com/campaigns/\(discountID)/terms_and_conditions?format_type=html"
+        if let campaignID = self.amountHelper.campaign?.id {
+            return "https://api.mercadolibre.com/campaigns/\(campaignID)/terms_and_conditions?format_type=html"
         }
         return ""
     }

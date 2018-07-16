@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
-import MercadoPagoServices
+import MercadoPagoPXTrackingV4
+import MercadoPagoServicesV4
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -131,7 +131,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     @objc func updateCoupon(_ notification: Notification) {
         if (notification.userInfo?["coupon"] as? PXDiscount) != nil {
-            self.viewModel.amountHelper = PXAmountHelper(preference: self.viewModel.amountHelper.preference, paymentData: self.viewModel.amountHelper.paymentData, discount: self.viewModel.amountHelper.discount, campaign: self.viewModel.amountHelper.campaign)
+            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules)
             self.collectionSearch.reloadData()
         }
     }

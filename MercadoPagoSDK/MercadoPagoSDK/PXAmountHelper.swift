@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoServices
+import MercadoPagoServicesV4
 
 internal struct PXAmountHelper {
 
@@ -15,10 +15,17 @@ internal struct PXAmountHelper {
     internal let paymentData: PaymentData
     internal let discount: PXDiscount?
     internal let campaign: PXCampaign?
+    internal let chargeRules: [PXPaymentTypeChargeRule]?
 
     var preferenceAmount: Double {
         get {
             return self.preference.getAmount()
+        }
+    }
+
+    var preferenceAmountWithCharges: Double {
+        get {
+            return preferenceAmount + chargeRuleAmount
         }
     }
 
@@ -28,9 +35,9 @@ internal struct PXAmountHelper {
                 return payerCost.totalAmount
             }
             if let couponAmount = discount?.couponAmount {
-                return preferenceAmount - couponAmount
+                return preferenceAmount - couponAmount + chargeRuleAmount
             } else {
-                return preferenceAmount
+                return preferenceAmount + chargeRuleAmount
             }
         }
     }
@@ -50,6 +57,20 @@ internal struct PXAmountHelper {
                 return maxCouponAmount
             }
             return nil
+        }
+    }
+
+    internal var chargeRuleAmount: Double {
+        get {
+            guard let rules = chargeRules else {
+                return 0
+            }
+            for rule in rules {
+                if rule.paymentMethdodId == paymentData.paymentMethod?.paymentTypeId {
+                    return rule.amountCharge
+                }
+            }
+            return 0
         }
     }
 }

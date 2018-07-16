@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
@@ -142,7 +142,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
 
         if self.amountHelper.discount != nil {
-            var amount = self.amountHelper.preferenceAmount
+            var amount = self.amountHelper.preferenceAmountWithCharges
 
             if let payerCostTotalAmount = self.paymentData.payerCost?.totalAmount {
                 amount = payerCostTotalAmount + self.amountHelper.amountOff

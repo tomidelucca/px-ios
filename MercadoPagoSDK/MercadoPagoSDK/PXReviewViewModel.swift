@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
+import MercadoPagoPXTrackingV4
 
 class PXReviewViewModel: NSObject {
 
@@ -35,7 +35,7 @@ class PXReviewViewModel: NSObject {
 
     // MARK: Tracking logic
     func trackConfirmActionEvent() {
-        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmount)]
+        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmountWithCharges)]
 
         if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
             properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
@@ -140,9 +140,10 @@ extension PXReviewViewModel {
     func getSummaryViewModel(amount: Double) -> Summary {
 
         var summary: Summary
+        let charge = self.amountHelper.chargeRuleAmount
 
         // TODO: Check Double type precision.
-        if abs(amount - self.reviewScreenPreference.getSummaryTotalAmount()) <= PXReviewViewModel.ERROR_DELTA {
+        if abs(amount - (self.reviewScreenPreference.getSummaryTotalAmount() + charge)) <= PXReviewViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 summary.addAmountDetail(detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount), type: SummaryType.PRODUCT)
@@ -153,6 +154,14 @@ extension PXReviewViewModel {
                 if let title = self.reviewScreenPreference.details[SummaryType.PRODUCT]?.title {
                     summary.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: title)
                 }
+            }
+        }
+
+        if charge > 0 {
+            if let chargesTitle = self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE] {
+                let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
+                let chargesSummaryDetail = SummaryDetail(title:chargesTitle , detail: chargesAmountDetail)
+                summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
             }
         }
 
@@ -172,9 +181,9 @@ extension PXReviewViewModel {
             var interest = 0.0
 
             if (self.amountHelper.paymentData.discount?.couponAmount) != nil {
-                interest = self.amountHelper.amountToPay - (self.amountHelper.preferenceAmount - self.amountHelper.amountOff)
+                interest = self.amountHelper.amountToPay - (self.amountHelper.preferenceAmountWithCharges - self.amountHelper.amountOff)
             } else {
-                interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmount
+                interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmountWithCharges
             }
 
             if interest > 0 {
@@ -238,7 +247,7 @@ extension PXReviewViewModel {
         if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
             subtitle = paymentMethodIssuerName.toAttributedString()
         }
-       
+
         if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
             action = nil
         }
@@ -251,8 +260,7 @@ extension PXReviewViewModel {
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
 
         var customTitle = "Productos".localized
-        let totalAmount: Double = self.amountHelper.preferenceAmount
-
+        let totalAmount: Double = self.amountHelper.preferenceAmountWithCharges
         if let prefDetail = reviewScreenPreference.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
             customTitle = prefDetail.title
         } else {

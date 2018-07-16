@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
-import MercadoPagoServices
+import MercadoPagoPXTrackingV4
+import MercadoPagoServicesV4
 
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
@@ -120,8 +120,6 @@ open class MercadoPagoCheckout: NSObject {
             self.getCampaigns()
         case .SERVICE_GET_DIRECT_DISCOUNT:
             self.getDirectDiscount()
-        case .APPLY_DISCOUNT:
-            self.applyDiscount()
         case .SERVICE_GET_PAYMENT_METHODS:
             self.getPaymentMethodSearch()
         case .SCREEN_PAYMENT_METHOD_SELECTION:
@@ -235,7 +233,11 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        self.viewModel.setDiscount(discount, withCampaign: campaign)
+          self.viewModel.setDiscount(discount, withCampaign: campaign)
+    }
+
+    public func setChargeRules(chargeRules: [PXPaymentTypeChargeRule]) {
+        self.viewModel.chargeRules = chargeRules
     }
 
     private func shouldApplyDiscount() -> Bool {
@@ -243,5 +245,8 @@ open class MercadoPagoCheckout: NSObject {
             return true
         }
         return false
+    }
+    private func removeDiscount() {
+        self.viewModel.clearDiscount()
     }
 }

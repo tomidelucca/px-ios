@@ -6,7 +6,7 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-import MercadoPagoServices
+import MercadoPagoServicesV4
 extension MercadoPagoCheckout {
 
     public convenience init(publicKey: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentResult: PaymentResult, navigationController: UINavigationController) {
