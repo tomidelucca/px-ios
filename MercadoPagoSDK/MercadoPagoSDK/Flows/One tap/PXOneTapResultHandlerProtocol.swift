@@ -8,7 +8,7 @@
 
 import Foundation
 protocol PXOneTapResultHandlerProtocol: NSObjectProtocol {
-    func finishOneTap(paymentResult: PaymentResult)
+    func finishOneTap(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?)
     func finishOneTap(businessResult: PXBusinessResult)
     func finishOneTap(paymentData: PaymentData)
     func cancelOneTap()

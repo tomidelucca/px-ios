@@ -33,7 +33,7 @@ public enum CheckoutStep: String {
     case SCREEN_PAYER_COST
     case SCREEN_REVIEW_AND_CONFIRM
     case SERVICE_POST_PAYMENT
-    case SERVICE_GET_INSTRUCTIONS
+
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
     case SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
@@ -446,10 +446,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if shouldExitCheckout() {
             return .ACTION_FINISH
-        }
-
-        if needToGetInstructions() {
-            return .SERVICE_GET_INSTRUCTIONS
         }
 
         if shouldShowCongrats() {

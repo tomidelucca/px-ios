@@ -8,7 +8,6 @@
 
 import Foundation
 protocol PXFlow {
-    var pxNavigationHandler: PXNavigationHandler { get }
 
     // Step logic
     func start()

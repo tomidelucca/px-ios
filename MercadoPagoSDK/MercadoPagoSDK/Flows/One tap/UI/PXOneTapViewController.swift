@@ -161,19 +161,17 @@ extension PXOneTapViewController {
         loadingButtonComponent?.animationDelegate = self
         loadingButtonComponent?.layer.cornerRadius = 4
         loadingButtonComponent?.add(for: .touchUpInside, { [weak self] in
-            self?.confirmPayment()
-            if self?.viewModel.shouldAnimatePayButton ?? false {
-                self?.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.confirmPayment()
+            if strongSelf.viewModel.shouldAnimatePayButton {
+                strongSelf.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+                strongSelf.subscribeLoadingButtonToNotifications()
             }
         })
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
-
-        if viewModel.shouldAnimatePayButton {
-            PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishSuccess))
-            PXNotificationManager.SuscribeTo.animateButtonForError(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishError))
-            PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButtonComponent!, selector: #selector(loadingButtonComponent?.animateFinishWarning))
-        }
 
         return loadingButtonComponent
     }
@@ -223,6 +221,10 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
+    func resetButton() {
+        loadingButtonComponent?.shake()
+    }
+
     private func cancelPayment() {
         self.callbackExit()
     }
@@ -238,7 +240,13 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 @available(iOS 9.0, *)
 extension PXOneTapViewController: PXAnimatedButtonDelegate {
     func shakeDidFinish() {
-
+        displayBackButton()
+        scrollView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
+        unsubscribeFromNotifications()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+        })
     }
 
     func expandAnimationInProgress() {
@@ -250,5 +258,23 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
 
     func progressButtonAnimationTimeOut() {
 
+    }
+}
+
+// MARK: Notifications
+extension PXOneTapViewController {
+    func subscribeLoadingButtonToNotifications() {
+        guard let loadingButton = loadingButtonComponent else {
+            return
+        }
+        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButton, selector: #selector(loadingButton.animateFinishSuccess))
+        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButton, selector: #selector(loadingButton.animateFinishError))
+        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButton, selector: #selector(loadingButton.animateFinishWarning))
+    }
+
+    func unsubscribeFromNotifications() {
+        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
     }
 }

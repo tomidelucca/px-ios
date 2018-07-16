@@ -24,6 +24,7 @@ class OneTapFlowModel: NSObject, PXFlowModel {
     var readyToPay: Bool = false
     var payerCosts: [PayerCost]?
     var paymentResult: PaymentResult?
+    var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
 
     // Payment flow
@@ -160,7 +161,7 @@ extension OneTapFlowModel {
         if !readyToPay {
             return false
         }
-        return paymentData.isComplete(shouldCheckForToken: false) && paymentFlow != nil && paymentResult == nil
+        return paymentData.isComplete(shouldCheckForToken: false) && paymentFlow != nil && paymentResult == nil && businessResult == nil
     }
 
     func hasSavedESC() -> Bool {

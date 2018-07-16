@@ -16,8 +16,9 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
         reviewScreen.resetButton()
     }
 
-    func finishPaymentFlow(paymentResult: PaymentResult) {
-        self.viewModel.paymentResult = paymentResult
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?) {
+        viewModel.paymentResult = paymentResult
+        viewModel.instructionsInfo = instructionsInfo
         PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
     }
 

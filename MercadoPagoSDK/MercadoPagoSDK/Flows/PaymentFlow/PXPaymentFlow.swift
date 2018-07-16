@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal final class PXPaymentFlow: NSObject {
+internal final class PXPaymentFlow: NSObject, PXFlow {
 
     var paymentData: PaymentData?
     var checkoutPreference: CheckoutPreference?
@@ -20,7 +20,9 @@ internal final class PXPaymentFlow: NSObject {
     weak var resultHandler: PXPaymentResultHandlerProtocol?
     weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
 
-    var shouldShowLoading: Bool = true
+    var paymentResult: PaymentResult?
+    var instructionsInfo: InstructionsInfo?
+    var businessResult: PXBusinessResult?
 
     init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol) {
         self.paymentPlugin = paymentPlugin
@@ -38,7 +40,7 @@ internal final class PXPaymentFlow: NSObject {
 
     deinit {
         #if DEBUG
-        print("DEINIT FLOW - \(self)")
+            print("DEINIT FLOW - \(self)")
         #endif
     }
 
@@ -48,28 +50,38 @@ internal final class PXPaymentFlow: NSObject {
 
     func executeNextStep() {
         switch self.nextStep() {
-        case .defaultPayment:
+        case .createDefaultPayment:
             createPayment()
-        case .paymentMethodPaymentPlugin:
+        case .createPaymentMethodPaymentPlugin:
             createPaymentWithPlugin(plugin: paymentMethodPaymentPlugin)
-        case .paymentPlugin:
+        case .createPaymentPlugin:
             createPaymentWithPlugin(plugin: paymentPlugin)
+        case .getInstructions:
+            getInstructions()
+        case .finish:
+            finishFlow()
         }
     }
 
     enum Steps: String {
-        case paymentPlugin
-        case paymentMethodPaymentPlugin
-        case defaultPayment
+        case createPaymentPlugin
+        case createPaymentMethodPaymentPlugin
+        case createDefaultPayment
+        case getInstructions
+        case finish
     }
 
     func nextStep() -> Steps {
         if needToCreatePaymentForPaymentPlugin() {
-            return .paymentPlugin
+            return .createPaymentPlugin
         } else if needToCreatePaymentForPaymentMethodPaymentPlugin() {
-            return .paymentMethodPaymentPlugin
+            return .createPaymentMethodPaymentPlugin
+        } else if needToCreatePayment() {
+            return .createDefaultPayment
+        } else if needToGetInstructions() {
+            return .getInstructions
         } else {
-            return .defaultPayment
+            return .finish
         }
     }
 
@@ -77,12 +89,15 @@ internal final class PXPaymentFlow: NSObject {
         if paymentPlugin == nil {
             return false
         }
-        assignToCheckoutStore()
 
-        if let shouldSkip = paymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
+        if !needToCreatePayment() {
             return false
         }
 
+        assignToCheckoutStore()
+        if let shouldSkip = paymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
+            return false
+        }
         return true
     }
 
@@ -90,8 +105,36 @@ internal final class PXPaymentFlow: NSObject {
         if paymentMethodPaymentPlugin == nil {
             return false
         }
+
+        if !needToCreatePayment() {
+            return false
+        }
+
         assignToCheckoutStore()
         return self.paymentData?.paymentMethod?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+    }
+
+    func needToCreatePayment() -> Bool {
+        return paymentResult == nil && businessResult == nil
+    }
+
+    func needToGetInstructions() -> Bool {
+        guard let paymentResult = self.paymentResult else {
+            return false
+        }
+
+        guard !String.isNullOrEmpty(paymentResult.paymentId) else {
+            return false
+        }
+
+        return isOfflinePayment() && instructionsInfo == nil
+    }
+
+    func isOfflinePayment() -> Bool {
+        guard let paymentTypeId = paymentData?.paymentMethod?.paymentTypeId else {
+            return false
+        }
+        return !PaymentTypeId.isOnlineType(paymentTypeId: paymentTypeId)
     }
 
     func createPaymentWithPlugin(plugin: PXPaymentPluginComponent?) {
@@ -108,21 +151,16 @@ internal final class PXPaymentFlow: NSObject {
                 paymentErrorHandler?.escError()
                 return
             }
-            // TODO: Ver esto
-            //        if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
-            //            paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
-            //        }
 
             let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
-            resultHandler?.finishPaymentFlow(paymentResult: paymentResult)
-            return
+            self.paymentResult = paymentResult
+            self.executeNextStep()
         } else if let createPaymentForBussinessResult = plugin.createPaymentWithBusinessResult {
-            let bussinessResult = createPaymentForBussinessResult(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
-            resultHandler?.finishPaymentFlow(businessResult: bussinessResult)
-            return
+            let businessResult = createPaymentForBussinessResult(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
+            self.businessResult = businessResult
+            self.executeNextStep()
         } else {
             self.showErrorScreen(message: "Hubo un error".localized, errorDetails: "", retry: false)
-            return
         }
     }
 
@@ -148,16 +186,15 @@ internal final class PXPaymentFlow: NSObject {
 
         mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { (payment) in
             guard let paymentData = self.paymentData else {
-                // return?
                 return
             }
             let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
-            self.resultHandler?.finishPaymentFlow(paymentResult: paymentResult)
+            self.paymentResult = paymentResult
+            self.executeNextStep()
 
             }, failure: { [weak self] (error) in
 
                 let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
-                mpError.retry = true
 
                 // ESC error
                 if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_WITH_ESC.rawValue) {
@@ -186,14 +223,53 @@ internal final class PXPaymentFlow: NSObject {
     }
 
     func getPaymentTimeOut() -> TimeInterval {
+        let instructionTimeOut: TimeInterval = isOfflinePayment() ? 15 : 0
         if let paymentPluginTimeOut = paymentPlugin?.paymentTimeOut?() {
-            return paymentPluginTimeOut
+            return paymentPluginTimeOut + instructionTimeOut
         } else if let paymentMethodPluginTimeOut = paymentMethodPaymentPlugin?.paymentTimeOut?() {
-            return paymentMethodPluginTimeOut
+            return paymentMethodPluginTimeOut + instructionTimeOut
         } else {
-            return mercadoPagoServicesAdapter.getTimeOut()
+            return mercadoPagoServicesAdapter.getTimeOut() + instructionTimeOut
         }
     }
+
+    func getInstructions() {
+
+        guard let paymentResult = paymentResult else {
+            fatalError("Get Instructions - Payment Result does no exist")
+        }
+
+        guard let paymentId = paymentResult.paymentId else {
+            fatalError("Get Instructions - Payment Id does no exist")
+        }
+
+        guard let paymentTypeId = paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId else {
+            fatalError("Get Instructions - Payment Method Type Id does no exist")
+        }
+
+        mercadoPagoServicesAdapter.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (instructionsInfo) in
+            self?.instructionsInfo = instructionsInfo
+            self?.executeNextStep()
+
+            }, failure: {[weak self] (error) in
+
+                let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue)
+                self?.showErrorScreen(error: mpError)
+
+        })
+    }
+
+    func cancelFlow() {}
+
+    func finishFlow() {
+        if let paymentResult = paymentResult {
+            self.resultHandler?.finishPaymentFlow(paymentResult: (paymentResult), instructionsInfo: instructionsInfo)
+        } else if let businessResult = businessResult {
+            self.resultHandler?.finishPaymentFlow(businessResult: businessResult)
+        }
+    }
+
+    func exitCheckout() {}
 
 }
 

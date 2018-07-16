@@ -60,7 +60,7 @@ final class OneTapFlow: NSObject, PXFlow {
         model.search.deleteCheckoutDefaultOption()
 
         if let paymentResult = model.paymentResult {
-            resultHandler?.finishOneTap(paymentResult: paymentResult)
+            resultHandler?.finishOneTap(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo)
         } else if let businessResult = model.businessResult {
             resultHandler?.finishOneTap(businessResult: businessResult)
         } else {
@@ -128,11 +128,16 @@ extension OneTapFlow {
 
 extension OneTapFlow: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(error: MPSDKError) {
+        guard let reviewScreen = pxNavigationHandler.navigationController.viewControllers.last as? PXOneTapViewController else {
+            return
+        }
 
+        reviewScreen.resetButton()
     }
 
-    func finishPaymentFlow(paymentResult: PaymentResult) {
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?) {
         self.model.paymentResult = paymentResult
+        self.model.instructionsInfo = instructionsInfo
         if self.model.needToShowLoading() {
             self.executeNextStep()
         } else {

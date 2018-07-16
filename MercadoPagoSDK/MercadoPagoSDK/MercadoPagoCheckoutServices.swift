@@ -385,42 +385,6 @@ extension MercadoPagoCheckout {
         paymentFlow.start()
     }
 
-    func getInstructions() {
-       // self.presentLoading() // Remove loading because two continue loadings doesn't work with payment plugin
-
-        guard let paymentResult = self.viewModel.paymentResult else {
-            fatalError("Get Instructions - Payment Result does no exist")
-        }
-
-        guard let paymentId = paymentResult.paymentId else {
-           fatalError("Get Instructions - Payment Id does no exist")
-        }
-
-        guard let paymentTypeId = paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId else {
-            fatalError("Get Instructions - Payment Method Type Id does no exist")
-        }
-
-        self.viewModel.mercadoPagoServicesAdapter.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (instructionsInfo) in
-
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.viewModel.instructionsInfo = instructionsInfo
-            strongSelf.executeNextStep()
-
-        }, failure: {[weak self] (error) in
-
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue), errorCallback: { [weak self] () in
-                self?.getInstructions()
-            })
-            strongSelf.executeNextStep()
-
-        })
-    }
-
     func getIdentificationTypes() {
         self.pxNavigationHandler.presentLoading()
         self.viewModel.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] (identificationTypes) in

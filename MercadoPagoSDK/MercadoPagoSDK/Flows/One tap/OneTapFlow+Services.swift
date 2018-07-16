@@ -47,10 +47,18 @@ extension OneTapFlow {
             self?.executeNextStep()
 
             }, failure: { [weak self] (error) in
+                guard let strongSelf = self else {
+                    return
+                }
                 let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-                self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.resultHandler?.exitCheckout, errorCallback: { [weak self] () in
-                    self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
-                })
+
+                if strongSelf.model.needToShowLoading() {
+                    strongSelf.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: strongSelf.resultHandler?.exitCheckout, errorCallback: { [weak self] () in
+                        self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
+                    })
+                } else {
+                    strongSelf.finishPaymentFlow(error: error)
+                }
         })
     }
 
@@ -69,18 +77,23 @@ extension OneTapFlow {
             self?.executeNextStep()
 
             }, failure: { [weak self] (error) in
-
+                guard let strongSelf = self else {
+                    return
+                }
                 let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
 
                 if let apiException = error.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) ||  apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
 
-                    self?.model.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
-                    self?.executeNextStep()
+                    strongSelf.model.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
+                    strongSelf.executeNextStep()
                 } else {
-                    self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.resultHandler?.exitCheckout, errorCallback: { [weak self] () in
-                        self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
-                    })
-
+                    if strongSelf.model.needToShowLoading() {
+                        strongSelf.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: strongSelf.resultHandler?.exitCheckout, errorCallback: { [weak self] () in
+                            self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
+                        })
+                    } else {
+                        strongSelf.finishPaymentFlow(error: error)
+                    }
                 }
         })
     }
