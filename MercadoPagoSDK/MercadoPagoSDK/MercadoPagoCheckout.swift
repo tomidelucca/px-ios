@@ -10,12 +10,6 @@ import UIKit
 import MercadoPagoPXTrackingV4
 import MercadoPagoServicesV4
 
-@objc
-public protocol PXCheckoutLifecycleProtocol: NSObjectProtocol {
-    func lazyInitDidFinish()
-    func lazyInitFailure(errorDetail: String)
-}
-
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
 

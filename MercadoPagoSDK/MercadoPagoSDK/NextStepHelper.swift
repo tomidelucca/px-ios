@@ -339,4 +339,16 @@ extension MercadoPagoCheckoutViewModel {
         }
         return false
     }
+
+    func needToInitFlow() -> Bool {
+        if let initialFlow = initFlow, (initialFlow.getStatus() == .ready
+            || initialFlow.getStatus() == .running) {
+            return true
+        } else {
+            if initFlow == nil {
+                return true
+            }
+        }
+        return false
+    }
 }

@@ -400,13 +400,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func nextStep() -> CheckoutStep {
-        if let initialFlow = initFlow, (initialFlow.getStatus() == .ready
-            || initialFlow.getStatus() == .running) {
+
+        if needToInitFlow() {
             return .START
-        } else {
-            if initFlow == nil {
-                return .START
-            }
         }
 
         if hasError() {

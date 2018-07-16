@@ -249,6 +249,8 @@
 		23AC324020AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */; };
 		23AC324120AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */; };
 		23AC324220AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */; };
+		23B7DF2320FCC5980054721E /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B7DF2220FCC5980054721E /* MercadopagoCheckoutLifecycleProtocol.swift */; };
+		23B7DF2420FCC5A40054721E /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B7DF2220FCC5980054721E /* MercadopagoCheckoutLifecycleProtocol.swift */; };
 		23BABFFC20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */; };
 		23BABFFD20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */; };
 		23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
@@ -943,6 +945,7 @@
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
 		23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXOneTapSummaryModalViewController.swift; sourceTree = "<group>"; };
 		23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PXOneTapSummaryModalViewController.xib; sourceTree = "<group>"; };
+		23B7DF2220FCC5980054721E /* MercadopagoCheckoutLifecycleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MercadopagoCheckoutLifecycleProtocol.swift; path = Flows/MercadopagoCheckoutLifecycleProtocol.swift; sourceTree = "<group>"; };
 		23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PXOneTapViewModel+Summary.swift"; sourceTree = "<group>"; };
 		23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiExceptionTest.swift; sourceTree = "<group>"; };
 		23BC73841F0E84FB00B19C1A /* CauseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseTest.swift; sourceTree = "<group>"; };
@@ -1740,6 +1743,7 @@
 				23230ADE20EA3F84008DA980 /* InitFlow+Services.swift */,
 				235036ED20ED37E6000A0794 /* MercadopagoCheckout+InitFlow.swift */,
 				235036EF20ED38E1000A0794 /* MercadopagoCheckoutViewModel+InitFlow.swift */,
+				23B7DF2220FCC5980054721E /* MercadopagoCheckoutLifecycleProtocol.swift */,
 			);
 			name = Flows;
 			sourceTree = "<group>";
@@ -3135,6 +3139,7 @@
 				0F9883711AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
 				FCBF13491E7204C30092B756 /* FinancialInstitutionTableViewCell.swift in Sources */,
 				FC3FC88A1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
+				23B7DF2320FCC5980054721E /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */,
 				15919BDB2091299F008B5D47 /* PXCloseLinkAction.swift in Sources */,
 				4B760D11204EEC78001E4976 /* PXItemContainerView.swift in Sources */,
 				23F5FEE7205078A9005382E9 /* PXCFTComponentView.swift in Sources */,
@@ -3526,6 +3531,7 @@
 				23625A3820AB06380069AE30 /* PXOneTapViewController.swift in Sources */,
 				8138737B1FA8D2BF002095D6 /* PXResultViewModel.swift in Sources */,
 				4BFD90C21F58554C00ABC348 /* DateExtensionTest.swift in Sources */,
+				23B7DF2420FCC5A40054721E /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */,
 				151A94191DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */,
 				4BCF602720A327B400ECEE81 /* OneTapFlow.swift in Sources */,
 				0F98839A1AD2AB6000F750F0 /* TransactionDetails.swift in Sources */,

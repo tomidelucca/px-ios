@@ -9,15 +9,15 @@
 import Foundation
 
 final class InitFlow: PXFlow {
-    let pxNavigationHandler: PXNavigationHandler
+    var pxNavigationHandler: PXNavigationHandler
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
     private let finishInitCallback: ((PaymentMethodSearch) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
 
-    init(navigationHandler: PXNavigationHandler, flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
-        pxNavigationHandler = navigationHandler
+    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PaymentMethodSearch) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
+        pxNavigationHandler = PXNavigationHandler.getDefault()
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
         model = InitFlowModel(flowProperties: flowProperties)

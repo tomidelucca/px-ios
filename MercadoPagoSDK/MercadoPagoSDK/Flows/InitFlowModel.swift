@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentResult: PaymentResult?, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, loadPreferenceStatus: Bool, directDiscountSearchStatus: Bool)
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?)
 
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool)
 
@@ -23,10 +23,10 @@ final class InitFlowModel: NSObject, PXFlowModel {
         case ERROR = "Error"
         case SERVICE_GET_PREFERENCE = "Obtener datos de preferencia"
         case ACTION_VALIDATE_PREFERENCE = "Validación de preferencia"
-        case SERVICE_GET_CAMPAIGNS = "Obtener campaigns"
-        case SERVICE_GET_DIRECT_DISCOUNT = "Obtener discount"
-        case SERVICE_GET_PAYMENT_METHODS = "Obtener payment methods"
-        case SERVICE_PAYMENT_METHOD_PLUGIN_INIT = "Init de plugins"
+        case SERVICE_GET_CAMPAIGNS = "Obtener campañas"
+        case SERVICE_GET_DIRECT_DISCOUNT = "Obtener descuento"
+        case SERVICE_GET_PAYMENT_METHODS = "Obtener medios de pago"
+        case SERVICE_PAYMENT_METHOD_PLUGIN_INIT = "Iniciando plugin de pago"
         case FINISH = "Finish step"
     }
 
@@ -35,6 +35,8 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     private var preferenceValidated: Bool = false
     private var needPaymentMethodPluginInit = true
+    private var loadPreferenceStatus: Bool
+    private var directDiscountSearchStatus: Bool
     private var flowError: InitFlowError?
     private var pendingRetryStep: Steps?
 
@@ -48,6 +50,8 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     init(flowProperties: InitFlowProperties) {
         self.properties = flowProperties
+        self.loadPreferenceStatus = !String.isNullOrEmpty(flowProperties.checkoutPreference.preferenceId)
+        self.directDiscountSearchStatus = flowProperties.paymentData.isComplete()
         super.init()
     }
 
@@ -139,7 +143,7 @@ extension InitFlowModel {
         }
 
         if needLoadPreference() {
-            properties.loadPreferenceStatus = false
+            loadPreferenceStatus = false
             return .SERVICE_GET_PREFERENCE
         }
 
@@ -161,7 +165,7 @@ extension InitFlowModel {
         }
 
         if needToSearchDirectDiscount() {
-            properties.directDiscountSearchStatus = true
+            directDiscountSearchStatus = true
             return .SERVICE_GET_DIRECT_DISCOUNT
         }
 
@@ -172,19 +176,19 @@ extension InitFlowModel {
 // MARK: Needs methods
 extension InitFlowModel {
     private func needLoadPreference() -> Bool {
-        return properties.loadPreferenceStatus
+        return loadPreferenceStatus
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && isDiscountEnabled() && !properties.directDiscountSearchStatus && properties.paymentData.discount == nil && properties.paymentResult == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
+        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && isDiscountEnabled() && !directDiscountSearchStatus && properties.paymentData.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
     }
 
     func needToSearchCampaign() -> Bool {
-        return isDiscountEnabled() && !properties.directDiscountSearchStatus && properties.paymentResult == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
+        return isDiscountEnabled() && !directDiscountSearchStatus && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
     }
 
     private func needValidatePreference() -> Bool {
-        return !properties.loadPreferenceStatus && !preferenceValidated
+        return !loadPreferenceStatus && !preferenceValidated
     }
 
     private func needToInitPaymentMethodPlugins() -> Bool {
