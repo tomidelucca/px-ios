@@ -29,7 +29,6 @@ open class AdditionalStepViewModel: NSObject {
     open var defaultRowCellHeight: CGFloat = 80
     open var callback: ((_ result: NSObject) -> Void)!
     open var maxFontSize: CGFloat { return 24 }
-    open var couponCallback: ((PXDiscount) -> Void)?
     let amountHelper: PXAmountHelper
 
     open var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter

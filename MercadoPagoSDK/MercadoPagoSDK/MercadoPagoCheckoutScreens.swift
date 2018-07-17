@@ -11,10 +11,8 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
-
         self.viewModel.paymentData.clearCollectedData()
 
-        var paymentMethodSelectionStep: PaymentVaultViewController!
         paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
 
             guard let strongSelf = self else {
@@ -26,7 +24,7 @@ extension MercadoPagoCheckout {
 
             strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
                 strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
-                paymentMethodSelectionStep.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+                strongSelf.paymentMethodSelectionStep?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
                 successBlock()
                 strongSelf.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
                 return
@@ -46,10 +44,9 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.rootVC = false
             strongSelf.executeNextStep()
         })
-        self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep, animated: true)
+        self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep!, animated: true)
 
     }
-
 
     func showCardForm() {
         let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { [weak self](paymentMethods, cardToken) in
@@ -114,41 +111,54 @@ extension MercadoPagoCheckout {
     func showPayerCostScreen() {
         let payerCostViewModel = self.viewModel.payerCostViewModel()
 
-        let payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
+        var payerCostStep: AdditionalStepViewController!
+        payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
             guard let payerCost = payerCost as? PayerCost else {
                 fatalError("Cannot convert payerCost to type PayerCost")
             }
 
             self?.viewModel.updateCheckoutModel(payerCost: payerCost)
             self?.executeNextStep()
-        }, discountValidationCallback: { (discount, campaign) -> Bool in
+        }, discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
 
-                if true {
-                    self.setDiscount(discount, withCampaign: campaign)
-                    return true
-                } else {
-                    return false
-                }
-        })
-
-        weak var strongPayerCostViewController = payerCostStep
-
-        payerCostStep.viewModel.couponCallback = {[weak self] (discount) in
             guard let strongSelf = self else {
+                errorBlock()
                 return
             }
-           // strongSelf.viewModel.paymentData.discount = discount TODO SET DISCOUNT WITH CAMPAIGN
 
-            strongSelf.getPayerCosts(updateCallback: {
+            strongSelf.setDiscount(discount, withCampaign: campaign)
 
-                guard let payerCosts = strongSelf.viewModel.payerCosts, let payerCostViewController = strongPayerCostViewController else {
+            strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
+                strongSelf.getPayerCosts(successBlock: { (installments) in
+
+                    //Update Payment Method Search
+                    strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+                    strongSelf.paymentMethodSelectionStep?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+
+                    //Update Payer Costs
+                    strongSelf.viewModel.payerCosts = installments[0].payerCosts
+
+                    if let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts) {
+                        strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
+                    }
+
+                    payerCostStep.viewModel = strongSelf.viewModel.payerCostViewModel()
+                    payerCostStep.updateDataSource(dataSource: strongSelf.viewModel.payerCosts!)
+
+                    successBlock()
+                    strongSelf.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
                     return
-                }
-
-                payerCostViewController.updateDataSource(dataSource: payerCosts)
+                }, errorBlock: { (_) in
+                    strongSelf.viewModel.clearDiscount()
+                    errorBlock()
+                    return
+                })
+            }, errorBlock: { (_) in
+                strongSelf.viewModel.clearDiscount()
+                errorBlock()
+                return
             })
-
-        }
+        })
         self.pxNavigationHandler.pushViewController(viewController: payerCostStep, animated: true)
     }
 

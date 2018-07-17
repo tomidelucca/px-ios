@@ -15,13 +15,20 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     @IBOutlet weak var tableView: UITableView!
 
     var bundle: Bundle? = MercadoPago.getBundle()
-    open let viewModel: AdditionalStepViewModel!
+    var viewModel: AdditionalStepViewModel {
+        didSet {
+            updateViewsAndLayout()
+            updateViewModelCallback()
+        }
+    }
+    var callback: (_ callbackData: NSObject) -> Void
+
     override var maxFontSize: CGFloat { return self.viewModel.maxFontSize}
 
     override open var screenName: String { return viewModel.getScreenName() }
     override open var screenId: String { return viewModel.getScreenId() }
 
-    private var discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool) = {dis, cam in return false}
+    private var discountValidationCallback: ((PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void)?
 
     private var floatingRowView: UIView?
 
@@ -57,12 +64,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.extendedLayoutIncludesOpaqueBars = true
         self.titleCellHeight = 44
 
-        if self.viewModel.showFloatingTotalRow() {
-            getTableViewPinBottomContraint()?.isActive = false
-            renderViews()
-        } else {
-            getTableViewPinBottomContraint()?.isActive = true
-        }
+        updateViewsAndLayout()
     }
 
     private func getTableViewPinBottomContraint() -> NSLayoutConstraint? {
@@ -73,7 +75,18 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         return nil
     }
 
-    private func renderViews() {
+    private func updateViewsAndLayout() {
+        self.tableView.reloadData()
+        if self.viewModel.showFloatingTotalRow() {
+            getTableViewPinBottomContraint()?.isActive = false
+            renderFloatingTotalRow()
+        } else {
+            getTableViewPinBottomContraint()?.isActive = true
+        }
+    }
+
+    private func renderFloatingTotalRow() {
+
         if let currentFloatingRowView = self.floatingRowView {
             currentFloatingRowView.removeFromSuperview()
         }
@@ -96,7 +109,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
 
     func handleTotalRowTap() {
-//        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, discountValidationCallback: discountValidationCallback)
+        if let discountValidationCallback = discountValidationCallback {
+            PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, discountValidationCallback: discountValidationCallback)
+        }
     }
 
     override func loadMPStyles() {
@@ -118,13 +133,18 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         fatalError("init(coder:) has not been implemented")
     }
 
-    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void), discountValidationCallback: ((PXDiscount, PXCampaign) -> Bool)? = nil) {
+    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void), discountValidationCallback: ((PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void)? = nil) {
         self.viewModel = viewModel
-        self.viewModel.callback = callback
+        self.callback = callback
         if let discountValidationCallback = discountValidationCallback {
             self.discountValidationCallback = discountValidationCallback
         }
         super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
+        updateViewModelCallback()
+    }
+
+    func updateViewModelCallback() {
+        self.viewModel.callback = self.callback
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
