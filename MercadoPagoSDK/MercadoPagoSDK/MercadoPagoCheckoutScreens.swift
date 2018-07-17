@@ -158,22 +158,6 @@ extension MercadoPagoCheckout {
                 errorBlock()
                 return
             })
-//                strongSelf.getPayerCosts(successBlock: { (installments) in
-//                    strongSelf.viewModel.payerCosts = installments[0].payerCosts
-//
-//                    if let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts) {
-//                        strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
-//                    }
-//
-//                    payerCostStep.viewModel = strongSelf.viewModel.payerCostViewModel()
-//                    payerCostStep.updateDataSource(dataSource: strongSelf.viewModel.payerCosts!)
-//                    successBlock()
-//                    return
-//                }, errorBlock: { (_) in
-//                    strongSelf.viewModel.clearDiscount()
-//                    errorBlock()
-//                    return
-//                })
         })
         self.pxNavigationHandler.pushViewController(viewController: payerCostStep, animated: true)
     }
