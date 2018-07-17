@@ -343,36 +343,23 @@ extension MercadoPagoCheckout {
         })
     }
 
-    func getPayerCosts(updateCallback: (() -> Void)? = nil) {
+    func getPayerCosts() {
         self.pxNavigationHandler.presentLoading()
 
-        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
-            return
-        }
-
-        let bin = self.viewModel.cardToken?.getBin()
-
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, callback: { [weak self] (installments) in
-
+        self.getPayerCosts(successBlock: { [weak self ] (installments) in
             guard let strongSelf = self else {
                 return
             }
 
             strongSelf.viewModel.payerCosts = installments[0].payerCosts
 
-            let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts)
-            if let defaultPC = defaultPayerCost {
-                strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
+            if let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts) {
+                strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
             }
 
-            if let updateCallback = updateCallback {
-                updateCallback()
-            } else {
-                strongSelf.executeNextStep()
-            }
+            strongSelf.executeNextStep()
 
-        }, failure: {[weak self] (error) in
-
+        }) { [weak self] (error) in
             guard let strongSelf = self else {
                 return
             }
@@ -381,7 +368,21 @@ extension MercadoPagoCheckout {
                 self?.getPayerCosts()
             })
             strongSelf.executeNextStep()
+        }
+    }
 
+    func getPayerCosts(successBlock:@escaping ([Installment])->Void, errorBlock:@escaping (NSError)->Void) {
+
+        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
+            return
+        }
+
+        let bin = self.viewModel.cardToken?.getBin()
+
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, callback: { (installments) in
+            successBlock(installments)
+        }, failure: {(error) in
+            errorBlock(error)
         })
     }
 

@@ -51,7 +51,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     var viewModel: PaymentVaultViewModel {
         didSet {
-            renderFloatingBottomView()
+            updateViewsAndLayout()
         }
     }
 
@@ -147,7 +147,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.isUserInteractionEnabled = false
             view.addSubview(temporalView)
         }
-        renderFloatingBottomView()
+        updateViewsAndLayout()
         hideLoading()
     }
 
@@ -159,7 +159,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         return nil
     }
 
-    private func renderFloatingBottomView() {
+    private func updateViewsAndLayout() {
         self.collectionSearch.reloadData()
         if floatingBottomRowView == nil {
             floatingBottomRowView = getFloatingTotalRowView()
