@@ -247,9 +247,9 @@ extension PXReviewViewController {
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: {
+            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingFloatingButtonComponent)
             self.confirmPayment()
             self.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
-            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingFloatingButtonComponent)
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
@@ -261,9 +261,9 @@ extension PXReviewViewController {
     fileprivate func getFooterView() -> UIView {
 
         let payAction = PXComponentAction(label: "Pagar".localized) {
+            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
             self.confirmPayment()
             self.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
-            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
         }
         let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
         let footerComponent = PXFooterComponent(props: footerProps)

@@ -19,14 +19,24 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?) {
         viewModel.paymentResult = paymentResult
         viewModel.instructionsInfo = instructionsInfo
-        PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
+
+        if pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
+            PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
+        } else {
+            executeNextStep()
+        }
+
     }
 
     func finishPaymentFlow(businessResult: PXBusinessResult) {
         // TODO: Remove
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
         self.viewModel.businessResult = businessResult
-        PXAnimatedButton.animateButtonWith(businessResult: businessResult)
+            if self.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
+                PXAnimatedButton.animateButtonWith(businessResult: businessResult)
+            } else {
+                self.executeNextStep()
+            }
 
         })
     }

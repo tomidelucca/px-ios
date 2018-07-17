@@ -18,12 +18,16 @@ extension PXPaymentFlow {
         if let createPayment = plugin.createPayment {
             let paymentPluginResult = createPayment(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
 
-            if paymentPluginResult.statusDetail == RejectedStatusDetail.INVALID_ESC {
+            if paymentPluginResult.statusDetail == RejectedStatusDetail.INVALID_ESC && fallo == false {
                 paymentErrorHandler?.escError()
+                fallo = true
                 return
             }
 
-            let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
+            // TODO: REMOVE mock status detail
+            sleep(5)
+
+            let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: RejectedStatusDetail.OTHER_REASON, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
             model.paymentResult = paymentResult
             executeNextStep()
         } else if let createPaymentForBussinessResult = plugin.createPaymentWithBusinessResult {
