@@ -8,6 +8,7 @@
 
 import Foundation
 import MercadoPagoServicesV4
+import MLUI
 
 final class PXTotalRowBuilder: PXTotalRowComponent {
 
@@ -93,12 +94,16 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
 
     static func handleTap(amountHelper: PXAmountHelper, discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void) {
         if amountHelper.discount != nil {
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
+            _ = PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
         } else if let currentCheckout = MercadoPagoCheckout.currentCheckout, currentCheckout.viewModel.shouldShowDiscountInput() {
+            var inputModal: MLModal?
+
             let inputVC = PXDiscountCodeInputViewController(discountValidationCallback: discountValidationCallback) {
-                print("hola hola")
+                if let inputModal = inputModal {
+                    inputModal.dismiss()
+                }
             }
-            PXComponentFactory.Modal.show(viewController: inputVC, title: nil)
+            inputModal = PXComponentFactory.Modal.show(viewController: inputVC, title: nil)
         }
     }
 }

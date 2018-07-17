@@ -12,19 +12,19 @@ import MLUI
 struct PXComponentFactory {
 
     struct Modal {
-        static func show(viewController: UIViewController, title: String?) {
+        static func show(viewController: UIViewController, title: String?) -> MLModal? {
             if let modalTitle = title {
-                MLModal.show(with: viewController, title: modalTitle)
+                return MLModal.show(with: viewController, title: modalTitle)
             } else {
-                MLModal.show(with: viewController)
+                return MLModal.show(with: viewController)
             }
         }
 
-        static func show(viewController: UIViewController, title: String?, dismissBlock: @escaping (() -> Void)) {
+        static func show(viewController: UIViewController, title: String?, dismissBlock: @escaping (() -> Void)) -> MLModal? {
             if let modalTitle = title {
-                MLModal.show(with: viewController, title: modalTitle, actionTitle: "", actionBlock: {}, secondaryActionTitle: "", secondaryActionBlock: {}, dismiss: dismissBlock, enableScroll: false)
+                return MLModal.show(with: viewController, title: modalTitle, actionTitle: "", actionBlock: {}, secondaryActionTitle: "", secondaryActionBlock: {}, dismiss: dismissBlock, enableScroll: false)
             } else {
-                MLModal.show(with: viewController, dismiss: dismissBlock)
+                return MLModal.show(with: viewController, dismiss: dismissBlock)
             }
         }
     }
