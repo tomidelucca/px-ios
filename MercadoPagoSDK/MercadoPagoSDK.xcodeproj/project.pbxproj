@@ -262,6 +262,7 @@
 		23C3893720AC44E0001EFDA9 /* PXPaymentMethodComponentRenderer+OneTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C3893520AC44E0001EFDA9 /* PXPaymentMethodComponentRenderer+OneTap.swift */; };
 		23C3893920AC451E001EFDA9 /* PXPaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C3893820AC451E001EFDA9 /* PXPaymentMethodView.swift */; };
 		23C3893A20AC451E001EFDA9 /* PXPaymentMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C3893820AC451E001EFDA9 /* PXPaymentMethodView.swift */; };
+		23CC9CA120FE139D006E751C /* PXPropertyStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC9CA020FE139D006E751C /* PXPropertyStoring.swift */; };
 		23CF4ED02099603100EC9399 /* PXDefaultMLStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CF4ECF2099603100EC9399 /* PXDefaultMLStyleSheet.swift */; };
 		23E2157E2005360600B968F6 /* PXTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E2157D2005360600B968F6 /* PXTheme.swift */; };
 		23E2158320062E4600B968F6 /* PXDefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E2158220062E4600B968F6 /* PXDefaultTheme.swift */; };
@@ -998,6 +999,7 @@
 		23C3893220AC43D7001EFDA9 /* PXPaymentMethodProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodProps.swift; sourceTree = "<group>"; };
 		23C3893520AC44E0001EFDA9 /* PXPaymentMethodComponentRenderer+OneTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PXPaymentMethodComponentRenderer+OneTap.swift"; sourceTree = "<group>"; };
 		23C3893820AC451E001EFDA9 /* PXPaymentMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodView.swift; sourceTree = "<group>"; };
+		23CC9CA020FE139D006E751C /* PXPropertyStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXPropertyStoring.swift; path = Core/PXPropertyStoring.swift; sourceTree = "<group>"; };
 		23CF4ECF2099603100EC9399 /* PXDefaultMLStyleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDefaultMLStyleSheet.swift; sourceTree = "<group>"; };
 		23E2157D2005360600B968F6 /* PXTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTheme.swift; sourceTree = "<group>"; };
 		23E2158220062E4600B968F6 /* PXDefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDefaultTheme.swift; sourceTree = "<group>"; };
@@ -1473,6 +1475,7 @@
 				4BB3ECE11FB379AB00AAFD38 /* URLConfigs.swift */,
 				4BB3ECE51FB37B0300AAFD38 /* PXSDKSettings.swift */,
 				4BE3C55120581048005BE20C /* PXTrackingStore.swift */,
+				23CC9CA020FE139D006E751C /* PXPropertyStoring.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -2932,6 +2935,7 @@
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
 				4BCA62FA1EBA48D8006D8131 /* SwiftLint */,
+				52D67BC76525CAE7D7B75394 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2952,6 +2956,7 @@
 				0F9883121AD2A97A00F750F0 /* Frameworks */,
 				7622E33F1DF5F5F900490C4E /* Headers */,
 				F9E0B11D8F72856EC5E5936F /* [CP] Embed Pods Frameworks */,
+				8110ECD62AB434574AC1F978 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3150,6 +3155,36 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\necho \"Swiftlint disabled\"\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
+		52D67BC76525CAE7D7B75394 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8110ECD62AB434574AC1F978 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F9E0B11D8F72856EC5E5936F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3251,6 +3286,7 @@
 				FC7BD8AA1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */,
 				FC3FC8761FBE122F00CF29E1 /* PXInstructionsTertiaryInfoRenderer.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
+				23CC9CA120FE139D006E751C /* PXPropertyStoring.swift in Sources */,
 				23C3892D20AC432D001EFDA9 /* PXFooterView.swift in Sources */,
 				4B4E23101FFFE0AC007E8FDD /* PXResultConstants.swift in Sources */,
 				1575E7161FBCD35C00E0756D /* PXFooterViewModelHelper.swift in Sources */,
