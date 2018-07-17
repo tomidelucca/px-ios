@@ -20,8 +20,12 @@ struct PXComponentFactory {
             }
         }
 
-        static func show(viewController: UIViewController, title: String, dismissBlock: @escaping (() -> Void)) {
-            MLModal.show(with: viewController, title: title, actionTitle: "", actionBlock: {}, secondaryActionTitle: "", secondaryActionBlock: {}, dismiss: dismissBlock, enableScroll: false)
+        static func show(viewController: UIViewController, title: String?, dismissBlock: @escaping (() -> Void)) {
+            if let modalTitle = title {
+                MLModal.show(with: viewController, title: modalTitle, actionTitle: "", actionBlock: {}, secondaryActionTitle: "", secondaryActionBlock: {}, dismiss: dismissBlock, enableScroll: false)
+            } else {
+                MLModal.show(with: viewController, dismiss: dismissBlock)
+            }
         }
     }
 
