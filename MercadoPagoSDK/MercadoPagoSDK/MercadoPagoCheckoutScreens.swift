@@ -12,7 +12,7 @@ extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
 
-        self.viewModel.paymentData.clearCollectedData()
+        viewModel.paymentData.clearCollectedData()
 
         // If paymentMethodsPlugins is available, disable discounts.
         if (!viewModel.paymentMethodPlugins.isEmpty || viewModel.paymentPlugin != nil) && viewModel.paymentData.discount == nil {
@@ -30,8 +30,8 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
         })
         self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep, animated: true)
-
     }
+
     func showCardForm() {
         let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { [weak self](paymentMethods, cardToken) in
 
@@ -233,7 +233,6 @@ extension MercadoPagoCheckout {
     func showErrorScreen() {
         pxNavigationHandler.showErrorScreen(error: MercadoPagoCheckoutViewModel.error, callbackCancel: finish, errorCallback: self.viewModel.errorCallback)
         MercadoPagoCheckoutViewModel.error = nil
-
     }
 
     func showFinancialInstitutionsScreen() {

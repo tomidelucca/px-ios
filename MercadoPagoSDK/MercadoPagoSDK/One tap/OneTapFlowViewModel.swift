@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class OneTapFlowViewModel: NSObject, PXFlowModel {
 
     enum Steps: String {

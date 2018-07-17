@@ -21,9 +21,8 @@ extension MercadoPagoCheckout {
                 self.viewModel.wentBackFrom(hook: hookStep)
             }
 
-            if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
-                targetHook.didReceive?(hookStore: PXCheckoutStore.sharedInstance)
-            }
+            viewModel.populateCheckoutStore()
+            targetHook.didReceive?(hookStore: PXCheckoutStore.sharedInstance)
 
             if let navTitle = targetHook.titleForNavigationBar?() {
                 vc.title = navTitle

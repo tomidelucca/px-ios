@@ -28,9 +28,8 @@ extension MercadoPagoCheckout {
         }
         containerVC.pluginComponentInterface = paymentMethodConfigPluginComponent
         containerVC.paymentMethodId = paymentMethodPlugin.getId()
-        if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
-            paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
-        }
+        viewModel.populateCheckoutStore()
+        paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
 
         // Create navigation handler.
         paymentMethodConfigPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
@@ -69,9 +68,8 @@ extension MercadoPagoCheckout {
         // By feature definition. Back is not available in make payment plugin.
         containerVC.shouldShowBackArrow = false
 
-        if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
-            paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
-        }
+        viewModel.populateCheckoutStore()
+        paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
 
         // Create navigation handler.
         paymentPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
