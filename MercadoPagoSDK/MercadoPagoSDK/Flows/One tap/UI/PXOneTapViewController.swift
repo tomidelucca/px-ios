@@ -28,13 +28,16 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     var loadingButtonComponent: PXAnimatedButton?
 
+    let timeOutPayButton: TimeInterval
+
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
         self.finishButtonAnimation = finishButtonAnimation
+        self.timeOutPayButton = timeOutPayButton
         super.init()
     }
 
@@ -166,7 +169,7 @@ extension PXOneTapViewController {
             }
             strongSelf.confirmPayment()
             if strongSelf.viewModel.shouldAnimatePayButton {
-                strongSelf.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar")
+                strongSelf.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: strongSelf.timeOutPayButton)
                 strongSelf.subscribeLoadingButtonToNotifications()
             }
         })
@@ -257,7 +260,7 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
     }
 
     func progressButtonAnimationTimeOut() {
-
+        loadingButtonComponent?.shake()
     }
 }
 

@@ -54,7 +54,6 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod(), !pm.isBolbradesco else {
             return false
         }
-
         return isIdentificationNeeded() && self.identificationTypes != nil
     }
 
@@ -66,7 +65,6 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod(), pm.isBolbradesco else {
             return false
         }
-
         return isIdentificationNeeded() && self.identificationTypes != nil
     }
 

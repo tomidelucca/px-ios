@@ -179,4 +179,14 @@ extension OneTapFlowModel {
         }
         return true
     }
+
+    func getTimeoutForOneTapReviewController() -> TimeInterval {
+        if let paymentFlow = paymentFlow {
+            paymentFlow.model.paymentData = paymentData
+            let tokenTimeOut: TimeInterval = mercadoPagoServicesAdapter.getTimeOut()
+            // Payment Flow timeout + tokenization TimeOut
+            return paymentFlow.getPaymentTimeOut() + tokenTimeOut
+        }
+        return 0
+    }
 }
