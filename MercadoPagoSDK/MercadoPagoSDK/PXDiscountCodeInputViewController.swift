@@ -17,10 +17,10 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
-    private var discountValidationCallback:  (PXDiscount, PXCampaign, @escaping ()->Void, @escaping ()->Void) -> Void
+    private var discountValidationCallback:  (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void
     private var closeModalCallback: (() -> Void)!
 
-    init(discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping ()->Void, @escaping ()->Void) -> Void, closeModalCallback: @escaping (() -> Void)) {
+    init(discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void, closeModalCallback: @escaping (() -> Void)) {
         self.discountValidationCallback = discountValidationCallback
         self.closeModalCallback = closeModalCallback
         super.init(nibName: nil, bundle: nil)
