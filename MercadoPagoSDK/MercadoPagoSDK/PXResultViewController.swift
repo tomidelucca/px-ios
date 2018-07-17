@@ -48,8 +48,6 @@ class PXResultViewController: PXComponentContainerViewController {
             super.prepareForAnimation()
             super.animateContentView()
         }
-
-        //contentView.backgroundColor = viewModel.primaryResultColor()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -64,6 +62,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Header
         self.headerView = self.buildHeaderView()
         if let headerView = self.headerView {
+            headerView.pxShouldAnimated = false
             contentView.addSubview(headerView)
             PXLayout.pinTop(view: headerView, to: contentView).isActive = true
             PXLayout.matchWidth(ofView: headerView).isActive = true
@@ -72,7 +71,6 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Receipt
         self.receiptView = self.buildReceiptView()
         if let receiptView = self.receiptView {
-//            receiptView.addSeparatorLineToBottom(height: 1)
             contentView.addSubviewToBottom(receiptView)
             PXLayout.matchWidth(ofView: receiptView).isActive = true
             self.view.layoutIfNeeded()
