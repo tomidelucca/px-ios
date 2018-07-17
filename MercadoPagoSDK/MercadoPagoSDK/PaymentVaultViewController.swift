@@ -103,8 +103,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateCoupon(_:)), name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil)
-
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10
         upperFrame.size.width = UIScreen.main.bounds.width
@@ -131,13 +129,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
 
        self.collectionSearch.backgroundColor = UIColor.white
-    }
-
-    @objc func updateCoupon(_ notification: Notification) {
-        if (notification.userInfo?["coupon"] as? PXDiscount) != nil {
-            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules)
-            self.collectionSearch.reloadData()
-        }
     }
 
     open override func viewWillAppear(_ animated: Bool) {
