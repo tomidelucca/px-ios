@@ -35,6 +35,9 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
         if self.contentView.isEmpty() {
             renderViews()
         }
+        self.callbackCancel = {
+            MercadoPagoCheckout.currentCheckout?.pxNavigationHandler.popViewController(animated: true)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

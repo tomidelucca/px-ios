@@ -28,6 +28,7 @@ extension MercadoPagoCheckout {
                 strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
                 paymentMethodSelectionStep.viewModel = strongSelf.viewModel.paymentVaultViewModel()
                 successBlock()
+                strongSelf.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
                 return
             }, errorBlock: { (_) in
                 strongSelf.viewModel.clearDiscount()
