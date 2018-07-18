@@ -17,7 +17,7 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
-    private var discountValidationCallback:  (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void
+    private var discountValidationCallback: (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void
     private var closeModalCallback: (() -> Void)!
 
     init(discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void, closeModalCallback: @escaping (() -> Void)) {
@@ -89,7 +89,7 @@ extension PXDiscountCodeInputViewController {
         //Build action button
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.buttonTitle = "Continuar"
+        button.buttonTitle = "discount_input_modal_action".localized_beta
         self.contentView.addSubview(button)
         PXLayout.put(view: button, onBottomOf: textfield, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.centerHorizontally(view: button).isActive = true
@@ -99,7 +99,7 @@ extension PXDiscountCodeInputViewController {
             if textfield.text.isNotEmpty {
                 self.getCodeDiscount(with: textfield.text)
             } else {
-                self.showError(with: "Complete este campo")
+                self.showError(with: "discount_input_modal_empty_code_error".localized_beta)
             }
         }
 
@@ -120,13 +120,13 @@ extension PXDiscountCodeInputViewController {
                                         NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor(),
                                         NSAttributedStringKey.paragraphStyle: paragraph]
 
-        let string = "Ingresa tu cupón"
+        let string = "discount_input_modal_title".localized_beta
         let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
         return attributedString
     }
 
     private func getErrorMessage() -> String {
-        return "Revisa este dato"
+        return "discount_input_modal_invalid_code_error".localized_beta
     }
 
     private func showError(with text: String) {
@@ -165,16 +165,16 @@ extension PXDiscountCodeInputViewController {
                                  NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor(),
                                  NSAttributedStringKey.paragraphStyle: paragraph]
 
-        let titleString = "¡Excelente!"
+        let titleString = "discount_input_success_modal_title".localized_beta
         let titleAttributedString = NSMutableAttributedString(string: titleString, attributes: titleAttributes)
 
         let discountDescription = discount.getDiscountDescription()
-        let messageString = "Ahora paga tu compra y obtén \(discountDescription) de descuento."
+        let messageString = "discount_input_success_modal_message".localized_beta.replacingOccurrences(of: "%1$s", with: discountDescription)
         let messageAttributedString = NSMutableAttributedString(string: messageString, attributes: messageAttributes)
 
         let image = MercadoPago.getImage("codeInputSuccess")
 
-        let action = PXComponentAction(label: "Continuar") {
+        let action = PXComponentAction(label: "discount_input_success_modal_action".localized_beta) {
             self.closeModalCallback()
         }
 
@@ -189,6 +189,7 @@ extension PXDiscountCodeInputViewController {
     func getCodeDiscount(with code: String) {
         if let mercadoPagoCheckout = MercadoPagoCheckout.currentCheckout {
             self.spinner?.show()
+            self.textfield?.isEnabled = false
             mercadoPagoCheckout.viewModel.mercadoPagoServicesAdapter.getCodeDiscount(amount: mercadoPagoCheckout.viewModel.amountHelper.amountToPay, payerEmail: mercadoPagoCheckout.viewModel.checkoutPreference.payer.email, couponCode: code, callback: { [weak self] (discount) in
 
                 guard let strongSelf = self else {
@@ -205,6 +206,7 @@ extension PXDiscountCodeInputViewController {
                             strongSelf.transitionToSuccess(with: discount)
                         }, {
                             strongSelf.spinner?.hide()
+                            strongSelf.textfield?.isEnabled = true
                             strongSelf.showError(with: "grupos fallo")
                         })
                     }
@@ -217,6 +219,7 @@ extension PXDiscountCodeInputViewController {
                     }
 
                     strongSelf.spinner?.hide()
+                    strongSelf.textfield?.isEnabled = true
                     strongSelf.showError(with: strongSelf.getErrorMessage())
             })
         }
