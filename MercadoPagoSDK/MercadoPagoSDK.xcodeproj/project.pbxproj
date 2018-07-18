@@ -1405,7 +1405,8 @@
 		0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */ = {
 			isa = PBXGroup;
 			children = (
-				4BF30E7420E27B19008CB089 /* Flows */,
+				4BF30E7320E27B09008CB089 /* PaymentFlow */,
+				4BAD088220F006B000F3A77F /* One tap */,
 				15D5173A20D15E0D00CC2D90 /* Comisiones */,
 				FC73AB42202B877600537C9F /* Translations */,
 				4B1CA5911FFE943200F576AA /* Constants */,
@@ -2118,7 +2119,8 @@
 				4BAD089920F006B000F3A77F /* OneTapFlow+Screens.swift */,
 				4BAD089A20F006B000F3A77F /* OneTapFlowModel.swift */,
 			);
-			path = "One tap";
+			name = "One tap";
+			path = "Flows/One tap";
 			sourceTree = "<group>";
 		};
 		4BAD088320F006B000F3A77F /* UI */ = {
@@ -2223,15 +2225,6 @@
 				4BA908D220FE6FDC0097BA27 /* PXPaymentPluginHandler.swift */,
 			);
 			path = PaymentFlow;
-			sourceTree = "<group>";
-		};
-		4BF30E7420E27B19008CB089 /* Flows */ = {
-			isa = PBXGroup;
-			children = (
-				4BAD088220F006B000F3A77F /* One tap */,
-				4BF30E7320E27B09008CB089 /* PaymentFlow */,
-			);
-			path = Flows;
 			sourceTree = "<group>";
 		};
 		5305BEF11F59A93C008EBFC7 /* Screens */ = {
