@@ -142,7 +142,6 @@ extension PXDiscountCodeInputViewController {
             let successView = self.buildPXDiscountCodeInputSuccessView(with: discount, frame: self.contentView.frame)
             self.view.addSubview(successView)
             PXLayout.matchWidth(ofView: successView).isActive = true
-            PXLayout.matchHeight(ofView: successView).isActive = true
             PXLayout.centerHorizontally(view: successView).isActive = true
             PXLayout.centerVertically(view: successView).isActive = true
 

@@ -62,7 +62,7 @@ class PXDiscountCodeInputSuccessView: UIView {
             label.numberOfLines = 0
             label.attributedText = message
             self.addSubview(label)
-            PXLayout.put(view: label, onBottomOfLastViewOf: self, withMargin: PXLayout.S_MARGIN)?.isActive = true
+            PXLayout.put(view: label, onBottomOfLastViewOf: self, withMargin: PXLayout.XS_MARGIN)?.isActive = true
             PXLayout.centerHorizontally(view: label).isActive = true
             PXLayout.pinLeft(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -74,7 +74,7 @@ class PXDiscountCodeInputSuccessView: UIView {
             button.translatesAutoresizingMaskIntoConstraints = false
             button.buttonTitle = action.label
             self.addSubview(button)
-            PXLayout.put(view: button, onBottomOfLastViewOf: self, withMargin: PXLayout.S_MARGIN)?.isActive = true
+            PXLayout.put(view: button, onBottomOfLastViewOf: self, withMargin: PXLayout.M_MARGIN)?.isActive = true
             PXLayout.centerHorizontally(view: button).isActive = true
             PXLayout.pinLeft(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
