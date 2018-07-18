@@ -23,8 +23,8 @@
 
 #pragma mark - Plugin implementation.
 - (UIView * _Nullable)renderWithStore:(PXCheckoutStore * _Nonnull)store theme:(id<PXTheme> _Nonnull)theme {
-    //return nil;
-    return self.view;
+    return nil;
+    //return self.view;
 }
 
 - (void)renderDidFinish {

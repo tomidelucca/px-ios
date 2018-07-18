@@ -183,11 +183,11 @@ extension PXAnimatedButton {
     func getImage(style: FinishStyle) -> UIImage? {
         switch style {
         case .success:
-            return MercadoPago.getImage("sheetSuccess")
+            return MercadoPago.getImage("one_tap_button_check")
         case .error:
-            return MercadoPago.getImage("white_close")
+            return MercadoPago.getImage("one_tap_button_error")
         case .warning:
-            return MercadoPago.getImage("white_close")
+            return MercadoPago.getImage("one_tap_button_error")
         }
     }
 }

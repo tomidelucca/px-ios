@@ -71,7 +71,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         loadingButtonComponent?.resetButton()
-        loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
+        loadingButtonComponent?.setTitle("Confirmar".localized, for: .normal)
     }
 
     override func trackInfo() {
@@ -172,11 +172,11 @@ extension PXOneTapViewController {
         loadingButtonComponent?.add(for: .touchUpInside, {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications()
-                self.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
+                self.loadingButtonComponent?.startLoading(loadingText: "Procesando tu pago", retryText: "Confirmar", timeOut: self.timeOutPayButton)
             }
             self.confirmPayment()
         })
-        loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
+        loadingButtonComponent?.setTitle("Confirmar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
 
         return loadingButtonComponent
