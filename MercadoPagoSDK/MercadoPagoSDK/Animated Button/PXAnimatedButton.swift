@@ -20,7 +20,6 @@ internal class PXAnimatedButton: UIButton {
     weak var animationDelegate: PXAnimatedButtonDelegate?
     var progressView: ProgressView?
     var status: Status = .normal
-    var retryText: String?
 
     enum FinishStyle: Int {
         case warning
@@ -42,7 +41,6 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         progressView?.progressDelegate = self
         setTitle(loadingText, for: .normal)
         status = .loading
-        self.retryText = retryText
     }
 
     func finishAnimatingButton(style: FinishStyle) {

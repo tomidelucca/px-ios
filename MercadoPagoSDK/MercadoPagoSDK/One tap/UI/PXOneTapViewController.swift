@@ -51,12 +51,10 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         super.viewWillAppear(animated)
         setupNavigationBar()
         setupUI()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        super.viewWillAppear(animated)
         if isMovingToParentViewController {
             viewModel.trackTapBackEvent()
         }
@@ -69,7 +67,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewDidAppear(animated)
         loadingButtonComponent?.resetButton()
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
     }

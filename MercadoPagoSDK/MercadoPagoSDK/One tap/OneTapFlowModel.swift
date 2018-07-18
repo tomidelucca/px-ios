@@ -165,6 +165,8 @@ extension OneTapFlowModel {
     }
 
     func hasSavedESC() -> Bool {
+//        // TODO: Remove
+        //return esc
         if let card = paymentOptionSelected as? CardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
