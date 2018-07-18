@@ -74,11 +74,6 @@ extension PXDiscountCodeInputViewController {
         textfield.delegate = self
         textfield.autocapitalizationType = .allCharacters
 //        textfield.autocorrectionType = UITextAutocorrectionType.no
-
-
-//        textfield.textInputControl().autocorrectionType = UITextAutocorrectionType.no
-
-
         self.contentView.addSubviewToBottom(textfield, withMargin: PXLayout.XXL_MARGIN)
         PXLayout.centerHorizontally(view: textfield).isActive = true
         PXLayout.pinLeft(view: textfield, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -109,6 +104,7 @@ extension PXDiscountCodeInputViewController {
         }
 
         self.contentView.pinLastSubviewToBottom(withMargin: PXLayout.M_MARGIN)?.isActive = true
+        self.contentView.backgroundColor = .white
         self.view.addSubview(contentView)
         PXLayout.matchWidth(ofView: contentView).isActive = true
         PXLayout.matchHeight(ofView: contentView).isActive = true
@@ -142,16 +138,18 @@ extension PXDiscountCodeInputViewController {
     private func transitionToSuccess(with discount: PXDiscount) {
 
         self.textfield?.resignFirstResponder()
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            let successView = self.buildPXDiscountCodeInputSuccessView(with: discount, frame: self.view.frame)
-            self.view.backgroundColor = .white
-            successView.backgroundColor = .white
+            let successView = self.buildPXDiscountCodeInputSuccessView(with: discount, frame: self.contentView.frame)
+            self.view.addSubview(successView)
+            PXLayout.matchWidth(ofView: successView).isActive = true
+            PXLayout.matchHeight(ofView: successView).isActive = true
+            PXLayout.centerHorizontally(view: successView).isActive = true
+            PXLayout.centerVertically(view: successView).isActive = true
+
             self.view.superview?.backgroundColor = .clear
             self.view.superview?.superview?.backgroundColor = .clear
             self.view.superview?.superview?.superview?.backgroundColor = .clear
-
-            UIView.transition(from: self.view, to: successView, duration: 0.5, options: .transitionFlipFromRight, completion: nil)
+            UIView.transition(from: self.contentView, to: successView, duration: 0.5, options: .transitionFlipFromRight, completion: nil)
         })
     }
 
