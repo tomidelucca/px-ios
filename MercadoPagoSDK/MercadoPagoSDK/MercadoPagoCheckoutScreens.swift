@@ -11,7 +11,8 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
-        self.viewModel.paymentData.clearCollectedData()
+
+        viewModel.paymentData.clearCollectedData()
 
         paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
 
@@ -44,8 +45,8 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.rootVC = false
             strongSelf.executeNextStep()
         })
-        self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep!, animated: true)
 
+        self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep!, animated: true)
     }
 
     func showCardForm() {
@@ -270,7 +271,6 @@ extension MercadoPagoCheckout {
     func showErrorScreen() {
         pxNavigationHandler.showErrorScreen(error: MercadoPagoCheckoutViewModel.error, callbackCancel: finish, errorCallback: self.viewModel.errorCallback)
         MercadoPagoCheckoutViewModel.error = nil
-
     }
 
     func showFinancialInstitutionsScreen() {

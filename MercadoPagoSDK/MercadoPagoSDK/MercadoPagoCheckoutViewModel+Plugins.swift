@@ -14,7 +14,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        _ = copyViewModelAndAssignToCheckoutStore()
+        populateCheckoutStore()
 
         if let shouldSkip = paymentMethodPluginSelected.paymentMethodConfigPlugin?.shouldSkip?(pluginStore: PXCheckoutStore.sharedInstance), shouldSkip {
             willShowPaymentMethodConfigPlugin()
@@ -62,19 +62,12 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        _ = copyViewModelAndAssignToCheckoutStore()
+        populateCheckoutStore()
 
         if let shouldSkip = paymentPlugin?.support?(pluginStore: PXCheckoutStore.sharedInstance), !shouldSkip {
             return false
         }
 
         return needToCreatePayment()
-    }
-
-    func needToInitPaymentMethodPlugins() -> Bool {
-        if paymentMethodPlugins.isEmpty {
-            return false
-        }
-        return needPaymentMethodPluginInit
     }
 }

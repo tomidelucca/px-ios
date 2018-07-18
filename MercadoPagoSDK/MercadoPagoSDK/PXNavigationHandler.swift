@@ -144,8 +144,13 @@ class PXNavigationHandler: NSObject {
     }
 }
 
-extension PXNavigationHandler: UINavigationControllerDelegate {
+extension PXNavigationHandler {
+    static func getDefault() -> PXNavigationHandler {
+        return PXNavigationHandler.init(navigationController: UINavigationController())
+    }
+}
 
+extension PXNavigationHandler: UINavigationControllerDelegate {
     func suscribeToNavigationFlow() {
         navigationController.delegate = self
     }

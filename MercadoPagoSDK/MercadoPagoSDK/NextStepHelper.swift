@@ -11,9 +11,6 @@ import MercadoPagoServicesV4
 
 extension MercadoPagoCheckoutViewModel {
 
-    func needSearch() -> Bool {
-        return search == nil
-    }
     func isPaymentTypeSelected() -> Bool {
 
         let hasPaymentWithInvalidESC = paymentData.hasPaymentMethod() && !paymentData.hasToken() && paymentResult != nil && paymentResult!.isInvalidESC()
@@ -320,14 +317,6 @@ extension MercadoPagoCheckoutViewModel {
         return (filterCampaignsByCodeType(campaigns: self.campaigns, CodeType.SINGLE.rawValue) != nil || filterCampaignsByCodeType(campaigns: self.campaigns, CodeType.MULTIPLE.rawValue) != nil) && !Array.isNullOrEmpty(self.campaigns) && self.paymentData.discount == nil && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
     }
 
-    func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: self.campaigns, CodeType.NONE.rawValue) != nil && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && !Array.isNullOrEmpty(self.campaigns)
-    }
-
-    func needToSearchCampaign() -> Bool {
-        return self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && self.campaigns == nil
-    }
-
     func needToCreatePayment() -> Bool {
         if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
             return readyToPay
@@ -357,10 +346,6 @@ extension MercadoPagoCheckoutViewModel {
         }
     }
 
-    func needValidatePreference() -> Bool {
-        return !self.needLoadPreference && !self.preferenceValidated
-    }
-
     func hasSavedESC() -> Bool {
         guard let pmSelected = self.paymentOptionSelected else {
             return false
@@ -368,6 +353,18 @@ extension MercadoPagoCheckoutViewModel {
 
         if let card = pmSelected as? CardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
+        }
+        return false
+    }
+
+    func needToInitFlow() -> Bool {
+        if let initialFlow = initFlow, (initialFlow.getStatus() == .ready
+            || initialFlow.getStatus() == .running) {
+            return true
+        } else {
+            if initFlow == nil {
+                return true
+            }
         }
         return false
     }

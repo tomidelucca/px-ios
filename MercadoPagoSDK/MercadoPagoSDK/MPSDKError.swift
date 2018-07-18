@@ -21,11 +21,14 @@ import MercadoPagoServicesV4
         super.init()
     }
 
-    public init(message: String, errorDetail: String, retry: Bool!) {
+    public init(message: String, errorDetail: String, retry: Bool, requestOrigin: String?=nil) {
         super.init()
         self.message = message
         self.errorDetail = errorDetail
         self.retry = retry
+        if let reqOrigin = requestOrigin {
+            self.requestOrigin = reqOrigin
+        }
     }
 
     open class func convertFrom(_ error: Error, requestOrigin: String) -> MPSDKError {

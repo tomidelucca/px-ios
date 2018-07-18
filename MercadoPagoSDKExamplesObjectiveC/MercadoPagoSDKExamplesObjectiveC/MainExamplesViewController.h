@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @import MercadoPagoSDK;
 
-@interface MainExamplesViewController : UITableViewController
+@interface MainExamplesViewController : UITableViewController <PXCheckoutLifecycleProtocol>
 
 @property MPCustomCell *customCell;
 @property CheckoutPreference *pref;
