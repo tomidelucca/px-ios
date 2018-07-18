@@ -118,6 +118,7 @@ extension OneTapFlow {
         guard let paymentFlow = model.paymentFlow else {
             return
         }
+        paymentFlow.paymentErrorHandler = self
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
@@ -147,13 +148,27 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
 
     func finishPaymentFlow(businessResult: PXBusinessResult) {
         // TODO: Remove
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
             self.model.businessResult = businessResult
             if self.model.needToShowLoading() {
                 self.executeNextStep()
             } else {
                 PXAnimatedButton.animateButtonWith(businessResult: businessResult)
             }
-        })
+//        })
     }
+}
+
+extension OneTapFlow: PXPaymentErrorHandlerProtocol {
+    func escError() {
+        model.readyToPay = true
+        model.mpESCManager.deleteESC(cardId: model.paymentData.getToken()?.cardId ?? "")
+        model.paymentData.cleanToken()
+        executeNextStep()
+    }
+
+    func identificationError() {
+
+    }
+
 }

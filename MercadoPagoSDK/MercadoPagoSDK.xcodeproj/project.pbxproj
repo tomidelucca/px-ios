@@ -367,6 +367,8 @@
 		4BA2934020659220000BC40D /* PXTrackingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE3C55120581048005BE20C /* PXTrackingStore.swift */; };
 		4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
 		4BA52FB61FFEAD9C0088B379 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 155F58321E3923180070A0D6 /* Images.xcassets */; };
+		4BA908D320FE6FDC0097BA27 /* PXPaymentPluginHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA908D220FE6FDC0097BA27 /* PXPaymentPluginHandler.swift */; };
+		4BA908D420FE6FDC0097BA27 /* PXPaymentPluginHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA908D220FE6FDC0097BA27 /* PXPaymentPluginHandler.swift */; };
 		4BAA55E71DB0012300501061 /* AdditionalStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E51DB0012300501061 /* AdditionalStepViewController.swift */; };
 		4BAA55E81DB0012300501061 /* AdditionalStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55E61DB0012300501061 /* AdditionalStepViewController.xib */; };
 		4BAA55EB1DB0015800501061 /* AdditionalStepCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E91DB0015800501061 /* AdditionalStepCardTableViewCell.swift */; };
@@ -1071,6 +1073,7 @@
 		4B8D73501E780F8F009C1209 /* SummaryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryRow.swift; sourceTree = "<group>"; };
 		4B9FEFCD1EA64E12002B78A2 /* PXReviewViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXReviewViewModelTest.swift; sourceTree = "<group>"; };
 		4B9FEFD01EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewModelTest.swift; sourceTree = "<group>"; };
+		4BA908D220FE6FDC0097BA27 /* PXPaymentPluginHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentPluginHandler.swift; sourceTree = "<group>"; };
 		4BAA55E51DB0012300501061 /* AdditionalStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewController.swift; sourceTree = "<group>"; };
 		4BAA55E61DB0012300501061 /* AdditionalStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdditionalStepViewController.xib; sourceTree = "<group>"; };
 		4BAA55E91DB0015800501061 /* AdditionalStepCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepCardTableViewCell.swift; sourceTree = "<group>"; };
@@ -2217,6 +2220,7 @@
 				4BDC087920EBFD07001C1F44 /* PXPaymentResultHandlerProtocol.swift */,
 				4BCE250120FCFA7400073F32 /* PXPaymentFlow+Services.swift */,
 				4BCE250420FD00EC00073F32 /* PXPaymentFlowModel.swift */,
+				4BA908D220FE6FDC0097BA27 /* PXPaymentPluginHandler.swift */,
 			);
 			path = PaymentFlow;
 			sourceTree = "<group>";
@@ -3380,6 +3384,7 @@
 				81ACC81F1F9A88F700206F7B /* PXFooterComponent.swift in Sources */,
 				0F98838D1AD2AB6000F750F0 /* Phone.swift in Sources */,
 				554BD3642062BEC700F6C631 /* MPCustomRowDelegate.swift in Sources */,
+				4BA908D320FE6FDC0097BA27 /* PXPaymentPluginHandler.swift in Sources */,
 				4BE3C55220581048005BE20C /* PXTrackingStore.swift in Sources */,
 				0F98835D1AD2AB6000F750F0 /* Card.swift in Sources */,
 				FCF0EEBB1FA111F9007D878C /* MercadoPagoServicesModelAdapter.swift in Sources */,
@@ -3622,6 +3627,7 @@
 				FC05809420A5DB4400BBECB8 /* PXBankDealComponent.swift in Sources */,
 				0F9883881AD2AB6000F750F0 /* Payment.swift in Sources */,
 				76FD247E1C5BFEA1008C5DC0 /* CardFormViewController.swift in Sources */,
+				4BA908D420FE6FDC0097BA27 /* PXPaymentPluginHandler.swift in Sources */,
 				4BABB4B41F83DBEC00C896D8 /* UIView+Additions.swift in Sources */,
 				4B4E23111FFFE5D4007E8FDD /* PXResultConstants.swift in Sources */,
 				76FD24861C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */,

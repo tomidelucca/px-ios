@@ -10,11 +10,6 @@ import Foundation
 import MercadoPagoPXTrackingV4
 
 final class PXOneTapViewModel: PXReviewViewModel {
-    let shouldAnimatePayButton: Bool
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), shouldAnimatePayButton: Bool, timeout: TimeInterval = 15) {
-        self.shouldAnimatePayButton = shouldAnimatePayButton
-        super.init(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
-    }
 
     // Tracking overrides.
     override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }

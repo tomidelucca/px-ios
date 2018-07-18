@@ -9,7 +9,7 @@
 import Foundation
 extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(error: MPSDKError) {
-        guard let reviewScreen = pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController else {
+        guard let reviewScreen = viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController else {
             return
         }
 
@@ -20,7 +20,7 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
         viewModel.paymentResult = paymentResult
         viewModel.instructionsInfo = instructionsInfo
 
-        if pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
+        if viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
             PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
         } else {
             executeNextStep()
@@ -30,14 +30,14 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
 
     func finishPaymentFlow(businessResult: PXBusinessResult) {
         // TODO: Remove
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
         self.viewModel.businessResult = businessResult
-            if self.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
+            if self.viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
                 PXAnimatedButton.animateButtonWith(businessResult: businessResult)
             } else {
                 self.executeNextStep()
             }
 
-        })
+//        })
     }
 }

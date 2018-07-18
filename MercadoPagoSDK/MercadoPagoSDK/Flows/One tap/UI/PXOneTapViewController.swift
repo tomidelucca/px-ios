@@ -29,15 +29,17 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var loadingButtonComponent: PXAnimatedButton?
 
     let timeOutPayButton: TimeInterval
+    let shouldAnimatePayButton: Bool
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
         self.finishButtonAnimation = finishButtonAnimation
         self.timeOutPayButton = timeOutPayButton
+        self.shouldAnimatePayButton = shouldAnimatePayButton
         super.init()
     }
 
@@ -56,16 +58,18 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         if isMovingToParentViewController {
             viewModel.trackTapBackEvent()
         }
-    }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if viewModel.shouldAnimatePayButton {
+        if shouldAnimatePayButton {
             PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
             PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
             PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
         }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadingButtonComponent?.resetButton()
+        loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
     }
 
     override func trackInfo() {
@@ -163,15 +167,12 @@ extension PXOneTapViewController {
         loadingButtonComponent = PXAnimatedButton(frame: .zero)
         loadingButtonComponent?.animationDelegate = self
         loadingButtonComponent?.layer.cornerRadius = 4
-        loadingButtonComponent?.add(for: .touchUpInside, { [weak self] in
-            guard let strongSelf = self else {
-                return
+        loadingButtonComponent?.add(for: .touchUpInside, {
+            if self.shouldAnimatePayButton {
+                self.subscribeLoadingButtonToNotifications()
+                self.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
             }
-            strongSelf.confirmPayment()
-            if strongSelf.viewModel.shouldAnimatePayButton {
-                strongSelf.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: strongSelf.timeOutPayButton)
-                strongSelf.subscribeLoadingButtonToNotifications()
-            }
+            self.confirmPayment()
         })
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
@@ -218,6 +219,8 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     }
 
     private func confirmPayment() {
+        scrollView.isScrollEnabled = false
+        view.isUserInteractionEnabled = false
         self.viewModel.trackConfirmActionEvent()
         self.hideBackButton()
         self.hideNavBar()

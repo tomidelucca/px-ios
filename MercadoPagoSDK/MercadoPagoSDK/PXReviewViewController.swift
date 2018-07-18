@@ -31,14 +31,16 @@ class PXReviewViewController: PXComponentContainerViewController {
     weak var loadingButtonComponent: PXAnimatedButton?
     weak var loadingFloatingButtonComponent: PXAnimatedButton?
     let timeOutPayButton: TimeInterval
+    let shouldAnimatePayButton: Bool
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.finishButtonAnimation = finishButtonAnimation
         self.timeOutPayButton = timeOutPayButton
+        self.shouldAnimatePayButton = shouldAnimatePayButton
         super.init()
     }
 
@@ -57,8 +59,10 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeFromNotifications()
-        showNavBarForAnimation()
+        if shouldAnimatePayButton {
+            unsubscribeFromNotifications()
+            showNavBarForAnimation()
+        }
     }
 
     override func trackInfo() {
@@ -247,8 +251,10 @@ extension PXReviewViewController {
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Pagar".localized, action: {
-            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingFloatingButtonComponent)
-            self.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
+            if self.shouldAnimatePayButton {
+                self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingFloatingButtonComponent)
+                self.loadingFloatingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
+            }
             self.confirmPayment()
             }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
@@ -259,10 +265,11 @@ extension PXReviewViewController {
     }
 
     fileprivate func getFooterView() -> UIView {
-
         let payAction = PXComponentAction(label: "Pagar".localized) {
-            self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
-            self.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
+            if self.shouldAnimatePayButton {
+                self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
+                self.loadingButtonComponent?.startLoading(loadingText: "Pagando...", retryText: "Pagar", timeOut: self.timeOutPayButton)
+            }
             self.confirmPayment()
         }
         let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
@@ -299,9 +306,9 @@ extension PXReviewViewController {
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
-        let loadinngButtonAnimated = loadingButtonComponent?.isAnimated() ?? false
-        let loadinngFloatingButtonAnimated = loadingFloatingButtonComponent?.isAnimated() ?? false
-        if !loadinngButtonAnimated && !loadinngFloatingButtonAnimated {
+        let loadingButtonAnimated = loadingButtonComponent?.isAnimated() ?? false
+        let loadingFloatingButtonAnimated = loadingFloatingButtonComponent?.isAnimated() ?? false
+        if !loadingButtonAnimated && !loadingFloatingButtonAnimated {
             self.checkFloatingButtonVisibility()
         }
     }

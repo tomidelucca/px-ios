@@ -127,7 +127,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var paymentFlow: PXPaymentFlow?
 
-    init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?) {
+    var pxNavigationHandler: PXNavigationHandler
+
+    init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationHandler: PXNavigationHandler) {
+        self.pxNavigationHandler = navigationHandler
         super.init()
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData {
@@ -158,7 +161,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentResult: self.paymentResult)
+        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentResult: self.paymentResult, navigationHandler: pxNavigationHandler)
         return copyObj
     }
 
@@ -316,7 +319,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             if let paymentOtionSelected = paymentOptionSelected, let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
                 paymentMethodPaymentPlugin = plugin.paymentPlugin
             }
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, binaryMode: binaryMode, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, binaryMode: binaryMode, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler)
             self.paymentFlow = paymentFlow
             return paymentFlow
         }
@@ -871,7 +874,6 @@ extension MercadoPagoCheckoutViewModel {
             self.savedESCCardToken = SavedESCCardToken(cardId: self.paymentData.getToken()!.cardId, esc: nil)
             mpESCManager.deleteESC(cardId: self.paymentData.getToken()!.cardId)
         }
-
         self.paymentData.cleanToken()
     }
 

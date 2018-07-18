@@ -25,8 +25,7 @@ extension OneTapFlow {
             createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 
         } else {
-            //TODO: REMOVE MOCK
-            createSavedCardToken(cardInformation: cardInfo, securityCode: "123")
+            createSavedCardToken(cardInformation: cardInfo, securityCode: securityCode!)
         }
     }
 

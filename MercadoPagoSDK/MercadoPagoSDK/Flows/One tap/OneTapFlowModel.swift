@@ -90,7 +90,7 @@ extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference, shouldAnimatePayButton: hasSavedESC())
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
     }
 }
 
@@ -165,8 +165,8 @@ extension OneTapFlowModel {
     }
 
     func hasSavedESC() -> Bool {
-        // TODO: Remove
-        return true
+//        // TODO: Remove
+        //return esc
         if let card = paymentOptionSelected as? CardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
@@ -174,8 +174,10 @@ extension OneTapFlowModel {
     }
 
     func needToShowLoading() -> Bool {
-        if paymentFlow != nil && hasSavedESC() {
-            return false
+        if let paymentFlow = paymentFlow, hasSavedESC() {
+            paymentFlow.model.paymentData = paymentData
+            paymentFlow.model.checkoutPreference = checkoutPreference
+            return paymentFlow.model.needToShowPaymentPluginScreen()
         }
         return true
     }
@@ -189,4 +191,5 @@ extension OneTapFlowModel {
         }
         return 0
     }
+
 }

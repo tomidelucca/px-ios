@@ -32,6 +32,8 @@ internal final class PXPaymentFlowModel: NSObject {
         case createPaymentMethodPaymentPlugin
         case createDefaultPayment
         case getInstructions
+        case createPaymentPluginScreen
+        case createPaymentMethodPaymentPluginScreen
         case finish
     }
 
@@ -40,6 +42,10 @@ internal final class PXPaymentFlowModel: NSObject {
             return .createPaymentPlugin
         } else if needToCreatePaymentForPaymentMethodPaymentPlugin() {
             return .createPaymentMethodPaymentPlugin
+        } else if needToShowPaymentPluginScreenForPaymentPlugin() {
+            return .createPaymentPluginScreen
+        } else if needToShowPaymentPluginScreenForPaymentMethodPlugin() {
+            return .createPaymentMethodPaymentPluginScreen
         } else if needToCreatePayment() {
             return .createDefaultPayment
         } else if needToGetInstructions() {
@@ -55,6 +61,12 @@ internal final class PXPaymentFlowModel: NSObject {
         }
 
         if !needToCreatePayment() {
+            return false
+        }
+
+        assignToCheckoutStore()
+
+        if hasPluginPaymentScreen(plugin: paymentPlugin) {
             return false
         }
 
@@ -75,6 +87,11 @@ internal final class PXPaymentFlowModel: NSObject {
         }
 
         assignToCheckoutStore()
+
+        if hasPluginPaymentScreen(plugin: paymentMethodPaymentPlugin) {
+            return false
+        }
+
         return self.paymentData?.paymentMethod?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
     }
 
@@ -94,6 +111,24 @@ internal final class PXPaymentFlowModel: NSObject {
         return isOfflinePayment() && instructionsInfo == nil
     }
 
+    func needToShowPaymentPluginScreenForPaymentPlugin() -> Bool {
+        if !needToCreatePayment() {
+            return false
+        }
+       return hasPluginPaymentScreen(plugin: paymentPlugin)
+    }
+
+    func needToShowPaymentPluginScreenForPaymentMethodPlugin() -> Bool {
+        if !needToCreatePayment() {
+            return false
+        }
+        return hasPluginPaymentScreen(plugin: paymentMethodPaymentPlugin)
+    }
+
+    func needToShowPaymentPluginScreen() -> Bool {
+        return hasPluginPaymentScreen(plugin: paymentPlugin) || hasPluginPaymentScreen(plugin: paymentMethodPaymentPlugin)
+    }
+
     func isOfflinePayment() -> Bool {
         guard let paymentTypeId = paymentData?.paymentMethod?.paymentTypeId else {
             return false
@@ -106,5 +141,16 @@ internal final class PXPaymentFlowModel: NSObject {
             PXCheckoutStore.sharedInstance.paymentData = paymentData
         }
         PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference
+    }
+}
+
+extension PXPaymentFlowModel {
+    func hasPluginPaymentScreen(plugin: PXPaymentPluginComponent?) -> Bool {
+        guard let paymentPlugin = plugin else {
+            return false
+        }
+        assignToCheckoutStore()
+        let view = paymentPlugin.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared)
+        return  view != nil
     }
 }
