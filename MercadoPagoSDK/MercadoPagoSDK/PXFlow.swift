@@ -7,6 +7,13 @@
 //
 
 import Foundation
+
+enum PXFlowStatus {
+    case ready
+    case running
+    case finished
+}
+
 protocol PXFlow {
 
     // Step logic

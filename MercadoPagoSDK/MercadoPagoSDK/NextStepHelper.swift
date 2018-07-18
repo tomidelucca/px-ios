@@ -11,9 +11,6 @@ import MercadoPagoServicesV4
 
 extension MercadoPagoCheckoutViewModel {
 
-    func needSearch() -> Bool {
-        return search == nil
-    }
     func isPaymentTypeSelected() -> Bool {
 
         let hasPaymentWithInvalidESC = paymentData.hasPaymentMethod() && !paymentData.hasToken() && paymentResult != nil && paymentResult!.isInvalidESC()
@@ -281,27 +278,6 @@ extension MercadoPagoCheckoutViewModel {
         return self.isCheckoutComplete()
     }
 
-    func filterCampaignsByCodeType(campaigns: [PXCampaign]?, _ codeType: String) -> [PXCampaign]? {
-        if let campaigns = campaigns {
-            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
-                return campaign.codeType == codeType
-            }
-            if filteredCampaigns.isEmpty {
-                return nil
-            }
-            return filteredCampaigns
-        }
-        return nil
-    }
-
-    func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: self.campaigns, "none") != nil && isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && !Array.isNullOrEmpty(self.campaigns)
-    }
-
-    func needToSearchCampaign() -> Bool {
-        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil) && self.campaigns == nil
-    }
-
     func needToCreatePayment() -> Bool {
         if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
             return readyToPay
@@ -331,10 +307,6 @@ extension MercadoPagoCheckoutViewModel {
         }
     }
 
-    func needValidatePreference() -> Bool {
-        return !self.needLoadPreference && !self.preferenceValidated
-    }
-
     func hasSavedESC() -> Bool {
         guard let pmSelected = self.paymentOptionSelected else {
             return false
@@ -346,7 +318,15 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
-    func isDiscountEnable() -> Bool {
-         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
+    func needToInitFlow() -> Bool {
+        if let initialFlow = initFlow, (initialFlow.getStatus() == .ready
+            || initialFlow.getStatus() == .running) {
+            return true
+        } else {
+            if initFlow == nil {
+                return true
+            }
+        }
+        return false
     }
 }

@@ -7,7 +7,12 @@
 //
 
 import Foundation
+<<<<<<< HEAD:MercadoPagoSDK/MercadoPagoSDK/Flows/One tap/OneTapFlowModel.swift
 class OneTapFlowModel: NSObject, PXFlowModel {
+=======
+
+class OneTapFlowViewModel: NSObject, PXFlowModel {
+>>>>>>> origin/development:MercadoPagoSDK/MercadoPagoSDK/One tap/OneTapFlowViewModel.swift
 
     enum Steps: String {
         case finish
@@ -165,8 +170,6 @@ extension OneTapFlowModel {
     }
 
     func hasSavedESC() -> Bool {
-//        // TODO: Remove
-        //return esc
         if let card = paymentOptionSelected as? CardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
