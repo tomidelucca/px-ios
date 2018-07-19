@@ -207,7 +207,7 @@ extension PXDiscountCodeInputViewController {
                         }, {
                             strongSelf.spinner?.hide()
                             strongSelf.textfield?.isEnabled = true
-                            strongSelf.showError(with: "grupos fallo")
+                            strongSelf.showError(with: "discount_input_modal_service_error".localized_beta)
                         })
                     }
                 }

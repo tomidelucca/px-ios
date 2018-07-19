@@ -9,8 +9,12 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
+protocol Updeteable {
+    func update()
+}
+
 @objcMembers
-open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
+open class MercadoPagoUIViewController: UIViewController, Updeteable, UIGestureRecognizerDelegate {
 
     open var callbackCancel: (() -> Void)?
     var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
@@ -50,6 +54,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        update()
         UIApplication.shared.statusBarStyle = ThemeManager.shared.statusBarStyle()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.loadMPStyles()
@@ -243,6 +248,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         #if DEBUG
             print("DEINIT - \(self)")
         #endif
+    }
+
+    func update() {
+
     }
 
 }

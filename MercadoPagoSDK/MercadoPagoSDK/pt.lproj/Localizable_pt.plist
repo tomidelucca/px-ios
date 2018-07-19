@@ -319,6 +319,13 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Complete esse dado</string>
 	</dict>
+	<key>discount_input_modal_service_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Algo deu errado, tente novamente</string>
+	</dict>
 	<key>discount_input_success_modal_title</key>
 	<dict>
 		<key>comment</key>

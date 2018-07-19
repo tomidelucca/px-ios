@@ -234,4 +234,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         return self.viewModel.getTitle()
     }
 
+    override func update() {
+        self.viewModel.updateBeforeRender()
+    }
+
 }
