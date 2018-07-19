@@ -9,12 +9,12 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
-protocol Updeteable {
+protocol PXUpdatable {
     func update()
 }
 
 @objcMembers
-open class MercadoPagoUIViewController: UIViewController, Updeteable, UIGestureRecognizerDelegate {
+open class MercadoPagoUIViewController: UIViewController, PXUpdatable, UIGestureRecognizerDelegate {
 
     open var callbackCancel: (() -> Void)?
     var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
