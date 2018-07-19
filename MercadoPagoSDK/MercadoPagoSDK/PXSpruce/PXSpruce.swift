@@ -29,7 +29,8 @@ import UIKit
 internal struct PXSpruce {
 
     struct PXDefaultAnimation {
-        static let appearAnimation: [StockAnimation] = [.slide(.up, .severely), .fadeIn]
+        static let slideUpAnimation: [StockAnimation] = [.slide(.up, .moderately), .fadeIn]
+        static let rightToLeftAnimation: [StockAnimation] = [.slide(.left, .slightly), .fadeIn]
         static let appearSortFunction: SortFunction = LinearSortFunction(direction: .topToBottom, interObjectDelay: 0.2)
     }
 

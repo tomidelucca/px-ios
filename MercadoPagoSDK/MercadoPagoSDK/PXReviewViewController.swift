@@ -265,7 +265,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Procesando tu pago".localized) {
+        let payAction = PXComponentAction(label: "Confirmar".localized) {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
                 self.loadingButtonComponent?.startLoading(loadingText: "Procesando tu pago", retryText: "Confirmar", timeOut: self.timeOutPayButton)

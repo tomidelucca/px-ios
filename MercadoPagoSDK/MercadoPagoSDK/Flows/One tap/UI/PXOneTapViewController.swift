@@ -88,16 +88,18 @@ extension PXOneTapViewController {
     private func setupNavigationBar() {
         navBarTextColor = ThemeManager.shared.labelTintColor()
         loadMPStyles()
-        self.navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.whiteColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
-        self.navigationController?.navigationBar.backgroundColor =  UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        navigationController?.navigationBar.backgroundColor =  UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     }
 
     private func setupUI() {
         if contentView.getSubviews().isEmpty {
             renderViews()
+            super.prepareForAnimation(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
+            super.animateContentView(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
         }
     }
 
@@ -115,7 +117,7 @@ extension PXOneTapViewController {
 
         // Add payment method.
         if let paymentMethodView = getPaymentMethodComponentView() {
-            contentView.addSubviewToBottom(paymentMethodView, withMargin: PXLayout.S_MARGIN)
+            contentView.addSubviewToBottom(paymentMethodView, withMargin: PXLayout.M_MARGIN)
             PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             let paymentMethodTapAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldChangePaymentMethod))
@@ -123,7 +125,7 @@ extension PXOneTapViewController {
         }
 
         // Add discount terms and conditions.
-        if self.viewModel.shouldShowDiscountTermsAndCondition() {
+        if viewModel.shouldShowDiscountTermsAndCondition() {
             let discountTCView = getDiscountTermsAndConditionView()
             discountTermsConditionView = discountTCView
             contentView.addSubviewToBottom(discountTCView, withMargin: PXLayout.S_MARGIN)
@@ -143,9 +145,7 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         refreshContentViewSize()
-        if centerContentView() {
-            contentView.animateContentOnY()
-        }
+        let _ = centerContentView()
     }
 }
 

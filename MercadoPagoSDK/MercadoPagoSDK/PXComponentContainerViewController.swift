@@ -69,6 +69,12 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         }
         return false
     }
+
+    func setBackground(color: UIColor?) {
+        view.backgroundColor = color
+        scrollView.backgroundColor = color
+        contentView.setBackground(color: color)
+    }
 }
 
 // MARK: Elastic header.
@@ -156,12 +162,19 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
 }
 
 extension PXComponentContainerViewController {
-    func animateContentView() {
-        contentView.getContentView().pxSpruce.animate(PXSpruce.PXDefaultAnimation.appearAnimation, sortFunction: PXSpruce.PXDefaultAnimation.appearSortFunction)
-
+    func animateContentView(customAnimations: [StockAnimation]? = nil) {
+        if let animationCustom = customAnimations {
+            contentView.getContentView().pxSpruce.animate(animationCustom, sortFunction: PXSpruce.PXDefaultAnimation.appearSortFunction)
+        } else {
+            contentView.getContentView().pxSpruce.animate(PXSpruce.PXDefaultAnimation.slideUpAnimation, sortFunction: PXSpruce.PXDefaultAnimation.appearSortFunction)
+        }
     }
 
-    func prepareForAnimation() {
-        contentView.getContentView().pxSpruce.prepare(with: PXSpruce.PXDefaultAnimation.appearAnimation)
+    func prepareForAnimation(customAnimations: [StockAnimation]? = nil) {
+        if let animationCustom = customAnimations {
+            contentView.getContentView().pxSpruce.prepare(with: animationCustom)
+        } else {
+            contentView.getContentView().pxSpruce.prepare(with: PXSpruce.PXDefaultAnimation.slideUpAnimation)
+        }
     }
 }

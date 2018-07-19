@@ -59,7 +59,7 @@ internal struct StandardAnimation: Animation {
         }
         forView.alpha = 1
         for subView in forView.subviews {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.45, animations: {
                 subView.alpha = 1
             })
         }

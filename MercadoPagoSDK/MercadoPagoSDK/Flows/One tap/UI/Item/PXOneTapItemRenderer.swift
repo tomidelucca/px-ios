@@ -75,7 +75,7 @@ final class PXOneTapItemRenderer {
         itemView.discountDescription = buildDiscountDescription(with: itemComponent.props.discountDescription, discountLimit: itemComponent.props.discountLimit)
 
         if let discountDescription = itemView.discountDescription {
-            itemView.addSubviewToBottom(discountDescription, withMargin: PXLayout.XXS_MARGIN)
+            itemView.addSubviewToBottom(discountDescription, withMargin: PXLayout.XS_MARGIN)
             PXLayout.centerHorizontally(view: discountDescription).isActive = true
             PXLayout.matchWidth(ofView: discountDescription, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
