@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?)
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?)
 
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
@@ -180,7 +180,7 @@ extension InitFlowModel {
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && !directDiscountSearchStatus && properties.paymentData.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
+        return filterCampaignsByCodeType(campaigns: properties.campaigns, CodeType.NONE.rawValue) != nil && !directDiscountSearchStatus && properties.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
     }
 
     func needToSearchCampaign() -> Bool {

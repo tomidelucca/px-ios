@@ -317,7 +317,7 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Complete este campo</string>
+		<string>Complete esse dado</string>
 	</dict>
 	<key>discount_input_success_modal_title</key>
 	<dict>
