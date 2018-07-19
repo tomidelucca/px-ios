@@ -353,4 +353,25 @@ extension MercadoPagoCheckout {
 
         })
     }
+
+    //Discount Flow Services
+    func getPaymentMethodSearch(successBlock:@escaping (PaymentMethodSearch) -> Void, errorBlock:@escaping (NSError) -> Void) {
+
+        let paymentMethodPluginsToShow = viewModel.paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
+        var pluginIds = [String]()
+        for plugin in paymentMethodPluginsToShow {
+            pluginIds.append(plugin.getId())
+        }
+
+        let cardIdsWithEsc = viewModel.mpESCManager.getSavedCardIds()
+
+        let exclusions: MercadoPagoServicesAdapter.PaymentSearchExclusions = (viewModel.initFlow?.model.getExcludedPaymentTypesIds(), viewModel.initFlow?.model.getExcludedPaymentMethodsIds())
+        let oneTapInfo: MercadoPagoServicesAdapter.PaymentSearchOneTapInfo = (cardIdsWithEsc, pluginIds)
+
+        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, defaultPaymentMethod: viewModel.initFlow?.model.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { (paymentMethodSearch) in
+            successBlock(paymentMethodSearch)
+        }, failure: { (error) in
+            errorBlock(error)
+        })
+    }
 }
