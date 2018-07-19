@@ -14,7 +14,7 @@ extension MercadoPagoCheckout {
 
         viewModel.paymentData.clearCollectedData()
 
-        paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
+        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
 
             guard let strongSelf = self else {
                 errorBlock()
@@ -25,7 +25,7 @@ extension MercadoPagoCheckout {
 
             strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
                 strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
-                strongSelf.paymentMethodSelectionStep?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+                strongSelf.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
                 successBlock()
                 strongSelf.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
                 return
@@ -46,7 +46,7 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
         })
 
-        self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep!, animated: true)
+        self.pxNavigationHandler.pushViewController(viewController: paymentMethodSelectionStep, animated: true)
     }
 
     func showCardForm() {
@@ -134,7 +134,7 @@ extension MercadoPagoCheckout {
 
                     //Update Payment Method Search
                     strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
-                    strongSelf.paymentMethodSelectionStep?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+                    strongSelf.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
 
                     //Update Payer Costs
                     strongSelf.viewModel.payerCosts = installments[0].payerCosts

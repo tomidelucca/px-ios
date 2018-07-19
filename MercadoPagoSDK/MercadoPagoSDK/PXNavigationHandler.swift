@@ -137,10 +137,18 @@ class PXNavigationHandler: NSObject {
     }
 
     func cleanDuplicatedPaymentVaultsFromNavigationStack() {
-        let  pxVaults = self.navigationController.viewControllers.filter {$0.isKind(of: PaymentVaultViewController.self)}
-        let pxLastVault = pxVaults.last
-        let  vcs = self.navigationController.viewControllers.filter {!$0.isKind(of: PaymentVaultViewController.self) || $0 == pxLastVault}
+        let pxLastVault = getLastPaymentVaultViewControllerFromStack()
+        let vcs = self.navigationController.viewControllers.filter {(!$0.isKind(of: PaymentVaultViewController.self) || $0 == pxLastVault) && !$0.isKind(of: PXDiscountCodeInputViewController.self)}
+
         self.navigationController.viewControllers = vcs
+    }
+
+    func getLastPaymentVaultViewControllerFromStack() -> PaymentVaultViewController? {
+        let pxVaults = self.navigationController.viewControllers.filter {$0.isKind(of: PaymentVaultViewController.self)}
+        if let paymentVaultViewController = pxVaults.last as? PaymentVaultViewController {
+            return paymentVaultViewController
+        }
+        return nil
     }
 }
 

@@ -26,8 +26,6 @@ open class MercadoPagoCheckout: NSObject {
     var viewModel: MercadoPagoCheckoutViewModel
     var pxNavigationHandler: PXNavigationHandler
 
-    var paymentMethodSelectionStep: PaymentVaultViewController?
-
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
