@@ -180,7 +180,7 @@ extension InitFlowModel {
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: properties.campaigns, CodeType.NONE.rawValue) != nil && !directDiscountSearchStatus && properties.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
+        return MercadoPagoCheckoutViewModel.filterCampaignsByCodeType(campaigns: properties.campaigns, CodeType.NONE.rawValue) != nil && !directDiscountSearchStatus && properties.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
     }
 
     func needToSearchCampaign() -> Bool {
@@ -204,18 +204,5 @@ extension InitFlowModel {
 
     private func hasError() -> Bool {
         return flowError != nil
-    }
-
-    private func filterCampaignsByCodeType(campaigns: [PXCampaign]?, _ codeType: String) -> [PXCampaign]? {
-        if let campaigns = campaigns {
-            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
-                return campaign.codeType == codeType
-            }
-            if filteredCampaigns.isEmpty {
-                return nil
-            }
-            return filteredCampaigns
-        }
-        return nil
     }
 }
