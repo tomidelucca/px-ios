@@ -123,6 +123,12 @@ class Utils {
         return getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis)
     }
 
+    class func getStrikethroughAmount(amount: Double, forCurrency currency: Currency, addingParenthesis: Bool = false) -> NSMutableAttributedString {
+        let formatedAttrAmount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis).toAttributedString()
+        formatedAttrAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: formatedAttrAmount.string.count))
+        return formatedAttrAmount
+    }
+
     class func getAttributedAmount(withAttributes attributes: [NSAttributedStringKey: Any], amount: Double, currency: Currency, negativeAmount: Bool) -> NSMutableAttributedString {
 
         let amount = getAmountFormatted(amount: amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, addingCurrencySymbol: currency.symbol, addingParenthesis: false)

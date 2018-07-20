@@ -148,8 +148,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
                 amount = payerCostTotalAmount + self.amountHelper.amountOff
             }
 
-            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.strikethroughStyle: 1]
-            let preferenceAmountString = Utils.getAttributedAmount(withAttributes: attributes, amount: amount, currency: currency, negativeAmount: false)
+            let preferenceAmountString = Utils.getStrikethroughAmount(amount: amount, forCurrency: currency)
 
             if subtitle == nil {
                 subtitle = preferenceAmountString
@@ -157,7 +156,6 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
                 subtitle?.append(String.NON_BREAKING_LINE_SPACE.toAttributedString())
                 subtitle?.append(preferenceAmountString)
             }
-
         }
 
         var pmDescription: String = ""
