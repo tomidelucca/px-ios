@@ -46,7 +46,7 @@ internal class PXAnimatedButton: UIButton {
 // MARK: Animations
 extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func startLoading(timeOut: TimeInterval = 15.0) {
-        progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.03, green: 0.33, blue: 0.85, alpha: 1.0), timeOut: timeOut)
+        progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.2666367292, green: 0.2666876018, blue: 0.2666300237, alpha: 0.3), timeOut: timeOut)
         progressView?.progressDelegate = self
         setTitle(loadingText, for: .normal)
         status = .loading
@@ -122,7 +122,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func shake() {
         status = .shaking
         resetButton()
-        setTitle(normalText, for: .normal)
+        setTitle(retryText, for: .normal)
         UIView.animate(withDuration: 0.1, animations: {
             self.backgroundColor = ThemeManager.shared.rejectedColor()
         }, completion: { _ in
