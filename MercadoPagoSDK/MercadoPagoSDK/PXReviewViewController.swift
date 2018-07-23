@@ -263,7 +263,7 @@ extension PXReviewViewController {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingFloatingButtonComponent)
-                self.loadingFloatingButtonComponent?.startLoading(loadingText: "Procesando tu pago".localized, retryText: "Confirmar", timeOut: self.timeOutPayButton)
+                self.loadingFloatingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
             }
             self.confirmPayment()
             }, animationDelegate: self))
@@ -278,7 +278,7 @@ extension PXReviewViewController {
         let payAction = PXComponentAction(label: "Confirmar".localized) {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
-                self.loadingButtonComponent?.startLoading(loadingText: "Procesando tu pago", retryText: "Confirmar", timeOut: self.timeOutPayButton)
+                self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
             }
             self.confirmPayment()
         }

@@ -8,17 +8,26 @@
 
 import Foundation
 
-protocol PXAnimatedButtonDelegate: NSObjectProtocol {
-    func expandAnimationInProgress()
-    func didFinishAnimation()
-    func progressButtonAnimationTimeOut()
-    func shakeDidFinish()
-}
-
 internal class PXAnimatedButton: UIButton {
     weak var animationDelegate: PXAnimatedButtonDelegate?
     var progressView: ProgressView?
     var status: Status = .normal
+
+    let normalText: String
+    let loadingText: String
+    let retryText: String
+
+    init(normalText: String, loadingText: String, retryText: String) {
+        self.normalText = normalText
+        self.loadingText = loadingText
+        self.retryText = retryText
+        super.init(frame: .zero)
+        setTitle(normalText, for: .normal)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     enum FinishStyle: Int {
         case warning
@@ -34,8 +43,9 @@ internal class PXAnimatedButton: UIButton {
     }
 }
 
+// MARK: Animations
 extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
-    func startLoading(loadingText: String, retryText: String, timeOut: TimeInterval = 15.0) {
+    func startLoading(timeOut: TimeInterval = 15.0) {
         progressView = ProgressView(forView: self, loadingColor: #colorLiteral(red: 0.03, green: 0.33, blue: 0.85, alpha: 1.0), timeOut: timeOut)
         progressView?.progressDelegate = self
         setTitle(loadingText, for: .normal)
@@ -76,10 +86,10 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                                 if #available(iOS 10.0, *) {
                                     let notification = UINotificationFeedbackGenerator()
                                     if style == .success {
-                                            notification.notificationOccurred(.success)
-                                        } else {
-                                            notification.notificationOccurred(.error)
-                                        }
+                                        notification.notificationOccurred(.success)
+                                    } else {
+                                        notification.notificationOccurred(.error)
+                                    }
                                 }
 
                                 UIView.animate(withDuration: 0.6, animations: {
@@ -105,18 +115,6 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         })
     }
 
-    @objc func animateFinishSuccess() {
-        finishAnimatingButton(style: .success)
-    }
-
-    @objc func animateFinishError() {
-        finishAnimatingButton(style: .error)
-    }
-
-    @objc func animateFinishWarning() {
-        finishAnimatingButton(style: .warning)
-    }
-
     func didFinishProgress() {
         progressView?.doReset()
     }
@@ -124,7 +122,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func shake() {
         status = .shaking
         resetButton()
-        setTitle("Reintentar".localized, for: .normal)
+        setTitle(normalText, for: .normal)
         UIView.animate(withDuration: 0.1, animations: {
             self.backgroundColor = ThemeManager.shared.rejectedColor()
         }, completion: { _ in
@@ -164,6 +162,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     }
 }
 
+// MARK: Business Logic
 extension PXAnimatedButton {
     func getColor(style: FinishStyle) -> UIColor {
         switch style {
@@ -185,5 +184,17 @@ extension PXAnimatedButton {
         case .warning:
             return MercadoPago.getImage("one_tap_button_error")
         }
+    }
+
+    @objc func animateFinishSuccess() {
+        finishAnimatingButton(style: .success)
+    }
+
+    @objc func animateFinishError() {
+        finishAnimatingButton(style: .error)
+    }
+
+    @objc func animateFinishWarning() {
+        finishAnimatingButton(style: .warning)
     }
 }
