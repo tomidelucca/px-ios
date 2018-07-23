@@ -321,6 +321,8 @@
 		4B2EC4A320FFC26F008D03F8 /* InitFlow+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49920FFC26F008D03F8 /* InitFlow+Services.swift */; };
 		4B2EC4A620FFC2A5008D03F8 /* InitFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4A520FFC2A5008D03F8 /* InitFlow.swift */; };
 		4B2EC4A720FFC2A5008D03F8 /* InitFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4A520FFC2A5008D03F8 /* InitFlow.swift */; };
+		4B2EC4AD21001EC9008D03F8 /* PaymentFlow+Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4AC21001EC9008D03F8 /* PaymentFlow+Screens.swift */; };
+		4B2EC4AE21001EC9008D03F8 /* PaymentFlow+Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC4AC21001EC9008D03F8 /* PaymentFlow+Screens.swift */; };
 		4B34DC3D1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */; };
 		4B40DAB01E3781EB00B65B9D /* FlowPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */; };
 		4B48541C204825C0001C0921 /* PXItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B48541B204825C0001C0921 /* PXItemComponent.swift */; };
@@ -1052,6 +1054,7 @@
 		4B2EC49820FFC26F008D03F8 /* InitFlowModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitFlowModel.swift; sourceTree = "<group>"; };
 		4B2EC49920FFC26F008D03F8 /* InitFlow+Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InitFlow+Services.swift"; sourceTree = "<group>"; };
 		4B2EC4A520FFC2A5008D03F8 /* InitFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitFlow.swift; sourceTree = "<group>"; };
+		4B2EC4AC21001EC9008D03F8 /* PaymentFlow+Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PaymentFlow+Screens.swift"; sourceTree = "<group>"; };
 		4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultScreenPreferenceTest.swift; sourceTree = "<group>"; };
 		4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreferenceTest.swift; sourceTree = "<group>"; };
 		4B48541B204825C0001C0921 /* PXItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXItemComponent.swift; sourceTree = "<group>"; };
@@ -2262,6 +2265,7 @@
 				4BCE250120FCFA7400073F32 /* PXPaymentFlow+Services.swift */,
 				4BCE250420FD00EC00073F32 /* PXPaymentFlowModel.swift */,
 				4BA908D220FE6FDC0097BA27 /* PXPaymentPluginHandler.swift */,
+				4B2EC4AC21001EC9008D03F8 /* PaymentFlow+Screens.swift */,
 			);
 			path = PaymentFlow;
 			sourceTree = "<group>";
@@ -3531,6 +3535,7 @@
 				76743C7B1C46951100120347 /* PaymentType.swift in Sources */,
 				FC239B002045D01800286B01 /* PXComponentAction.swift in Sources */,
 				4BAA55EF1DB0019200501061 /* PayerCostRowTableViewCell.swift in Sources */,
+				4B2EC4AD21001EC9008D03F8 /* PaymentFlow+Screens.swift in Sources */,
 				814139BE202A052700824A10 /* PXPluginConfigViewController.swift in Sources */,
 				C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */,
 				4BAD089F20F006B000F3A77F /* PXOneTapViewModel+PaymentMethodComponent.swift in Sources */,
@@ -3863,6 +3868,7 @@
 				FC05809620A5DB4900BBECB8 /* PXBankDealComponentRenderer.swift in Sources */,
 				4BEF81011E538CCE00797CD1 /* PaymentResultScreenPreference.swift in Sources */,
 				23C3892E20AC432D001EFDA9 /* PXFooterView.swift in Sources */,
+				4B2EC4AE21001EC9008D03F8 /* PaymentFlow+Screens.swift in Sources */,
 				FC3FC86D1FBE11C500CF29E1 /* PXInstructionsReferenceComponent.swift in Sources */,
 				4B4E23171FFFF182007E8FDD /* PXHeaderComponentTest.swift in Sources */,
 				4B760D07204DB5E5001E4976 /* PXItemComponent.swift in Sources */,

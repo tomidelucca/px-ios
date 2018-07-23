@@ -81,48 +81,9 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     func exitCheckout() {}
 
-    fileprivate func showPaymentPluginComponent(paymentPluginComponent: PXPaymentPluginComponent?) {
-        guard let paymentPluginComponent = paymentPluginComponent else {
-            return
-        }
-
-        let containerVC = MercadoPagoUIViewController()
-
-        // By feature definition. Back is not available in make payment plugin.
-        containerVC.shouldShowBackArrow = false
-
-        model.assignToCheckoutStore()
-        paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
-
-        // Create navigation handler.
-        paymentPluginComponent.navigationHandlerForPaymentPlugin?(navigationHandler: PXPaymentPluginNavigationHandler(flow: self))
-
-        if let navTitle = paymentPluginComponent.titleForNavigationBar?() {
-            containerVC.title = navTitle
-        }
-
-        if let navBarColor = paymentPluginComponent.colorForNavigationBar?() {
-            containerVC.setNavBarBackgroundColor(color: navBarColor)
-        }
-
-        if let shouldShowNavigationBar = paymentPluginComponent.shouldShowNavigationBar?() {
-            containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
-        }
-
-        if let paymentPluginComponentView = paymentPluginComponent.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            paymentPluginComponentView.removeFromSuperview()
-            paymentPluginComponentView.frame = containerVC.view.frame
-            paymentPluginComponentView.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-            containerVC.view.addSubview(paymentPluginComponentView)
-        }
-
-        //TODO: Change in Q2 - Payment processor by block. Not a view.
-        containerVC.view.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-        paymentPluginComponent.renderDidFinish?()
-
-        self.pxNavigationHandler.navigationController.pushViewController(containerVC, animated: false)
+    func cleanPayment() {
+        model.cleanData()
     }
-
 }
 
 extension PXPaymentFlow: PXPaymentFlowHandlerProtocol {

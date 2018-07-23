@@ -55,6 +55,8 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         self.checkFloatingButtonVisibility()
+        scrollView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,6 +65,14 @@ class PXReviewViewController: PXComponentContainerViewController {
             unsubscribeFromNotifications()
             showNavBarForAnimation()
         }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        loadingButtonComponent?.resetButton()
+        loadingButtonComponent?.setTitle("Confirmar".localized, for: .normal)
+        loadingFloatingButtonComponent?.resetButton()
+        loadingFloatingButtonComponent?.setTitle("Confirmar".localized, for: .normal)
     }
 
     override func trackInfo() {

@@ -798,6 +798,7 @@ extension MercadoPagoCheckoutViewModel {
         self.paymentResult = nil
         self.readyToPay = false
         self.setIsCheckoutComplete(isCheckoutComplete: false)
+        self.paymentFlow?.cleanPayment()
     }
 
     func prepareForClone() {

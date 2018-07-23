@@ -142,6 +142,12 @@ internal final class PXPaymentFlowModel: NSObject {
         }
         PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference
     }
+
+    func cleanData() {
+        paymentResult = nil
+        businessResult = nil
+        instructionsInfo = nil
+    }
 }
 
 extension PXPaymentFlowModel {

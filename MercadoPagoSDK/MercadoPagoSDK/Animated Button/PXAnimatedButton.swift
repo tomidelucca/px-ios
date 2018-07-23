@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AVFoundation
 
 protocol PXAnimatedButtonDelegate: NSObjectProtocol {
     func expandAnimationInProgress()
@@ -74,21 +73,18 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
                                 self.addSubview(iconImage)
 
-                                // Ver que hacer en los otros casos
-                                if style == .success {
-                                    if #available(iOS 10.0, *) {
-                                        let notification = UINotificationFeedbackGenerator()
-                                        notification.notificationOccurred(.success)
-                                    } else {
-                                        // Fallback on earlier versions
-                                    }
-                                    let systemSoundID: SystemSoundID = 1109
-                                    AudioServicesPlaySystemSound(systemSoundID)
+                                if #available(iOS 10.0, *) {
+                                    let notification = UINotificationFeedbackGenerator()
+                                    if style == .success {
+                                            notification.notificationOccurred(.success)
+                                        } else {
+                                            notification.notificationOccurred(.error)
+                                        }
                                 }
 
                                 UIView.animate(withDuration: 0.6, animations: {
                                     iconImage.alpha = 1
-                                    iconImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                                    iconImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                                 }) { _ in
 
                                     UIView.animate(withDuration: 0.4, animations: {
@@ -134,7 +130,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         }, completion: { _ in
             let animation = CABasicAnimation(keyPath: "position")
             animation.duration = 0.1
-            animation.repeatCount = 8
+            animation.repeatCount = 4
             animation.autoreverses = true
             animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 3, y: self.center.y))
             animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 3, y: self.center.y))
