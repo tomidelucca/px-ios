@@ -17,10 +17,12 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler) {
+    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PaymentData?, checkoutPreference: CheckoutPreference?) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, binaryMode: binaryMode, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
+        self.model.paymentData = paymentData
+        self.model.checkoutPreference = checkoutPreference
     }
 
     func setData(paymentData: PaymentData, checkoutPreference: CheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
@@ -67,6 +69,10 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         } else {
             return model.mercadoPagoServicesAdapter.getTimeOut() + instructionTimeOut
         }
+    }
+
+    func needToShowPaymentPluginScreen() -> Bool {
+        return model.needToCreatePaymentForPaymentMethodPaymentPlugin() || model.needToShowPaymentPluginScreenForPaymentMethodPlugin()
     }
 
     func finishFlow() {
