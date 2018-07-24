@@ -15,24 +15,23 @@ extension PXPaymentFlow {
 
         model.paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
 
-        if let createPayment = plugin.createPayment {
-            let paymentPluginResult = createPayment(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
+        plugin.createPayment?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, success: { [weak self] paymentPluginResult in
 
             if paymentPluginResult.statusDetail == RejectedStatusDetail.INVALID_ESC {
-                paymentErrorHandler?.escError()
+                self?.paymentErrorHandler?.escError()
                 return
             }
 
             let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
-            model.paymentResult = paymentResult
-            executeNextStep()
-        } else if let createPaymentForBussinessResult = plugin.createPaymentWithBusinessResult {
-            let businessResult = createPaymentForBussinessResult(PXCheckoutStore.sharedInstance, self as PXPaymentFlowHandlerProtocol)
-            model.businessResult = businessResult
-            executeNextStep()
-        } else {
-            showErrorScreen(message: "Hubo un error".localized, errorDetails: "", retry: false)
-        }
+            self?.model.paymentResult = paymentResult
+            self?.executeNextStep()
+        })
+
+        plugin.createPaymentWithBusinessResult?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, success: { [weak self] businessResult in
+            self?.model.businessResult = businessResult
+            self?.executeNextStep()
+        })
+
     }
 
     func createPayment() {
