@@ -15,21 +15,19 @@ extension PXPaymentFlow {
 
         model.paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
 
-        plugin.createPayment?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, success: { [weak self] paymentPluginResult in
-
-            if paymentPluginResult.statusDetail == RejectedStatusDetail.INVALID_ESC {
-                self?.paymentErrorHandler?.escError()
-                return
-            }
-
-            let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
-            self?.model.paymentResult = paymentResult
-            self?.executeNextStep()
-        })
-
-        plugin.createPaymentWithBusinessResult?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, success: { [weak self] businessResult in
+        plugin.createPayment?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, successWithBusinessResult: { [weak self] businessResult in
             self?.model.businessResult = businessResult
             self?.executeNextStep()
+            }, successWithPaymentResult: { [weak self] paymentPluginResult in
+
+                if paymentPluginResult.statusDetail == RejectedStatusDetail.INVALID_ESC {
+                    self?.paymentErrorHandler?.escError()
+                    return
+                }
+
+                let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
+                self?.model.paymentResult = paymentResult
+                self?.executeNextStep()
         })
 
     }

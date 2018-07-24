@@ -72,7 +72,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
     }
 
     func needToShowPaymentPluginScreen() -> Bool {
-        return model.needToCreatePaymentForPaymentMethodPaymentPlugin() || model.needToShowPaymentPluginScreenForPaymentMethodPlugin()
+        return model.needToShowPaymentPluginScreenForPaymentPlugin() || model.needToShowPaymentPluginScreenForPaymentMethodPlugin()
     }
 
     func finishFlow() {
