@@ -57,6 +57,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
+        setupNavigationBar()
+        setupUI()
     }
 }
 
@@ -70,13 +72,12 @@ extension PXOneTapViewController {
     }
 
     private func setupUI() {
-        if contentView.getSubviews().isEmpty {
-            renderViews()
-        }
+        renderViews()
     }
 
     private func renderViews() {
         contentView.prepareForRender()
+        contentView.removeAllSubviews()
 
         // Add item-price view.
         if let itemView = getItemComponentView() {

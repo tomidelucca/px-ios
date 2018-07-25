@@ -150,6 +150,14 @@ class PXNavigationHandler: NSObject {
         }
         return nil
     }
+
+    func getOneTapViewControllerFromStack() -> PXOneTapViewController? {
+        let oneTapVCs = self.navigationController.viewControllers.filter {$0.isKind(of: PXOneTapViewController.self)}
+        if let oneTapViewController = oneTapVCs.last as? PXOneTapViewController {
+            return oneTapViewController
+        }
+        return nil
+    }
 }
 
 extension PXNavigationHandler {

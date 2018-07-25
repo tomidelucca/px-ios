@@ -25,10 +25,10 @@ extension MercadoPagoCheckoutViewModel {
 
         // Create init flow.
         initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse, pxCampaigns, pxDiscount) in
-            self?.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
             self?.campaigns = pxCampaigns
             self?.checkoutPreference = checkoutPreference
             self?.attemptToApplyDiscount(discount: pxDiscount)
+            self?.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
             self?.initFlowProtocol?.didFinishInitFlow()
         }, errorCallback: { [weak self] initFlowError in
             self?.initFlowProtocol?.didFailInitFlow(flowError: initFlowError)

@@ -562,8 +562,14 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if totalPaymentMethodsToShow == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
-        } else if totalPaymentMethodsToShow == 1, self.amountHelper.discount == nil {
-            autoselectOnlyPaymentMethod()
+        } else if totalPaymentMethodsToShow ==  1 {
+            if self.amountHelper.discount == nil, self.shouldShowDiscountInput() {
+                if let defaultGroup = paymentMethodSearch.groups.first, defaultGroup.hasChildren() {
+                    autoselectOnlyPaymentMethod()
+                }
+            } else {
+                autoselectOnlyPaymentMethod()
+            }
         }
     }
 

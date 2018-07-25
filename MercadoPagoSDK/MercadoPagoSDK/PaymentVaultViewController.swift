@@ -231,12 +231,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.collectionSearch.dataSource = self
         self.collectionSearch.reloadData()
         self.loadingGroups = false
-
-        if self.viewModel.getDisplayedPaymentMethodsCount() == 1 {
-            if let paymentOptionDefault = self.viewModel.getPaymentMethodOption(row: 0) as? PaymentMethodOption {
-                self.callback(paymentOptionDefault)
-            }
-        }
     }
 
     fileprivate func registerAllCells() {

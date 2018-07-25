@@ -31,7 +31,15 @@ extension MercadoPagoCheckout {
 
                 //Update Payment Method Search
                 strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+                strongSelf.viewModel.paymentOptionSelected = nil
+                strongSelf.viewModel.rootVC = true
                 strongSelf.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+
+                if strongSelf.viewModel.needOneTapFlow() {
+                    let viewMod = PXOneTapViewModel(amountHelper: strongSelf.viewModel.amountHelper, paymentOptionSelected: strongSelf.viewModel.paymentOptionSelected!, reviewScreenPreference: strongSelf.viewModel.reviewScreenPreference)
+                    strongSelf.pxNavigationHandler.getOneTapViewControllerFromStack()?.update(viewModel: viewMod)
+                    strongSelf.viewModel.search?.oneTap = nil
+                }
                 successBlock()
                 strongSelf.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
                 return

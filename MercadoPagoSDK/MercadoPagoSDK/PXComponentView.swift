@@ -96,6 +96,12 @@ import Foundation
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func removeAllSubviews() {
+        for view in contentView.subviews {
+            view.removeFromSuperview()
+        }
+    }
+
     override public func addSubview(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
