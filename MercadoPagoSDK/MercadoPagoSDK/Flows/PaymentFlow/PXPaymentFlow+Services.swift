@@ -70,7 +70,7 @@ extension PXPaymentFlow {
 
                 // Identification number error
             } else if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_PAYMENT_IDENTIFICATION_NUMBER.rawValue) {
-                self?.paymentErrorHandler?.identificationError()
+                self?.paymentErrorHandler?.identificationError?()
 
             } else {
                 self?.showError(error: mpError)
