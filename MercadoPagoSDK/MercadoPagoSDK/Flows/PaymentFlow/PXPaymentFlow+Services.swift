@@ -73,7 +73,7 @@ extension PXPaymentFlow {
                 self?.paymentErrorHandler?.identificationError()
 
             } else {
-                self?.showErrorScreen(error: mpError)
+                self?.showError(error: mpError)
             }
 
         })
@@ -99,7 +99,7 @@ extension PXPaymentFlow {
             }, failure: {[weak self] (error) in
 
                 let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTRUCTIONS.rawValue)
-                self?.showErrorScreen(error: mpError)
+                self?.showError(error: mpError)
 
         })
     }

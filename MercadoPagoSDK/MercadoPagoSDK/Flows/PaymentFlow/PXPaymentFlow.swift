@@ -93,12 +93,12 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 }
 
 extension PXPaymentFlow: PXPaymentFlowHandlerProtocol {
-    public func showErrorScreen(message: String, errorDetails: String, retry: Bool = true) {
-        let error = MPSDKError(message: message, errorDetail: errorDetails, retry: retry)
+    public func showError() {
+        let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: false)
         resultHandler?.finishPaymentFlow(error: error)
     }
 
-    func showErrorScreen(error: MPSDKError) {
+    func showError(error: MPSDKError) {
         resultHandler?.finishPaymentFlow(error: error)
     }
 }
