@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers
 open class PurchaseDetailTableViewCell: UITableViewCell {
@@ -29,7 +30,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    internal func fillCell(_ title: String, amount: Double, currency: Currency, payerCost: PayerCost? = nil) {
+    internal func fillCell(_ title: String, amount: Double, currency: PXCurrency, payerCost: PayerCost? = nil) {
 
         //Deafult values for cells
         self.purchaseDetailTitle.text = title.localized
@@ -54,7 +55,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         } else {
-            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 18, centsFontSize: 12, baselineOffset: 5)
+            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: ThemeManager.shared.boldLabelTintColor(), fontSize: 18, centsFontSize: 12, baselineOffset: 5)
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }

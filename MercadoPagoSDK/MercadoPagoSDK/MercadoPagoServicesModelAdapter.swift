@@ -13,34 +13,8 @@ extension MercadoPagoServicesAdapter {
 
     open func getPXSiteFromId(_ siteId: String) -> PXSite {
         let currency = MercadoPagoContext.getCurrency()
-        let pxCurrency = getPXCurrencyFromCurrency(currency)
-        let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
+        let pxSite = PXSite(id: siteId, currencyId: currency.id)
         return pxSite
-    }
-
-    open func getPXCurrencyFromCurrency(_ currency: Currency) -> PXCurrency {
-        let id: String = currency.currencyId
-        let description: String = currency.currencyDescription
-        let symbol: String = currency.symbol
-        let decimalPlaces: Int = currency.decimalPlaces
-        let decimalSeparator: String = currency.decimalSeparator
-        let thousandSeparator: String = currency.thousandsSeparator
-        let pxCurrency = PXCurrency(id: id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
-        return pxCurrency
-    }
-
-    open func getCurrencyFromPXCurrency(_ pxCurrency: PXCurrency?) -> Currency {
-        if let pxCurrency = pxCurrency {
-            let currencyId: String = pxCurrency.id
-            let description: String = pxCurrency._description ?? ""
-            let symbol: String = pxCurrency.symbol ?? "$"
-            let decimalPlaces: Int = pxCurrency.decimalPlaces ?? 2
-            let decimalSeparator: String = pxCurrency.decimalSeparator ?? ","
-            let thousandSeparator: String = pxCurrency.thousandSeparator ?? "."
-            let currency = Currency(currencyId: currencyId, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
-            return currency
-        }
-        return Currency()
     }
 
     open func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
@@ -151,7 +125,7 @@ extension MercadoPagoServicesAdapter {
         let amountInfo = AmountInfo()
         if let pxAmountInfo = pxAmountInfo {
             amountInfo.amount = pxAmountInfo.amount
-            amountInfo.currency = getCurrencyFromPXCurrency(pxAmountInfo.currency)
+            amountInfo.currency = pxAmountInfo.currency
         }
         return amountInfo
     }

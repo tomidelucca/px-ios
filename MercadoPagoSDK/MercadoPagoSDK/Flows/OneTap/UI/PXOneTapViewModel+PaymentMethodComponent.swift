@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 // One Tap - Payment method component.
 extension PXOneTapViewModel {
@@ -25,7 +26,7 @@ extension PXOneTapViewModel {
         let backgroundColor = ThemeManager.shared.whiteColor()
         let lightLabelColor = ThemeManager.shared.labelTintColor()
         let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
-        let currency: Currency = MercadoPagoContext.getCurrency()
+        let currency: PXCurrency = MercadoPagoContext.getCurrency()
 
         if pm.isCard {
             if let lastFourDigits = (self.amountHelper.paymentData.token?.lastFourDigits) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers
 open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -20,7 +21,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     var merchantBaseUrl: String!
     var merchantAccessToken: String!
     var publicKey: String!
-    var currency: Currency!
+    var currency: PXCurrency!
     var defaultInstallments: Int?
     var installments: Int?
     var viewModel: CardsAdminViewModel!

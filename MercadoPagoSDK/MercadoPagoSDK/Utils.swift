@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServicesV4
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l__?, r__?):
@@ -82,8 +84,8 @@ class Utils {
         return attributedSymbol
     }
 
-    class func getAttributedAmount(_ amount: Double, currency: Currency, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
-        return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount, lightFont: lightFont)
+    class func getAttributedAmount(_ amount: Double, currency: PXCurrency, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
+        return getAttributedAmount(amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount, lightFont: lightFont)
     }
 
     class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, smallSymbol: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
@@ -119,13 +121,13 @@ class Utils {
         return attributedSymbol
     }
 
-    class func getAmountFormated(amount: Double, forCurrency currency: Currency, addingParenthesis: Bool = false) -> String {
+    class func getAmountFormated(amount: Double, forCurrency currency: PXCurrency, addingParenthesis: Bool = false) -> String {
         return getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis)
     }
 
-    class func getAttributedAmount(withAttributes attributes: [NSAttributedStringKey: Any], amount: Double, currency: Currency, negativeAmount: Bool) -> NSMutableAttributedString {
+    class func getAttributedAmount(withAttributes attributes: [NSAttributedStringKey: Any], amount: Double, currency: PXCurrency, negativeAmount: Bool) -> NSMutableAttributedString {
 
-        let amount = getAmountFormatted(amount: amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, addingCurrencySymbol: currency.symbol, addingParenthesis: false)
+        let amount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
 
         var symbols = ""
         if negativeAmount {
@@ -205,7 +207,7 @@ class Utils {
         return labelTitle
     }
 
-    class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments: String, currency: PXCurrency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         let currency = MercadoPagoContext.getCurrency()
 

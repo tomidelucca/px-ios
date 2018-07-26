@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class MercadoPagoContext: NSObject {
 
@@ -27,7 +28,7 @@ import UIKit
 
     var account_money_available = false
 
-    var currency: Currency!
+    var currency: PXCurrency!
 
     // TODO: Deprecate/Delete in Q2. - 2018
     var display_default_loading = true
@@ -165,7 +166,7 @@ import UIKit
         return sharedInstance.termsAndConditionsSite
     }
 
-    open static func getCurrency() -> Currency {
+    open static func getCurrency() -> PXCurrency {
         return sharedInstance.currency
     }
 

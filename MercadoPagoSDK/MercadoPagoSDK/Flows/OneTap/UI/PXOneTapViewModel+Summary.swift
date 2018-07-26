@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 extension PXOneTapViewModel {
     func shouldShowSummaryModal() -> Bool {
@@ -19,7 +20,7 @@ extension PXOneTapViewModel {
     }
 
     func getSummaryProps() -> [PXSummaryRowProps]? {
-        let currency: Currency = MercadoPagoContext.getCurrency()
+        let currency: PXCurrency = MercadoPagoContext.getCurrency()
         let itemComponentsModel = buildOneTapItemComponents()
 
         var props = [PXSummaryRowProps]()
