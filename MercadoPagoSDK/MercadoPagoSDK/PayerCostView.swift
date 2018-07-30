@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 final class PayerCostView: UIView, PXComponent {
 
@@ -27,7 +28,7 @@ final class PayerCostView: UIView, PXComponent {
 
     var requiredHeight: CGFloat = 0.0
 
-    init(frame: CGRect, payerCost: PayerCost) {
+    init(frame: CGRect, payerCost: PXPayerCost) {
         super.init(frame: frame)
         self.purchaseDetailTitle = MPLabel(frame: CGRect(x: HORIZONTAL_MARGIN, y: VERTICAL_MARGIN, width: (self.getWeight() - 3 * HORIZONTAL_MARGIN)/2, height: 0))
         self.purchaseDetailTitle.font = Utils.getFont(size: PayerCostView.TITLE_FONT_SIZE)
@@ -81,7 +82,7 @@ extension PayerCostView {
         return self.frame.size.width
     }
 
-    fileprivate func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
+    fileprivate func getInstallmentsAmount(payerCost: PXPayerCost) -> NSAttributedString {
         return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.boldLabelTintColor(), fontSize: PayerCostView.VALUE_FONT_SIZE, baselineOffset: 8)
     }
 

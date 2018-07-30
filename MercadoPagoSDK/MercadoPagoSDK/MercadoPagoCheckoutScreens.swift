@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 extension MercadoPagoCheckout {
 
@@ -97,7 +98,7 @@ extension MercadoPagoCheckout {
         let payerCostViewModel = self.viewModel.payerCostViewModel()
 
         let payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
-            guard let payerCost = payerCost as? PayerCost else {
+            guard let payerCost = payerCost as? PXPayerCost else {
                 fatalError("Cannot convert payerCost to type PayerCost")
             }
 

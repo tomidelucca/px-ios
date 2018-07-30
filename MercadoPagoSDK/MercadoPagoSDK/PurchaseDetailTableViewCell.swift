@@ -30,7 +30,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    internal func fillCell(_ title: String, amount: Double, currency: PXCurrency, payerCost: PayerCost? = nil) {
+    internal func fillCell(_ title: String, amount: Double, currency: PXCurrency, payerCost: PXPayerCost? = nil) {
 
         //Deafult values for cells
         self.purchaseDetailTitle.text = title.localized
@@ -62,14 +62,14 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
 
     }
 
-    public static func getCellHeight(payerCost: PayerCost? = nil) -> CGFloat {
+    public static func getCellHeight(payerCost: PXPayerCost? = nil) -> CGFloat {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() {
             return ROW_HEIGHT + 30
         }
         return ROW_HEIGHT
     }
 
-    private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
+    private func getInstallmentsAmount(payerCost: PXPayerCost) -> NSAttributedString {
         return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 24, baselineOffset: 8)
     }
 }

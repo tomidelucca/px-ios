@@ -13,7 +13,7 @@ import MercadoPagoServicesV4
 
     public var paymentMethod: PaymentMethod?
     public var issuer: Issuer?
-    public var payerCost: PayerCost?
+    public var payerCost: PXPayerCost?
     public var token: Token?
     public var payer: Payer?
     public var transactionDetails: TransactionDetails?
@@ -123,7 +123,7 @@ import MercadoPagoServicesV4
         self.token = token
     }
 
-    public func updatePaymentDataWith(payerCost: PayerCost?) {
+    public func updatePaymentDataWith(payerCost: PXPayerCost?) {
         guard let payerCost = payerCost else {
             return
         }
@@ -165,7 +165,7 @@ import MercadoPagoServicesV4
         return token
     }
 
-    public func getPayerCost() -> PayerCost? {
+    public func getPayerCost() -> PXPayerCost? {
         return payerCost
     }
 
@@ -204,9 +204,9 @@ import MercadoPagoServicesV4
             obj["payment_method"] = paymentMethod.toJSON()
         }
 
-        if let payerCost = self.payerCost {
-            obj["payer_cost"] = payerCost.toJSON()
-        }
+//        if let payerCost = self.payerCost {
+//            obj["payer_cost"] = payerCost.toJSON()
+//        }
 
         if let token = self.token {
             obj["card_token"] = token.toJSON()

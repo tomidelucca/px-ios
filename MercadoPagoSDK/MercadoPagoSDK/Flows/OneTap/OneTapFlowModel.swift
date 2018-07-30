@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 final class OneTapFlowModel: NSObject, PXFlowModel {
 
@@ -23,7 +24,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     var paymentOptionSelected: PaymentMethodOption
     let search: PaymentMethodSearch
     var readyToPay: Bool = false
-    var payerCosts: [PayerCost]?
+    var payerCosts: [PXPayerCost]?
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
@@ -106,7 +107,7 @@ extension OneTapFlowModel {
         self.paymentData.updatePaymentDataWith(token: token)
     }
 
-    public func updateCheckoutModel(payerCost: PayerCost) {
+    public func updateCheckoutModel(payerCost: PXPayerCost) {
         if paymentOptionSelected.isCard() {
             self.paymentData.updatePaymentDataWith(payerCost: payerCost)
             self.paymentData.cleanToken()

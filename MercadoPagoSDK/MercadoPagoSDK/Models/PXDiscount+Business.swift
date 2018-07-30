@@ -1,5 +1,5 @@
 //
-//  PXDiscount.swift
+//  PXDiscount+Business.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 29/5/18.

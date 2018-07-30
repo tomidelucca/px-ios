@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		156526C9209F76E600852D39 /* CustomComponentText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156526C8209F76E600852D39 /* CustomComponentText.swift */; };
-		15AF42AA1D36848100E70343 /* MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; };
-		15AF42AB1D36848100E70343 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */; };
 		23346C341FE83734005FD8C9 /* PaymentPluginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */; };
 		23346C351FE83734005FD8C9 /* PaymentMethodPlugins.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */; };
@@ -54,33 +52,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		15AF42AC1D36848100E70343 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 0F9883091AD2A97A00F750F0;
-			remoteInfo = MercadoPagoSDK;
-		};
 		76EF7ED71D2559140087C785 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 76EF7EB51D2559140087C785 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 76EF7EBC1D2559140087C785;
 			remoteInfo = MercadoPagoSDKExamplesObjectiveC;
-		};
-		76EF7EFA1D255AA10087C785 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0F98830A1AD2A97A00F750F0;
-			remoteInfo = MercadoPagoSDK;
-		};
-		76EF7EFC1D255AA10087C785 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0F9883151AD2A97A00F750F0;
-			remoteInfo = MercadoPagoSDKTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -91,7 +68,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				15AF42AB1D36848100E70343 /* MercadoPagoSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,7 +133,6 @@
 		76EF7EDC1D2559140087C785 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76EF7EE51D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MercadoPagoSDKExamplesObjectiveCUITests.m; sourceTree = "<group>"; };
 		76EF7EE71D2559140087C785 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MercadoPagoSDK.xcodeproj; path = ../MercadoPagoSDK/MercadoPagoSDK.xcodeproj; sourceTree = "<group>"; };
 		76EF7F201D255C7E0087C785 /* ExampleUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleUtils.h; sourceTree = "<group>"; };
 		76EF7F211D255C7E0087C785 /* ExampleUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleUtils.m; sourceTree = "<group>"; };
 		76EF7F581D26FDB80087C785 /* MainExamplesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainExamplesViewController.h; sourceTree = "<group>"; };
@@ -178,7 +153,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15AF42AA1D36848100E70343 /* MercadoPagoSDK.framework in Frameworks */,
 				89E2D62BFE6285DFD1B7DB40 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +259,6 @@
 		76EF7EB41D2559140087C785 = {
 			isa = PBXGroup;
 			children = (
-				76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */,
 				76EF7EBF1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */,
 				76EF7ED91D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCTests */,
 				76EF7EE41D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCUITests */,
@@ -353,15 +326,6 @@
 			path = MercadoPagoSDKExamplesObjectiveCUITests;
 			sourceTree = "<group>";
 		};
-		76EF7EF61D255AA10087C785 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */,
-				76EF7EFD1D255AA10087C785 /* MercadoPagoSDKTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		76EF7F1E1D255B5F0087C785 /* Component Examples */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,7 +358,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				15AF42AD1D36848100E70343 /* PBXTargetDependency */,
 			);
 			name = MercadoPagoSDKExamplesObjectiveC;
 			productName = MercadoPagoSDKExamplesObjectiveC;
@@ -451,12 +414,6 @@
 			mainGroup = 76EF7EB41D2559140087C785;
 			productRefGroup = 76EF7EBE1D2559140087C785 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 76EF7EF61D255AA10087C785 /* Products */;
-					ProjectRef = 76EF7EF51D255AA10087C785 /* MercadoPagoSDK.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				76EF7EBC1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */,
@@ -464,23 +421,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MercadoPagoSDK.framework;
-			remoteRef = 76EF7EFA1D255AA10087C785 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		76EF7EFD1D255AA10087C785 /* MercadoPagoSDKTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MercadoPagoSDKTests.xctest;
-			remoteRef = 76EF7EFC1D255AA10087C785 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		76EF7EBB1D2559140087C785 /* Resources */ = {
@@ -539,6 +479,7 @@
 				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
 				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/MercadoPagoPXTrackingV4/MercadoPagoPXTrackingV4.framework",
+				"${BUILT_PRODUCTS_DIR}/MercadoPagoSDKV4/MercadoPagoSDKV4.framework",
 				"${BUILT_PRODUCTS_DIR}/MercadoPagoServicesV4/MercadoPagoServicesV4.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -547,6 +488,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoPXTrackingV4.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoSDKV4.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoServicesV4.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,11 +564,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		15AF42AD1D36848100E70343 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MercadoPagoSDK;
-			targetProxy = 15AF42AC1D36848100E70343 /* PBXContainerItemProxy */;
-		};
 		76EF7ED81D2559140087C785 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 76EF7EBC1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */;

@@ -11,7 +11,7 @@ import UIKit
 import MercadoPagoPXTrackingV4
 import MercadoPagoServicesV4
 
-open class AdditionalStepViewModel: NSObject {
+internal class AdditionalStepViewModel: NSObject {
 
     var bundle: Bundle? = MercadoPago.getBundle()
     public var screenTitle: String
@@ -204,7 +204,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override func getDefaultRowCellHeight() -> CGFloat {
-        if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PayerCost) {
+        if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PXPayerCost) {
             return 86
         } else {
             return 60

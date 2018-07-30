@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServicesV4
 
 class AdditionalStepCellFactory: NSObject {
 
@@ -17,7 +18,7 @@ class AdditionalStepCellFactory: NSObject {
 
         if object.objectType == ObjectTypes.payerCost {
 
-            guard let payerCost = object as? PayerCost else { return UITableViewCell() }
+            guard let payerCost = object as? PXPayerCost else { return UITableViewCell() }
 
             if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: payerCost) {
                 if let cell = bundle.loadNibNamed("PayerCostCFTTableViewCell", owner: nil, options: nil)?[0] as? PayerCostCFTTableViewCell {
@@ -76,7 +77,7 @@ class AdditionalStepCellFactory: NSObject {
         return UITableViewCell()
     }
 
-    open class func needsCFTPayerCostCell(payerCost: PayerCost) -> Bool {
+    open class func needsCFTPayerCostCell(payerCost: PXPayerCost) -> Bool {
         return payerCost.hasCFTValue() && MercadoPagoCheckoutViewModel.flowPreference.isInstallmentsReviewScreenEnable() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
     }
 }

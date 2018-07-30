@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l__?, r__?):
@@ -95,7 +97,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 return preferencePaymentMethods
             }
 
-    open func autoSelectPayerCost(_ payerCostList: [PayerCost]) -> PayerCost? {
+    open func autoSelectPayerCost(_ payerCostList: [PXPayerCost]) -> PXPayerCost? {
         if payerCostList.count == 0 {
             return nil
         }

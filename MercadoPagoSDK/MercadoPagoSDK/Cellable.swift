@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Cellable {
+protocol Cellable {
 
     var objectType: ObjectTypes { get set }
 

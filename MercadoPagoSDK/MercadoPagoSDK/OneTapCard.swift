@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
+
 open class OneTapCard: NSObject {
     open var cardId: String
-    open var selectedPayerCost: PayerCost?
+    open var selectedPayerCost: PXPayerCost?
 
-    public init(cardId: String, selectedPayerCost: PayerCost?) {
+    public init(cardId: String, selectedPayerCost: PXPayerCost?) {
         self.cardId = cardId
         self.selectedPayerCost = selectedPayerCost
     }

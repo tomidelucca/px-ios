@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 class PayerCostRowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var interestDescription: UILabel!
     @IBOutlet weak var installmentDescription: UILabel!
 
-    func fillCell(payerCost: PayerCost, showDescription: Bool? = true) {
+    func fillCell(payerCost: PXPayerCost, showDescription: Bool? = true) {
         let currency = MercadoPagoContext.getCurrency()
         if payerCost.installments == 1 {
             self.interestDescription.clearAttributedText()

@@ -40,9 +40,9 @@ private class Localizator {
                 return parentLocalizedString
             }
 
-            #if DEBUG
-                assertionFailure("Missing translation for: \(string)")
-            #endif
+//            #if DEBUG
+//                assertionFailure("Missing translation for: \(string)")
+//            #endif
 
             return string
         }

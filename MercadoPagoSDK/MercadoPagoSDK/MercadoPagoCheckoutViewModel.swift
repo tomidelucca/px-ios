@@ -40,7 +40,7 @@ public enum CheckoutStep: String {
 }
 
 @objcMembers
-open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
+internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     static var servicePreference = ServicePreference()
     static var flowPreference = FlowPreference()
@@ -85,7 +85,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var payment: Payment?
     var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
-    open var payerCosts: [PayerCost]?
+    open var payerCosts: [PXPayerCost]?
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
     open var financialInstitutions: [FinancialInstitution]?
@@ -361,7 +361,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    public func updateCheckoutModel(payerCost: PayerCost) {
+    public func updateCheckoutModel(payerCost: PXPayerCost) {
         self.paymentData.updatePaymentDataWith(payerCost: payerCost)
 
         if let paymentOptionSelected = paymentOptionSelected {

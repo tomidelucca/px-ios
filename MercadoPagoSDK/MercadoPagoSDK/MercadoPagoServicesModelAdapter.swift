@@ -561,8 +561,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getOneTapCardFromPXOneTapCard(_ pxOneTapCard: PXOneTapCard) -> OneTapCard {
         let cardId = pxOneTapCard.cardId
-        var payerCost: PayerCost? = getPayerCostFromPXPayerCost(pxOneTapCard.selectedPayerCost)
-        let oneTapCard = OneTapCard(cardId: cardId, selectedPayerCost: payerCost)
+        let oneTapCard = OneTapCard(cardId: cardId, selectedPayerCost: pxOneTapCard.selectedPayerCost)
         return oneTapCard
     }
 
@@ -692,33 +691,5 @@ extension MercadoPagoServicesAdapter {
             issuer.name = pxIssuer.name
         }
         return issuer
-    }
-
-    open func getInstallmentFromPXInstallment(_ pxInstallment: PXInstallment) -> Installment {
-        let installment = Installment()
-        installment.issuer = getIssuerFromPXIssuer(pxInstallment.issuer)
-        installment.paymentTypeId = pxInstallment.paymentTypeId
-        installment.paymentMethodId = pxInstallment.paymentMethodId
-
-        if let pxInstallmentPayerCosts = pxInstallment.payerCosts {
-            installment.payerCosts = []
-            for pxPayerCost in pxInstallmentPayerCosts {
-                if let payerCost = getPayerCostFromPXPayerCost(pxPayerCost) {
-                    installment.payerCosts = Array.safeAppend(installment.payerCosts, payerCost)
-                }
-            }
-        }
-        return installment
-    }
-
-    open func getPayerCostFromPXPayerCost(_ pxPayerCost: PXPayerCost?) -> PayerCost? {
-        if let pxPayerCost = pxPayerCost {
-            guard let installments = pxPayerCost.installments, let installmentRate = pxPayerCost.installmentRate, let labels = pxPayerCost.labels, let installmentAmount = pxPayerCost.installmentAmount, let totalAmount = pxPayerCost.totalAmount else {
-                return nil
-            }
-            return PayerCost(installments: installments, installmentRate: installmentRate, labels: labels, minAllowedAmount: pxPayerCost.minAllowedAmount ?? 0, maxAllowedAmount: pxPayerCost.maxAllowedAmount ?? 0, recommendedMessage: pxPayerCost.recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount)
-
-        }
-        return nil
     }
 }

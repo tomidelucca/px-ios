@@ -1,5 +1,5 @@
 //
-//  PXCurrency.swift
+//  PXCurrency+Business.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 26/07/2018.

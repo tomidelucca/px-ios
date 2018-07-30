@@ -83,36 +83,4 @@ import Foundation
         return obj
     }
 
-    public func hasInstallmentsRate() -> Bool {
-        return (self.installmentRate > 0 && self.installments > 1)
-    }
-
-    public func hasCFTValue() -> Bool {
-        return !String.isNullOrEmpty(getCFTValue())
-    }
-
-    public func getCFTValue() -> String? {
-        for label in labels {
-            let values = label.components(separatedBy: "|")
-            for value in values {
-                if let range = value.range(of: "CFT_") {
-                    return String(value[range.upperBound...])
-                }
-            }
-        }
-        return nil
-    }
-
-    public func getTEAValue() -> String? {
-
-        for label in labels {
-            let values = label.components(separatedBy: "|")
-            for value in values {
-                if let range = value.range(of: "TEA_") {
-                    return String(value[range.upperBound...])
-                }
-            }
-        }
-        return nil
-    }
 }
