@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
 
@@ -67,8 +68,7 @@ import UIKit
         self.customerPaymentMethodDescription = description
     }
 
-    public func getIssuer() -> Issuer? {
-
+    public func getIssuer() -> PXIssuer? {
         return card?.issuer
     }
 

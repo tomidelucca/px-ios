@@ -12,7 +12,7 @@ import MercadoPagoServicesV4
 @objcMembers public class PaymentData: NSObject, NSCopying {
 
     public var paymentMethod: PaymentMethod?
-    public var issuer: Issuer?
+    public var issuer: PXIssuer?
     public var payerCost: PXPayerCost?
     public var token: Token?
     public var payer: Payer?
@@ -130,7 +130,7 @@ import MercadoPagoServicesV4
         self.payerCost = payerCost
     }
 
-    public func updatePaymentDataWith(issuer: Issuer?) {
+    public func updatePaymentDataWith(issuer: PXIssuer?) {
         guard let issuer = issuer else {
             return
         }
@@ -176,7 +176,7 @@ import MercadoPagoServicesV4
         return installments
     }
 
-    public func getIssuer() -> Issuer? {
+    public func getIssuer() -> PXIssuer? {
         return issuer
     }
 
@@ -212,9 +212,9 @@ import MercadoPagoServicesV4
             obj["card_token"] = token.toJSON()
         }
 
-        if let issuer = self.issuer {
-            obj["issuer"] = issuer.toJSON()
-        }
+//        if let issuer = self.issuer {
+//            obj["issuer"] = issuer.toJSON()
+//        }
 
         if let discount = self.discount {
             obj["discount"] = discount.toJSONDictionary()

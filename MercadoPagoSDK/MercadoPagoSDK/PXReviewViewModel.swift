@@ -110,7 +110,7 @@ extension PXReviewViewModel {
         let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()
-        guard let issuerID = self.amountHelper.paymentData.getIssuer()?.issuerId else {
+        guard let issuerID = self.amountHelper.paymentData.getIssuer()?.id else {
             return nil
         }
         let searchString: String = site + "_" + "\(issuerID)"

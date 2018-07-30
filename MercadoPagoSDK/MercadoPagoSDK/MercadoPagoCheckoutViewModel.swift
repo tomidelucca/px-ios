@@ -86,7 +86,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
     open var payerCosts: [PXPayerCost]?
-    open var issuers: [Issuer]?
+    open var issuers: [PXIssuer]?
     open var entityTypes: [EntityType]?
     open var financialInstitutions: [FinancialInstitution]?
     open var instructionsInfo: InstructionsInfo?
@@ -334,7 +334,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    public func updateCheckoutModel(issuer: Issuer) {
+    public func updateCheckoutModel(issuer: PXIssuer) {
         self.cleanPayerCostSearch()
         self.paymentData.updatePaymentDataWith(issuer: issuer)
     }
@@ -567,7 +567,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     public class func createMPPayment(preferenceId: String, paymentData: PaymentData, customerId: String? = nil, binaryMode: Bool) -> MPPayment {
 
-        let issuerId: String = paymentData.hasIssuer() ? paymentData.getIssuer()!.issuerId! : ""
+        let issuerId: String = paymentData.hasIssuer() ? paymentData.getIssuer()!.id! : ""
 
         let tokenId: String = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
 

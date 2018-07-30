@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 @objcMembers open class BankDeal: NSObject {
 
 	open var promoId: String!
-	open var issuer: Issuer!
+	open var issuer: PXIssuer!
 	open var recommendedMessage: String!
 	open var paymentMethods: [PaymentMethod]!
 	open var legals: String!
@@ -22,9 +23,9 @@ import Foundation
                 let promo: BankDeal = BankDeal()
                 promo.promoId = json["id"] as? String
 
-                if let issuerDic = json["issuer"] as? NSDictionary {
-                       promo.issuer = Issuer.fromJSON(issuerDic)
-                    }
+//                if let issuerDic = json["issuer"] as? NSDictionary {
+//                       promo.issuer = Issuer.fromJSON(issuerDic)
+//                    }
 
                 if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]) {
                         promo.recommendedMessage = recommendedMessage
@@ -60,12 +61,12 @@ import Foundation
     }
 
     open func toJSON() -> [String: Any] {
-        let issuer: Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
+//        let issuer: Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
         let url: Any = (self.url != nil) ? self.url! : ""
 
         var obj: [String: Any] = [
             "promoId": self.promoId ,
-            "issuer": issuer,
+//            "issuer": issuer,
             "recommendedMessage": self.recommendedMessage ?? "",
             "legals": self.legals ?? "",
             "url": url

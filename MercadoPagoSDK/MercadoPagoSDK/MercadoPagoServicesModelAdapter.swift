@@ -221,7 +221,7 @@ extension MercadoPagoServicesAdapter {
     open func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
         let bankDeal = BankDeal()
         bankDeal.promoId = pxBankDeal.id
-        bankDeal.issuer = getIssuerFromPXIssuer(pxBankDeal.issuer)
+        bankDeal.issuer = pxBankDeal.issuer
         bankDeal.recommendedMessage = pxBankDeal.recommendedMessage
 
         if let pxBankDealPaymentMethods = pxBankDeal.paymentMethods {
@@ -626,7 +626,7 @@ extension MercadoPagoServicesAdapter {
             card.idCard = pxCard.id ?? ""
             card.lastFourDigits = pxCard.lastFourDigits
             card.paymentMethod = getPaymentMethodFromPXPaymentMethod(pxCard.paymentMethod)
-            card.issuer = getIssuerFromPXIssuer(pxCard.issuer)
+            card.issuer = pxCard.issuer
             card.securityCode = getSecurityCodeFromPXSecurityCode(pxCard.securityCode)
             return card
         }
@@ -682,14 +682,5 @@ extension MercadoPagoServicesAdapter {
             phone.number = pxPhone.number
         }
         return phone
-    }
-
-    open func getIssuerFromPXIssuer(_ pxIssuer: PXIssuer?) -> Issuer {
-        let issuer = Issuer()
-        if let pxIssuer = pxIssuer {
-            issuer.issuerId = pxIssuer.id
-            issuer.name = pxIssuer.name
-        }
-        return issuer
     }
 }

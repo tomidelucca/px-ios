@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 class IssuerRowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var issuerImage: UIImageView!
 
-    func fillCell(issuer: Issuer, bundle: Bundle) {
-        if let image = UIImage(named: "issuer_\(issuer.issuerId!)", in: bundle, compatibleWith: nil) {
+    func fillCell(issuer: PXIssuer, bundle: Bundle) {
+        if let image = UIImage(named: "issuer_\(issuer.id!)", in: bundle, compatibleWith: nil) {
             issuerImage.image = image
         } else {
             issuerImage.image = nil

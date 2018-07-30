@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
 
@@ -21,7 +22,7 @@ import UIKit
     open var idCard: String = ""
     open var lastFourDigits: String?
     open var paymentMethod: PaymentMethod?
-    open var issuer: Issuer?
+    open var issuer: PXIssuer?
     open var securityCode: SecurityCode?
 
     open class func fromJSON(_ json: NSDictionary) -> Card {
@@ -42,9 +43,9 @@ import UIKit
                 if let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"]) {
                         card.firstSixDigits = firstSixDigits
                     }
-                if let issuerDic = json["issuer"] as? NSDictionary {
-                        card.issuer = Issuer.fromJSON(issuerDic)
-                    }
+//                if let issuerDic = json["issuer"] as? NSDictionary {
+//                        card.issuer = Issuer.fromJSON(issuerDic)
+//                    }
                 if let secDic = json["security_code"] as? NSDictionary {
                         card.securityCode = SecurityCode.fromJSON(secDic)
                     }
@@ -63,7 +64,7 @@ import UIKit
                 return card
             }
 
-    public func getIssuer() -> Issuer? {
+    public func getIssuer() -> PXIssuer? {
         return self.issuer
     }
 
@@ -79,7 +80,7 @@ import UIKit
         let firstSixDigits: Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
         let lastFourDigits: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
         let paymentMethod: Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
-        let issuer: Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSON()
+//        let issuer: Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSON()
         let securityCode: Any = self.securityCode == nil ? JSONHandler.null : self.securityCode!.toJSON()
         let obj: [String: Any] = [
             "card_holder": cardHolder,
@@ -92,7 +93,7 @@ import UIKit
             "id": self.idCard,
             "last_four_digits": lastFourDigits,
             "payment_method": paymentMethod,
-            "issuer": issuer,
+//            "issuer": issuer,
             "security_code": securityCode
         ]
         return obj

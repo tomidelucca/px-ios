@@ -82,15 +82,13 @@ extension MercadoPagoCheckout {
     func showIssuersScreen() {
         let issuerStep = AdditionalStepViewController(viewModel: self.viewModel.issuerViewModel(), callback: { [weak self](issuer) in
 
-            guard let issuer = issuer as? Issuer else {
+            guard let issuer = issuer as? PXIssuer else {
                 fatalError("Cannot convert issuer to type Issuer")
             }
-
             self?.viewModel.updateCheckoutModel(issuer: issuer)
             self?.executeNextStep()
 
         })
-
         viewModel.pxNavigationHandler.pushViewController(viewController: issuerStep, animated: true)
     }
 

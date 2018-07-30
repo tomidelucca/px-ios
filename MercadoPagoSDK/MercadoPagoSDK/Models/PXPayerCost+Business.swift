@@ -15,7 +15,7 @@ extension PXPayerCost: Cellable {
             return ObjectTypes.payerCost
         }
         set {
-            objectType = ObjectTypes.payerCost
+            self.objectType = ObjectTypes.payerCost
         }
     }
 

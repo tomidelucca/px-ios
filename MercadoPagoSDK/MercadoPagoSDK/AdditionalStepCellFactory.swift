@@ -39,7 +39,7 @@ class AdditionalStepCellFactory: NSObject {
         }
 
         if object.objectType == ObjectTypes.issuer {
-            if let cell = bundle.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as? IssuerRowTableViewCell, let issuerObj = object as? Issuer {
+            if let cell = bundle.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as? IssuerRowTableViewCell, let issuerObj = object as? PXIssuer {
                 cell.fillCell(issuer: issuerObj, bundle: bundle)
                 cell.addSeparatorLineToBottom(width: width, height: height)
                 cell.selectionStyle = .none

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objc
 public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
@@ -29,7 +30,7 @@ public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
     func getPaymentTypeId() -> String
 
-    func getIssuer() -> Issuer?
+    func getIssuer() -> PXIssuer?
 
     func getFirstSixDigits() -> String!
 

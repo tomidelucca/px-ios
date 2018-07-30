@@ -23,7 +23,7 @@ public class PXResultViewModel: PXResultViewModelInterface {
             metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.paymentMethodId
         }
         if let issuer = self.getPaymentData().getIssuer() {
-            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.issuerId
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.id
         }
 
         let finalId = "\(screenId)/\(self.getPaymentStatus())"
