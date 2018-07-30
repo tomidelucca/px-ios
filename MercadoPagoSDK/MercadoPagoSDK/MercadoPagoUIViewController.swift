@@ -11,6 +11,8 @@ import MercadoPagoPXTrackingV4
 
 @objcMembers
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
+    
+    let kMLNavigationBarBackgroundViewTag = 569242;
 
     open var callbackCancel: (() -> Void)?
     var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
@@ -57,6 +59,17 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
+        
+        /**
+         The following line is to temporarily fix the MLHeaderBehaviour issue in Mercado Libre. ML places a view in the navigation
+         bar with the kMLNavigationBarBackgroundViewTag tag to make it opaque. Unfortunately, there's no easy way to hide this
+         view when we present MercadoPagoSDK. This temporary fix checks if this view exists, and if it does, it sets it's background
+         color clear so it doesn't interfere with MercadoPagoSDK colors.
+         **/
+        if let navigationBarBackgroundView = navigationController?.navigationBar.viewWithTag(kMLNavigationBarBackgroundViewTag) {
+            navigationBarBackgroundView.backgroundColor = UIColor.clear
+        }
+        
         pluginComponentInterface?.viewWillAppear?()
     }
 
