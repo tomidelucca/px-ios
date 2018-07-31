@@ -23,5 +23,4 @@ extension PXAdvancedConfigurationProtocol {
     }
 }
 
-final class PXAdvancedConfiguration: PXAdvancedConfigurationProtocol {
-}
+final class PXAdvancedConfiguration: PXAdvancedConfigurationProtocol {}

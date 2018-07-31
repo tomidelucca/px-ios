@@ -259,15 +259,11 @@ open class MercadoPagoCheckout: NSObject {
     private func removeDiscount() {
         self.viewModel.clearDiscount()
     }
-
-    private func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
-        viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
-    }
 }
 
-// TODO: Importante! - Esto debe agregarlo el integrador MoneyIn.
+// MARK: Advanced config.
 extension MercadoPagoCheckout {
-    func setAdvancesConfig(config: PXAdvancedConfigurationProtocol) {
-        setAdvancedConfiguration(advancedConfig: config)
+    func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
+        viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
     }
 }
