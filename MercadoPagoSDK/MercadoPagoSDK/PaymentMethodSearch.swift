@@ -6,11 +6,12 @@
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 import Foundation
+import MercadoPagoServicesV4
 
 @objcMembers open class PaymentMethodSearch: NSObject {
 
     var groups: [PaymentMethodSearchItem]!
-    var paymentMethods: [PaymentMethod]!
+    var paymentMethods: [PXPaymentMethod]!
     var customerPaymentMethods: [CardInformation]?
     var cards: [Card]?
     var defaultOption: PaymentMethodSearchItem?

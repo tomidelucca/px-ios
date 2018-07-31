@@ -179,7 +179,7 @@ import MercadoPagoServicesV4
     }
 
     open func getCampaigns(callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        mercadoPagoServices.getCampaigns(payerEmail: nil, callback: callback, failure: failure)
+       mercadoPagoServices.getCampaigns(payerEmail: nil, callback: callback, failure: failure)
     }
 
     open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {

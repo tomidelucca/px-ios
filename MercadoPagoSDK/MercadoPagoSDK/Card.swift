@@ -21,9 +21,9 @@ import MercadoPagoServicesV4
     open var firstSixDigits: String?
     open var idCard: String = ""
     open var lastFourDigits: String?
-    open var paymentMethod: PaymentMethod?
+    open var paymentMethod: PXPaymentMethod?
     open var issuer: PXIssuer?
-    open var securityCode: SecurityCode?
+    open var securityCode: PXSecurityCode?
 
     open class func fromJSON(_ json: NSDictionary) -> Card {
                 let card: Card = Card()
@@ -43,15 +43,7 @@ import MercadoPagoServicesV4
                 if let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"]) {
                         card.firstSixDigits = firstSixDigits
                     }
-//                if let issuerDic = json["issuer"] as? NSDictionary {
-//                        card.issuer = Issuer.fromJSON(issuerDic)
-//                    }
-                if let secDic = json["security_code"] as? NSDictionary {
-                        card.securityCode = SecurityCode.fromJSON(secDic)
-                    }
-                if let pmDic = json["payment_method"] as? NSDictionary {
-                        card.paymentMethod = PaymentMethod.fromJSON(pmDic)
-                    }
+
                 if let chDic = json["card_holder"] as? NSDictionary {
                        card.cardHolder = Cardholder.fromJSON(chDic)
                    }
@@ -79,9 +71,9 @@ import MercadoPagoServicesV4
         let dateLastUpdated: Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
         let firstSixDigits: Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
         let lastFourDigits: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
-        let paymentMethod: Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
+//        let paymentMethod: Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
 //        let issuer: Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSON()
-        let securityCode: Any = self.securityCode == nil ? JSONHandler.null : self.securityCode!.toJSON()
+//        let securityCode: Any = self.securityCode == nil ? JSONHandler.null : self.securityCode!.toJSON()
         let obj: [String: Any] = [
             "card_holder": cardHolder,
             "customer_id": customer_id,
@@ -118,7 +110,7 @@ import MercadoPagoServicesV4
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
 
-    open func getPaymentMethod() -> PaymentMethod? {
+    open func getPaymentMethod() -> PXPaymentMethod? {
         return self.paymentMethod
     }
 
@@ -134,7 +126,7 @@ import MercadoPagoServicesV4
         return self.paymentMethod?.paymentTypeId ?? ""
     }
 
-    open func getCardSecurityCode() -> SecurityCode {
+    open func getCardSecurityCode() -> PXSecurityCode {
         return self.securityCode!
     }
 
@@ -146,11 +138,11 @@ import MercadoPagoServicesV4
         return self.lastFourDigits!
     }
 
-    open func setupPaymentMethodSettings(_ settings: [Setting]) {
+    open func setupPaymentMethodSettings(_ settings: [PXSetting]) {
         self.paymentMethod?.settings = settings
     }
 
-    open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {
+    open func setupPaymentMethod(_ paymentMethod: PXPaymentMethod) {
         self.paymentMethod = paymentMethod
     }
 

@@ -16,15 +16,15 @@ public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
     func getCardId() -> String
 
-    func getCardSecurityCode() -> SecurityCode
+    func getCardSecurityCode() -> PXSecurityCode?
 
     func getCardDescription() -> String
 
-    func setupPaymentMethodSettings(_ settings: [Setting])
+    func setupPaymentMethodSettings(_ settings: [PXSetting])
 
-    func setupPaymentMethod(_ paymentMethod: PaymentMethod)
+    func setupPaymentMethod(_ paymentMethod: PXPaymentMethod)
 
-    func getPaymentMethod() -> PaymentMethod?
+    func getPaymentMethod() -> PXPaymentMethod?
 
     func getPaymentMethodId() -> String
 

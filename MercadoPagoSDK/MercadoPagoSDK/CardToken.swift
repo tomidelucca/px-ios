@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class CardToken: NSObject, CardInformationForm {
 
@@ -63,16 +64,14 @@ import UIKit
     open func validateCardNumber() -> String? {
         if String.isNullOrEmpty(cardNumber) {
             return "Ingresa el número de la tarjeta de crédito".localized
-          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "Ingresa el número de la tarjeta de crédito".localized])
         } else if self.cardNumber!.count < MIN_LENGTH_NUMBER || self.cardNumber!.count > MAX_LENGTH_NUMBER {
             return "invalid_field".localized
-          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "invalid_field".localized])
         } else {
             return nil
         }
     }
 
-    open func validateCardNumber(_ paymentMethod: PaymentMethod) -> String? {
+    open func validateCardNumber(_ paymentMethod: PXPaymentMethod) -> String? {
         var userInfo: [String: String]?
         cardNumber = cardNumber?.replacingOccurrences(of: "•", with: "")
         let validCardNumber = self.validateCardNumber()
@@ -80,9 +79,9 @@ import UIKit
             return validCardNumber
         } else {
 
-            let settings: [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
+            let settings: [PXSetting]? = PXSetting.getSettingByBin(paymentMethod.settings, bin: getBin())
 
-            guard let cardSettings = settings, !Array.isNullOrEmpty(settings) else {
+            guard let cardSettings = settings, let firstCardSetting = cardSettings.first else {
                 if userInfo == nil {
                     userInfo = [String: String]()
                 }
@@ -91,25 +90,30 @@ import UIKit
 
                 // Validate card length
 
-                let filteredSettings = settings?.filter({return $0.cardNumber.length == cardNumber!.trimSpaces().count})
+            let filteredSettings = settings?.filter({return $0.cardNumber?.length == cardNumber!.trimSpaces().count})
 
                 if Array.isNullOrEmpty(filteredSettings) {
                     if userInfo == nil {
                         userInfo = [String: String]()
                     }
-                    if cardSettings.count>1 {
+                    if cardSettings.count > 1 {
                         return "invalid_card_length_general".localized
                     } else {
-                        return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardSettings[0].cardNumber.length)")
+                        let cardLength: String
+                        if let length = firstCardSetting.cardNumber?.length {
+                            cardLength = String(length)
+                        } else {
+                            cardLength = ""
+                        }
+                        return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: cardLength)
                     }
                 }
                 // Validate luhn
-                if "standard" == cardSettings[0].cardNumber.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
+            if "standard" == firstCardSetting.cardNumber?.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
                     if userInfo == nil {
                         userInfo = [String: String]()
                     }
                     return "El número de tarjeta que ingresaste es incorrecto".localized
-                 //   userInfo?.updateValue("El número de tarjeta que ingresaste es incorrecto".localized, forKey: "cardNumber")
                 }
         }
 
@@ -117,7 +121,6 @@ import UIKit
             return nil
         } else {
             return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
-         //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: userInfo)
         }
     }
 
@@ -128,13 +131,12 @@ import UIKit
     open func validateSecurityCode(_ securityCode: String?) -> String? {
         if String.isNullOrEmpty(self.securityCode) || self.securityCode!.count < 3 || self.securityCode!.count > 4 {
             return "invalid_field".localized
-          //  return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : "invalid_field".localized])
         } else {
             return nil
         }
     }
 
-    open func validateSecurityCodeWithPaymentMethod(_ paymentMethod: PaymentMethod) -> String? {
+    open func validateSecurityCodeWithPaymentMethod(_ paymentMethod: PXPaymentMethod) -> String? {
 
         guard let cardNumber = cardNumber else {
             return nil
@@ -151,13 +153,12 @@ import UIKit
         }
     }
 
-    open func validateSecurityCodeWithPaymentMethod(_ securityCode: String, paymentMethod: PaymentMethod, bin: String) -> String? {
-        let setting: [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
-        if let settings = setting {
-                let cvvLength = settings[0].securityCode.length
+    open func validateSecurityCodeWithPaymentMethod(_ securityCode: String, paymentMethod: PXPaymentMethod, bin: String) -> String? {
+        let settings: [PXSetting]? = PXSetting.getSettingByBin(paymentMethod.settings, bin: getBin())
+        if let setting = settings?.first, let firstSettingSecurityCode = setting.securityCode {
+                let cvvLength = firstSettingSecurityCode.length
                 if (cvvLength != 0) && (securityCode.count != cvvLength) {
                     return ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
-                    // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")])
                 } else {
                     return nil
                 }
@@ -172,16 +173,13 @@ import UIKit
     open func validateExpiryDate(_ month: Int, year: Int) -> String? {
         if !validateExpMonth(month) {
             return "invalid_field".localized
-			//return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized])
         }
         if !validateExpYear(year) {
             return "invalid_field".localized
-           // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized])
         }
 
         if hasMonthPassed(self.expirationYear, month: self.expirationMonth) {
             return "invalid_field".localized
-         //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized])
         }
 
         return nil
@@ -213,17 +211,14 @@ import UIKit
 
         if String.isNullOrEmpty(cardholder!.identification!.type) {
             return "invalid_field".localized
-         //   return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
         } else {
             return nil
         }
     }
 
     open func validateIdentificationNumber() -> String? {
-
         if String.isNullOrEmpty(cardholder!.identification!.number) {
             return "invalid_field".localized
-            //return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
         } else {
             return nil
         }
@@ -238,7 +233,6 @@ import UIKit
                 if min != 0 && max != 0 {
                     if len > max || len < min {
                         return "invalid_field".localized
-                  //      return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
                     } else {
                         return nil
                     }
@@ -247,7 +241,6 @@ import UIKit
                 }
             } else {
                 return "invalid_field".localized
-                //return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
             }
         } else {
             return validateIdentificationNumber()
@@ -257,7 +250,6 @@ import UIKit
     open func validateCardholderName() -> String? {
         if String.isNullOrEmpty(self.cardholder?.name) {
             return "invalid_field".localized
-           // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardholder" : "invalid_field".localized])
         } else {
             return nil
         }
@@ -327,7 +319,6 @@ import UIKit
     }
 
     open func getNumberFormated() -> NSString {
-
         //TODO AMEX
         var str: String
         str = (cardNumber?.insert(" ", ind: 12))!

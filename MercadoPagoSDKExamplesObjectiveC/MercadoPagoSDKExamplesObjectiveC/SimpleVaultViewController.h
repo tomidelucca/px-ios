@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @interface SimpleVaultViewController : UITableViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic) PaymentMethod *selectedPaymentMethod;
 @property Card *customerCard;
 @property bool allowInstallmentsSelection;
 

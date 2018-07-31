@@ -11,12 +11,12 @@ import MercadoPagoServicesV4
 
 @objcMembers public class PaymentData: NSObject, NSCopying {
 
-    public var paymentMethod: PaymentMethod?
+    public var paymentMethod: PXPaymentMethod?
     public var issuer: PXIssuer?
     public var payerCost: PXPayerCost?
     public var token: Token?
     public var payer: Payer?
-    public var transactionDetails: TransactionDetails?
+    public var transactionDetails: PXTransactionDetails?
     public private(set) var discount: PXDiscount?
     public private(set) var campaign: PXCampaign?
     private let paymentTypesWithoutInstallments = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
@@ -106,7 +106,7 @@ import MercadoPagoServicesV4
         return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
     }
 
-    public func updatePaymentDataWith(paymentMethod: PaymentMethod?) {
+    public func updatePaymentDataWith(paymentMethod: PXPaymentMethod?) {
         guard let paymentMethod = paymentMethod else {
             return
         }
@@ -188,7 +188,7 @@ import MercadoPagoServicesV4
         return returnedPayer
     }
 
-    public func getPaymentMethod() -> PaymentMethod? {
+    public func getPaymentMethod() -> PXPaymentMethod? {
         return paymentMethod
     }
 
@@ -200,9 +200,9 @@ import MercadoPagoServicesV4
        var obj: [String: Any] = [
         "payer": payer?.toJSON() ?? ""
        ]
-        if let paymentMethod = self.paymentMethod {
-            obj["payment_method"] = paymentMethod.toJSON()
-        }
+//        if let paymentMethod = self.paymentMethod {
+//            obj["payment_method"] = paymentMethod.toJSON()
+//        }
 
 //        if let payerCost = self.payerCost {
 //            obj["payer_cost"] = payerCost.toJSON()

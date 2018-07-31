@@ -7,7 +7,7 @@
 //
 
 #import "CustomTableViewCell.h"
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @implementation CustomTableViewCell
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @interface DineroEnCuentaTableViewCell : UITableViewCell<MPCellContentProvider>
 @property (weak, nonatomic) IBOutlet UIButton *button;

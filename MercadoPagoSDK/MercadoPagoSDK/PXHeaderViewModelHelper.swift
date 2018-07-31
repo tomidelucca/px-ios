@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 extension PXResultViewModel {
 
@@ -101,7 +102,7 @@ extension PXResultViewModel {
         return titleForStatusDetail(statusDetail: self.paymentResult.statusDetail, paymentMethod: self.paymentResult.paymentData?.paymentMethod)
     }
 
-    func titleForStatusDetail(statusDetail: String, paymentMethod: PaymentMethod?) -> NSAttributedString {
+    func titleForStatusDetail(statusDetail: String, paymentMethod: PXPaymentMethod?) -> NSAttributedString {
         guard let paymentMethod = paymentMethod else {
             return "".toAttributedString()
         }
@@ -149,7 +150,7 @@ extension PXResultViewModel {
         }
     }
 
-    func getTitleForCallForAuth(_ paymentMethod: PaymentMethod) -> NSAttributedString {
+    func getTitleForCallForAuth(_ paymentMethod: PXPaymentMethod) -> NSAttributedString {
         if let paymentMethodName = paymentMethod.name {
             let currency = MercadoPagoContext.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
@@ -166,7 +167,7 @@ extension PXResultViewModel {
         }
     }
 
-    func getTitleForRejected(_ paymentMethod: PaymentMethod, _ title: String) -> NSAttributedString {
+    func getTitleForRejected(_ paymentMethod: PXPaymentMethod, _ title: String) -> NSAttributedString {
 
         guard let paymentMethodName = paymentMethod.name else {
             return getDefaultRejectedTitle()

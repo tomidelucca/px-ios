@@ -10,7 +10,7 @@
 #import "SimpleVaultFormViewController.h"
 
 
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @interface SimpleVaultViewController ()
 
@@ -18,10 +18,8 @@
 
 @implementation SimpleVaultViewController
 
-@synthesize selectedPaymentMethod;
 @synthesize customerCard;
 @synthesize allowInstallmentsSelection;
-NSArray<PaymentMethod *> *currentPaymentMethods;
 
 - (void)viewDidLoad {
 //    [super viewDidLoad];
@@ -41,25 +39,21 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [currentPaymentMethods count];
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    PaymentMethod *pm = currentPaymentMethods[indexPath.row];
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPPaymentMethodSelection"];
     
     UIImageView* pmIcon = [cell viewWithTag:1];
-    pmIcon.image = [MercadoPago getImage:pm.paymentMethodId bundle: [MercadoPago getBundle]];
     
     UILabel *pmTitle = [cell viewWithTag:2];
-    pmTitle.text = pm.name;
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.selectedPaymentMethod = currentPaymentMethods[indexPath.row];
     [self performSegueWithIdentifier:@"paymentFormSegue" sender:self];
     
 }
@@ -71,7 +65,6 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     SimpleVaultFormViewController *simpleFormVc= (SimpleVaultFormViewController*) [segue destinationViewController];
-    simpleFormVc.paymentMethod = self.selectedPaymentMethod;
     simpleFormVc.allowInstallmentsSelection = self.allowInstallmentsSelection;
     
 

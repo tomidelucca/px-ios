@@ -21,7 +21,7 @@
 #import "PaymentPluginViewController.h"
 #import "MLMyMPPXTrackListener.h"
 
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 @import MercadoPagoPXTrackingV4;
 @import MercadoPagoServicesV4;
 
@@ -120,7 +120,7 @@
     
     //[self setPaymentMethodPlugins];
 
-    [self setPaymentPlugin];
+    //[self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
 //    [self setPaymentResultScreenPreference];
@@ -132,8 +132,8 @@
 //    [self setReviewScreenPreference];
 
 
-    [self.mpCheckout lazyStartWithLifecycleDelegate: self];
-    //[self.mpCheckout start];
+    //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
+    [self.mpCheckout start];
 }
 
 -(void)setHooks {
@@ -193,19 +193,13 @@
 
 -(void) setPaymentData {
     PaymentData* paymentData = [[PaymentData alloc] init];
-    paymentData.paymentMethod = [[PaymentMethod alloc] init];
-    paymentData.paymentMethod.paymentMethodId = @"visa";
-    paymentData.paymentMethod.paymentTypeId = @"credit_card";
-    paymentData.paymentMethod.name = @"visa";
-    paymentData.payerCost = [[PayerCost alloc] initWithInstallments:1 installmentRate:0 labels:nil minAllowedAmount:100 maxAllowedAmount:1000 recommendedMessage:nil installmentAmount:100 totalAmount:100];
+
 
     self.paymentData = paymentData;
 }
 -(void)setRyCUpdate {
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.paymentMethod.paymentMethodId);
         NSLog(@"%@", paymentData.token.tokenId);
-        NSLog(@"%ld", paymentData.payerCost.installments);
 
         ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
         //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
@@ -220,10 +214,7 @@
 -(void)setPaymentDataCallback {
 
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
-        NSLog(@"PaymentMethod: %@", paymentData.paymentMethod.paymentMethodId);
         NSLog(@"Token_id: %@", paymentData.token.tokenId);
-        NSLog(@"Installemtns: %ld", paymentData.payerCost.installments);
-        NSLog(@"Issuer_id: %@", paymentData.issuer.issuerId);
         self.paymentData = paymentData;
         [self setPaymentCallback];
 
@@ -250,10 +241,7 @@
     [MercadoPagoCheckout setFlowPreference:flowPreference];
 
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
-        NSLog(@"PaymentMethod: %@", paymentData.paymentMethod.paymentMethodId);
         NSLog(@"Token_id: %@", paymentData.token.tokenId);
-        NSLog(@"Installemtns: %ld", paymentData.payerCost.installments);
-        NSLog(@"Issuer_id: %@", paymentData.issuer.issuerId);
 
         FlowPreference *flowPreference = [[FlowPreference alloc]init];
         [flowPreference enableReviewAndConfirmScreen];
@@ -352,9 +340,7 @@
 -(void)invokeCallback:(MPCustomCell *)button {
 
     [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.paymentMethod.paymentMethodId);
         NSLog(@"%@", paymentData.token.tokenId);
-        NSLog(@"%ld", paymentData.payerCost.installments);
 
         // Mostrar modal
         NSArray *currentViewControllers = self.navigationController.viewControllers;

@@ -7,16 +7,16 @@
 //
 
 import Foundation
-
+import MercadoPagoServicesV4
 @objcMembers
 open class SecurityCodeViewModel: NSObject {
-    var paymentMethod: PaymentMethod!
+    var paymentMethod: PXPaymentMethod!
     var cardInfo: CardInformationForm!
     var reason: Reason
 
     var callback: ((_ cardInformation: CardInformationForm, _ securityCode: String) -> Void)?
 
-    public init(paymentMethod: PaymentMethod, cardInfo: CardInformationForm, reason: Reason) {
+    public init(paymentMethod: PXPaymentMethod, cardInfo: CardInformationForm, reason: Reason) {
         self.paymentMethod = paymentMethod
         self.cardInfo = cardInfo
         self.reason = reason

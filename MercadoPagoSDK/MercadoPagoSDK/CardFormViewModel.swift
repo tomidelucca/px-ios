@@ -23,8 +23,8 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 @objcMembers
 open class CardFormViewModel: NSObject {
 
-    var paymentMethods: [PaymentMethod]
-    var guessedPMS: [PaymentMethod]?
+    var paymentMethods: [PXPaymentMethod]
+    var guessedPMS: [PXPaymentMethod]?
     var customerCard: CardInformation?
     var token: Token?
     var cardToken: CardToken?
@@ -40,14 +40,14 @@ open class CardFormViewModel: NSObject {
     var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    public init(paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    public init(paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
 
         if customerCard != nil {
             self.customerCard = customerCard
-            self.guessedPMS = [PaymentMethod]()
+            self.guessedPMS = [PXPaymentMethod]()
             self.guessedPMS?.append((customerCard?.getPaymentMethod())!)
         }
         self.token = token
@@ -67,18 +67,14 @@ open class CardFormViewModel: NSObject {
     }
 
     func cvvLenght() -> Int {
-        var lenght: Int
-
-        if self.customerCard != nil {
-            lenght = (self.customerCard?.getCardSecurityCode().length)!
+        if let securityCode = customerCard?.getCardSecurityCode() {
+            return  securityCode.length
         } else {
-            if (getGuessedPM()?.settings == nil)||(getGuessedPM()?.settings.count == 0) {
-                lenght = 3 // Default
-            } else {
-                lenght = (getGuessedPM()?.settings[0].securityCode.length)!
+            guard let guessedPMFisrtSetting = getGuessedPM()?.settings.first else {
+                return 3
             }
+            return guessedPMFisrtSetting.securityCode?.length ?? 3
         }
-        return lenght
     }
 
     func getLabelTextColor(cardNumber: String?) -> UIColor {
@@ -197,7 +193,7 @@ open class CardFormViewModel: NSObject {
         }
     }
 
-    func matchedPaymentMethod (_ cardNumber: String) -> [PaymentMethod]? {
+    func matchedPaymentMethod (_ cardNumber: String) -> [PXPaymentMethod]? {
 
         if self.guessedPMS != nil {
             return self.guessedPMS
@@ -207,7 +203,7 @@ open class CardFormViewModel: NSObject {
             return nil
         }
 
-        var paymentMethods = [PaymentMethod]()
+        var paymentMethods = [PXPaymentMethod]()
 
         for paymentMethod in self.paymentMethods {
             if paymentMethod.conformsToBIN(getBIN(cardNumber)!) {
@@ -237,7 +233,7 @@ open class CardFormViewModel: NSObject {
         self.cardToken = SavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
         return self.cardToken!
     }
-    func getGuessedPM() -> PaymentMethod? {
+    func getGuessedPM() -> PXPaymentMethod? {
         if let card = customerCard {
             return card.getPaymentMethod()
         } else {
@@ -265,8 +261,8 @@ open class CardFormViewModel: NSObject {
         if Array.isNullOrEmpty(paymentMethods) {
             return defaultMessage
         }
-        if !String.isNullOrEmpty(paymentMethods[0].name) {
-            return "Solo puedes pagar con ".localized + paymentMethods[0].name
+        if let paymentMethodName = paymentMethods[0].name {
+            return "Solo puedes pagar con ".localized + paymentMethodName
         } else {
             return defaultMessage
         }

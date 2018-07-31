@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l__?, r__?):
@@ -55,7 +56,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var statusDetail: String!
     open var transactionAmount: Double = 0
     open var transactionAmountRefunded: Double = 0
-    open var transactionDetails: TransactionDetails!
+    open var transactionDetails: PXTransactionDetails!
     open var collectorId: String!
     open var couponAmount: Double = 0
     open var differentialPricingId: NSNumber = 0
@@ -158,9 +159,9 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let transactionAmountRefunded = JSONHandler.attemptParseToDouble(json["transaction_amount_refunded"]) {
                         payment.transactionAmountRefunded = transactionAmountRefunded
                     }
-                if let tdDic = json["transaction_details"] as? NSDictionary {
-                        payment.transactionDetails = TransactionDetails.fromJSON(tdDic)
-                    }
+//                if let tdDic = json["transaction_details"] as? NSDictionary {
+//                        payment.transactionDetails = TransactionDetails.fromJSON(tdDic)
+//                    }
                 if let collectorId = JSONHandler.attemptParseToString(json["collector_id"]) {
                         payment.collectorId = collectorId
                     }

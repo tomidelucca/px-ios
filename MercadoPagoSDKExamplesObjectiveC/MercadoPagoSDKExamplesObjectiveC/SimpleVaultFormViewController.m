@@ -12,11 +12,9 @@
 
 @implementation SimpleVaultFormViewController 
 
-@synthesize paymentMethod;
 @synthesize customerCard;
 @synthesize allowInstallmentsSelection;
 @synthesize amount;
-@synthesize selectedPayerCost;
 @synthesize identificationTypes;
 UIImageView *cardIcon;
 UITextView *cardNumber;
@@ -64,11 +62,9 @@ UILabel *identificationType;
             errorOcurred = YES;
         }
     }
-    
-    if (allowInstallmentsSelection && selectedPayerCost == nil) {
-        installmentsTitle.textColor = [UIColor redColor];
-        errorOcurred = YES;
-    }
+
+    installmentsTitle.textColor = [UIColor redColor];
+    errorOcurred = YES;
     
 //    if (!errorOcurred) {
 //        [MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
@@ -140,13 +136,11 @@ UILabel *identificationType;
             if (self.customerCard == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCardNumber"];
                 cardIcon = [cell viewWithTag:1];
-                cardIcon.image = [MercadoPago getImage:self.paymentMethod.paymentMethodId bundle: [MercadoPago getBundle]];
                 cardNumber = [cell viewWithTag:2];
                 return cell;
             }
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCustomerCard"];
             cardIcon = [cell viewWithTag:1];
-            cardIcon.image = [MercadoPago getImage:self.customerCard.paymentMethod.paymentMethodId bundle: [MercadoPago getBundle]];
             return cell;
             }
             break;
@@ -162,13 +156,8 @@ UILabel *identificationType;
                 expirationMonth = [cell viewWithTag:1];
                 expirationYear = [cell viewWithTag:2];
                 return cell;
-            } else if (self.selectedPayerCost == nil) {
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
-                installmentsTitle = [cell viewWithTag:1];
-                return cell;
             }
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];
-            cell.textLabel.text = self.selectedPayerCost.recommendedMessage;
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];;
             return cell;
 
         }
@@ -187,13 +176,8 @@ UILabel *identificationType;
         }
             break;
         case 5:{
-            if (self.selectedPayerCost == nil) {
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
-                installmentsTitle = [cell viewWithTag:1];
-                return cell;
-            }
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];
-            cell.textLabel.text = self.selectedPayerCost.recommendedMessage;
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
+            installmentsTitle = [cell viewWithTag:1];
             return cell;
             
         }
@@ -236,7 +220,6 @@ UILabel *identificationType;
 
 -(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
     InstallmentsTableViewController *installmentsVC = [segue sourceViewController];
-    self.selectedPayerCost = installmentsVC.selectedPayerCost;
     [[self tableView] reloadData];
     
 }

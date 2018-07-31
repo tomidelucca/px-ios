@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers
 @IBDesignable open class CardFrontView: UIView, Updatable {
@@ -31,7 +32,7 @@ import UIKit
         loadViewFromNib ()
     }
 
-    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
+    public func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod) {
 
         self.cardLogo.image =  paymentMethod.getImage()
         self.cardLogo.alpha = 1

@@ -244,7 +244,7 @@ extension MercadoPagoCheckout {
             } else {
                 let financialInstitutionStep = AdditionalStepViewController(viewModel:
                     self.viewModel.financialInstitutionViewModel(), callback: { [weak self] (financialInstitution) in
-                        guard let financialInstitution = financialInstitution as? FinancialInstitution else {
+                        guard let financialInstitution = financialInstitution as? PXFinancialInstitution else {
                             fatalError("Cannot convert entityType to type EntityType")
                         }
                         self?.viewModel.updateCheckoutModel(financialInstitution: financialInstitution)

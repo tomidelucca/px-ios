@@ -9,7 +9,7 @@
 #import "StepsExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "MainExamplesViewController.h"
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @interface StepsExamplesViewController ()
 
@@ -81,24 +81,9 @@ CheckoutPreference *pref;
     [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
     [CardFormViewController setShowBankDeals:NO];
     
-    PaymentMethod *pm = [[PaymentMethod alloc] init];
-    pm.paymentMethodId = @"debvisa";
-    pm.paymentTypeId = @"debit_card";
-    pm.name = @"visa";
-     
-     
-    PaymentData *pd = [[PaymentData alloc] init];
-    pd.paymentMethod = pm;
-     
-    pd.token = [[Token alloc] initWithTokenId:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
-    pd.token.lastFourDigits = @"7890";
-    pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
-     
-    pd.issuer = nil;//[[Issuer alloc] init];
-    pd.issuer.issuerId = [NSNumber numberWithInt:200];
     
     
-    [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:pd discount:nil navigationController:self.navigationController] start];
+    [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:nil discount:nil navigationController:self.navigationController] start];
 
     
 }
@@ -123,25 +108,7 @@ CheckoutPreference *pref;
 }
 
 - (void)showCongrats {
-    
-    PaymentMethod *pm = [[PaymentMethod alloc] init];
-    pm.paymentMethodId = @"debvisa";
-    pm.paymentTypeId = @"debit_card";
-    pm.name = @"visa";
 
-    PaymentData *pd = [[PaymentData alloc] init];
-    pd.paymentMethod = pm;
-    pd.paymentMethod.name = @"Visa";
-    
-    pd.token = [[Token alloc] initWithTokenId:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
-    pd.token.lastFourDigits = @"7890";
-    pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:2 totalAmount:6];
-    //pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
-    
-    pd.issuer = nil;//[[Issuer alloc] init];
-     PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_bad_filled_other" paymentData:pd payerEmail:nil paymentId:nil statementDescription:nil];
-    
-    [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:pd paymentResult:paymentResult navigationController:self.navigationController] start];
 
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers
 open class IdentificationCardView: UIView, Updatable {
@@ -26,7 +27,7 @@ var view: UIView!
         loadViewFromNib ()
     }
 
-    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
+    public func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod) {
 
     }
 

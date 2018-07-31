@@ -27,7 +27,6 @@
 		4B811DF11FCDD49A000611AD /* ThirdHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */; };
 		4B811DF21FCDD49A000611AD /* SecondHookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DED1FCDD49A000611AD /* SecondHookViewController.m */; };
 		763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */; };
-		763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */; };
 		766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */; };
 		767D8DBC1E5541EC0004FCA9 /* CustomItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 767D8DBA1E5541EC0004FCA9 /* CustomItemTableViewCell.m */; };
 		767D8DBD1E5541EC0004FCA9 /* CustomItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 767D8DBB1E5541EC0004FCA9 /* CustomItemTableViewCell.xib */; };
@@ -105,8 +104,6 @@
 		5B1E48FF5AB4373760232522 /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; sourceTree = "<group>"; };
 		763B44F71D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPaymentMethodTableViewController.h; sourceTree = "<group>"; };
 		763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectPaymentMethodTableViewController.m; sourceTree = "<group>"; };
-		763B45001D2C02DE002E2B39 /* InstallmentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstallmentsTableViewController.h; sourceTree = "<group>"; };
-		763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstallmentsTableViewController.m; sourceTree = "<group>"; };
 		766627551D2AFDF9002EB903 /* SavedCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedCardsTableViewController.h; sourceTree = "<group>"; };
 		766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedCardsTableViewController.m; sourceTree = "<group>"; };
 		767D8DB91E5541EC0004FCA9 /* CustomItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomItemTableViewCell.h; sourceTree = "<group>"; };
@@ -236,8 +233,6 @@
 				766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */,
 				763B44F71D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.h */,
 				763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */,
-				763B45001D2C02DE002E2B39 /* InstallmentsTableViewController.h */,
-				763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */,
 				15C84A961D2D531E002E4988 /* MediosOffTableViewController.h */,
 				15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */,
 				76BAC6451E4B2F220081F675 /* CustomTableViewCell.h */,
@@ -534,7 +529,6 @@
 				4B811DF11FCDD49A000611AD /* ThirdHookViewController.m in Sources */,
 				2385C5DA20125871002C147D /* MeliTheme.swift in Sources */,
 				15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */,
-				763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */,
 				76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */,
 				76EF7F5D1D27027A0087C785 /* StepsExamplesViewController.m in Sources */,
 				76E6E06A1D2AD33F006CE49B /* SimpleVaultViewController.m in Sources */,

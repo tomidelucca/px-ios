@@ -223,108 +223,10 @@ extension MercadoPagoServicesAdapter {
         bankDeal.promoId = pxBankDeal.id
         bankDeal.issuer = pxBankDeal.issuer
         bankDeal.recommendedMessage = pxBankDeal.recommendedMessage
-
-        if let pxBankDealPaymentMethods = pxBankDeal.paymentMethods {
-            bankDeal.paymentMethods = []
-            for pxPaymentMethod in pxBankDealPaymentMethods {
-                let paymentMethod = getPaymentMethodFromPXPaymentMethod(pxPaymentMethod)
-                bankDeal.paymentMethods = Array.safeAppend(bankDeal.paymentMethods, paymentMethod)
-            }
-        }
-
+        bankDeal.paymentMethods = pxBankDeal.paymentMethods
         bankDeal.legals = pxBankDeal.legals
         bankDeal.url = pxBankDeal.picture?.url ?? ""
         return bankDeal
-    }
-
-    open func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod?) -> PaymentMethod {
-        let paymentMethod = PaymentMethod()
-        if let pxPaymentMethod = pxPaymentMethod {
-            paymentMethod.paymentMethodId = pxPaymentMethod.id
-            paymentMethod.name = pxPaymentMethod.name
-            paymentMethod.paymentTypeId = pxPaymentMethod.paymentTypeId
-            if let pxSettings = pxPaymentMethod.settings {
-                for pxSetting in pxSettings {
-                    let setting = getSettingFromPXSetting(pxSetting)
-                    paymentMethod.settings = Array.safeAppend(paymentMethod.settings, setting)
-                }
-            } else {
-                paymentMethod.settings = []
-            }
-            paymentMethod.additionalInfoNeeded = pxPaymentMethod.additionalInfoNeeded
-            if let pxFinancialInstitutions = pxPaymentMethod.financialInstitutions {
-                for pxFinancialInstitution in pxFinancialInstitutions {
-                    let financialInstitution = getFinancialInstitutionFromPXFinancialInstitution(pxFinancialInstitution)
-                    paymentMethod.financialInstitutions = Array.safeAppend(paymentMethod.financialInstitutions, financialInstitution)
-                }
-            } else {
-                paymentMethod.financialInstitutions = []
-            }
-            paymentMethod.accreditationTime = pxPaymentMethod.accreditationTime
-            paymentMethod.status = pxPaymentMethod.status
-            paymentMethod.secureThumbnail = pxPaymentMethod.secureThumbnail
-            paymentMethod.thumbnail = pxPaymentMethod.thumbnail
-            paymentMethod.deferredCapture = pxPaymentMethod.deferredCapture
-            paymentMethod.minAllowedAmount = pxPaymentMethod.minAllowedAmount ?? 0
-            paymentMethod.maxAllowedAmount = pxPaymentMethod.maxAllowedAmount
-            paymentMethod.merchantAccountId = pxPaymentMethod.merchantAccountId
-        }
-        return paymentMethod
-    }
-
-    open func getSettingFromPXSetting(_ pxSetting: PXSetting) -> Setting {
-        let setting = Setting()
-        setting.binMask = getBinMaskFromPXBin(pxSetting.bin)
-        setting.cardNumber = getCardNumberFromPXCardNumber(pxSetting.cardNumber)
-        setting.securityCode = getSecurityCodeFromPXSecurityCode(pxSetting.securityCode)
-        return setting
-    }
-
-    open func getFinancialInstitutionFromPXFinancialInstitution(_ pxFinancialInstitution: PXFinancialInstitution?) -> FinancialInstitution {
-        if let pxFinancialInstitution = pxFinancialInstitution {
-            let financialInstitution = FinancialInstitution()
-            financialInstitution.financialInstitutionId = Int(pxFinancialInstitution.id)
-            financialInstitution.financialInstitutionDescription = pxFinancialInstitution._description
-            return financialInstitution
-        } else {
-            let financialInstitution = FinancialInstitution()
-            return financialInstitution
-        }
-    }
-
-    open func getBinMaskFromPXBin(_ pxBin: PXBin?) -> BinMask {
-        if let pxBin = pxBin {
-            let binMask = BinMask()
-            binMask.exclusionPattern = pxBin.exclusionPattern
-            binMask.installmentsPattern = pxBin.installmentPattern
-            binMask.pattern = pxBin.pattern
-            return binMask
-        } else {
-            let binMask = BinMask()
-            binMask.exclusionPattern = ""
-            binMask.installmentsPattern = ""
-            binMask.pattern = ""
-            return binMask
-        }
-    }
-
-    open func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber?) -> CardNumber {
-        let cardNumber = CardNumber()
-        if let pxCardNumber = pxCardNumber {
-            cardNumber.length = pxCardNumber.length ?? 17
-            cardNumber.validation = pxCardNumber.validation
-        }
-        return cardNumber
-    }
-
-    open func getSecurityCodeFromPXSecurityCode(_ pxSecurityCode: PXSecurityCode?) -> SecurityCode {
-        let securityCode = SecurityCode()
-        if let pxSecurityCode = pxSecurityCode {
-            securityCode.length = pxSecurityCode.length ?? 3
-            securityCode.cardLocation = pxSecurityCode.cardLocation
-            securityCode.mode = pxSecurityCode.mode
-        }
-        return securityCode
     }
 
     open func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
@@ -380,7 +282,7 @@ extension MercadoPagoServicesAdapter {
         payment.statusDetail = pxPayment.statusDetail
         payment.transactionAmount = pxPayment.transactionAmount ?? 0.0
         payment.transactionAmountRefunded = pxPayment.transactionAmountRefunded ?? 0.0
-        payment.transactionDetails = getTransactionDetailsFromPXTransactionDetails(pxPayment.transactionDetails)
+        payment.transactionDetails = pxPayment.transactionDetails
         payment.collectorId = String(describing: pxPayment.collectorId)
         payment.couponAmount = pxPayment.couponAmount ?? 0.0
         payment.differentialPricingId = NSNumber(value: pxPayment.differentialPricingId ?? 0)
@@ -415,28 +317,6 @@ extension MercadoPagoServicesAdapter {
         refund.source = pxRefund.source
         refund.uniqueSequenceNumber = pxRefund.uniqueSecuenceNumber
         return refund
-    }
-
-    open func getTransactionDetailsFromPXTransactionDetails(_ pxTransactionDetails: PXTransactionDetails?) -> TransactionDetails {
-        let transactionDetails = TransactionDetails()
-        if let pxTransactionDetails = pxTransactionDetails {
-            transactionDetails.couponAmount = nil
-            transactionDetails.externalResourceUrl = pxTransactionDetails.externalResourceUrl
-            transactionDetails.financialInstitution = getFinancialInstitutionFromId(pxTransactionDetails.financialInstitution)
-            transactionDetails.installmentAmount = pxTransactionDetails.installmentAmount
-            transactionDetails.netReceivedAmount = pxTransactionDetails.netReceivedAmount
-            transactionDetails.overpaidAmount = pxTransactionDetails.overpaidAmount
-            transactionDetails.totalPaidAmount = pxTransactionDetails.totalPaidAmount
-        }
-        return transactionDetails
-    }
-
-    open func getFinancialInstitutionFromId(_ financialInstitutionId: String?) -> FinancialInstitution {
-        let financialInstitution = FinancialInstitution()
-        if let financialInstitutionId = financialInstitutionId {
-            financialInstitution.financialInstitutionId = Int(financialInstitutionId)
-        }
-        return financialInstitution
     }
 
     open func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
@@ -507,14 +387,7 @@ extension MercadoPagoServicesAdapter {
             }
         }
 
-        if let pxPaymentMethodSearchPaymentMethods = pxPaymentMethodSearch.paymentMethods {
-            paymentMethodSearch.paymentMethods = []
-            for pxPaymentMethod in pxPaymentMethodSearchPaymentMethods {
-                let paymentMethod = getPaymentMethodFromPXPaymentMethod(pxPaymentMethod)
-                paymentMethodSearch.paymentMethods = Array.safeAppend(paymentMethodSearch.paymentMethods, paymentMethod)
-            }
-        }
-
+        paymentMethodSearch.paymentMethods = pxPaymentMethodSearch.paymentMethods
         if let pxPaymentMethodSearchCards = pxPaymentMethodSearch.cards {
             paymentMethodSearch.cards = []
             for pxCard in pxPaymentMethodSearchCards {
@@ -625,9 +498,9 @@ extension MercadoPagoServicesAdapter {
             card.firstSixDigits = pxCard.firstSixDigits
             card.idCard = pxCard.id ?? ""
             card.lastFourDigits = pxCard.lastFourDigits
-            card.paymentMethod = getPaymentMethodFromPXPaymentMethod(pxCard.paymentMethod)
+            card.paymentMethod = pxCard.paymentMethod
             card.issuer = pxCard.issuer
-            card.securityCode = getSecurityCodeFromPXSecurityCode(pxCard.securityCode)
+            card.securityCode = pxCard.securityCode
             return card
         }
         return card

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 class AdditionalStepCardTableViewCell: UITableViewCell {
 
@@ -41,7 +42,7 @@ class AdditionalStepCardTableViewCell: UITableViewCell {
         self.cell.backgroundColor = UIColor.primaryColor()
 
     }
-    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod, view: Updatable) {
+    func updateCardSkin(token: CardInformationForm?, paymentMethod: PXPaymentMethod, view: Updatable) {
 
         view.updateCard(token: token, paymentMethod: paymentMethod)
 

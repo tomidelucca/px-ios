@@ -57,7 +57,7 @@ class AdditionalStepCellFactory: NSObject {
         }
 
         if object.objectType == ObjectTypes.financialInstitution {
-            if let cell = bundle.loadNibNamed("FinancialInstitutionTableViewCell", owner: nil, options: nil)?[0] as? FinancialInstitutionTableViewCell, let financialObj = object as? FinancialInstitution {
+            if let cell = bundle.loadNibNamed("FinancialInstitutionTableViewCell", owner: nil, options: nil)?[0] as? FinancialInstitutionTableViewCell, let financialObj = object as? PXFinancialInstitution {
                 cell.fillCell(financialInstitution: financialObj, bundle: bundle)
                 cell.addSeparatorLineToBottom(width: width, height: height)
                 cell.selectionStyle = .none
@@ -66,7 +66,7 @@ class AdditionalStepCellFactory: NSObject {
         }
 
         if object.objectType == ObjectTypes.paymentMethod {
-            if let cell = bundle.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as? CardTypeTableViewCell, let pmObject = object as? PaymentMethod {
+            if let cell = bundle.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as? CardTypeTableViewCell, let pmObject = object as? PXPaymentMethod {
                 cell.setPaymentMethod(paymentMethod: pmObject)
                 cell.addSeparatorLineToBottom(width: width, height: height)
                 cell.selectionStyle = .none

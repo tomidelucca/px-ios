@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 @objcMembers open class PaymentResultScreenPreference: NSObject {
 
@@ -457,7 +458,7 @@ import Foundation
         self.approvedIconBundle = bundle
     }
 
-    open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
+    open func getHeaderRejectedIcon(_ paymentMethod: PXPaymentMethod?) -> UIImage? {
         if let urlImage = self.rejectedURLImage {
             if let image =  ViewUtils.loadImageFromUrl(urlImage) {
                 return image
@@ -469,7 +470,7 @@ import Foundation
        return getHeaderImageFor(paymentMethod)
     }
 
-    open func getHeaderImageFor(_ paymentMethod: PaymentMethod?) -> UIImage? {
+    open func getHeaderImageFor(_ paymentMethod: PXPaymentMethod?) -> UIImage? {
         guard let paymentMethod = paymentMethod else {
             return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
         }

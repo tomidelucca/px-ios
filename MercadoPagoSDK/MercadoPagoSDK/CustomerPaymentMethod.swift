@@ -17,8 +17,8 @@ import MercadoPagoServicesV4
     var paymentMethodTypeId: String!
     var firstSixDigits: String!
 
-    var securityCode: SecurityCode = SecurityCode()
-    var paymentMethod: PaymentMethod?
+    var securityCode: PXSecurityCode?
+    var paymentMethod: PXPaymentMethod?
     var card: Card?
 
     open class func fromJSON(_ json: NSDictionary) -> CustomerPaymentMethod {
@@ -99,15 +99,15 @@ import MercadoPagoServicesV4
         return self.customerPaymentMethodId
     }
 
-    open func getCardSecurityCode() -> SecurityCode {
-        return self.securityCode
+    open func getCardSecurityCode() -> PXSecurityCode? {
+        return securityCode
     }
 
     open func getCardDescription() -> String {
         return self.customerPaymentMethodDescription
     }
 
-    open func getPaymentMethod() -> PaymentMethod? {
+    open func getPaymentMethod() -> PXPaymentMethod? {
         return paymentMethod
     }
 
@@ -127,11 +127,11 @@ import MercadoPagoServicesV4
         return card?.getCardLastForDigits()
     }
 
-    open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {
+    open func setupPaymentMethod(_ paymentMethod: PXPaymentMethod) {
         self.paymentMethod = paymentMethod
     }
 
-    open func setupPaymentMethodSettings(_ settings: [Setting]) {
+    open func setupPaymentMethodSettings(_ settings: [PXSetting]) {
         self.securityCode = settings[0].securityCode
     }
 

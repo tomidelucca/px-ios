@@ -39,14 +39,14 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var tokenId: String?
     open var payer: Payer?
     open var binaryMode: Bool = false
-    open var transactionDetails: TransactionDetails?
+    open var transactionDetails: PXTransactionDetails?
     open var discount: PXDiscount?
 
     override init() {
         super.init()
     }
 
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) {
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: PXTransactionDetails?, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) {
         self.preferenceId = preferenceId
         self.publicKey = publicKey
         self.paymentMethodId = paymentMethodId
@@ -85,9 +85,9 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 obj["payer"] = self.payer?.toJSON()
         }
 
-        if self.transactionDetails != nil {
-            obj["transaction_details"] = self.transactionDetails?.toJSON()
-        }
+//        if self.transactionDetails != nil {
+//            obj["transaction_details"] = self.transactionDetails?.toJSON()
+//        }
         if let discount = self.discount {
             obj["campaign_id"] = discount.id
             obj["coupon_amount"] = discount.couponAmount
@@ -101,7 +101,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
     open var customerId: String!
 
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool) {
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String, transactionDetails: PXTransactionDetails?, payer: Payer, binaryMode: Bool) {
         super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
         self.customerId = customerId
     }
@@ -130,7 +130,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class MPPaymentFactory {
 
-    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) -> MPPayment {
+    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: PXTransactionDetails?, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) -> MPPayment {
 
         if !String.isNullOrEmpty(customerId) {
             return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId!, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)

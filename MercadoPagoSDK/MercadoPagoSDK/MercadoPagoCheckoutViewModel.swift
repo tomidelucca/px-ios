@@ -70,7 +70,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentMethodOptions: [PaymentMethodOption]?
     var paymentOptionSelected: PaymentMethodOption?
     // Payment method disponibles correspondientes a las opciones que se muestran en selección de medio de pago
-    var availablePaymentMethods: [PaymentMethod]?
+    var availablePaymentMethods: [PXPaymentMethod]?
 
     var rootPaymentMethodOptions: [PaymentMethodOption]?
     var customPaymentOptions: [CardInformation]?
@@ -88,7 +88,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     open var payerCosts: [PXPayerCost]?
     open var issuers: [PXIssuer]?
     open var entityTypes: [EntityType]?
-    open var financialInstitutions: [FinancialInstitution]?
+    open var financialInstitutions: [PXFinancialInstitution]?
     open var instructionsInfo: InstructionsInfo?
 
     static var error: MPSDKError?
@@ -180,7 +180,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    public func getPaymentMethodsForSelection() -> [PaymentMethod] {
+    public func getPaymentMethodsForSelection() -> [PXPaymentMethod] {
         let filteredPaymentMethods = search?.paymentMethods.filter {
             return $0.conformsPaymentPreferences(self.getPaymentPreferences()) && $0.paymentTypeId ==  self.paymentOptionSelected?.getId()
         }
@@ -206,8 +206,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if let paymentMethods = search?.paymentMethods {
             for paymentMethod in paymentMethods {
-                if let id = paymentMethod.paymentMethodId, let paymentTypeId = paymentMethod.paymentTypeId {
-                    paymentMethodsOptions += "\(id):\(paymentTypeId)|"
+                if let id = paymentMethod.paymentMethodId {
+                    paymentMethodsOptions += "\(id):\(paymentMethod.paymentTypeId)|"
                 }
             }
         }
@@ -259,18 +259,16 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func issuerViewModel() -> AdditionalStepViewModel {
-        var paymentMethod: PaymentMethod = PaymentMethod()
-        if let pm = self.paymentData.getPaymentMethod() {
-            paymentMethod = pm
+        guard let paymentMethod = self.paymentData.getPaymentMethod() else {
+            fatalError("Cannot find payment method")
         }
 
         return IssuerAdditionalStepViewModel(amountHelper: self.amountHelper, token: self.cardToken, paymentMethod: paymentMethod, dataSource: self.issuers!, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func payerCostViewModel() -> AdditionalStepViewModel {
-        var paymentMethod: PaymentMethod = PaymentMethod()
-        if let pm = self.paymentData.getPaymentMethod() {
-            paymentMethod = pm
+        guard let paymentMethod = self.paymentData.getPaymentMethod() else {
+            fatalError("Cannot find payment method")
         }
         var cardInformation: CardInformationForm? = self.cardToken
         if cardInformation == nil {
@@ -310,7 +308,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     //SEARCH_PAYMENT_METHODS
-    public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?) {
+    public func updateCheckoutModel(paymentMethods: [PXPaymentMethod], cardToken: CardToken?) {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
         self.cleanIdentificationTypesSearch()
@@ -319,18 +317,18 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     //CREDIT_DEBIT
-    public func updateCheckoutModel(paymentMethod: PaymentMethod?) {
+    public func updateCheckoutModel(paymentMethod: PXPaymentMethod?) {
         if let paymentMethod = paymentMethod {
             self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethod)
         }
     }
 
-    public func updateCheckoutModel(financialInstitution: FinancialInstitution) {
+    public func updateCheckoutModel(financialInstitution: PXFinancialInstitution) {
         if let TDs = self.paymentData.transactionDetails {
-            TDs.financialInstitution = financialInstitution
+            TDs.financialInstitution = financialInstitution.id
         } else {
-            let TD = TransactionDetails(financialInstitution: financialInstitution)
-            self.paymentData.transactionDetails = TD
+            let transactionDetails = PXTransactionDetails(externalResourceUrl: nil, financialInstitution: financialInstitution.id, installmentAmount: nil, netReivedAmount: nil, overpaidAmount: nil, totalPaidAmount: nil, paymentMethodReferenceId: nil)
+            self.paymentData.transactionDetails = transactionDetails
         }
     }
 
@@ -573,11 +571,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
 
-        var transactionDetails = TransactionDetails()
-        if paymentData.transactionDetails != nil {
-            transactionDetails = paymentData.transactionDetails!
-        }
-
         var payer = Payer()
         if let targetPayer = paymentData.payer {
             payer = targetPayer
@@ -585,7 +578,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let isBlacklabelPayment = paymentData.hasToken() && paymentData.getToken()!.cardId != nil && String.isNullOrEmpty(customerId)
 
-        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode, discount: paymentData.discount)
+        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: paymentData.transactionDetails, payer: payer, binaryMode: binaryMode, discount: paymentData.discount)
         return mpPayment
     }
 

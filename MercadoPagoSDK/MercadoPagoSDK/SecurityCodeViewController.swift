@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 import MercadoPagoPXTrackingV4
 
 @objcMembers
@@ -126,7 +127,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         self.executeBack()
     }
 
-    func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod) {
+    func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PXPaymentMethod) {
         self.updateCardThumbnail(paymentMethodColor: paymentMethod.getColor(bin: cardInformation?.getCardBin()))
         self.cardFront.updateCard(token: cardInformation, paymentMethod: paymentMethod)
         cardFront.cardCVV.alpha = 0.8

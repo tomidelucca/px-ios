@@ -41,7 +41,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     var expirationLabelEmpty: Bool = true
     var cvvLabel: UILabel?
     var editingLabel: UILabel?
-    var callback : (( _ paymentMethods: [PaymentMethod], _ cardtoken: CardToken?) -> Void)?
+    var callback : (( _ paymentMethods: [PXPaymentMethod], _ cardtoken: CardToken?) -> Void)?
 
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
@@ -56,7 +56,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM }
 
-    public init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.viewModel = cardFormManager
         self.callback = callback
@@ -124,7 +124,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel

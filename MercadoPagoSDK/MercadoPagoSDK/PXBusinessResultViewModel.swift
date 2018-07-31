@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 import MercadoPagoPXTrackingV4
 
 class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
@@ -188,7 +189,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return PXPaymentMethodComponent(props: bodyProps)
     }
 
-    fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
+    fileprivate func getPaymentMethodIcon(paymentMethod: PXPaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
