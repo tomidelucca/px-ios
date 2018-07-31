@@ -77,7 +77,7 @@ class AdditionalStepCellFactory: NSObject {
     }
 
     open class func needsCFTPayerCostCell(payerCost: PayerCost) -> Bool {
-        return payerCost.hasCFTValue() && MercadoPagoCheckoutViewModel.flowPreference.isInstallmentsReviewScreenEnable() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+        return payerCost.hasCFTValue()
     }
 }
 

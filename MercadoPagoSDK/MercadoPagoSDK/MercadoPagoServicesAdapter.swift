@@ -24,7 +24,6 @@ import MercadoPagoServicesV4
     }
 
     func setServicePreference(servicePreference: ServicePreference) {
-
         mercadoPagoServices.setBaseURL(servicePreference.baseURL)
         mercadoPagoServices.setGatewayBaseURL(servicePreference.getGatewayURL())
     }
@@ -62,13 +61,16 @@ import MercadoPagoServicesV4
 
     public typealias PaymentSearchExclusions = (excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?)
     public typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
+
     open func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let pxPayer = getPXPayerFromPayer(payer)
         let pxSite = getPXSiteFromId(site)
 
+        let accountMoneyAvailable: Bool = false // TODO: This is temporary. (Until AM first class member.)
+
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
-        if !MercadoPagoContext.accountMoneyAvailable() {
+        if !accountMoneyAvailable {
             if excludedPaymentTypesIds != nil {
                 excludedPaymentTypesIds?.insert("account_money")
             } else {

@@ -10,7 +10,7 @@ import Foundation
 extension MercadoPagoCheckout {
     func showHookScreen(hookStep: PXHookStep) {
 
-        if let targetHook = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
+        if let targetHook = MercadoPagoCheckoutViewModel.hookService.getHookForStep(hookStep: hookStep) {
 
             let vc = MercadoPagoUIViewController()
             vc.view.backgroundColor = .clear

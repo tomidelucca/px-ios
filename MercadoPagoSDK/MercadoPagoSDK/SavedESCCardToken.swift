@@ -7,7 +7,7 @@
 //
 
 @objcMembers open class SavedESCCardToken: SavedCardToken {
-    open var requireESC = MercadoPagoCheckoutViewModel.flowPreference.saveESC
+    open var requireESC: Bool = true
     open var esc: String?
 
     init (cardId: String, securityCode: String?, requireESC: Bool = true) {
@@ -29,7 +29,7 @@
 
     open override func toJSON() -> [String: Any] {
         var obj = super.toJSON()
-        obj["require_esc"] = MercadoPagoCheckoutViewModel.flowPreference.saveESC
+        obj["require_esc"] = requireESC
         obj["esc"] = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc!
         return obj
     }

@@ -25,12 +25,7 @@ import UIKit
 
     var termsAndConditionsSite: String!
 
-    var account_money_available = false
-
     var currency: Currency!
-
-    // TODO: Deprecate/Delete in Q2. - 2018
-    var display_default_loading = true
 
     var language: String = NSLocale.preferredLanguages[0]
 
@@ -188,21 +183,9 @@ import UIKit
     }
 
     open class func setPublicKey(_ public_key: String) {
-
         sharedInstance.public_key = public_key.trimSpaces()
 //        _ = CardFrontView()
 //        _ = CardBackView()
-
-    }
-
-    open class func setAccountMoneyAvailable(accountMoneyAvailable: Bool) {
-        sharedInstance.account_money_available = accountMoneyAvailable
-    }
-
-    @available(*, deprecated, message: "Do not use. Deprecated in Q2 - 2018.")
-    open class func setDisplayDefaultLoading(flag: Bool) {
-        print("setDisplayDefaultLoading - Do not use. Deprecated in Q2 - 2018")
-        //sharedInstance.display_default_loading = flag
     }
 
     open class func merchantAccessToken() -> String {
@@ -218,16 +201,6 @@ import UIKit
 
     open class func payerAccessToken() -> String {
         return sharedInstance.payer_access_token
-    }
-
-    open class func accountMoneyAvailable() -> Bool {
-        return sharedInstance.account_money_available
-    }
-
-    @available(*, deprecated, message: "Do not use. Deprecated in Q2 - 2018.")
-    open class func shouldDisplayDefaultLoading() -> Bool {
-        return false
-        //return sharedInstance.display_default_loading
     }
 
     open class func paymentKey() -> String {

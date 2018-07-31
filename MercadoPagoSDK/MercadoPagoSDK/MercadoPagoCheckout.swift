@@ -27,7 +27,7 @@ open class MercadoPagoCheckout: NSObject {
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
-        MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
+        MercadoPagoCheckoutViewModel.hookService.removeHooks()
 
         MercadoPagoContext.setPublicKey(publicKey)
         MercadoPagoContext.setPayerAccessToken(accessToken)
@@ -37,8 +37,6 @@ open class MercadoPagoCheckout: NSObject {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, navigationHandler: PXNavigationHandler(navigationController: navigationController))
 
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
-
-        MercadoPagoCheckoutViewModel.flowPreference.disableESC()
     }
 
     public func setTheme(_ theme: PXTheme) {
@@ -208,11 +206,11 @@ open class MercadoPagoCheckout: NSObject {
     func finish() {
         viewModel.pxNavigationHandler.removeRootLoading()
 
-        if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
+        if self.viewModel.paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
             return
 
-        } else if self.viewModel.paymentData.isComplete() && MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil && !self.viewModel.isCheckoutComplete() {
+        } else if self.viewModel.paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil && !self.viewModel.isCheckoutComplete() {
             MercadoPagoCheckoutViewModel.paymentDataConfirmCallback!(self.viewModel.paymentData)
             return
 
@@ -253,12 +251,25 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     private func shouldApplyDiscount() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
+        //TODO: Ver con mati.
+        if viewModel.paymentPlugin != nil {
             return true
         }
         return false
     }
+
     private func removeDiscount() {
         self.viewModel.clearDiscount()
+    }
+
+    private func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
+        viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
+    }
+}
+
+// TODO: Importante! - Esto debe agregarlo el integrador MoneyIn.
+extension MercadoPagoCheckout {
+    func setAdvancesConfig(config: PXAdvancedConfigurationProtocol) {
+        setAdvancedConfiguration(advancedConfig: config)
     }
 }

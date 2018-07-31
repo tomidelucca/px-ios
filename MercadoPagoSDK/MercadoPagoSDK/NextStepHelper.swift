@@ -225,7 +225,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         if paymentData.isComplete() {
-            return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+            return true
         }
         return false
     }
@@ -269,7 +269,7 @@ extension MercadoPagoCheckoutViewModel {
         }
         if self.payment != nil || self.paymentResult != nil {
             self.setIsCheckoutComplete(isCheckoutComplete: true)
-            return self.shouldDisplayPaymentResult()
+            return true
         }
         return false
     }

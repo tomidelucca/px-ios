@@ -38,8 +38,6 @@
 
 - (IBAction)checkoutFlow:(id)sender {
 
-    [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
-
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.opaque = YES;
 
@@ -54,11 +52,6 @@
 
     // Setear ServicePreference
     //[self setServicePreference];
-
-
-    //Setear flowPreference
-    //[self finishFlowBeforeRYC];
-
 
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
 
@@ -116,9 +109,9 @@
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
-    //[self setHooks];
-    
-    //[self setPaymentMethodPlugins];
+    // [self setHooks];
+
+    [self setPaymentMethodPlugins];
 
     [self setPaymentPlugin];
 
@@ -137,7 +130,8 @@
 }
 
 -(void)setHooks {
-
+    /*
+     // De cara a v4, hooks queda temporalmente oculto a integradores. Ya que no se utiliza.
     FlowPreference *flowPref = [[FlowPreference alloc] init];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"Hooks" bundle:[NSBundle mainBundle]];
@@ -151,6 +145,7 @@
     [flowPref addHookToFlowWithHook:thirdHook];
 
     [MercadoPagoCheckout setFlowPreference:flowPref];
+     */
 }
 
 -(void)setPaymentMethodPlugins {
@@ -241,27 +236,6 @@
     [self.mpCheckout setCallbackCancelWithCallback:^{
         NSLog(@"Se termino el flujo");
         [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
-}
-
--(void)finishFlowBeforeRYC {
-    FlowPreference *flowPreference = [[FlowPreference alloc]init];
-    [flowPreference disableReviewAndConfirmScreen];
-    [MercadoPagoCheckout setFlowPreference:flowPreference];
-
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
-        NSLog(@"PaymentMethod: %@", paymentData.paymentMethod.paymentMethodId);
-        NSLog(@"Token_id: %@", paymentData.token.tokenId);
-        NSLog(@"Installemtns: %ld", paymentData.payerCost.installments);
-        NSLog(@"Issuer_id: %@", paymentData.issuer.issuerId);
-
-        FlowPreference *flowPreference = [[FlowPreference alloc]init];
-        [flowPreference enableReviewAndConfirmScreen];
-        [MercadoPagoCheckout setFlowPreference:flowPreference];
-
-
-        [self.mpCheckout start];
-
     }];
 }
 

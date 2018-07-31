@@ -18,7 +18,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         var secondaryValue: NSAttributedString?
 
         //////////////// TITLE ////////////////
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = amountHelper.discount {
+        if let discount = amountHelper.discount {
 
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
@@ -77,10 +77,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
     }
 
     static func shouldAddActionToRow(amountHelper: PXAmountHelper) -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
-            return true
-        }
-        return false
+        return amountHelper.discount != nil
     }
 
     static func handleTap(amountHelper: PXAmountHelper) {

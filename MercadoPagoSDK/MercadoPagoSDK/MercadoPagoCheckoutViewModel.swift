@@ -43,7 +43,11 @@ public enum CheckoutStep: String {
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     static var servicePreference = ServicePreference()
-    static var flowPreference = FlowPreference()
+
+    static var hookService = HookService()
+
+    private var advancedConfig: PXAdvancedConfigurationProtocol = PXAdvancedConfiguration()
+
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
     static var paymentDataCallback: ((PaymentData) -> Void)?
@@ -539,8 +543,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
 
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
-            if !MercadoPagoContext.accountMoneyAvailable() {
-                //Remover account_money como opción de pago
+            if !advancedConfig.accountMoneyAvailable {
+                // Remover account_money como opción de pago
                 self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
                     return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
                 })
@@ -691,22 +695,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.errorCallback = errorCallback
     }
 
-    func shouldDisplayPaymentResult() -> Bool {
-        guard let paymentResult = self.paymentResult else {
-            return false
-        }
-        if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentResultScreenEnable() {
-            return false
-        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentApprovedScreenEnable() && paymentResult.isApproved() {
-            return false
-        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && paymentResult.isInProcess() {
-            return false
-        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentRejectedScreenEnable() && paymentResult.isRejected() {
-            return false
-        }
-        return true
-    }
-
     func saveOrDeleteESC() -> Bool {
         guard let token = paymentData.getToken() else {
             return false
@@ -752,7 +740,7 @@ extension MercadoPagoCheckoutViewModel {
 
     func resetInFormationOnNewPaymentMethodOptionSelected() {
         resetInformation()
-        MercadoPagoCheckoutViewModel.flowPreference.resetHooksToShow()
+        MercadoPagoCheckoutViewModel.hookService.resetHooksToShow()
     }
 
     func resetInformation() {
@@ -798,7 +786,7 @@ extension MercadoPagoCheckoutViewModel {
         self.resetInformation()
         self.resetGroupSelection()
         self.rootVC = true
-        MercadoPagoCheckoutViewModel.flowPreference.resetHooksToShow()
+        MercadoPagoCheckoutViewModel.hookService.resetHooksToShow()
     }
 
     func prepareForInvalidPaymentWithESC() {
@@ -812,12 +800,23 @@ extension MercadoPagoCheckoutViewModel {
 
     static internal func clearEnviroment() {
         MercadoPagoCheckoutViewModel.servicePreference = ServicePreference()
-        MercadoPagoCheckoutViewModel.flowPreference = FlowPreference()
+        MercadoPagoCheckoutViewModel.hookService.removeHooks()
         MercadoPagoCheckoutViewModel.paymentDataCallback = nil
         MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = nil
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
         MercadoPagoCheckoutViewModel.error = nil
+    }
+}
+
+// MARK: Advanced Config
+extension MercadoPagoCheckoutViewModel {
+    func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
+        self.advancedConfig = advancedConfig
+    }
+
+    func getAdvancedConfiguration() -> PXAdvancedConfigurationProtocol {
+        return advancedConfig
     }
 }
 
