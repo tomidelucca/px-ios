@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.0.0.beta.33"
+  s.version          = "4.0.0.beta.34"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     s.dependency 'MercadoPagoPXTrackingV4', '2.1.3'
     s.dependency 'MercadoPagoServicesV4', '1.0.17'
-    s.dependency 'MLUI', '~> 4.0'
+    s.dependency 'MLUI', '~> 5.0'
   end
 
 end
