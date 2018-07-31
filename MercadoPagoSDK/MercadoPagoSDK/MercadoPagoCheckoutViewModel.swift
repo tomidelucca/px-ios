@@ -44,7 +44,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     static var servicePreference = ServicePreference()
 
-    static var hookService = HookService()
+    var hookService: HookService = HookService()
 
     private var advancedConfig: PXAdvancedConfigurationProtocol = PXAdvancedConfiguration()
 
@@ -543,14 +543,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
 
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
-            if !advancedConfig.accountMoneyAvailable {
-                // Remover account_money como opción de pago
-                self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
-                    return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
-                })
-            } else {
-                self.customPaymentOptions = paymentMethodSearch.customerPaymentMethods
-            }
+            // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
+            self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
+                return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+            })
         }
 
         let totalPaymentMethodSearchCount = search.getPaymentOptionsCount()
@@ -740,7 +736,7 @@ extension MercadoPagoCheckoutViewModel {
 
     func resetInFormationOnNewPaymentMethodOptionSelected() {
         resetInformation()
-        MercadoPagoCheckoutViewModel.hookService.resetHooksToShow()
+        hookService.resetHooksToShow()
     }
 
     func resetInformation() {
@@ -786,13 +782,13 @@ extension MercadoPagoCheckoutViewModel {
         self.resetInformation()
         self.resetGroupSelection()
         self.rootVC = true
-        MercadoPagoCheckoutViewModel.hookService.resetHooksToShow()
+        hookService.resetHooksToShow()
     }
 
     func prepareForInvalidPaymentWithESC() {
         if self.paymentData.isComplete() {
             readyToPay = true
-            self.savedESCCardToken = SavedESCCardToken(cardId: self.paymentData.getToken()!.cardId, esc: nil)
+            self.savedESCCardToken = SavedESCCardToken(cardId: self.paymentData.getToken()!.cardId, esc: nil, requireESC: advancedConfig.escEnabled)
             mpESCManager.deleteESC(cardId: self.paymentData.getToken()!.cardId)
         }
         self.paymentData.cleanToken()
@@ -800,7 +796,6 @@ extension MercadoPagoCheckoutViewModel {
 
     static internal func clearEnviroment() {
         MercadoPagoCheckoutViewModel.servicePreference = ServicePreference()
-        MercadoPagoCheckoutViewModel.hookService.removeHooks()
         MercadoPagoCheckoutViewModel.paymentDataCallback = nil
         MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = nil
         MercadoPagoCheckoutViewModel.paymentCallback = nil

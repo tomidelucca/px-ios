@@ -67,7 +67,7 @@ import MercadoPagoServicesV4
         let pxPayer = getPXPayerFromPayer(payer)
         let pxSite = getPXSiteFromId(site)
 
-        let accountMoneyAvailable: Bool = false // TODO: This is temporary. (Until AM first class member.)
+        let accountMoneyAvailable: Bool = false // TODO: This is temporary. (Warning: Until AM First Class Member)
 
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
         if !accountMoneyAvailable {

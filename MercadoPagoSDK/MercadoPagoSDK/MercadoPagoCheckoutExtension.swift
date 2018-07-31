@@ -33,11 +33,6 @@ extension MercadoPagoCheckout {
         self.init(publicKey: publicKey, accessToken: accessToken, checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: nil, navigationController: navigationController)
     }
 
-    @available(*, deprecated, message: "Use setTheme or setDefaultColor instead.")
-    open static func setDecorationPreference(_ decorationPreference: DecorationPreference) {
-        print("")
-    }
-
     open static func setServicePreference(_ servicePreference: ServicePreference) {
         MercadoPagoCheckoutViewModel.servicePreference = servicePreference
     }

@@ -7,10 +7,10 @@
 //
 
 @objcMembers open class SavedESCCardToken: SavedCardToken {
-    open var requireESC: Bool = true
+    open var requireESC: Bool = false
     open var esc: String?
 
-    init (cardId: String, securityCode: String?, requireESC: Bool = true) {
+    init (cardId: String, securityCode: String?, requireESC: Bool) {
         super.init(cardId: cardId)
         self.securityCode = securityCode
         self.cardId = cardId
@@ -18,7 +18,7 @@
         self.device = Device()
     }
 
-    init (cardId: String, esc: String?, requireESC: Bool = true) {
+    init (cardId: String, esc: String?, requireESC: Bool) {
         super.init(cardId: cardId)
         self.securityCode = ""
         self.cardId = cardId

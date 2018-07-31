@@ -27,8 +27,6 @@ open class MercadoPagoCheckout: NSObject {
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
-        MercadoPagoCheckoutViewModel.hookService.removeHooks()
-
         MercadoPagoContext.setPublicKey(publicKey)
         MercadoPagoContext.setPayerAccessToken(accessToken)
 

@@ -10,7 +10,7 @@ extension MercadoPagoCheckoutViewModel {
 
     func shouldShowHook(hookStep: PXHookStep) -> Bool {
 
-        guard let hookSelected = MercadoPagoCheckoutViewModel.hookService.getHookForStep(hookStep: hookStep) else {
+        guard let hookSelected = hookService.getHookForStep(hookStep: hookStep) else {
             return false
         }
 
@@ -59,11 +59,11 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     public func wentBackFrom(hook: PXHookStep) {
-        MercadoPagoCheckoutViewModel.hookService.addHookToHooksToShow(hookStep: hook)
+        hookService.addHookToHooksToShow(hookStep: hook)
     }
 
     public func continueFrom(hook: PXHookStep) {
-        MercadoPagoCheckoutViewModel.hookService.removeHookFromHooksToShow(hookStep: hook)
+        hookService.removeHookFromHooksToShow(hookStep: hook)
     }
 
     public func updateCheckoutModelAfterBeforeConfigHook(paymentOptionSelected: PaymentMethodOption) {
