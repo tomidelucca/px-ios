@@ -37,7 +37,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var installments: Int = 0
     open var issuerId: String?
     open var tokenId: String?
-    open var payer: Payer?
+    open var payer: PXPayer?
     open var binaryMode: Bool = false
     open var transactionDetails: PXTransactionDetails?
     open var discount: PXDiscount?
@@ -46,7 +46,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         super.init()
     }
 
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: PXTransactionDetails?, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) {
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: PXTransactionDetails?, payer: PXPayer, binaryMode: Bool, discount: PXDiscount? = nil) {
         self.preferenceId = preferenceId
         self.publicKey = publicKey
         self.paymentMethodId = paymentMethodId
@@ -68,7 +68,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,
             "pref_id": self.preferenceId,
-            "binary_mode": self.binaryMode
+            "binary_mode": self.binaryMode,
+            "payer" : ["email": self.payer?.email]
             ]
 
         if self.tokenId != nil && self.tokenId?.count > 0 {
@@ -79,10 +80,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
         if self.issuerId != nil && self.issuerId?.count > 0 {
             obj["issuer_id"] = self.issuerId
-        }
-
-        if self.payer != nil {
-                obj["payer"] = self.payer?.toJSON()
         }
 
 //        if self.transactionDetails != nil {
@@ -101,13 +98,13 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
     open var customerId: String!
 
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String, transactionDetails: PXTransactionDetails?, payer: Payer, binaryMode: Bool) {
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String, transactionDetails: PXTransactionDetails?, payer: PXPayer, binaryMode: Bool) {
         super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
         self.customerId = customerId
     }
 
     open override func toJSON() -> [String: Any] {
-        self.payer?.payerId = customerId
+        self.payer?.id = customerId
         let customerPaymentObj: [String: Any] = super.toJSON()
         return customerPaymentObj
     }
@@ -117,12 +114,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 @objcMembers open class BlacklabelPayment: MPPayment {
 
     open override func toJSON() -> [String: Any] {
-        // Override payer object with groupsPayer (which includes AT in its body)
-        guard let payer = self.payer, let email = self.payer?.email else {
-            return [:]
-        }
-
-        self.payer = GroupsPayer(payerId: payer.payerId, email: email, identification: payer.identification, entityType: payer.entityType)
         let blacklabelPaymentObj: [String: Any] = super.toJSON()
         return blacklabelPaymentObj
     }
@@ -130,7 +121,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class MPPaymentFactory {
 
-    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: PXTransactionDetails?, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) -> MPPayment {
+    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: PXTransactionDetails?, payer: PXPayer, binaryMode: Bool, discount: PXDiscount? = nil) -> MPPayment {
 
         if !String.isNullOrEmpty(customerId) {
             return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId!, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)

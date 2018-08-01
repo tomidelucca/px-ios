@@ -15,7 +15,7 @@ import MercadoPagoServicesV4
     public var issuer: PXIssuer?
     public var payerCost: PXPayerCost?
     public var token: Token?
-    public var payer: Payer?
+    public var payer: PXPayer?
     public var transactionDetails: PXTransactionDetails?
     public private(set) var discount: PXDiscount?
     public private(set) var campaign: PXCampaign?
@@ -138,7 +138,7 @@ import MercadoPagoServicesV4
         self.issuer = issuer
     }
 
-    public func updatePaymentDataWith(payer: Payer?) {
+    public func updatePaymentDataWith(payer: PXPayer?) {
         guard let payer = payer else {
             return
         }
@@ -180,8 +180,8 @@ import MercadoPagoServicesV4
         return issuer
     }
 
-    public func getPayer() -> Payer {
-        var returnedPayer = Payer()
+    public func getPayer() -> PXPayer {
+        var returnedPayer = PXPayer()
         if let payer = payer {
             returnedPayer = payer
         }
@@ -197,30 +197,7 @@ import MercadoPagoServicesV4
     }
 
     func toJSON() -> [String: Any] {
-       var obj: [String: Any] = [
-        "payer": payer?.toJSON() ?? ""
-       ]
-//        if let paymentMethod = self.paymentMethod {
-//            obj["payment_method"] = paymentMethod.toJSON()
-//        }
-
-//        if let payerCost = self.payerCost {
-//            obj["payer_cost"] = payerCost.toJSON()
-//        }
-
-        if let token = self.token {
-            obj["card_token"] = token.toJSON()
-        }
-
-//        if let issuer = self.issuer {
-//            obj["issuer"] = issuer.toJSON()
-//        }
-
-        if let discount = self.discount {
-            obj["discount"] = discount.toJSONDictionary()
-        }
-
-        return obj
+        return [:]
     }
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {

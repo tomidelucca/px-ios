@@ -26,13 +26,13 @@ class PayerInfoViewModel: NSObject {
     var name: String = ""
     var lastName: String = ""
     var identificationNumber: String = ""
-    let payer: Payer!
+    let payer: PXPayer!
 
     var identificationType: PXIdentificationType!
 
     var currentStep: PayerInfoFlowStep = PayerInfoFlowStep.SCREEN_IDENTIFICATION
 
-    init(identificationTypes: [PXIdentificationType], payer: Payer) {
+    init(identificationTypes: [PXIdentificationType], payer: PXPayer) {
         self.payer = payer
         super.init()
 
@@ -146,11 +146,11 @@ class PayerInfoViewModel: NSObject {
         }
     }
 
-    func getFinalPayer() -> Payer {
+    func getFinalPayer() -> PXPayer {
         let identification = PXIdentification(identificationType: identificationType, identificationNumber: identificationNumber)
         self.payer.identification = identification
-        self.payer.name = name
-        self.payer.surname = lastName
+        self.payer.firstName = name
+        self.payer.lastName = lastName
 
         return payer
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate, InputComponentListener {
 
@@ -32,9 +33,9 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     var boletoComponent: BoletoComponent?
 
     var viewModel: PayerInfoViewModel!
-    var callback : ((_ payer: Payer) -> Void)!
+    var callback : ((_ payer: PXPayer) -> Void)!
 
-    init(viewModel: PayerInfoViewModel, callback: @escaping ((_ payer: Payer) -> Void)) {
+    init(viewModel: PayerInfoViewModel, callback: @escaping ((_ payer: PXPayer) -> Void)) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
         self.view.backgroundColor = ThemeManager.shared.getMainColor()

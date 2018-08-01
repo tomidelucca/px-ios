@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class CheckoutPreference: NSObject {
 
     open var preferenceId: String!
     open var items: [Item]!
-    open var payer: Payer!
+    open var payer: PXPayer!
     open var paymentPreference: PaymentPreference!
     open var siteId: String = "MLA"
     open var expirationDateFrom: Date?
@@ -26,10 +27,6 @@ import UIKit
                     }
                 if let siteId = JSONHandler.attemptParseToString(json["site_id"]) {
                         preference.siteId = siteId
-                    }
-
-                if let payerDic = json["payer"] as? NSDictionary {
-                        preference.payer = Payer.fromJSON(payerDic)
                     }
 
                 var items = [Item]()
@@ -54,7 +51,7 @@ import UIKit
         self.preferenceId = preferenceId
     }
 
-    public init(items: [Item] = [], payer: Payer = Payer(), paymentMethods: PaymentPreference? = nil) {
+    public init(items: [Item] = [], payer: PXPayer = PXPayer(), paymentMethods: PaymentPreference? = nil) {
         self.items = items
         self.payer = payer
         self.paymentPreference = paymentMethods ?? PaymentPreference()
@@ -131,7 +128,8 @@ import UIKit
         return items
     }
 
-    public func getPayer() -> Payer {
+    public func getPayer() -> PXPayer {
+        payer.accessToken = MercadoPagoContext.payerAccessToken()
         return payer
     }
 
@@ -176,7 +174,7 @@ import UIKit
             return "No hay información de payer".localized
         }
 
-        if self.payer.email == nil || self.payer.email?.count == 0 {
+        if String.isNullOrEmpty(payer.email) {
             return "Se requiere email de comprador".localized
         }
 
@@ -235,10 +233,8 @@ import UIKit
     open func toJSONString() -> String {
 
         let preferenceId: Any = self.preferenceId == nil ? JSONHandler.null : (self.preferenceId)!
-        let player: Any = self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
         var obj: [String: Any] = [
-            "id": preferenceId,
-            "payer": player
+            "id": preferenceId
         ]
 
         var itemsJson = ""
@@ -257,15 +253,4 @@ import UIKit
         }
         return amount
     }
-}
-
-public func == (obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
-
-    let areEqual =
-        obj1.preferenceId == obj2.preferenceId &&
-            obj1.items == obj2.items &&
-            obj1.payer == obj2.payer &&
-            obj1.paymentPreference == obj2.paymentPreference
-
-    return areEqual
 }

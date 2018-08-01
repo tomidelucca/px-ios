@@ -62,9 +62,8 @@ import MercadoPagoServicesV4
 
     public typealias PaymentSearchExclusions = (excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?)
     public typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
-    open func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, defaultPaymentMethod: String?, payer: PXPayer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        let pxPayer = getPXPayerFromPayer(payer)
         let pxSite = getPXSiteFromId(site)
 
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
@@ -76,7 +75,7 @@ import MercadoPagoServicesV4
             }
         }
 
-        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: defaultPaymentMethod, payer: pxPayer, site: pxSite, callback: {  [weak self] (pxPaymentMethodSearch) in
+        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: defaultPaymentMethod, payer: payer, site: pxSite, callback: {  [weak self] (pxPaymentMethodSearch) in
                 guard let strongSelf = self else {
                     return
                 }

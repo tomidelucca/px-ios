@@ -47,7 +47,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var moneyReleaseDate: Date!
     open var notificationUrl: String!
     open var order: Order!
-    open var payer: Payer!
+    open var payer: PXPayer!
     open var paymentMethodId: String!
     open var paymentTypeId: String!
     open var refunds: [Refund]!
@@ -125,9 +125,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let orderDic = json["order"] as? NSDictionary {
                         payment.order = Order.fromJSON(orderDic)
                     }
-                if let payerDic = json["payer"] as? NSDictionary {
-                        payment.payer = Payer.fromJSON(payerDic)
-                    }
+
                 if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]) {
                         payment.paymentMethodId = paymentMethodId
                     }

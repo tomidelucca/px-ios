@@ -337,7 +337,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentData.updatePaymentDataWith(issuer: issuer)
     }
 
-    public func updateCheckoutModel(payer: Payer) {
+    public func updateCheckoutModel(payer: PXPayer) {
         self.paymentData.updatePaymentDataWith(payer: payer)
     }
 
@@ -370,7 +370,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updateCheckoutModel(entityType: EntityType) {
-        self.paymentData.payer?.entityType = entityType
+        self.paymentData.payer?.entityType = entityType.entityTypeId
     }
 
     // MARK: PAYMENT METHOD OPTION SELECTION
@@ -571,7 +571,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
 
-        var payer = Payer()
+        var payer = PXPayer()
         if let targetPayer = paymentData.payer {
             payer = targetPayer
         }

@@ -10,6 +10,7 @@
 #import "ExampleUtils.h"
 #import "MainExamplesViewController.h"
 @import MercadoPagoSDKV4;
+@import MercadoPagoServicesV4;
 
 @interface StepsExamplesViewController ()
 
@@ -24,7 +25,8 @@ CheckoutPreference *pref;
   
     Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
-    Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
+    PXPayer *payer = [[PXPayer alloc]init];
+    payer.email = @"sarasa@gmail.com";
     
     NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
     

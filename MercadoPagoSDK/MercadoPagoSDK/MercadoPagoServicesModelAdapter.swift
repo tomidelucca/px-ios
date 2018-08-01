@@ -26,7 +26,7 @@ extension MercadoPagoServicesAdapter {
                 checkoutPreference.items = Array.safeAppend(checkoutPreference.items, item)
             }
         }
-        checkoutPreference.payer = getPayerFromPXPayer(pxCheckoutPreference.payer)
+        checkoutPreference.payer = pxCheckoutPreference.payer
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
         checkoutPreference.siteId = pxCheckoutPreference.siteId ?? ""
         checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom ?? Date()
@@ -240,7 +240,7 @@ extension MercadoPagoServicesAdapter {
         payment.moneyReleaseDate = pxPayment.moneyReleaseDate
         payment.notificationUrl = pxPayment.notificationUrl
         payment.order = getOrderFromPXOrder(pxPayment.order)
-        payment.payer = getPayerFromPXPayer(pxPayment.payer)
+        payment.payer = pxPayment.payer
         payment.paymentMethodId = pxPayment.paymentMethodId
         payment.paymentTypeId = pxPayment.paymentTypeId
 
@@ -291,32 +291,6 @@ extension MercadoPagoServicesAdapter {
         refund.source = pxRefund.source
         refund.uniqueSequenceNumber = pxRefund.uniqueSecuenceNumber
         return refund
-    }
-
-    open func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
-        let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
-        pxPayer.id = payer.payerId
-        pxPayer.accessToken = MercadoPagoContext.payerAccessToken()
-        pxPayer.identification = payer.identification
-        pxPayer.entityType = payer.entityType?.entityTypeId
-        pxPayer.email = payer.email
-        pxPayer.firstName = payer.name
-        pxPayer.lastName = payer.surname
-        return pxPayer
-    }
-
-    open func getPayerFromPXPayer(_ pxPayer: PXPayer?) -> Payer {
-        let payer = Payer()
-        if let pxPayer = pxPayer {
-            payer.email = pxPayer.email ?? ""
-            payer.payerId = pxPayer.id
-            payer.identification = pxPayer.identification
-            payer.entityType = getEntityTypeFromId(pxPayer.entityType)
-            payer.name = pxPayer.firstName
-            payer.surname = pxPayer.lastName
-            payer.address = nil
-        }
-        return payer
     }
 
     open func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
