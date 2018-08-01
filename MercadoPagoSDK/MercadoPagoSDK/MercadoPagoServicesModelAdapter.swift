@@ -52,6 +52,7 @@ extension MercadoPagoServicesAdapter {
                 checkoutPreference.items = Array.safeAppend(checkoutPreference.items, item)
             }
         }
+        checkoutPreference.differentialPricing = pxCheckoutPreference.differentialPricing
         checkoutPreference.payer = getPayerFromPXPayer(pxCheckoutPreference.payer)
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
         checkoutPreference.siteId = pxCheckoutPreference.siteId ?? ""

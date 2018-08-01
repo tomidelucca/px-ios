@@ -210,7 +210,11 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, callback: { [weak self] (installments) in
+        var diffPricingString: String? = nil
+        if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
+            diffPricingString = String(describing: differentialPricing)
+        }
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, differentialPricingId: diffPricingString, callback: { [weak self] (installments) in
 
             guard let strongSelf = self else {
                 return
