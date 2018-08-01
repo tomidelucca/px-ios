@@ -44,9 +44,6 @@ import MercadoPagoServicesV4
                         card.firstSixDigits = firstSixDigits
                     }
 
-                if let chDic = json["card_holder"] as? NSDictionary {
-                       card.cardHolder = Cardholder.fromJSON(chDic)
-                   }
                if let dateLastUpdated = JSONHandler.attemptParseToString(json["date_last_updated"]) {
                         card.dateLastUpdated = Utils.getDateFromString(dateLastUpdated)
                     }
@@ -65,7 +62,6 @@ import MercadoPagoServicesV4
     }
 
     open func toJSON() -> [String: Any] {
-        let cardHolder: Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
         let customer_id: Any = self.customerId == nil ? JSONHandler.null : self.customerId!
         let dateCreated: Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
         let dateLastUpdated: Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)

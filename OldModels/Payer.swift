@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 @objcMembers
 open class Payer: NSObject {
 	open var email: String!
 	open var payerId: String?
-	open var identification: Identification?
+	open var identification: PXIdentification?
     open var entityType: EntityType?
     open var name: String?
     open var surname: String?
     open var address: Address?
 
-    public init(payerId: String? = nil, email: String = "", identification: Identification? = nil, entityType: EntityType? = nil) {
+    public init(payerId: String? = nil, email: String = "", identification: PXIdentification? = nil, entityType: EntityType? = nil) {
 		self.payerId = payerId
 		self.email = email
 		self.identification = identification
@@ -34,10 +35,6 @@ open class Payer: NSObject {
 
         if let email = JSONHandler.attemptParseToString(json["email"]) {
             payer.email  = email
-        }
-
-        if let identificationDic = json["identification"] as? NSDictionary {
-            payer.identification = Identification.fromJSON(identificationDic)
         }
 
         if let entityTypeDic = json["entity_type"] as? NSDictionary {
@@ -78,10 +75,6 @@ open class Payer: NSObject {
 
         if self.payerId != nil {
             obj["id"] = self.payerId
-        }
-
-        if self.identification != nil {
-            obj["identification"] = self.identification?.toJSON()
         }
 
         if let ET = self.entityType {

@@ -162,19 +162,13 @@ import MercadoPagoServicesV4
         mercadoPagoServices.getBankDeals(callback: callback, failure: failure)
     }
 
-    open func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getIdentificationTypes(callback: { [weak self] (pxIdentificationTypes) in
             guard let strongSelf = self else {
                 return
             }
-
-            var identificationTypes: [IdentificationType] = []
-            for pxIdentificationTypes in pxIdentificationTypes {
-                let identificationType = strongSelf.getIdentificationTypeFromPXIdentificationType(pxIdentificationTypes)
-                identificationTypes.append(identificationType)
-            }
-            callback(identificationTypes)
+            callback(pxIdentificationTypes)
             }, failure: failure)
     }
 

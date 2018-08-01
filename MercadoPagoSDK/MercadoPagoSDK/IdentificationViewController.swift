@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 @objcMembers
 open class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
@@ -15,10 +16,10 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     var numberDocLabel: UILabel!
     @IBOutlet weak var numberTextField: HoshiTextField!
 
-    var callback : (( Identification) -> Void)?
+    var callback : (( PXIdentification) -> Void)?
     var errorExitCallback: (() -> Void)?
-    var identificationTypes: [IdentificationType]!
-    var identificationType: IdentificationType?
+    var identificationTypes: [PXIdentificationType]!
+    var identificationType: PXIdentificationType?
 
     //identification Masks
     var identificationMask = TextMaskFormater(mask: "XXXXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
@@ -36,7 +37,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     override open var screenName: String { return "IDENTIFICATION_NUMBER" }
 
-    public init(identificationTypes: [IdentificationType], callback : @escaping (( _ identification: Identification) -> Void), errorExitCallback: (() -> Void)?) {
+    public init(identificationTypes: [PXIdentificationType], callback : @escaping (( _ identification: PXIdentification) -> Void), errorExitCallback: (() -> Void)?) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
         self.identificationTypes = identificationTypes
@@ -260,7 +261,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     func rightArrowKeyTapped() {
-        let idnt = Identification(type: self.identificationType?.identificationTypeId, number: defaultEditTextMask.textUnmasked(numberTextField.text))
+        let idnt = PXIdentification(number: defaultEditTextMask.textUnmasked(numberTextField.text), type: self.identificationType?.identificationTypeId)
 
         let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber: defaultEditTextMask.textUnmasked(numberTextField.text))
 
@@ -323,7 +324,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         return nil
     }
 
-    fileprivate func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
+    fileprivate func getIdMask(IDtype: PXIdentificationType?) -> [TextMaskFormater] {
         let site = MercadoPagoContext.getSite()
 
         if IDtype != nil {

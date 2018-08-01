@@ -5,7 +5,7 @@
 //  Created by Demian Tejo on 9/29/17.
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
-
+import MercadoPagoServicesV4
 public enum PayerInfoFlowStep: String {
 
     case CANCEL
@@ -19,7 +19,7 @@ public enum PayerInfoFlowStep: String {
 }
 
 class PayerInfoViewModel: NSObject {
-    var identificationTypes: [IdentificationType]!
+    var identificationTypes: [PXIdentificationType]!
     var masks: [TextMaskFormater]!
     var currentMask: TextMaskFormater?
 
@@ -28,11 +28,11 @@ class PayerInfoViewModel: NSObject {
     var identificationNumber: String = ""
     let payer: Payer!
 
-    var identificationType: IdentificationType!
+    var identificationType: PXIdentificationType!
 
     var currentStep: PayerInfoFlowStep = PayerInfoFlowStep.SCREEN_IDENTIFICATION
 
-    init(identificationTypes: [IdentificationType], payer: Payer) {
+    init(identificationTypes: [PXIdentificationType], payer: Payer) {
         self.payer = payer
         super.init()
 
@@ -46,7 +46,7 @@ class PayerInfoViewModel: NSObject {
         self.currentMask = masks[0]
     }
 
-    func filterSupported(identificationTypes: [IdentificationType]) -> [IdentificationType] {
+    func filterSupported(identificationTypes: [PXIdentificationType]) -> [PXIdentificationType] {
         let supportedIdentificationTypes = identificationTypes.filter {$0.identificationTypeId == "CPF"}
         return supportedIdentificationTypes
     }
@@ -147,7 +147,7 @@ class PayerInfoViewModel: NSObject {
     }
 
     func getFinalPayer() -> Payer {
-        let identification = Identification(identificationType: identificationType, identificationNumber: identificationNumber)
+        let identification = PXIdentification(identificationType: identificationType, identificationNumber: identificationNumber)
         self.payer.identification = identification
         self.payer.name = name
         self.payer.surname = lastName
@@ -169,7 +169,7 @@ class PayerInfoViewModel: NSObject {
         return nil
     }
 
-    fileprivate func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
+    fileprivate func getIdMask(IDtype: PXIdentificationType?) -> [TextMaskFormater] {
         let site = MercadoPagoContext.getSite()
         let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
         let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)

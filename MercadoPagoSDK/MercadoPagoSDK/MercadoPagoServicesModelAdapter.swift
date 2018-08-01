@@ -206,14 +206,14 @@ extension MercadoPagoServicesAdapter {
         let cardholder = Cardholder()
         if let pxCardHolder = pxCardHolder {
             cardholder.name = pxCardHolder.name
-            cardholder.identification = getIdentificationFromPXIdentification(pxCardHolder.identification)
+            cardholder.identification = pxCardHolder.identification
         }
         return cardholder
     }
 
     open func getPXCardHolderFromCardHolder(_ cardHolder: Cardholder) -> PXCardHolder {
         let name: String = cardHolder.name!
-        let pxIdentification: PXIdentification = getPXIdentificationFromIdentification(cardHolder.identification)!
+        let pxIdentification: PXIdentification = cardHolder.identification
         let pxCardholder = PXCardHolder(name: name, identification: pxIdentification)
         return pxCardholder
     }
@@ -227,16 +227,6 @@ extension MercadoPagoServicesAdapter {
         bankDeal.legals = pxBankDeal.legals
         bankDeal.url = pxBankDeal.picture?.url ?? ""
         return bankDeal
-    }
-
-    open func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
-        let identificationType = IdentificationType()
-        identificationType.identificationTypeId = pxIdentificationType.id
-        identificationType.name = pxIdentificationType.name
-        identificationType.type = pxIdentificationType.type
-        identificationType.minLength = pxIdentificationType.minLength ?? 0
-        identificationType.maxLength = pxIdentificationType.maxLength ?? 0
-        return identificationType
     }
 
     open func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
@@ -323,7 +313,7 @@ extension MercadoPagoServicesAdapter {
         let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
         pxPayer.id = payer.payerId
         pxPayer.accessToken = MercadoPagoContext.payerAccessToken()
-        pxPayer.identification = getPXIdentificationFromIdentification(payer.identification)
+        pxPayer.identification = payer.identification
         pxPayer.entityType = payer.entityType?.entityTypeId
         pxPayer.email = payer.email
         pxPayer.firstName = payer.name
@@ -336,33 +326,13 @@ extension MercadoPagoServicesAdapter {
         if let pxPayer = pxPayer {
             payer.email = pxPayer.email ?? ""
             payer.payerId = pxPayer.id
-            payer.identification = getIdentificationFromPXIdentification(pxPayer.identification)
+            payer.identification = pxPayer.identification
             payer.entityType = getEntityTypeFromId(pxPayer.entityType)
             payer.name = pxPayer.firstName
             payer.surname = pxPayer.lastName
             payer.address = nil
         }
         return payer
-    }
-
-    open func getIdentificationFromPXIdentification(_ pxIdentification: PXIdentification?) -> Identification? {
-        if let pxIdentification = pxIdentification, let type = pxIdentification.type, let number = pxIdentification.number {
-            let identification = Identification(type: type, number: number)
-            return identification
-        } else {
-            return nil
-        }
-    }
-
-    open func getPXIdentificationFromIdentification(_ identification: Identification?) -> PXIdentification? {
-        if let identification = identification {
-            let number: String = !String.isNullOrEmpty(identification.number) ? identification.number! : "null"
-            let type: String = !String.isNullOrEmpty(identification.type) ? identification.type! : "null"
-            let pxIdentification = PXIdentification(number: number, type: type)
-            return pxIdentification
-        } else {
-            return nil
-        }
     }
 
     open func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
@@ -525,7 +495,7 @@ extension MercadoPagoServicesAdapter {
         customer.email = pxCustomer.email
         customer.firstName = pxCustomer.firstName
         customer.customerId = pxCustomer.id
-        customer.identification = getIdentificationFromPXIdentification(pxCustomer.identification)
+        customer.identification = pxCustomer.identification
         customer.lastName = pxCustomer.lastName
         customer.liveMode = pxCustomer.liveMode
         customer.phone = getPhoneFromPXPhone(pxCustomer.phone)

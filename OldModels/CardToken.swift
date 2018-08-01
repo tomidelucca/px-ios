@@ -33,9 +33,7 @@ import MercadoPagoServicesV4
             super.init()
             self.cardholder = Cardholder()
             self.cardholder?.name = cardholderName
-            self.cardholder?.identification = Identification()
-            self.cardholder?.identification?.number = docNumber
-            self.cardholder?.identification?.type = docType
+            self.cardholder?.identification = PXIdentification(number: docNumber, type: docType)
             self.cardNumber = normalizeCardNumber(cardNumber!.replacingOccurrences(of: " ", with: ""))
             self.expirationMonth = expirationMonth
             self.expirationYear = 2000 + expirationYear
@@ -224,7 +222,7 @@ import MercadoPagoServicesV4
         }
     }
 
-    open func validateIdentificationNumber(_ identificationType: IdentificationType?) -> String? {
+    open func validateIdentificationNumber(_ identificationType: PXIdentificationType?) -> String? {
         if identificationType != nil {
             if cardholder?.identification != nil && cardholder?.identification?.number != nil {
                 let len = cardholder!.identification!.number!.count
@@ -300,7 +298,6 @@ import MercadoPagoServicesV4
     open func toJSON() -> [String: Any] {
 
         let card_number: Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
-        let cardholder: Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
         let security_code: Any = String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!
         let device: Any = self.device == nil ? JSONHandler.null : self.device!.toJSON()
         let obj: [String: Any] = [

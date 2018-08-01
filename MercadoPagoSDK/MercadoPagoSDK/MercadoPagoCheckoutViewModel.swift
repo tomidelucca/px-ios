@@ -74,7 +74,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var rootPaymentMethodOptions: [PaymentMethodOption]?
     var customPaymentOptions: [CardInformation]?
-    var identificationTypes: [IdentificationType]?
+    var identificationTypes: [PXIdentificationType]?
 
     var search: PaymentMethodSearch?
 
@@ -341,11 +341,11 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentData.updatePaymentDataWith(payer: payer)
     }
 
-    public func updateCheckoutModel(identificationTypes: [IdentificationType]) {
+    public func updateCheckoutModel(identificationTypes: [PXIdentificationType]) {
         self.identificationTypes = identificationTypes
     }
 
-    public func updateCheckoutModel(identification: Identification) {
+    public func updateCheckoutModel(identification: PXIdentification) {
         self.paymentData.cleanToken()
         self.paymentData.cleanIssuer()
         self.paymentData.cleanPayerCost()

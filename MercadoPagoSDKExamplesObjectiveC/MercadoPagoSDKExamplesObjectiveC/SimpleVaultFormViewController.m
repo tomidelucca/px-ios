@@ -15,7 +15,6 @@
 @synthesize customerCard;
 @synthesize allowInstallmentsSelection;
 @synthesize amount;
-@synthesize identificationTypes;
 UIImageView *cardIcon;
 UITextView *cardNumber;
 UITextView *securityCode;

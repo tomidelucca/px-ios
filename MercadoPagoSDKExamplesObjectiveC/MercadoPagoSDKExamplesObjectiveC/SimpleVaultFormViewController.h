@@ -14,6 +14,5 @@
 @property(nonatomic) Card *customerCard;
 @property(nonatomic) bool allowInstallmentsSelection;
 @property(nonatomic) double amount;
-@property NSArray<IdentificationType *> *identificationTypes;
 
 @end

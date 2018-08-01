@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class Customer: NSObject {
     open var address: Address?
@@ -19,7 +20,7 @@ import UIKit
     open var email: String?
     open var firstName: String?
     open var customerId: String?
-    open var identification: Identification?
+    open var identification: PXIdentification?
     open var lastName: String?
     open var liveMode: Bool?
     open var metadata: NSDictionary?
@@ -35,9 +36,6 @@ import UIKit
         customer.lastName = json["last_name"] as? String
         customer.customerDescription = json["description"] as? String
 
-        if let identificationDic = json["identification"] as? NSDictionary {
-            customer.identification = Identification.fromJSON(identificationDic)
-        }
         if let phoneDic = json["phone"] as? NSDictionary {
             customer.phone = Phone.fromJSON(phoneDic)
         }
@@ -70,7 +68,6 @@ import UIKit
         let firstName: Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
         let lastName: Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
         let id: Any =   self.customerId == nil ? JSONHandler.null : self.customerId!
-        let identification: Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
         let address: Any = self.address == nil ? JSONHandler.null : self.address!.toJSON()
         let liveMode: Any = self.liveMode == nil ? JSONHandler.null : self.liveMode!
 

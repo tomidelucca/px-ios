@@ -66,9 +66,7 @@ import Foundation
         let esc = JSONHandler.attemptParseToString(literalJson["esc"])
 
         var cardHolder: Cardholder? = nil
-        if let dic = json["cardholder"] as? NSDictionary {
-            cardHolder = Cardholder.fromJSON(dic)
-        }
+
 
         let lastModifiedDate = json.isKeyValid("date_last_updated") ? Utils.getDateFromString(json["date_last_updated"] as? String) : Date()
         let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : Date()
@@ -108,7 +106,6 @@ import Foundation
         let luhn: Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!
         let lastFour: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
         let firstSix: Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
-        let cardHolderToJsonString: Any = self.cardHolder?.toJSON() ?? JSONHandler.null
 
         //TODO: Change all json parse logic. Remove fromJson, tJson. Refactor of Network layer.
         let esc: Any = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc ?? ""
@@ -128,7 +125,6 @@ import Foundation
             "expiration_year": self.expirationYear,
             "last_modified_date": Utils.getStringFromDate(self.lastModifiedDate),
             "due_date": Utils.getStringFromDate(self.dueDate),
-            "cardholder": cardHolderToJsonString,
             "esc": esc
         ]
 
