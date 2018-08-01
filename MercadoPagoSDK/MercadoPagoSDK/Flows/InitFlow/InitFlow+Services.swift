@@ -45,7 +45,7 @@ extension InitFlow {
                 return
             }
 
-            strongSelf.attemptToApplyDiscount(discount: discount)
+            strongSelf.model.properties.discount = discount
             strongSelf.executeNextStep()
 
             }, failure: { [weak self] _ in
@@ -76,17 +76,6 @@ extension InitFlow {
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
-    }
-
-    func attemptToApplyDiscount(discount: PXDiscount?) {
-        if let discount = discount, let campaigns = model.properties.campaigns {
-            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
-                return campaign.id.stringValue == discount.id
-            }
-            if let firstFilteredCampaign = filteredCampaigns.first {
-                model.properties.paymentData.setDiscount(discount, withCampaign: firstFilteredCampaign)
-            }
-        }
     }
 
     func initPaymentMethodPlugins() {
