@@ -174,7 +174,7 @@ extension MercadoPagoCheckout {
 
     func collectSecurityCodeForRetry() {
         let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.cloneTokenSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
-            guard let token = cardInformation as? Token else {
+            guard let token = cardInformation as? PXToken else {
                 fatalError("Cannot convert cardInformation to Token")
             }
             self?.cloneCardToken(token: token, securityCode: securityCode)

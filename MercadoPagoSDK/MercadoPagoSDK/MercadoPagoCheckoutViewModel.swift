@@ -559,7 +559,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    public func updateCheckoutModel(token: Token) {
+    public func updateCheckoutModel(token: PXToken) {
         self.paymentData.updatePaymentDataWith(token: token)
     }
 

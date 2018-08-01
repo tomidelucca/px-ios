@@ -199,7 +199,6 @@
 }
 -(void)setRyCUpdate {
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.token.tokenId);
 
         ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
         //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
@@ -214,7 +213,6 @@
 -(void)setPaymentDataCallback {
 
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
-        NSLog(@"Token_id: %@", paymentData.token.tokenId);
         self.paymentData = paymentData;
         [self setPaymentCallback];
 
@@ -241,7 +239,6 @@
     [MercadoPagoCheckout setFlowPreference:flowPreference];
 
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
-        NSLog(@"Token_id: %@", paymentData.token.tokenId);
 
         FlowPreference *flowPreference = [[FlowPreference alloc]init];
         [flowPreference enableReviewAndConfirmScreen];
@@ -342,7 +339,6 @@
 -(void)invokeCallback:(MPCustomCell *)button {
 
     [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.token.tokenId);
 
         // Mostrar modal
         NSArray *currentViewControllers = self.navigationController.viewControllers;

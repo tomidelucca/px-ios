@@ -103,7 +103,7 @@ extension OneTapFlowModel {
         self.readyToPay = true
     }
 
-    public func updateCheckoutModel(token: Token) {
+    public func updateCheckoutModel(token: PXToken) {
         self.paymentData.updatePaymentDataWith(token: token)
     }
 

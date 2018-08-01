@@ -124,7 +124,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, token: PXToken? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel
@@ -177,8 +177,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             self.prepareCVVLabelForEdit()
         } else if viewModel.token != nil {
             let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: true)
-            self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(viewModel.token?.firstSixDigit, remasked: false)
-            self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(viewModel.token?.firstSixDigit, remasked: false)
+            self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(viewModel.token?.firstSixDigits, remasked: false)
+            self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(viewModel.token?.firstSixDigits, remasked: false)
             self.prepareCVVLabelForEdit()
         }
     }

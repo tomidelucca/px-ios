@@ -95,7 +95,7 @@ import MercadoPagoServicesV4
             }, failure: failure)
     }
 
-    open func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(cardToken: CardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let pxCardToken = getPXCardTokenFromCardToken(cardToken)
 
@@ -103,13 +103,11 @@ import MercadoPagoServicesV4
             guard let strongSelf = self else {
                 return
             }
-
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+                callback(pxToken)
             }, failure: failure)
     }
 
-    open func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let pxSavedESCCardToken = getPXSavedESCCardTokenFromSavedESCCardToken(savedESCCardToken)
 
@@ -117,13 +115,11 @@ import MercadoPagoServicesV4
             guard let strongSelf = self else {
                 return
             }
-
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+                callback(pxToken)
             }, failure: failure)
     }
 
-    open func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createToken(savedCardToken: SavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let pxSavedCardToken = getPXSavedCardTokenFromSavedCardToken(savedCardToken)
 
@@ -131,29 +127,25 @@ import MercadoPagoServicesV4
             guard let strongSelf = self else {
                 return
             }
-
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+                callback(pxToken)
             }, failure: failure)
     }
 
-    internal func createToken(cardTokenJSON: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    internal func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         mercadoPagoServices.createToken(cardTokenJSON: cardTokenJSON, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
             }
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+                callback(pxToken)
             }, failure: failure)
     }
 
-    open func cloneToken(tokenId: String, securityCode: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         mercadoPagoServices.cloneToken(tokenId: tokenId, securityCode: securityCode, callback: { [weak self] (pxToken) in
             guard let strongSelf = self else {
                 return
             }
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+                callback(pxToken)
             }, failure: failure)
     }
 

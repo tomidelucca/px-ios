@@ -14,7 +14,7 @@ import MercadoPagoServicesV4
     public var paymentMethod: PXPaymentMethod?
     public var issuer: PXIssuer?
     public var payerCost: PXPayerCost?
-    public var token: Token?
+    public var token: PXToken?
     public var payer: PXPayer?
     public var transactionDetails: PXTransactionDetails?
     public private(set) var discount: PXDiscount?
@@ -116,7 +116,7 @@ import MercadoPagoServicesV4
         self.paymentMethod = paymentMethod
     }
 
-    public func updatePaymentDataWith(token: Token?) {
+    public func updatePaymentDataWith(token: PXToken?) {
         guard let token = token else {
             return
         }
@@ -161,7 +161,7 @@ import MercadoPagoServicesV4
         self.paymentMethod = nil
     }
 
-   public func getToken() -> Token? {
+   public func getToken() -> PXToken? {
         return token
     }
 

@@ -49,7 +49,7 @@ extension MercadoPagoCheckout {
             return
         }
         if cardInfo.canBeClone() {
-            guard let token = cardInfo as? Token else {
+            guard let token = cardInfo as? PXToken else {
                 return // TODO Refactor : Tenemos unos lios barbaros con CardInformation y CardInformationForm, no entiendo porque hay uno y otr
             }
             cloneCardToken(token: token, securityCode: securityCode!)
@@ -120,7 +120,7 @@ extension MercadoPagoCheckout {
             }
 
             if token.lastFourDigits.isEmpty {
-                token.lastFourDigits = cardInformation.getCardLastForDigits()
+                token.lastFourDigits = cardInformation.getCardLastForDigits() ?? ""
             }
             strongSelf.viewModel.updateCheckoutModel(token: token)
             strongSelf.executeNextStep()
@@ -176,7 +176,7 @@ extension MercadoPagoCheckout {
         })
     }
 
-    func cloneCardToken(token: Token, securityCode: String) {
+    func cloneCardToken(token: PXToken, securityCode: String) {
         viewModel.pxNavigationHandler.presentLoading()
         self.viewModel.mercadoPagoServicesAdapter.cloneToken(tokenId: token.tokenId, securityCode: securityCode, callback: { [weak self] (token) in
 

@@ -26,7 +26,7 @@ open class CardFormViewModel: NSObject {
     var paymentMethods: [PXPaymentMethod]
     var guessedPMS: [PXPaymentMethod]?
     var customerCard: CardInformation?
-    var token: Token?
+    var token: PXToken?
     var cardToken: CardToken?
 
     let textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
@@ -40,7 +40,7 @@ open class CardFormViewModel: NSObject {
     var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    public init(paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    public init(paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: CardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
@@ -109,7 +109,7 @@ open class CardFormViewModel: NSObject {
 
     func getBIN(_ cardNumber: String) -> String? {
         if token != nil {
-            return token?.firstSixDigit
+            return token?.firstSixDigits
         }
 
         var trimmedNumber = cardNumber.replacingOccurrences(of: " ", with: "")

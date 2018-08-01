@@ -43,7 +43,7 @@ extension OneTapFlow {
         self.model.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
-                token.lastFourDigits = cardInformation.getCardLastForDigits()
+                token.lastFourDigits = cardInformation.getCardLastForDigits() ?? ""
             }
             self?.model.updateCheckoutModel(token: token)
             self?.executeNextStep()

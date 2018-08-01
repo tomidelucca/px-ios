@@ -174,29 +174,6 @@ extension MercadoPagoServicesAdapter {
         return pxFingerprint
     }
 
-    open func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
-        let id: String = pxToken.id
-        let publicKey: String = pxToken.publicKey ?? ""
-        let cardId: String = pxToken.cardId ?? ""
-        let luhnValidation: String = pxToken.luhnValidation?.description ?? ""
-        let status: String = pxToken.status ?? ""
-        let usedDate: String = getStringDateFromDate(pxToken.usedDate ?? Date())
-        let cardNumberLength: Int = pxToken.cardNumberLength ?? 0
-        let creationDate: Date = pxToken.dateCreated ?? Date()
-        let lastFourDigits: String = pxToken.lastFourDigits ?? ""
-        let firstSixDigits: String = pxToken.firstSixDigits ?? ""
-        let securityCodeLength: Int = pxToken.securityCodeLength ?? 0
-        let expirationMonth: Int = pxToken.expirationMonth  ?? 0
-        let expirationYear: Int = pxToken.expirationYear ?? 0
-        let lastModifiedDate: Date = pxToken.dateLastUpdated ?? Date()
-        let dueDate: Date = pxToken.dueDate ?? Date()
-        let cardholder = pxToken.cardholder
-        let esc = pxToken.esc
-        let token = Token(tokenId: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
-        token.esc = esc
-        return token
-    }
-
     open func getStringDateFromDate(_ date: Date) -> String {
         let stringDate = String(describing: date)
         return stringDate
