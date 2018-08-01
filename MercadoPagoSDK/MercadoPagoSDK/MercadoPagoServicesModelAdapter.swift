@@ -132,7 +132,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getPXCardTokenFromCardToken(_ cardToken: CardToken) -> PXCardToken {
         let pxCardToken = PXCardToken()
-        pxCardToken.cardholder = getPXCardHolderFromCardHolder(cardToken.cardholder!)
+        pxCardToken.cardholder = cardToken.cardholder
         pxCardToken.cardNumber = cardToken.cardNumber
         pxCardToken.device = getPXDeviceFromDevice(cardToken.device)
         pxCardToken.expirationMonth = cardToken.expirationMonth
@@ -190,7 +190,7 @@ extension MercadoPagoServicesAdapter {
         let expirationYear: Int = pxToken.expirationYear ?? 0
         let lastModifiedDate: Date = pxToken.dateLastUpdated ?? Date()
         let dueDate: Date = pxToken.dueDate ?? Date()
-        let cardholder = getCardholderFromPXCardHolder(pxToken.cardholder)
+        let cardholder = pxToken.cardholder
         let esc = pxToken.esc
         let token = Token(tokenId: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
         token.esc = esc
@@ -200,22 +200,6 @@ extension MercadoPagoServicesAdapter {
     open func getStringDateFromDate(_ date: Date) -> String {
         let stringDate = String(describing: date)
         return stringDate
-    }
-
-    open func getCardholderFromPXCardHolder(_ pxCardHolder: PXCardHolder?) -> Cardholder {
-        let cardholder = Cardholder()
-        if let pxCardHolder = pxCardHolder {
-            cardholder.name = pxCardHolder.name
-            cardholder.identification = pxCardHolder.identification
-        }
-        return cardholder
-    }
-
-    open func getPXCardHolderFromCardHolder(_ cardHolder: Cardholder) -> PXCardHolder {
-        let name: String = cardHolder.name!
-        let pxIdentification: PXIdentification = cardHolder.identification
-        let pxCardholder = PXCardHolder(name: name, identification: pxIdentification)
-        return pxCardholder
     }
 
     open func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
@@ -459,7 +443,7 @@ extension MercadoPagoServicesAdapter {
     open func getCardFromPXCard(_ pxCard: PXCard?) -> Card {
         let card = Card()
         if let pxCard = pxCard {
-            card.cardHolder = getCardholderFromPXCardHolder(pxCard.cardHolder)
+            card.cardHolder = pxCard.cardHolder
             card.customerId = pxCard.customerId
             card.dateCreated = pxCard.dateCreated
             card.dateLastUpdated = pxCard.dateLastUpdated

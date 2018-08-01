@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 @objcMembers open class Token: NSObject, CardInformationForm {
 	open var tokenId: String!
@@ -26,9 +27,9 @@ import Foundation
 	open var dueDate: Date!
     open var esc: String?
 
-    open var cardHolder: Cardholder?
+    open var cardHolder: PXCardHolder?
 
-	public init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!, usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!, dueDate: Date?, cardHolder: Cardholder?, esc: String? = nil) {
+	public init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!, usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!, dueDate: Date?, cardHolder: PXCardHolder?, esc: String? = nil) {
 			self.tokenId = tokenId
 			self.publicKey = publicKey
 			self.cardId = cardId
@@ -65,8 +66,7 @@ import Foundation
         let expYear = JSONHandler.attemptParseToInt(literalJson["expiration_year"], defaultReturn: 0)
         let esc = JSONHandler.attemptParseToString(literalJson["esc"])
 
-        var cardHolder: Cardholder? = nil
-
+        var cardHolder: PXCardHolder? = nil
 
         let lastModifiedDate = json.isKeyValid("date_last_updated") ? Utils.getDateFromString(json["date_last_updated"] as? String) : Date()
         let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : Date()
@@ -78,7 +78,7 @@ import Foundation
                      dueDate: dueDate, cardHolder: cardHolder, esc: esc)
     }
 
-    public convenience init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!, usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!, dueDate: Date?, cardHolder: Cardholder?) {
+    public convenience init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!, usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!, dueDate: Date?, cardHolder: PXCardHolder?) {
 
         self.init(tokenId: tokenId, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status,
               usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigit,

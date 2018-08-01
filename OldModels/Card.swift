@@ -12,7 +12,7 @@ import MercadoPagoServicesV4
 
 @objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
 
-    open var cardHolder: Cardholder?
+    open var cardHolder: PXCardHolder?
     open var customerId: String?
     open var dateCreated: Date?
     open var dateLastUpdated: Date?

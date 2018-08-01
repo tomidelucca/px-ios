@@ -23,7 +23,7 @@ import MercadoPagoServicesV4
     open var cardNumber: String?
     open var expirationMonth: Int = 0
     open var expirationYear: Int = 0
-    open var cardholder: Cardholder?
+    open var cardholder: PXCardHolder?
 
     public override init() {
         super.init()
@@ -31,9 +31,7 @@ import MercadoPagoServicesV4
 
     public init (cardNumber: String?, expirationMonth: Int, expirationYear: Int, securityCode: String?, cardholderName: String, docType: String, docNumber: String) {
             super.init()
-            self.cardholder = Cardholder()
-            self.cardholder?.name = cardholderName
-            self.cardholder?.identification = PXIdentification(number: docNumber, type: docType)
+            self.cardholder = PXCardHolder(name: cardholderName, identification: PXIdentification(number: docNumber, type: docType))
             self.cardNumber = normalizeCardNumber(cardNumber!.replacingOccurrences(of: " ", with: ""))
             self.expirationMonth = expirationMonth
             self.expirationYear = 2000 + expirationYear
