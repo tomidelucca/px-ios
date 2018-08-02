@@ -31,7 +31,7 @@ extension PXDefaultTheme: PXTheme {
     }
 
     public func detailedBackgroundColor() -> UIColor {
-        return #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
+        return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     }
 
     public func statusBarStyle() -> UIStatusBarStyle {

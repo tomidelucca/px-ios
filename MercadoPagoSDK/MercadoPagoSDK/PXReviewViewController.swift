@@ -50,6 +50,8 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         self.checkFloatingButtonVisibility()
+        // Temporary fix for MP/Meli UX incompatibility
+        UIApplication.shared.statusBarStyle = .default
     }
 
     override func trackInfo() {
@@ -169,6 +171,8 @@ extension PXReviewViewController {
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
         PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+
+        contentView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
 
         // Add elastic header.
         addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized, textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation())
