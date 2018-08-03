@@ -559,10 +559,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         } else if totalPaymentMethodsToShow == 1, self.amountHelper.discount == nil {
             autoselectOnlyPaymentMethod()
         }
-
-        if let preferencePMOption = getPreferenceDefaultPaymentOption() {
-            updateCheckoutModel(paymentOptionSelected: preferencePMOption)
-        }
     }
 
     public func updateCheckoutModel(token: Token) {
