@@ -64,7 +64,7 @@ extension MercadoPagoCheckout {
     }
 
     fileprivate func showPaymentPluginComponent(paymentPluginComponent: PXPluginComponent) {
-        let containerVC = MercadoPagoUIViewController()
+        let containerVC = PXPaymentPluginViewController()
 
         // By feature definition. Back is not available in make payment plugin.
         containerVC.shouldShowBackArrow = false

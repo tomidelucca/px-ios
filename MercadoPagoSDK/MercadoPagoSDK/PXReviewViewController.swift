@@ -105,6 +105,7 @@ extension PXReviewViewController {
             let discountTCView = getDiscountTermsAndConditionView()
             discountTermsConditionView = discountTCView
             discountTCView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 100)
+            discountTCView.backgroundColor = .white
             contentView.addSubviewToBottom(discountTCView)
             PXLayout.matchWidth(ofView: discountTCView).isActive = true
             PXLayout.centerHorizontally(view: discountTCView).isActive = true
