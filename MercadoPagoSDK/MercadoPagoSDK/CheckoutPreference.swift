@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class CheckoutPreference: NSObject {
 
@@ -17,6 +18,7 @@ import UIKit
     open var siteId: String = "MLA"
     open var expirationDateFrom: Date?
     open var expirationDateTo: Date?
+    open var differentialPricing: PXDifferentialPricing?
 
     open class func fromJSON(_ json: NSDictionary) -> CheckoutPreference {
                 let preference: CheckoutPreference = CheckoutPreference()
