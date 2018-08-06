@@ -128,8 +128,11 @@ extension PXDiscountDetailViewController {
 
     func getHeader() -> NSAttributedString {
         let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
-        let string = NSAttributedString(string: "discount_detail_modal_title".localized_beta, attributes: attributes)
-        return string
+        if amountHelper.consumedDiscount {
+            return NSAttributedString(string: "modal_title_consumed_discount".localized_beta, attributes: attributes)
+        } else {
+            return NSAttributedString(string: "discount_detail_modal_title".localized_beta, attributes: attributes)
+        }
     }
 
     func getTitle() -> NSAttributedString? {

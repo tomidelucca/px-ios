@@ -9,7 +9,8 @@
 import Foundation
 import MercadoPagoServicesV4
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?,consumedDiscount: Bool)
+
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool)
 
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
@@ -39,8 +40,8 @@ final class InitFlowModel: NSObject, PXFlowModel {
     private var directDiscountSearchStatus: Bool
     private var flowError: InitFlowError?
     private var pendingRetryStep: Steps?
-    
-    
+
+
     var properties: InitFlowProperties
 
     var amountHelper: PXAmountHelper {
@@ -80,7 +81,9 @@ extension InitFlowModel {
     }
 
     func setError(error: InitFlowError) {
-        flowError = error
+        if error.errorStep != .SERVICE_GET_CAMPAIGNS && error.errorStep != .SERVICE_GET_DIRECT_DISCOUNT && error.errorStep != .SERVICE_PAYMENT_METHOD_PLUGIN_INIT {
+            flowError = error
+        }
     }
 
     func resetError() {
