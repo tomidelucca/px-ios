@@ -129,12 +129,6 @@ class PXNavigationHandler: NSObject {
         self.navigationController.viewControllers = currentViewControllers
     }
 
-    func popToWhenFinish(viewController: UIViewController) {
-        if self.navigationController.viewControllers.contains(viewController) {
-            self.viewControllerBase = viewController
-        }
-    }
-
     func cleanCompletedCheckoutsFromNavigationStack() {
         let  pxResultViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of: PXResultViewController.self)}
         if let lastResultViewController = pxResultViewControllers.last {

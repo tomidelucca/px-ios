@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//TODO: v4 sign - Ver si lo usamos/exponemos.
 @objcMembers open class MercadoPagoContext: NSObject {
 
     static let sharedInstance = MercadoPagoContext()
@@ -175,17 +176,11 @@ import UIKit
     }
 
     open class func setPayerAccessToken(_ payerAccessToken: String) {
-
         sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
-//        _ = CardFrontView()
-//        _ = CardBackView()
-
     }
 
     open class func setPublicKey(_ public_key: String) {
         sharedInstance.public_key = public_key.trimSpaces()
-//        _ = CardFrontView()
-//        _ = CardBackView()
     }
 
     open class func merchantAccessToken() -> String {
@@ -213,32 +208,4 @@ import UIKit
     open class func clearPaymentKey() {
         sharedInstance.payment_key = ""
     }
-}
-
-@objc public enum Languages: Int {
-    case _SPANISH
-    case _SPANISH_MEXICO
-    case _SPANISH_COLOMBIA
-    case _SPANISH_URUGUAY
-    case _SPANISH_PERU
-    case _SPANISH_VENEZUELA
-    //        case _SPANISH_CHILE
-    case _PORTUGUESE
-    case _ENGLISH
-
-    func langPrefix() -> String {
-        switch self {
-        case ._SPANISH : return "es"
-        case ._SPANISH_MEXICO : return "es-MX"
-        case ._SPANISH_COLOMBIA : return "es-CO"
-        case ._SPANISH_URUGUAY : return "es-UY"
-        case ._SPANISH_PERU : return "es-PE"
-        case ._SPANISH_VENEZUELA : return "es-VE"
-            //            case ._SPANISH_CHILE : return "es-CH"
-
-        case ._PORTUGUESE : return "pt"
-        case ._ENGLISH : return "en"
-        }
-    }
-
 }

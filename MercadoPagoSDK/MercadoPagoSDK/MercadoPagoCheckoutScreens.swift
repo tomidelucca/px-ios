@@ -145,13 +145,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-
-            if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
-                MercadoPagoCheckoutViewModel.paymentDataCallback = MercadoPagoCheckoutViewModel.paymentDataConfirmCallback
-                strongSelf.finish()
-            } else {
-                strongSelf.executeNextStep()
-            }
+            strongSelf.executeNextStep()
 
         }, finishButtonAnimation: {
                 self.executeNextStep()

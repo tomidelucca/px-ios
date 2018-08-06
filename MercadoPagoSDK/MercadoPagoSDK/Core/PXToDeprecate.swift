@@ -8,31 +8,6 @@
 
 import Foundation
 
-// MARK: To deprecate v4 final signs.
-extension MercadoPagoCheckout {
-    @available(*, deprecated, message: "Use PXAdvancedConfigurationProtocol instead.")
-    open static func setFlowPreference(_ flowPreference: FlowPreference) {
-    }
-}
-
-// MARK: To deprecate v4 final.
-@objcMembers open class FlowPreference: NSObject {
-    @available(*, deprecated, message: "Use PXAdvancedConfigurationProtocol instead.")
-    public func disableESC() {
-
-    }
-
-    @available(*, deprecated, message: "Use PXAdvancedConfigurationProtocol instead.")
-    public func enableESC() {
-
-    }
-
-    @available(*, deprecated, message: "Use PXAdvancedConfigurationProtocol instead.")
-    public func isESCEnable() -> Bool {
-        return false
-    }
-}
-
 // MARK: To deprecate v4 final.
 @objcMembers open class PaymentResultScreenPreference: NSObject {
 
@@ -141,9 +116,6 @@ extension MercadoPagoCheckout {
     var hideAmount = false
     var hidePaymentId = false
     var hidePaymentMethod = false
-    var pendingAdditionalInfoCells = [MPCustomCell]()
-    var approvedAdditionalInfoCells = [MPCustomCell]()
-    var approvedSubHeaderCells = [MPCustomCell]()
 
     // MARK: Sets de Approved
     open func getApprovedBadgeImage() -> UIImage? {
@@ -183,11 +155,6 @@ extension MercadoPagoCheckout {
     @available(*, deprecated)
     open func setApprovedSubtitle(subtitle: String) {
         self.approvedSubtitle = subtitle
-    }
-
-    open func setApprovedSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String) {
-        self.approvedSecondaryExitButtonText = text
-        self.approvedSecondaryExitButtonCallback = callback
     }
 
     open func setApprovedHeaderIcon(name: String, bundle: Bundle) {
@@ -254,11 +221,6 @@ extension MercadoPagoCheckout {
         self.hidePendingContentTitle = true
     }
 
-    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String? = nil) {
-        self.pendingSecondaryExitButtonText = text
-        self.pendingSecondaryExitButtonCallback = callback
-    }
-
     // MARK: Sets de rejected
 
     open func setRejected(title: String) {
@@ -310,11 +272,6 @@ extension MercadoPagoCheckout {
 
     open func disableRejectedContentTitle() {
         self.hideRejectedContentTitle = true
-    }
-
-    open func setRejectedSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String? = nil) {
-        self.rejectedSecondaryExitButtonText = text
-        self.rejectedSecondaryExitButtonCallback = callback
     }
 
     open func setExitButtonTitle(title: String) {
@@ -381,20 +338,6 @@ extension MercadoPagoCheckout {
         self.hidePaymentMethod = false
     }
 
-    // MARK: Custom Rows
-
-    open func setCustomPendingCells(customCells: [MPCustomCell]) {
-        self.pendingAdditionalInfoCells = customCells
-    }
-
-    open func setCustomsApprovedCell(customCells: [MPCustomCell]) {
-        self.approvedAdditionalInfoCells = customCells
-    }
-
-    open func setCustomApprovedSubHeaderCell(customCells: [MPCustomCell]) {
-        self.approvedSubHeaderCells = customCells
-    }
-
     // MARK: Approved
 
     open func getApprovedTitle() -> String {
@@ -407,9 +350,6 @@ extension MercadoPagoCheckout {
 
     open func getApprovedSecondaryButtonText() -> String {
         return approvedSecondaryExitButtonText
-    }
-    open func getApprovedSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
-        return approvedSecondaryExitButtonCallback
     }
 
     open func getHeaderApprovedIcon() -> UIImage? {
@@ -452,9 +392,6 @@ extension MercadoPagoCheckout {
         return pendingSecondaryExitButtonText
     }
 
-    open func getPendingSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
-        return pendingSecondaryExitButtonCallback
-    }
 
     open func isPendingSecondaryExitButtonDisable() -> Bool {
         return hidePendingSecondaryButton
@@ -524,9 +461,6 @@ extension MercadoPagoCheckout {
 
     open func getRejectedSecondaryButtonText() -> String? {
         return rejectedSecondaryExitButtonText
-    }
-    open func getRejectedSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
-        return rejectedSecondaryExitButtonCallback
     }
 
     open func isRejectedSecondaryExitButtonDisable() -> Bool {
@@ -816,5 +750,35 @@ extension ReviewScreenPreference {
             }
         }
         return totalAmount
+    }
+}
+
+extension MercadoPagoCheckout {
+    internal class func showPayerCostDescription() -> Bool {
+        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        let site = MercadoPagoContext.getSite()
+
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let payerCostDescription = siteDic.value(forKey: "payerCostDescription") as? Bool {
+                return payerCostDescription
+            }
+        }
+
+        return true
+    }
+
+    internal class func showBankInterestWarning() -> Bool {
+        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        let site = MercadoPagoContext.getSite()
+
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let bankInsterestCell = siteDic.value(forKey: "bankInsterestCell") as? Bool {
+                return bankInsterestCell
+            }
+        }
+
+        return false
     }
 }

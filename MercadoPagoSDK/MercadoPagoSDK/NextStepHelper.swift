@@ -279,7 +279,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToCreatePayment() -> Bool {
-        if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
+        if paymentData.isComplete() {
             return readyToPay
         }
         return false

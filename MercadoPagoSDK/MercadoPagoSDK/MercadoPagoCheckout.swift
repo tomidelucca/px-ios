@@ -10,53 +10,44 @@ import UIKit
 import MercadoPagoPXTrackingV4
 import MercadoPagoServicesV4
 
+// MARK: Builders
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
 
-    enum InitMode {
+    // Init
+    internal enum InitMode {
         case normal
         case lazy
     }
+    internal var initMode: InitMode = .normal
+    internal var lifecycleProtocol: PXCheckoutLifecycleProtocol?
+    internal static var currentCheckout: MercadoPagoCheckout?
+    internal var viewModel: MercadoPagoCheckoutViewModel
 
-    // Init
-    var initMode: InitMode = .normal
-    var lifecycleProtocol: PXCheckoutLifecycleProtocol?
-
-    static var currentCheckout: MercadoPagoCheckout?
-    var viewModel: MercadoPagoCheckoutViewModel
-
-    public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
-
+    public init(publicKey: String, checkoutPreference: CheckoutPreference) {
         MercadoPagoContext.setPublicKey(publicKey)
-        MercadoPagoContext.setPayerAccessToken(accessToken)
-
-        ThemeManager.shared.initialize()
-
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, navigationHandler: PXNavigationHandler(navigationController: navigationController))
-
-        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference)
     }
 
-    public func setTheme(_ theme: PXTheme) {
-        ThemeManager.shared.setTheme(theme: theme)
+    public init(publicKey: String, preferenceId: String) {
+        let customPreference: CheckoutPreference = CheckoutPreference(preferenceId: preferenceId)
+        MercadoPagoContext.setPublicKey(publicKey)
+        self.viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: customPreference)
     }
 
-    public func setDefaultColor(_ color: UIColor) {
-        ThemeManager.shared.setDefaultColor(color: color)
+    public func setPrivateKey(_ privateKey: String) -> MercadoPagoCheckout {
+        MercadoPagoContext.setPayerAccessToken(privateKey)
+        return self
     }
+}
 
-    func initMercadPagoPXTracking() {
-        MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
-        MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
-        MPXTracker.sharedInstance.startNewFlow()
-    }
-
-    public func setBinaryMode(_ binaryMode: Bool) {
-        self.viewModel.binaryMode = binaryMode
-    }
-
-    public func start() {
+// MARK: Publics
+extension MercadoPagoCheckout {
+    public func start(_ navigationController: UINavigationController) {
         commondInit()
+        ThemeManager.shared.initialize()
+        viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
+        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
         if initMode == .lazy {
             if viewModel.initFlow?.getStatus() == .finished {
                 executeNextStep()
@@ -83,23 +74,21 @@ open class MercadoPagoCheckout: NSObject {
         executeNextStep()
     }
 
-    private func commondInit() {
-        viewModel.setInitFlowProtocol(flowInitProtocol: self)
-        if !shouldApplyDiscount() {
-            viewModel.clearDiscount()
-        }
+    public func setTheme(_ theme: PXTheme) {
+        ThemeManager.shared.setTheme(theme: theme)
     }
 
-    public func setPaymentResult(paymentResult: PaymentResult) {
-        self.viewModel.paymentResult = paymentResult
+    public func setDefaultColor(_ color: UIColor) {
+        ThemeManager.shared.setDefaultColor(color: color)
     }
 
-    public func setCheckoutPreference(checkoutPreference: CheckoutPreference) {
-        self.viewModel.checkoutPreference = checkoutPreference
+    public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
+        viewModel.setDiscount(discount, withCampaign: campaign)
+        self.viewModel.setDiscount(discount, withCampaign: campaign)
     }
 
-    public func setPaymentData(paymentData: PaymentData) {
-        self.viewModel.paymentData = paymentData
+    public func setChargeRules(chargeRules: [PXPaymentTypeChargeRule]) {
+        viewModel.chargeRules = chargeRules
     }
 
     public func setPaymentMethodPlugins(plugins: [PXPaymentMethodPlugin]) {
@@ -108,36 +97,49 @@ open class MercadoPagoCheckout: NSObject {
         viewModel.updateInitFlow()
     }
 
-    public func getPXCheckoutStore() -> PXCheckoutStore {
-        viewModel.populateCheckoutStore()
-        return PXCheckoutStore.sharedInstance
-    }
-
     public func setPaymentPlugin(paymentPlugin: PXPaymentPluginComponent) {
         viewModel.paymentPlugin = paymentPlugin
         viewModel.updateInitFlow()
     }
 
-    public func resume() {
-        MercadoPagoCheckout.currentCheckout = self
-        executeNextStep()
+    public func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
+        viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
     }
 
-    func executePreviousStep(animated: Bool = true) {
+    open static func setLanguage(language: Languages) {
+        MercadoPagoContext.setLanguage(language: language)
+    }
+
+    open static func setLanguage(string: String) {
+        MercadoPagoContext.setLanguage(string: string)
+    }
+}
+
+// MARK: Internals
+extension MercadoPagoCheckout {
+    internal func setPaymentResult(paymentResult: PaymentResult) {
+        self.viewModel.paymentResult = paymentResult
+    }
+
+    internal func setPaymentData(paymentData: PaymentData) {
+        self.viewModel.paymentData = paymentData
+    }
+
+    internal func enableBetaServices() {
+        URLConfigs.MP_SELECTED_ENV = URLConfigs.MP_TEST_ENV
+        PXServicesSettings.enableBetaServices()
+        PXTrackingSettings.enableBetaServices()
+    }
+
+    internal func setCheckoutPreference(checkoutPreference: CheckoutPreference) {
+        self.viewModel.checkoutPreference = checkoutPreference
+    }
+
+    internal func executePreviousStep(animated: Bool = true) {
         viewModel.pxNavigationHandler.navigationController.popViewController(animated: animated)
     }
 
-    private func initialize() {
-        initMercadPagoPXTracking()
-        MercadoPagoCheckout.currentCheckout = self
-        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
-        if let currentCheckout = MercadoPagoCheckout.currentCheckout {
-            PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
-        }
-        viewModel.startInitFlow()
-    }
-
-    func executeNextStep() {
+    internal func executeNextStep() {
         switch self.viewModel.nextStep() {
         case .START :
             self.initialize()
@@ -195,24 +197,9 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
 
-    private func executePaymentDataCallback() {
-        if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
-            MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
-        }
-    }
-
-    func finish() {
+    internal func finish() {
         viewModel.pxNavigationHandler.removeRootLoading()
-
-        if self.viewModel.paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
-            MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
-            return
-
-        } else if self.viewModel.paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil && !self.viewModel.isCheckoutComplete() {
-            MercadoPagoCheckoutViewModel.paymentDataConfirmCallback!(self.viewModel.paymentData)
-            return
-
-        } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
+        if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
             return
 
@@ -223,33 +210,47 @@ open class MercadoPagoCheckout: NSObject {
         viewModel.pxNavigationHandler.goToRootViewController()
     }
 
-    func cancel() {
+    internal func cancel() {
         if let callback = viewModel.callbackCancel {
             callback()
             return
         }
         viewModel.pxNavigationHandler.goToRootViewController()
     }
-    @objc func closeCheckout() {
+
+    @objc internal func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
     }
+}
 
-    public func popToWhenFinish(viewController: UIViewController) {
-        viewModel.pxNavigationHandler.popToWhenFinish(viewController: viewController)
+// MARK: Privates
+extension MercadoPagoCheckout {
+    private func initialize() {
+        startTracking()
+        MercadoPagoCheckout.currentCheckout = self
+        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
+        if let currentCheckout = MercadoPagoCheckout.currentCheckout {
+            PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
+        }
+        viewModel.startInitFlow()
     }
 
-    public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        viewModel.setDiscount(discount, withCampaign: campaign)
-          self.viewModel.setDiscount(discount, withCampaign: campaign)
+    private func startTracking() {
+        MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
+        MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
+        MPXTracker.sharedInstance.startNewFlow()
     }
 
-    public func setChargeRules(chargeRules: [PXPaymentTypeChargeRule]) {
-        viewModel.chargeRules = chargeRules
+    private func commondInit() {
+        viewModel.setInitFlowProtocol(flowInitProtocol: self)
+        if !shouldApplyDiscount() {
+            viewModel.clearDiscount()
+        }
     }
 
     private func shouldApplyDiscount() -> Bool {
-        //TODO: Ver con mati.
+        // TODO: Ver con Mati/Pulpo/Lucas
         if viewModel.paymentPlugin != nil {
             return true
         }
@@ -258,12 +259,5 @@ open class MercadoPagoCheckout: NSObject {
 
     private func removeDiscount() {
         self.viewModel.clearDiscount()
-    }
-}
-
-// MARK: Advanced config.
-extension MercadoPagoCheckout {
-    func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
-        viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
     }
 }
