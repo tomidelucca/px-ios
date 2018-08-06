@@ -131,7 +131,7 @@ extension PXDiscountDetailViewController {
         if amountHelper.consumedDiscount {
             return NSAttributedString(string: "modal_title_consumed_discount".localized_beta, attributes: attributes)
         } else {
-            return NSAttributedString(string: "discount_detail_modal_title".localized_beta, attributes: attributes)
+            return NSAttributedString(string: amountHelper.discount!.getDiscountDescription(), attributes: attributes)
         }
     }
 
