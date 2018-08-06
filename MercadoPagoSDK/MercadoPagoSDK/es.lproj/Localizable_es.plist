@@ -249,6 +249,27 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Tope de descuento %1$s</string>
 	</dict>
+	<key>discount_end_date</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Válido hasta el %1s.</string>
+	</dict>
+	<key>unique_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Tope disponible para consumir en un único pago.</string>
+	</dict>
+	<key>multiple_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Con cada pago en esta marca vas a consumir el tope hasta agotarlo.</string>
+	</dict>
 	<key>total_row_title_add_coupon</key>
 	<dict>
 		<key>comment</key>
@@ -290,6 +311,27 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<string></string>
 		<key>value</key>
 		<string>Total a pagar</string>
+	</dict>
+	<key>total_row_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Alcanzaste el tope de descuento</string>
+	</dict>
+	<key>modal_title_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Alcanzaste el tope</string>
+	</dict>
+	<key>modal_content_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Este descuento ya no aplica porque consumiste el tope máximo.</string>
 	</dict>
 </dict>
 </plist>

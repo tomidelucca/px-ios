@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?)
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?,consumedDiscount: Bool)
 
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
@@ -39,12 +39,13 @@ final class InitFlowModel: NSObject, PXFlowModel {
     private var directDiscountSearchStatus: Bool
     private var flowError: InitFlowError?
     private var pendingRetryStep: Steps?
-
+    
+    
     var properties: InitFlowProperties
 
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign, chargeRules: self.properties.chargeRules)
+            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount)
         }
     }
 
