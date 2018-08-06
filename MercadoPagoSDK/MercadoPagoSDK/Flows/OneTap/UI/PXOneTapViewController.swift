@@ -145,7 +145,7 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         refreshContentViewSize()
-        _ = centerContentView()
+        _ = centerContentView(margin: -PXLayout.getStatusBarHeight())
     }
 }
 
