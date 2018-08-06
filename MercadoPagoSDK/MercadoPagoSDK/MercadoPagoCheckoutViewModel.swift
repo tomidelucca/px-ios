@@ -559,6 +559,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         } else if totalPaymentMethodsToShow == 1, self.amountHelper.discount == nil {
             autoselectOnlyPaymentMethod()
         }
+
+        // MoneyIn "ChoExpress"
+        if let defaultPM = getPreferenceDefaultPaymentOption() {
+            updateCheckoutModel(paymentOptionSelected: defaultPM)
+        }
     }
 
     public func updateCheckoutModel(token: Token) {
