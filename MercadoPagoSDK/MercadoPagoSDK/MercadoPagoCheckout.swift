@@ -253,7 +253,7 @@ open class MercadoPagoCheckout: NSObject {
 
     private func shouldApplyDiscount() -> Bool {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
-            return true
+            return !viewModel.consumedDiscount
         }
         return false
     }
@@ -261,6 +261,7 @@ open class MercadoPagoCheckout: NSObject {
         self.viewModel.clearDiscount()
     }
     public func discountNotAvailable() {
+        self.removeDiscount()
         self.viewModel.consumedDiscount = true
     }
 }

@@ -20,7 +20,7 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     // MARK: Definitions
     var termsConditionView: PXTermsAndConditionView!
-    var discountTermsConditionView: PXDiscountTermsAndConditionView?
+    var discountTermsConditionView: PXTermsAndConditionView?
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
 
@@ -125,7 +125,7 @@ extension PXReviewViewController {
 
         // Add discount terms and conditions.
         if self.viewModel.shouldShowDiscountTermsAndCondition() {
-            let discountTCView = getDiscountTermsAndConditionView()
+            let discountTCView = viewModel.getDiscountTermsAndConditionView()
             discountTermsConditionView = discountTCView
             discountTCView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 100)
             contentView.addSubviewToBottom(discountTCView)
@@ -292,11 +292,6 @@ extension PXReviewViewController {
         loadingButtonComponent = footerView.principalButton
         loadingButtonComponent?.layer.cornerRadius = 4
         return footerView
-    }
-
-    fileprivate func getDiscountTermsAndConditionView() -> PXDiscountTermsAndConditionView {
-        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: self.viewModel.amountHelper)
-        return discountTermsAndConditionView
     }
 
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {

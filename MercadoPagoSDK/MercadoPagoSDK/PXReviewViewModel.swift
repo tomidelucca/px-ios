@@ -72,10 +72,34 @@ extension PXReviewViewModel {
     }
 
     func shouldShowDiscountTermsAndCondition() -> Bool {
+        if amountHelper.consumedDiscount {
+            return true
+        }
         if self.amountHelper.discount != nil {
             return true
         }
         return false
+    }
+
+    func getDiscountTermsAndConditionView(shouldAddMargins: Bool = true) -> PXTermsAndConditionView {
+        if amountHelper.consumedDiscount {
+            let termsAndConditionsText = "hola mati como va"
+            let paragraph = NSMutableParagraphStyle()
+            paragraph.alignment = .center
+            paragraph.lineSpacing = CGFloat(3)
+
+            let attributes: [NSAttributedStringKey: AnyObject] = [
+                NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXXS_FONT),
+                NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor(),
+                NSAttributedStringKey.paragraphStyle: paragraph]
+
+            let text = NSMutableAttributedString(string: termsAndConditionsText, attributes: attributes)
+
+            let customTermsAndConditionView = PXCustomTermsAndConditionView(text: text, shouldAddMargins: shouldAddMargins)
+            return customTermsAndConditionView
+        }
+        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: amountHelper, shouldAddMargins: shouldAddMargins)
+        return discountTermsAndConditionView
     }
 
     func shouldShowInstallmentSummary() -> Bool {
