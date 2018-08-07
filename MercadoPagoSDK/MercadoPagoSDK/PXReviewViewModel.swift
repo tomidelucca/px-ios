@@ -72,10 +72,7 @@ extension PXReviewViewModel {
     }
 
     func shouldShowDiscountTermsAndCondition() -> Bool {
-        if amountHelper.consumedDiscount {
-            return true
-        }
-        if self.amountHelper.discount != nil {
+        if amountHelper.consumedDiscount || self.amountHelper.discount != nil {
             return true
         }
         return false
@@ -83,7 +80,7 @@ extension PXReviewViewModel {
 
     func getDiscountTermsAndConditionView(shouldAddMargins: Bool = true) -> PXTermsAndConditionView {
         if amountHelper.consumedDiscount {
-            let termsAndConditionsText = "hola mati como va"
+            let termsAndConditionsText = "review_consumed_discount_terms_and_conditions".localized_beta
             let paragraph = NSMutableParagraphStyle()
             paragraph.alignment = .center
             paragraph.lineSpacing = CGFloat(3)

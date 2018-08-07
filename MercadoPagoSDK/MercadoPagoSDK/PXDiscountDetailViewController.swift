@@ -141,10 +141,9 @@ extension PXDiscountDetailViewController {
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)
             let string: String = ("discount_detail_modal_disclaimer".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
             let attributedString = NSMutableAttributedString(string: string, attributes: attributes)
-            
+
             return attributedString
         }
-        
         return nil
     }
 
@@ -153,13 +152,13 @@ extension PXDiscountDetailViewController {
          if amountHelper.campaign?.maxRedeemPerUser == 1 {
             var message = "unique_discount_detail_modal_footer".localized_beta
             if let expirationDate = amountHelper.campaign?.endDate {
-                var messageDate = "discount_end_date".localized_beta
+                let messageDate = "discount_end_date".localized_beta
                 message.append(messageDate.replacingOccurrences(of: "%1s", with: Utils.getFormatedStringDate(expirationDate)))
             }
             return NSAttributedString(string: message, attributes: attributes)
-         }else if let maxRedeemPerUser = amountHelper.campaign?.maxRedeemPerUser, maxRedeemPerUser > 1 {
+         } else if let maxRedeemPerUser = amountHelper.campaign?.maxRedeemPerUser, maxRedeemPerUser > 1 {
             return NSAttributedString(string: "multiple_discount_detail_modal_footer".localized_beta, attributes: attributes)
-         }else if amountHelper.consumedDiscount {
+         } else if amountHelper.consumedDiscount {
             return NSAttributedString(string: "modal_content_consumed_discount".localized_beta, attributes: attributes)
         }
         return nil
@@ -175,7 +174,7 @@ extension PXDiscountDetailViewController {
             return nil
         }
         let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
-        var string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
+        let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
         return string
     }
 }
