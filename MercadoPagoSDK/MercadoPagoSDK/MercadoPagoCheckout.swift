@@ -24,7 +24,6 @@ open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
-
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
@@ -254,11 +253,15 @@ open class MercadoPagoCheckout: NSObject {
 
     private func shouldApplyDiscount() -> Bool {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
-            return true
+            return !viewModel.consumedDiscount
         }
         return false
     }
     private func removeDiscount() {
         self.viewModel.clearDiscount()
+    }
+    public func discountNotAvailable() {
+        self.removeDiscount()
+        self.viewModel.consumedDiscount = true
     }
 }

@@ -27,7 +27,8 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
-
+    var consumedDiscount: Bool = false
+    
     // Payment flow
     var paymentFlow: PXPaymentFlow?
     weak var paymentResultHandler: PXPaymentResultHandlerProtocol?
@@ -37,7 +38,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules, consumedDiscount: consumedDiscount)
         }
     }
 
@@ -45,7 +46,8 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     let reviewScreenPreference: ReviewScreenPreference
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), chargeRules: [PXPaymentTypeChargeRule]?) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false) {
+        self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
