@@ -43,7 +43,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var defaultPaymentMethodId: String?
     open var maxAcceptedInstallments: Int = 0
     open var defaultInstallments: Int = 0
-    var defaultPaymentTypeId: String?
+    open var defaultPaymentTypeId: String?
+    open var cardId: String?
 
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
     // excluded_payment_method < payment_methods
@@ -91,6 +92,10 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let defaultInstallments = JSONHandler.attemptParseToInt(json["default_installments"]) {
                         preferencePaymentMethods.defaultInstallments = defaultInstallments
                     }
+
+                if let defaultCardId = JSONHandler.attemptParseToString(json["card_id"]) {
+                    preferencePaymentMethods.cardId = defaultCardId
+                }
 
                 return preferencePaymentMethods
             }

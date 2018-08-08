@@ -260,6 +260,7 @@
 		239A9C161F0FFA7100C338C7 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		23A07FCC20482FEB0074CB64 /* PXSummaryComponentProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A07FCB20482FEB0074CB64 /* PXSummaryComponentProps.swift */; };
 		23A07FCF204837AB0074CB64 /* PXSummaryFullComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A07FCE204837AB0074CB64 /* PXSummaryFullComponentView.swift */; };
+		23A1742C2119051D00B88F7E /* MercadoPagoCheckoutViewModel+MoneyIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A1742B2119051D00B88F7E /* MercadoPagoCheckoutViewModel+MoneyIn.swift */; };
 		23A366A9200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */; };
 		23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		23BC737F1F0D71D500B19C1A /* ApiExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */; };
@@ -1031,6 +1032,7 @@
 		2389DE2D20F4D99A0053AF76 /* PXDefaultAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXDefaultAnimations.swift; sourceTree = "<group>"; };
 		23A07FCB20482FEB0074CB64 /* PXSummaryComponentProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryComponentProps.swift; sourceTree = "<group>"; };
 		23A07FCE204837AB0074CB64 /* PXSummaryFullComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryFullComponentView.swift; sourceTree = "<group>"; };
+		23A1742B2119051D00B88F7E /* MercadoPagoCheckoutViewModel+MoneyIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MercadoPagoCheckoutViewModel+MoneyIn.swift"; sourceTree = "<group>"; };
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
 		23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiExceptionTest.swift; sourceTree = "<group>"; };
 		23BC73841F0E84FB00B19C1A /* CauseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseTest.swift; sourceTree = "<group>"; };
@@ -1442,6 +1444,7 @@
 		0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */ = {
 			isa = PBXGroup;
 			children = (
+				23A1742A2119051D00B88F7E /* MoneyIn */,
 				232114B0211897E800B50503 /* Plist */,
 				4B2EC4A420FFC284008D03F8 /* Flows */,
 				15D5173A20D15E0D00CC2D90 /* Comisiones */,
@@ -1971,6 +1974,14 @@
 				15822D521F69ABD5008353B9 /* PayerCostView.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		23A1742A2119051D00B88F7E /* MoneyIn */ = {
+			isa = PBXGroup;
+			children = (
+				23A1742B2119051D00B88F7E /* MercadoPagoCheckoutViewModel+MoneyIn.swift */,
+			);
+			path = MoneyIn;
 			sourceTree = "<group>";
 		};
 		23E2157F2005360B00B968F6 /* Theme */ = {
@@ -3281,6 +3292,7 @@
 				151ECC6C1FF55CDB003F5E4B /* PXCheckoutStore.swift in Sources */,
 				15DA6A1D1FC73FF40038D827 /* CardsAdminViewModel.swift in Sources */,
 				155954EE1F87CD200086854B /* BoletoComponent.swift in Sources */,
+				23A1742C2119051D00B88F7E /* MercadoPagoCheckoutViewModel+MoneyIn.swift in Sources */,
 				FC3918B6208E1A2900B75366 /* PXBankDealsViewModel.swift in Sources */,
 				2389DE2F20F4D99A0053AF76 /* PXSpruce+UIView+.swift in Sources */,
 				FC0F6CBC20179A01006E3EA1 /* PXContainedLabelComponent.swift in Sources */,
