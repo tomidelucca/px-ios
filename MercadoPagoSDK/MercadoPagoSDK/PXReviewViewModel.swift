@@ -78,6 +78,11 @@ extension PXReviewViewModel {
         return false
     }
 
+    func getDiscountTermsAndConditionView(shouldAddMargins: Bool = true) -> PXTermsAndConditionView {
+        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: amountHelper, shouldAddMargins: shouldAddMargins)
+        return discountTermsAndConditionView
+    }
+
     func shouldShowInstallmentSummary() -> Bool {
         return isPaymentMethodSelectedCard() && self.amountHelper.paymentData.getPaymentMethod()!.paymentTypeId != "debit_card" && self.amountHelper.paymentData.hasPayerCost() && self.amountHelper.paymentData.getPayerCost()!.installments != 1
     }

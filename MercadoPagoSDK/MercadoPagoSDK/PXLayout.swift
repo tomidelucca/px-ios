@@ -147,11 +147,11 @@ class PXLayout: NSObject {
     }
 
     //Vista 1 a la izquierda de vista 2
-    static func put(view: UIView, leftOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
+    static func put(view: UIView, leftOf view2: UIView, withMargin margin: CGFloat = 0, relation: NSLayoutRelation = NSLayoutRelation.equal) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(
             item: view,
             attribute: .right,
-            relatedBy: .equal,
+            relatedBy: relation,
             toItem: view2,
             attribute: .left,
             multiplier: 1.0,
@@ -160,11 +160,11 @@ class PXLayout: NSObject {
     }
 
     //Vista 1 a la derecha de vista 2
-    static func put(view: UIView, rightOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
+    static func put(view: UIView, rightOf view2: UIView, withMargin margin: CGFloat = 0, relation: NSLayoutRelation = NSLayoutRelation.equal) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(
             item: view,
             attribute: .left,
-            relatedBy: .equal,
+            relatedBy: relation,
             toItem: view2,
             attribute: .right,
             multiplier: 1.0,

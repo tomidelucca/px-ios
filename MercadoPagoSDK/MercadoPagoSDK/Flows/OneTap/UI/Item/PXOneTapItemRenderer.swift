@@ -73,6 +73,10 @@ final class PXOneTapItemRenderer {
 
         // Discount
         itemView.discountDescription = buildDiscountDescription(with: itemComponent.props.discountDescription, discountLimit: itemComponent.props.discountLimit)
+        
+        if itemView.discountDescription == nil {
+            itemView.discountDescription = buildDisclaimerMessage(with: itemComponent.props.disclaimerMessage)
+        }
 
         if let discountDescription = itemView.discountDescription {
             itemView.addSubviewToBottom(discountDescription, withMargin: PXLayout.XS_MARGIN)
@@ -138,11 +142,21 @@ extension PXOneTapItemRenderer {
         return buildLabel(attributedText: totalWithoutDiscount, color: labelColor, font: font)
     }
 
+    private func buildDisclaimerMessage(with disclaimer: String?) -> UILabel? {
+        guard let disclaimer = disclaimer else {
+            return nil
+        }
+
+        let font = Utils.getFont(size: PXOneTapItemRenderer.DISCOUNT_DESCRIPTION_FONT_SIZE)
+        let disclaimerMessage = NSMutableAttributedString(string: disclaimer, attributes: [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()])
+            return buildLabel(attributedText: disclaimerMessage, color: ThemeManager.shared.greyColor(), font: font)
+    }
+    
     private func buildDiscountDescription(with description: String?, discountLimit: String?) -> UILabel? {
         guard let description = description else {
             return nil
         }
-
+        
         let font = Utils.getFont(size: PXOneTapItemRenderer.DISCOUNT_DESCRIPTION_FONT_SIZE)
         let discountDescription = NSMutableAttributedString(string: description, attributes: [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()])
         if let discountLimit = discountLimit {

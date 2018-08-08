@@ -24,7 +24,6 @@ open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
-
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
@@ -39,6 +38,7 @@ open class MercadoPagoCheckout: NSObject {
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
 
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
+        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion()
     }
 
     public func setTheme(_ theme: PXTheme) {
@@ -254,11 +254,15 @@ open class MercadoPagoCheckout: NSObject {
 
     private func shouldApplyDiscount() -> Bool {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
-            return true
+            return !viewModel.consumedDiscount
         }
         return false
     }
     private func removeDiscount() {
         self.viewModel.clearDiscount()
+    }
+    public func discountNotAvailable() {
+        self.removeDiscount()
+        self.viewModel.consumedDiscount = true
     }
 }

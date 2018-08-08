@@ -21,6 +21,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.paymentMethodSearchResult = self.search
         initFlowProperties.chargeRules = self.chargeRules
         initFlowProperties.campaigns = self.campaigns
+        initFlowProperties.consumedDiscount = self.consumedDiscount
         initFlowProperties.discount = self.paymentData.discount
 
         // Create init flow.

@@ -251,6 +251,11 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
+        // MoneyIn default card - OneTap safe business check.
+        if amountHelper.preference.paymentPreference.cardId != nil {
+            return false
+        }
+
         if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, paymentMethodPlugins: paymentMethodPluginsToShow) {
             updateCheckoutModel(paymentOptionSelected: paymentMethodSelected)
             return true

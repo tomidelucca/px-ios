@@ -71,7 +71,7 @@ extension PXTermsAndConditionView {
 
         let termsAndConditionsText = "review_terms_and_conditions".localized_beta
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: SCREEN_TITLE.localized)
