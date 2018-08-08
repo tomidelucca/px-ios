@@ -38,6 +38,7 @@ open class MercadoPagoCheckout: NSObject {
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
 
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
+        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion()
     }
 
     public func setTheme(_ theme: PXTheme) {
