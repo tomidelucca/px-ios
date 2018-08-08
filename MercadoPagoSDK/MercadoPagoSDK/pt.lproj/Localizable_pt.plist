@@ -228,13 +228,6 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Ver condições</string>
 	</dict>
-	<key>review_consumed_discount_terms_and_conditions</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Veja os termos e condições do desconto no site.</string>
-	</dict>
 	<key>discount_detail_modal_title</key>
 	<dict>
 		<key>comment</key>
