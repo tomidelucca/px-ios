@@ -196,6 +196,7 @@ extension PXReviewViewController {
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
 
         contentView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
+        scrollView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         
         // Add elastic header.
         addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized, textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation())
