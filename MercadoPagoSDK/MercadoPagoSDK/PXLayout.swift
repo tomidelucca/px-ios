@@ -184,14 +184,14 @@ class PXLayout: NSObject {
     }
 
     //Centrado Vertical
-    static func centerVertically(view: UIView, to container: UIView? = nil) -> NSLayoutConstraint {
+    static func centerVertically(view: UIView, to container: UIView? = nil, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
         var superView: UIView!
         if container == nil {
             superView = view.superview
         } else {
             superView = container
         }
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: margin))
     }
 
     static func matchWidth(ofView view: UIView, toView otherView: UIView? = nil, withPercentage percent: CGFloat = 100) -> NSLayoutConstraint {
