@@ -97,7 +97,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
 
     static func handleTap(amountHelper: PXAmountHelper, discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void) {
         if amountHelper.discount != nil {
-            _ = PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
+            _ = PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: amountHelper.discount?.getDiscountDescription())
         } else if let currentCheckout = MercadoPagoCheckout.currentCheckout, currentCheckout.viewModel.shouldShowDiscountInput() {
             var inputModal: MLModal?
 
@@ -108,7 +108,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             }
             inputModal = PXComponentFactory.Modal.show(viewController: inputVC, title: nil)
         } else if amountHelper.consumedDiscount {
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".localized_beta)
+            _ = PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".localized_beta)
         }
     }
 }

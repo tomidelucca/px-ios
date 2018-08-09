@@ -167,9 +167,7 @@ open class AdditionalStepViewModel: NSObject {
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
     }
 
-    func updateBeforeRender() {
-
-    }
+    func updateBeforeRender() {}
 
 }
 

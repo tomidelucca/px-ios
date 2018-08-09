@@ -183,7 +183,6 @@
 		15F3D7591EA65B3B00DC57AA /* CardsAdminViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3D7581EA65B3B00DC57AA /* CardsAdminViewModelTest.swift */; };
 		15FE72921E79AAA200111A9C /* AdditionalStepTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55F91DB0241700501061 /* AdditionalStepTitleTableViewCell.swift */; };
 		2313F709211B1334008DFE7A /* Localizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2313F707211B1334008DFE7A /* Localizable_en.plist */; };
-		2313F70C211B1346008DFE7A /* Localizable_es.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2313F70A211B1346008DFE7A /* Localizable_es.plist */; };
 		2313F714211B1399008DFE7A /* Localizable_pt.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2313F712211B1399008DFE7A /* Localizable_pt.plist */; };
 		231437512060A56600F08B4B /* PXBusinessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B411E2051837800B6D886 /* PXBusinessResult.swift */; };
 		231AB99B20ADF416006DC5A0 /* PXXibRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AB99A20ADF416006DC5A0 /* PXXibRenderer.swift */; };
@@ -723,6 +722,7 @@
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
 		CFFB91B6CA021D9431FD25D9 /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702A5B6D3E6D032B44490F54 /* Pods_MercadoPagoSDKTests.framework */; };
 		FC03E7FC211CAD1600439B82 /* PXDiscountCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */; };
+		FC03E804211CAEDA00439B82 /* Localizable_es.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC03E7FD211CAED900439B82 /* Localizable_es.plist */; };
 		FC03FD791FCDE49F0006BBD6 /* PXBodyViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15661C5B1FCDCC47007FD7B7 /* PXBodyViewModelHelper.swift */; };
 		FC05808E20A5D90200BBECB8 /* PXBankDealCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05808D20A5D90200BBECB8 /* PXBankDealCollectionCell.swift */; };
 		FC05808F20A5DB3500BBECB8 /* PXBankDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAFDEAA20A0CD7600D00B60 /* PXBankDealsViewController.swift */; };
@@ -985,12 +985,6 @@
 		15EEE1D81D89D477004D3A19 /* CardFormViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFormViewModel.swift; sourceTree = "<group>"; };
 		15F3D7581EA65B3B00DC57AA /* CardsAdminViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewModelTest.swift; sourceTree = "<group>"; };
 		2313F708211B1334008DFE7A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = Translations/en.lproj/Localizable_en.plist; sourceTree = "<group>"; };
-		2313F70B211B1346008DFE7A /* es-CO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-CO"; path = "Translations/es-CO.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
-		2313F70D211B1351008DFE7A /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-MX"; path = "Translations/es-MX.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
-		2313F70E211B1369008DFE7A /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-PE"; path = "Translations/es-PE.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
-		2313F70F211B1372008DFE7A /* es-UY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-UY"; path = "Translations/es-UY.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
-		2313F710211B137F008DFE7A /* es-VE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-VE"; path = "Translations/es-VE.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
-		2313F711211B138B008DFE7A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = Translations/es.lproj/Localizable_es.plist; sourceTree = "<group>"; };
 		2313F713211B1399008DFE7A /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = Translations/pt.lproj/Localizable_pt.plist; sourceTree = "<group>"; };
 		231AB99A20ADF416006DC5A0 /* PXXibRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXXibRenderer.swift; sourceTree = "<group>"; };
 		231AE26F20472C1400CB87CF /* PXSummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryComponent.swift; sourceTree = "<group>"; };
@@ -1322,6 +1316,12 @@
 		C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVaultViewModel.swift; sourceTree = "<group>"; };
 		CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
 		D9AD5978A956066BB04D3B60 /* Pods_MercadoPagoSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC03E7FE211CAED900439B82 /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-PE"; path = "Translations/es-PE.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
+		FC03E7FF211CAEDA00439B82 /* es-UY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-UY"; path = "Translations/es-UY.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
+		FC03E800211CAEDA00439B82 /* es-VE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-VE"; path = "Translations/es-VE.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
+		FC03E801211CAEDA00439B82 /* es-CO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-CO"; path = "Translations/es-CO.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
+		FC03E802211CAEDA00439B82 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = Translations/es.lproj/Localizable_es.plist; sourceTree = "<group>"; };
+		FC03E803211CAEDA00439B82 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-MX"; path = "Translations/es-MX.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
 		FC05808D20A5D90200BBECB8 /* PXBankDealCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealCollectionCell.swift; sourceTree = "<group>"; };
 		FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelComponent.swift; sourceTree = "<group>"; };
 		FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelRenderer.swift; sourceTree = "<group>"; };
@@ -2906,8 +2906,8 @@
 		FC73AB42202B877600537C9F /* Translations */ = {
 			isa = PBXGroup;
 			children = (
+				FC03E7FD211CAED900439B82 /* Localizable_es.plist */,
 				2313F712211B1399008DFE7A /* Localizable_pt.plist */,
-				2313F70A211B1346008DFE7A /* Localizable_es.plist */,
 				2313F707211B1334008DFE7A /* Localizable_en.plist */,
 				FCF723F3202CB2D9002F125C /* Localizator.swift */,
 			);
@@ -3126,13 +3126,13 @@
 				4BAA55EC1DB0015800501061 /* AdditionalStepCardTableViewCell.xib in Resources */,
 				766EE1BF1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib in Resources */,
 				4BB721B61ECB18810013FE32 /* MockedData.plist in Resources */,
-				2313F70C211B1346008DFE7A /* Localizable_es.plist in Resources */,
 				76FD24831C5BFEA1008C5DC0 /* CardFrontView.xib in Resources */,
 				0F0749051AED5BAE003DD39D /* Localizable.strings in Resources */,
 				FCBF134B1E7204C30092B756 /* FinancialInstitutionTableViewCell.xib in Resources */,
 				1563DCA91E9C11CB00A7E5C8 /* CardsAdminViewController.xib in Resources */,
 				2313F714211B1399008DFE7A /* Localizable_pt.plist in Resources */,
 				4BAA56261DB6B58D00501061 /* CardTypeTableViewCell.xib in Resources */,
+				FC03E804211CAEDA00439B82 /* Localizable_es.plist in Resources */,
 				766012F11CF284A600897F9D /* WebViewController.xib in Resources */,
 				FCA47E4D1E92925B003DB787 /* BankInsterestTableViewCell.xib in Resources */,
 				4BFD45201E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib in Resources */,
@@ -4141,26 +4141,25 @@
 			name = Localizable_en.plist;
 			sourceTree = "<group>";
 		};
-		2313F70A211B1346008DFE7A /* Localizable_es.plist */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2313F70B211B1346008DFE7A /* es-CO */,
-				2313F70D211B1351008DFE7A /* es-MX */,
-				2313F70E211B1369008DFE7A /* es-PE */,
-				2313F70F211B1372008DFE7A /* es-UY */,
-				2313F710211B137F008DFE7A /* es-VE */,
-				2313F711211B138B008DFE7A /* es */,
-			);
-			name = Localizable_es.plist;
-			path = Translations;
-			sourceTree = "<group>";
-		};
 		2313F712211B1399008DFE7A /* Localizable_pt.plist */ = {
 			isa = PBXVariantGroup;
 			children = (
 				2313F713211B1399008DFE7A /* pt */,
 			);
 			name = Localizable_pt.plist;
+			sourceTree = "<group>";
+		};
+		FC03E7FD211CAED900439B82 /* Localizable_es.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC03E7FE211CAED900439B82 /* es-PE */,
+				FC03E7FF211CAEDA00439B82 /* es-UY */,
+				FC03E800211CAEDA00439B82 /* es-VE */,
+				FC03E801211CAEDA00439B82 /* es-CO */,
+				FC03E802211CAEDA00439B82 /* es */,
+				FC03E803211CAEDA00439B82 /* es-MX */,
+			);
+			name = Localizable_es.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
