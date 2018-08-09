@@ -66,7 +66,6 @@
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
     //self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
-    // Differential pricing
     self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref];
 
@@ -92,14 +91,14 @@
     // CDP color.
     // [self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
-
-    [self setPaymentMethodPlugins];
+    // [self setPaymentMethodPlugins];
 
     // [self setPaymentPlugin];
 
     // Setear Callback Cancel
     [self setVoidCallback];
 
+    // [self.mpCheckout discountNotAvailable];
 
     //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
     [self.mpCheckout start:self.navigationController];
@@ -146,21 +145,21 @@
     Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
-    NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, nil];
 
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
-    paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card", nil];
-    paymentExclusions.defaultInstallments = 1;
+  //  paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card", nil];
+  //  paymentExclusions.defaultInstallments = 1;
 
     self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
 }
 
 -(void)setCheckoutPref_CardsNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:10 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:1 unitPrice:2.5 description:@"Sugus" currencyId:@"ARS"];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
-    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, nil];
 
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];

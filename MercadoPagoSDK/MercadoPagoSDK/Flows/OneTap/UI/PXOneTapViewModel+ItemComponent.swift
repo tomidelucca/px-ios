@@ -11,7 +11,12 @@ extension PXOneTapViewModel {
 
     func getItemComponent() -> PXOneTapItemComponent? {
         let amountWithoutDiscount: Double? = isNoPayerCostAndDiscount() ? self.amountHelper.preferenceAmountWithCharges : nil
-        let props = PXOneTapItemComponentProps(title: getIconTitle(), collectorImage: getCollectorIcon(), numberOfInstallments: getNumberOfInstallmentsForItem(), installmentAmount: getInstallmentAmountForItem(), totalWithoutDiscount: amountWithoutDiscount, discountDescription: getDiscountDescription(), discountLimit: getDiscountLimit(), shouldShowArrow: shouldShowSummaryModal())
+        
+        var disclaimerMessage: String? = nil
+        if amountHelper.consumedDiscount {
+            disclaimerMessage = "total_row_consumed_discount".localized_beta
+        }
+        let props = PXOneTapItemComponentProps(title: getIconTitle(), collectorImage: getCollectorIcon(), numberOfInstallments: getNumberOfInstallmentsForItem(), installmentAmount: getInstallmentAmountForItem(), totalWithoutDiscount: amountWithoutDiscount, discountDescription: getDiscountDescription(), discountLimit: getDiscountLimit(), shouldShowArrow: shouldShowSummaryModal(), disclaimerMessage: disclaimerMessage)
         return PXOneTapItemComponent(props: props)
     }
 

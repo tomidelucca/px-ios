@@ -26,13 +26,15 @@ open class MercadoPagoCheckout: NSObject {
 
     public init(publicKey: String, checkoutPreference: CheckoutPreference) {
         MercadoPagoContext.setPublicKey(publicKey)
+        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion()
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference)
     }
 
     public init(publicKey: String, preferenceId: String) {
         let customPreference: CheckoutPreference = CheckoutPreference(preferenceId: preferenceId)
         MercadoPagoContext.setPublicKey(publicKey)
-        self.viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: customPreference)
+        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion()
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: customPreference)
     }
 
     public func setPrivateKey(_ privateKey: String) -> MercadoPagoCheckout {
@@ -250,14 +252,17 @@ extension MercadoPagoCheckout {
     }
 
     private func shouldApplyDiscount() -> Bool {
-        // TODO: Ver con Mati/Pulpo/Lucas
-        if viewModel.paymentPlugin != nil {
-            return true
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
+            return !viewModel.consumedDiscount
         }
         return false
     }
 
     private func removeDiscount() {
         self.viewModel.clearDiscount()
+    }
+    public func discountNotAvailable() {
+        self.removeDiscount()
+        self.viewModel.consumedDiscount = true
     }
 }
