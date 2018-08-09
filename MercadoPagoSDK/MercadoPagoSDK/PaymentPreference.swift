@@ -93,10 +93,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                         preferencePaymentMethods.defaultInstallments = defaultInstallments
                     }
 
-                if let defaultCardId = JSONHandler.attemptParseToString(json["card_id"]) {
-                    preferencePaymentMethods.cardId = defaultCardId
-                }
-
                 return preferencePaymentMethods
             }
 

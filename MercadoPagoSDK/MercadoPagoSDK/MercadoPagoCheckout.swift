@@ -108,6 +108,11 @@ extension MercadoPagoCheckout {
         viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
     }
 
+    public func discountNotAvailable() {
+        self.removeDiscount()
+        self.viewModel.consumedDiscount = true
+    }
+
     open static func setLanguage(language: Languages) {
         MercadoPagoContext.setLanguage(language: language)
     }
@@ -252,7 +257,7 @@ extension MercadoPagoCheckout {
     }
 
     private func shouldApplyDiscount() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
+        if viewModel.paymentPlugin != nil {
             return !viewModel.consumedDiscount
         }
         return false
@@ -260,9 +265,5 @@ extension MercadoPagoCheckout {
 
     private func removeDiscount() {
         self.viewModel.clearDiscount()
-    }
-    public func discountNotAvailable() {
-        self.removeDiscount()
-        self.viewModel.consumedDiscount = true
     }
 }

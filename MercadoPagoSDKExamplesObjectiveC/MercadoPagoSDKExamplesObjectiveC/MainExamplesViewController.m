@@ -66,7 +66,9 @@
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
     //self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
+
     self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref];
 
     // PXDiscount* discount = [[PXDiscount alloc] init];
@@ -96,7 +98,7 @@
     // [self setPaymentPlugin];
 
     // Setear Callback Cancel
-    [self setVoidCallback];
+    // [self setVoidCallback];
 
     // [self.mpCheckout discountNotAvailable];
 
