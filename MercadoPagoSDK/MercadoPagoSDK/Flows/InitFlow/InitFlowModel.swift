@@ -81,8 +81,6 @@ extension InitFlowModel {
     }
 
     func setError(error: InitFlowError) {
-        if error.errorStep
-
         if error.errorStep != .SERVICE_GET_CAMPAIGNS && error.errorStep != .SERVICE_GET_DIRECT_DISCOUNT && error.errorStep != .SERVICE_PAYMENT_METHOD_PLUGIN_INIT {
             flowError = error
         }

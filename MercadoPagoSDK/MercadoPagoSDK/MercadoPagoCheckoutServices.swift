@@ -202,7 +202,7 @@ extension MercadoPagoCheckout {
     }
 
     func getPayerCosts() {
-        self.pxNavigationHandler.presentLoading()
+        self.viewModel.pxNavigationHandler.presentLoading()
 
         self.getPayerCosts(successBlock: { [weak self ] (installments) in
             guard let strongSelf = self else {
@@ -229,7 +229,7 @@ extension MercadoPagoCheckout {
         }
     }
 
-    func getPayerCosts(successBlock:@escaping ([Installment])->Void, errorBlock:@escaping (NSError)->Void) {
+    func getPayerCosts(successBlock:@escaping ([Installment]) -> Void, errorBlock:@escaping (NSError)->Void) {
 
         guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
             return
@@ -237,7 +237,12 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, callback: { (installments) in
+        var differentialPricingString: String? = nil
+        if let diffPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
+            differentialPricingString = String(describing: diffPricing)
+        }
+
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, differentialPricingId: differentialPricingString, callback: { (installments) in
             successBlock(installments)
         }, failure: {(error) in
             errorBlock(error)
@@ -289,10 +294,15 @@ extension MercadoPagoCheckout {
         let exclusions: MercadoPagoServicesAdapter.PaymentSearchExclusions = (viewModel.initFlow?.model.getExcludedPaymentTypesIds(), viewModel.initFlow?.model.getExcludedPaymentMethodsIds())
         let oneTapInfo: MercadoPagoServicesAdapter.PaymentSearchOneTapInfo = (cardIdsWithEsc, pluginIds)
 
-        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, defaultPaymentMethod: viewModel.initFlow?.model.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { (paymentMethodSearch) in
+        var differentialPricingString: String? = nil
+        if let diffPricing = self.viewModel.amountHelper.preference.differentialPricing?.id {
+            differentialPricingString = String(describing: diffPricing)
+        }
+
+        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: Payer(), site: MercadoPagoContext.getSite(), extraParams: (defaultPaymentMethod: viewModel.initFlow?.model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString), callback: { (paymentMethodSearch) in
             successBlock(paymentMethodSearch)
-        }, failure: { (error) in
+        }) { (error) in
             errorBlock(error)
-        })
+        }
     }
 }

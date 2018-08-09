@@ -199,9 +199,9 @@ import MercadoPagoServicesV4
         getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, callback: callback, failure: failure)
     }
 
-    open func getInstallments(bin: String?, amount: Double, issuer: Issuer?, paymentMethodId: String,  differentialPricingId: String?, callback: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getInstallments(bin: String?, amount: Double, issuer: Issuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.issuerId, paymentMethodId: paymentMethodId,  differentialPricingId: differentialPricingId, callback: { [weak self] (pxInstallments) in
+        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.issuerId, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (pxInstallments) in
             guard let strongSelf = self else {
                 return
             }

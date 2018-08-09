@@ -722,6 +722,7 @@
 		C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
 		CFFB91B6CA021D9431FD25D9 /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702A5B6D3E6D032B44490F54 /* Pods_MercadoPagoSDKTests.framework */; };
+		FC03E7FC211CAD1600439B82 /* PXDiscountCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */; };
 		FC03FD791FCDE49F0006BBD6 /* PXBodyViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15661C5B1FCDCC47007FD7B7 /* PXBodyViewModelHelper.swift */; };
 		FC05808E20A5D90200BBECB8 /* PXBankDealCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC05808D20A5D90200BBECB8 /* PXBankDealCollectionCell.swift */; };
 		FC05808F20A5DB3500BBECB8 /* PXBankDealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAFDEAA20A0CD7600D00B60 /* PXBankDealsViewController.swift */; };
@@ -744,7 +745,6 @@
 		FC1A2AF520B5A4F30046FECA /* PXTotalRowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A2AF320B5A4F30046FECA /* PXTotalRowRenderer.swift */; };
 		FC1A2AFA20B5A50B0046FECA /* PXTotalRowProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A2AF920B5A50B0046FECA /* PXTotalRowProps.swift */; };
 		FC1A2AFB20B5A50B0046FECA /* PXTotalRowProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1A2AF920B5A50B0046FECA /* PXTotalRowProps.swift */; };
-		FC1F067F20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */; };
 		FC1F068020D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1F067E20D02C7C00AF83DF /* PXDiscountCodeInputViewController.swift */; };
 		FC20C9D21F05580E003A018C /* ArrayExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC20C9D11F05580E003A018C /* ArrayExtensionsTest.swift */; };
 		FC239B002045D01800286B01 /* PXComponentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC239AFF2045D01800286B01 /* PXComponentAction.swift */; };
@@ -885,7 +885,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0B579125399DEF25335FEF81 /* Pods-MercadoPagoSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0F0749071AED5BAE003DD39D /* pt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0F07490A1AED5BBB003DD39D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0F07490B1AED5BC0003DD39D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2335,17 +2334,6 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		55C1264B1077DD0CEADE2199 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				39171E87A5193D18E1908A96 /* Pods-MercadoPagoSDK.debug.xcconfig */,
-				2EE9A56E54C2F44FE5CBB1F8 /* Pods-MercadoPagoSDK.release.xcconfig */,
-				0B579125399DEF25335FEF81 /* Pods-MercadoPagoSDKTests.debug.xcconfig */,
-				9467C2836D0A54A9FD6718BB /* Pods-MercadoPagoSDKTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		76062BCD1C4D20060067A14B /* PaymentVault */ = {
 			isa = PBXGroup;
 			children = (
@@ -3029,7 +3017,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F9883201AD2A97A00F750F0 /* Build configuration list for PBXNativeTarget "MercadoPagoSDK" */;
 			buildPhases = (
-				02F731100E45CB2E953B51F0 /* [CP] Check Pods Manifest.lock */,
+				6593F66AC3C9775B04E4D0E0 /* [CP] Check Pods Manifest.lock */,
+				02F731100E45CB2E953B51F0 /* SwiftLint */,
 				0F9883051AD2A97A00F750F0 /* Sources */,
 				0F9883061AD2A97A00F750F0 /* Frameworks */,
 				0F9883071AD2A97A00F750F0 /* Headers */,
@@ -3144,7 +3133,6 @@
 				1563DCA91E9C11CB00A7E5C8 /* CardsAdminViewController.xib in Resources */,
 				2313F714211B1399008DFE7A /* Localizable_pt.plist in Resources */,
 				4BAA56261DB6B58D00501061 /* CardTypeTableViewCell.xib in Resources */,
-				2399A9022107A7B700FE44C4 /* EntityTypes.plist in Resources */,
 				766012F11CF284A600897F9D /* WebViewController.xib in Resources */,
 				FCA47E4D1E92925B003DB787 /* BankInsterestTableViewCell.xib in Resources */,
 				4BFD45201E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib in Resources */,
@@ -3154,7 +3142,6 @@
 				232114BE211897E800B50503 /* UnlockCardLinks.plist in Resources */,
 				534D84241F5480F800C2C6F9 /* AvailableCardsViewController.xib in Resources */,
 				76062BD91C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
-				2399A9032107A7B700FE44C4 /* UnlockCardLinks.plist in Resources */,
 				4BAA55FC1DB0241700501061 /* AdditionalStepTitleTableViewCell.xib in Resources */,
 				151A941A1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
 				2313F709211B1334008DFE7A /* Localizable_en.plist in Resources */,
@@ -3162,7 +3149,6 @@
 				4BEFBF901F06BB20003EA94E /* PayerCostCFTTableViewCell.xib in Resources */,
 				232114BB211897E800B50503 /* EntityTypes.plist in Resources */,
 				4BAA55F01DB0019200501061 /* PayerCostRowTableViewCell.xib in Resources */,
-				2399A9012107A7B700FE44C4 /* PaymentMethodSearch.plist in Resources */,
 				4BAA56061DB57D1B00501061 /* IssuerRowTableViewCell.xib in Resources */,
 				232114BC211897E800B50503 /* PaymentMethod.plist in Resources */,
 				76FD247B1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
@@ -3207,7 +3193,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		02F731100E45CB2E953B51F0 /* [CP] Check Pods Manifest.lock */ = {
+		02F731100E45CB2E953B51F0 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3276,6 +3262,24 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6593F66AC3C9775B04E4D0E0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MercadoPagoSDK-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A61072F5DF50F7162D547F67 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3316,6 +3320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC03E7FC211CAD1600439B82 /* PXDiscountCodeInputViewController.swift in Sources */,
 				151ECC6C1FF55CDB003F5E4B /* PXCheckoutStore.swift in Sources */,
 				15DA6A1D1FC73FF40038D827 /* CardsAdminViewModel.swift in Sources */,
 				155954EE1F87CD200086854B /* BoletoComponent.swift in Sources */,
