@@ -82,8 +82,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
     }
     func buildHeaderComponent() -> PXHeaderComponent {
-        let headerImage = getHeaderIcon()
-        let headerProps = PXHeaderProps(labelText: businessResult.getSubTitle()?.toAttributedString(), title: businessResult.getTitle().toAttributedString(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage())
+        let headerImage = getHeaderDefaultIcon()
+        let headerProps = PXHeaderProps(labelText: businessResult.getSubTitle()?.toAttributedString(), title: businessResult.getTitle().toAttributedString(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage(), imageURL: businessResult.getImageUrl())
         return PXHeaderComponent(props: headerProps)
     }
 
@@ -110,7 +110,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             pmComponent =  getPaymentMethodComponent()
         }
 
-        if (self.businessResult.getHelpMessage() != nil) {
+        if self.businessResult.getHelpMessage() != nil {
             helpComponent = getHelpMessageComponent()
         }
 
@@ -148,8 +148,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
                 amount = payerCostTotalAmount + self.amountHelper.amountOff
             }
 
-            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.strikethroughStyle: 1]
-            let preferenceAmountString = Utils.getAttributedAmount(withAttributes: attributes, amount: amount, currency: currency, negativeAmount: false)
+            let preferenceAmountString = Utils.getStrikethroughAmount(amount: amount, forCurrency: currency)
 
             if subtitle == nil {
                 subtitle = preferenceAmountString
@@ -183,7 +182,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: .white, lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
@@ -212,19 +211,14 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return PXCustomComponent(view: view)
     }
 
-    func getHeaderIcon() -> UIImage? {
-        if let brImageUrl = businessResult.getImageUrl() {
-            if let image =  ViewUtils.loadImageFromUrl(brImageUrl) {
-                return image
-            }
-        } else if let brIcon = businessResult.getIcon() {
-            return brIcon
+    func getHeaderDefaultIcon() -> UIImage? {
+        if let brIcon = businessResult.getIcon() {
+             return brIcon
         } else if let defaultBundle = approvedIconBundle, let defaultImage = MercadoPago.getImage(approvedIconName, bundle: defaultBundle) {
             return defaultImage
         }
         return nil
     }
-
 }
 
 class PXBusinessResultBodyComponent: PXComponentizable {

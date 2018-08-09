@@ -24,8 +24,6 @@ open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
-    var pxNavigationHandler: PXNavigationHandler
-
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
@@ -35,13 +33,12 @@ open class MercadoPagoCheckout: NSObject {
 
         ThemeManager.shared.initialize()
 
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, navigationHandler: PXNavigationHandler(navigationController: navigationController))
 
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
 
-        pxNavigationHandler = PXNavigationHandler(navigationController: navigationController)
-
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
+        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion()
     }
 
     public func setTheme(_ theme: PXTheme) {
@@ -72,12 +69,12 @@ open class MercadoPagoCheckout: NSObject {
                     return
                 } else {
                     // Lazy with "ready" to run.
-                    pxNavigationHandler.presentInitLoading()
+                    viewModel.pxNavigationHandler.presentInitLoading()
                     executeNextStep()
                 }
             }
         } else {
-            pxNavigationHandler.presentInitLoading()
+            viewModel.pxNavigationHandler.presentInitLoading()
             executeNextStep()
         }
     }
@@ -130,14 +127,14 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func executePreviousStep(animated: Bool = true) {
-        self.pxNavigationHandler.navigationController.popViewController(animated: animated)
+        viewModel.pxNavigationHandler.navigationController.popViewController(animated: animated)
     }
 
     private func initialize() {
         commonInit()
         initMercadPagoPXTracking()
         MercadoPagoCheckout.currentCheckout = self
-        pxNavigationHandler.suscribeToNavigationFlow()
+        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
@@ -178,8 +175,6 @@ open class MercadoPagoCheckout: NSObject {
             self.showSecurityCodeScreen()
         case .SERVICE_POST_PAYMENT:
             self.createPayment()
-        case .SERVICE_GET_INSTRUCTIONS:
-            self.getInstructions()
         case .SCREEN_PAYMENT_RESULT:
             self.showPaymentResultScreen()
         case .ACTION_FINISH:
@@ -211,7 +206,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func finish() {
-        pxNavigationHandler.removeRootLoading()
+        viewModel.pxNavigationHandler.removeRootLoading()
 
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
@@ -229,7 +224,7 @@ open class MercadoPagoCheckout: NSObject {
             finishFlowCallback(self.viewModel.payment)
             return
         }
-        pxNavigationHandler.goToRootViewController()
+        viewModel.pxNavigationHandler.goToRootViewController()
     }
 
     func cancel() {
@@ -237,7 +232,7 @@ open class MercadoPagoCheckout: NSObject {
             callback()
             return
         }
-        pxNavigationHandler.goToRootViewController()
+        viewModel.pxNavigationHandler.goToRootViewController()
     }
     @objc func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
@@ -245,7 +240,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func popToWhenFinish(viewController: UIViewController) {
-        pxNavigationHandler.popToWhenFinish(viewController: viewController)
+        viewModel.pxNavigationHandler.popToWhenFinish(viewController: viewController)
     }
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
@@ -258,6 +253,18 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     private func shouldApplyDiscount() -> Bool {
-        return self.viewModel.paymentPlugin != nil
+        if viewModel.paymentPlugin != nil {
+            return !viewModel.consumedDiscount
+        }
+        return false
+    }
+
+    private func removeDiscount() {
+        self.viewModel.clearDiscount()
+    }
+    
+    public func discountNotAvailable() {
+        self.removeDiscount()
+        self.viewModel.consumedDiscount = true
     }
 }

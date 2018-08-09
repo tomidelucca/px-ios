@@ -46,7 +46,7 @@
     self.pref = nil;
     self.paymentData = nil;
     self.paymentResult = nil;
-    
+
     // Setear el idioma de la aplicación
     [MercadoPagoCheckout setLanguageWithLanguage:Languages_SPANISH_MEXICO];
 
@@ -76,9 +76,9 @@
     [self setPaymentCallback];
 /*
     DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
-    
+
     NSNumber *externalDiscount = [NSNumber numberWithDouble:2.00];
-    
+
     dc.name = @"Patito Off";
     dc.coupon_amount = [externalDiscount stringValue];
     dc.percent_off = @"10";
@@ -87,38 +87,40 @@
     dc.amountWithoutDiscount = 50;
     dc = nil;
 */
-    
+
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
-    self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c";
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2"
-    accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
+    //self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
+    //Differential pricing
+  //  self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
+                                                         accessToken:@"TEST-244508097630521-031308-7b8b58d617aec50b3e528ca98606b116__LC_LA__-150216849" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     //PXDiscount* discount = [[PXDiscount alloc] init];
-    
+
     // Set default color or theme.
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
     MPTheme *mpExampleTheme = [[MPTheme alloc] init];
     [self.mpCheckout setTheme: meliExampleTheme];
 
-    
+
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
 
 //    [self.mpCheckout setDiscount:discount withCampaign:campaign];
-    
+
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
     PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"payment_method_plugin" amountCharge:10.5];
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
     [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
-    
+
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
     //[self setHooks];
-    
+
 //    [self setPaymentMethodPlugins];
 
 //    [self setPaymentPlugin];
@@ -132,9 +134,9 @@
     //Setear ReviewScreenPrefernce
 //    [self setReviewScreenPreference];
 
-
-    [self.mpCheckout lazyStartWithLifecycleDelegate: self];
-    //[self.mpCheckout start];
+  //  [self.mpCheckout discountNotAvailable];
+    //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
+    [self.mpCheckout start];
 }
 
 -(void)setHooks {
@@ -271,25 +273,25 @@
     Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
-    NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, nil];
 
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
-    paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card", nil];
-    paymentExclusions.defaultInstallments = 1;
+  //  paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card", nil];
+  //  paymentExclusions.defaultInstallments = 1;
 
     self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
 }
 
 -(void)setCheckoutPref_CardsNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:10 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:1 unitPrice:2.5 description:@"Sugus" currencyId:@"ARS"];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
-    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, nil];
 
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
-    paymentExclusions.defaultInstallments = 1;
+   // paymentExclusions.defaultInstallments = 1;
 
     self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
 }
@@ -305,9 +307,9 @@
 }
 
 -(void)setReviewScreenPreference {
-    
+
     ReviewScreenPreference *resultPreference = [TestComponent getReviewScreenPreference];
-    
+
     [self.mpCheckout setReviewScreenPreference:resultPreference];
 }
 

@@ -36,7 +36,10 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let attributedString = NSAttributedString(string: string, attributes: addNewDiscountAttributes)
             title = attributedString
         } else {
-            let defaultTitleString = "total_row_title_default".localized_beta
+            var defaultTitleString = "total_row_title_default".localized_beta
+            if amountHelper.consumedDiscount {
+                defaultTitleString = "total_row_consumed_discount".localized_beta
+            }
             let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                      NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
@@ -104,6 +107,8 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
                 }
             }
             inputModal = PXComponentFactory.Modal.show(viewController: inputVC, title: nil)
+        } else if amountHelper.consumedDiscount {
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".localized_beta)
         }
     }
 }

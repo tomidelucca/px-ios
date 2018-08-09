@@ -18,19 +18,14 @@ class PXReviewViewModel: NSObject {
     public static var CUSTOMER_ID = ""
 
     internal var amountHelper: PXAmountHelper
-//    var preference: CheckoutPreference
-//    var paymentData: PaymentData!
     var paymentOptionSelected: PaymentMethodOption
     var reviewScreenPreference: ReviewScreenPreference
 
-    public init(amountHelper: PXAmountHelper, /* checkoutPreference: CheckoutPreference, paymentData: PaymentData,*/ paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
-      //  self.preference = checkoutPreference
-      //  self.paymentData = paymentData
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
-        super.init()
     }
 
     // MARK: Tracking logic
@@ -81,6 +76,11 @@ extension PXReviewViewModel {
             return true
         }
         return false
+    }
+
+    func getDiscountTermsAndConditionView(shouldAddMargins: Bool = true) -> PXTermsAndConditionView {
+        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: amountHelper, shouldAddMargins: shouldAddMargins)
+        return discountTermsAndConditionView
     }
 
     func shouldShowInstallmentSummary() -> Bool {
@@ -157,10 +157,10 @@ extension PXReviewViewModel {
             }
         }
 
-        if charge > 0 {
+        if charge > PXReviewViewModel.ERROR_DELTA {
             if let chargesTitle = self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE] {
                 let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
-                let chargesSummaryDetail = SummaryDetail(title:chargesTitle , detail: chargesAmountDetail)
+                let chargesSummaryDetail = SummaryDetail(title: chargesTitle, detail: chargesAmountDetail)
                 summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
             }
         }
@@ -186,7 +186,7 @@ extension PXReviewViewModel {
                 interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmountWithCharges
             }
 
-            if interest > 0 {
+            if interest > PXReviewViewModel.ERROR_DELTA {
                 let interestAmountDetail = SummaryItemDetail(amount: interest)
                 if summary.details[SummaryType.CHARGE] != nil {
                     summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.CHARGE)

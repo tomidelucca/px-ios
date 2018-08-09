@@ -16,6 +16,8 @@ protocol PXUpdatable {
 @objcMembers
 open class MercadoPagoUIViewController: UIViewController, PXUpdatable, UIGestureRecognizerDelegate {
 
+    private static let MLNavigationBarBackgroundViewTag = 569242
+
     open var callbackCancel: (() -> Void)?
     var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
     private var navBarBackgroundColor = ThemeManager.shared.getMainColor()
@@ -62,6 +64,17 @@ open class MercadoPagoUIViewController: UIViewController, PXUpdatable, UIGesture
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
+
+        /**
+         The following line is to temporarily fix the MLHeaderBehaviour issue in Mercado Libre. ML places a view in the navigation
+         bar with the MLNavigationBarBackgroundViewTag tag to make it opaque. Unfortunately, there's no easy way to hide this
+         view when we present MercadoPagoSDK. This temporary fix checks if this view exists, and if it does, it sets it's background
+         color clear so it doesn't interfere with MercadoPagoSDK colors.
+         **/
+        if let navigationBarBackgroundView = navigationController?.navigationBar.viewWithTag(MercadoPagoUIViewController.MLNavigationBarBackgroundViewTag) {
+            navigationBarBackgroundView.backgroundColor = UIColor.clear
+        }
+
         pluginComponentInterface?.viewWillAppear?()
     }
 

@@ -219,14 +219,14 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Desconto exclusivo do Mercado Livre e Mercado Pago. Ver condições</string>
+		<string>Desconto exclusivo do Mercado Livre e Mercado Pago. Ver condições</string>
 	</dict>
 	<key>review_discount_terms_and_conditions_link</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Ver condições</string>
+		<string>Ver condições</string>
 	</dict>
 	<key>discount_detail_modal_title</key>
 	<dict>
@@ -248,6 +248,27 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<string></string>
 		<key>value</key>
 		<string>Limite de desconto %1$s</string>
+	</dict>
+	<key>discount_end_date</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Válido até %1s.</string>
+	</dict>
+	<key>unique_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Limite disponível para consumo em um único pagamento.</string>
+	</dict>
+	<key>multiple_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>A cada pagamento para esta marca, você terá descontos até atingir o limite.</string>
 	</dict>
 	<key>total_row_title_add_coupon</key>
 	<dict>
@@ -290,6 +311,27 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<string></string>
 		<key>value</key>
 		<string>Total a pagar</string>
+	</dict>
+	<key>total_row_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Você alcançou o limite do desconto </string>
+	</dict>
+	<key>modal_title_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Você atingiu o limite</string>
+	</dict>
+	<key>modal_content_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Este desconto não é aplicável, porque você atingiu o limite.</string>
 	</dict>
 	<key>discount_input_modal_title</key>
 	<dict>
