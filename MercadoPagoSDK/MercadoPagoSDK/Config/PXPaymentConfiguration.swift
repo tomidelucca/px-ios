@@ -14,7 +14,7 @@ open class PXPaymentConfiguration: NSObject {
     private var discountConfiguration: PXDiscountConfiguration?
     private var chargeRules: [PXPaymentTypeChargeRule]?
 
-    public init(_ discountConfiguration: PXDiscountConfiguration?, _ chargeRules: [PXPaymentTypeChargeRule]?) {
+    public init(discountConfiguration: PXDiscountConfiguration?, chargeRules: [PXPaymentTypeChargeRule]?) {
         self.discountConfiguration = discountConfiguration
         self.chargeRules = chargeRules
     }

@@ -22,7 +22,7 @@ open class MercadoPagoCheckout: NSObject {
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
 
-    public init(_ builder: MercadoPagoCheckoutBuilder) {
+    public init(builder: MercadoPagoCheckoutBuilder) {
         var choPref: CheckoutPreference
 
         if let preferenceId = builder.preferenceId {
@@ -84,7 +84,7 @@ open class MercadoPagoCheckout: NSObject {
 
 // MARK: Publics
 extension MercadoPagoCheckout {
-    public func start(_ navigationController: UINavigationController) {
+    public func start(navigationController: UINavigationController) {
         commondInit()
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))

@@ -23,7 +23,7 @@ open class PXDiscountConfiguration: NSObject {
         isNotAvailable = true
     }
 
-    public init(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
+    public init(discount: PXDiscount, campaign: PXCampaign) {
         self.discount = discount
         self.campaign = campaign
     }

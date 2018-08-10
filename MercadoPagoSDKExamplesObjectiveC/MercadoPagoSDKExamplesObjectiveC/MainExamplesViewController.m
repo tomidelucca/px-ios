@@ -84,7 +84,7 @@
     MPTheme *mpTheme = [[MPTheme alloc] init];
     [self.checkoutBuilder setTheme:mpTheme];
 
-    self.mpCheckout = [[MercadoPagoCheckout alloc] init:self.checkoutBuilder];
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
@@ -104,7 +104,7 @@
     // [self.mpCheckout discountNotAvailable];
 
     //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
-    [self.mpCheckout start:self.navigationController];
+    [self.mpCheckout startWithNavigationController:self.navigationController];
 }
 
 -(void)setPaymentMethodPlugins {
@@ -206,7 +206,7 @@
 
 - (void)lazyInitDidFinish {
     NSLog(@"lazyInitDidFinish");
-    [self.mpCheckout start:self.navigationController];
+    [self.mpCheckout startWithNavigationController:self.navigationController];
 }
 
 - (void)lazyInitFailureWithErrorDetail:(NSString *)errorDetail {

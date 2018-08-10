@@ -36,12 +36,12 @@ open class MercadoPagoCheckoutBuilder: NSObject {
 }
 
 extension MercadoPagoCheckoutBuilder {
-    open func setLanguage(string: String) -> MercadoPagoCheckoutBuilder  {
+    open func setLanguage(string: String) -> MercadoPagoCheckoutBuilder {
         MercadoPagoContext.setLanguage(string: string) //TODO: MercadoPagoContext (Internal refactor)
         return self
     }
 
-    open func setPaymentConfiguration(_ paymentConfiguration: PXPaymentConfiguration) -> MercadoPagoCheckoutBuilder {
+    open func setPaymentConfiguration(paymentConfiguration: PXPaymentConfiguration) -> MercadoPagoCheckoutBuilder {
         paymentConfig = paymentConfiguration
         return self
     }
