@@ -32,6 +32,7 @@ class PXTermsAndConditionView: PXComponentView {
         termsAndConditionsText.translatesAutoresizingMaskIntoConstraints = false
         termsAndConditionsText.attributedText = getTyCText()
         termsAndConditionsText.isUserInteractionEnabled = false
+        termsAndConditionsText.backgroundColor = .clear
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tap.delegate = self

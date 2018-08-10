@@ -33,9 +33,6 @@
     self.navigationController.navigationBar.opaque = YES;
 
     self.pref = nil;
-    
-    // Setear el idioma de la aplicación
-    [MercadoPagoCheckout setLanguageWithLanguage:Languages_SPANISH_MEXICO];
 
     ///  PASO 1: SETEAR PREFERENCIAS
 
@@ -65,18 +62,29 @@
     
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
-    //self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
+    // self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
 
     self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
 
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref];
+
+    // CDP color.
+    // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
+
+    [self setPaymentMethodPlugins];
+
+    // [self setPaymentPlugin];
+
+    // [self.mpCheckout discountNotAvailable];
 
     // PXDiscount* discount = [[PXDiscount alloc] init];
     
     // Set default color or theme.
-    MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
-    MPTheme *mpExampleTheme = [[MPTheme alloc] init];
-    [self.mpCheckout setTheme: meliExampleTheme];
+    MeliTheme *meliTheme = [[MeliTheme alloc] init];
+    MPTheme *mpTheme = [[MPTheme alloc] init];
+    [self.checkoutBuilder setTheme:mpTheme];
+
+    self.mpCheckout = [[MercadoPagoCheckout alloc] init:self.checkoutBuilder];
 
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
@@ -89,13 +97,6 @@
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
     // [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
-
-    // CDP color.
-    // [self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
-
-    // [self setPaymentMethodPlugins];
-
-    // [self setPaymentPlugin];
 
     // Setear Callback Cancel
     // [self setVoidCallback];
@@ -123,15 +124,15 @@
     NSMutableArray *paymentMethodPlugins = [[NSMutableArray alloc] init];
     [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
 
-    [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
-    // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.checkoutBuilder setPaymentMethodPlugins:paymentMethodPlugins];
 }
 
 -(void)setPaymentPlugin {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+
+    [self.checkoutBuilder setPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setVoidCallback {

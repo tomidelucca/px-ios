@@ -275,6 +275,7 @@ extension PXReviewViewController {
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
         loadingFloatingButtonComponent?.layer.cornerRadius = 4
+        containedButtonView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
 
         return containedButtonView
     }
@@ -292,6 +293,7 @@ extension PXReviewViewController {
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton
         loadingButtonComponent?.layer.cornerRadius = 4
+        footerView.backgroundColor = .clear
         return footerView
     }
 

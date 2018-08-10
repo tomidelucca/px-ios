@@ -11,7 +11,10 @@
 
 @interface MainExamplesViewController : UITableViewController <PXCheckoutLifecycleProtocol>
 
+@property MercadoPagoCheckoutBuilder *checkoutBuilder;
+
 @property CheckoutPreference *pref;
+
 @property MercadoPagoCheckout *mpCheckout;
 
 +(void)setPaymentDataCallback;

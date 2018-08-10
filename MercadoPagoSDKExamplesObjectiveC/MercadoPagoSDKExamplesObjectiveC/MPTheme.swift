@@ -18,7 +18,7 @@ import MercadoPagoSDK
     }
 
     public func loadingComponent() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: primaryColor, selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: primaryColor, tintColor: .white, selectedColor: .clear)
     }
 
     public func highlightBackgroundColor() -> UIColor {
@@ -26,7 +26,7 @@ import MercadoPagoSDK
     }
 
     public func detailedBackgroundColor() -> UIColor {
-        return #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
+        return #colorLiteral(red: 0.9552358985, green: 0.9538454413, blue: 0.9771363139, alpha: 1)
     }
 
     func highlightNavigationTintColor() -> UIColor? {

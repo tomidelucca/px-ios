@@ -10,36 +10,75 @@ import UIKit
 import MercadoPagoPXTrackingV4
 import MercadoPagoServicesV4
 
-// MARK: Builders
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
-
-    // Init
     internal enum InitMode {
         case normal
         case lazy
     }
+
     internal var initMode: InitMode = .normal
     internal var lifecycleProtocol: PXCheckoutLifecycleProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
 
-    public init(publicKey: String, checkoutPreference: CheckoutPreference) {
-        MercadoPagoContext.setPublicKey(publicKey)
-        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion()
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference)
-    }
+    public init(_ builder: MercadoPagoCheckoutBuilder) {
+        var choPref: CheckoutPreference
 
-    public init(publicKey: String, preferenceId: String) {
-        let customPreference: CheckoutPreference = CheckoutPreference(preferenceId: preferenceId)
-        MercadoPagoContext.setPublicKey(publicKey)
-        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion()
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: customPreference)
-    }
+        if let preferenceId = builder.preferenceId {
+            choPref = CheckoutPreference(preferenceId: preferenceId)
+        } else if let preference = builder.checkoutPreference {
+            choPref = preference
+        } else {
+            fatalError("CheckoutPreference or preferenceId must be mandatory.")
+        }
 
-    public func setPrivateKey(_ privateKey: String) -> MercadoPagoCheckout {
-        MercadoPagoContext.setPayerAccessToken(privateKey)
-        return self
+        if let accessToken = builder.privateKey {
+            MercadoPagoContext.setPayerAccessToken(accessToken)
+        }
+
+        if let theme = builder.theme {
+            ThemeManager.shared.setTheme(theme: theme)
+        } else if let defaultColor = builder.defaultColor {
+            ThemeManager.shared.setDefaultColor(color: defaultColor)
+        }
+
+        MercadoPagoContext.setPublicKey(builder.publicKey)
+        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion() //TODO: This is temporary.
+
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref)
+
+        viewModel.paymentMethodPlugins = builder.paymentMethodPlugins
+        viewModel.paymentMethodPluginsToShow = builder.paymentMethodPlugins
+
+        if let advancedConfig = builder.advancedConfig {
+            viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
+        }
+
+        if let paymentConfiguration = builder.paymentConfig {
+            let (discountConfig, chargeRules) = paymentConfiguration.getPaymentConfiguration()
+
+            // Set charge rules
+            viewModel.chargeRules = chargeRules
+
+            // Set discount/campaign
+            if let dConfig = discountConfig {
+                let discountConfiguration = dConfig.getDiscountConfiguration()
+                if let campaign = discountConfiguration.campaign, let discount = discountConfiguration.discount {
+                    viewModel.setDiscount(discount, withCampaign: campaign)
+                }
+                if discountConfiguration.isNotAvailable {
+                    viewModel.clearDiscount()
+                    viewModel.consumedDiscount = true
+                }
+            }
+        }
+
+        if let paymentPlugin = builder.paymentPlugin {
+            viewModel.paymentPlugin = paymentPlugin
+        }
+
+        viewModel.updateInitFlow()
     }
 }
 
@@ -74,51 +113,6 @@ extension MercadoPagoCheckout {
         initMode = .lazy
         commondInit()
         executeNextStep()
-    }
-
-    public func setTheme(_ theme: PXTheme) {
-        ThemeManager.shared.setTheme(theme: theme)
-    }
-
-    public func setDefaultColor(_ color: UIColor) {
-        ThemeManager.shared.setDefaultColor(color: color)
-    }
-
-    public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        viewModel.setDiscount(discount, withCampaign: campaign)
-        self.viewModel.setDiscount(discount, withCampaign: campaign)
-    }
-
-    public func setChargeRules(chargeRules: [PXPaymentTypeChargeRule]) {
-        viewModel.chargeRules = chargeRules
-    }
-
-    public func setPaymentMethodPlugins(plugins: [PXPaymentMethodPlugin]) {
-        viewModel.paymentMethodPlugins = plugins
-        viewModel.paymentMethodPluginsToShow = plugins
-        viewModel.updateInitFlow()
-    }
-
-    public func setPaymentPlugin(paymentPlugin: PXPaymentPluginComponent) {
-        viewModel.paymentPlugin = paymentPlugin
-        viewModel.updateInitFlow()
-    }
-
-    public func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
-        viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
-    }
-
-    public func discountNotAvailable() {
-        self.removeDiscount()
-        self.viewModel.consumedDiscount = true
-    }
-
-    open static func setLanguage(language: Languages) {
-        MercadoPagoContext.setLanguage(language: language)
-    }
-
-    open static func setLanguage(string: String) {
-        MercadoPagoContext.setLanguage(string: string)
     }
 }
 
