@@ -35,6 +35,7 @@ open class MercadoPagoCheckoutBuilder: NSObject {
     }
 }
 
+// MARK: - Builder
 extension MercadoPagoCheckoutBuilder {
     open func setLanguage(string: String) -> MercadoPagoCheckoutBuilder {
         MercadoPagoContext.setLanguage(string: string) //TODO: MercadoPagoContext (Internal refactor)

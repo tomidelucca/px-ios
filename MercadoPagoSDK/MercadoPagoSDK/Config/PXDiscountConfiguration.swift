@@ -17,7 +17,7 @@ open class PXDiscountConfiguration: NSObject {
     private var campaign: PXCampaign?
     private var isNotAvailable: Bool = false
 
-    public override init() {
+    internal override init() {
         self.discount = nil
         self.campaign = nil
         isNotAvailable = true
@@ -28,7 +28,7 @@ open class PXDiscountConfiguration: NSObject {
         self.campaign = campaign
     }
 
-    public static func forNotAvailableDiscount() -> PXDiscountConfiguration {
+    public static func initForNotAvailableDiscount() -> PXDiscountConfiguration {
         return PXDiscountConfiguration()
     }
 }
