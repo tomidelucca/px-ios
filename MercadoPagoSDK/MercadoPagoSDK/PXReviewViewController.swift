@@ -159,6 +159,7 @@ extension PXReviewViewController {
 
         //Add Footer
         footerView = getFooterView()
+        footerView.backgroundColor = .clear
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
@@ -250,6 +251,7 @@ extension PXReviewViewController {
            strongSelf.confirmPayment()
         }))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
+        containedButtonView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         return containedButtonView
     }
 
@@ -288,7 +290,7 @@ extension PXReviewViewController {
         }
         return nil
     }
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView        ) {
         super.scrollViewDidScroll(scrollView)
         self.checkFloatingButtonVisibility()
     }

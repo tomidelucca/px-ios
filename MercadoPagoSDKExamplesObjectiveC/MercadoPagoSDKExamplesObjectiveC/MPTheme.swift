@@ -26,7 +26,7 @@ import MercadoPagoSDK
     }
 
     public func detailedBackgroundColor() -> UIColor {
-        return #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
+        return #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
     }
 
     func highlightNavigationTintColor() -> UIColor? {
