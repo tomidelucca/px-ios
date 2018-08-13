@@ -45,8 +45,8 @@ extension MercadoPagoCheckoutBuilder {
         return self
     }
 
-    open func setAdvancedConfiguration(configProtocol: PXAdvancedConfigurationProtocol) -> MercadoPagoCheckoutBuilder {
-        self.advancedConfig = configProtocol
+    open func setAdvancedConfiguration(config: PXAdvancedConfigurationProtocol) -> MercadoPagoCheckoutBuilder {
+        self.advancedConfig = config
         return self
     }
 

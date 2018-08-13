@@ -33,6 +33,7 @@ open class PXDiscountConfiguration: NSObject {
     }
 }
 
+// MARK: - Internals
 extension PXDiscountConfiguration {
     internal func getDiscountConfiguration() -> PXDiscountConfigurationType {
         return (discount, campaign, isNotAvailable)
