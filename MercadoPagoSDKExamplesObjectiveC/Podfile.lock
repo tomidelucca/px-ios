@@ -7,15 +7,10 @@ DEPENDENCIES:
   - MercadoPagoPXTracking (= 2.0.1)
   - MercadoPagoServices (= 1.0.2.1)
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - MercadoPagoPXTracking
-    - MercadoPagoServices
-
 SPEC CHECKSUMS:
   MercadoPagoPXTracking: d1d0129392c96a824b85505f0f8ce26f8073db05
   MercadoPagoServices: 1a89562840d0323c58f89965dc5e579a06111d89
 
 PODFILE CHECKSUM: bd79918e74f5d0b5550d1507a3aca79625dbfa02
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.4.0

@@ -75,4 +75,10 @@ class CurrencyUtilTest: BaseTest {
         let roundedAmount: Double = CurrenciesUtil.getRoundedAmount(amount: amount)
         assert(roundedAmount .isEqual(to: 425.10))
     }
+
+    func test_whenThirdDecimalIsFiveThenRoundUpWithThreeDigits() {
+        let amount: Double = 425.005
+        let roundedAmount: Double = CurrenciesUtil.getRoundedAmount(amount: amount)
+        assert(roundedAmount .isEqual(to: 425.01))
+    }
 }
