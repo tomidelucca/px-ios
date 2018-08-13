@@ -22,9 +22,6 @@ open class MercadoPagoCheckoutBuilder: NSObject {
     internal var theme: PXTheme?
     internal var defaultColor: UIColor?
 
-    internal var paymentPlugin: PXPaymentPluginComponent?
-    internal var paymentMethodPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
-
     public init(publicKey: String, checkoutPreference: CheckoutPreference) {
         self.publicKey = publicKey
         self.checkoutPreference = checkoutPreference
@@ -50,16 +47,6 @@ extension MercadoPagoCheckoutBuilder {
 
     open func setAdvancedConfiguration(configProtocol: PXAdvancedConfigurationProtocol) -> MercadoPagoCheckoutBuilder {
         self.advancedConfig = configProtocol
-        return self
-    }
-
-    open func setPaymentProcessor(paymentPlugin: PXPaymentPluginComponent) -> MercadoPagoCheckoutBuilder {
-        self.paymentPlugin = paymentPlugin
-        return self
-    }
-
-    open func addPaymentMethodPlugin(plugin: PXPaymentMethodPlugin) -> MercadoPagoCheckoutBuilder {
-        self.paymentMethodPlugins.append(plugin)
         return self
     }
 

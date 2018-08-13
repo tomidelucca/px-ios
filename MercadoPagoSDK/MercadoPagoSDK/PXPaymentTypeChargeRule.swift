@@ -10,7 +10,6 @@ import UIKit
 
 @objc
 public final class PXPaymentTypeChargeRule: NSObject {
-
     let paymentMethdodId: String
     let amountCharge: Double
 

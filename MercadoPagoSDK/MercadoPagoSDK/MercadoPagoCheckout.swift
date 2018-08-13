@@ -48,15 +48,12 @@ open class MercadoPagoCheckout: NSObject {
 
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref)
 
-        viewModel.paymentMethodPlugins = builder.paymentMethodPlugins
-        viewModel.paymentMethodPluginsToShow = builder.paymentMethodPlugins
-
         if let advancedConfig = builder.advancedConfig {
             viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
         }
 
         if let paymentConfiguration = builder.paymentConfig {
-            let (discountConfig, chargeRules) = paymentConfiguration.getPaymentConfiguration()
+            let (discountConfig, chargeRules, paymentPlugin, paymentMethodPlugins) = paymentConfiguration.getPaymentConfiguration()
 
             // Set charge rules
             viewModel.chargeRules = chargeRules
@@ -72,10 +69,15 @@ open class MercadoPagoCheckout: NSObject {
                     viewModel.consumedDiscount = true
                 }
             }
-        }
 
-        if let paymentPlugin = builder.paymentPlugin {
-            viewModel.paymentPlugin = paymentPlugin
+            // Payment method plugins.
+            viewModel.paymentMethodPlugins = paymentMethodPlugins
+            viewModel.paymentMethodPluginsToShow = paymentMethodPlugins
+
+            // Payment plugin (paymentProcessor).
+            if let paymentProcessor = paymentPlugin {
+                viewModel.paymentPlugin = paymentProcessor
+            }
         }
 
         viewModel.updateInitFlow()

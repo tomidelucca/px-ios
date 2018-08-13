@@ -71,9 +71,7 @@
     // CDP color.
     // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
-    [self setPaymentMethodPlugins];
-
-    // [self setPaymentPlugin];
+    [self setPaymentConfiguration];
 
     // [self.mpCheckout discountNotAvailable];
 
@@ -82,6 +80,8 @@
     // Set default color or theme.
     MeliTheme *meliTheme = [[MeliTheme alloc] init];
     MPTheme *mpTheme = [[MPTheme alloc] init];
+
+    [self.checkoutBuilder setThemeWithCustomTheme:mpTheme];
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
@@ -106,6 +106,15 @@
     [self.mpCheckout startWithNavigationController:self.navigationController];
 }
 
+
+-(void)setPaymentConfiguration {
+    self.paymentConfig = [[PXPaymentConfiguration alloc] init];
+    [self setPaymentMethodPlugins];
+    // [self setPaymentPlugin];
+    [self.checkoutBuilder setPaymentConfigurationWithConfig:self.paymentConfig];
+}
+
+
 -(void)setPaymentMethodPlugins {
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
@@ -120,14 +129,14 @@
 
     //[bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
 
-    [self.checkoutBuilder addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
+    [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
 }
 
 -(void)setPaymentPlugin {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-    [self.checkoutBuilder setPaymentProcessorWithPaymentPlugin:makePaymentComponent];
+    [self.paymentConfig setPaymentProcessorWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setVoidCallback {

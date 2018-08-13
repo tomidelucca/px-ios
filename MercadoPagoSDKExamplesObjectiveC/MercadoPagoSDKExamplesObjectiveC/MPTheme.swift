@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoSDK
 
-@objc class MPTheme: NSObject, PXTheme {
+@objc final class MPTheme: NSObject, PXTheme {
 
     let primaryColor: UIColor = #colorLiteral(red: 0, green: 0.6117647059, blue: 0.9333333333, alpha: 1)
 
@@ -26,7 +26,7 @@ import MercadoPagoSDK
     }
 
     public func detailedBackgroundColor() -> UIColor {
-        return #colorLiteral(red: 0.9552358985, green: 0.9538454413, blue: 0.9771363139, alpha: 1)
+        return #colorLiteral(red: 0.9493724704, green: 0.9581322074, blue: 0.9801041484, alpha: 1)
     }
 
     func highlightNavigationTintColor() -> UIColor? {
