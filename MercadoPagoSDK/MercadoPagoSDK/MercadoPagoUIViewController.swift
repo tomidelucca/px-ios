@@ -263,9 +263,7 @@ open class MercadoPagoUIViewController: UIViewController, PXUpdatable, UIGesture
         #endif
     }
 
-    func update() {
-
-    }
+    func update() {}
 
 }
 

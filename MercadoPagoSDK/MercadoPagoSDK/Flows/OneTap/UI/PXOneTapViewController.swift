@@ -105,7 +105,6 @@ extension PXOneTapViewController {
 
     private func renderViews() {
         contentView.prepareForRender()
-        contentView.removeAllSubviews()
 
         // Add item-price view.
         if let itemView = getItemComponentView() {
