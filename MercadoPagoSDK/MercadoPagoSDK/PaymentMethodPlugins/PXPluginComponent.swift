@@ -15,7 +15,7 @@ import Foundation
 
 @objc public protocol PXPaymentPluginComponent: PXPluginComponent {
     @objc optional func support(pluginStore: PXCheckoutStore) -> Bool
-    @objc optional func createPayment(pluginStore: PXCheckoutStore, handler: PXPaymentFlowHandlerProtocol, successWithBusinessResult: ((PXBusinessResult) -> Void), successWithPaymentResult: ((PXPaymentPluginResult) -> Void))
+    @objc optional func createPayment(pluginStore: PXCheckoutStore, handler: PXPaymentFlowHandlerProtocol, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXPaymentPluginResult) -> Void))
     @objc optional func navigationHandlerForPaymentPlugin(navigationHandler: PXPaymentPluginNavigationHandler)
     @objc optional func paymentTimeOut() -> Double
 }

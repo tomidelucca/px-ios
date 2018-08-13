@@ -94,7 +94,7 @@
     //Differential pricing
   //  self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
-                                                         accessToken:@"TEST-244508097630521-031308-7b8b58d617aec50b3e528ca98606b116__LC_LA__-150216849" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
+                                                         accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     //PXDiscount* discount = [[PXDiscount alloc] init];
     
