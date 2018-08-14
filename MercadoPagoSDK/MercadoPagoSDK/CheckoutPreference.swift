@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class CheckoutPreference: NSObject {
     open var preferenceId: String!
     open var items: [Item]!
@@ -261,6 +261,7 @@ import MercadoPagoServicesV4
     }
 }
 
+/** :nodoc: */
 public func == (obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
 
     let areEqual =

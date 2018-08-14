@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Identification: NSObject {
 
     open var type: String?

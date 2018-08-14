@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class CardToken: NSObject, CardInformationForm {
 
     let MIN_LENGTH_NUMBER: Int = 10

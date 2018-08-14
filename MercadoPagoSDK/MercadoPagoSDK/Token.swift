@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Token: NSObject, CardInformationForm {
 	open var tokenId: String!
 	open var publicKey: String?
@@ -190,6 +190,7 @@ import Foundation
     }
 }
 
+/** :nodoc: */
 extension NSDictionary {
 	public func isKeyValid(_ dictKey: String) -> Bool {
 		let dictValue: Any? = self[dictKey]

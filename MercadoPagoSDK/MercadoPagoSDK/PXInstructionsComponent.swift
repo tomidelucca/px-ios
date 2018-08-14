@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 public class PXInstructionsComponent: NSObject, PXComponentizable {
     var props: PXInstructionsProps
 
@@ -50,6 +50,8 @@ public class PXInstructionsComponent: NSObject, PXComponentizable {
         return PXInstructionsRenderer().render(self)
     }
 }
+
+/** :nodoc: */
 public class PXInstructionsProps: NSObject {
     var instruction: Instruction
     init(instruction: Instruction) {

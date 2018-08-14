@@ -7,6 +7,7 @@
 //
 import Foundation
 
+/** :nodoc: */
 extension MercadoPagoCheckoutViewModel {
     func shouldShowHook(hookStep: PXHookStep) -> Bool {
 

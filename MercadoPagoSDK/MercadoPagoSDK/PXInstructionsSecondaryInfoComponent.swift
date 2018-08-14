@@ -8,8 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
-
+/** :nodoc: */
 public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponentizable {
     var props: PXInstructionsSecondaryInfoProps
 
@@ -20,6 +19,8 @@ public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponentizable {
         return PXInstructionsSecondaryInfoRenderer().render(instructionsSecondaryInfo: self)
     }
 }
+
+/** :nodoc: */
 public class PXInstructionsSecondaryInfoProps: NSObject {
     var secondaryInfo: [String]
     init(secondaryInfo: [String]) {

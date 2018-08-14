@@ -8,7 +8,7 @@
 
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 extension PXResultViewModel {
 
     open func getBodyComponentProps() -> PXBodyProps {
@@ -23,6 +23,7 @@ extension PXResultViewModel {
 }
 
 // MARK: Build Helpers
+/** :nodoc: */
 extension PXResultViewModel {
     func getBodyAction() -> (() -> Void) {
         return { [weak self]  in self?.executeBodyCallback() }

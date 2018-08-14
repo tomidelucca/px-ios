@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers
 open class PXCheckoutStore: NSObject {
     static let sharedInstance = PXCheckoutStore()

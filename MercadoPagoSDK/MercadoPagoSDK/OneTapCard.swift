@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 open class OneTapCard: NSObject {
     open var cardId: String
     open var selectedPayerCost: PayerCost?

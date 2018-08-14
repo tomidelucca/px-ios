@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Address: NSObject {
     open var streetName: String?
     open var streetNumber: NSNumber?

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objc public protocol Updatable {
 
     func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod)

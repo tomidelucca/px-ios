@@ -7,7 +7,7 @@
 //
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class PaymentMethodSearch: NSObject {
 
     var groups: [PaymentMethodSearchItem]!

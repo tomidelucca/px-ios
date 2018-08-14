@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 extension PXResultViewModel {
     open func buildTopCustomComponent() -> PXCustomComponentizable? {
         if let customComponent = preference.getApprovedTopCustomComponent(), self.paymentResult.isApproved() {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 struct PaymentStatus {
     static let APPROVED = "approved"
     static let REJECTED = "rejected"

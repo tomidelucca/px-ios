@@ -9,7 +9,6 @@
 import Foundation
 
 internal extension UILabel {
-
     static func requiredHeight(forText text: String, withFont font: UIFont, inNumberOfLines lines: Int = 0, inWidth width: CGFloat) -> CGFloat {
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.text = text
@@ -58,6 +57,7 @@ internal extension UILabel {
     }
 }
 
+/** :nodoc: */
 extension NSAttributedString {
     func heightWithConstrainedWidth(width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)

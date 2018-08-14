@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 //TODO: v4 sign - Ver si lo usamos/exponemos.
 @objcMembers open class MercadoPagoContext: NSObject {
 

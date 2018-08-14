@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Refund: NSObject {
     open var amount: Double = 0
     open var dateCreated: Date!

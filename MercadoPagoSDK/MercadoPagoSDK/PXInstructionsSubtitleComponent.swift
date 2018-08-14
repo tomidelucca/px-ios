@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 public class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
     var props: PXInstructionsSubtitleProps
 
@@ -21,7 +21,7 @@ public class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
     }
 }
 
-/* :nodoc: */
+/** :nodoc: */
 public class PXInstructionsSubtitleProps: NSObject {
     var subtitle: String
     init(subtitle: String) {

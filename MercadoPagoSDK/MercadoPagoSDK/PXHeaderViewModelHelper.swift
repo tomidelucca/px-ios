@@ -8,7 +8,7 @@
 
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 extension PXResultViewModel {
 
     func getHeaderComponentProps() -> PXHeaderProps {
@@ -22,6 +22,7 @@ extension PXResultViewModel {
     }
 }
 
+/** :nodoc: */
 // MARK: Build Helpers
 extension PXResultViewModel {
     func iconImageHeader() -> UIImage? {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Issuer: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.issuer
@@ -44,6 +44,7 @@ import Foundation
     }
 }
 
+/** :nodoc: */
 public func == (obj1: Issuer, obj2: Issuer) -> Bool {
 
     let areEqual =

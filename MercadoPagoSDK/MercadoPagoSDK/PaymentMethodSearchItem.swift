@@ -8,7 +8,7 @@
 
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
 
     open var idPaymentMethodSearchItem: String!
@@ -121,6 +121,7 @@ import UIKit
             }
 }
 
+/** :nodoc: */
 public enum PaymentMethodSearchItemType: String {
     case GROUP = "group"
     case PAYMENT_TYPE = "payment_type"

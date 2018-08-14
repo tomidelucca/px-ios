@@ -8,7 +8,7 @@
 
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers
 open class PXNavigationHeaderLabel: UILabel {
 
@@ -27,4 +27,5 @@ open class PXNavigationHeaderLabel: UILabel {
     }
 }
 
+/** :nodoc: */
 open class PXToolbar: UIToolbar {}

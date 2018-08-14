@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
-/* :nodoc: */
+/** :nodoc: */
 public class PXResultViewModel: PXResultViewModelInterface {
 
     var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }

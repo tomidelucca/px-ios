@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 protocol PXPaymentResultHandlerProtocol: NSObjectProtocol {
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?)
     func finishPaymentFlow(businessResult: PXBusinessResult)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers
 open class PXContainedLabelComponent: PXComponentizable {
 
@@ -23,7 +23,7 @@ open class PXContainedLabelComponent: PXComponentizable {
     }
 }
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers
 open class PXContainedLabelProps: NSObject {
     var labelText: NSAttributedString

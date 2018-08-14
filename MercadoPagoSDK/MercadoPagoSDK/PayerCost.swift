@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class PayerCost: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.payerCost

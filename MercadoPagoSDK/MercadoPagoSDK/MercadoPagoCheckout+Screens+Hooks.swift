@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/** :nodoc: */
 extension MercadoPagoCheckout {
     func showHookScreen(hookStep: PXHookStep) {
 

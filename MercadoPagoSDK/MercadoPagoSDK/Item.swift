@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Item: NSObject {
 
     // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency

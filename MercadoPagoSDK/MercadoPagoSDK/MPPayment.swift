@@ -29,7 +29,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class MPPayment: NSObject {
 
     open var preferenceId: String!
@@ -98,6 +98,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
+/** :nodoc: */
 @objcMembers open class CustomerPayment: MPPayment {
 
     open var customerId: String!
@@ -115,6 +116,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 }
 
+/** :nodoc: */
 @objcMembers open class BlacklabelPayment: MPPayment {
 
     open override func toJSON() -> [String: Any] {
@@ -129,6 +131,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
+/** :nodoc: */
 open class MPPaymentFactory {
 
     open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) -> MPPayment {

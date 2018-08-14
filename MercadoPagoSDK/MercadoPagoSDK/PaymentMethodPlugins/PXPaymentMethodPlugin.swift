@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers
 open class PXPaymentMethodPlugin: NSObject {
 
@@ -55,6 +55,7 @@ open class PXPaymentMethodPlugin: NSObject {
 
 }
 
+/** :nodoc: */
 // MARK: PXPaymentMethodPlugin as PaymentOptionDrawable/PaymentMethodOption
 extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
     public func getId() -> String {

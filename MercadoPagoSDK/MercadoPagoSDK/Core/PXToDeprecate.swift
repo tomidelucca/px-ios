@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 // MARK: To deprecate v4 final.
 @objcMembers open class PaymentResultScreenPreference: NSObject {
 
@@ -504,6 +505,7 @@ import Foundation
 }
 
 // MARK: To deprecate v4 final.
+/** :nodoc: */
 @objcMembers open class ReviewScreenPreference: NSObject {
 
     fileprivate static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
@@ -530,6 +532,7 @@ import Foundation
     fileprivate var itemsReview: ItemsReview = ItemsReview() //Revisar
 }
 
+/** :nodoc: */
 // Not in Android.
 // MARK: Payment method.
 extension ReviewScreenPreference {
@@ -546,6 +549,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 // MARK: Items.
 extension ReviewScreenPreference {
     // hasItemsEnable (In Android)
@@ -562,6 +566,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 // Not in Android.
 // MARK: Amount title.
 extension ReviewScreenPreference {
@@ -586,6 +591,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 // MARK: Collector icon.
 extension ReviewScreenPreference {
     open func setCollectorIcon(image: UIImage) {
@@ -597,6 +603,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 // MARK: Quantity row.
 extension ReviewScreenPreference {
     // Not in Android.
@@ -624,6 +631,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 // MARK: Disclaimer text.
 extension ReviewScreenPreference {
     open func getDisclaimerText() -> String? {
@@ -643,6 +651,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 // MARK: - Custom components.
 extension ReviewScreenPreference {
     open func setTopComponent(_ component: PXCustomComponentizable) {
@@ -662,6 +671,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 // MARK: - Summary.
 extension ReviewScreenPreference {
     // Not in Android.
@@ -753,6 +763,7 @@ extension ReviewScreenPreference {
     }
 }
 
+/** :nodoc: */
 extension MercadoPagoCheckout {
     internal class func showPayerCostDescription() -> Bool {
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Order: NSObject {
     open var orderId: Int = 0
     open var type: String!

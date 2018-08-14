@@ -81,7 +81,7 @@ class AdditionalStepCellFactory: NSObject {
     }
 }
 
-/* :nodoc: */
+/** :nodoc: */
 public enum ObjectTypes: String {
     case payerCost = "payer_cost"
     case issuer = "issuer"

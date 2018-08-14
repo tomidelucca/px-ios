@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Customer: NSObject {
     open var address: Address?
     open var cards: [Card]?

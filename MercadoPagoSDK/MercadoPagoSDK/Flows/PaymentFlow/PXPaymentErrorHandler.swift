@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objc protocol PXPaymentErrorHandlerProtocol: NSObjectProtocol {
     func escError()
     func exitCheckout()

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Cause: NSObject {
     open var code: String!
     open var causeDescription: String!

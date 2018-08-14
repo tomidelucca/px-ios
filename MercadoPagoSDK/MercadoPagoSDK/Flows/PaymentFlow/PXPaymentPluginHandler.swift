@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers
 open class PXPaymentPluginNavigationHandler: NSObject {
     private var flow: PXPaymentFlow?

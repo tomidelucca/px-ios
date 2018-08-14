@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-/* :nodoc: */
+/** :nodoc: */
 @objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
 
     open var cardHolder: Cardholder?

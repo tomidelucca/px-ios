@@ -8,7 +8,7 @@
 
 import Foundation
 
-/* :nodoc: */
+/** :nodoc: */
 @objc
 public protocol MPCellContentProvider: NSObjectProtocol {
 
