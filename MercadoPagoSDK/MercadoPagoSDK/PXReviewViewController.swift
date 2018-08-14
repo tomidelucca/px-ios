@@ -181,6 +181,7 @@ extension PXReviewViewController {
 
         //Add Footer
         footerView = getFooterView()
+        footerView.backgroundColor = .clear
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
@@ -276,7 +277,6 @@ extension PXReviewViewController {
         loadingFloatingButtonComponent = containedButtonView.button
         loadingFloatingButtonComponent?.layer.cornerRadius = 4
         containedButtonView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
-
         return containedButtonView
     }
 

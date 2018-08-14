@@ -24,6 +24,7 @@ class PXTermsAndConditionView: PXComponentView {
     init(shouldAddMargins: Bool = true) {
         super.init()
 
+        self.termsAndConditionsText.backgroundColor = .clear
         translatesAutoresizingMaskIntoConstraints = false
 
         termsAndConditionsText.isUserInteractionEnabled = true
