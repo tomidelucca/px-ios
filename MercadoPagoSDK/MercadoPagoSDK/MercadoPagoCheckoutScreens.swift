@@ -25,6 +25,7 @@ extension MercadoPagoCheckout {
 
             strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
                 if paymentMethodSearch.isEmpty {
+                    strongSelf.viewModel.clearDiscount()
                     errorBlock()
                     return
                 }
@@ -145,11 +146,13 @@ extension MercadoPagoCheckout {
 
             strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
                 if paymentMethodSearch.isEmpty {
+                    strongSelf.viewModel.clearDiscount()
                     errorBlock()
                     return
                 }
                 strongSelf.getPayerCosts(successBlock: { (installments) in
                     if installments.isEmpty {
+                        strongSelf.viewModel.clearDiscount()
                         errorBlock()
                         return
                     }
