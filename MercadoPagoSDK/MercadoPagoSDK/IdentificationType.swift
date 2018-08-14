@@ -8,6 +8,7 @@
 
 import Foundation
 
+/* :nodoc: */
 @objcMembers open class IdentificationType: NSObject {
     open var identificationTypeId: String?
     open var name: String?

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/* :nodoc: */
 @objcMembers open class Issuer: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.issuer

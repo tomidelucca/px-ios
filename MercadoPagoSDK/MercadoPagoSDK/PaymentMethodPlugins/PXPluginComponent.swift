@@ -8,6 +8,7 @@
 
 import Foundation
 
+/* :nodoc: */
 @objc public protocol PXConfigPluginComponent: PXPluginComponent {
     @objc optional func shouldSkip(pluginStore: PXCheckoutStore) -> Bool
     @objc optional func shouldShowBackArrow() -> Bool

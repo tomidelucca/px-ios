@@ -8,6 +8,7 @@
 
 import Foundation
 
+/* :nodoc: */
 open class OneTapItem: NSObject {
     open var paymentMethodId: String
     open var paymentTypeId: String?

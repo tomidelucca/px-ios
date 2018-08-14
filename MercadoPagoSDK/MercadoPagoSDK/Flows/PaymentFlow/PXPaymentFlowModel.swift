@@ -7,8 +7,8 @@
 //
 
 import Foundation
-internal final class PXPaymentFlowModel: NSObject {
 
+internal final class PXPaymentFlowModel: NSObject {
     var paymentData: PaymentData?
     var checkoutPreference: CheckoutPreference?
     let binaryMode: Bool

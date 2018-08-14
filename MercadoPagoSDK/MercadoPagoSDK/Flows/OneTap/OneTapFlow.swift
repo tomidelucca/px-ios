@@ -7,8 +7,8 @@
 //
 
 import Foundation
-final class OneTapFlow: NSObject, PXFlow {
 
+final class OneTapFlow: NSObject, PXFlow {
     let model: OneTapFlowModel
     let pxNavigationHandler: PXNavigationHandler
 

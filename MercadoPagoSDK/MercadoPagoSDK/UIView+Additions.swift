@@ -6,7 +6,7 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-extension UIView {
+internal extension UIView {
 
     //Eventualmente hay que borrar esto. Cuando summary deje de usarlo
     func addSeparatorLineToTop(horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {

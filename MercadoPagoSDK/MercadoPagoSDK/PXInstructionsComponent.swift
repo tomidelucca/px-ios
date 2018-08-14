@@ -8,6 +8,7 @@
 
 import Foundation
 
+/* :nodoc: */
 public class PXInstructionsComponent: NSObject, PXComponentizable {
     var props: PXInstructionsProps
 

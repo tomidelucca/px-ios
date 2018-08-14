@@ -8,6 +8,7 @@
 
 import UIKit
 
+/* :nodoc: */
 @objc
 public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 

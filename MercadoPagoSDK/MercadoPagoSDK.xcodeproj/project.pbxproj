@@ -663,7 +663,6 @@
 		76FD24861C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */; };
 		76FD24891C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
 		76FD248A1C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
-		8061156A6A68F5714E5C2F73 /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C946A47B4B3A21AC13D408A /* Pods_MercadoPagoSDKTests.framework */; };
 		811B4FD2201F87A40060026A /* PXMonospaceLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B4FD1201F87A40060026A /* PXMonospaceLabel.swift */; };
 		811B4FD3201F87A40060026A /* PXMonospaceLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B4FD1201F87A40060026A /* PXMonospaceLabel.swift */; };
 		812BA9BE1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812BA9BD1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift */; };
@@ -718,7 +717,7 @@
 		81F090E220177EDD008A69C1 /* PXContainedActionButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F090E020177EDA008A69C1 /* PXContainedActionButtonComponent.swift */; };
 		81F090E4201784BE008A69C1 /* PXContainedActionButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */; };
 		81F090E5201784BE008A69C1 /* PXContainedActionButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */; };
-		A0B84AC778537046791DC39A /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10E3E408D360C8E6DED756C /* Pods_MercadoPagoSDKTests.framework */; };
+		B40E90127FCA7582741FA7FD /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B9FB1017ECCD6DD92E2EDD9 /* Pods_MercadoPagoSDKTests.framework */; };
 		C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
@@ -926,7 +925,7 @@
 		0F9883B91AD2AD1600F750F0 /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
 		0FC4FC171B0FAA6400CF7148 /* BankDeal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankDeal.swift; sourceTree = "<group>"; };
 		0FE3E37E1AE706B600C27B97 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		13097315A7C7771CC2CDB209 /* Pods-MercadoPagoSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
+		137B6252DBF3B49F57A839AB /* Pods-MercadoPagoSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		150786A21CD7CD1E0034C5B1 /* IdentificationCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentificationCardView.swift; sourceTree = "<group>"; };
 		150786A51CD7CD340034C5B1 /* IdentificationCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentificationCardView.xib; sourceTree = "<group>"; };
 		150E4BFD1FB37FD300773565 /* PXComponentContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentContainerViewController.swift; sourceTree = "<group>"; };
@@ -980,13 +979,9 @@
 		15E7D6E71C87164E00101872 /* MockedData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MockedData.plist; sourceTree = "<group>"; };
 		15EEE1D81D89D477004D3A19 /* CardFormViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFormViewModel.swift; sourceTree = "<group>"; };
 		15F3D7581EA65B3B00DC57AA /* CardsAdminViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewModelTest.swift; sourceTree = "<group>"; };
-
 		231272EA210FA5D300664060 /* PXAdvancedConfigurationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXAdvancedConfigurationProtocol.swift; path = Config/PXAdvancedConfigurationProtocol.swift; sourceTree = "<group>"; };
 		231272EF211074FC00664060 /* HookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookService.swift; sourceTree = "<group>"; };
 		231272F62110D4A700664060 /* PXToDeprecate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXToDeprecate.swift; path = Core/PXToDeprecate.swift; sourceTree = "<group>"; };
-
-		1BC88C5C0BC95124AF066EBB /* Pods-MercadoPagoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.debug.xcconfig"; sourceTree = "<group>"; };
-
 		2313F708211B1334008DFE7A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = Translations/en.lproj/Localizable_en.plist; sourceTree = "<group>"; };
 		2313F70B211B1346008DFE7A /* es-CO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-CO"; path = "Translations/es-CO.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
 		2313F70D211B1351008DFE7A /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-MX"; path = "Translations/es-MX.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
@@ -1067,7 +1062,6 @@
 		23F5FEE6205078A9005382E9 /* PXCFTComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCFTComponentView.swift; sourceTree = "<group>"; };
 		23F98D4E20F5364700E1767E /* MercadoPagoPXTrackingV4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoPXTrackingV4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F98D4F20F5364700E1767E /* MercadoPagoServicesV4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoServicesV4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-
 		4B08CD9A1F20E2B400FE800A /* ESCFlowsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESCFlowsTests.swift; sourceTree = "<group>"; };
 		4B08CD9C1F20F66700FE800A /* SavedESCCardToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedESCCardToken.swift; sourceTree = "<group>"; };
 		4B08CD9F1F21A06600FE800A /* SavedESCCardTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedESCCardTokenTest.swift; sourceTree = "<group>"; };
@@ -1206,7 +1200,8 @@
 		4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalPayerCostRowTableViewCell.swift; sourceTree = "<group>"; };
 		4BFD451E1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TotalPayerCostRowTableViewCell.xib; sourceTree = "<group>"; };
 		4BFD90C11F58554C00ABC348 /* DateExtensionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensionTest.swift; sourceTree = "<group>"; };
-		4D9710EBB2AD5E9FAF38643D /* Pods_MercadoPagoSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51D6093051952B5323023850 /* Pods-MercadoPagoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		52D2D2289A57B36F8261F854 /* Pods_MercadoPagoSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		534D841D1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableCardsDetailView.swift; sourceTree = "<group>"; };
 		534D841F1F546FA000C2C6F9 /* AvailableCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableCardsViewController.swift; sourceTree = "<group>"; };
 		534D84231F5480F800C2C6F9 /* AvailableCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AvailableCardsViewController.xib; sourceTree = "<group>"; };
@@ -1214,11 +1209,7 @@
 		534D84291F5593BC00C2C6F9 /* CardNotAvailableErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNotAvailableErrorView.swift; sourceTree = "<group>"; };
 		537CA8AE1F4F22D200C10006 /* MPCardFormToolbarLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCardFormToolbarLabel.swift; sourceTree = "<group>"; };
 		53EB434D1F601D09009510BC /* AvailableCardsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableCardsViewModelTests.swift; sourceTree = "<group>"; };
-
-		61FD9182075BE57306A07676 /* Pods-MercadoPagoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		5C946A47B4B3A21AC13D408A /* Pods_MercadoPagoSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5EF1930E24E1608A06D7D8C8 /* Pods_MercadoPagoSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-
+		5B9FB1017ECCD6DD92E2EDD9 /* Pods_MercadoPagoSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearch.swift; sourceTree = "<group>"; };
 		76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchItem.swift; sourceTree = "<group>"; };
 		76062BD51C4D20C30067A14B /* PaymentVaultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVaultViewController.swift; sourceTree = "<group>"; };
@@ -1322,14 +1313,10 @@
 		81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResultViewModel.swift; sourceTree = "<group>"; };
 		81F090E020177EDA008A69C1 /* PXContainedActionButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedActionButtonComponent.swift; sourceTree = "<group>"; };
 		81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedActionButtonRenderer.swift; sourceTree = "<group>"; };
-		91D25C426A7599C0AC2D875E /* Pods-MercadoPagoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.release.xcconfig"; sourceTree = "<group>"; };
-		B10E3E408D360C8E6DED756C /* Pods_MercadoPagoSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B8CF2C4F6524C01ABDECFEE7 /* Pods-MercadoPagoSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.release.xcconfig"; sourceTree = "<group>"; };
+		C1AD6163523D5B58A2CE5295 /* Pods-MercadoPagoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.release.xcconfig"; sourceTree = "<group>"; };
+		C2F971D5EAF653CB1E91BF77 /* Pods-MercadoPagoSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.release.xcconfig"; sourceTree = "<group>"; };
 		C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVaultViewModel.swift; sourceTree = "<group>"; };
 		CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
-
-		D1658DB64C66B7D797023368 /* Pods-MercadoPagoSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
-
 		FC05808D20A5D90200BBECB8 /* PXBankDealCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealCollectionCell.swift; sourceTree = "<group>"; };
 		FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelComponent.swift; sourceTree = "<group>"; };
 		FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXContainedLabelRenderer.swift; sourceTree = "<group>"; };
@@ -1425,10 +1412,7 @@
 				4BF5555A210609590048BD76 /* MercadoPagoPXTrackingV4.framework in Frameworks */,
 				4BF55558210609520048BD76 /* MercadoPagoServicesV4.framework in Frameworks */,
 				4B6954AD20A3678600CCF735 /* MLUI.framework in Frameworks */,
-
-				CFFB91B6CA021D9431FD25D9 /* (null) in Frameworks */,
-				A0B84AC778537046791DC39A /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
-
+				B40E90127FCA7582741FA7FD /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1443,8 +1427,7 @@
 				0F9883191AD2A97A00F750F0 /* MercadoPagoSDKTests */,
 				0F98830B1AD2A97A00F750F0 /* Products */,
 				C21B34312E09C5D174785343 /* Frameworks */,
-
-				C8EC55C7831148F1CDD27117 /* Pods */,
+				15996F2566E440D755D3FA1E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1710,6 +1693,17 @@
 				4B9FEFCD1EA64E12002B78A2 /* PXReviewViewModelTest.swift */,
 			);
 			name = ReviewConfirm;
+			sourceTree = "<group>";
+		};
+		15996F2566E440D755D3FA1E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				51D6093051952B5323023850 /* Pods-MercadoPagoSDK.debug.xcconfig */,
+				C1AD6163523D5B58A2CE5295 /* Pods-MercadoPagoSDK.release.xcconfig */,
+				137B6252DBF3B49F57A839AB /* Pods-MercadoPagoSDKTests.debug.xcconfig */,
+				C2F971D5EAF653CB1E91BF77 /* Pods-MercadoPagoSDKTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		15AE1D951F6072E400B0DAF8 /* Summary Component */ = {
@@ -2558,17 +2552,6 @@
 			name = GuessingForm;
 			sourceTree = "<group>";
 		};
-		7CE343B16981124E0D253E1E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				61FD9182075BE57306A07676 /* Pods-MercadoPagoSDK.debug.xcconfig */,
-				91D25C426A7599C0AC2D875E /* Pods-MercadoPagoSDK.release.xcconfig */,
-				D1658DB64C66B7D797023368 /* Pods-MercadoPagoSDKTests.debug.xcconfig */,
-				B8CF2C4F6524C01ABDECFEE7 /* Pods-MercadoPagoSDKTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		812BA9BC1FC8B1F800FF32C2 /* Payment Method */ = {
 			isa = PBXGroup;
 			children = (
@@ -2714,22 +2697,10 @@
 				4B5E77471FA8F78500D813AF /* MercadoPagoPXTracking.framework */,
 				4B5E77481FA8F78500D813AF /* MercadoPagoServices.framework */,
 				7622E32B1DF5EF8800490C4E /* Foundation.framework */,
-				4D9710EBB2AD5E9FAF38643D /* Pods_MercadoPagoSDK.framework */,
-				B10E3E408D360C8E6DED756C /* Pods_MercadoPagoSDKTests.framework */,
-
+				52D2D2289A57B36F8261F854 /* Pods_MercadoPagoSDK.framework */,
+				5B9FB1017ECCD6DD92E2EDD9 /* Pods_MercadoPagoSDKTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C8EC55C7831148F1CDD27117 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1BC88C5C0BC95124AF066EBB /* Pods-MercadoPagoSDK.debug.xcconfig */,
-				466005FDB9452755D2A9353B /* Pods-MercadoPagoSDK.release.xcconfig */,
-				13097315A7C7771CC2CDB209 /* Pods-MercadoPagoSDKTests.debug.xcconfig */,
-				F82E2AE8E3B5C558A6B0ABBD /* Pods-MercadoPagoSDKTests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		CCDE89851DA3E49F00A5CC15 /* No Pretty */ = {
@@ -3037,18 +3008,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F9883201AD2A97A00F750F0 /* Build configuration list for PBXNativeTarget "MercadoPagoSDK" */;
 			buildPhases = (
-
-				0B09BD5E13CEB5D636D1F718 /* [CP] Check Pods Manifest.lock */,
-
+				485035927CB8E36FEB32FF26 /* [CP] Check Pods Manifest.lock */,
 				0F9883051AD2A97A00F750F0 /* Sources */,
 				0F9883061AD2A97A00F750F0 /* Frameworks */,
 				0F9883071AD2A97A00F750F0 /* Headers */,
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
 				4BCA62FA1EBA48D8006D8131 /* SwiftLint */,
-
-				8831E699EDF1CA4F994E9E66 /* [CP] Copy Pods Resources */,
-
+				85F83C217F2FD824D7AAE6D0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3063,17 +3030,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F9883231AD2A97A00F750F0 /* Build configuration list for PBXNativeTarget "MercadoPagoSDKTests" */;
 			buildPhases = (
-
-				0BA0380E204D3CCE4542F78A /* [CP] Check Pods Manifest.lock */,
-
+				9A420CF972670E630F880EBF /* [CP] Check Pods Manifest.lock */,
 				0F9883111AD2A97A00F750F0 /* Sources */,
 				0F9883131AD2A97A00F750F0 /* Resources */,
 				0F9883121AD2A97A00F750F0 /* Frameworks */,
 				7622E33F1DF5F5F900490C4E /* Headers */,
-
-				AD15359F259186A0BF77AF6A /* [CP] Embed Pods Frameworks */,
-				64F28E4F8491832F29304087 /* [CP] Copy Pods Resources */,
-
+				E55231CAF99427FC47BA47A3 /* [CP] Embed Pods Frameworks */,
+				FD06CCD81B6E439BAD1D54A3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3220,26 +3183,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-
-		0B09BD5E13CEB5D636D1F718 /* [CP] Check Pods Manifest.lock */ = {
-
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-
-		44B4D99C443E4181E5606C7E /* [CP] Check Pods Manifest.lock */ = {
-
+		485035927CB8E36FEB32FF26 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3250,9 +3194,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-
-				"$(DERIVED_FILE_DIR)/Pods-MercadoPagoSDKTests-checkManifestLockResult.txt",
-
+				"$(DERIVED_FILE_DIR)/Pods-MercadoPagoSDK-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3273,9 +3215,40 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\necho \"Swiftlint disabled\"\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
-
-		544EBE75B1BCD6B1E3C0A6C9 /* [CP] Embed Pods Frameworks */ = {
-
+		85F83C217F2FD824D7AAE6D0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A420CF972670E630F880EBF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MercadoPagoSDKTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E55231CAF99427FC47BA47A3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3301,9 +3274,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-
-		8831E699EDF1CA4F994E9E66 /* [CP] Copy Pods Resources */ = {
-
+		FD06CCD81B6E439BAD1D54A3 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3316,32 +3287,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A95E6D88A25E2F54C9378D1A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
-				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
-				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
-				"${BUILT_PRODUCTS_DIR}/MercadoPagoPXTrackingV4/MercadoPagoPXTrackingV4.framework",
-				"${BUILT_PRODUCTS_DIR}/MercadoPagoServicesV4/MercadoPagoServicesV4.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoPXTrackingV4.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoServicesV4.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -4302,7 +4247,7 @@
 		};
 		0F9883211AD2A97A00F750F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1BC88C5C0BC95124AF066EBB /* Pods-MercadoPagoSDK.debug.xcconfig */;
+			baseConfigurationReference = 51D6093051952B5323023850 /* Pods-MercadoPagoSDK.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -4340,7 +4285,7 @@
 		};
 		0F9883221AD2A97A00F750F0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 91D25C426A7599C0AC2D875E /* Pods-MercadoPagoSDK.release.xcconfig */;
+			baseConfigurationReference = C1AD6163523D5B58A2CE5295 /* Pods-MercadoPagoSDK.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -4377,7 +4322,7 @@
 		};
 		0F9883241AD2A97A00F750F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1658DB64C66B7D797023368 /* Pods-MercadoPagoSDKTests.debug.xcconfig */;
+			baseConfigurationReference = 137B6252DBF3B49F57A839AB /* Pods-MercadoPagoSDKTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
@@ -4407,7 +4352,7 @@
 		};
 		0F9883251AD2A97A00F750F0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8CF2C4F6524C01ABDECFEE7 /* Pods-MercadoPagoSDKTests.release.xcconfig */;
+			baseConfigurationReference = C2F971D5EAF653CB1E91BF77 /* Pods-MercadoPagoSDKTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;

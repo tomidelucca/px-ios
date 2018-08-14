@@ -8,6 +8,8 @@
 
 import UIKit
 
+/* :nodoc: */
+
 class PXReceiptComponent: PXComponentizable {
     var props: PXReceiptProps
 

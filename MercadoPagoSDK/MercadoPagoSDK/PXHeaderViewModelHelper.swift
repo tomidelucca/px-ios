@@ -8,6 +8,7 @@
 
 import UIKit
 
+/* :nodoc: */
 extension PXResultViewModel {
 
     func getHeaderComponentProps() -> PXHeaderProps {

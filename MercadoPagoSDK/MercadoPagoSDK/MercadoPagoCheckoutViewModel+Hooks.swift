@@ -6,8 +6,8 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 import Foundation
-extension MercadoPagoCheckoutViewModel {
 
+extension MercadoPagoCheckoutViewModel {
     func shouldShowHook(hookStep: PXHookStep) -> Bool {
 
         guard let hookSelected = hookService.getHookForStep(hookStep: hookStep) else {

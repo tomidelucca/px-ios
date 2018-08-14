@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension Array {
+internal extension Array {
     static public func safeAppend(_ array: Array?, _ newElement: Element) -> Array {
         if var array = array {
             array.append(newElement)

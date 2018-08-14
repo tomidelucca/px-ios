@@ -8,6 +8,8 @@
 
 import Foundation
 
+/* :nodoc: */
+
 public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponentizable {
     var props: PXInstructionsSecondaryInfoProps
 

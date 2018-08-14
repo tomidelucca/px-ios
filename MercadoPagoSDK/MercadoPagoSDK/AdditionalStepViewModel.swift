@@ -11,6 +11,7 @@ import UIKit
 import MercadoPagoPXTrackingV4
 import MercadoPagoServicesV4
 
+/* :nodoc: */
 open class AdditionalStepViewModel: NSObject {
 
     var bundle: Bundle? = MercadoPago.getBundle()

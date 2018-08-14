@@ -8,6 +8,7 @@
 
 import UIKit
 
+/* :nodoc: */
 @objcMembers open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
 
     open var idPaymentMethodSearchItem: String!

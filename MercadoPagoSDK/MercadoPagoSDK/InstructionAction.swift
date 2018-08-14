@@ -8,6 +8,7 @@
 
 import UIKit
 
+/* :nodoc: */
 @objcMembers open class InstructionAction: NSObject {
 
     var label: String!

@@ -9,7 +9,6 @@
 import Foundation
 
 final class OneTapFlowModel: NSObject, PXFlowModel {
-
     enum Steps: String {
         case finish
         case screenReviewOneTap

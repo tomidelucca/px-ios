@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+/* :nodoc: */
 @objcMembers open class ApiUtil {
     enum StatusCodes: Int {
         case INTERNAL_SERVER_ERROR = 500

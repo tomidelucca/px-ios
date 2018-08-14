@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIColor {
+internal extension UIColor {
 
     class public func UIColorFromRGB(_ rgbValue: UInt) -> UIColor {
         return UIColor(

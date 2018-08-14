@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSDictionary {
+internal extension NSDictionary {
 
     public func toJsonString() -> String {
         do {

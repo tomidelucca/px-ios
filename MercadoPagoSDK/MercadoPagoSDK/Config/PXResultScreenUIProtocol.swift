@@ -8,6 +8,7 @@
 
 import Foundation
 
+/* :nodoc: - Not intended for public use. */
 public protocol PXResultScreenUIProtocol {
 
 }

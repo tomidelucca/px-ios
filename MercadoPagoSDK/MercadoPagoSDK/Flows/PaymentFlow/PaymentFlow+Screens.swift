@@ -9,7 +9,6 @@
 import Foundation
 
 extension PXPaymentFlow {
-
     func showPaymentPluginComponent(paymentPluginComponent: PXPaymentPluginComponent?) {
 
         guard let paymentPluginComponent = paymentPluginComponent else {

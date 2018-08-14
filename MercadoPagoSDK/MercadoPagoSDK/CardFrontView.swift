@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/* :nodoc: */
 @objcMembers
 @IBDesignable open class CardFrontView: UIView, Updatable {
   var view: UIView!

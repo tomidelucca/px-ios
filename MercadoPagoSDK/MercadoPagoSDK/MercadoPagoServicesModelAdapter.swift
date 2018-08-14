@@ -9,6 +9,8 @@
 import Foundation
 import MercadoPagoServicesV4
 
+/* :nodoc: */
+
 extension MercadoPagoServicesAdapter {
 
     open func getPXSiteFromId(_ siteId: String) -> PXSite {

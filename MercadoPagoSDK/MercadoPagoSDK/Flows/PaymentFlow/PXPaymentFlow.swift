@@ -9,7 +9,6 @@
 import Foundation
 
 internal final class PXPaymentFlow: NSObject, PXFlow {
-
     let model: PXPaymentFlowModel
 
     weak var resultHandler: PXPaymentResultHandlerProtocol?
