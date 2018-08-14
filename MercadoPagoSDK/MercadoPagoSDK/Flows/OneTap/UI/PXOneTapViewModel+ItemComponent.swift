@@ -56,7 +56,7 @@ extension PXOneTapViewModel {
 
     private func getDiscountLimit() -> String? {
         if amountHelper.maxCouponAmount != nil {
-            return "one_tap_discount_disclaimer".localized_beta
+            return "total_row_disclaimer".localized_beta
         }
         return nil
     }

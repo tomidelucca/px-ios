@@ -89,7 +89,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
     }
 
     static func shouldAddActionToRow(amountHelper: PXAmountHelper) -> Bool {
-        if amountHelper.discount != nil {
+        if amountHelper.discount != nil || amountHelper.consumedDiscount {
             return true
         }
         return false

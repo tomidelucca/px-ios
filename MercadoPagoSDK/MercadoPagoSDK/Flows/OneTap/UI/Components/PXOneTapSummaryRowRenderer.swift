@@ -55,8 +55,7 @@ extension PXOneTapSummaryRowRenderer {
     func setupConstraints() {
         PXLayout.setHeight(owner: titleLabel, height: 18).isActive = true
         PXLayout.setHeight(owner: amountLabel, height: 18).isActive = true
-        subtitleHeightConstraint = PXLayout.setHeight(owner: subtitleLabel, height: 18)
-        subtitleHeightConstraint?.isActive = true
+        PXLayout.setHeight(owner: subtitleLabel, height: 18).isActive = true
 
         PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinTop(view: titleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
@@ -65,10 +64,15 @@ extension PXOneTapSummaryRowRenderer {
         PXLayout.pinRight(view: amountLabel, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.put(view: amountLabel, rightOf: titleLabel, withMargin: 8, relation: .greaterThanOrEqual).isActive = true
 
-        PXLayout.pinLeft(view: subtitleLabel, to: titleLabel).isActive = true
-        PXLayout.pinRight(view: subtitleLabel, to: amountLabel).isActive = true
-        PXLayout.put(view: subtitleLabel, onBottomOf: titleLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
-        PXLayout.pinBottom(view: subtitleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+        if String.isNullOrEmpty(subtitleLabel.text)  {
+            subtitleLabel.removeFromSuperview()
+            PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+        } else {
+            PXLayout.pinLeft(view: subtitleLabel, to: titleLabel).isActive = true
+            PXLayout.pinRight(view: subtitleLabel, to: amountLabel).isActive = true
+            PXLayout.put(view: subtitleLabel, onBottomOf: titleLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: subtitleLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+        }
     }
 
     private func setupStyles() {
@@ -84,11 +88,7 @@ extension PXOneTapSummaryRowRenderer {
             subtitleLabel.text = nil
             titleLabel.text = componentProps.title
             amountLabel.text = componentProps.rightText
-            if let subTitleText = componentProps.subTitle {
-                subtitleLabel.text = subTitleText
-            } else {
-                subtitleHeightConstraint?.constant = 0
-            }
+            subtitleLabel.text = componentProps.subTitle
         }
     }
 }

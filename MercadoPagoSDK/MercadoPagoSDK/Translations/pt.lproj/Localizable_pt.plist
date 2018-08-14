@@ -240,7 +240,7 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Limite de desconto %1$s</string>
+		<string>Limite de desconto: %1$s</string>
 	</dict>
 	<key>discount_end_date</key>
 	<dict>
@@ -268,7 +268,7 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Você tem um cupom de desconto?</string>
+		<string>Digite seu cupom de desconto</string>
 	</dict>
 	<key>total_row_disclaimer</key>
 	<dict>
@@ -276,13 +276,6 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<string></string>
 		<key>value</key>
 		<string>Com limite de desconto</string>
-	</dict>
-	<key>one_tap_discount_disclaimer</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>com limite de desconto</string>
 	</dict>
 	<key>total_row_title_percent_off</key>
 	<dict>
