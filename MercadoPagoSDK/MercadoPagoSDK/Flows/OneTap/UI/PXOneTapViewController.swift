@@ -49,10 +49,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
         setupUI()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,7 +77,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
-        setupNavigationBar()
         setupUI()
     }
 }
@@ -98,7 +94,12 @@ extension PXOneTapViewController {
     }
 
     private func setupUI() {
+        self.viewModel.amountHelper = PXAmountHelper(preference: self.viewModel.amountHelper.preference, paymentData: self.viewModel.amountHelper.paymentData, discount: MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.discount, campaign: MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.campaign, chargeRules: self.viewModel.amountHelper.chargeRules, consumedDiscount: self.viewModel.amountHelper.consumedDiscount)
+
+        setupNavigationBar()
         renderViews()
+        scrollView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
         super.prepareForAnimation(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
         super.animateContentView(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
     }

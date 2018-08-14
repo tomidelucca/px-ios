@@ -31,16 +31,12 @@ extension MercadoPagoCheckout {
                 }
 
                 //Update Payment Method Search
+                paymentMethodSearch.oneTap = nil
                 strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
                 strongSelf.viewModel.paymentOptionSelected = nil
                 strongSelf.viewModel.rootVC = true
                 strongSelf.viewModel.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
 
-                if strongSelf.viewModel.needOneTapFlow() {
-                    let viewMod = PXOneTapViewModel(amountHelper: strongSelf.viewModel.amountHelper, paymentOptionSelected: strongSelf.viewModel.paymentOptionSelected!, reviewScreenPreference: strongSelf.viewModel.reviewScreenPreference)
-                    strongSelf.viewModel.pxNavigationHandler.getOneTapViewControllerFromStack()?.update(viewModel: viewMod)
-                    strongSelf.viewModel.search?.oneTap = nil
-                }
                 successBlock()
                 strongSelf.viewModel.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
                 return
@@ -158,6 +154,7 @@ extension MercadoPagoCheckout {
                     }
 
                     //Update Payment Method Search
+                    paymentMethodSearch.oneTap = nil
                     strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
                     strongSelf.viewModel.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
 
