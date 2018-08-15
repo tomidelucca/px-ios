@@ -8,12 +8,12 @@
 
 import Foundation
 
-class PXDiscountCodeInputSuccessView: UIView {
+final class PXDiscountCodeInputSuccessView: UIView {
 
-    var title: NSAttributedString?
-    var message: NSAttributedString?
-    var icon: UIImage?
-    var action: PXComponentAction?
+    private var title: NSAttributedString?
+    private var message: NSAttributedString?
+    private var icon: UIImage?
+    private var action: PXComponentAction?
 
     func setProps(title: NSAttributedString, message: NSAttributedString, icon: UIImage, action: PXComponentAction) {
         self.title = title

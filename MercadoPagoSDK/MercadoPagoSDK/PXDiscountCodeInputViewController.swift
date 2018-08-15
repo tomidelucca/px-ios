@@ -12,8 +12,6 @@ import MLUI
 
 final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTitledTextFieldDelegate {
 
-    override open var screenName: String { return "DISCOUNT_SUMMARY" }
-
     let contentView: PXComponentView = PXComponentView()
     private var textfield: MLTitledSingleLineTextField?
     private var spinner: MLSpinner?
@@ -43,7 +41,7 @@ final class PXDiscountCodeInputViewController: MercadoPagoUIViewController, MLTi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            self.textfield!.becomeFirstResponder()
+            self.textfield?.becomeFirstResponder()
         })
     }
 }
@@ -80,7 +78,7 @@ extension PXDiscountCodeInputViewController {
         PXLayout.pinRight(view: textfield, withMargin: PXLayout.M_MARGIN).isActive = true
 
         //Spinner
-        let spinner = PXComponentFactory.Spinner.newSmall(color1: ThemeManager.shared.secondaryColor(), color2: ThemeManager.shared.secondaryColor())
+        let spinner = PXComponentFactory.SmallSpinner.new(color1: ThemeManager.shared.secondaryColor(), color2: ThemeManager.shared.secondaryColor())
         self.spinner = spinner
         self.contentView.addSubview(spinner)
         PXLayout.pinRight(view: spinner, to: textfield, withMargin: 5).isActive = true

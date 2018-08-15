@@ -68,7 +68,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
     private var discountValidationCallback: ((PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void)
-    private var floatingBottomRowView: UIView?
+    private weak var floatingRowView: UIView?
 
     init(viewModel: PaymentVaultViewModel, discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
         self.viewModel = viewModel
@@ -168,14 +168,14 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     private func updateViewsAndLayout() {
         self.collectionSearch.reloadData()
-        if floatingBottomRowView == nil {
-            floatingBottomRowView = getFloatingTotalRowView()
+        if floatingRowView == nil {
+            floatingRowView = getFloatingTotalRowView()
         } else {
-            floatingBottomRowView?.removeFromSuperview()
-            floatingBottomRowView = getFloatingTotalRowView()
+            floatingRowView?.removeFromSuperview()
+            floatingRowView = getFloatingTotalRowView()
         }
 
-        if let floatingRowView = floatingBottomRowView {
+        if let floatingRowView = floatingRowView {
             getCollectionViewPinBottomContraint()?.isActive = false
             view.addSubview(floatingRowView)
             PXLayout.matchWidth(ofView: floatingRowView).isActive = true

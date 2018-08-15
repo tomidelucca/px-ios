@@ -184,7 +184,7 @@ extension InitFlowModel {
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return MercadoPagoCheckoutViewModel.filterCampaignsByCodeType(campaigns: properties.campaigns, CodeType.NONE.rawValue) != nil && !directDiscountSearchStatus && properties.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
+        return PXCampaign.filterCampaignsByCodeType(campaigns: properties.campaigns, CampaignCodeType.NONE.rawValue) != nil && !directDiscountSearchStatus && properties.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
     }
 
     func needToSearchCampaign() -> Bool {

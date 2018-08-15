@@ -283,21 +283,8 @@ extension MercadoPagoCheckoutViewModel {
         return self.isCheckoutComplete()
     }
 
-    class func filterCampaignsByCodeType(campaigns: [PXCampaign]?, _ codeType: String) -> [PXCampaign]? {
-        if let campaigns = campaigns {
-            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
-                return campaign.codeType == codeType
-            }
-            if filteredCampaigns.isEmpty {
-                return nil
-            }
-            return filteredCampaigns
-        }
-        return nil
-    }
-
     func shouldShowDiscountInput() -> Bool {
-        return (MercadoPagoCheckoutViewModel.filterCampaignsByCodeType(campaigns: self.campaigns, CodeType.SINGLE.rawValue) != nil || MercadoPagoCheckoutViewModel.filterCampaignsByCodeType(campaigns: self.campaigns, CodeType.MULTIPLE.rawValue) != nil) && !Array.isNullOrEmpty(self.campaigns) && self.paymentData.discount == nil && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
+        return (PXCampaign.filterCampaignsByCodeType(campaigns: self.campaigns, CampaignCodeType.SINGLE.rawValue) != nil || PXCampaign.filterCampaignsByCodeType(campaigns: self.campaigns, CampaignCodeType.MULTIPLE.rawValue) != nil) && !Array.isNullOrEmpty(self.campaigns) && self.paymentData.discount == nil && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
     }
 
     func needToCreatePayment() -> Bool {
@@ -351,10 +338,4 @@ extension MercadoPagoCheckoutViewModel {
         }
         return false
     }
-}
-
-public enum CodeType: String {
-    case NONE = "none"
-    case SINGLE = "single"
-    case MULTIPLE = "multiple"
 }

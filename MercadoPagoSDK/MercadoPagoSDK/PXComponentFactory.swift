@@ -40,8 +40,10 @@ struct PXComponentFactory {
             let spinnerConfig = MLSpinnerConfig(size: .big, primaryColor: color1, secondaryColor: color2)
             return MLSpinner(config: spinnerConfig, text: nil)
         }
+    }
 
-        static func newSmall(color1: UIColor, color2: UIColor) -> MLSpinner {
+    struct SmallSpinner {
+        static func new(color1: UIColor, color2: UIColor) -> MLSpinner {
             let spinnerConfig = MLSpinnerConfig(size: .small, primaryColor: color1, secondaryColor: color2)
             return MLSpinner(config: spinnerConfig, text: nil)
         }

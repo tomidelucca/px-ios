@@ -16,7 +16,7 @@ import Foundation
     var defaultOption: PaymentMethodSearchItem?
     var oneTap: OneTapItem?
     var isEmpty: Bool {
-        get{
+        get {
             return paymentMethods.count <= 0
         }
     }

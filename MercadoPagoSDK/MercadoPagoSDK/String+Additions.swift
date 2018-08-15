@@ -75,4 +75,8 @@ extension String {
     public func toAttributedString(attributes: [NSAttributedStringKey: Any]? = nil) -> NSMutableAttributedString {
         return NSMutableAttributedString(string: self, attributes: attributes)
     }
+
+    static internal func space() -> String {
+        return " "
+    }
 }
