@@ -30,7 +30,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     private var discountValidationCallback: ((PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void)?
 
-    private weak var floatingRowView: UIView?
+    private var floatingRowView: UIView?
 
     override open func viewDidLoad() {
         super.viewDidLoad()

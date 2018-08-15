@@ -68,7 +68,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
     private var discountValidationCallback: ((PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void)
-    private weak var floatingRowView: UIView?
+    private var floatingRowView: UIView?
 
     init(viewModel: PaymentVaultViewModel, discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
         self.viewModel = viewModel
