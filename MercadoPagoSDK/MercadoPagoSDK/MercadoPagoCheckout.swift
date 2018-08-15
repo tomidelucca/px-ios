@@ -75,9 +75,7 @@ open class MercadoPagoCheckout: NSObject {
             viewModel.paymentMethodPluginsToShow = paymentMethodPlugins
 
             // Payment plugin (paymentProcessor).
-            if let paymentProcessor = paymentPlugin {
-                viewModel.paymentPlugin = paymentProcessor
-            }
+            viewModel.paymentPlugin = paymentPlugin
         }
 
         viewModel.updateInitFlow()

@@ -113,15 +113,19 @@
 
 
 -(void)setPaymentConfiguration {
-    self.paymentConfig = [[PXPaymentConfiguration alloc] init];
-    [self setPaymentMethodPlugins];
-    // [self setPaymentPlugin];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
+    PaymentPluginViewController *paymentProcessorPlugin = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
+
+    self.paymentConfig = [[PXPaymentConfiguration alloc] initWithPaymentProcessor:paymentProcessorPlugin];
+
+    [self addPaymentMethodPlugin];
+
     [self.checkoutBuilder setPaymentConfigurationWithConfig:self.paymentConfig];
 }
 
 
--(void)setPaymentMethodPlugins {
-
+-(void)addPaymentMethodPlugin {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
 
@@ -135,13 +139,6 @@
     //[bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
 
     [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
-}
-
--(void)setPaymentPlugin {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
-    PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-    [self.paymentConfig setPaymentProcessorWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setVoidCallback {
