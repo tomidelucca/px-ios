@@ -107,7 +107,6 @@
 		1553AF371E36457F00E36C62 /* MercadoPagoCheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553AF351E36457F00E36C62 /* MercadoPagoCheckoutViewModel.swift */; };
 		155692D21C47DA1200521403 /* PaymentPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PaymentPreference.swift */; };
 		15584BB320BD956200866BE7 /* PXDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15584BB220BD956200866BE7 /* PXDiscount.swift */; };
-		15584BB420BD956200866BE7 /* PXDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15584BB220BD956200866BE7 /* PXDiscount.swift */; };
 		15584BB920BDB80600866BE7 /* PXAmountHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15584BB820BDB80600866BE7 /* PXAmountHelper.swift */; };
 		155954EC1F87CD200086854B /* PayerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155954E61F87CD1F0086854B /* PayerInfoViewController.swift */; };
 		155954EE1F87CD200086854B /* BoletoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155954E81F87CD1F0086854B /* BoletoComponent.swift */; };
@@ -1534,8 +1533,8 @@
 		0F9883341AD2AB5000F750F0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FC9E62892125C55A0036A99F /* PX Extensions */,
 				15584BB720BDB7EA00866BE7 /* Checkout Model */,
-				15584BB520BD96E200866BE7 /* PX Extensions */,
 				4BEF80FE1E538C9000797CD1 /* Preferences */,
 				15E08F6B1DA2CFC70087041B /* Parsed */,
 				15E7D6E51C85D4F900101872 /* Json */,
@@ -1660,15 +1659,6 @@
 				4BE805BB20AB563C001F5C0F /* PXFlow.swift */,
 			);
 			name = MercadoPagoCheckout;
-			sourceTree = "<group>";
-		};
-		15584BB520BD96E200866BE7 /* PX Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				15584BB220BD956200866BE7 /* PXDiscount.swift */,
-				FC9E627E212469FB0036A99F /* PXCampaign.swift */,
-			);
-			name = "PX Extensions";
 			sourceTree = "<group>";
 		};
 		15584BB720BDB7EA00866BE7 /* Checkout Model */ = {
@@ -2935,6 +2925,15 @@
 			name = PXUtils;
 			sourceTree = "<group>";
 		};
+		FC9E62892125C55A0036A99F /* PX Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				15584BB220BD956200866BE7 /* PXDiscount.swift */,
+				FC9E627E212469FB0036A99F /* PXCampaign.swift */,
+			);
+			path = "PX Extensions";
+			sourceTree = "<group>";
+		};
 		FCAFDEAC20A0CEF100D00B60 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -3981,7 +3980,6 @@
 				7622E3241DF5EE5400490C4E /* JSONHandler.swift in Sources */,
 				15D79A051CA96D6400623A84 /* MPLabel.swift in Sources */,
 				7656CA1B1C7645450043BDB2 /* InstructionReference.swift in Sources */,
-				15584BB420BD956200866BE7 /* PXDiscount.swift in Sources */,
 				4B811DE11FCDD31A000611AD /* MercadoPagoCheckoutViewModel+Hooks.swift in Sources */,
 				FC05808F20A5DB3500BBECB8 /* PXBankDealsViewController.swift in Sources */,
 				4BE2B16D1FCDDCB7007C58F2 /* MockedHookViewController.swift in Sources */,
