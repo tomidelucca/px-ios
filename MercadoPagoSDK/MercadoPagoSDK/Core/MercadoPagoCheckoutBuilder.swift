@@ -19,17 +19,17 @@ open class MercadoPagoCheckoutBuilder: NSObject {
     internal var paymentConfig: PXPaymentConfiguration?
     internal var advancedConfig: PXAdvancedConfigurationProtocol?
 
-    internal var theme: PXTheme?
-    internal var defaultColor: UIColor?
-
-    public init(publicKey: String, checkoutPreference: CheckoutPreference) {
-        self.publicKey = publicKey
-        self.checkoutPreference = checkoutPreference
-    }
+    internal var defaultUIColor: UIColor?
 
     public init(publicKey: String, preferenceId: String) {
         self.publicKey = publicKey
         self.preferenceId = preferenceId
+    }
+
+    public init(publicKey: String, checkoutPreference: CheckoutPreference, paymentConfiguration: PXPaymentConfiguration) {
+        self.publicKey = publicKey
+        self.checkoutPreference = checkoutPreference
+        self.paymentConfig = paymentConfiguration
     }
 }
 
@@ -40,23 +40,13 @@ extension MercadoPagoCheckoutBuilder {
         return self
     }
 
-    open func setPaymentConfiguration(config: PXPaymentConfiguration) -> MercadoPagoCheckoutBuilder {
-        self.paymentConfig = config
-        return self
-    }
-
     open func setAdvancedConfiguration(config: PXAdvancedConfigurationProtocol) -> MercadoPagoCheckoutBuilder {
         self.advancedConfig = config
         return self
     }
 
-    open func setTheme(customTheme: PXTheme) -> MercadoPagoCheckoutBuilder {
-        self.theme = customTheme
-        return self
-    }
-
-    open func setDefaultColor(customColor: UIColor) -> MercadoPagoCheckoutBuilder {
-        self.defaultColor = customColor
+    open func setColor(checkoutColor: UIColor) -> MercadoPagoCheckoutBuilder {
+        self.defaultUIColor = checkoutColor
         return self
     }
 
@@ -64,4 +54,10 @@ extension MercadoPagoCheckoutBuilder {
         MercadoPagoContext.setLanguage(string: string) //TODO: MercadoPagoContext (Internal refactor)
         return self
     }
+
+    /*
+     open func setPaymentConfiguration(config: PXPaymentConfiguration) -> MercadoPagoCheckoutBuilder {
+     self.paymentConfig = config
+     return self
+     }*/
 }

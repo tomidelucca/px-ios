@@ -71,24 +71,19 @@
 
     self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
     // CDP color.
     // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
-
-    [self setPaymentConfiguration];
 
     // [self.mpCheckout discountNotAvailable];
 
     // PXDiscount* discount = [[PXDiscount alloc] init];
     
     // Set default color or theme.
-    MeliTheme *meliTheme = [[MeliTheme alloc] init];
-    MPTheme *mpTheme = [[MPTheme alloc] init];
-
-    [self.checkoutBuilder setThemeWithCustomTheme:mpTheme];
-
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
+    // MeliTheme *meliTheme = [[MeliTheme alloc] init];
+    // MPTheme *mpTheme = [[MPTheme alloc] init];
+    // [self.checkoutBuilder setThemeWithCustomTheme:mpTheme];
 
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
@@ -108,24 +103,27 @@
     // [self.mpCheckout discountNotAvailable];
 
     //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
+
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
+
     [self.mpCheckout startWithNavigationController:self.navigationController];
 }
 
 
--(void)setPaymentConfiguration {
+-(PXPaymentConfiguration *)getPaymentConfiguration {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
     PaymentPluginViewController *paymentProcessorPlugin = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
     self.paymentConfig = [[PXPaymentConfiguration alloc] initWithPaymentProcessor:paymentProcessorPlugin];
 
-    [self addPaymentMethodPlugin];
+    [self addPaymentMethodPluginToPaymentConfig];
 
-    [self.checkoutBuilder setPaymentConfigurationWithConfig:self.paymentConfig];
+    return self.paymentConfig;
 }
 
 
--(void)addPaymentMethodPlugin {
+-(void)addPaymentMethodPluginToPaymentConfig {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
 
@@ -134,9 +132,8 @@
     PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"account_money" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"Hola mundo" paymentPlugin:makePaymentComponent];
 
     // Payment method config plugin component.
-    PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
-
-    //[bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
+    // PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
+    // [bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
 
     [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
 }

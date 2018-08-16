@@ -14,8 +14,7 @@ public protocol PXAdvancedConfigurationProtocol {
     var binaryMode: Bool { get set }
     var reviewScreenPreference: ReviewScreenPreference { get set }
     var paymentResultScreenPreference: PaymentResultScreenPreference { get set }
-    //func reviewScreenUIProtocol() -> PXReviewScreenUIProtocol?
-    //func resultScreenUIProtocol() -> PXResultScreenUIProtocol?
+    var theme: PXTheme? { get set }
 }
 
 extension PXAdvancedConfigurationProtocol {
@@ -38,7 +37,10 @@ extension PXAdvancedConfigurationProtocol {
     var paymentResultScreenPreference: PaymentResultScreenPreference {
         get { return PaymentResultScreenPreference() } set { }
     }
+
+    var theme: PXTheme? {
+        get { return nil } set { }
+    }
 }
 
-final class PXAdvancedConfiguration: PXAdvancedConfigurationProtocol {
-}
+final class PXAdvancedConfiguration: PXAdvancedConfigurationProtocol {}
