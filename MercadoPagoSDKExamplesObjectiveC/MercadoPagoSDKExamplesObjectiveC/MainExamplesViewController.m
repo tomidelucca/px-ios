@@ -105,7 +105,8 @@
 
     
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
-    PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
+    PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" maxRedeemPerUser:1 name:@"Campaña" maxCouponAmount:1000 endDate:[NSDate date]];
+    //[[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
 
     [self.mpCheckout setDiscount:discount withCampaign:campaign];
     
