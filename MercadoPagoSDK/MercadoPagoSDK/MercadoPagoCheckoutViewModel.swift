@@ -45,7 +45,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var hookService: HookService = HookService()
 
-    private var advancedConfig: PXAdvancedConfigurationProtocol = PXAdvancedConfiguration()
+    private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
 
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
@@ -795,11 +795,11 @@ extension MercadoPagoCheckoutViewModel {
 
 // MARK: Advanced Config
 extension MercadoPagoCheckoutViewModel {
-    func setAdvancedConfiguration(advancedConfig: PXAdvancedConfigurationProtocol) {
+    func setAdvancedConfiguration(advancedConfig: PXAdvancedConfiguration) {
         self.advancedConfig = advancedConfig
     }
 
-    func getAdvancedConfiguration() -> PXAdvancedConfigurationProtocol {
+    func getAdvancedConfiguration() -> PXAdvancedConfiguration {
         return advancedConfig
     }
 }

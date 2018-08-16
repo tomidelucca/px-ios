@@ -73,17 +73,22 @@
 
     self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
+    // AdvancedConfig
+    PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
+    // Set default color or theme.
+    // MeliTheme *meliTheme = [[MeliTheme alloc] init];
+    MPTheme *mpTheme = [[MPTheme alloc] init];
+    [advancedConfig setTheme:mpTheme];
+
+    [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
+
     // CDP color.
     // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
     // [self.mpCheckout discountNotAvailable];
 
     // PXDiscount* discount = [[PXDiscount alloc] init];
-    
-    // Set default color or theme.
-    // MeliTheme *meliTheme = [[MeliTheme alloc] init];
-    // MPTheme *mpTheme = [[MPTheme alloc] init];
-    // [self.checkoutBuilder setThemeWithCustomTheme:mpTheme];
+
 
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];

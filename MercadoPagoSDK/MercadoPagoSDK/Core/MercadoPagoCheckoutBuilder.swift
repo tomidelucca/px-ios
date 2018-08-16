@@ -17,7 +17,7 @@ open class MercadoPagoCheckoutBuilder: NSObject {
     internal var privateKey: String?
 
     internal var paymentConfig: PXPaymentConfiguration?
-    internal var advancedConfig: PXAdvancedConfigurationProtocol?
+    internal var advancedConfig: PXAdvancedConfiguration?
 
     internal var defaultUIColor: UIColor?
 
@@ -40,7 +40,7 @@ extension MercadoPagoCheckoutBuilder {
         return self
     }
 
-    open func setAdvancedConfiguration(config: PXAdvancedConfigurationProtocol) -> MercadoPagoCheckoutBuilder {
+    open func setAdvancedConfiguration(config: PXAdvancedConfiguration) -> MercadoPagoCheckoutBuilder {
         self.advancedConfig = config
         return self
     }
