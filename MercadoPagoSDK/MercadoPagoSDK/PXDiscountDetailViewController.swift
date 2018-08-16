@@ -19,7 +19,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
     private let shouldShowTitle: Bool
-    private let currency = MercadoPagoContext.getCurrency()
+    private let currency = SiteManager.shared.getCurrency()
     let contentView: PXComponentView = PXComponentView()
 
     init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {

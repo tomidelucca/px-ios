@@ -78,7 +78,7 @@ extension PXTermsAndConditionView {
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: SCREEN_TITLE.localized)
 
-        mutableAttributedString.addAttribute(NSAttributedStringKey.link, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
+        mutableAttributedString.addAttribute(NSAttributedStringKey.link, value: SiteManager.shared.getTermsAndConditionsURL(), range: tycLinkRange)
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -92,7 +92,7 @@ extension PXTermsAndConditionView {
 extension PXTermsAndConditionView: UITextViewDelegate, UIGestureRecognizerDelegate {
 
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        if let url = URL(string: MercadoPagoContext.getTermsAndConditionsSite()) {
+        if let url = URL(string: SiteManager.shared.getTermsAndConditionsURL()) {
             delegate?.shouldOpenTermsCondition(SCREEN_TITLE.localized, screenName: SCREEN_NAME, url: url)
         }
     }

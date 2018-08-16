@@ -33,6 +33,8 @@ open class MercadoPagoCheckout: NSObject {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
 
+        SiteManager.shared.setSite(siteId: choPref.getSiteId())
+
         if let accessToken = builder.privateKey {
             MercadoPagoContext.setPayerAccessToken(accessToken)
         }

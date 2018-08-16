@@ -48,7 +48,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
 
     var paymentResultScreenPreference = PaymentResultScreenPreference()
-   
+
     static var paymentCallback: ((Payment) -> Void)?
     static var finishFlowCallback: ((Payment?) -> Void)?
     var callbackCancel: (() -> Void)?
@@ -129,7 +129,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if !isPreferenceLoaded() {
             self.paymentData.payer = self.checkoutPreference.getPayer()
-            MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
 
         // Create Init Flow
@@ -666,7 +665,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func getEntityTypes() -> [EntityType] {
         let path = MercadoPago.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
         let dictET = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
+        let site = SiteManager.shared.getSiteId()
 
         if let siteETs = entityTypesFinder(inDict: dictET!, forKey: site) {
             return siteETs

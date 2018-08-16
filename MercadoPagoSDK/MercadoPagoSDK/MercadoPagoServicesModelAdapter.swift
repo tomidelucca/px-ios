@@ -13,7 +13,7 @@ import MercadoPagoServicesV4
 extension MercadoPagoServicesAdapter {
 
     open func getPXSiteFromId(_ siteId: String) -> PXSite {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         let pxCurrency = getPXCurrencyFromCurrency(currency)
         let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
         return pxSite

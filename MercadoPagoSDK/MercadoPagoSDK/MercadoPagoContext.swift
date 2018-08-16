@@ -19,16 +19,6 @@ import UIKit
 
     var payer_access_token: String = ""
 
-    var merchant_access_token: String = ""
-
-    var payment_key: String = ""
-
-    var site: Site!
-
-    var termsAndConditionsSite: String!
-
-    var currency: Currency!
-
     var language: String = NSLocale.preferredLanguages[0]
 
     static let kSdkVersion = "sdk_version"
@@ -39,7 +29,6 @@ import UIKit
     static var mpxPublicKey: String {return sharedInstance.publicKey()}
     static var mpxCheckoutVersion: String {return sharedInstance.sdkVersion()}
     static var mpxPlatform: String {return sharedInstance.framework()}
-    static var mpxSiteId: String {return sharedInstance.siteId()}
     static var platformType: String {return "native/ios"}
 
     open func framework() -> String! {
@@ -51,67 +40,6 @@ import UIKit
         return sdkVersion
     }
 
-    static let siteIdsSettings: [String: NSDictionary] = [
-        //Argentina
-        "MLA": ["language": "es", "currency": "ARS", "termsconditions": "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
-        //Brasil
-        "MLB": ["language": "pt", "currency": "BRL", "termsconditions": "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300"],
-        //Chile
-
-        "MLC": ["language": "es", "currency": "CLP", "termsconditions": "https://www.mercadopago.cl/ayuda/terminos-y-condiciones_299"],
-        //Mexico
-        "MLM": ["language": "es-MX", "currency": "MXN", "termsconditions": "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"],
-        //Peru
-        "MPE": ["language": "es", "currency": "PEN", "termsconditions": "https://www.mercadopago.com.pe/ayuda/terminos-condiciones-uso_2483"],
-        //Uruguay
-        "MLU": ["language": "es", "currency": "UYU", "termsconditions": "https://www.mercadopago.com.uy/ayuda/terminos-y-condiciones-uy_2834"],
-        //Colombia
-        "MCO": ["language": "es-CO", "currency": "COP", "termsconditions": "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
-        //Venezuela
-        "MLV": ["language": "es", "currency": "VES", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
-    ]
-
-    public enum Site: String {
-        case MLA
-        case MLB
-        case MLM
-        case MLV
-        case MLU
-        case MPE
-        case MLC
-        case MCO
-    }
-
-    open func siteId() -> String! {
-        return site.rawValue
-    }
-
-    fileprivate func setSite(_ site: Site) {
-        let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
-        if siteConfig != nil {
-            self.site = site
-            self.termsAndConditionsSite = siteConfig!["termsconditions"] as? String ?? ""
-            let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
-            if currency != nil {
-                self.currency = currency!
-            }
-        }
-    }
-
-    open class func setSite(_ site: Site) {
-        MercadoPagoContext.sharedInstance.setSite(site)
-    }
-
-    open class func getSite() -> String {
-        return MercadoPagoContext.sharedInstance.site.rawValue
-    }
-
-    open class func setSiteID(_ siteId: String) {
-        let site = Site(rawValue: siteId)
-        if site != nil {
-            MercadoPagoContext.setSite(site!)
-        }
-    }
     open static func setLanguage(language: Languages) {
         sharedInstance.language = language.langPrefix()
     }
@@ -158,22 +86,12 @@ import UIKit
         return bundle.path(forResource: pathID, ofType: "lproj")!
     }
 
-    open static func getTermsAndConditionsSite() -> String {
-        return sharedInstance.termsAndConditionsSite
-    }
-
-    open static func getCurrency() -> Currency {
-        return sharedInstance.currency
-    }
-
     open func publicKey() -> String! {
         return self.public_key
     }
 
     fileprivate override init() {
         super.init()
-        _ = MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-        self.setSite(Site.MLA)
     }
 
     open class func setPayerAccessToken(_ payerAccessToken: String) {
@@ -184,29 +102,11 @@ import UIKit
         sharedInstance.public_key = public_key.trimSpaces()
     }
 
-    open class func merchantAccessToken() -> String {
-        return sharedInstance.merchant_access_token
-    }
-    open class func setMerchantAccessToken(merchantAT: String) {
-        sharedInstance.merchant_access_token = merchantAT
-    }
-
     open class func publicKey() -> String {
         return sharedInstance.public_key
     }
 
     open class func payerAccessToken() -> String {
         return sharedInstance.payer_access_token
-    }
-
-    open class func paymentKey() -> String {
-        if sharedInstance.payment_key == "" {
-            sharedInstance.payment_key = String(arc4random()) + String(Date().timeIntervalSince1970)
-        }
-        return sharedInstance.payment_key
-    }
-
-    open class func clearPaymentKey() {
-        sharedInstance.payment_key = ""
     }
 }

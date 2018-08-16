@@ -214,7 +214,7 @@ class Utils {
 
     class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
 
         let descriptionAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
 
@@ -282,7 +282,7 @@ class Utils {
      Ex: formattedString = "100.2", decimalSeparator = "."
      returns 20
      **/
-    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = MercadoPagoContext.getCurrency().getDecimalPlacesOrDefault()) -> String {
+    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = SiteManager.shared.getCurrency().getDecimalPlacesOrDefault()) -> String {
         var range = formattedString.range(of: decimalSeparator)
 
         if range == nil {

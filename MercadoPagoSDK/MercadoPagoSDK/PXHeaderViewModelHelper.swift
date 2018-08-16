@@ -125,7 +125,7 @@ extension PXResultViewModel {
         guard let instructionsInfo = self.instructionsInfo else {
             return "".toAttributedString()
         }
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
@@ -153,7 +153,7 @@ extension PXResultViewModel {
 
     func getTitleForCallForAuth(_ paymentMethod: PaymentMethod) -> NSAttributedString {
         if let paymentMethodName = paymentMethod.name {
-            let currency = MercadoPagoContext.getCurrency()
+            let currency = SiteManager.shared.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = currency.getThousandsSeparatorOrDefault()
             let decimalSeparator = currency.getDecimalSeparatorOrDefault()

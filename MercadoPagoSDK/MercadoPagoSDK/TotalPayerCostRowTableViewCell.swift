@@ -24,7 +24,7 @@ class TotalPayerCostRowTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     public func fillCell(total: Double) {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         // amount currency color fontsize centfontsize baselineoffset
         // (total, currency: currency, color : UIColor.black, fontSize: 16, centsFontSize: 12,  baselineOffset:3)
         let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "Total".localized + ": ", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black]))

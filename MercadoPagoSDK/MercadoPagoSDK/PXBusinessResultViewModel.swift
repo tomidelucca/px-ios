@@ -131,7 +131,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         let pm = self.paymentData.paymentMethod!
 
         let image = getPaymentMethodIcon(paymentMethod: pm)
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.amountHelper.amountToPay, forCurrency: currency)
         var subtitle: NSMutableAttributedString?  = pm.paymentMethodDescription?.toAttributedString()
         if let payerCost = self.paymentData.payerCost {

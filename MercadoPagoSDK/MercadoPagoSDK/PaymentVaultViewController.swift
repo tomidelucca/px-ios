@@ -42,7 +42,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
 
     var merchantBaseUrl: String!
-    var merchantAccessToken: String!
     var publicKey: String!
 
     var groupName: String?
@@ -87,7 +86,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func initCommon() {
-        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
         self.publicKey = MercadoPagoContext.publicKey()
     }
 

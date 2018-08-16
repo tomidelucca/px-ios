@@ -70,6 +70,6 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     }
 
     private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
-        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 24, baselineOffset: 8)
+        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: SiteManager.shared.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 24, baselineOffset: 8)
     }
 }

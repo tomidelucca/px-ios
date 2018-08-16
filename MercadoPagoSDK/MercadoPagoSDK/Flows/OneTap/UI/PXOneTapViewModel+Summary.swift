@@ -19,7 +19,7 @@ extension PXOneTapViewModel {
     }
 
     func getSummaryProps() -> [PXSummaryRowProps]? {
-        let currency: Currency = MercadoPagoContext.getCurrency()
+        let currency: Currency = SiteManager.shared.getCurrency()
         let itemComponentsModel = buildOneTapItemComponents()
 
         var props = [PXSummaryRowProps]()
