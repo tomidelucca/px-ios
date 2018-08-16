@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PXAdvancedConfigurationProtocol Protocol Reference</title>
+    <title>PXAdvancedConfiguration Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/PXAdvancedConfigurationProtocol" class="dashAnchor"></a>
-    <a title="PXAdvancedConfigurationProtocol Protocol Reference"></a>
+    <a name="//apple_ref/swift/Class/PXAdvancedConfiguration" class="dashAnchor"></a>
+    <a title="PXAdvancedConfiguration Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (0% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        PXAdvancedConfigurationProtocol Protocol Reference
+        PXAdvancedConfiguration Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -37,6 +37,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/MercadoPagoCheckoutBuilder.html">MercadoPagoCheckoutBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXAdvancedConfiguration.html">PXAdvancedConfiguration</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/PXBusinessResult.html">PXBusinessResult</a>
@@ -70,9 +73,6 @@
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Protocols/PXAdvancedConfigurationProtocol.html">PXAdvancedConfigurationProtocol</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/PXCheckoutLifecycleProtocol.html">PXCheckoutLifecycleProtocol</a>
               </li>
               <li class="nav-group-task">
@@ -85,10 +85,11 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>PXAdvancedConfigurationProtocol</h1>
+            <h1>PXAdvancedConfiguration</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PXAdvancedConfigurationProtocol</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXAdvancedConfiguration</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                 </div>
               </div>
@@ -101,9 +102,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP16bankDealsEnabledSbv"></a>
-                    <a name="//apple_ref/swift/Property/bankDealsEnabled" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP16bankDealsEnabledSbv">bankDealsEnabled</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)theme"></a>
+                    <a name="//apple_ref/swift/Property/theme" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)theme">theme</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -118,12 +119,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">bankDealsEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">theme</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PXTheme.html">PXTheme</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfigurationProtocol.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -131,9 +132,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP10escEnabledSbv"></a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)escEnabled"></a>
                     <a name="//apple_ref/swift/Property/escEnabled" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP10escEnabledSbv">escEnabled</a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)escEnabled">escEnabled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -148,12 +149,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">escEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">escEnabled</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfigurationProtocol.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -161,9 +162,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP10binaryModeSbv"></a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)binaryMode"></a>
                     <a name="//apple_ref/swift/Property/binaryMode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP10binaryModeSbv">binaryMode</a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)binaryMode">binaryMode</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -178,12 +179,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">binaryMode</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">binaryMode</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfigurationProtocol.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -191,9 +192,39 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP22reviewScreenPreferenceAA06ReviewhI0Cv"></a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)bankDealsEnabled"></a>
+                    <a name="//apple_ref/swift/Property/bankDealsEnabled" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)bankDealsEnabled">bankDealsEnabled</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">bankDealsEnabled</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)reviewScreenPreference"></a>
                     <a name="//apple_ref/swift/Property/reviewScreenPreference" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP22reviewScreenPreferenceAA06ReviewhI0Cv">reviewScreenPreference</a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)reviewScreenPreference">reviewScreenPreference</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -208,12 +239,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">reviewScreenPreference</span><span class="p">:</span> <span class="kt">ReviewScreenPreference</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">reviewScreenPreference</span><span class="p">:</span> <span class="kt">ReviewScreenPreference</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfigurationProtocol.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -221,9 +252,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP29paymentResultScreenPreferenceAA07PaymenthiJ0Cv"></a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)paymentResultScreenPreference"></a>
                     <a name="//apple_ref/swift/Property/paymentResultScreenPreference" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK31PXAdvancedConfigurationProtocolP29paymentResultScreenPreferenceAA07PaymenthiJ0Cv">paymentResultScreenPreference</a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXAdvancedConfiguration(py)paymentResultScreenPreference">paymentResultScreenPreference</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -238,12 +269,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">paymentResultScreenPreference</span><span class="p">:</span> <span class="kt">PaymentResultScreenPreference</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">paymentResultScreenPreference</span><span class="p">:</span> <span class="kt">PaymentResultScreenPreference</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfigurationProtocol.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -253,7 +284,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-14)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-16)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
