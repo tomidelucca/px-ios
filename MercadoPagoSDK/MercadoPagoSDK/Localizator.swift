@@ -8,13 +8,62 @@
 
 import Foundation
 
-private class Localizator {
+internal class Localizator {
 
     static let sharedInstance = Localizator()
 
-    lazy var localizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
-        let languageID = MercadoPagoContext.getParentLanguageID()
+    private var language: String = NSLocale.preferredLanguages[0]
+
+    func setLanguage(language: Languages) {
+        self.language = language.rawValue
+    }
+
+    func setLanguage(string: String) {
+        let enumLanguage = Languages(rawValue: string)
+        guard let languange = enumLanguage else {
+            self.language = "es"
+            return
+        }
+        self.language = languange.rawValue
+    }
+
+    func getLanguage() -> String {
+        return language
+    }
+
+    private func getLocalizedID() -> String {
+        let bundle = MercadoPago.getBundle() ?? Bundle.main
+
+        let currentLanguage = getLanguage()
+        let currentLanguageSeparated = currentLanguage.components(separatedBy: "-")[0]
+        if bundle.path(forResource: currentLanguage, ofType: "lproj") != nil {
+            return currentLanguage
+        } else if (bundle.path(forResource: currentLanguageSeparated, ofType: "lproj") != nil) {
+            return currentLanguageSeparated
+        } else {
+            return "es"
+        }
+    }
+
+    private func getParentLanguageID() -> String {
+        return getLanguage().components(separatedBy: "-")[0]
+    }
+
+    func getLocalizedPath() -> String {
+        let bundle = MercadoPago.getBundle() ?? Bundle.main
+        let pathID = getLocalizedID()
+        return bundle.path(forResource: pathID, ofType: "lproj")!
+    }
+
+    private func getParentLocalizedPath() -> String {
+        let bundle = MercadoPago.getBundle() ?? Bundle.main
+        let pathID = getParentLanguageID()
+        return bundle.path(forResource: pathID, ofType: "lproj")!
+    }
+
+    private lazy var localizableDictionary: NSDictionary! = {
+        let languageBundle = Bundle(path: getLocalizedPath())
+        let languageID = getParentLanguageID()
 
         if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
             return NSDictionary(contentsOfFile: path)
@@ -22,9 +71,9 @@ private class Localizator {
         fatalError("Localizable file NOT found")
     }()
 
-    lazy var parentLocalizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path: MercadoPagoContext.getParentLocalizedPath())
-        let languageID = MercadoPagoContext.getParentLanguageID()
+    private lazy var parentLocalizableDictionary: NSDictionary! = {
+        let languageBundle = Bundle(path: getParentLocalizedPath())
+        let languageID = getParentLanguageID()
 
         if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
             return NSDictionary(contentsOfFile: path)
@@ -55,5 +104,14 @@ private class Localizator {
 extension String {
     var localized_beta: String {
         return Localizator.sharedInstance.localize(string: self)
+    }
+
+    var localized: String {
+        var bundle: Bundle? = MercadoPago.getBundle()
+        if bundle == nil {
+            bundle = Bundle.main
+        }
+        let languageBundle = Bundle(path: Localizator.sharedInstance.getLocalizedPath())
+        return languageBundle!.localizedString(forKey: self, value: "", table: nil)
     }
 }

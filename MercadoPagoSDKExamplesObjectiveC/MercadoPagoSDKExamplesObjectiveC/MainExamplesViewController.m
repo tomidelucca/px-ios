@@ -113,7 +113,7 @@
     // [self.mpCheckout discountNotAvailable];
 
     //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
-    [self.checkoutBuilder setLanguageWithString:@"es"];
+    [self.checkoutBuilder setLanguage:@"es"];
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 

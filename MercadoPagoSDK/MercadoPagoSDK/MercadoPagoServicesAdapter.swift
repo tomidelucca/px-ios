@@ -16,7 +16,7 @@ import MercadoPagoServicesV4
 
     init(servicePreference: ServicePreference? = nil) {
         mercadoPagoServices = MercadoPagoServices(merchantPublicKey: MercadoPagoContext.publicKey(), payerAccessToken: MercadoPagoContext.payerAccessToken(), procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
-        mercadoPagoServices.setLanguage(language: MercadoPagoContext.getLanguage())
+        mercadoPagoServices.setLanguage(language: Localizator.sharedInstance.getLanguage())
         super.init()
 
         if let servicePreference = servicePreference {
