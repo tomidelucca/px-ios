@@ -19,21 +19,12 @@ class AdditionalStepCellFactory: NSObject {
 
             guard let payerCost = object as? PayerCost else { return UITableViewCell() }
 
-            if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: payerCost) {
-                if let cell = bundle.loadNibNamed("PayerCostCFTTableViewCell", owner: nil, options: nil)?[0] as? PayerCostCFTTableViewCell {
-                    cell.fillCell(payerCost: payerCost)
-                    cell.addSeparatorLineToBottom(width: width, height: height)
-                    cell.selectionStyle = .none
-                    return cell
-                }
-            } else {
-                if let cell = bundle.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as? PayerCostRowTableViewCell {
-                    let showDescription = MercadoPagoCheckout.showPayerCostDescription()
-                    cell.fillCell(payerCost: payerCost, showDescription: showDescription)
-                    cell.addSeparatorLineToBottom(width: width, height: height)
-                    cell.selectionStyle = .none
-                    return cell
-                }
+            if let cell = bundle.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as? PayerCostRowTableViewCell {
+                let showDescription = MercadoPagoCheckout.showPayerCostDescription()
+                cell.fillCell(payerCost: payerCost, showDescription: showDescription)
+                cell.addSeparatorLineToBottom(width: width, height: height)
+                cell.selectionStyle = .none
+                return cell
             }
         }
 
@@ -74,10 +65,6 @@ class AdditionalStepCellFactory: NSObject {
         }
 
         return UITableViewCell()
-    }
-
-    open class func needsCFTPayerCostCell(payerCost: PayerCost) -> Bool {
-        return payerCost.hasCFTValue()
     }
 }
 
