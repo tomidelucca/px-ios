@@ -59,6 +59,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.update()
         self.hideNavBar()
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         self.extendedLayoutIncludesOpaqueBars = true
@@ -234,7 +235,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         return self.viewModel.getTitle()
     }
 
-    override func update() {
+    func update() {
         self.viewModel.updateBeforeRender()
     }
 

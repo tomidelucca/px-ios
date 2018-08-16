@@ -9,12 +9,8 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
-protocol PXUpdatable {
-    func update()
-}
-
 @objcMembers
-open class MercadoPagoUIViewController: UIViewController, PXUpdatable, UIGestureRecognizerDelegate {
+open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     private static let MLNavigationBarBackgroundViewTag = 569242
 
@@ -56,7 +52,6 @@ open class MercadoPagoUIViewController: UIViewController, PXUpdatable, UIGesture
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        update()
         UIApplication.shared.statusBarStyle = ThemeManager.shared.statusBarStyle()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.loadMPStyles()
@@ -262,9 +257,6 @@ open class MercadoPagoUIViewController: UIViewController, PXUpdatable, UIGesture
             print("DEINIT - \(self)")
         #endif
     }
-
-    func update() {}
-
 }
 
 extension UINavigationController {
