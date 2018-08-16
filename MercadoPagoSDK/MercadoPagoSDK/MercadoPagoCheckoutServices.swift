@@ -229,7 +229,7 @@ extension MercadoPagoCheckout {
         }
     }
 
-    func getPayerCosts(successBlock:@escaping ([Installment]) -> Void, errorBlock:@escaping (NSError)->Void) {
+    func getPayerCosts(successBlock: @escaping ([Installment]) -> Void, errorBlock: @escaping (NSError) -> Void) {
 
         guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
             return
@@ -281,7 +281,7 @@ extension MercadoPagoCheckout {
     }
 
     //Discount Flow Services
-    func getPaymentMethodSearch(successBlock:@escaping (PaymentMethodSearch) -> Void, errorBlock:@escaping (NSError) -> Void) {
+    func getPaymentMethodSearch(successBlock: @escaping (PaymentMethodSearch) -> Void, errorBlock: @escaping (NSError) -> Void) {
 
         let paymentMethodPluginsToShow = viewModel.paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
         var pluginIds = [String]()

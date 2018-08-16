@@ -123,7 +123,7 @@ extension MercadoPagoCheckout {
     func showPayerCostScreen() {
         let payerCostViewModel = self.viewModel.payerCostViewModel()
 
-        var payerCostStep: AdditionalStepViewController!
+        var payerCostStep: AdditionalStepViewController?
         payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
             guard let payerCost = payerCost as? PayerCost else {
                 fatalError("Cannot convert payerCost to type PayerCost")
@@ -159,14 +159,14 @@ extension MercadoPagoCheckout {
                     strongSelf.viewModel.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
 
                     //Update Payer Costs
-                    strongSelf.viewModel.payerCosts = installments[0].payerCosts
+                    strongSelf.viewModel.payerCosts = installments.first?.payerCosts
 
                     if let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts) {
                         strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
                     }
 
-                    payerCostStep.viewModel = strongSelf.viewModel.payerCostViewModel()
-                    payerCostStep.updateDataSource(dataSource: strongSelf.viewModel.payerCosts!)
+                    payerCostStep?.viewModel = strongSelf.viewModel.payerCostViewModel()
+                    payerCostStep?.updateDataSource(dataSource: strongSelf.viewModel.payerCosts!)
 
                     successBlock()
                     strongSelf.viewModel.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
@@ -182,7 +182,9 @@ extension MercadoPagoCheckout {
                 return
             })
         })
-        viewModel.pxNavigationHandler.pushViewController(viewController: payerCostStep, animated: true)
+        if let payerCostStep = payerCostStep {
+            viewModel.pxNavigationHandler.pushViewController(viewController: payerCostStep, animated: true)
+        }
     }
 
     func showReviewAndConfirmScreen() {

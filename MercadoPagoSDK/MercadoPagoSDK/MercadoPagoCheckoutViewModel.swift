@@ -552,6 +552,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
         } else if totalPaymentMethodsToShow ==  1 {
+
+            //En caso de que el usuario pueda ingresar un descuento con código solo se autoselecciona el medio de pago si el mismo tiene children, para que el usuario pueda ver una pantalla de grupos y cargar el descuento antes de seleccionar el medio de pago.
             if self.amountHelper.discount == nil, self.shouldShowDiscountInput() {
                 if let defaultGroup = paymentMethodSearch.groups.first, defaultGroup.hasChildren() {
                     autoselectOnlyPaymentMethod()
