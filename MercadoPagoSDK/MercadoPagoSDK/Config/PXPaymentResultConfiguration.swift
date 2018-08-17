@@ -24,6 +24,7 @@ import Foundation
 
     // To deprecate post v4. SP integration.
     @available(*, deprecated)
+    /// :nodoc:
     public enum ApprovedBadge {
         case pending
         case check
