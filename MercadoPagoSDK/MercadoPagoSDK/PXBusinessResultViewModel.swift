@@ -23,7 +23,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     //Default Image
     private lazy var approvedIconName = "default_item_icon"
-    private lazy var approvedIconBundle = MercadoPago.getBundle()
+    private lazy var approvedIconBundle = ResourcesManager.shared.getBundle()
 
     init(businessResult: PXBusinessResult, paymentData: PaymentData, amountHelper: PXAmountHelper) {
         self.businessResult = businessResult
@@ -72,13 +72,13 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     func getBadgeImage() -> UIImage? {
         switch self.businessResult.getStatus() {
         case .APPROVED:
-            return MercadoPago.getImage("ok_badge")
+            return ResourcesManager.shared.getImage("ok_badge")
         case .REJECTED:
-            return MercadoPago.getImage("error_badge")
+            return ResourcesManager.shared.getImage("error_badge")
         case .PENDING:
-            return MercadoPago.getImage("orange_pending_badge")
+            return ResourcesManager.shared.getImage("orange_pending_badge")
         case .IN_PROGRESS:
-            return MercadoPago.getImage("orange_pending_badge")
+            return ResourcesManager.shared.getImage("orange_pending_badge")
         }
     }
     func buildHeaderComponent() -> PXHeaderComponent {
@@ -189,7 +189,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
+        var paymentMethodImage: UIImage? =  ResourcesManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
@@ -208,7 +208,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     func getHeaderDefaultIcon() -> UIImage? {
         if let brIcon = businessResult.getIcon() {
              return brIcon
-        } else if let defaultBundle = approvedIconBundle, let defaultImage = MercadoPago.getImage(approvedIconName, bundle: defaultBundle) {
+        } else if let defaultBundle = approvedIconBundle, let defaultImage = ResourcesManager.shared.getImage(approvedIconName) {
             return defaultImage
         }
         return nil

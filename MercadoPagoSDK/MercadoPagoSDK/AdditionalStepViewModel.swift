@@ -15,7 +15,7 @@ import MercadoPagoServicesV4
 open class AdditionalStepViewModel: NSObject {
 
     /// :nodoc:
-    var bundle: Bundle? = MercadoPago.getBundle()
+    var bundle: Bundle? = ResourcesManager.shared.getBundle()
     /// :nodoc:
     public var screenTitle: String
     /// :nodoc:

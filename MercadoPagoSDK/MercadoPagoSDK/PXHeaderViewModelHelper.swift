@@ -48,16 +48,16 @@ extension PXResultViewModel {
             if self.paymentResult.isApproved() {
                 return preference.getApprovedBadgeImage()
             } else if self.paymentResult.isReviewManual() {
-                return MercadoPago.getImage("orange_pending_badge")
+                return ResourcesManager.shared.getImage("orange_pending_badge")
             } else {
-                return MercadoPago.getImage("pending_badge")
+                return ResourcesManager.shared.getImage("pending_badge")
             }
         }
         if paymentResult.isWarning() {
-            return MercadoPago.getImage("need_action_badge")
+            return ResourcesManager.shared.getImage("need_action_badge")
         }
         if paymentResult.isError() {
-            return MercadoPago.getImage("error_badge")
+            return ResourcesManager.shared.getImage("error_badge")
         }
         return nil
     }

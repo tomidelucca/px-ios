@@ -173,7 +173,7 @@ import UIKit
     }
 
     public func getImage() -> UIImage? {
-        return MercadoPago.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
+        return ResourcesManager.shared.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
     }
 
     /** PaymentMethodOption implementation */

@@ -16,13 +16,13 @@ final class PXImageService: NSObject {
             return paymentMethod.getImageForExtenalPaymentMethod()
         }
 
-        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let path = ResourcesManager.shared.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
         if let pm = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
-            return MercadoPago.getImage(pm.object(forKey: "image_name") as? String ?? nil)
+            return ResourcesManager.shared.getImage(pm.object(forKey: "image_name") as? String ?? nil)
         } else if let pmPt = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + paymentMethod.paymentTypeId) as? NSDictionary {
-            return MercadoPago.getImage(pmPt.object(forKey: "image_name") as? String ?? nil)
+            return ResourcesManager.shared.getImage(pmPt.object(forKey: "image_name") as? String ?? nil)
         }
 
         return nil

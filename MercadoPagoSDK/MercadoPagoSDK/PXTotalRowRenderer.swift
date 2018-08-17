@@ -40,7 +40,7 @@ final class PXTotalRowRenderer {
             let chevronImageView = UIImageView()
             chevronImageView.accessibilityIdentifier = "floating_row_chevron_image_view"
             chevronImageView.translatesAutoresizingMaskIntoConstraints = false
-            let image = MercadoPago.getImage("oneTapArrow")
+            let image = ResourcesManager.shared.getImage("oneTapArrow")
             chevronImageView.image = image
             chevronImageView.contentMode = .scaleAspectFit
             totalRowView.chevron = chevronImageView

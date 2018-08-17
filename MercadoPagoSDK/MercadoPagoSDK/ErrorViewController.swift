@@ -34,7 +34,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
     open var exitErrorCallback: (() -> Void)!
 
     public init(error: MPSDKError!, callback: (() -> Void)?, callbackCancel: (() -> Void)? = nil) {
-        super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
+        super.init(nibName: "ErrorViewController", bundle: ResourcesManager.shared.getBundle())
         self.error = error
         self.exitErrorCallback = {
             self.dismiss(animated: true, completion: {
