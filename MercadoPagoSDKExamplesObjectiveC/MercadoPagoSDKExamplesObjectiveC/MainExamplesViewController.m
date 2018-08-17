@@ -75,11 +75,16 @@
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
-    // Set default color or theme.
+
+    // Add theme to advanced config.
     // MeliTheme *meliTheme = [[MeliTheme alloc] init];
     MPTheme *mpTheme = [[MPTheme alloc] init];
     [advancedConfig setTheme:mpTheme];
 
+    // Add ReviewConfirm configuration to advanced config.
+    [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
+
+    // Set advanced comnfig
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
 
     // CDP color.
@@ -189,10 +194,9 @@
     //[self.mpCheckout setPaymentResultScreenPreference:resultPreference];
 }
 
--(void)setReviewScreenPreference {
-    ReviewScreenPreference *resultPreference = [TestComponent getReviewScreenPreference];
-    // Deprecated
-    //[self.mpCheckout setReviewScreenPreference:resultPreference];
+-(PXReviewConfirmConfiguration *)getReviewScreenConfiguration {
+    PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
+    return config;
 }
 
 -(void)setServicePreference {

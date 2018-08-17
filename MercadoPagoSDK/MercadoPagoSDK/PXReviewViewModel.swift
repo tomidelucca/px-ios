@@ -19,13 +19,13 @@ class PXReviewViewModel: NSObject {
 
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
-    var reviewScreenPreference: ReviewScreenPreference
+    var reviewScreenPreference: PXReviewConfirmConfiguration
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenPreference = reviewScreenPreference
+        self.reviewScreenPreference = reviewConfirmConfig
     }
 
     // MARK: Tracking logic
@@ -288,7 +288,7 @@ extension PXReviewViewModel {
     // HotFix: TODO - Move to OneTapViewModel
     func buildOneTapItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
-        if reviewScreenPreference.isItemsEnable() {
+        if reviewScreenPreference.hasItemsEnabled() {
             for item in self.amountHelper.preference.items {
                 if let itemComponent = buildOneTapItemComponent(item: item) {
                     pxItemComponents.append(itemComponent)
@@ -300,7 +300,7 @@ extension PXReviewViewModel {
 
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
-        if reviewScreenPreference.isItemsEnable() { // Items can be disable
+        if reviewScreenPreference.hasItemsEnabled() { // Items can be disable
             for item in self.amountHelper.preference.items {
                 if let itemComponent = buildItemComponent(item: item) {
                     pxItemComponents.append(itemComponent)
@@ -393,19 +393,36 @@ extension PXReviewViewModel {
     }
 }
 
-// MARK: Custom Components
+// MARK: Custom Views
 extension PXReviewViewModel {
-
-    func buildTopCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getTopComponent() {
-            return PXCustomComponentContainer(withComponent: customComponent)
+    func buildTopCustomView() -> UIView? {
+        if let customView = reviewScreenPreference.getTopCustomView() {
+            let componentView = UIView()
+            componentView.translatesAutoresizingMaskIntoConstraints = false
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
+            componentView.addSubview(customView)
+            PXLayout.centerHorizontally(view: customView).isActive = true
+            PXLayout.pinTop(view: customView).isActive = true
+            PXLayout.pinBottom(view: customView).isActive = true
+            PXLayout.matchWidth(ofView: customView).isActive = true
+            return componentView
         }
         return nil
     }
 
-    func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getBottomComponent() {
-            return PXCustomComponentContainer(withComponent: customComponent)
+    func buildBottomCustomView() -> UIView? {
+        if let customView = reviewScreenPreference.getBottomCustomView() {
+            let componentView = UIView()
+            componentView.translatesAutoresizingMaskIntoConstraints = false
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
+            componentView.addSubview(customView)
+            PXLayout.centerHorizontally(view: customView).isActive = true
+            PXLayout.pinTop(view: customView).isActive = true
+            PXLayout.pinBottom(view: customView).isActive = true
+            PXLayout.matchWidth(ofView: customView).isActive = true
+            return componentView
         }
         return nil
     }

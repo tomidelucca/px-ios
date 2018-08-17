@@ -23,7 +23,8 @@ import MercadoPagoSDK
         return preference
     }
 
-    public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
+    // TODO: Temporal. Refactor components (Internal)
+    public func getView() -> UIView {
         let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
         let view = UIView(frame: frame)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -44,31 +45,14 @@ import MercadoPagoSDK
         return view
     }
 
-    static public func getReviewScreenPreference() -> ReviewScreenPreference {
+    public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
+        return nil
+    }
+
+    static public func getReviewConfirmConfiguration() -> PXReviewConfirmConfiguration {
         let top = TestComponent()
         let bottom = TestComponent()
-        let preference = ReviewScreenPreference()
-        preference.setTopComponent(top)
-        preference.setBottomComponent(bottom)
-        // preference.disableItems()
-        // preference.disableChangeMethodOption()
-
-        // preference.setSummaryProductTitle(productTitle: "Product title from ReviewScreenPreference")
-        // preference.setAmountTitle(title: "Amount title from RSP")
-
-        //preference.setDisclaimerText(text: "Disclamer text from RSP")
-
-        //preference.setAmountTitle(title: "Pepito")
-        //preference.addSummaryProductDetail(amount: 10)
-
-        //preference.setQuantityLabel(title: "La cantidad")
-
-        preference.addSummaryProductDetail(amount: 31)
-        preference.addSummaryDiscountDetail(amount: 1)
-        preference.addSummaryArrearsDetail(amount: 10)
-        preference.addSummaryTaxesDetail(amount: 10)
-        preference.addSummaryShippingDetail(amount: 10)
-
-        return preference
+        let config = PXReviewConfirmConfiguration(itemsEnabled: true, topView: top.getView(), bottomView: bottom.getView())
+        return config
     }
 }

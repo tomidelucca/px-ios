@@ -303,17 +303,11 @@ extension PXReviewViewController {
     }
 
     fileprivate func getTopCustomView() -> UIView? {
-        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            return componentView
-        }
-        return nil
+        return viewModel.buildTopCustomView()
     }
 
     fileprivate func getBottomCustomView() -> UIView? {
-        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            return componentView
-        }
-        return nil
+        return viewModel.buildBottomCustomView()
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {

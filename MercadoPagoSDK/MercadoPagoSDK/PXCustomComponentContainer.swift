@@ -8,12 +8,14 @@
 
 import UIKit
 
-class PXCustomComponentContainer: PXCustomComponentizable {
+// TODO: To deprecated
+internal class PXCustomComponentContainer: PXCustomComponentizable {
     let customComponent: PXCustomComponentizable
 
     init(withComponent customComponent: PXCustomComponentizable) {
         self.customComponent = customComponent
     }
+    
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
         let componentView = UIView()
         componentView.translatesAutoresizingMaskIntoConstraints = false
