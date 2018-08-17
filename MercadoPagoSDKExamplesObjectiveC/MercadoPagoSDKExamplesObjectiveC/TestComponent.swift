@@ -10,20 +10,6 @@ import UIKit
 import MercadoPagoSDK
 
 @objc public class TestComponent: NSObject, PXCustomComponentizable {
-
-    static public func getPaymentResultPreference() -> PaymentResultScreenPreference {
-        //let top = TestComponent()
-        //let bottom = TestComponent()
-        let preference = PaymentResultScreenPreference()
-        preference.disableApprovedReceipt()
-        preference.setApprovedHeaderIcon(stringURL: "https://i.pinimg.com/736x/16/6a/54/166a54b720bf9763dbce64e4cb52fa17--phoenix-band-nail-fashion.jpg")
-        preference.setPendingHeaderIcon(stringURL: "https://i.pinimg.com/736x/16/6a/54/166a54b720bf9763dbce64e4cb52fa17--phoenix-band-nail-fashion.jpg")
-       // preference.setApprovedTopCustomComponent(top)
-        //        preference.setApprovedBottomCustomComponent(bottom)
-        return preference
-    }
-
-    // TODO: Temporal. Refactor components (Internal)
     public func getView() -> UIView {
         let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
         let view = UIView(frame: frame)
@@ -47,6 +33,16 @@ import MercadoPagoSDK
 
     public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
         return nil
+    }
+}
+
+// MARK: Mock configurations (Ex-preferences).
+extension TestComponent {
+    static public func getPaymentResultConfiguration() -> PXPaymentResultConfiguration {
+        let top = TestComponent()
+        let bottom = TestComponent()
+        let paymentConfig = PXPaymentResultConfiguration(topView: top.getView(), bottomView: bottom.getView())
+        return paymentConfig
     }
 
     static public func getReviewConfirmConfiguration() -> PXReviewConfirmConfiguration {

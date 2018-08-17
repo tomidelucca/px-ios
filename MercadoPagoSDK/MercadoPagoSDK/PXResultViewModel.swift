@@ -11,7 +11,6 @@ import MercadoPagoPXTrackingV4
 
 /** :nodoc: */
 public class PXResultViewModel: PXResultViewModelInterface {
-
     var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
     var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT }
 
@@ -62,16 +61,16 @@ public class PXResultViewModel: PXResultViewModelInterface {
 
     open var paymentResult: PaymentResult
     open var instructionsInfo: InstructionsInfo?
-    open var preference: PaymentResultScreenPreference
+    open var preference: PXPaymentResultConfiguration
     var callback: ((PaymentResult.CongratsState) -> Void)!
     let amountHelper: PXAmountHelper
 
     let warningStatusDetails = [RejectedStatusDetail.INVALID_ESC, RejectedStatusDetail.CALL_FOR_AUTH, RejectedStatusDetail.BAD_FILLED_CARD_NUMBER, RejectedStatusDetail.CARD_DISABLE, RejectedStatusDetail.INSUFFICIENT_AMOUNT, RejectedStatusDetail.BAD_FILLED_DATE, RejectedStatusDetail.BAD_FILLED_SECURITY_CODE, RejectedStatusDetail.BAD_FILLED_OTHER]
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: InstructionsInfo? = nil, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: InstructionsInfo? = nil, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
-        self.preference =  paymentResultScreenPreference
+        self.preference =  resultConfiguration
         self.amountHelper = amountHelper
     }
 

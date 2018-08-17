@@ -198,8 +198,8 @@
 		232114A32117D8A500B50503 /* Languages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232114A12117D8A500B50503 /* Languages.swift */; };
 		232114A5211844D100B50503 /* PXReviewConfirmConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232114A4211844D100B50503 /* PXReviewConfirmConfiguration.swift */; };
 		232114A6211844D100B50503 /* PXReviewConfirmConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232114A4211844D100B50503 /* PXReviewConfirmConfiguration.swift */; };
-		232114A82118450A00B50503 /* PXResultScreenUIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232114A72118450A00B50503 /* PXResultScreenUIProtocol.swift */; };
-		232114A92118450A00B50503 /* PXResultScreenUIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232114A72118450A00B50503 /* PXResultScreenUIProtocol.swift */; };
+		232114A82118450A00B50503 /* PXPaymentResultConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232114A72118450A00B50503 /* PXPaymentResultConfiguration.swift */; };
+		232114A92118450A00B50503 /* PXPaymentResultConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232114A72118450A00B50503 /* PXPaymentResultConfiguration.swift */; };
 		232114B8211897E800B50503 /* mpsdk_settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 232114B1211897E800B50503 /* mpsdk_settings.plist */; };
 		232114B9211897E800B50503 /* PayerCostPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 232114B2211897E800B50503 /* PayerCostPreferences.plist */; };
 		232114BA211897E800B50503 /* PaymentMethodSearch.plist in Resources */ = {isa = PBXBuildFile; fileRef = 232114B3211897E800B50503 /* PaymentMethodSearch.plist */; };
@@ -996,7 +996,7 @@
 		232114962114700500B50503 /* PXPaymentPluginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentPluginViewController.swift; sourceTree = "<group>"; };
 		232114A12117D8A500B50503 /* Languages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Languages.swift; path = Core/Languages.swift; sourceTree = "<group>"; };
 		232114A4211844D100B50503 /* PXReviewConfirmConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXReviewConfirmConfiguration.swift; path = Config/PXReviewConfirmConfiguration.swift; sourceTree = "<group>"; };
-		232114A72118450A00B50503 /* PXResultScreenUIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXResultScreenUIProtocol.swift; path = Config/PXResultScreenUIProtocol.swift; sourceTree = "<group>"; };
+		232114A72118450A00B50503 /* PXPaymentResultConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXPaymentResultConfiguration.swift; path = Config/PXPaymentResultConfiguration.swift; sourceTree = "<group>"; };
 		232114B1211897E800B50503 /* mpsdk_settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mpsdk_settings.plist; sourceTree = "<group>"; };
 		232114B2211897E800B50503 /* PayerCostPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PayerCostPreferences.plist; sourceTree = "<group>"; };
 		232114B3211897E800B50503 /* PaymentMethodSearch.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethodSearch.plist; sourceTree = "<group>"; };
@@ -1847,10 +1847,10 @@
 			isa = PBXGroup;
 			children = (
 				231272EA210FA5D300664060 /* PXAdvancedConfiguration.swift */,
-				232114A4211844D100B50503 /* PXReviewConfirmConfiguration.swift */,
-				232114A72118450A00B50503 /* PXResultScreenUIProtocol.swift */,
 				23A7FC11211E0EE5002D1CB1 /* PXDiscountConfiguration.swift */,
 				23A7FC14211E15DF002D1CB1 /* PXPaymentConfiguration.swift */,
+				232114A72118450A00B50503 /* PXPaymentResultConfiguration.swift */,
+				232114A4211844D100B50503 /* PXReviewConfirmConfiguration.swift */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -3551,7 +3551,7 @@
 				23C3893320AC43D7001EFDA9 /* PXPaymentMethodProps.swift in Sources */,
 				235A326B204B4185002D1F54 /* PXReviewTitleComponentProps.swift in Sources */,
 				15AE1D971F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
-				232114A82118450A00B50503 /* PXResultScreenUIProtocol.swift in Sources */,
+				232114A82118450A00B50503 /* PXPaymentResultConfiguration.swift in Sources */,
 				FC3FC8901FBE13E800CF29E1 /* PXInstructionsActionComponent.swift in Sources */,
 				FC3FC8491FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */,
 				4B2EC4A620FFC2A5008D03F8 /* InitFlow.swift in Sources */,
@@ -3802,7 +3802,7 @@
 				FC114D6C1E6DECEF00640196 /* Cellable.swift in Sources */,
 				15661C561FCC7334007FD7B7 /* (null) in Sources */,
 				FCF24596201A2C1400CAF717 /* PXContainedLabelRenderer.swift in Sources */,
-				232114A92118450A00B50503 /* PXResultScreenUIProtocol.swift in Sources */,
+				232114A92118450A00B50503 /* PXPaymentResultConfiguration.swift in Sources */,
 				76EC47F61C8619E70086FA53 /* SavedCardTokenTest.swift in Sources */,
 				237A1A042050048A00B0C2D2 /* PayerCostView.swift in Sources */,
 				FCCC11F71FCF2D5A0001A591 /* PXResultViewModelTest.swift in Sources */,
