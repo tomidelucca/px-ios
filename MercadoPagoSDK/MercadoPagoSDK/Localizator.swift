@@ -9,11 +9,33 @@
 import Foundation
 
 internal class Localizator {
-
     static let sharedInstance = Localizator()
-
     private var language: String = NSLocale.preferredLanguages[0]
 
+    private lazy var localizableDictionary: NSDictionary! = {
+        let languageBundle = Bundle(path: getLocalizedPath())
+        let languageID = getParentLanguageID()
+
+        if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
+            return NSDictionary(contentsOfFile: path)
+        }
+        fatalError("Localizable file NOT found")
+    }()
+
+    private lazy var parentLocalizableDictionary: NSDictionary! = {
+        let languageBundle = Bundle(path: getParentLocalizedPath())
+        let languageID = getParentLanguageID()
+
+        if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
+            return NSDictionary(contentsOfFile: path)
+        }
+        fatalError("Localizable file NOT found")
+    }()
+
+}
+
+// MARK: Getters/ Setters
+extension Localizator {
     func setLanguage(language: Languages) {
         self.language = language.rawValue
     }
@@ -21,7 +43,7 @@ internal class Localizator {
     func setLanguage(string: String) {
         let enumLanguage = Languages(rawValue: string)
         guard let languange = enumLanguage else {
-            self.language = "es"
+            self.language = Languages.SPANISH.rawValue
             return
         }
         self.language = languange.rawValue
@@ -31,6 +53,10 @@ internal class Localizator {
         return language
     }
 
+}
+
+// MARK: Localization Paths
+extension Localizator {
     private func getLocalizedID() -> String {
         let bundle = MercadoPago.getBundle() ?? Bundle.main
 
@@ -61,26 +87,6 @@ internal class Localizator {
         return bundle.path(forResource: pathID, ofType: "lproj")!
     }
 
-    private lazy var localizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path: getLocalizedPath())
-        let languageID = getParentLanguageID()
-
-        if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
-            return NSDictionary(contentsOfFile: path)
-        }
-        fatalError("Localizable file NOT found")
-    }()
-
-    private lazy var parentLocalizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path: getParentLocalizedPath())
-        let languageID = getParentLanguageID()
-
-        if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
-            return NSDictionary(contentsOfFile: path)
-        }
-        fatalError("Localizable file NOT found")
-    }()
-
     func localize(string: String) -> String {
         guard let localizedStringDictionary = localizableDictionary.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
 
@@ -90,7 +96,7 @@ internal class Localizator {
             }
 
             #if DEBUG
-                assertionFailure("Missing translation for: \(string)")
+            assertionFailure("Missing translation for: \(string)")
             #endif
 
             return string

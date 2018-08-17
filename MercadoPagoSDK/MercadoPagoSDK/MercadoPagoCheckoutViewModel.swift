@@ -63,7 +63,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
     var checkoutPreference: CheckoutPreference!
-    var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
     //    var paymentMethods: [PaymentMethod]?
     var cardToken: CardToken?
