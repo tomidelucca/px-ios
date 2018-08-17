@@ -47,7 +47,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
 
-    var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
    
     static var paymentCallback: ((Payment) -> Void)?
@@ -292,7 +291,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
-        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, reviewScreenPreference: reviewScreenPreference)
+        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, reviewConfirmConfig: advancedConfig.reviewConfirmConfiguration)
     }
 
     func resultViewModel() -> PXResultViewModel {
@@ -501,7 +500,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         if !search.paymentMethods.isEmpty, !search.paymentMethods[0].isCard {
-            self.reviewScreenPreference.disableChangeMethodOption()
+            self.advancedConfig.reviewConfirmConfiguration.disableChangeMethodOption()
         }
 
         if !Array.isNullOrEmpty(search.groups) && search.groups.count == 1 {

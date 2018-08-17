@@ -42,16 +42,16 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     }
 
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
-    let reviewScreenPreference: ReviewScreenPreference
+    let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenPreference = reviewScreenPreference
+        self.reviewScreenConfiguration = reviewScreenConfiguration
         self.chargeRules = chargeRules
         super.init()
 
@@ -93,7 +93,7 @@ extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration)
     }
 }
 
