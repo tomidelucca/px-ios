@@ -19,6 +19,7 @@ import MercadoPagoServicesV4
     open var expirationDateFrom: Date?
     open var expirationDateTo: Date?
     open var differentialPricing: PXDifferentialPricing?
+    private var binaryModeEnabled: Bool = false
 
     open class func fromJSON(_ json: NSDictionary) -> CheckoutPreference {
                 let preference: CheckoutPreference = CheckoutPreference()
@@ -258,6 +259,18 @@ import MercadoPagoServicesV4
             amount += (Double(item.quantity) * item.unitPrice)
         }
         return amount
+    }
+}
+
+// MARK: BinaryMode
+extension CheckoutPreference {
+    open func isBinaryMode() -> Bool {
+        return binaryModeEnabled
+    }
+
+    open func setBinaryMode(isBinaryMode: Bool) -> CheckoutPreference {
+        self.binaryModeEnabled = isBinaryMode
+        return self
     }
 }
 
