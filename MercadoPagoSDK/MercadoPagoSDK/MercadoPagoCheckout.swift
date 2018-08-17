@@ -29,20 +29,14 @@ open class MercadoPagoCheckout: NSObject {
             choPref = CheckoutPreference(preferenceId: preferenceId)
         } else if let preference = builder.checkoutPreference {
             choPref = preference
+            SiteManager.shared.setSite(siteId: choPref.getSiteId()) // TODO: Ver esto
         } else {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
 
-        SiteManager.shared.setSite(siteId: choPref.getSiteId())
+        PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? "" //TODO: This is temporary.
 
-        if let accessToken = builder.privateKey {
-            MercadoPagoContext.setPayerAccessToken(accessToken)
-        }
-
-        MercadoPagoContext.setPublicKey(builder.publicKey)
-        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion() //TODO: This is temporary.
-
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey)
 
         // Set advanced config.
         if let advancedConfig = builder.advancedConfig {
@@ -196,7 +190,6 @@ extension MercadoPagoCheckout {
             self.showPaymentPluginScreen()
         case .FLOW_ONE_TAP:
             self.startOneTapFlow()
-        default: break
         }
     }
 
@@ -240,8 +233,8 @@ extension MercadoPagoCheckout {
     }
 
     private func startTracking() {
-        MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
-        MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
+        MPXTracker.setPublicKey(viewModel.publicKey)
+        MPXTracker.setSdkVersion(PXServicesURLConfigs.PX_SDK_VERSION ?? "") // TODO: Temporal
         MPXTracker.sharedInstance.startNewFlow()
     }
 

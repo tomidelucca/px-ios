@@ -30,7 +30,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 /** :nodoc: */
-@objcMembers open class MPPayment: NSObject {
+@objcMembers internal class MPPayment: NSObject {
 
     open var preferenceId: String!
     open var publicKey: String!
@@ -58,6 +58,32 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         self.payer = payer
         self.binaryMode = binaryMode
         self.discount = discount
+    }
+
+    public init(preferenceId: String, publicKey: String, paymentData: PaymentData, binaryMode: Bool) {
+        self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.issuerId! : ""
+
+        self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
+
+        self.installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
+
+        self.transactionDetails = TransactionDetails()
+        if let transactionDetails = paymentData.transactionDetails {
+            self.transactionDetails = transactionDetails
+        }
+
+        self.payer = Payer()
+        if let targetPayer = paymentData.payer {
+            self.payer = targetPayer
+        }
+
+        self.discount = paymentData.discount
+        self.paymentMethodId = paymentData.getPaymentMethod()?.paymentMethodId ?? ""
+
+        self.preferenceId = preferenceId
+        self.publicKey = publicKey
+        self.binaryMode = binaryMode
+
     }
 
     open func toJSONString() -> String {
@@ -96,54 +122,4 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
         return obj
     }
-}
-
-/** :nodoc: */
-@objcMembers open class CustomerPayment: MPPayment {
-
-    open var customerId: String!
-
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool) {
-        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
-        self.customerId = customerId
-    }
-
-    open override func toJSON() -> [String: Any] {
-        self.payer?.payerId = customerId
-        let customerPaymentObj: [String: Any] = super.toJSON()
-        return customerPaymentObj
-    }
-
-}
-
-/** :nodoc: */
-@objcMembers open class BlacklabelPayment: MPPayment {
-
-    open override func toJSON() -> [String: Any] {
-        // Override payer object with groupsPayer (which includes AT in its body)
-        guard let payer = self.payer, let email = self.payer?.email else {
-            return [:]
-        }
-
-        self.payer = GroupsPayer(payerId: payer.payerId, email: email, identification: payer.identification, entityType: payer.entityType)
-        let blacklabelPaymentObj: [String: Any] = super.toJSON()
-        return blacklabelPaymentObj
-    }
-}
-
-/** :nodoc: */
-open class MPPaymentFactory {
-
-    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) -> MPPayment {
-
-        if !String.isNullOrEmpty(customerId) {
-            return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId!, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
-        } else if isBlacklabelPayment {
-            return BlacklabelPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
-        }
-
-        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode, discount: discount)
-
-    }
-
 }

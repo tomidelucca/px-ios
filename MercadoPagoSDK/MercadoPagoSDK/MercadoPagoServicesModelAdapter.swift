@@ -470,7 +470,7 @@ extension MercadoPagoServicesAdapter {
     open func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
         let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
         pxPayer.id = payer.payerId
-        pxPayer.accessToken = MercadoPagoContext.payerAccessToken()
+        pxPayer.accessToken = payer.accessToken
         pxPayer.identification = getPXIdentificationFromIdentification(payer.identification)
         pxPayer.entityType = payer.entityType?.entityTypeId
         pxPayer.email = payer.email
@@ -489,6 +489,7 @@ extension MercadoPagoServicesAdapter {
             payer.name = pxPayer.firstName
             payer.surname = pxPayer.lastName
             payer.address = nil
+            payer.accessToken = pxPayer.accessToken
         }
         return payer
     }

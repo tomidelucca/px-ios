@@ -20,12 +20,14 @@ class PXReviewViewModel: NSObject {
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
     var reviewScreenPreference: PXReviewConfirmConfiguration
+    var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewConfirmConfig
+        self.userLogged = userLogged
     }
 
     // MARK: Tracking logic
@@ -63,12 +65,8 @@ extension PXReviewViewModel {
         return self.amountHelper.paymentData.hasPaymentMethod()
     }
 
-    func isUserLogged() -> Bool {
-        return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
-    }
-
     func shouldShowTermsAndCondition() -> Bool {
-        return !isUserLogged()
+        return !userLogged
     }
 
     func shouldShowDiscountTermsAndCondition() -> Bool {

@@ -14,8 +14,8 @@ import MercadoPagoServicesV4
 
     let mercadoPagoServices: MercadoPagoServices!
 
-    init(servicePreference: ServicePreference? = nil) {
-        mercadoPagoServices = MercadoPagoServices(merchantPublicKey: MercadoPagoContext.publicKey(), payerAccessToken: MercadoPagoContext.payerAccessToken(), procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
+    init(servicePreference: ServicePreference? = nil, publicKey: String, privateKey: String?) {
+        mercadoPagoServices = MercadoPagoServices(merchantPublicKey: publicKey, payerAccessToken: privateKey ?? "", procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
         mercadoPagoServices.setLanguage(language: Localizator.sharedInstance.getLanguage())
         super.init()
 
@@ -67,6 +67,7 @@ import MercadoPagoServicesV4
 
     open func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: Payer, site: String, extraParams: ExtraParams?, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
+        payer.accessToken = mercadoPagoServices.payerAccessToken
         let pxPayer = getPXPayerFromPayer(payer)
         let pxSite = getPXSiteFromId(site)
 

@@ -18,6 +18,7 @@ open class Payer: NSObject {
     open var name: String?
     open var surname: String?
     open var address: Address?
+    open var accessToken: String?
 
     public init(payerId: String? = nil, email: String = "", identification: Identification? = nil, entityType: EntityType? = nil) {
 		self.payerId = payerId
@@ -101,18 +102,11 @@ open class Payer: NSObject {
             obj["address"] = address.toJSON()
         }
 
+        if let address = address {
+            obj["access_token"] = accessToken
+        }
+
         return obj
-    }
-
-}
-
-/** :nodoc: */
-public class GroupsPayer: Payer {
-
-    open override func toJSON() -> [String: Any] {
-        var payerObj: [String: Any]  = super.toJSON()
-        payerObj["access_token"] = MercadoPagoContext.payerAccessToken()
-        return payerObj
     }
 
 }
