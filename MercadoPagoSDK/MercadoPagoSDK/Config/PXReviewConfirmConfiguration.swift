@@ -19,9 +19,10 @@ import Foundation
     // For only 1 PM Scenario. (Internal)
     private var changePaymentMethodsEnabled: Bool = true
 
-    public override init() {}
+    /// :nodoc:
+    override init() {}
 
-    public init(itemsEnabled: Bool, topView: UIView?, bottomView: UIView?) {
+    public init(itemsEnabled: Bool, topView: UIView? = nil, bottomView: UIView? = nil) {
         self.itemsEnabled = itemsEnabled
         self.topCustomView = topView
         self.bottomCustomView = bottomView
@@ -33,7 +34,7 @@ import Foundation
     internal var details: [SummaryType: SummaryDetail] = [SummaryType: SummaryDetail]()
 }
 
-// MARK: - Getters.
+// MARK: - Internal Getters.
 extension PXReviewConfirmConfiguration {
     internal func hasItemsEnabled() -> Bool {
         return itemsEnabled

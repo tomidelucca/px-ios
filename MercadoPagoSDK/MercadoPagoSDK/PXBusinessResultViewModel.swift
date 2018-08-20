@@ -197,18 +197,12 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return paymentMethodImage
     }
 
-    func buildTopCustomComponent() -> PXCustomComponentizable? {
-        guard let view = self.businessResult.getTopCustomView() else {
-            return nil
-        }
-        return PXCustomComponent(view: view)
+    func buildTopCustomView() -> UIView? {
+        return self.businessResult.getTopCustomView()
     }
 
-    func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        guard let view = self.businessResult.getBottomCustomView() else {
-            return nil
-        }
-        return PXCustomComponent(view: view)
+    func buildBottomCustomView() -> UIView? {
+        return self.businessResult.getBottomCustomView()
     }
 
     func getHeaderDefaultIcon() -> UIImage? {

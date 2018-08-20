@@ -88,6 +88,9 @@
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
 
+    // Add PaymentResult configuration to advanced config.
+    [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
+
     // Set advanced comnfig
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
 
@@ -124,19 +127,27 @@
     [self.mpCheckout startWithNavigationController:self.navigationController];
 }
 
+// ReviewConfirm
+-(PXReviewConfirmConfiguration *)getReviewScreenConfiguration {
+    PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
+    return config;
+}
 
+// PaymentResult
+-(PXPaymentResultConfiguration *)getPaymentResultConfiguration {
+    PXPaymentResultConfiguration *config = [TestComponent getPaymentResultConfiguration];
+    return config;
+}
+
+// Procesadora
 -(PXPaymentConfiguration *)getPaymentConfiguration {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
     PaymentPluginViewController *paymentProcessorPlugin = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-
     self.paymentConfig = [[PXPaymentConfiguration alloc] initWithPaymentProcessor:paymentProcessorPlugin];
-
     [self addPaymentMethodPluginToPaymentConfig];
-
     return self.paymentConfig;
 }
-
 
 -(void)addPaymentMethodPluginToPaymentConfig {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
@@ -191,17 +202,6 @@
 
 -(void)setCheckoutPref_WithId {
     self.pref = [[CheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
-}
-
--(void)setPaymentResultScreenPreference {
-    PaymentResultScreenPreference *resultPreference = [TestComponent getPaymentResultPreference];
-    // Deprecated
-    //[self.mpCheckout setPaymentResultScreenPreference:resultPreference];
-}
-
--(PXReviewConfirmConfiguration *)getReviewScreenConfiguration {
-    PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
-    return config;
 }
 
 -(void)setServicePreference {

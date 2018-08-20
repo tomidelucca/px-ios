@@ -46,8 +46,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
 
-    var paymentResultScreenPreference = PaymentResultScreenPreference()
-
     internal var publicKey: String
     internal var privateKey: String?
 
@@ -299,7 +297,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func resultViewModel() -> PXResultViewModel {
-        return PXResultViewModel(amountHelper: self.amountHelper, paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, paymentResultScreenPreference: self.paymentResultScreenPreference)
+        return PXResultViewModel(amountHelper: self.amountHelper, paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, resultConfiguration: self.advancedConfig.paymentResultConfiguration)
     }
 
     //SEARCH_PAYMENT_METHODS
