@@ -9,16 +9,16 @@
 import Foundation
 import MercadoPagoServicesV4
 
-internal typealias PXPaymentConfigurationType = (discountConfiguration: PXDiscountConfiguration?, chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXPaymentPluginComponent, paymentMethodPlugins: [PXPaymentMethodPlugin])
+internal typealias PXPaymentConfigurationType = (discountConfiguration: PXDiscountConfiguration?, chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXPaymentProcessor, paymentMethodPlugins: [PXPaymentMethodPlugin])
 
 @objcMembers
 open class PXPaymentConfiguration: NSObject {
-    private let paymentPlugin: PXPaymentPluginComponent
+    private let paymentPlugin: PXPaymentProcessor
     private var discountConfiguration: PXDiscountConfiguration?
     private var chargeRules: [PXPaymentTypeChargeRule] = [PXPaymentTypeChargeRule]()
     private var paymentMethodPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
 
-    public init(paymentProcessor: PXPaymentPluginComponent) {
+    public init(paymentProcessor: PXPaymentProcessor) {
         self.paymentPlugin = paymentProcessor
     }
 }

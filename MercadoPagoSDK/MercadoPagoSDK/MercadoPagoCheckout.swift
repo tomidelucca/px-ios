@@ -186,8 +186,6 @@ extension MercadoPagoCheckout {
             self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
         case .SCREEN_HOOK_BEFORE_PAYMENT:
             self.showHookScreen(hookStep: .BEFORE_PAYMENT)
-        case .SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT:
-            self.showPaymentMethodPluginPaymentScreen()
         case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
             self.showPaymentMethodPluginConfigScreen()
         case .SCREEN_PAYMENT_PLUGIN_PAYMENT: //PROCESADORA

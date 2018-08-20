@@ -10,14 +10,14 @@ import Foundation
 
 /** :nodoc: */
 extension PXPaymentFlow {
-    func createPaymentWithPlugin(plugin: PXPaymentPluginComponent?) {
+    func createPaymentWithPlugin(plugin: PXPaymentProcessor?) {
         guard let paymentData = model.paymentData, let plugin = plugin else {
             return
         }
 
-        model.paymentPlugin?.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        model.paymentPlugin?.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
-        plugin.createPayment?(pluginStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, successWithBusinessResult: { [weak self] businessResult in
+        plugin.createPayment?(checkoutStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, successWithBusinessResult: { [weak self] businessResult in
             self?.model.businessResult = businessResult
             self?.executeNextStep()
             }, successWithPaymentResult: { [weak self] paymentPluginResult in
