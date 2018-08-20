@@ -397,33 +397,28 @@ extension PXReviewViewModel {
 extension PXReviewViewModel {
     func buildTopCustomView() -> UIView? {
         if let customView = reviewScreenPreference.getTopCustomView() {
-            let componentView = UIView()
-            componentView.translatesAutoresizingMaskIntoConstraints = false
-            customView.translatesAutoresizingMaskIntoConstraints = false
-            PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
-            componentView.addSubview(customView)
-            PXLayout.centerHorizontally(view: customView).isActive = true
-            PXLayout.pinTop(view: customView).isActive = true
-            PXLayout.pinBottom(view: customView).isActive = true
-            PXLayout.matchWidth(ofView: customView).isActive = true
-            return componentView
+            return buildComponentView(customView)
         }
         return nil
     }
 
     func buildBottomCustomView() -> UIView? {
         if let customView = reviewScreenPreference.getBottomCustomView() {
-            let componentView = UIView()
-            componentView.translatesAutoresizingMaskIntoConstraints = false
-            customView.translatesAutoresizingMaskIntoConstraints = false
-            PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
-            componentView.addSubview(customView)
-            PXLayout.centerHorizontally(view: customView).isActive = true
-            PXLayout.pinTop(view: customView).isActive = true
-            PXLayout.pinBottom(view: customView).isActive = true
-            PXLayout.matchWidth(ofView: customView).isActive = true
-            return componentView
+            return buildComponentView(customView)
         }
         return nil
+    }
+
+    private func buildComponentView(_ customView: UIView) -> UIView {
+        let componentView = UIView()
+        componentView.translatesAutoresizingMaskIntoConstraints = false
+        customView.translatesAutoresizingMaskIntoConstraints = false
+        PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
+        componentView.addSubview(customView)
+        PXLayout.centerHorizontally(view: customView).isActive = true
+        PXLayout.pinTop(view: customView).isActive = true
+        PXLayout.pinBottom(view: customView).isActive = true
+        PXLayout.matchWidth(ofView: customView).isActive = true
+        return componentView
     }
 }

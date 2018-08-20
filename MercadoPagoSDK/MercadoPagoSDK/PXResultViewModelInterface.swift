@@ -9,7 +9,6 @@
 import UIKit
 
 protocol PXResultViewModelInterface {
-
     func getPaymentData() -> PaymentData
     func primaryResultColor() -> UIColor
     func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void)
@@ -21,7 +20,7 @@ protocol PXResultViewModelInterface {
     func buildFooterComponent() -> PXFooterComponent
     func buildReceiptComponent() -> PXReceiptComponent?
     func buildBodyComponent() -> PXComponentizable?
-    func buildTopCustomComponent() -> PXCustomComponentizable?
-    func buildBottomCustomComponent() -> PXCustomComponentizable?
+    func buildTopCustomView() -> UIView?
+    func buildBottomCustomView() -> UIView?
     func trackInfo()
 }
