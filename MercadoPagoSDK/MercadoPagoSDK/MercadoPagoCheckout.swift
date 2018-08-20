@@ -18,7 +18,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     internal var initMode: InitMode = .normal
-    internal var lifecycleProtocol: PXCheckoutLifecycleProtocol?
+    internal var initProtocol: PXLazyInitProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
 
@@ -107,9 +107,9 @@ extension MercadoPagoCheckout {
         }
     }
 
-    public func lazyStart(lifecycleDelegate: PXCheckoutLifecycleProtocol) {
+    public func start(lazyInitProtocol: PXLazyInitProtocol) {
         viewModel.initFlow?.restart()
-        lifecycleProtocol = lifecycleDelegate
+        initProtocol = lazyInitProtocol
         initMode = .lazy
         commondInit()
         executeNextStep()

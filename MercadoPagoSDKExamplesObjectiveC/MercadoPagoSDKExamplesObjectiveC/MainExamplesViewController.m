@@ -115,11 +115,10 @@
 
     // [self.mpCheckout discountNotAvailable];
 
-    //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
+    MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
-
-    [self.mpCheckout startWithNavigationController:self.navigationController];
+    //[mpCheckout startWithLazyInitProtocol:self];
+    [mpCheckout startWithNavigationController:self.navigationController];
 }
 
 // ReviewConfirm
@@ -216,14 +215,12 @@
 
 -(IBAction)startCardManager:(id)sender  {}
 
-- (void)lazyInitDidFinish {
-    NSLog(@"lazyInitDidFinish");
-    [self.mpCheckout startWithNavigationController:self.navigationController];
+- (void)didFinishWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
+    [checkout startWithNavigationController:self.navigationController];
 }
 
-- (void)lazyInitFailureWithErrorDetail:(NSString *)errorDetail {
-    NSLog(@"lazyInitFailureWithErrorDetail");
-    NSLog(@"%@", errorDetail);
+- (void)failureWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
+    NSLog(@"LazyInit - failureWithCheckout");
 }
 
 @end
