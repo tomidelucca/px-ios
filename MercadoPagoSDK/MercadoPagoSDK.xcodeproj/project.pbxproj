@@ -340,8 +340,8 @@
 		4B2EC49B20FFC26F008D03F8 /* MercadopagoCheckout+InitFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49520FFC26E008D03F8 /* MercadopagoCheckout+InitFlow.swift */; };
 		4B2EC49C20FFC26F008D03F8 /* MercadopagoCheckoutViewModel+InitFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49620FFC26E008D03F8 /* MercadopagoCheckoutViewModel+InitFlow.swift */; };
 		4B2EC49D20FFC26F008D03F8 /* MercadopagoCheckoutViewModel+InitFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49620FFC26E008D03F8 /* MercadopagoCheckoutViewModel+InitFlow.swift */; };
-		4B2EC49E20FFC26F008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49720FFC26E008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift */; };
-		4B2EC49F20FFC26F008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49720FFC26E008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift */; };
+		4B2EC49E20FFC26F008D03F8 /* PXLazyInitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49720FFC26E008D03F8 /* PXLazyInitProtocol.swift */; };
+		4B2EC49F20FFC26F008D03F8 /* PXLazyInitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49720FFC26E008D03F8 /* PXLazyInitProtocol.swift */; };
 		4B2EC4A020FFC26F008D03F8 /* InitFlowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49820FFC26F008D03F8 /* InitFlowModel.swift */; };
 		4B2EC4A120FFC26F008D03F8 /* InitFlowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49820FFC26F008D03F8 /* InitFlowModel.swift */; };
 		4B2EC4A220FFC26F008D03F8 /* InitFlow+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EC49920FFC26F008D03F8 /* InitFlow+Services.swift */; };
@@ -1081,7 +1081,7 @@
 		4B2AF5831EEB8F1400925644 /* CardsAdminViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewControllerTest.swift; sourceTree = "<group>"; };
 		4B2EC49520FFC26E008D03F8 /* MercadopagoCheckout+InitFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MercadopagoCheckout+InitFlow.swift"; sourceTree = "<group>"; };
 		4B2EC49620FFC26E008D03F8 /* MercadopagoCheckoutViewModel+InitFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MercadopagoCheckoutViewModel+InitFlow.swift"; sourceTree = "<group>"; };
-		4B2EC49720FFC26E008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadopagoCheckoutLifecycleProtocol.swift; sourceTree = "<group>"; };
+		4B2EC49720FFC26E008D03F8 /* PXLazyInitProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXLazyInitProtocol.swift; sourceTree = "<group>"; };
 		4B2EC49820FFC26F008D03F8 /* InitFlowModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitFlowModel.swift; sourceTree = "<group>"; };
 		4B2EC49920FFC26F008D03F8 /* InitFlow+Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InitFlow+Services.swift"; sourceTree = "<group>"; };
 		4B2EC4A520FFC2A5008D03F8 /* InitFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitFlow.swift; sourceTree = "<group>"; };
@@ -2085,7 +2085,7 @@
 				4B2EC49920FFC26F008D03F8 /* InitFlow+Services.swift */,
 				4B2EC49820FFC26F008D03F8 /* InitFlowModel.swift */,
 				4B2EC49520FFC26E008D03F8 /* MercadopagoCheckout+InitFlow.swift */,
-				4B2EC49720FFC26E008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift */,
+				4B2EC49720FFC26E008D03F8 /* PXLazyInitProtocol.swift */,
 				4B2EC49620FFC26E008D03F8 /* MercadopagoCheckoutViewModel+InitFlow.swift */,
 			);
 			path = InitFlow;
@@ -3574,7 +3574,7 @@
 				FCBF13521E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */,
 				0F98835F1AD2AB6000F750F0 /* Cardholder.swift in Sources */,
 				534D84281F5485B000C2C6F9 /* CardAvailableView.swift in Sources */,
-				4B2EC49E20FFC26F008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */,
+				4B2EC49E20FFC26F008D03F8 /* PXLazyInitProtocol.swift in Sources */,
 				0F9883911AD2AB6000F750F0 /* SavedCardToken.swift in Sources */,
 				FC0F6CBE20179A08006E3EA1 /* PXContainedLabelRenderer.swift in Sources */,
 				15DA7E5E1CD92C670068896E /* IdentificationViewController.swift in Sources */,
@@ -3671,7 +3671,7 @@
 				156A6DD01F6C7C9C00B17A20 /* SummaryTest.swift in Sources */,
 				FC3FC8741FBE122000CF29E1 /* PXInstructionsTertiaryInfoComponent.swift in Sources */,
 				1563DCA81E9C11CB00A7E5C8 /* CardsAdminViewController.swift in Sources */,
-				4B2EC49F20FFC26F008D03F8 /* MercadopagoCheckoutLifecycleProtocol.swift in Sources */,
+				4B2EC49F20FFC26F008D03F8 /* PXLazyInitProtocol.swift in Sources */,
 				FC05809420A5DB4400BBECB8 /* PXBankDealComponent.swift in Sources */,
 				0F9883881AD2AB6000F750F0 /* Payment.swift in Sources */,
 				76FD247E1C5BFEA1008C5DC0 /* CardFormViewController.swift in Sources */,
