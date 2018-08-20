@@ -26,6 +26,12 @@ open class MercadoPagoCheckoutBuilder: NSObject {
         self.preferenceId = preferenceId
     }
 
+    public init(publicKey: String, preferenceId: String, paymentConfiguration: PXPaymentConfiguration) {
+        self.publicKey = publicKey
+        self.preferenceId = preferenceId
+        self.paymentConfig = paymentConfiguration
+    }
+
     public init(publicKey: String, checkoutPreference: CheckoutPreference, paymentConfiguration: PXPaymentConfiguration) {
         self.publicKey = publicKey
         self.checkoutPreference = checkoutPreference
