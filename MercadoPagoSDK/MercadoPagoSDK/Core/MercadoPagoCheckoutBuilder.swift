@@ -60,10 +60,4 @@ extension MercadoPagoCheckoutBuilder {
         MercadoPagoContext.setLanguage(string: string) //TODO: MercadoPagoContext (Internal refactor)
         return self
     }
-
-    /*
-     open func setPaymentConfiguration(config: PXPaymentConfiguration) -> MercadoPagoCheckoutBuilder {
-     self.paymentConfig = config
-     return self
-     }*/
 }
