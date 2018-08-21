@@ -200,13 +200,8 @@ import MercadoPagoServicesV4
         if Array.isNullOrEmpty(items) {
             return "No hay items".localized
         }
-        let currencyIdAllItems = items[0].currencyId
 
         for item in items {
-            if item.currencyId != currencyIdAllItems {
-                return "Los items tienen diferente moneda".localized
-            }
-
             if let error = item.validate() {
                 return error
             }

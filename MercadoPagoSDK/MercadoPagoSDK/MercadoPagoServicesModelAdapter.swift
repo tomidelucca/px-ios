@@ -67,11 +67,11 @@ extension MercadoPagoServicesAdapter {
         let title: String = pxItem.title ?? ""
         let quantity: Int = pxItem.quantity ?? 1
         let unitPrice: Double = pxItem.unitPrice ?? 0.0
-        let description: String = pxItem._description ?? ""
-        let currencyId: String = pxItem.currencyId ?? "ARS"
         let picture_URL: String = pxItem.pictureUrl ?? ""
-        let item = Item(itemId: id, title: title, quantity: quantity, unitPrice: unitPrice, description: description, currencyId: currencyId)
+        let item = Item(title: title, quantity: quantity, unitPrice: unitPrice)
         item.pictureUrl = picture_URL
+        item.setDescription(description: pxItem._description ?? "")
+        item.itemId = id
         return item
     }
 
