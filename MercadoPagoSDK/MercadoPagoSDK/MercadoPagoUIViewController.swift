@@ -9,8 +9,11 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
+/** :nodoc: */
 @objcMembers
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
+
+    private static let MLNavigationBarBackgroundViewTag = 569242
 
     open var callbackCancel: (() -> Void)?
     var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
@@ -57,6 +60,17 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
+
+        /**
+         The following line is to temporarily fix the MLHeaderBehaviour issue in Mercado Libre. ML places a view in the navigation
+         bar with the MLNavigationBarBackgroundViewTag tag to make it opaque. Unfortunately, there's no easy way to hide this
+         view when we present MercadoPagoSDK. This temporary fix checks if this view exists, and if it does, it sets it's background
+         color clear so it doesn't interfere with MercadoPagoSDK colors.
+         **/
+        if let navigationBarBackgroundView = navigationController?.navigationBar.viewWithTag(MercadoPagoUIViewController.MLNavigationBarBackgroundViewTag) {
+            navigationBarBackgroundView.backgroundColor = UIColor.clear
+        }
+
         pluginComponentInterface?.viewWillAppear?()
     }
 
@@ -84,22 +98,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     func trackInfo() {
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
-    }
-
-    static func loadFont(_ fontName: String) -> Bool {
-        if let path = MercadoPago.getBundle()!.path(forResource: fontName, ofType: "ttf") {
-            if let inData = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-                var error: Unmanaged<CFError>?
-                let cfdata = CFDataCreate(nil, (inData as NSData).bytes.bindMemory(to: UInt8.self, capacity: inData.count), inData.count)
-                if let provider = CGDataProvider(data: cfdata!), let font = CGFont(provider) {
-                    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-                        print("Failed to load font: \(error.debugDescription)")
-                    }
-                    return true
-                }
-            }
-        }
-        return false
     }
 
     internal func loadMPStyles() {
@@ -247,21 +245,19 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
 }
 
+/** :nodoc: */
 extension UINavigationController {
-
     override open var shouldAutorotate: Bool {
         return (self.viewControllers.count > 0 && self.viewControllers.last!.shouldAutorotate)
     }
-
 }
 
+/** :nodoc: */
 extension UINavigationBar {
-
     func removeBottomLine() {
         self.setValue(true, forKey: "hidesShadow")
     }
     func restoreBottomLine() {
         self.setValue(false, forKey: "hidesShadow")
     }
-
 }

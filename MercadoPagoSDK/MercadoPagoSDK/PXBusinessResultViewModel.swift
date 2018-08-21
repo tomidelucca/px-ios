@@ -132,7 +132,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         let pm = self.paymentData.paymentMethod!
 
         let image = getPaymentMethodIcon(paymentMethod: pm)
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.amountHelper.amountToPay, forCurrency: currency)
         var subtitle: NSMutableAttributedString?  = pm.paymentMethodDescription?.toAttributedString()
         if let payerCost = self.paymentData.payerCost {
@@ -149,8 +149,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
                 amount = payerCostTotalAmount + self.amountHelper.amountOff
             }
 
-            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.strikethroughStyle: 1]
-            let preferenceAmountString = Utils.getAttributedAmount(withAttributes: attributes, amount: amount, currency: currency, negativeAmount: false)
+            let preferenceAmountString = Utils.getStrikethroughAmount(amount: amount, forCurrency: currency)
 
             if subtitle == nil {
                 subtitle = preferenceAmountString
@@ -184,7 +183,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: .white, lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
@@ -199,18 +198,12 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return paymentMethodImage
     }
 
-    func buildTopCustomComponent() -> PXCustomComponentizable? {
-        guard let view = self.businessResult.getTopCustomView() else {
-            return nil
-        }
-        return PXCustomComponent(view: view)
+    func buildTopCustomView() -> UIView? {
+        return self.businessResult.getTopCustomView()
     }
 
-    func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        guard let view = self.businessResult.getBottomCustomView() else {
-            return nil
-        }
-        return PXCustomComponent(view: view)
+    func buildBottomCustomView() -> UIView? {
+        return self.businessResult.getBottomCustomView()
     }
 
     func getHeaderDefaultIcon() -> UIImage? {

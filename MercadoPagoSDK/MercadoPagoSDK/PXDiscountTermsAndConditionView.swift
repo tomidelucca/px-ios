@@ -28,7 +28,7 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
         let termsAndConditionsText = "review_discount_terms_and_conditions".localized_beta
         let highlightedText = "review_discount_terms_and_conditions_link".localized_beta
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 12), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: highlightedText)

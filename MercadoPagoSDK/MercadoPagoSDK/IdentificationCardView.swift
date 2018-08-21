@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers
 open class IdentificationCardView: UIView, Updatable {
 var view: UIView!

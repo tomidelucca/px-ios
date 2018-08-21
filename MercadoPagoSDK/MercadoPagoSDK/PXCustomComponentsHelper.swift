@@ -8,20 +8,34 @@
 
 import Foundation
 
+/** :nodoc: */
 extension PXResultViewModel {
-    open func buildTopCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = preference.getApprovedTopCustomComponent(), self.paymentResult.isApproved() {
-            return PXCustomComponentContainer(withComponent: customComponent)
+    open func buildTopCustomView() -> UIView? {
+        if let customView = preference.getTopCustomView(), self.paymentResult.isApproved() {
+            return buildComponentView(customView)
         } else {
             return nil
         }
     }
 
-    open func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = preference.getApprovedBottomCustomComponent(), self.paymentResult.isApproved() {
-            return PXCustomComponentContainer(withComponent: customComponent)
+    open func buildBottomCustomView() -> UIView? {
+        if let customView = preference.getBottomCustomView(), self.paymentResult.isApproved() {
+            return buildComponentView(customView)
         } else {
             return nil
         }
+    }
+
+    private func buildComponentView(_ customView: UIView) -> UIView {
+        let componentView = UIView()
+        componentView.translatesAutoresizingMaskIntoConstraints = false
+        customView.translatesAutoresizingMaskIntoConstraints = false
+        PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
+        componentView.addSubview(customView)
+        PXLayout.centerHorizontally(view: customView).isActive = true
+        PXLayout.pinTop(view: customView).isActive = true
+        PXLayout.pinBottom(view: customView).isActive = true
+        PXLayout.matchWidth(ofView: customView).isActive = true
+        return componentView
     }
 }

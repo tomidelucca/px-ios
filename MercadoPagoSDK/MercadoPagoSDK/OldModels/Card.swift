@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
 
     open var cardHolder: PXCardHolder?

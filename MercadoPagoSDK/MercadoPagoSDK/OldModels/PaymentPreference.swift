@@ -38,14 +38,15 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+/** :nodoc: */
 @objcMembers open class PaymentPreference: NSObject {
-
     open var excludedPaymentMethodIds: Set<String>?
     open var excludedPaymentTypeIds: Set<String>?
     open var defaultPaymentMethodId: String?
     open var maxAcceptedInstallments: Int = 0
     open var defaultInstallments: Int = 0
-    var defaultPaymentTypeId: String?
+    open var defaultPaymentTypeId: String?
+    open var cardId: String?
 
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
     // excluded_payment_method < payment_methods

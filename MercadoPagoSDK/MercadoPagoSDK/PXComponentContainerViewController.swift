@@ -61,10 +61,10 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func centerContentView() -> Bool {
+    func centerContentView(margin: CGFloat = 0) -> Bool {
         if contentView.frame.height < PXLayout.getScreenHeight() - PXLayout.NAV_BAR_HEIGHT - PXLayout.getStatusBarHeight() {
             topContentConstraint?.isActive = false
-            PXLayout.centerVertically(view: contentView, to: scrollView).isActive = true
+            PXLayout.centerVertically(view: contentView, to: scrollView, withMargin: margin).isActive = true
             return true
         }
         return false

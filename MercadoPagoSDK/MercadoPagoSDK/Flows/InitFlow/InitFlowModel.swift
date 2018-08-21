@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?)
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter)
 
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
@@ -30,7 +30,6 @@ final class InitFlowModel: NSObject, PXFlowModel {
         case FINISH = "Finish step"
     }
 
-    private let serviceAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
     private let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
 
     private var preferenceValidated: Bool = false
@@ -44,7 +43,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign, chargeRules: self.properties.chargeRules)
+            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount)
         }
     }
 
@@ -64,7 +63,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 // MARK: Public methods
 extension InitFlowModel {
     func getService() -> MercadoPagoServicesAdapter {
-        return serviceAdapter
+        return properties.serviceAdapter
     }
 
     func getESCService() -> MercadoPagoESC {
@@ -79,7 +78,9 @@ extension InitFlowModel {
     }
 
     func setError(error: InitFlowError) {
-        flowError = error
+        if error.errorStep != .SERVICE_GET_CAMPAIGNS && error.errorStep != .SERVICE_GET_DIRECT_DISCOUNT && error.errorStep != .SERVICE_PAYMENT_METHOD_PLUGIN_INIT {
+            flowError = error
+        }
     }
 
     func resetError() {
@@ -180,11 +181,11 @@ extension InitFlowModel {
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && isDiscountEnabled() && !directDiscountSearchStatus && properties.paymentData.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
+        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && !directDiscountSearchStatus && properties.paymentData.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
     }
 
     func needToSearchCampaign() -> Bool {
-        return isDiscountEnabled() && !directDiscountSearchStatus && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
+        return !directDiscountSearchStatus && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
     }
 
     private func needValidatePreference() -> Bool {
@@ -200,10 +201,6 @@ extension InitFlowModel {
 
     private func needSearch() -> Bool {
         return properties.paymentMethodSearchResult == nil
-    }
-
-    private func isDiscountEnabled() -> Bool {
-        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
 
     private func hasError() -> Bool {

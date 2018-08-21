@@ -225,7 +225,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         if paymentData.isComplete() {
-            return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+            return true
         }
         return false
     }
@@ -251,6 +251,11 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
+        // MoneyIn default card - OneTap safe business check.
+        if amountHelper.preference.paymentPreference.cardId != nil {
+            return false
+        }
+
         if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, paymentMethodPlugins: paymentMethodPluginsToShow) {
             updateCheckoutModel(paymentOptionSelected: paymentMethodSelected)
             return true
@@ -269,7 +274,7 @@ extension MercadoPagoCheckoutViewModel {
         }
         if self.payment != nil || self.paymentResult != nil {
             self.setIsCheckoutComplete(isCheckoutComplete: true)
-            return self.shouldDisplayPaymentResult()
+            return true
         }
         return false
     }
@@ -279,7 +284,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToCreatePayment() -> Bool {
-        if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
+        if paymentData.isComplete() {
             return readyToPay
         }
         return false

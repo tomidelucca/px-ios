@@ -18,7 +18,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
     private lazy var footerView: UIView = UIView()
-    private var discountTermsConditionView: PXDiscountTermsAndConditionView?
+    private var discountTermsConditionView: PXTermsAndConditionView?
 
     // MARK: Callbacks
     var callbackPaymentData: ((PaymentData) -> Void)
@@ -126,7 +126,7 @@ extension PXOneTapViewController {
 
         // Add discount terms and conditions.
         if viewModel.shouldShowDiscountTermsAndCondition() {
-            let discountTCView = getDiscountTermsAndConditionView()
+            let discountTCView = viewModel.getDiscountTermsAndConditionView(shouldAddMargins: false)
             discountTermsConditionView = discountTCView
             contentView.addSubviewToBottom(discountTCView, withMargin: PXLayout.S_MARGIN)
             PXLayout.matchWidth(ofView: discountTCView).isActive = true
@@ -145,7 +145,7 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         refreshContentViewSize()
-        _ = centerContentView()
+        _ = centerContentView(margin: -PXLayout.getStatusBarHeight())
     }
 }
 
@@ -183,16 +183,11 @@ extension PXOneTapViewController {
     }
 
     private func getDiscountDetailView() -> UIView? {
-        if self.viewModel.amountHelper.discount != nil {
+        if self.viewModel.amountHelper.discount != nil || self.viewModel.amountHelper.consumedDiscount {
             let discountDetailVC = PXDiscountDetailViewController(amountHelper: self.viewModel.amountHelper, shouldShowTitle: true)
             return discountDetailVC.getContentView()
         }
         return nil
-    }
-
-    private func getDiscountTermsAndConditionView() -> PXDiscountTermsAndConditionView {
-        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: self.viewModel.amountHelper, shouldAddMargins: false)
-        return discountTermsAndConditionView
     }
 }
 

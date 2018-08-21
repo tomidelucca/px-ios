@@ -9,13 +9,14 @@
 import Foundation
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class MercadoPagoServicesAdapter: NSObject {
 
     let mercadoPagoServices: MercadoPagoServices!
 
-    init(servicePreference: ServicePreference? = nil) {
-        mercadoPagoServices = MercadoPagoServices(merchantPublicKey: MercadoPagoContext.publicKey(), payerAccessToken: MercadoPagoContext.payerAccessToken(), procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
-        mercadoPagoServices.setLanguage(language: MercadoPagoContext.getLanguage())
+    init(servicePreference: ServicePreference? = nil, publicKey: String, privateKey: String?) {
+        mercadoPagoServices = MercadoPagoServices(merchantPublicKey: publicKey, payerAccessToken: privateKey ?? "", procesingMode: MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString())
+        mercadoPagoServices.setLanguage(language: Localizator.sharedInstance.getLanguage())
         super.init()
 
         if let servicePreference = servicePreference {
@@ -24,7 +25,6 @@ import MercadoPagoServicesV4
     }
 
     func setServicePreference(servicePreference: ServicePreference) {
-
         mercadoPagoServices.setBaseURL(servicePreference.baseURL)
         mercadoPagoServices.setGatewayBaseURL(servicePreference.getGatewayURL())
     }
@@ -37,10 +37,11 @@ import MercadoPagoServicesV4
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { [weak self] (pxCheckoutPreference) in
-            guard let strongSelf = self else {
+            guard let strongSelf = self, let siteId = pxCheckoutPreference.siteId else {
+                // TODO: faltal error?
                 return
             }
-            MercadoPagoContext.setSiteID(pxCheckoutPreference.siteId ?? "MLA")
+            SiteManager.shared.setSite(siteId: siteId)
             let checkoutPreference = strongSelf.getCheckoutPreferenceFromPXCheckoutPreference(pxCheckoutPreference)
             callback(checkoutPreference)
             }, failure: failure)
@@ -62,12 +63,17 @@ import MercadoPagoServicesV4
 
     public typealias PaymentSearchExclusions = (excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?)
     public typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
-    open func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, defaultPaymentMethod: String?, payer: PXPayer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    public typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?)
 
+    open func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+
+        payer.accessToken = mercadoPagoServices.payerAccessToken
         let pxSite = getPXSiteFromId(site)
 
+        let accountMoneyAvailable: Bool = false // TODO: This is temporary. (Warning: Until AM First Class Member)
+
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
-        if !MercadoPagoContext.accountMoneyAvailable() {
+        if !accountMoneyAvailable {
             if excludedPaymentTypesIds != nil {
                 excludedPaymentTypesIds?.insert("account_money")
             } else {
@@ -75,7 +81,7 @@ import MercadoPagoServicesV4
             }
         }
 
-        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: defaultPaymentMethod, payer: payer, site: pxSite, callback: {  [weak self] (pxPaymentMethodSearch) in
+        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, callback: {  [weak self] (pxPaymentMethodSearch) in
                 guard let strongSelf = self else {
                     return
                 }
@@ -163,10 +169,9 @@ import MercadoPagoServicesV4
             }, failure: failure)
     }
 
-    open func getCampaigns(callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-       mercadoPagoServices.getCampaigns(payerEmail: nil, callback: callback, failure: failure)
+    open func getCampaigns(payerEmail: String?, callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        mercadoPagoServices.getCampaigns(payerEmail: payerEmail, callback: callback, failure: failure)
     }
-
     open func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let url = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL()
@@ -182,9 +187,9 @@ import MercadoPagoServicesV4
         getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, callback: callback, failure: failure)
     }
 
-    open func getInstallments(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getInstallments(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, callback: { [weak self] (pxInstallments) in
+        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (pxInstallments) in
             guard let strongSelf = self else {
                 return
             }

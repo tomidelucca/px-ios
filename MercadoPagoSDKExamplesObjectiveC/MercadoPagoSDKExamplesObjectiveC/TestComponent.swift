@@ -10,20 +10,7 @@ import UIKit
 import MercadoPagoSDKV4
 
 @objc public class TestComponent: NSObject, PXCustomComponentizable {
-
-    static public func getPaymentResultPreference() -> PaymentResultScreenPreference {
-        //let top = TestComponent()
-        //let bottom = TestComponent()
-        let preference = PaymentResultScreenPreference()
-        preference.disableApprovedReceipt()
-        preference.setApprovedHeaderIcon(stringURL: "https://i.pinimg.com/736x/16/6a/54/166a54b720bf9763dbce64e4cb52fa17--phoenix-band-nail-fashion.jpg")
-        preference.setPendingHeaderIcon(stringURL: "https://i.pinimg.com/736x/16/6a/54/166a54b720bf9763dbce64e4cb52fa17--phoenix-band-nail-fashion.jpg")
-       // preference.setApprovedTopCustomComponent(top)
-        //        preference.setApprovedBottomCustomComponent(bottom)
-        return preference
-    }
-
-    public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
+    public func getView() -> UIView {
         let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
         let view = UIView(frame: frame)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -44,31 +31,24 @@ import MercadoPagoSDKV4
         return view
     }
 
-    static public func getReviewScreenPreference() -> ReviewScreenPreference {
+    public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
+        return nil
+    }
+}
+
+// MARK: Mock configurations (Ex-preferences).
+extension TestComponent {
+    static public func getPaymentResultConfiguration() -> PXPaymentResultConfiguration {
         let top = TestComponent()
         let bottom = TestComponent()
-        let preference = ReviewScreenPreference()
-        preference.setTopComponent(top)
-        preference.setBottomComponent(bottom)
-        // preference.disableItems()
-        // preference.disableChangeMethodOption()
+        let paymentConfig = PXPaymentResultConfiguration(topView: top.getView(), bottomView: bottom.getView())
+        return paymentConfig
+    }
 
-        // preference.setSummaryProductTitle(productTitle: "Product title from ReviewScreenPreference")
-        // preference.setAmountTitle(title: "Amount title from RSP")
-
-        //preference.setDisclaimerText(text: "Disclamer text from RSP")
-
-        //preference.setAmountTitle(title: "Pepito")
-        //preference.addSummaryProductDetail(amount: 10)
-
-        //preference.setQuantityLabel(title: "La cantidad")
-
-        preference.addSummaryProductDetail(amount: 31)
-        preference.addSummaryDiscountDetail(amount: 1)
-        preference.addSummaryArrearsDetail(amount: 10)
-        preference.addSummaryTaxesDetail(amount: 10)
-        preference.addSummaryShippingDetail(amount: 10)
-
-        return preference
+    static public func getReviewConfirmConfiguration() -> PXReviewConfirmConfiguration {
+        let top = TestComponent()
+        let bottom = TestComponent()
+        let config = PXReviewConfirmConfiguration(itemsEnabled: true, topView: top.getView(), bottomView: bottom.getView())
+        return config
     }
 }

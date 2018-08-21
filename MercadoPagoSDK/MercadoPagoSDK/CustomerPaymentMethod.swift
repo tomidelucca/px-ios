@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
 
     var customerPaymentMethodId: String!

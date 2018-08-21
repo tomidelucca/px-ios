@@ -6,10 +6,10 @@ target 'MercadoPagoSDK' do
   use_frameworks!
 
   # Pods for MercadoPagoSDK
-  pod 'MercadoPagoPXTrackingV4', '2.1.3'
-  pod 'MercadoPagoServicesV4', '1.0.17'
+  pod 'MercadoPagoPXTrackingV4', '2.1.4'
+  pod 'MercadoPagoServicesV4', :path => '../../px-ios_services'
   # MELI UI
-  pod 'MLUI', '~> 4.0'
+  pod 'MLUI', '~> 5.0'
 
   target 'MercadoPagoSDKTests' do
     inherit! :search_paths

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class Customer: NSObject {
     open var address: Address?
     open var cards: [Card]?

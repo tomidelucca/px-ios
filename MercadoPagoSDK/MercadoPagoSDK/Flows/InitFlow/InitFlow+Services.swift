@@ -45,7 +45,7 @@ extension InitFlow {
                 return
             }
 
-            strongSelf.attemptToApplyDiscount(discount: discount)
+            strongSelf.model.properties.discount = discount
             strongSelf.executeNextStep()
 
             }, failure: { [weak self] _ in
@@ -59,7 +59,8 @@ extension InitFlow {
     }
 
     func getCampaigns() {
-        model.getService().getCampaigns(callback: { [weak self] (pxCampaigns) in
+        let payerEmail = model.properties.checkoutPreference.getPayer().email
+        model.getService().getCampaigns(payerEmail: payerEmail, callback: { [weak self] (pxCampaigns) in
             guard let strongSelf = self else {
                 return
             }
@@ -75,17 +76,6 @@ extension InitFlow {
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
-    }
-
-    func attemptToApplyDiscount(discount: PXDiscount?) {
-        if let discount = discount, let campaigns = model.properties.campaigns {
-            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
-                return campaign.id.stringValue == discount.id
-            }
-            if let firstFilteredCampaign = filteredCampaigns.first {
-                model.properties.paymentData.setDiscount(discount, withCampaign: firstFilteredCampaign)
-            }
-        }
     }
 
     func initPaymentMethodPlugins() {
@@ -122,7 +112,11 @@ extension InitFlow {
         let exclusions: MercadoPagoServicesAdapter.PaymentSearchExclusions = (model.getExcludedPaymentTypesIds(), model.getExcludedPaymentMethodsIds())
         let oneTapInfo: MercadoPagoServicesAdapter.PaymentSearchOneTapInfo = (cardIdsWithEsc, pluginIds)
 
-        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, defaultPaymentMethod: model.getDefaultPaymentMethodId(), payer: PXPayer(), site: MercadoPagoContext.getSite(), callback: { [weak self] (paymentMethodSearch) in
+        var differentialPricingString: String? = nil
+        if let diffPricing = model.properties.checkoutPreference.differentialPricing?.id {
+            differentialPricingString = String(describing: diffPricing)
+        }
+        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString), callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return

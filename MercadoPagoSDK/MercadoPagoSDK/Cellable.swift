@@ -8,8 +8,7 @@
 
 import Foundation
 
-protocol Cellable {
-
+/** :nodoc: */
+internal protocol Cellable {
     var objectType: ObjectTypes { get set }
-
 }

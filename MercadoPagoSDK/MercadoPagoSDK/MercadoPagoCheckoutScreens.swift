@@ -15,11 +15,6 @@ extension MercadoPagoCheckout {
 
         viewModel.paymentData.clearCollectedData()
 
-        // If paymentMethodsPlugins is available, disable discounts.
-        if (!viewModel.paymentMethodPlugins.isEmpty || viewModel.paymentPlugin != nil) && viewModel.paymentData.discount == nil {
-            MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
-        }
-
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
@@ -149,13 +144,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-
-            if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
-                MercadoPagoCheckoutViewModel.paymentDataCallback = MercadoPagoCheckoutViewModel.paymentDataConfirmCallback
-                strongSelf.finish()
-            } else {
-                strongSelf.executeNextStep()
-            }
+            strongSelf.executeNextStep()
 
         }, finishButtonAnimation: {
                 self.executeNextStep()
@@ -301,9 +290,9 @@ extension MercadoPagoCheckout {
         guard let search = viewModel.search, let paymentOtionSelected = viewModel.paymentOptionSelected else {
             return
         }
-        let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
 
-        let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewScreenPreference: viewModel.reviewScreenPreference, chargeRules: viewModel.chargeRules, oneTapResultHandler: self)
+        let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
+        let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewConfirmConfiguration: viewModel.getAdvancedConfiguration().reviewConfirmConfiguration, chargeRules: viewModel.chargeRules, oneTapResultHandler: self, consumedDiscount: self.viewModel.consumedDiscount, advancedConfiguration: viewModel.getAdvancedConfiguration(), mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter)
 
         onetapFlow.setPaymentFlow(paymentFlow: paymentFlow)
         onetapFlow.start()

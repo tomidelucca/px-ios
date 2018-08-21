@@ -9,15 +9,12 @@
 #import <UIKit/UIKit.h>
 @import MercadoPagoSDKV4;
 
-@interface MainExamplesViewController : UITableViewController <PXCheckoutLifecycleProtocol>
+@interface MainExamplesViewController : UITableViewController <PXLazyInitProtocol>
 
-@property MPCustomCell *customCell;
+@property MercadoPagoCheckoutBuilder *checkoutBuilder;
+
 @property CheckoutPreference *pref;
-@property PaymentData *paymentData;
-@property PaymentResult *paymentResult;
-@property MercadoPagoCheckout *mpCheckout;
-
-@property MPCustomCell *dineroEnCuentaCell;
+@property PXPaymentConfiguration *paymentConfig;
 
 +(void)setPaymentDataCallback;
 

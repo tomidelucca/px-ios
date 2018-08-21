@@ -20,7 +20,7 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     // MARK: Definitions
     var termsConditionView: PXTermsAndConditionView!
-    var discountTermsConditionView: PXDiscountTermsAndConditionView?
+    var discountTermsConditionView: PXTermsAndConditionView?
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
 
@@ -57,6 +57,8 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.checkFloatingButtonVisibility()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
+        // Temporary fix for MP/Meli UX incompatibility
+        UIApplication.shared.statusBarStyle = .default
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -123,7 +125,7 @@ extension PXReviewViewController {
 
         // Add discount terms and conditions.
         if self.viewModel.shouldShowDiscountTermsAndCondition() {
-            let discountTCView = getDiscountTermsAndConditionView()
+            let discountTCView = viewModel.getDiscountTermsAndConditionView()
             discountTermsConditionView = discountTCView
             discountTCView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 100)
             contentView.addSubviewToBottom(discountTCView)
@@ -179,6 +181,7 @@ extension PXReviewViewController {
 
         //Add Footer
         footerView = getFooterView()
+        footerView.backgroundColor = .clear
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
@@ -192,6 +195,9 @@ extension PXReviewViewController {
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
         PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+
+        contentView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
+        scrollView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
 
         // Add elastic header.
         addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized, textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation())
@@ -270,7 +276,7 @@ extension PXReviewViewController {
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
         loadingFloatingButtonComponent?.layer.cornerRadius = 4
-
+        containedButtonView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         return containedButtonView
     }
 
@@ -287,12 +293,8 @@ extension PXReviewViewController {
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton
         loadingButtonComponent?.layer.cornerRadius = 4
+        footerView.backgroundColor = .clear
         return footerView
-    }
-
-    fileprivate func getDiscountTermsAndConditionView() -> PXDiscountTermsAndConditionView {
-        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: self.viewModel.amountHelper)
-        return discountTermsAndConditionView
     }
 
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
@@ -301,17 +303,11 @@ extension PXReviewViewController {
     }
 
     fileprivate func getTopCustomView() -> UIView? {
-        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            return componentView
-        }
-        return nil
+        return viewModel.buildTopCustomView()
     }
 
     fileprivate func getBottomCustomView() -> UIView? {
-        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            return componentView
-        }
-        return nil
+        return viewModel.buildBottomCustomView()
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -19,7 +19,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
     private let shouldShowTitle: Bool
-    private let currency = MercadoPagoContext.getCurrency()
+    private let currency = SiteManager.shared.getCurrency()
     let contentView: PXComponentView = PXComponentView()
 
     init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
@@ -79,15 +79,16 @@ extension PXDiscountDetailViewController {
         }
 
         if let disclaimer = getDisclaimer() {
-            buildAndAddLabel(to: self.contentView, margin: PXLayout.XXXS_MARGIN, with: disclaimer, height: 19, accessibilityIdentifier: "discount_detail_disclaimer_label")
+            buildAndAddLabel(to: self.contentView, margin: PXLayout.XS_MARGIN, with: disclaimer, accessibilityIdentifier: "discount_detail_disclaimer_label")
         }
 
         if let description = getDescription() {
             buildAndAddLabel(to: self.contentView, margin: PXLayout.XXS_MARGIN, with: description, height: 34, accessibilityIdentifier: "discount_detail_description_label")
         }
+        if !amountHelper.consumedDiscount {
+            buildSeparatorLine(in: self.contentView, topMargin: PXLayout.M_MARGIN, sideMargin: PXLayout.M_MARGIN, height: 1)
 
-        buildSeparatorLine(in: self.contentView, topMargin: PXLayout.M_MARGIN, sideMargin: PXLayout.M_MARGIN, height: 1)
-
+        }
         if let footerMessage = getFooterMessage() {
             buildAndAddLabel(to: self.contentView, margin: PXLayout.S_MARGIN, with: footerMessage, accessibilityIdentifier: "discount_detail_footer_label")
         }
@@ -127,33 +128,39 @@ extension PXDiscountDetailViewController {
 
     func getHeader() -> NSAttributedString {
         let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
-        let string = NSAttributedString(string: "discount_detail_modal_title".localized_beta, attributes: attributes)
-        return string
+        if amountHelper.consumedDiscount {
+            return NSAttributedString(string: "modal_title_consumed_discount".localized_beta, attributes: attributes)
+        } else {
+            return NSAttributedString(string: amountHelper.discount!.getDiscountDescription(), attributes: attributes)
+        }
     }
 
     func getTitle() -> NSAttributedString? {
-        let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
-
-        if let discount = amountHelper.discount {
-            let string = discount.getDiscountDescription()
-            let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
-            return attributedString
-        }
-
-        return nil
-    }
-
-    func getDisclaimer() -> NSAttributedString? {
         if let maxCouponAmount = amountHelper.maxCouponAmount {
-            let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
-
+            let attributes = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)
             let string: String = ("discount_detail_modal_disclaimer".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
             let attributedString = NSMutableAttributedString(string: string, attributes: attributes)
 
             return attributedString
         }
+        return nil
+    }
 
+    func getDisclaimer() -> NSAttributedString? {
+        let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
+         if amountHelper.campaign?.maxRedeemPerUser == 1 {
+            var message = "unique_discount_detail_modal_footer".localized_beta
+            if let expirationDate = amountHelper.campaign?.endDate {
+                let messageDate = "discount_end_date".localized_beta
+                message.append(messageDate.replacingOccurrences(of: "%1s", with: Utils.getFormatedStringDate(expirationDate)))
+            }
+            return NSAttributedString(string: message, attributes: attributes)
+         } else if let maxRedeemPerUser = amountHelper.campaign?.maxRedeemPerUser, maxRedeemPerUser > 1 {
+            return NSAttributedString(string: "multiple_discount_detail_modal_footer".localized_beta, attributes: attributes)
+         } else if amountHelper.consumedDiscount {
+            return NSAttributedString(string: "modal_content_consumed_discount".localized_beta, attributes: attributes)
+        }
         return nil
     }
 
@@ -163,6 +170,9 @@ extension PXDiscountDetailViewController {
     }
 
     func getFooterMessage() -> NSAttributedString? {
+        if amountHelper.consumedDiscount {
+            return nil
+        }
         let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
         let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
         return string

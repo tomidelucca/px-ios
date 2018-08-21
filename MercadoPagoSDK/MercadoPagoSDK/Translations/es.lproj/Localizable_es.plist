@@ -7,135 +7,135 @@
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>O que posso fazer?</string>
+		<string>¿Qué puedo hacer?</string>
 	</dict>
 	<key>error_body_description_</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Por favor, tente pagar de outra forma.</string>
+		<string>Por favor, intente pagar de otra forma.</string>
 	</dict>
 	<key>error_body_description_pending_contingency</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Em algumas horas te avisaremos por e-mail se foi aprovado.</string>
+		<string>En unas horas te avisaremos por e-mail si se acreditó.</string>
 	</dict>
 	<key>error_body_description_pending_review_manual</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Dentro das próximas 24 horas te avisaremos por e-mail se foi aprovado.</string>
+		<string>Dentro de las próximas 24 horas te avisaremos por e-mail si se acreditó.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_call_for_authorize</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>O telefone do banco está no verso do seu cartão.</string>
+		<string>El teléfono está al dorso de tu tarjeta.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_card_disabled</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Use outro meio de pagamento ou ligue para %1$s e desbloqueie o cartão.</string>
+		<string>Usa otro medio de pago o llama a %1$s para activar tu tarjeta.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_insufficient_amount</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Não se preocupe! Recarregue-o em qualquer banco ou pelo Internet Banking e tente novamente.
+		<string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. 
 
-Se preferir, você pode escolher outro meio de pagamento.</string>
+O si prefieres, puedes elegir otro medio de pago.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_other_reason</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Use outro cartão ou outro meio de pagamento.</string>
+		<string>Usa otra tarjeta u otro medio de pago.</string>
 	</dict>
 	<key>error_body_description_rejected_by_bank</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Por favor, tente pagar de outra forma.</string>
+		<string>Por favor, intente pagar de otra forma.</string>
 	</dict>
 	<key>error_body_description_rejected_insufficient_data</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Por favor, tente pagar de outra forma.</string>
+		<string>Por favor, intente pagar de otra forma.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_duplicated_payment</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Não se preocupe! O seu pagamento foi efetuado com sucesso.</string>
+		<string>Igual no te preocupes que tu pago anterior se efectuó con éxito.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_max_attempts</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Como você chegou no limite de tentativas com este cartão, use outro meio de pagamento.</string>
+		<string>Como llegaste al límite de intentos con esta tarjeta, usa otro medio de pago.</string>
 	</dict>
 	<key>error_body_description_rejected_high_risk</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Use um meio de pagamento diferente de cartão.</string>
+		<string>Usa un medio de pago distinto de tarjeta.</string>
 	</dict>
 	<key>error_body_action_text_</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Já falei e autorizei</string>
+		<string>Ya hablé y me autorizó</string>
 	</dict>
 	<key>error_body_action_text_cc_rejected_call_for_authorize</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Já falei com %1$s e autorizei</string>
+		<string>Ya hablé con %1$s y me autorizó</string>
 	</dict>
 	<key>error_body_secondary_title_</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Não conseguiu autorizá-lo?</string>
+		<string>¿No pudiste autorizarlo?</string>
 	</dict>
 	<key>discount_coupon_detail_default_concept</key>
 	<dict>
 		<key>comment</key>
 		<string>Concepto Default en el modal de Discount Coupon</string>
 		<key>value</key>
-		<string>Desconto</string>
+		<string>Descuento</string>
 	</dict>
 	<key>discount_coupon_detail_description</key>
 	<dict>
 		<key>comment</key>
 		<string>Descripción del descuento</string>
 		<key>value</key>
-		<string> de desconto</string>
+		<string> de descuento</string>
 	</dict>
 	<key>payment_result_screen_congrats_finish_button</key>
 	<dict>
 		<key>comment</key>
 		<string>Acción para terminar el flujo en una pantalla de congrats</string>
 		<key>value</key>
-		<string>Pronto!</string>
+		<string>Continuar</string>
 	</dict>
 	<key>card_form_next_button</key>
 	<dict>
@@ -156,14 +156,14 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Nome</string>
+		<string>Nombre</string>
 	</dict>
 	<key>payer_info_surname</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Sobrenome</string>
+		<string>Apellido</string>
 	</dict>
 	<key>payer_info_number</key>
 	<dict>
@@ -184,91 +184,112 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Alterar meio de pagamento</string>
+		<string>Cambiar medio de pago</string>
 	</dict>
 	<key>bank_deal_details_title</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Condições</string>
+		<string>Condiciones</string>
 	</dict>
 	<key>bank_deal_details_date_format</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Até %@</string>
+		<string>Hasta el %@</string>
 	</dict>
 	<key>bank_deals_screen_title</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Promoções</string>
+		<string>Promociones</string>
 	</dict>
 	<key>review_terms_and_conditions</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Ao pagar, declaro que sou maior de idade e aceito os Termos e Condições.</string>
+		<string>Al pagar, declaro que soy mayor de edad y acepto los Términos y Condiciones.</string>
 	</dict>
 	<key>review_discount_terms_and_conditions</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Desconto exclusivo do Mercado Livre e Mercado Pago. Ver condições</string>
+		<string>Descuento exclusivo de Mercado Libre y Mercado Pago. Ver condiciones</string>
 	</dict>
 	<key>review_discount_terms_and_conditions_link</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Ver condições</string>
+		<string>Ver condiciones</string>
 	</dict>
 	<key>discount_detail_modal_title</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Meu desconto</string>
+		<string>Mi descuento</string>
 	</dict>
 	<key>discount_detail_modal_footer</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Os descontos não são acumulativos. Aplicamos o mais alto para este pagamento.</string>
+		<string>Los descuentos no son acumulables. Te damos el más alto para este pago.</string>
 	</dict>
 	<key>discount_detail_modal_disclaimer</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Limite de desconto %1$s</string>
+		<string>Tope de descuento %1$s</string>
+	</dict>
+	<key>discount_end_date</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Válido hasta el %1s.</string>
+	</dict>
+	<key>unique_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Tope disponible para consumir en un único pago.</string>
+	</dict>
+	<key>multiple_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Con cada pago en esta marca vas a consumir el tope hasta agotarlo.</string>
 	</dict>
 	<key>total_row_title_add_coupon</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Você tem um cupom de desconto?</string>
+		<string>¿Tienes un cupón de descuento?</string>
 	</dict>
 	<key>total_row_disclaimer</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Com limite de desconto</string>
+		<string>Con tope de descuento</string>
 	</dict>
 	<key>one_tap_discount_disclaimer</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>com limite de desconto</string>
+		<string>con tope de descuento</string>
 	</dict>
 	<key>total_row_title_percent_off</key>
 	<dict>
@@ -290,6 +311,27 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<string></string>
 		<key>value</key>
 		<string>Total a pagar</string>
+	</dict>
+	<key>total_row_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Alcanzaste el tope de descuento</string>
+	</dict>
+	<key>modal_title_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Alcanzaste el tope</string>
+	</dict>
+	<key>modal_content_consumed_discount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Este descuento ya no aplica porque consumiste el tope máximo.</string>
 	</dict>
 </dict>
 </plist>

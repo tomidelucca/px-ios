@@ -30,6 +30,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
+/** :nodoc: */
 class Utils {
 
     private static let kSdkSettingsFile = "mpsdk_settings"
@@ -193,6 +194,12 @@ class Utils {
         return amountFotmated
     }
 
+    class func getStrikethroughAmount(amount: Double, forCurrency currency: PXCurrency, addingParenthesis: Bool = false) -> NSMutableAttributedString {
+        let formatedAttrAmount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis).toAttributedString()
+        formatedAttrAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: formatedAttrAmount.string.count))
+        return formatedAttrAmount
+    }
+
     class func getAccreditationTimeAttributedString(from text: String, fontSize: CGFloat? = nil) -> NSAttributedString {
         let clockImage = NSTextAttachment()
         var attributes: [NSAttributedStringKey: Any]? = nil
@@ -209,7 +216,7 @@ class Utils {
 
     class func getTransactionInstallmentsDescription(_ installments: String, currency: PXCurrency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
 
         let descriptionAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
 
@@ -277,7 +284,7 @@ class Utils {
      Ex: formattedString = "100.2", decimalSeparator = "."
      returns 20
      **/
-    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = MercadoPagoContext.getCurrency().getDecimalPlacesOrDefault()) -> String {
+    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = SiteManager.shared.getCurrency().getDecimalPlacesOrDefault()) -> String {
         var range = formattedString.range(of: decimalSeparator)
 
         if range == nil {

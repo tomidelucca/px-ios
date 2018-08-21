@@ -9,11 +9,12 @@
 import Foundation
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 extension MercadoPagoServicesAdapter {
 
     open func getPXSiteFromId(_ siteId: String) -> PXSite {
-        let currency = MercadoPagoContext.getCurrency()
-        let pxSite = PXSite(id: siteId, currencyId: currency.id)
+        let currency = SiteManager.shared.getCurrency()
+        let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
         return pxSite
     }
 
@@ -26,7 +27,8 @@ extension MercadoPagoServicesAdapter {
                 checkoutPreference.items = Array.safeAppend(checkoutPreference.items, item)
             }
         }
-        checkoutPreference.payer = pxCheckoutPreference.payer
+        checkoutPreference.differentialPricing = pxCheckoutPreference.differentialPricing
+        checkoutPreference.payer = getPayerFromPXPayer(pxCheckoutPreference.payer)
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
         checkoutPreference.siteId = pxCheckoutPreference.siteId ?? ""
         checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom ?? Date()

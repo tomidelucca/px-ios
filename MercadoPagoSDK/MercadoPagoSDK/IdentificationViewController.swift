@@ -8,6 +8,8 @@
 
 import UIKit
 import MercadoPagoServicesV4
+
+/** :nodoc: */
 @objcMembers
 open class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
@@ -325,10 +327,10 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     fileprivate func getIdMask(IDtype: PXIdentificationType?) -> [TextMaskFormater] {
-        let site = MercadoPagoContext.getSite()
+        let site = SiteManager.shared.getSiteId()
 
-        if IDtype != nil {
-            if let masks = maskFinder(dictID: site+"_"+(IDtype?.identificationTypeId)!, forKey: "identification_mask") {
+        if let identificationType = IDtype {
+            if let identificationTypeId = identificationType.identificationTypeId, let masks = maskFinder(dictID: site + "_" + identificationTypeId, forKey: "identification_mask") {
                 return masks
             } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
                 return masks

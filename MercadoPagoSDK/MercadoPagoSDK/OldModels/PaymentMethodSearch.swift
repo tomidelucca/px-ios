@@ -8,6 +8,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class PaymentMethodSearch: NSObject {
 
     var groups: [PaymentMethodSearchItem]!

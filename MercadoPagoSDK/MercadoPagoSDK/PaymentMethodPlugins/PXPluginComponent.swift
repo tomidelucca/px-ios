@@ -8,18 +8,21 @@
 
 import Foundation
 
+/** :nodoc: */
 @objc public protocol PXConfigPluginComponent: PXPluginComponent {
     @objc optional func shouldSkip(pluginStore: PXCheckoutStore) -> Bool
     @objc optional func shouldShowBackArrow() -> Bool
 }
 
+/** :nodoc: */
 @objc public protocol PXPaymentPluginComponent: PXPluginComponent {
     @objc optional func support(pluginStore: PXCheckoutStore) -> Bool
-    @objc optional func createPayment(pluginStore: PXCheckoutStore, handler: PXPaymentFlowHandlerProtocol, successWithBusinessResult: ((PXBusinessResult) -> Void), successWithPaymentResult: ((PXPaymentPluginResult) -> Void))
+    @objc optional func createPayment(pluginStore: PXCheckoutStore, handler: PXPaymentFlowHandlerProtocol, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXPaymentPluginResult) -> Void))
     @objc optional func navigationHandlerForPaymentPlugin(navigationHandler: PXPaymentPluginNavigationHandler)
     @objc optional func paymentTimeOut() -> Double
 }
 
+/** :nodoc: */
 @objc public protocol PXPluginComponent: PXCustomComponentizable {
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
     @objc optional func didReceive(pluginStore: PXCheckoutStore)

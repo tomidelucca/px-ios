@@ -11,14 +11,14 @@ import Foundation
 final class PXTotalRowBuilder: PXTotalRowComponent {
 
     init(amountHelper: PXAmountHelper, shouldShowChevron: Bool = false) {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         var title: NSAttributedString?
         var disclaimer: NSAttributedString?
         var mainValue: NSAttributedString?
         var secondaryValue: NSAttributedString?
 
         //////////////// TITLE ////////////////
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = amountHelper.discount {
+        if let discount = amountHelper.discount {
 
             let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                             NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
@@ -27,7 +27,10 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
             title = attributedString
         } else {
-            let defaultTitleString = "total_row_title_default".localized_beta
+            var defaultTitleString = "total_row_title_default".localized_beta
+            if amountHelper.consumedDiscount {
+                defaultTitleString = "total_row_consumed_discount".localized_beta
+            }
             let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
                                      NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
 
@@ -77,15 +80,14 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
     }
 
     static func shouldAddActionToRow(amountHelper: PXAmountHelper) -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), amountHelper.discount != nil {
-            return true
-        }
-        return false
+        return amountHelper.discount != nil
     }
 
     static func handleTap(amountHelper: PXAmountHelper) {
         if amountHelper.discount != nil {
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "discount_detail_modal_title".localized_beta)
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: amountHelper.discount?.getDiscountDescription())
+        } else if amountHelper.consumedDiscount {
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: amountHelper), title: "modal_title_consumed_discount".localized_beta)
         }
     }
 }

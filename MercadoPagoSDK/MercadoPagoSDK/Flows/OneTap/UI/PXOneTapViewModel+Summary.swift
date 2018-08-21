@@ -16,11 +16,11 @@ extension PXOneTapViewModel {
     }
 
     func hasDiscount() -> Bool {
-        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && amountHelper.discount != nil
+        return amountHelper.discount != nil
     }
 
     func getSummaryProps() -> [PXSummaryRowProps]? {
-        let currency: PXCurrency = MercadoPagoContext.getCurrency()
+        let currency: Currency = SiteManager.shared.getCurrency()
         let itemComponentsModel = buildOneTapItemComponents()
 
         var props = [PXSummaryRowProps]()

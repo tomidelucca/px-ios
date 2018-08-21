@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0570FF3C545361FF9CA1F323 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FDB169D97F49F1FB2791A2 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */; };
 		156526C9209F76E600852D39 /* CustomComponentText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156526C8209F76E600852D39 /* CustomComponentText.swift */; };
 		15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */; };
 		23346C341FE83734005FD8C9 /* PaymentPluginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */; };
@@ -14,6 +15,7 @@
 		23346C361FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */; };
 		2385C5DA20125871002C147D /* MeliTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2385C5D920125871002C147D /* MeliTheme.swift */; };
 		23CF4ECE20994D1A00EC9399 /* MPTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CF4ECC20994D1A00EC9399 /* MPTheme.swift */; };
+		3481D596169AC0AC909D40B3 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7E841E3BF020E7B8734816 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */; };
 		4B1A74F0209204B900E39587 /* MLMyMPPXTrackListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1A74EF209204B900E39587 /* MLMyMPPXTrackListener.m */; };
 		4B34DC331E5DA33100FDD295 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC41D2559140087C785 /* AppDelegate.m */; };
 		4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
@@ -42,12 +44,9 @@
 		76EF7EDB1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EDA1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCTests.m */; };
 		76EF7F221D255C7E0087C785 /* ExampleUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7F211D255C7E0087C785 /* ExampleUtils.m */; };
 		76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7F591D26FDB80087C785 /* MainExamplesViewController.m */; };
-		76EF7F5D1D27027A0087C785 /* StepsExamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7F5C1D27027A0087C785 /* StepsExamplesViewController.m */; };
 		76EF7F601D2706720087C785 /* ServicesExamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7F5F1D2706720087C785 /* ServicesExamplesViewController.m */; };
 		81488CC11FE93E0C003C35B1 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81488CC01FE93E0C003C35B1 /* TestComponent.swift */; };
 		81488CC21FE94196003C35B1 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81488CC01FE93E0C003C35B1 /* TestComponent.swift */; };
-		89E2D62BFE6285DFD1B7DB40 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5782BCBF8F4486F5771B2EF /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */; };
-		90B0FE8C5E538FEE11591685 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77EE9A8E778F15DDDBC622B /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		047971856DFF23546FAC781B /* Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig"; sourceTree = "<group>"; };
+		14FDB169D97F49F1FB2791A2 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		156526C8209F76E600852D39 /* CustomComponentText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomComponentText.swift; sourceTree = "<group>"; };
 		15C84A961D2D531E002E4988 /* MediosOffTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediosOffTableViewController.h; sourceTree = "<group>"; };
 		15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediosOffTableViewController.m; sourceTree = "<group>"; };
@@ -100,8 +99,8 @@
 		4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThirdHookViewController.m; path = Hooks/ThirdHookViewController.m; sourceTree = "<group>"; };
 		4B811DED1FCDD49A000611AD /* SecondHookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondHookViewController.m; path = Hooks/SecondHookViewController.m; sourceTree = "<group>"; };
 		4B811DEE1FCDD49A000611AD /* FirstHookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstHookViewController.h; path = Hooks/FirstHookViewController.h; sourceTree = "<group>"; };
-		5231F08A48CD3E364CF4DE2E /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveCTests/Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig"; sourceTree = "<group>"; };
-		5B1E48FF5AB4373760232522 /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; sourceTree = "<group>"; };
+		542133090B690B2A064E0E54 /* Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig"; sourceTree = "<group>"; };
+		60C32D4852CDA61F565DAE33 /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveCTests/Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig"; sourceTree = "<group>"; };
 		763B44F71D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPaymentMethodTableViewController.h; sourceTree = "<group>"; };
 		763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectPaymentMethodTableViewController.m; sourceTree = "<group>"; };
 		766627551D2AFDF9002EB903 /* SavedCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedCardsTableViewController.h; sourceTree = "<group>"; };
@@ -134,15 +133,13 @@
 		76EF7F211D255C7E0087C785 /* ExampleUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleUtils.m; sourceTree = "<group>"; };
 		76EF7F581D26FDB80087C785 /* MainExamplesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainExamplesViewController.h; sourceTree = "<group>"; };
 		76EF7F591D26FDB80087C785 /* MainExamplesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainExamplesViewController.m; sourceTree = "<group>"; };
-		76EF7F5B1D27027A0087C785 /* StepsExamplesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepsExamplesViewController.h; sourceTree = "<group>"; };
-		76EF7F5C1D27027A0087C785 /* StepsExamplesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepsExamplesViewController.m; sourceTree = "<group>"; };
 		76EF7F5E1D2706720087C785 /* ServicesExamplesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesExamplesViewController.h; sourceTree = "<group>"; };
 		76EF7F5F1D2706720087C785 /* ServicesExamplesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesExamplesViewController.m; sourceTree = "<group>"; };
 		81488CC01FE93E0C003C35B1 /* TestComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestComponent.swift; sourceTree = "<group>"; };
 		81760F3A1FD5981B00237A81 /* MercadoPagoPXTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoPXTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		87BDC474F616E971319A81F8 /* Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveCTests/Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C5782BCBF8F4486F5771B2EF /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D77EE9A8E778F15DDDBC622B /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE7E841E3BF020E7B8734816 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D32574A2EF0CC292260A58D1 /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig"; sourceTree = "<group>"; };
+		E8382E28CA70E8FC2C91977C /* Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveCTests/Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +147,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89E2D62BFE6285DFD1B7DB40 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */,
+				15AF42AA1D36848100E70343 /* MercadoPagoSDK.framework in Frameworks */,
+				0570FF3C545361FF9CA1F323 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,7 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90B0FE8C5E538FEE11591685 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework in Frameworks */,
+				3481D596169AC0AC909D40B3 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,8 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				81760F3A1FD5981B00237A81 /* MercadoPagoPXTracking.framework */,
-				C5782BCBF8F4486F5771B2EF /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */,
-				D77EE9A8E778F15DDDBC622B /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */,
+				14FDB169D97F49F1FB2791A2 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */,
+				CE7E841E3BF020E7B8734816 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -209,17 +207,6 @@
 				4B811DEC1FCDD49A000611AD /* ThirdHookViewController.m */,
 			);
 			name = Hooks;
-			sourceTree = "<group>";
-		};
-		534E667780A9D067BBE15284 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5B1E48FF5AB4373760232522 /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */,
-				047971856DFF23546FAC781B /* Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig */,
-				87BDC474F616E971319A81F8 /* Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig */,
-				5231F08A48CD3E364CF4DE2E /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		76E6E0601D2AD29C006CE49B /* Example */ = {
@@ -259,7 +246,7 @@
 				76EF7EE41D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCUITests */,
 				76EF7EBE1D2559140087C785 /* Products */,
 				250DBD73536A8A42B1E606E9 /* Frameworks */,
-				534E667780A9D067BBE15284 /* Pods */,
+				8B20EEDF2B32CF9D31CAE66A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -326,14 +313,23 @@
 			children = (
 				76EF7F581D26FDB80087C785 /* MainExamplesViewController.h */,
 				76EF7F591D26FDB80087C785 /* MainExamplesViewController.m */,
-				76EF7F5B1D27027A0087C785 /* StepsExamplesViewController.h */,
-				76EF7F5C1D27027A0087C785 /* StepsExamplesViewController.m */,
 				76EF7F5E1D2706720087C785 /* ServicesExamplesViewController.h */,
 				76EF7F5F1D2706720087C785 /* ServicesExamplesViewController.m */,
 				76BAC63F1E4B2ED80081F675 /* MercadoPagoSDKExamplesObjectiveC-Bridging-Header.h */,
 				81488CC01FE93E0C003C35B1 /* TestComponent.swift */,
 			);
 			name = "Component Examples";
+			sourceTree = "<group>";
+		};
+		8B20EEDF2B32CF9D31CAE66A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D32574A2EF0CC292260A58D1 /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */,
+				542133090B690B2A064E0E54 /* Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig */,
+				E8382E28CA70E8FC2C91977C /* Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig */,
+				60C32D4852CDA61F565DAE33 /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,12 +339,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 76EF7EEA1D2559140087C785 /* Build configuration list for PBXNativeTarget "MercadoPagoSDKExamplesObjectiveC" */;
 			buildPhases = (
-				E3E2D9028C3594450BF01D3A /* [CP] Check Pods Manifest.lock */,
+				E487A280810E379C48CF2F62 /* [CP] Check Pods Manifest.lock */,
 				76EF7EB91D2559140087C785 /* Sources */,
 				76EF7EBA1D2559140087C785 /* Frameworks */,
 				76EF7EBB1D2559140087C785 /* Resources */,
 				15AF42AE1D36848100E70343 /* Embed Frameworks */,
-				B0BCF506448128360A0F5998 /* [CP] Embed Pods Frameworks */,
+				32CE6805B0B53FFFE6546E98 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -363,7 +359,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 76EF7EED1D2559140087C785 /* Build configuration list for PBXNativeTarget "MercadoPagoSDKExamplesObjectiveCTests" */;
 			buildPhases = (
-				8BEA8DB4E81FCA1483BAA9C1 /* [CP] Check Pods Manifest.lock */,
+				E468C93195E47403CA7144FD /* [CP] Check Pods Manifest.lock */,
 				76EF7ED21D2559140087C785 /* Sources */,
 				76EF7ED31D2559140087C785 /* Frameworks */,
 				76EF7ED41D2559140087C785 /* Resources */,
@@ -445,25 +441,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8BEA8DB4E81FCA1483BAA9C1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MercadoPagoSDKExamplesObjectiveCTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B0BCF506448128360A0F5998 /* [CP] Embed Pods Frameworks */ = {
+		32CE6805B0B53FFFE6546E98 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -491,7 +469,25 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E3E2D9028C3594450BF01D3A /* [CP] Check Pods Manifest.lock */ = {
+		E468C93195E47403CA7144FD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MercadoPagoSDKExamplesObjectiveCTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E487A280810E379C48CF2F62 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -530,7 +526,6 @@
 				2385C5DA20125871002C147D /* MeliTheme.swift in Sources */,
 				15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */,
 				76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */,
-				76EF7F5D1D27027A0087C785 /* StepsExamplesViewController.m in Sources */,
 				76E6E06A1D2AD33F006CE49B /* SimpleVaultViewController.m in Sources */,
 				23CF4ECE20994D1A00EC9399 /* MPTheme.swift in Sources */,
 				76EF7F601D2706720087C785 /* ServicesExamplesViewController.m in Sources */,
@@ -678,7 +673,7 @@
 		};
 		76EF7EEB1D2559140087C785 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B1E48FF5AB4373760232522 /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */;
+			baseConfigurationReference = D32574A2EF0CC292260A58D1 /* Pods-MercadoPagoSDKExamplesObjectiveC.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -698,7 +693,7 @@
 		};
 		76EF7EEC1D2559140087C785 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 047971856DFF23546FAC781B /* Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig */;
+			baseConfigurationReference = 542133090B690B2A064E0E54 /* Pods-MercadoPagoSDKExamplesObjectiveC.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -717,7 +712,7 @@
 		};
 		76EF7EEE1D2559140087C785 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87BDC474F616E971319A81F8 /* Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig */;
+			baseConfigurationReference = E8382E28CA70E8FC2C91977C /* Pods-MercadoPagoSDKExamplesObjectiveCTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -731,7 +726,7 @@
 		};
 		76EF7EEF1D2559140087C785 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5231F08A48CD3E364CF4DE2E /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */;
+			baseConfigurationReference = 60C32D4852CDA61F565DAE33 /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

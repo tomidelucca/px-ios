@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class CardToken: NSObject, CardInformationForm {
 
     let MIN_LENGTH_NUMBER: Int = 10

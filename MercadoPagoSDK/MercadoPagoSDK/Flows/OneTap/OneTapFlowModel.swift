@@ -10,7 +10,6 @@ import Foundation
 import MercadoPagoServicesV4
 
 final class OneTapFlowModel: NSObject, PXFlowModel {
-
     enum Steps: String {
         case finish
         case screenReviewOneTap
@@ -28,6 +27,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
+    var consumedDiscount: Bool = false
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -38,21 +38,23 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules, consumedDiscount: consumedDiscount)
         }
     }
 
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
-    let reviewScreenPreference: ReviewScreenPreference
-    let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
+    let reviewScreenConfiguration: PXReviewConfirmConfiguration
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), chargeRules: [PXPaymentTypeChargeRule]?) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+        self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenPreference = reviewScreenPreference
+        self.reviewScreenConfiguration = reviewScreenConfiguration
         self.chargeRules = chargeRules
+        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
@@ -76,6 +78,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     }
 }
 
+/** :nodoc: */
 // MARK: Create view model
 extension OneTapFlowModel {
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
@@ -92,10 +95,11 @@ extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
     }
 }
 
+/** :nodoc: */
 // MARK: Update view models
 extension OneTapFlowModel {
     func updateCheckoutModel(paymentData: PaymentData) {
@@ -116,6 +120,7 @@ extension OneTapFlowModel {
 
 }
 
+/** :nodoc: */
 // MARK: Flow logic
 extension OneTapFlowModel {
     func needReviewAndConfirmForOneTap() -> Bool {

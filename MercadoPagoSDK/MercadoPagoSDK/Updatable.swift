@@ -9,6 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objc public protocol Updatable {
 
     func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod)

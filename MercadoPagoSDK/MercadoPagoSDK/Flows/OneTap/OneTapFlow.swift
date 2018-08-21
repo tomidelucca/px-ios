@@ -7,17 +7,20 @@
 //
 
 import Foundation
-final class OneTapFlow: NSObject, PXFlow {
 
+final class OneTapFlow: NSObject, PXFlow {
     let model: OneTapFlowModel
     let pxNavigationHandler: PXNavigationHandler
 
     weak var resultHandler: PXOneTapResultHandlerProtocol?
 
-    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol) {
+    let advancedConfig: PXAdvancedConfiguration
+
+    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, consumedDiscount: Bool, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         pxNavigationHandler = navigationController
         resultHandler = oneTapResultHandler
-        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference, chargeRules: chargeRules)
+        advancedConfig = advancedConfiguration
+        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, reviewScreenConfiguration: reviewConfirmConfiguration, chargeRules: chargeRules, consumedDiscount: consumedDiscount, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     deinit {

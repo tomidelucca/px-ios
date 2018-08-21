@@ -30,6 +30,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+/** :nodoc: */
 @objcMembers
 open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
@@ -41,8 +42,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
 
     var merchantBaseUrl: String!
-    var merchantAccessToken: String!
-    var publicKey: String!
 
     var groupName: String?
 
@@ -67,7 +66,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     init(viewModel: PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
-        self.initCommon()
         self.viewModel = viewModel
         if let groupName = self.viewModel.groupName {
             self.groupName = groupName
@@ -83,11 +81,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             finalId = screenId + "/" + groupName
         }
         MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName, properties: properties)
-    }
-
-    fileprivate func initCommon() {
-        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
-        self.publicKey = MercadoPagoContext.publicKey()
     }
 
     required  public init(coder aDecoder: NSCoder) {
@@ -129,7 +122,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     @objc func updateCoupon(_ notification: Notification) {
         if (notification.userInfo?["coupon"] as? PXDiscount) != nil {
-            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules)
+            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules, consumedDiscount: viewModel.amountHelper.consumedDiscount)
             self.collectionSearch.reloadData()
         }
     }

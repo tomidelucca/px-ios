@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers
 @IBDesignable open class CardFrontView: UIView, Updatable {
   var view: UIView!
@@ -89,6 +90,7 @@ import MercadoPagoServicesV4
 
 }
 
+/** :nodoc: */
 extension UIView {
     class func loadFromNibNamed(_ nibNamed: String, bundle: Bundle? = nil) -> UIView? {
         return UINib(
@@ -98,6 +100,7 @@ extension UIView {
     }
 }
 
+/** :nodoc: */
 extension String {
     func insert(_ string: String, ind: Int) -> String {
         return  String(self.prefix(ind)) + string + String(self.suffix(self.count-ind))

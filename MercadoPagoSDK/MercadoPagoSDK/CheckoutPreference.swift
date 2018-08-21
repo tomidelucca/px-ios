@@ -9,15 +9,17 @@
 import UIKit
 import MercadoPagoServicesV4
 
+/** :nodoc: */
 @objcMembers open class CheckoutPreference: NSObject {
-
     open var preferenceId: String!
     open var items: [Item]!
     open var payer: PXPayer!
     open var paymentPreference: PaymentPreference!
-    open var siteId: String = "MLA"
+    open var siteId: String = "MLA" // TODO: Ver esto
     open var expirationDateFrom: Date?
     open var expirationDateTo: Date?
+    open var differentialPricing: PXDifferentialPricing?
+    private var binaryModeEnabled: Bool = false
 
     open class func fromJSON(_ json: NSDictionary) -> CheckoutPreference {
                 let preference: CheckoutPreference = CheckoutPreference()
@@ -129,7 +131,6 @@ import MercadoPagoServicesV4
     }
 
     public func getPayer() -> PXPayer {
-        payer.accessToken = MercadoPagoContext.payerAccessToken()
         return payer
     }
 
@@ -253,4 +254,28 @@ import MercadoPagoServicesV4
         }
         return amount
     }
+}
+
+// MARK: BinaryMode
+extension CheckoutPreference {
+    open func isBinaryMode() -> Bool {
+        return binaryModeEnabled
+    }
+
+    open func setBinaryMode(isBinaryMode: Bool) -> CheckoutPreference {
+        self.binaryModeEnabled = isBinaryMode
+        return self
+    }
+}
+
+/** :nodoc: */
+public func == (obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
+
+    let areEqual =
+        obj1.preferenceId == obj2.preferenceId &&
+            obj1.items == obj2.items &&
+            obj1.payer == obj2.payer &&
+            obj1.paymentPreference == obj2.paymentPreference
+
+    return areEqual
 }

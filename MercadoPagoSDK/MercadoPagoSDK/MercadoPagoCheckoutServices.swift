@@ -60,12 +60,12 @@ extension MercadoPagoCheckout {
             let esc = self.viewModel.mpESCManager.getESC(cardId: cardInfo.getCardId())
 
             if !String.isNullOrEmpty(esc) {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc)
+                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
             } else {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode)
+                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
             }
-            createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 
+            createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
         } else {
             guard let securityCode = securityCode else {
                 return
@@ -210,7 +210,11 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, callback: { [weak self] (installments) in
+        var diffPricingString: String? = nil
+        if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
+            diffPricingString = String(describing: differentialPricing)
+        }
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, differentialPricingId: diffPricingString, callback: { [weak self] (installments) in
 
             guard let strongSelf = self else {
                 return

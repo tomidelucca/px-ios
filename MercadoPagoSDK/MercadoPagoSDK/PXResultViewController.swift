@@ -177,6 +177,7 @@ class PXResultViewController: PXComponentContainerViewController {
 }
 
 // Components
+/** :nodoc: */
 extension PXResultViewController {
     func buildHeaderView() -> UIView {
         let headerComponent = viewModel.buildHeaderComponent()
@@ -205,11 +206,11 @@ extension PXResultViewController {
     }
 
     func buildTopCustomView() -> UIView? {
-        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            if componentView.backgroundColor == nil {
-                componentView.backgroundColor = .white
+        if let customView = self.viewModel.buildTopCustomView() {
+            if customView.backgroundColor == nil {
+                customView.backgroundColor = .white
             }
-            return componentView
+            return customView
         }
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -217,11 +218,11 @@ extension PXResultViewController {
     }
 
     func buildBottomCustomView() -> UIView? {
-        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            if componentView.backgroundColor == nil {
-                componentView.backgroundColor = .white
+        if let customView = self.viewModel.buildBottomCustomView() {
+            if customView.backgroundColor == nil {
+                customView.backgroundColor = .white
             }
-            return componentView
+            return customView
         }
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

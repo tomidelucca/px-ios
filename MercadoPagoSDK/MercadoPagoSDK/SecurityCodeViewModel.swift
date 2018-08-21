@@ -8,6 +8,8 @@
 
 import Foundation
 import MercadoPagoServicesV4
+
+/** :nodoc: */
 @objcMembers
 open class SecurityCodeViewModel: NSObject {
     var paymentMethod: PXPaymentMethod!

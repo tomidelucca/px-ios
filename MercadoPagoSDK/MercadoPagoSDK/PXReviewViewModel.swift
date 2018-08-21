@@ -19,13 +19,15 @@ class PXReviewViewModel: NSObject {
 
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
-    var reviewScreenPreference: ReviewScreenPreference
+    var reviewScreenPreference: PXReviewConfirmConfiguration
+    var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenPreference = reviewScreenPreference
+        self.reviewScreenPreference = reviewConfirmConfig
+        self.userLogged = userLogged
     }
 
     // MARK: Tracking logic
@@ -63,12 +65,8 @@ extension PXReviewViewModel {
         return self.amountHelper.paymentData.hasPaymentMethod()
     }
 
-    func isUserLogged() -> Bool {
-        return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
-    }
-
     func shouldShowTermsAndCondition() -> Bool {
-        return !isUserLogged()
+        return !userLogged
     }
 
     func shouldShowDiscountTermsAndCondition() -> Bool {
@@ -76,6 +74,11 @@ extension PXReviewViewModel {
             return true
         }
         return false
+    }
+
+    func getDiscountTermsAndConditionView(shouldAddMargins: Bool = true) -> PXTermsAndConditionView {
+        let discountTermsAndConditionView = PXDiscountTermsAndConditionView(amountHelper: amountHelper, shouldAddMargins: shouldAddMargins)
+        return discountTermsAndConditionView
     }
 
     func shouldShowInstallmentSummary() -> Bool {
@@ -109,8 +112,8 @@ extension PXReviewViewModel {
     func getUnlockLink() -> URL? {
         let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
-        guard let issuerID = self.amountHelper.paymentData.getIssuer()?.id else {
+        let site = SiteManager.shared.getSiteId()
+        guard let issuerID = self.amountHelper.paymentData.getIssuer()?.issuerId else {
             return nil
         }
         let searchString: String = site + "_" + "\(issuerID)"
@@ -152,7 +155,7 @@ extension PXReviewViewModel {
             }
         }
 
-        if charge > 0 {
+        if charge > PXReviewViewModel.ERROR_DELTA {
             if let chargesTitle = self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE] {
                 let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
                 let chargesSummaryDetail = SummaryDetail(title: chargesTitle, detail: chargesAmountDetail)
@@ -181,7 +184,7 @@ extension PXReviewViewModel {
                 interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmountWithCharges
             }
 
-            if interest > 0 {
+            if interest > PXReviewViewModel.ERROR_DELTA {
                 let interestAmountDetail = SummaryItemDetail(amount: interest)
                 if summary.details[SummaryType.CHARGE] != nil {
                     summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.CHARGE)
@@ -283,7 +286,7 @@ extension PXReviewViewModel {
     // HotFix: TODO - Move to OneTapViewModel
     func buildOneTapItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
-        if reviewScreenPreference.isItemsEnable() {
+        if reviewScreenPreference.hasItemsEnabled() {
             for item in self.amountHelper.preference.items {
                 if let itemComponent = buildOneTapItemComponent(item: item) {
                     pxItemComponents.append(itemComponent)
@@ -295,7 +298,7 @@ extension PXReviewViewModel {
 
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
-        if reviewScreenPreference.isItemsEnable() { // Items can be disable
+        if reviewScreenPreference.hasItemsEnabled() { // Items can be disable
             for item in self.amountHelper.preference.items {
                 if let itemComponent = buildItemComponent(item: item) {
                     pxItemComponents.append(itemComponent)
@@ -388,20 +391,32 @@ extension PXReviewViewModel {
     }
 }
 
-// MARK: Custom Components
+// MARK: Custom Views
 extension PXReviewViewModel {
-
-    func buildTopCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getTopComponent() {
-            return PXCustomComponentContainer(withComponent: customComponent)
+    func buildTopCustomView() -> UIView? {
+        if let customView = reviewScreenPreference.getTopCustomView() {
+            return buildComponentView(customView)
         }
         return nil
     }
 
-    func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getBottomComponent() {
-            return PXCustomComponentContainer(withComponent: customComponent)
+    func buildBottomCustomView() -> UIView? {
+        if let customView = reviewScreenPreference.getBottomCustomView() {
+            return buildComponentView(customView)
         }
         return nil
+    }
+
+    private func buildComponentView(_ customView: UIView) -> UIView {
+        let componentView = UIView()
+        componentView.translatesAutoresizingMaskIntoConstraints = false
+        customView.translatesAutoresizingMaskIntoConstraints = false
+        PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
+        componentView.addSubview(customView)
+        PXLayout.centerHorizontally(view: customView).isActive = true
+        PXLayout.pinTop(view: customView).isActive = true
+        PXLayout.pinBottom(view: customView).isActive = true
+        PXLayout.matchWidth(ofView: customView).isActive = true
+        return componentView
     }
 }

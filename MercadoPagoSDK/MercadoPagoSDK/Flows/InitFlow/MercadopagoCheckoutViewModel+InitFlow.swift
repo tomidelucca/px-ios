@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 // MARK: Init Flow
 extension MercadoPagoCheckoutViewModel {
@@ -20,10 +21,18 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.paymentMethodSearchResult = self.search
         initFlowProperties.chargeRules = self.chargeRules
         initFlowProperties.campaigns = self.campaigns
+        initFlowProperties.consumedDiscount = self.consumedDiscount
+        initFlowProperties.discount = self.paymentData.discount
+        initFlowProperties.serviceAdapter = self.mercadoPagoServicesAdapter
 
         // Create init flow.
-        initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] paymentMethodSearchResponse  in
+        initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse, pxCampaigns, pxDiscount)  in
             self?.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
+
+            self?.campaigns = pxCampaigns
+            self?.checkoutPreference = checkoutPreference
+            self?.attemptToApplyDiscount(discount: pxDiscount)
+
             self?.initFlowProtocol?.didFinishInitFlow()
         }, errorCallback: { [weak self] initFlowError in
             self?.initFlowProtocol?.didFailInitFlow(flowError: initFlowError)
@@ -40,5 +49,16 @@ extension MercadoPagoCheckoutViewModel {
 
     func updateInitFlow() {
         initFlow?.updateModel(paymentPlugin: self.paymentPlugin, paymentMethodPlugins: self.paymentMethodPlugins)
+    }
+
+    func attemptToApplyDiscount(discount: PXDiscount?) {
+        if let discount = discount, let campaigns = self.campaigns {
+            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
+                return campaign.id.stringValue == discount.id
+            }
+            if let firstFilteredCampaign = filteredCampaigns.first {
+                self.setDiscount(discount, withCampaign: firstFilteredCampaign)
+            }
+        }
     }
 }

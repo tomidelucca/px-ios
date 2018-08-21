@@ -7,15 +7,16 @@
 //
 
 import Foundation
-extension PXPaymentFlow {
 
+/** :nodoc: */
+extension PXPaymentFlow {
     func showPaymentPluginComponent(paymentPluginComponent: PXPaymentPluginComponent?) {
 
         guard let paymentPluginComponent = paymentPluginComponent else {
             return
         }
 
-        let containerVC = MercadoPagoUIViewController()
+        let containerVC = PXPaymentPluginViewController()
 
         // By feature definition. Back is not available in make payment plugin.
         containerVC.shouldShowBackArrow = false

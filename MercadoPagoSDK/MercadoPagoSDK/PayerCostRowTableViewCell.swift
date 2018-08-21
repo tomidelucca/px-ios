@@ -15,7 +15,7 @@ class PayerCostRowTableViewCell: UITableViewCell {
     @IBOutlet weak var installmentDescription: UILabel!
 
     func fillCell(payerCost: PXPayerCost, showDescription: Bool? = true) {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         if payerCost.installments == 1 {
             self.interestDescription.clearAttributedText()
 
