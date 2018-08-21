@@ -33,13 +33,9 @@ class PXHeaderRenderer: NSObject {
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
         //Image
-
-        if let imageURL = header.props.imageURL {
-            headerView.circleImage = buildCircleImage(with: nil)
-            Utils().loadImageWithCache(withUrl: imageURL, targetImageView: headerView.circleImage!, placeholderImage: nil, fallbackImage: header.props.productImage)
-        } else {
-            headerView.circleImage = buildCircleImage(with: header.props.productImage)
-        }
+        let pximage = PXUIImage(url: header.props.imageURL)
+        headerView.circleImage = buildCircleImage(with: pximage)
+        
         if let circleImage = headerView.circleImage {
             headerView.addSubview(circleImage)
             PXLayout.centerHorizontally(view: circleImage, to: headerView).isActive = true
@@ -68,8 +64,8 @@ class PXHeaderRenderer: NSObject {
         return headerView
     }
 
-    func buildCircleImage(with image: UIImage?) -> UIImageView {
-        let circleImage = UIImageView(frame: CGRect(x: 0, y: 0, width: IMAGE_WIDTH, height: IMAGE_HEIGHT))
+    func buildCircleImage(with image: UIImage?) -> PXUIImageView {
+        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: IMAGE_WIDTH, height: IMAGE_HEIGHT))
         circleImage.layer.masksToBounds = false
         circleImage.layer.cornerRadius = circleImage.frame.height/2
         circleImage.clipsToBounds = true
@@ -82,14 +78,12 @@ class PXHeaderRenderer: NSObject {
         return circleImage
     }
 
-    func buildBudgeImage(with image: UIImage?) -> UIImageView {
-        let badgeImage = UIImageView()
-        badgeImage.translatesAutoresizingMaskIntoConstraints = false
-        badgeImage.image = image
-        PXLayout.setHeight(owner: badgeImage, height: BADGE_IMAGE_SIZE).isActive = true
-        PXLayout.setWidth(owner: badgeImage, width: BADGE_IMAGE_SIZE).isActive = true
-        return badgeImage
+    func buildBudgeImage(with image: UIImage?) -> PXAnimatedImageView {
+        let imageView = PXAnimatedImageView(image: image, size: CGSize(width: BADGE_IMAGE_SIZE, height: BADGE_IMAGE_SIZE))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }
+
     func buildStatusLabel(with text: NSAttributedString?, in superView: UIView, onBottomOf upperView: UIView) -> UILabel {
         let statusLabel = UILabel()
         let font = Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)
@@ -126,9 +120,13 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-public class PXHeaderView: PXComponentView {
-    public var circleImage: UIImageView?
-    public var badgeImage: UIImageView?
+public class PXHeaderView: PXComponentView, PXAnimatedView {
+    func animate(duration: Double) {
+        self.badgeImage?.animate(duration: duration)
+    }
+
+    public var circleImage: PXUIImageView?
+    public var badgeImage: PXAnimatedImageView?
     public var statusLabel: UILabel?
     public var messageLabel: UILabel?
 }

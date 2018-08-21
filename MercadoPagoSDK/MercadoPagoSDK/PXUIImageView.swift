@@ -8,10 +8,10 @@
 
 import UIKit
 
-class PXUIImageView: UIImageView {
+public class PXUIImageView: UIImageView {
 
     private var currentImage: UIImage?
-    override var image: UIImage? {
+    override public var image: UIImage? {
         set {
             loadImage(image: newValue)
         }
@@ -21,14 +21,40 @@ class PXUIImageView: UIImageView {
     }
 
     private func loadImage(image: UIImage?) {
-        self.contentMode = .scaleAspectFit
+        self.contentMode = .scaleAspectFill
         if let pxImage = image as? PXUIImage {
-            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: buildLabel(with: pxImage.placeholder), fallbackView: buildLabel(with: pxImage.fallback)) { newImage in
+            let placeholder = buildPlaceholderView(image: pxImage)
+            let fallback = buildFallbackView(image: pxImage)
+
+            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback) { newImage in
                 self.currentImage = newImage
             }
         } else {
             self.currentImage = image
         }
+    }
+
+    private func buildPlaceholderView(image: PXUIImage) -> UIView? {
+        if let placeholderString = image.placeholder {
+            return buildLabel(with: placeholderString)
+        } else {
+            return buildSpinner()
+        }
+    }
+
+    private func buildFallbackView(image: PXUIImage) -> UIView? {
+        if let fallbackString = image.fallback {
+            return buildLabel(with: fallbackString)
+        } else {
+            return buildSpinner()
+        }
+    }
+
+    private func buildSpinner() -> UIView {
+        let spinner = PXComponentFactory.SmallSpinner.new(color1: ThemeManager.shared.secondaryColor(), color2: ThemeManager.shared.secondaryColor())
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.show()
+        return spinner
     }
 
     private func buildLabel(with text: String?) -> UILabel? {

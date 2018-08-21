@@ -63,17 +63,17 @@
 //        [handler showError];
 
     // Result with payment result
-    PXPaymentPluginResult* result = [[PXPaymentPluginResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
-    successWithPaymentResult(result);
+//    PXPaymentPluginResult* result = [[PXPaymentPluginResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
+//    successWithPaymentResult(result);
 
 
     // Result with business result
-//    CustomComponentText* component = [[CustomComponentText alloc] init];
-//    PXComponentAction* printeaEnConsola = [[PXComponentAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
-//        NSLog(@"print !!! action!!");
-//    }];
-//
-//    PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"1879867544" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: nil paymentStatus:@"" paymentStatusDetail:@""];
-//    successWithBusinessResult(businessResult);
+    CustomComponentText* component = [[CustomComponentText alloc] init];
+    PXComponentAction* printeaEnConsola = [[PXComponentAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
+        NSLog(@"print !!! action!!");
+    }];
+
+    PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"1879867544" status:PXBusinessResultStatusAPPROVED title:@"¡Listo! Ya pagaste en YPF" subtitle:nil icon:[UIImage imageNamed:@"ypf"] mainAction:nil secondaryAction:nil helpMessage:nil showPaymentMethod:YES statementDescription:nil imageUrl:@"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png" topCustomView:[component render] bottomCustomView: nil paymentStatus:@"" paymentStatusDetail:@""];
+    successWithBusinessResult(businessResult);
 }
 @end
