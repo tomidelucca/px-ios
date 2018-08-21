@@ -18,6 +18,16 @@ Pod::Spec.new do |s|
     s.dependency 'MercadoPagoServices', '1.0.2.2'
   end
 
+  s.subspec 'ESC' do |esc|	
+	esc.dependency 'MercadoPagoSDK/Default'  
+    	esc.dependency 'MLESCManager', '1.0.0' 
+     esc.pod_target_xcconfig = { 
+       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE', 
+       'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE', 
+       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D MPESC_ENABLE' 
+     } 
+   end
+  
 s.pod_target_xcconfig = {
   'SWIFT_VERSION' => '3.0.1'
 }
