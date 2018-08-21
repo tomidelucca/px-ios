@@ -45,7 +45,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
         }
     }
 
-    func fillInstallmentsLabel(payerCost: PayerCost) {
+    func fillInstallmentsLabel(payerCost: PXPayerCost) {
         let currency = SiteManager.shared.getCurrency()
         self.installmentsLabel.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), currency: currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string: ""), color: UIColor.px_grayBaseText(), fontSize: 20, centsFontSize: 12, baselineOffset: 6)
     }

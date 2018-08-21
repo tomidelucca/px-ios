@@ -67,7 +67,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
         self.installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
 
-        self.transactionDetails = PXTransactionDetails()
         if let transactionDetails = paymentData.transactionDetails {
             self.transactionDetails = transactionDetails
         }

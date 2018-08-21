@@ -112,7 +112,8 @@
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
-    [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
+
+    //[mpCheckout setChargeRulesWithChargeRules:chargesArray];
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
@@ -158,49 +159,22 @@
 }
 
 -(void)addPaymentMethodPluginToPaymentConfig {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
-                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
-
-    PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-
-<<<<<<< HEAD
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {
-    PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_call_for_authorize" paymentData:self.paymentData payerEmail:@"sarasa" paymentId:@"123" statementDescription:@"sarasa"];
-    self.paymentResult = paymentResult;
 
 }
 
 -(void) setPaymentData {
-    PaymentData* paymentData = [[PaymentData alloc] init];
 
-
-    self.paymentData = paymentData;
 }
 -(void)setRyCUpdate {
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
 
-        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
-        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
-        //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
-        [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
-        //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
-        //[self.navigationController popToRootViewControllerAnimated:NO];
-    }];
 }
 
 
 -(void)setPaymentDataCallback {
 
-    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"account_money" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"Hola mundo" paymentPlugin:makePaymentComponent];
-
-    // Payment method config plugin component.
-    // PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
-    // [bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
-
-    [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
 }
 
 -(void)setVoidCallback {

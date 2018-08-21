@@ -173,7 +173,7 @@ extension PXOneTapItemRenderer {
 
     private func buildAttributedTotalAmountWithoutDiscount(amount: Double, color: UIColor, font: UIFont) -> NSAttributedString {
         let currency = SiteManager.shared.getCurrency()
-        let amount = Utils.getAmountFormatted(amount: amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, addingCurrencySymbol: currency.symbol).toAttributedString()
+        let amount = Utils.getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault()).toAttributedString()
         let amountString = NSMutableAttributedString(attributedString: amount)
         amountString.addAttributes([NSAttributedStringKey.font: font], range: NSRange(location: 0, length: amount.length))
         amountString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: amount.length))

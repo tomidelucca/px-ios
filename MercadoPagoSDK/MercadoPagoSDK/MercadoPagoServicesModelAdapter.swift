@@ -14,7 +14,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getPXSiteFromId(_ siteId: String) -> PXSite {
         let currency = SiteManager.shared.getCurrency()
-        let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
+        let pxSite = PXSite(id: siteId, currencyId: currency.id)
         return pxSite
     }
 
@@ -28,7 +28,7 @@ extension MercadoPagoServicesAdapter {
             }
         }
         checkoutPreference.differentialPricing = pxCheckoutPreference.differentialPricing
-        checkoutPreference.payer = getPayerFromPXPayer(pxCheckoutPreference.payer)
+        checkoutPreference.payer = pxCheckoutPreference.payer
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
         checkoutPreference.siteId = pxCheckoutPreference.siteId ?? ""
         checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom ?? Date()

@@ -21,7 +21,7 @@ class PaymentVaultViewModel: NSObject {
     var defaultPaymentOption: PaymentMethodSearchItem?
 
     var displayItems = [PaymentOptionDrawable]()
-    var currency: Currency = SiteManager.shared.getCurrency()
+    var currency: PXCurrency = SiteManager.shared.getCurrency()
 
     var customerId: String?
 

@@ -128,7 +128,7 @@ extension MercadoPagoCheckout {
         PXTrackingSettings.enableBetaServices()
     }
 
-    internal func setCheckoutPreference(checkoutPreference: PXCheckoutPreference) {
+    internal func setCheckoutPreference(checkoutPreference: CheckoutPreference) {
         self.viewModel.checkoutPreference = checkoutPreference
     }
 

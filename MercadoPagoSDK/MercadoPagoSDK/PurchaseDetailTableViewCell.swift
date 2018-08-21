@@ -70,7 +70,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
         return ROW_HEIGHT
     }
 
-    private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
+    private func getInstallmentsAmount(payerCost: PXPayerCost) -> NSAttributedString {
         return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: SiteManager.shared.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 24, baselineOffset: 8)
     }
 }
