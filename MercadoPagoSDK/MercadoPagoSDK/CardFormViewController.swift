@@ -58,7 +58,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM }
 
     public init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
-        super.init(nibName: "CardFormViewController", bundle: ResourcesManager.shared.getBundle())
+        super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = cardFormManager
         self.callback = callback
         //  self.paymentMethods = cardFormManager.getPaymentMethods()
@@ -126,7 +126,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     public init(paymentSettings: PaymentPreference?, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
-        super.init(nibName: "CardFormViewController", bundle: ResourcesManager.shared.getBundle())
+        super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel
         self.callback = callback
@@ -661,15 +661,15 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func clearCardSkin() {
-        if self.cardFront?.cardLogo.image != nil, self.cardFront?.cardLogo.image != ResourcesManager.shared.getCardDefaultLogo() {
+        if self.cardFront?.cardLogo.image != nil, self.cardFront?.cardLogo.image != ResourceManager.shared.getCardDefaultLogo() {
             self.cardFront?.cardLogo.alpha = 0
-            self.cardFront?.cardLogo.image =  ResourcesManager.shared.getCardDefaultLogo()
+            self.cardFront?.cardLogo.image =  ResourceManager.shared.getCardDefaultLogo()
             UIView.animate(withDuration: 0.7, animations: { () -> Void in
                 self.cardView.backgroundColor = UIColor.cardDefaultColor()
                 self.cardFront?.cardLogo.alpha = 1
             })
         } else if self.cardFront?.cardLogo.image == nil {
-            self.cardFront?.cardLogo.image = ResourcesManager.shared.getCardDefaultLogo()
+            self.cardFront?.cardLogo.image = ResourceManager.shared.getCardDefaultLogo()
             self.cardView.backgroundColor = UIColor.cardDefaultColor()
         }
 
@@ -704,7 +704,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             let bin = viewModel.getBIN(self.cardNumberLabel!.text!)
             if let paymentMethod = viewModel.getGuessedPM() {
 
-                if self.cardFront?.cardLogo.image == ResourcesManager.shared.getCardDefaultLogo() {
+                if self.cardFront?.cardLogo.image == ResourceManager.shared.getCardDefaultLogo() {
                     self.cardFront?.cardLogo.alpha = 0
                     self.cardFront?.cardLogo.image =  paymentMethod.getImage()
                     UIView.animate(withDuration: 0.7, animations: { () -> Void in

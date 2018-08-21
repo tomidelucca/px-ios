@@ -304,8 +304,8 @@
 		23F5FEE8205078A9005382E9 /* PXCFTComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F5FEE6205078A9005382E9 /* PXCFTComponentView.swift */; };
 		23F98D4C20F5364700E1767E /* MercadoPagoPXTrackingV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F98D4E20F5364700E1767E /* MercadoPagoPXTrackingV4.framework */; };
 		23F98D4D20F5364700E1767E /* MercadoPagoServicesV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F98D4F20F5364700E1767E /* MercadoPagoServicesV4.framework */; };
-		4B05C2AB212724B900A1A264 /* ResourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05C2AA212724B900A1A264 /* ResourcesManager.swift */; };
-		4B05C2AC212724B900A1A264 /* ResourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05C2AA212724B900A1A264 /* ResourcesManager.swift */; };
+		4B05C2AB212724B900A1A264 /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05C2AA212724B900A1A264 /* ResourceManager.swift */; };
+		4B05C2AC212724B900A1A264 /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05C2AA212724B900A1A264 /* ResourceManager.swift */; };
 		4B08CD9B1F20E2B400FE800A /* ESCFlowsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08CD9A1F20E2B400FE800A /* ESCFlowsTests.swift */; };
 		4B08CD9D1F20F66700FE800A /* SavedESCCardToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08CD9C1F20F66700FE800A /* SavedESCCardToken.swift */; };
 		4B08CD9E1F20F66B00FE800A /* SavedESCCardToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08CD9C1F20F66700FE800A /* SavedESCCardToken.swift */; };
@@ -1058,7 +1058,7 @@
 		23F5FEE6205078A9005382E9 /* PXCFTComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCFTComponentView.swift; sourceTree = "<group>"; };
 		23F98D4E20F5364700E1767E /* MercadoPagoPXTrackingV4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoPXTrackingV4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F98D4F20F5364700E1767E /* MercadoPagoServicesV4.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoServicesV4.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B05C2AA212724B900A1A264 /* ResourcesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesManager.swift; sourceTree = "<group>"; };
+		4B05C2AA212724B900A1A264 /* ResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
 		4B08CD9A1F20E2B400FE800A /* ESCFlowsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESCFlowsTests.swift; sourceTree = "<group>"; };
 		4B08CD9C1F20F66700FE800A /* SavedESCCardToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedESCCardToken.swift; sourceTree = "<group>"; };
 		4B08CD9F1F21A06600FE800A /* SavedESCCardTokenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedESCCardTokenTest.swift; sourceTree = "<group>"; };
@@ -1516,7 +1516,7 @@
 				232114A12117D8A500B50503 /* Languages.swift */,
 				23A7FC0E211C979F002D1CB1 /* MercadoPagoCheckoutBuilder.swift */,
 				4BCC24452125C6B100B6F6AB /* SiteManager.swift */,
-				4B05C2AA212724B900A1A264 /* ResourcesManager.swift */,
+				4B05C2AA212724B900A1A264 /* ResourceManager.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -3331,7 +3331,7 @@
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				23CC9CA120FE139D006E751C /* PXPropertyStoring.swift in Sources */,
 				23C3892D20AC432D001EFDA9 /* PXFooterView.swift in Sources */,
-				4B05C2AB212724B900A1A264 /* ResourcesManager.swift in Sources */,
+				4B05C2AB212724B900A1A264 /* ResourceManager.swift in Sources */,
 				4B4E23101FFFE0AC007E8FDD /* PXResultConstants.swift in Sources */,
 				1575E7161FBCD35C00E0756D /* PXFooterViewModelHelper.swift in Sources */,
 				81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */,
@@ -4023,7 +4023,7 @@
 				FC3FC8911FBE13E800CF29E1 /* PXInstructionsActionComponent.swift in Sources */,
 				23F5FEE8205078A9005382E9 /* PXCFTComponentView.swift in Sources */,
 				4BCC24472125C6B100B6F6AB /* SiteManager.swift in Sources */,
-				4B05C2AC212724B900A1A264 /* ResourcesManager.swift in Sources */,
+				4B05C2AC212724B900A1A264 /* ResourceManager.swift in Sources */,
 				23BDC9222073DF3500678B0F /* Double+Format.swift in Sources */,
 				FC3FC85B1FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift in Sources */,
 				15521E391E60A0B000148979 /* AppDecorationKeeper.swift in Sources */,

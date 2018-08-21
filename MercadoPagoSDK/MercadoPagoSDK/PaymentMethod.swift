@@ -380,7 +380,7 @@ import UIKit
 
     // IMAGE
     open func getImage() -> UIImage? {
-        return ResourcesManager.shared.getImageFor(self)
+        return ResourceManager.shared.getImageFor(self)
     }
 
     open func setExternalPaymentMethodImage(externalImage: UIImage?) {
@@ -405,7 +405,7 @@ import UIKit
             settings = Setting.getSettingByBin(self.settings, bin: bin)
         }
 
-        return ResourcesManager.shared.getColorFor(self, settings: settings)
+        return ResourceManager.shared.getColorFor(self, settings: settings)
     }
     // Font Color
     open func getFontColor(bin: String?) -> UIColor {
@@ -415,7 +415,7 @@ import UIKit
             settings = Setting.getSettingByBin(self.settings, bin: bin)
         }
 
-        return ResourcesManager.shared.getFontColorFor(self, settings: settings)
+        return ResourceManager.shared.getFontColorFor(self, settings: settings)
     }
     // Edit Font Color
     open func getEditingFontColor(bin: String?) -> UIColor {
@@ -425,7 +425,7 @@ import UIKit
             settings = Setting.getSettingByBin(self.settings, bin: bin)
         }
 
-        return  ResourcesManager.shared.getEditingFontColorFor(self, settings: settings)
+        return  ResourceManager.shared.getEditingFontColorFor(self, settings: settings)
     }
 
     // MASKS
@@ -436,7 +436,7 @@ import UIKit
         if let bin = bin {
             settings = Setting.getSettingByBin(self.settings, bin: bin)
         }
-        return ResourcesManager.shared.getLabelMaskFor(self, settings: settings)
+        return ResourceManager.shared.getLabelMaskFor(self, settings: settings)
     }
     // Edit Text Mask
     open func getEditTextMask(bin: String?) -> String {
@@ -445,7 +445,7 @@ import UIKit
         if let bin = bin {
             settings = Setting.getSettingByBin(self.settings, bin: bin)
         }
-        return ResourcesManager.shared.getEditTextMaskFor(self, settings: settings)
+        return ResourceManager.shared.getEditTextMaskFor(self, settings: settings)
     }
 
     var isBolbradesco: Bool {

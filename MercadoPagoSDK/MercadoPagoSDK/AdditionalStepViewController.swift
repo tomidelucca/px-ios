@@ -14,7 +14,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     @IBOutlet weak var tableView: UITableView!
 
-    var bundle: Bundle? = ResourcesManager.shared.getBundle()
+    var bundle: Bundle? = ResourceManager.shared.getBundle()
     /// :nodoc:
     open let viewModel: AdditionalStepViewModel!
     override var maxFontSize: CGFloat { return self.viewModel.maxFontSize}

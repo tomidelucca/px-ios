@@ -21,7 +21,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         self.name = screenName
         self.navBarTitle = navigationBarTitle
         self.loadingVC = PXLoadingViewController()
-        super.init(nibName: "WebViewController", bundle: ResourcesManager.shared.getBundle())
+        super.init(nibName: "WebViewController", bundle: ResourceManager.shared.getBundle())
     }
     override internal var screenName: String { return name! }
 

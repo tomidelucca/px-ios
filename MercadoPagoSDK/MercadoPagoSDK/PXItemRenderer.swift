@@ -97,11 +97,11 @@ extension PXItemRenderer {
 
     fileprivate func buildItemImageUrl(imageURL: String?, collectorImage: UIImage? = nil) -> (String?, UIImage?) {
         if imageURL != nil {
-            return (imageURL, collectorImage ?? ResourcesManager.shared.getImage("MPSDK_review_iconoCarrito"))
+            return (imageURL, collectorImage ?? ResourceManager.shared.getImage("MPSDK_review_iconoCarrito"))
         } else if let image = collectorImage {
             return (nil, image)
         } else {
-            return (nil, ResourcesManager.shared.getImage("MPSDK_review_iconoCarrito"))
+            return (nil, ResourceManager.shared.getImage("MPSDK_review_iconoCarrito"))
         }
     }
 

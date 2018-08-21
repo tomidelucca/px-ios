@@ -10,7 +10,7 @@ import Foundation
 
 extension PXPaymentMethodComponentRenderer {
     func oneTapRender(component: PXPaymentMethodComponent) -> PXOneTapPaymentMethodView {
-        let arrowImage: UIImage? = ResourcesManager.shared.getImage("oneTapArrow")
+        let arrowImage: UIImage? = ResourceManager.shared.getImage("oneTapArrow")
         var defaultHeight: CGFloat = 80
         let leftRightMargin = PXLayout.S_MARGIN
         let interMargin = PXLayout.XS_MARGIN

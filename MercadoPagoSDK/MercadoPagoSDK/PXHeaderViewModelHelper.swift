@@ -48,16 +48,16 @@ extension PXResultViewModel {
             if self.paymentResult.isApproved() {
                 return preference.getApprovedBadgeImage()
             } else if self.paymentResult.isReviewManual() {
-                return ResourcesManager.shared.getImage("orange_pending_badge")
+                return ResourceManager.shared.getImage("orange_pending_badge")
             } else {
-                return ResourcesManager.shared.getImage("pending_badge")
+                return ResourceManager.shared.getImage("pending_badge")
             }
         }
         if paymentResult.isWarning() {
-            return ResourcesManager.shared.getImage("need_action_badge")
+            return ResourceManager.shared.getImage("need_action_badge")
         }
         if paymentResult.isError() {
-            return ResourcesManager.shared.getImage("error_badge")
+            return ResourceManager.shared.getImage("error_badge")
         }
         return nil
     }

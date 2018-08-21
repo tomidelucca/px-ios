@@ -147,7 +147,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     internal func displayBackButton() {
         if shouldShowBackArrow {
             let backButton = UIBarButtonItem()
-            backButton.image = ResourcesManager.shared.getImage("back")
+            backButton.image = ResourceManager.shared.getImage("back")
             backButton.style = .plain
             backButton.target = self
             backButton.tintColor = navBarTextColor

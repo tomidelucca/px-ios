@@ -69,8 +69,8 @@ class Utils {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourcesManager.shared.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
-        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourcesManager.shared.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
+        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -204,7 +204,7 @@ class Utils {
         if let fontSize = fontSize {
             attributes = [NSAttributedStringKey.font: Utils.getFont(size: fontSize)]
         }
-        clockImage.image = ResourcesManager.shared.getImage("iconTime")
+        clockImage.image = ResourceManager.shared.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
         let labelAttributedString = NSMutableAttributedString(string: String(describing: " " + text), attributes: attributes)
         labelAttributedString.insert(clockAttributedString, at: 0)
@@ -482,7 +482,7 @@ class Utils {
     }
 
     internal static func getSetting<T>(identifier: String) -> T? {
-        let path = ResourcesManager.shared.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         return dictPM![identifier] as? T
     }

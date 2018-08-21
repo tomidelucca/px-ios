@@ -40,7 +40,7 @@ final class PXTotalRowRenderer {
             let chevronImageView = UIImageView()
             chevronImageView.accessibilityIdentifier = "floating_row_chevron_image_view"
             chevronImageView.translatesAutoresizingMaskIntoConstraints = false
-            let image = ResourcesManager.shared.getImage("oneTapArrow")
+            let image = ResourceManager.shared.getImage("oneTapArrow")
             chevronImageView.image = image
             chevronImageView.contentMode = .scaleAspectFit
             totalRowView.chevron = chevronImageView

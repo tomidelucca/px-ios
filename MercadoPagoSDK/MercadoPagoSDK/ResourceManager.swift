@@ -1,5 +1,5 @@
 //
-//  ResourcesManager.swift
+//  ResourceManager.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 17/08/2018.
@@ -7,18 +7,18 @@
 //
 
 import Foundation
-internal class ResourcesManager {
+internal class ResourceManager {
 
-    static let shared = ResourcesManager()
+    static let shared = ResourceManager()
 
     let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"
 
     func getBundle() -> Bundle? {
-        return Bundle(for: ResourcesManager.self)
+        return Bundle(for: ResourceManager.self)
     }
 
     func getImage(_ name: String?) -> UIImage? {
-        guard let name = name, let bundle = ResourcesManager.shared.getBundle() else {
+        guard let name = name, let bundle = ResourceManager.shared.getBundle() else {
             return nil
         }
         return UIImage(named: name, in: bundle, compatibleWith: nil)
@@ -27,10 +27,10 @@ internal class ResourcesManager {
 }
 
 // MARK: Payment Method Resources
-extension ResourcesManager {
+extension ResourceManager {
     func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
 
-        let path = ResourcesManager.shared.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         var description = withDescription
         let tintColorForIcons = ThemeManager.shared.getTintColorForIcons()
@@ -47,7 +47,7 @@ extension ResourcesManager {
             return nil
         }
 
-        let image = ResourcesManager.shared.getImage(itemSelected.object(forKey: "image_name") as? String)
+        let image = ResourceManager.shared.getImage(itemSelected.object(forKey: "image_name") as? String)
 
         if description == "credit_card" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
             if let iconsTintColor = tintColorForIcons {
@@ -61,20 +61,20 @@ extension ResourcesManager {
 
     func getImageFor(_ paymentMethod: PaymentMethod, forCell: Bool? = false) -> UIImage? {
         if forCell == true {
-            return ResourcesManager.shared.getImage(paymentMethod.paymentMethodId.lowercased())
-        } else if let pmImage = ResourcesManager.shared.getImage("icoTc_"+paymentMethod.paymentMethodId.lowercased()) {
+            return ResourceManager.shared.getImage(paymentMethod.paymentMethodId.lowercased())
+        } else if let pmImage = ResourceManager.shared.getImage("icoTc_"+paymentMethod.paymentMethodId.lowercased()) {
             return pmImage
         } else {
-            return ResourcesManager.shared.getCardDefaultLogo()
+            return ResourceManager.shared.getCardDefaultLogo()
         }
     }
 
     func getCardDefaultLogo() -> UIImage? {
-        return ResourcesManager.shared.getImage("icoTc_default")
+        return ResourceManager.shared.getImage("icoTc_default")
     }
 
     func getColorFor(_ paymentMethod: PaymentMethod, settings: [Setting]?) -> UIColor {
-        let path = ResourcesManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
         if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
@@ -97,7 +97,7 @@ extension ResourcesManager {
     }
 
     func getLabelMaskFor(_ paymentMethod: PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String {
-        let path = ResourcesManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
@@ -115,7 +115,7 @@ extension ResourcesManager {
     }
 
     func getEditTextMaskFor(_ paymentMethod: PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String {
-        let path = ResourcesManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
@@ -133,7 +133,7 @@ extension ResourcesManager {
     }
 
     func getFontColorFor(_ paymentMethod: PaymentMethod, settings: [Setting]?) -> UIColor {
-        let path = ResourcesManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.defaultColorText
 
@@ -156,7 +156,7 @@ extension ResourcesManager {
     }
 
     func getEditingFontColorFor(_ paymentMethod: PaymentMethod, settings: [Setting]?) -> UIColor {
-        let path = ResourcesManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.highlightedColorText
 
