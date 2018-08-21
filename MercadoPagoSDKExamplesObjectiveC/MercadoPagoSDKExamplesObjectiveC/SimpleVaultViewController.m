@@ -50,7 +50,6 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPPaymentMethodSelection"];
     
     UIImageView* pmIcon = [cell viewWithTag:1];
-    pmIcon.image = [MercadoPago getImage:pm.paymentMethodId bundle: [MercadoPago getBundle]];
     
     UILabel *pmTitle = [cell viewWithTag:2];
     pmTitle.text = pm.name;

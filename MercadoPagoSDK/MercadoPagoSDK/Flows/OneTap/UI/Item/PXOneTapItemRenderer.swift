@@ -22,7 +22,7 @@ final class PXOneTapItemRenderer {
     static let AMOUNT_WITHOUT_DISCOUNT_FONT_SIZE = PXLayout.XXS_FONT
     static let DISCOUNT_DESCRIPTION_FONT_SIZE = PXLayout.XXS_FONT
 
-    let arrow: UIImage? = MercadoPago.getImage("oneTapArrow")
+    let arrow: UIImage? = ResourceManager.shared.getImage("oneTapArrow")
 
     func oneTapRender(_ itemComponent: PXOneTapItemComponent) -> PXOneTapItemContainerView {
         let itemView = PXOneTapItemContainerView()
@@ -211,7 +211,7 @@ extension PXOneTapItemRenderer {
         if let image = collectorImage {
             return image
         } else {
-            return MercadoPago.getImage("MPSDK_review_iconoCarrito")
+            return ResourceManager.shared.getImage("MPSDK_review_iconoCarrito")
         }
     }
 }

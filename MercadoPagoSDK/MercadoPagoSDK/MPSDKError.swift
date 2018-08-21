@@ -48,7 +48,7 @@ import MercadoPagoServicesV4
             }
             mpError.requestOrigin = requestOrigin
         }
-        mpError.retry = (currentError.code == MercadoPago.ERROR_API_CODE || currentError.code == NSURLErrorCannotDecodeContentData || currentError.code == NSURLErrorNotConnectedToInternet || currentError.code == NSURLErrorTimedOut)
+        mpError.retry = (currentError.code == -2 || currentError.code == NSURLErrorCannotDecodeContentData || currentError.code == NSURLErrorNotConnectedToInternet || currentError.code == NSURLErrorTimedOut)
         return mpError
     }
 
