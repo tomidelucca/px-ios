@@ -42,8 +42,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
 
     var merchantBaseUrl: String!
-    var merchantAccessToken: String!
-    var publicKey: String!
 
     var groupName: String?
 
@@ -68,7 +66,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     init(viewModel: PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
-        self.initCommon()
         self.viewModel = viewModel
         if let groupName = self.viewModel.groupName {
             self.groupName = groupName
@@ -84,11 +81,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             finalId = screenId + "/" + groupName
         }
         MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName, properties: properties)
-    }
-
-    fileprivate func initCommon() {
-        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
-        self.publicKey = MercadoPagoContext.publicKey()
     }
 
     required  public init(coder aDecoder: NSCoder) {

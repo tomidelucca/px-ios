@@ -56,8 +56,8 @@ extension MercadoPagoCheckoutBuilder {
         return self
     }
 
-    open func setLanguage(string: String) -> MercadoPagoCheckoutBuilder {
-        MercadoPagoContext.setLanguage(string: string) //TODO: MercadoPagoContext (Internal refactor)
+    open func setLanguage(_ string: String) -> MercadoPagoCheckoutBuilder {
+        Localizator.sharedInstance.setLanguage(string: string)
         return self
     }
 }

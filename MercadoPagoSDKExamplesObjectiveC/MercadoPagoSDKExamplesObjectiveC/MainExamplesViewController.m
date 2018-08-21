@@ -69,9 +69,13 @@
     /* self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
                                                          accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController]; */
 
-    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+//    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+//
+//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
+
+//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
@@ -115,6 +119,8 @@
 
     // [self.mpCheckout discountNotAvailable];
 
+    [self.checkoutBuilder setLanguage:@"es"];
+  
     MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
     //[mpCheckout startWithLazyInitProtocol:self];

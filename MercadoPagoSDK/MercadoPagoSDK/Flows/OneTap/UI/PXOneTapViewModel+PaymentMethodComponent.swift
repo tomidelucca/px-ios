@@ -25,7 +25,7 @@ extension PXOneTapViewModel {
         let backgroundColor = ThemeManager.shared.whiteColor()
         let lightLabelColor = ThemeManager.shared.labelTintColor()
         let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
-        let currency: Currency = MercadoPagoContext.getCurrency()
+        let currency: Currency = SiteManager.shared.getCurrency()
 
         if pm.isCard {
             if let lastFourDigits = (self.amountHelper.paymentData.token?.lastFourDigits) {

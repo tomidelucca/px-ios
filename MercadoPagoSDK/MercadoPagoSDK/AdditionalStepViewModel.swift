@@ -135,7 +135,7 @@ open class AdditionalStepViewModel: NSObject {
         } else if isBodyCellFor(indexPath: indexPath) {
             return self.getDefaultRowCellHeight()
         }
-         return 0
+        return 0
     }
 
     func getCardSectionView() -> Updatable? {
@@ -232,11 +232,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override func getDefaultRowCellHeight() -> CGFloat {
-        if AdditionalStepCellFactory.needsCFTPayerCostCell(payerCost: dataSource[0] as! PayerCost) {
-            return 86
-        } else {
-            return 60
-        }
+        return 60
     }
 
     override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {

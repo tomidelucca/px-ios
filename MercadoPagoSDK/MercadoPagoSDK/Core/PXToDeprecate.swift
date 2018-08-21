@@ -13,7 +13,7 @@ extension MercadoPagoCheckout {
     internal class func showPayerCostDescription() -> Bool {
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
+        let site = SiteManager.shared.getSiteId()
 
         if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
             if let payerCostDescription = siteDic.value(forKey: "payerCostDescription") as? Bool {
@@ -27,7 +27,7 @@ extension MercadoPagoCheckout {
     internal class func showBankInterestWarning() -> Bool {
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
+        let site = SiteManager.shared.getSiteId()
 
         if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
             if let bankInsterestCell = siteDic.value(forKey: "bankInsterestCell") as? Bool {

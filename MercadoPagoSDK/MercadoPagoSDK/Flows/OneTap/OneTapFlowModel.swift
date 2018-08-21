@@ -27,7 +27,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
     var consumedDiscount: Bool = false
-    
+
     // Payment flow
     var paymentFlow: PXPaymentFlow?
     weak var paymentResultHandler: PXPaymentResultHandlerProtocol?
@@ -43,9 +43,9 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
 
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
-    let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
@@ -53,6 +53,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenConfiguration = reviewScreenConfiguration
         self.chargeRules = chargeRules
+        self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
@@ -93,7 +94,7 @@ extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
     }
 }
 

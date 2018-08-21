@@ -49,7 +49,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         let pm = self.props.paymentResult.paymentData!.paymentMethod!
 
         let image = getPaymentMethodIcon(paymentMethod: pm)
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency)
         var subtitle: NSMutableAttributedString? = pm.paymentMethodDescription?.toAttributedString()
         if let payerCost = self.props.paymentResult.paymentData?.payerCost {
