@@ -11,7 +11,6 @@ import Foundation
 internal final class PXPaymentFlowModel: NSObject {
     var paymentData: PaymentData?
     var checkoutPreference: CheckoutPreference?
-    let binaryMode: Bool
     let paymentPlugin: PXPaymentPluginComponent?
     let paymentMethodPaymentPlugin: PXPaymentPluginComponent?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
@@ -20,10 +19,9 @@ internal final class PXPaymentFlowModel: NSObject {
     var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
 
-    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, binaryMode: Bool, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentPlugin = paymentPlugin
         self.paymentMethodPaymentPlugin = paymentMethodPaymentPlugin
-        self.binaryMode = binaryMode
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
     }
 
