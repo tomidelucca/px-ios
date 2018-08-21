@@ -41,7 +41,7 @@ extension PXPaymentFlow {
 
         var paymentBody: [String: Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MPPayment(preferenceId: checkoutPreference.preferenceId, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.binaryMode)
+            let mpPayment = MPPayment(preferenceId: checkoutPreference.preferenceId, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
             paymentBody = mpPayment.toJSON()
         } else {
             paymentBody = paymentData.toJSON()
