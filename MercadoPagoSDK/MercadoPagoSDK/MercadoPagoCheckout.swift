@@ -60,7 +60,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
-        commondInit()
+        
         if initMode == .lazy {
             if viewModel.initFlow?.getStatus() == .finished {
                 executeNextStep()
@@ -83,11 +83,10 @@ open class MercadoPagoCheckout: NSObject {
         viewModel.initFlow?.restart()
         lifecycleProtocol = lifecycleDelegate
         initMode = .lazy
-        commondInit()
         executeNextStep()
     }
 
-    private func commondInit() {
+    private func commonInit() {
         viewModel.setInitFlowProtocol(flowInitProtocol: self)
         if !shouldApplyDiscount() {
             viewModel.clearDiscount()
@@ -132,6 +131,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     private func initialize() {
+        commonInit()
         initMercadPagoPXTracking()
         MercadoPagoCheckout.currentCheckout = self
         viewModel.pxNavigationHandler.suscribeToNavigationFlow()
@@ -245,7 +245,6 @@ open class MercadoPagoCheckout: NSObject {
 
     public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
         viewModel.setDiscount(discount, withCampaign: campaign)
-          self.viewModel.setDiscount(discount, withCampaign: campaign)
     }
 
     public func setChargeRules(chargeRules: [PXPaymentTypeChargeRule]) {
@@ -253,14 +252,16 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     private func shouldApplyDiscount() -> Bool {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), viewModel.paymentPlugin != nil {
+        if viewModel.paymentPlugin != nil {
             return !viewModel.consumedDiscount
         }
         return false
     }
+
     private func removeDiscount() {
         self.viewModel.clearDiscount()
     }
+    
     public func discountNotAvailable() {
         self.removeDiscount()
         self.viewModel.consumedDiscount = true

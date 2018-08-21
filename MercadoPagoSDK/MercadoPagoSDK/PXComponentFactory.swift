@@ -12,16 +12,20 @@ import MLUI
 struct PXComponentFactory {
 
     struct Modal {
-        static func show(viewController: UIViewController, title: String?) {
+        static func show(viewController: UIViewController, title: String?) -> MLModal? {
             if let modalTitle = title {
-                MLModal.show(with: viewController, title: modalTitle)
+                return MLModal.show(with: viewController, title: modalTitle)
             } else {
-                MLModal.show(with: viewController)
+                return MLModal.show(with: viewController)
             }
         }
 
-        static func show(viewController: UIViewController, title: String, dismissBlock: @escaping (() -> Void)) {
-            MLModal.show(with: viewController, title: title, actionTitle: "", actionBlock: {}, secondaryActionTitle: "", secondaryActionBlock: {}, dismiss: dismissBlock, enableScroll: false)
+        static func show(viewController: UIViewController, title: String?, dismissBlock: @escaping (() -> Void)) -> MLModal? {
+            if let modalTitle = title {
+                return MLModal.show(with: viewController, title: modalTitle, actionTitle: "", actionBlock: {}, secondaryActionTitle: "", secondaryActionBlock: {}, dismiss: dismissBlock, enableScroll: false)
+            } else {
+                return MLModal.show(with: viewController, dismiss: dismissBlock)
+            }
         }
     }
 
@@ -34,6 +38,13 @@ struct PXComponentFactory {
     struct Spinner {
         static func new(color1: UIColor, color2: UIColor) -> MLSpinner {
             let spinnerConfig = MLSpinnerConfig(size: .big, primaryColor: color1, secondaryColor: color2)
+            return MLSpinner(config: spinnerConfig, text: nil)
+        }
+    }
+
+    struct SmallSpinner {
+        static func new(color1: UIColor, color2: UIColor) -> MLSpinner {
+            let spinnerConfig = MLSpinnerConfig(size: .small, primaryColor: color1, secondaryColor: color2)
             return MLSpinner(config: spinnerConfig, text: nil)
         }
     }

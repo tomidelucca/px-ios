@@ -19,7 +19,6 @@ import Foundation
     var showPaymentRejectedScreen = true
     var showPaymentPendingScreen = true
     var showPaymentSearchScreen = true
-    var showDiscount = true
     var showAllSavedCards = false
     var showInstallmentsReviewScreen = true
     var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
@@ -50,10 +49,6 @@ import Foundation
 
     public func disableDefaultSelection() {
         showPaymentSearchScreen = false
-    }
-
-    public func disableDiscount() {
-        showDiscount = false
     }
 
     public func disableBankDeals() {
@@ -94,10 +89,6 @@ import Foundation
 
     public func enableDefaultSelection() {
         showPaymentSearchScreen = true
-    }
-
-    public func enableDiscount() {
-        showDiscount = true
     }
 
     public func enableBankDeals() {
@@ -153,10 +144,6 @@ import Foundation
         return showPaymentSearchScreen
     }
 
-    public func isDiscountEnable() -> Bool {
-        return showDiscount
-    }
-
     public func isShowAllSavedCardsEnabled() -> Bool {
         return showAllSavedCards
     }
@@ -181,7 +168,6 @@ import Foundation
         flowPreference.showPaymentRejectedScreen = json["payment_rejected_screen_enabled"] as? Bool ?? true
         flowPreference.showPaymentPendingScreen = json["payment_pending_screen_enabled"] as? Bool ?? true
         flowPreference.showPaymentSearchScreen = json["payment_search_screen_enabled"] as? Bool ?? true
-        flowPreference.showDiscount = json["discount_enabled"] as? Bool ?? true
         flowPreference.showAllSavedCards = json["show_all_saved_cards_enabled"] as? Bool ?? false
         flowPreference.showInstallmentsReviewScreen = json["installments_review_screen_enabled"] as? Bool ?? true
         flowPreference.maxSavedCardsToShow = json["max_saved_cards_to_show"] as? Int ?? FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW

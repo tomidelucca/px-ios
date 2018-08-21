@@ -283,6 +283,10 @@ extension MercadoPagoCheckoutViewModel {
         return self.isCheckoutComplete()
     }
 
+    func shouldShowDiscountInput() -> Bool {
+        return (PXCampaign.filterCampaignsByCodeType(campaigns: self.campaigns, CampaignCodeType.SINGLE.rawValue) != nil || PXCampaign.filterCampaignsByCodeType(campaigns: self.campaigns, CampaignCodeType.MULTIPLE.rawValue) != nil) && !Array.isNullOrEmpty(self.campaigns) && self.paymentData.discount == nil && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
+    }
+
     func needToCreatePayment() -> Bool {
         if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
             return readyToPay

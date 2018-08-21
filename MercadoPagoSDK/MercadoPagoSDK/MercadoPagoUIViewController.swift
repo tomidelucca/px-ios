@@ -257,7 +257,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             print("DEINIT - \(self)")
         #endif
     }
-
 }
 
 extension UINavigationController {

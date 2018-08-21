@@ -228,13 +228,6 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Ver condições</string>
 	</dict>
-	<key>discount_detail_modal_title</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Meu desconto</string>
-	</dict>
 	<key>discount_detail_modal_footer</key>
 	<dict>
 		<key>comment</key>
@@ -247,7 +240,7 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Limite de desconto %1$s</string>
+		<string>Limite de desconto: %1$s</string>
 	</dict>
 	<key>discount_end_date</key>
 	<dict>
@@ -275,7 +268,7 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Você tem um cupom de desconto?</string>
+		<string>Digite seu cupom de desconto</string>
 	</dict>
 	<key>total_row_disclaimer</key>
 	<dict>
@@ -283,13 +276,6 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<string></string>
 		<key>value</key>
 		<string>Com limite de desconto</string>
-	</dict>
-	<key>one_tap_discount_disclaimer</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>com limite de desconto</string>
 	</dict>
 	<key>total_row_title_percent_off</key>
 	<dict>
@@ -332,6 +318,62 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<string></string>
 		<key>value</key>
 		<string>Este desconto não é aplicável, porque você atingiu o limite.</string>
+	</dict>
+	<key>discount_input_modal_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Adicione o seu cupom</string>
+	</dict>
+	<key>discount_input_modal_action</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Continuar</string>
+	</dict>
+	<key>discount_input_modal_invalid_code_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Revise este dado</string>
+	</dict>
+	<key>discount_input_modal_empty_code_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Complete esse dado</string>
+	</dict>
+	<key>discount_input_modal_service_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Algo saiu errado, tente novamente.</string>
+	</dict>
+	<key>discount_input_success_modal_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Excelente!</string>
+	</dict>
+	<key>discount_input_success_modal_message</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Agora pague a sua compra e tenha %1$s de desconto.</string>
+	</dict>
+	<key>discount_input_success_modal_action</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Continuar</string>
 	</dict>
 </dict>
 </plist>

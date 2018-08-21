@@ -46,7 +46,7 @@
     self.pref = nil;
     self.paymentData = nil;
     self.paymentResult = nil;
-    
+
     // Setear el idioma de la aplicación
     [MercadoPagoCheckout setLanguageWithLanguage:Languages_SPANISH_MEXICO];
 
@@ -76,9 +76,9 @@
     [self setPaymentCallback];
 /*
     DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
-    
+
     NSNumber *externalDiscount = [NSNumber numberWithDouble:2.00];
-    
+
     dc.name = @"Patito Off";
     dc.coupon_amount = [externalDiscount stringValue];
     dc.percent_off = @"10";
@@ -87,7 +87,7 @@
     dc.amountWithoutDiscount = 50;
     dc = nil;
 */
-    
+
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
     //self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
@@ -97,33 +97,34 @@
                                                          accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     //PXDiscount* discount = [[PXDiscount alloc] init];
-    
+
     // Set default color or theme.
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
     MPTheme *mpExampleTheme = [[MPTheme alloc] init];
     [self.mpCheckout setTheme: meliExampleTheme];
 
-    
+
     PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" maxRedeemPerUser:1 name:@"Campaña" maxCouponAmount:1000 endDate:[NSDate date]];
     //[[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
 
-    [self.mpCheckout setDiscount:discount withCampaign:campaign];
-    
+//    [self.mpCheckout setDiscount:discount withCampaign:campaign];
+
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
     PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"payment_method_plugin" amountCharge:10.5];
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
-  //  [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
+    [self.mpCheckout setChargeRulesWithChargeRules:chargesArray];
+
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
     //[self setHooks];
-    
-    //[self setPaymentMethodPlugins];
 
-    [self setPaymentPlugin];
+//    [self setPaymentMethodPlugins];
+
+//    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
 //    [self setPaymentResultScreenPreference];
@@ -307,9 +308,9 @@
 }
 
 -(void)setReviewScreenPreference {
-    
+
     ReviewScreenPreference *resultPreference = [TestComponent getReviewScreenPreference];
-    
+
     [self.mpCheckout setReviewScreenPreference:resultPreference];
 }
 

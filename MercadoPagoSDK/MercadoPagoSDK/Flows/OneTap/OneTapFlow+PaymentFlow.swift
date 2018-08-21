@@ -16,6 +16,9 @@ extension OneTapFlow {
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
+        if let discount = MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.discount, let campaign = MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.campaign {
+            model.paymentData.setDiscount(discount, withCampaign: campaign)
+        }
         paymentFlow.setData(paymentData: model.paymentData, checkoutPreference: model.checkoutPreference, resultHandler: self)
         paymentFlow.start()
     }

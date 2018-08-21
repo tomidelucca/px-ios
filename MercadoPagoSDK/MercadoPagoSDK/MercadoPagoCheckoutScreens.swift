@@ -14,12 +14,39 @@ extension MercadoPagoCheckout {
 
         viewModel.paymentData.clearCollectedData()
 
-        // If paymentMethodsPlugins is available, disable discounts.
-        if (!viewModel.paymentMethodPlugins.isEmpty || viewModel.paymentPlugin != nil) && viewModel.paymentData.discount == nil {
-            MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
-        }
+        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
 
-        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
+            guard let strongSelf = self else {
+                errorBlock()
+                return
+            }
+
+            strongSelf.setDiscount(discount, withCampaign: campaign)
+
+            strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
+                if paymentMethodSearch.isEmpty {
+                    strongSelf.viewModel.clearDiscount()
+                    errorBlock()
+                    return
+                }
+
+                //Update Payment Method Search
+                paymentMethodSearch.oneTap = nil
+                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+                strongSelf.viewModel.paymentOptionSelected = nil
+                strongSelf.viewModel.rootVC = true
+                strongSelf.viewModel.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+
+                successBlock()
+                strongSelf.viewModel.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
+                return
+            }, errorBlock: { (_) in
+                strongSelf.viewModel.clearDiscount()
+                errorBlock()
+                return
+            })
+
+        }, callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
                 return
@@ -96,34 +123,68 @@ extension MercadoPagoCheckout {
     func showPayerCostScreen() {
         let payerCostViewModel = self.viewModel.payerCostViewModel()
 
-        let payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
+        var payerCostStep: AdditionalStepViewController?
+        payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
             guard let payerCost = payerCost as? PayerCost else {
                 fatalError("Cannot convert payerCost to type PayerCost")
             }
 
             self?.viewModel.updateCheckoutModel(payerCost: payerCost)
             self?.executeNextStep()
-        })
+        }, discountValidationCallback: { [weak self] (discount, campaign, successBlock, errorBlock) -> Void in
 
-        weak var strongPayerCostViewController = payerCostStep
-
-        payerCostStep.viewModel.couponCallback = {[weak self] (discount) in
             guard let strongSelf = self else {
+                errorBlock()
                 return
             }
-           // strongSelf.viewModel.paymentData.discount = discount TODO SET DISCOUNT WITH CAMPAIGN
 
-            strongSelf.getPayerCosts(updateCallback: {
+            strongSelf.setDiscount(discount, withCampaign: campaign)
 
-                guard let payerCosts = strongSelf.viewModel.payerCosts, let payerCostViewController = strongPayerCostViewController else {
+            strongSelf.getPaymentMethodSearch(successBlock: { (paymentMethodSearch) in
+                if paymentMethodSearch.isEmpty {
+                    strongSelf.viewModel.clearDiscount()
+                    errorBlock()
                     return
                 }
+                strongSelf.getPayerCosts(successBlock: { (installments) in
+                    if installments.isEmpty {
+                        strongSelf.viewModel.clearDiscount()
+                        errorBlock()
+                        return
+                    }
 
-                payerCostViewController.updateDataSource(dataSource: payerCosts)
+                    //Update Payment Method Search
+                    paymentMethodSearch.oneTap = nil
+                    strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+                    strongSelf.viewModel.pxNavigationHandler.getLastPaymentVaultViewControllerFromStack()?.viewModel = strongSelf.viewModel.paymentVaultViewModel()
+
+                    //Update Payer Costs
+                    strongSelf.viewModel.payerCosts = installments.first?.payerCosts
+
+                    if let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts) {
+                        strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
+                    }
+
+                    payerCostStep?.viewModel = strongSelf.viewModel.payerCostViewModel()
+                    payerCostStep?.updateDataSource(dataSource: strongSelf.viewModel.payerCosts!)
+
+                    successBlock()
+                    strongSelf.viewModel.pxNavigationHandler.cleanDuplicatedPaymentVaultsFromNavigationStack()
+                    return
+                }, errorBlock: { (_) in
+                    strongSelf.viewModel.clearDiscount()
+                    errorBlock()
+                    return
+                })
+            }, errorBlock: { (_) in
+                strongSelf.viewModel.clearDiscount()
+                errorBlock()
+                return
             })
-
+        })
+        if let payerCostStep = payerCostStep {
+            viewModel.pxNavigationHandler.pushViewController(viewController: payerCostStep, animated: true)
         }
-        viewModel.pxNavigationHandler.pushViewController(viewController: payerCostStep, animated: true)
     }
 
     func showReviewAndConfirmScreen() {

@@ -49,10 +49,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
         setupUI()
-        scrollView.isScrollEnabled = true
-        view.isUserInteractionEnabled = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,6 +77,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
+        setupUI()
     }
 }
 
@@ -96,11 +94,17 @@ extension PXOneTapViewController {
     }
 
     private func setupUI() {
-        if contentView.getSubviews().isEmpty {
-            renderViews()
-            super.prepareForAnimation(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
-            super.animateContentView(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
-        }
+        updateAmountHelper()
+        setupNavigationBar()
+        renderViews()
+        scrollView.isScrollEnabled = true
+        view.isUserInteractionEnabled = true
+        super.prepareForAnimation(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
+        super.animateContentView(customAnimations: PXSpruce.PXDefaultAnimation.rightToLeftAnimation)
+    }
+
+    private func updateAmountHelper() {
+        self.viewModel.amountHelper = PXAmountHelper(preference: self.viewModel.amountHelper.preference, paymentData: self.viewModel.amountHelper.paymentData, discount: MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.discount, campaign: MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.campaign, chargeRules: self.viewModel.amountHelper.chargeRules, consumedDiscount: self.viewModel.amountHelper.consumedDiscount)
     }
 
     private func renderViews() {
@@ -199,12 +203,12 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
             if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
                 let summaryViewController = PXOneTapSummaryModalViewController()
                 summaryViewController.setProps(summaryProps: summaryProps, bottomCustomView: getDiscountDetailView())
-                PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle".localized)
+                _ = PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle".localized)
             } else {
                 if let discountView = getDiscountDetailView() {
                     let summaryViewController = PXOneTapSummaryModalViewController()
                     summaryViewController.setProps(summaryProps: nil, bottomCustomView: discountView)
-                    PXComponentFactory.Modal.show(viewController: summaryViewController, title: nil)
+                    _ = PXComponentFactory.Modal.show(viewController: summaryViewController, title: nil)
                 }
             }
         }

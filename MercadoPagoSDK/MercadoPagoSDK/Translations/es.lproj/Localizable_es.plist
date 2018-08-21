@@ -49,7 +49,7 @@
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. 
+		<string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo.
 
 O si prefieres, puedes elegir otro medio de pago.</string>
 	</dict>
@@ -228,13 +228,6 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Ver condiciones</string>
 	</dict>
-	<key>discount_detail_modal_title</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Mi descuento</string>
-	</dict>
 	<key>discount_detail_modal_footer</key>
 	<dict>
 		<key>comment</key>
@@ -247,7 +240,7 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>Tope de descuento %1$s</string>
+		<string>Tope de descuento: %1$s</string>
 	</dict>
 	<key>discount_end_date</key>
 	<dict>
@@ -275,7 +268,7 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
-		<string>¿Tienes un cupón de descuento?</string>
+		<string>Ingresa tu cupón de descuento</string>
 	</dict>
 	<key>total_row_disclaimer</key>
 	<dict>
@@ -283,13 +276,6 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<string></string>
 		<key>value</key>
 		<string>Con tope de descuento</string>
-	</dict>
-	<key>one_tap_discount_disclaimer</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>con tope de descuento</string>
 	</dict>
 	<key>total_row_title_percent_off</key>
 	<dict>
@@ -332,6 +318,62 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<string></string>
 		<key>value</key>
 		<string>Este descuento ya no aplica porque consumiste el tope máximo.</string>
+	</dict>
+	<key>discount_input_modal_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Ingresa tu cupón</string>
+	</dict>
+	<key>discount_input_modal_action</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Continuar</string>
+	</dict>
+	<key>discount_input_modal_invalid_code_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Revisa este dato</string>
+	</dict>
+	<key>discount_input_modal_empty_code_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Complete este campo</string>
+	</dict>
+	<key>discount_input_modal_service_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Algo salió mal, intenta nuevamente.</string>
+	</dict>
+	<key>discount_input_success_modal_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>¡Excelente!</string>
+	</dict>
+	<key>discount_input_success_modal_message</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Ahora paga tu compra y obtén %1$s de descuento.</string>
+	</dict>
+	<key>discount_input_success_modal_action</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Continuar</string>
 	</dict>
 </dict>
 </plist>

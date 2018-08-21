@@ -242,12 +242,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let paymentMethodsOptions = getPaymentMethodsOptions(paymentMethodPluginsToShow)
         PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS, value: paymentMethodsOptions)
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
-            if self == nil {
-                return
-            }
-            // object.paymentData.discount = discount // TODO SET DISCOUNT WITH CAMPAIGN
-        })
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
@@ -556,8 +551,16 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if totalPaymentMethodsToShow == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
-        } else if totalPaymentMethodsToShow == 1 {
-            autoselectOnlyPaymentMethod()
+        } else if totalPaymentMethodsToShow ==  1 {
+
+            //En caso de que el usuario pueda ingresar un descuento con código solo se autoselecciona el medio de pago si el mismo tiene children, para que el usuario pueda ver una pantalla de grupos y cargar el descuento antes de seleccionar el medio de pago.
+            if self.amountHelper.discount == nil, self.shouldShowDiscountInput() {
+                if let defaultGroup = paymentMethodSearch.groups.first, defaultGroup.hasChildren() {
+                    autoselectOnlyPaymentMethod()
+                }
+            } else {
+                autoselectOnlyPaymentMethod()
+            }
         }
 
         // MoneyIn "ChoExpress"
@@ -590,7 +593,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let isBlacklabelPayment = paymentData.hasToken() && paymentData.getToken()!.cardId != nil && String.isNullOrEmpty(customerId)
 
-        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode, discount: paymentData.discount)
+        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode, discount: paymentData.discount, campaign: paymentData.campaign)
         return mpPayment
     }
 

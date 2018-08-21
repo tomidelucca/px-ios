@@ -184,11 +184,11 @@ extension InitFlowModel {
     }
 
     private func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && isDiscountEnabled() && !directDiscountSearchStatus && properties.paymentData.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
+        return PXCampaign.filterCampaignsByCodeType(campaigns: properties.campaigns, CampaignCodeType.NONE.rawValue) != nil && !directDiscountSearchStatus && properties.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
     }
 
     func needToSearchCampaign() -> Bool {
-        return isDiscountEnabled() && !directDiscountSearchStatus && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
+        return !directDiscountSearchStatus && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
     }
 
     private func needValidatePreference() -> Bool {
@@ -206,24 +206,7 @@ extension InitFlowModel {
         return properties.paymentMethodSearchResult == nil
     }
 
-    private func isDiscountEnabled() -> Bool {
-        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
-    }
-
     private func hasError() -> Bool {
         return flowError != nil
-    }
-
-    private func filterCampaignsByCodeType(campaigns: [PXCampaign]?, _ codeType: String) -> [PXCampaign]? {
-        if let campaigns = campaigns {
-            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
-                return campaign.codeType == codeType
-            }
-            if filteredCampaigns.isEmpty {
-                return nil
-            }
-            return filteredCampaigns
-        }
-        return nil
     }
 }

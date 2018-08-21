@@ -153,6 +153,7 @@ extension PXDiscountDetailViewController {
             var message = "unique_discount_detail_modal_footer".localized_beta
             if let expirationDate = amountHelper.campaign?.endDate {
                 let messageDate = "discount_end_date".localized_beta
+                message.append(String.space())
                 message.append(messageDate.replacingOccurrences(of: "%1s", with: Utils.getFormatedStringDate(expirationDate)))
             }
             return NSAttributedString(string: message, attributes: attributes)

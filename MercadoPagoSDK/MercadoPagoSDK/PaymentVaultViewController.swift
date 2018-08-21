@@ -48,7 +48,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     var defaultInstallments: Int?
     var installments: Int?
-    var viewModel: PaymentVaultViewModel!
+
+    var viewModel: PaymentVaultViewModel {
+        didSet {
+            updateViewsAndLayout()
+        }
+    }
 
     var bundle = MercadoPago.getBundle()
 
@@ -62,13 +67,14 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate var defaultOptionSelected = false
 
     fileprivate var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
+    private var discountValidationCallback: ((PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void)
+    private var floatingRowView: UIView?
 
-    private var floatingBottomRowView: UIView?
-
-    init(viewModel: PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
+    init(viewModel: PaymentVaultViewModel, discountValidationCallback: @escaping (PXDiscount, PXCampaign, @escaping () -> Void, @escaping () -> Void) -> Void, callback : @escaping (_ paymentMethodSelected: PaymentMethodOption) -> Void) {
+        self.viewModel = viewModel
+        self.discountValidationCallback = discountValidationCallback
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
-        self.viewModel = viewModel
         if let groupName = self.viewModel.groupName {
             self.groupName = groupName
         }
@@ -96,8 +102,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateCoupon(_:)), name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil)
 
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10
@@ -150,7 +154,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.isUserInteractionEnabled = false
             view.addSubview(temporalView)
         }
-        renderFloatingBottomView()
+        updateViewsAndLayout()
         hideLoading()
     }
 
@@ -162,17 +166,23 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         return nil
     }
 
-    private func renderFloatingBottomView() {
-        if floatingBottomRowView == nil {
-            floatingBottomRowView = getFloatingTotalRowView()
-            if let floatingRowView = floatingBottomRowView {
-                getCollectionViewPinBottomContraint()?.isActive = false
-                view.addSubview(floatingRowView)
-                PXLayout.matchWidth(ofView: floatingRowView).isActive = true
-                PXLayout.centerHorizontally(view: floatingRowView).isActive = true
-                PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
-                PXLayout.put(view: floatingRowView, onBottomOf: collectionSearch).isActive = true
-            }
+    private func updateViewsAndLayout() {
+        self.collectionSearch.reloadData()
+        if floatingRowView == nil {
+            floatingRowView = getFloatingTotalRowView()
+        } else {
+            floatingRowView?.removeFromSuperview()
+            floatingRowView = getFloatingTotalRowView()
+        }
+
+        if let floatingRowView = floatingRowView {
+            getCollectionViewPinBottomContraint()?.isActive = false
+            view.addSubview(floatingRowView)
+            PXLayout.matchWidth(ofView: floatingRowView).isActive = true
+            PXLayout.centerHorizontally(view: floatingRowView).isActive = true
+            PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
+            PXLayout.put(view: floatingRowView, onBottomOf: collectionSearch).isActive = true
+            view.layoutIfNeeded()
         }
     }
 
@@ -185,7 +195,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     func handleTotalRowTap() {
-        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
+        PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper, discountValidationCallback: discountValidationCallback)
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {
@@ -201,7 +211,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate func getCustomerCards() {
 
-        if self.viewModel!.shouldGetCustomerCardsInfo() {
+        if self.viewModel.shouldGetCustomerCardsInfo() {
             if MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() != nil {
                 self.viewModel.mercadoPagoServicesAdapter.getCustomer(callback: { [weak self] (customer) in
                     self?.viewModel.customerId = customer.customerId
@@ -228,12 +238,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.collectionSearch.dataSource = self
         self.collectionSearch.reloadData()
         self.loadingGroups = false
-
-        if self.viewModel.getDisplayedPaymentMethodsCount() == 1 {
-            if let paymentOptionDefault = self.viewModel.getPaymentMethodOption(row: 0) as? PaymentMethodOption {
-                self.callback(paymentOptionDefault)
-            }
-        }
     }
 
     fileprivate func registerAllCells() {
@@ -255,7 +259,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
         //En caso de que el vc no sea root
         if (navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self) || (navigationController != nil && navigationController!.viewControllers.count == 1) {
-            if self.viewModel!.isRoot {
+            if self.viewModel.isRoot {
                 self.callbackCancel!()
             }
             return true
