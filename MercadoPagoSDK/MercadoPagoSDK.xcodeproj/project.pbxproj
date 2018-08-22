@@ -1455,6 +1455,7 @@
 		0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */ = {
 			isa = PBXGroup;
 			children = (
+				FC9C8125212DC53800B14B56 /* UI */,
 				23A1742A2119051D00B88F7E /* MoneyIn */,
 				232114B0211897E800B50503 /* Plist */,
 				4B2EC4A420FFC284008D03F8 /* Flows */,
@@ -1601,7 +1602,6 @@
 		0F9883C01AD2AD3200F750F0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				FC5B769B212C802F00237FB3 /* PX Animated Views */,
 				1563DCA41E9BFDEF00A7E5C8 /* Cards Admin */,
 				4BA78EB51EC0C5B600CA5D6E /* SecurityCode */,
 				4BAA55E31DAFFBAC00501061 /* AdditionalStep */,
@@ -2890,13 +2890,13 @@
 			name = "Instruction Action";
 			sourceTree = "<group>";
 		};
-		FC5B769B212C802F00237FB3 /* PX Animated Views */ = {
+		FC5B769B212C802F00237FB3 /* PXAnimatedViews */ = {
 			isa = PBXGroup;
 			children = (
 				FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */,
 				FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */,
 			);
-			path = "PX Animated Views";
+			path = PXAnimatedViews;
 			sourceTree = "<group>";
 		};
 		FC65A1E7208E48DE000A0DA0 /* Bank Deal Component */ = {
@@ -2937,6 +2937,14 @@
 				FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */,
 			);
 			name = PXUtils;
+			sourceTree = "<group>";
+		};
+		FC9C8125212DC53800B14B56 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				FC5B769B212C802F00237FB3 /* PXAnimatedViews */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		FC9E62892125C55A0036A99F /* PX Extensions */ = {

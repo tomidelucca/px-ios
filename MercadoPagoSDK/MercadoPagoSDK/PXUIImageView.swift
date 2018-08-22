@@ -8,10 +8,10 @@
 
 import UIKit
 
-public class PXUIImageView: UIImageView {
+class PXUIImageView: UIImageView {
 
     private var currentImage: UIImage?
-    override public var image: UIImage? {
+    override var image: UIImage? {
         set {
             loadImage(image: newValue)
         }

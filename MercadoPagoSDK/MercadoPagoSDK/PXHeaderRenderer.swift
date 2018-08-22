@@ -120,9 +120,9 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-public class PXHeaderView: PXComponentView {
-    public var circleImage: PXUIImageView?
-    public var badgeImage: PXAnimatedImageView?
-    public var statusLabel: UILabel?
-    public var messageLabel: UILabel?
+final class PXHeaderView: PXComponentView {
+    var circleImage: PXUIImageView?
+    var badgeImage: PXAnimatedImageView?
+    var statusLabel: UILabel?
+    var messageLabel: UILabel?
 }
