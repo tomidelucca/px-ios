@@ -40,6 +40,7 @@ Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 * iOS 9.0+
 * Swift 4
 * xCode 9.2+
+* @Objc Compatibility
 
 ### 🔮 Project Example
 This project include an example project using MercadoPagoSDKV4. In case you need support contact the MercadoPago Developers Site.
