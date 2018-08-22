@@ -33,8 +33,9 @@ Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 - [x] Easy to install
 - [x] Easy to use
 - [x] Basic color customization
-- [x] Advanced color customization
-- [x] Lazy loading initialization support
+- [x] Advanced color customization (PXTheme)
+- [x] Lazy loading initialization support (PXLazyInitProtocol)
+- [x] Custom UIViews support in certain screens -> (PXPaymentResultConfiguration, PXReviewConfirmConfigutation)
 
 ### 📋 Supported OS & SDK Versions
 * iOS 9.0+
