@@ -181,12 +181,8 @@ import MercadoPagoServicesV4
         return issuer
     }
 
-    public func getPayer() -> Payer {
-        var returnedPayer = Payer()
-        if let payer = payer {
-            returnedPayer = payer
-        }
-        return returnedPayer
+    public func getPayer() -> Payer? {
+        return payer
     }
 
     public func getPaymentMethod() -> PaymentMethod? {

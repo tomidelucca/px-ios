@@ -347,7 +347,7 @@ import UIKit
         return ((self.paymentMethodId == "master") && (self.paymentMethodId == "debmaster"))
     }
 
-    open func conformsPaymentPreferences(_ paymentPreference: PaymentPreference?) -> Bool {
+    internal func conformsPaymentPreferences(_ paymentPreference: PaymentPreference?) -> Bool {
 
         if paymentPreference == nil {
             return true

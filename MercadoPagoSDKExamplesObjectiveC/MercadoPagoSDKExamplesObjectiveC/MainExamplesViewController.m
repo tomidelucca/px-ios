@@ -169,29 +169,11 @@
 -(void)setCheckoutPref_CreditCardNotExcluded {
     Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
     Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
-    Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
-    NSArray *items = [NSArray arrayWithObjects:item, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
-    PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
-  //  paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card", nil];
-  //  paymentExclusions.defaultInstallments = 1;
-
-    self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
-}
-
--(void)setCheckoutPref_CardsNotExcluded {
-    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
-    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
-    Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
-
-    NSArray *items = [NSArray arrayWithObjects:item, nil];
-
-    PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
-    paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
-   // paymentExclusions.defaultInstallments = 1;
-
-    self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
+    self.pref = [[CheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
+    [self.pref addExcludedPaymentType:@"ticket"];
 }
 
 -(void)setCheckoutPref_WithId {

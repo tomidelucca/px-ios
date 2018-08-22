@@ -10,64 +10,64 @@ import UIKit
 import MercadoPagoServicesV4
 
 @objcMembers open class CheckoutPreference: NSObject {
-    open var preferenceId: String!
-    open var items: [Item]!
-    open var payer: Payer!
-    open var paymentPreference: PaymentPreference!
-    open var siteId: String = "MLA" // TODO: Ver esto
-    open var expirationDateFrom: Date?
-    open var expirationDateTo: Date?
-    open var differentialPricing: PXDifferentialPricing?
+    internal var preferenceId: String!
+    internal var items: [Item]!
+    internal var payer: Payer!
+    internal var paymentPreference: PaymentPreference!
+    internal var siteId: String!
+    internal var expirationDateFrom: Date?
+    internal var expirationDateTo: Date?
+    internal var differentialPricing: PXDifferentialPricing?
     private var binaryModeEnabled: Bool = false
-
-    open class func fromJSON(_ json: NSDictionary) -> CheckoutPreference {
-                let preference: CheckoutPreference = CheckoutPreference()
-
-                if let preferenceId = JSONHandler.attemptParseToString(json["id"]) {
-                        preference.preferenceId = preferenceId
-                    }
-                if let siteId = JSONHandler.attemptParseToString(json["site_id"]) {
-                        preference.siteId = siteId
-                    }
-
-                if let payerDic = json["payer"] as? NSDictionary {
-                        preference.payer = Payer.fromJSON(payerDic)
-                    }
-
-                var items = [Item]()
-                if let itemsArray = json["items"] as? NSArray {
-                        for index in 0..<itemsArray.count {
-                                if let itemDic = itemsArray[index] as? NSDictionary {
-                                        items.append(Item.fromJSON(itemDic))
-                                }
-                            }
-
-                        preference.items = items
-                    }
-
-                if let paymentPreference = json["payment_methods"] as? NSDictionary {
-                        preference.paymentPreference = PaymentPreference.fromJSON(paymentPreference)
-                    }
-
-                return preference
-            }
 
     public init(preferenceId: String) {
         self.preferenceId = preferenceId
     }
 
-    public init(items: [Item] = [], payer: Payer = Payer(), paymentMethods: PaymentPreference? = nil) {
+    public init(siteId: String, payerEmail: String, items: [Item]) {
         self.items = items
-        self.payer = payer
-        self.paymentPreference = paymentMethods ?? PaymentPreference()
+
+        guard let siteId = PXSites(rawValue: siteId)?.rawValue else {
+            fatalError("Invalid site id")
+        }
+        self.siteId = siteId
+        self.payer = Payer(email: payerEmail)
     }
 
-    public func addItem(item: Item) {
-        items.append(item)
+    internal func isExpired() -> Bool {
+        let date = Date()
+        if let expirationDateTo = expirationDateTo {
+            return expirationDateTo > date
+        }
+        return false
     }
 
-    public func addItems(items: [Item]) {
-        self.items.append(contentsOf: items)
+    internal func isActive() -> Bool {
+        let date = Date()
+        if let expirationDateFrom = expirationDateFrom {
+            return expirationDateFrom < date
+        }
+        return true
+    }
+
+    internal func hasMultipleItems() -> Bool {
+        return items.count > 1
+    }
+}
+
+// MARK: Setters
+extension CheckoutPreference {
+
+    open func setExpirationDate(_ expirationDate: Date) {
+        self.expirationDateTo = expirationDate
+    }
+
+    open func setActiveFromDate(_ date: Date) {
+        self.expirationDateFrom = date
+    }
+
+    open func setDifferentialPricing(differentialPricing: PXDifferentialPricing) {
+        self.differentialPricing = differentialPricing
     }
 
     public func addExcludedPaymentMethod(_ paymentMethodId: String) {
@@ -104,48 +104,28 @@ import MercadoPagoServicesV4
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
+}
 
-    public func setPayerEmail(_ payerEmail: String) {
-        self.payer.email = payerEmail
-    }
+// MARK: Getters
+extension CheckoutPreference {
 
-    public func setSite(siteId: String) {
-        self.siteId = siteId
-    }
-
-    public func setExpirationDate(_ expirationDate: Date) {
-        self.expirationDateTo = expirationDate
-    }
-
-    public func setActiveFromDate(_ date: Date) {
-        self.expirationDateFrom = date
-    }
-
-    public func setId(_ preferenceId: String) {
-        self.preferenceId = preferenceId
-    }
-
-    public func getId() -> String {
+    open func getId() -> String {
         return self.preferenceId
     }
 
-    public func getItems() -> [Item]? {
+    open func getItems() -> [Item]? {
         return items
     }
 
-    public func getPayer() -> Payer {
-        return payer
-    }
-
-    public func getSiteId() -> String {
+    open func getSiteId() -> String {
         return self.siteId
     }
 
-    public func getExpirationDate() -> Date? {
+    open func getExpirationDate() -> Date? {
         return expirationDateTo
     }
 
-    public func getActiveFromDate() -> Date? {
+    open func getActiveFromDate() -> Date? {
         return expirationDateFrom
     }
 
@@ -169,7 +149,23 @@ import MercadoPagoServicesV4
         return paymentPreference.getDefaultPaymentMethodId()
     }
 
-    open func validate() -> String? {
+    internal func getTotalAmount() -> Double {
+        var amount = 0.0
+        for item in self.items {
+            amount += (Double(item.quantity) * item.unitPrice)
+        }
+        return amount
+    }
+
+    internal func getPayer() -> Payer {
+        return payer
+    }
+
+}
+
+// MARK: Validation
+extension CheckoutPreference {
+    internal func validate() -> String? {
 
         if let itemError = itemsValid() {
             return itemError
@@ -189,13 +185,13 @@ import MercadoPagoServicesV4
         if isExpired() {
             return "La preferencia esta expirada".localized
         }
-        if self.getAmount() < 0 {
+        if self.getTotalAmount() < 0 {
             return "El monto de la compra no es válido".localized
         }
         return nil
     }
 
-    open func itemsValid() -> String? {
+    internal func itemsValid() -> String? {
         if Array.isNullOrEmpty(items) {
             return "No hay items".localized
         }
@@ -207,52 +203,6 @@ import MercadoPagoServicesV4
         }
 
         return nil
-    }
-
-    open func isExpired() -> Bool {
-        let date = Date()
-        if let expirationDateTo = expirationDateTo {
-            return expirationDateTo > date
-        }
-        return false
-    }
-
-    open func isActive() -> Bool {
-        let date = Date()
-        if let expirationDateFrom = expirationDateFrom {
-            return expirationDateFrom < date
-        }
-        return true
-    }
-
-    func hasMultipleItems() -> Bool {
-        return items.count > 1
-    }
-
-    open func toJSONString() -> String {
-
-        let preferenceId: Any = self.preferenceId == nil ? JSONHandler.null : (self.preferenceId)!
-        let player: Any = self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
-        var obj: [String: Any] = [
-            "id": preferenceId,
-            "payer": player
-        ]
-
-        var itemsJson = ""
-        for item in items {
-            itemsJson += item.toJSONString()
-        }
-        obj["items"] = itemsJson
-
-        return JSONHandler.jsonCoding(obj)
-    }
-
-    open func getAmount() -> Double {
-        var amount = 0.0
-        for item in self.items {
-            amount += (Double(item.quantity) * item.unitPrice)
-        }
-        return amount
     }
 }
 
@@ -266,16 +216,4 @@ extension CheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self
     }
-}
-
-/** :nodoc: */
-public func == (obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
-
-    let areEqual =
-        obj1.preferenceId == obj2.preferenceId &&
-            obj1.items == obj2.items &&
-            obj1.payer == obj2.payer &&
-            obj1.paymentPreference == obj2.paymentPreference
-
-    return areEqual
 }

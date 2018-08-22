@@ -72,7 +72,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
             self.transactionDetails = transactionDetails
         }
 
-        self.payer = Payer()
+        self.payer = Payer(email: "")
         if let targetPayer = paymentData.payer {
             self.payer = targetPayer
         }

@@ -8,26 +8,91 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers
 open class Payer: NSObject {
-	open var email: String!
-	open var payerId: String?
-	open var identification: Identification?
-    open var entityType: EntityType?
-    open var name: String?
-    open var surname: String?
-    open var address: Address?
-    open var accessToken: String?
+	internal var email: String!
+	internal var payerId: String?
+	internal var identification: Identification?
+    internal var entityType: EntityType?
+    internal var name: String?
+    internal var surname: String?
+    internal var accessToken: String?
 
-    public init(payerId: String? = nil, email: String = "", identification: Identification? = nil, entityType: EntityType? = nil) {
-		self.payerId = payerId
+    public init(email: String) {
 		self.email = email
-		self.identification = identification
-        self.entityType = entityType
 	}
 
-    open class func fromJSON(_ json: NSDictionary) -> Payer {
-        let payer: Payer = Payer()
+    internal func clearCollectedData() {
+        self.entityType = nil
+        self.identification = nil
+        self.name = nil
+        self.surname = nil
+    }
+}
+
+// MARK: Setters
+extension Payer {
+    open func setId(payerId: String) {
+        self.payerId = payerId
+    }
+
+    open func setIdentification(identification: Identification) {
+        self.identification = identification
+    }
+
+    open func setEntityType(entityType: EntityType) {
+        self.entityType = entityType
+    }
+
+    open func setFirstName(name: String) {
+        self.name = name
+    }
+
+    open func setLastName(lastName: String) {
+        self.surname = lastName
+    }
+
+    internal func setAccessToken(accessToken: String) {
+        self.accessToken = accessToken
+    }
+}
+
+// MARK: Getters
+extension Payer {
+    open func getEmail() -> String {
+        return email
+    }
+
+    open func getId() -> String? {
+        return payerId
+    }
+
+    open func getIdentification() -> Identification? {
+        return identification
+    }
+
+    open func getEntityType() -> EntityType? {
+        return entityType
+    }
+
+    open func getFirstName() -> String? {
+        return name
+    }
+
+    open func getLastName() -> String? {
+        return surname
+    }
+
+    internal func getAccessToken() -> String? {
+        return accessToken
+    }
+}
+
+// MarK: JSON
+extension Payer {
+    internal class func fromJSON(_ json: NSDictionary) -> Payer {
+        let payer: Payer = Payer(email: "")
 
         if let id = JSONHandler.attemptParseToString(json["id"]) {
             payer.payerId  = id
@@ -53,25 +118,14 @@ open class Payer: NSObject {
             payer.surname = surname
         }
 
-        if let addressDic = json["address"] as? NSDictionary {
-            payer.address = Address.fromJSON(addressDic)
-        }
-
         return payer
     }
 
-    func clearCollectedData() {
-        self.entityType = nil
-        self.identification = nil
-        self.name = nil
-        self.surname = nil
+    internal func toJSONString() -> String {
+        return JSONHandler.jsonCoding(toJSON())
     }
 
-	open func toJSONString() -> String {
-		return JSONHandler.jsonCoding(toJSON())
-	}
-
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let email: Any = self.email == nil ? JSONHandler.null : (self.email!)
         var obj: [String: Any] = [
             "email": email
@@ -97,15 +151,6 @@ open class Payer: NSObject {
             obj["last_name"] = self.surname
         }
 
-        if let address = address {
-            obj["address"] = address.toJSON()
-        }
-
-        if let address = address {
-            obj["access_token"] = accessToken
-        }
-
         return obj
     }
-
 }
