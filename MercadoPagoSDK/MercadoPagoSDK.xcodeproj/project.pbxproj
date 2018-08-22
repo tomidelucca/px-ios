@@ -807,7 +807,6 @@
 		FC511EAD20BCD2B8006F098C /* PXDiscountTermsAndConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC511EAC20BCD2B8006F098C /* PXDiscountTermsAndConditionView.swift */; };
 		FC511EAF20BCE7C1006F098C /* PXDiscountDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC511EAE20BCE7C1006F098C /* PXDiscountDetailViewController.swift */; };
 		FC54C70020A493F600C73A36 /* PXUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC54C6FF20A493F600C73A36 /* PXUIImage.swift */; };
-		FC5B7699212C802500237FB3 /* PXTickAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B7697212C802500237FB3 /* PXTickAnimationView.swift */; };
 		FC5B769A212C802500237FB3 /* PXAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */; };
 		FC5B769F212C974C00237FB3 /* PXAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */; };
 		FC5BCEBF208FA99300447D99 /* PXBankDealDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */; };
@@ -1369,7 +1368,6 @@
 		FC511EAC20BCD2B8006F098C /* PXDiscountTermsAndConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDiscountTermsAndConditionView.swift; sourceTree = "<group>"; };
 		FC511EAE20BCE7C1006F098C /* PXDiscountDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDiscountDetailViewController.swift; sourceTree = "<group>"; };
 		FC54C6FF20A493F600C73A36 /* PXUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUIImage.swift; sourceTree = "<group>"; };
-		FC5B7697212C802500237FB3 /* PXTickAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXTickAnimationView.swift; sourceTree = "<group>"; };
 		FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAnimatedImageView.swift; sourceTree = "<group>"; };
 		FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAnimatedView.swift; sourceTree = "<group>"; };
 		FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -2897,7 +2895,6 @@
 			children = (
 				FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */,
 				FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */,
-				FC5B7697212C802500237FB3 /* PXTickAnimationView.swift */,
 			);
 			path = "PX Animated Views";
 			sourceTree = "<group>";
@@ -3334,7 +3331,6 @@
 				FC0F6CBC20179A01006E3EA1 /* PXContainedLabelComponent.swift in Sources */,
 				4BAD089B20F006B000F3A77F /* PXOneTapSummaryModalViewController.swift in Sources */,
 				15FE72921E79AAA200111A9C /* AdditionalStepTitleTableViewCell.swift in Sources */,
-				FC5B7699212C802500237FB3 /* PXTickAnimationView.swift in Sources */,
 				4BFD451F1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift in Sources */,
 				4B811DD11FCDCBD5000611AD /* PXHookStep.swift in Sources */,
 				FCBF132D1E71D6A60092B756 /* Updatable.swift in Sources */,
