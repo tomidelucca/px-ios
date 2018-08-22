@@ -1,0 +1,6 @@
+framework module MercadoPagoServicesV4 {
+  umbrella header "MercadoPagoServicesV4-umbrella.h"
+
+  export *
+  module * { export * }
+}
