@@ -63,120 +63,72 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
             if #available(iOS 10.0, *) {
                 let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: {
-
-                })
-
-                transitionAnimator.addAnimations({
                     self.setTitle("", for: .normal)
                     self.frame = newFrame
                     self.layer.cornerRadius = self.frame.height / 2
-                }, delayFactor: 4)
+                })
 
                 transitionAnimator.addCompletion({ (_) in
-                    UIView.animate(withDuration: 0.3, animations: {
-                        self.progressView?.alpha = 0
-                        self.backgroundColor = color
-                    }, completion: { _ in
-
-                        let scaleFactor: CGFloat = 0.40
-                        let iconImage = UIImageView(frame: CGRect(x: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, y: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, width: newFrame.width * scaleFactor, height: newFrame.height * scaleFactor))
-
-                        iconImage.image = image
-                        iconImage.contentMode = .scaleAspectFit
-                        iconImage.alpha = 0
-
-                        self.addSubview(iconImage)
-
-                        if #available(iOS 10.0, *) {
-                            let notification = UINotificationFeedbackGenerator()
-                            if style == .success {
-                                notification.notificationOccurred(.success)
-                            } else {
-                                notification.notificationOccurred(.error)
-                            }
-                        }
-
-                        UIView.animate(withDuration: 0.6, animations: {
-                            iconImage.alpha = 1
-                            iconImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                        }) { _ in
-
-                            UIView.animate(withDuration: 0.4, animations: {
-                                iconImage.alpha = 0
-                            }, completion: { _ in
-
-                                self.superview?.layer.masksToBounds = false
-                                self.animationDelegate?.expandAnimationInProgress()
-
-                                UIView.animate(withDuration: 0.5, animations: {
-                                    self.transform = CGAffineTransform(scaleX: 50, y: 50)
-                                }, completion: { _ in
-                                    self.animationDelegate?.didFinishAnimation()
-                                })
-                            })
-                        }
-                    })
+                    self.explosion(color: color, style: style, newFrame: newFrame, image: image)
                 })
 
                 transitionAnimator.startAnimation()
             } else {
-                UIView.animate(withDuration: 0.5,
-                               animations: {
-                                self.setTitle("", for: .normal)
-                                self.frame = newFrame
-                                self.layer.cornerRadius = self.frame.height / 2
-                },
-                   completion: { _ in
-
-                    UIView.animate(withDuration: 0.3, animations: {
-                        self.progressView?.alpha = 0
-                        self.backgroundColor = color
-                    }, completion: { _ in
-
-                        let scaleFactor: CGFloat = 0.40
-                        let iconImage = UIImageView(frame: CGRect(x: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, y: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, width: newFrame.width * scaleFactor, height: newFrame.height * scaleFactor))
-
-                        iconImage.image = image
-                        iconImage.contentMode = .scaleAspectFit
-                        iconImage.alpha = 0
-
-                        self.addSubview(iconImage)
-
-                        if #available(iOS 10.0, *) {
-                            let notification = UINotificationFeedbackGenerator()
-                            if style == .success {
-                                notification.notificationOccurred(.success)
-                            } else {
-                                notification.notificationOccurred(.error)
-                            }
-                        }
-
-                        UIView.animate(withDuration: 0.6, animations: {
-                            iconImage.alpha = 1
-                            iconImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                        }) { _ in
-
-                            UIView.animate(withDuration: 0.4, animations: {
-                                iconImage.alpha = 0
-                            }, completion: { _ in
-
-                                self.superview?.layer.masksToBounds = false
-                                self.animationDelegate?.expandAnimationInProgress()
-                                UIView.animate(withDuration: 0.5, animations: {
-                                    self.transform = CGAffineTransform(scaleX: 50, y: 50)
-                                }, completion: { _ in
-                                    self.animationDelegate?.didFinishAnimation()
-                                })
-                            })
-                        }
-                    })
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.setTitle("", for: .normal)
+                    self.frame = newFrame
+                    self.layer.cornerRadius = self.frame.height / 2
+                }, completion: { _ in
+                    self.explosion(color: color, style: style, newFrame: newFrame, image: image)
                 })
             }
         })
     }
 
-    func iconAnimation() {
+    private func explosion(color: UIColor, style: FinishStyle, newFrame: CGRect, image: UIImage?) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.progressView?.alpha = 0
+            self.backgroundColor = color
+        }, completion: { _ in
 
+            let scaleFactor: CGFloat = 0.40
+            let iconImage = UIImageView(frame: CGRect(x: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, y: newFrame.width / 2 - (newFrame.width * scaleFactor) / 2, width: newFrame.width * scaleFactor, height: newFrame.height * scaleFactor))
+
+            iconImage.image = image
+            iconImage.contentMode = .scaleAspectFit
+            iconImage.alpha = 0
+
+            self.addSubview(iconImage)
+
+            if #available(iOS 10.0, *) {
+                let notification = UINotificationFeedbackGenerator()
+                if style == .success {
+                    notification.notificationOccurred(.success)
+                } else {
+                    notification.notificationOccurred(.error)
+                }
+            }
+
+            UIView.animate(withDuration: 0.6, animations: {
+                iconImage.alpha = 1
+                iconImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }) { _ in
+
+                UIView.animate(withDuration: 0.4, animations: {
+                    iconImage.alpha = 0
+                }, completion: { _ in
+
+                    self.superview?.layer.masksToBounds = false
+                    self.animationDelegate?.expandAnimationInProgress()
+
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.transform = CGAffineTransform(scaleX: 50, y: 50)
+                    }, completion: { _ in
+                        self.animationDelegate?.didFinishAnimation()
+                    })
+                })
+            }
+        })
     }
 
     func didFinishProgress() {
