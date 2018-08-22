@@ -40,9 +40,9 @@ Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 * Swift 4
 
 ### 🔮 Project Example
-This project include an example project using MercadoPagoSDKV4. In case you need support contact the development team.
+This project include an example project using MercadoPagoSDKV4. In case you need support contact the MercadoPago Developers Site.
 
-### 📚 Documentation
+### 📚 Documentation & DevSite
 + [Advanced full documentation.](http://mercadopago.github.io/px-ios/v4/)
 + [Check out MercadoPago Developers Site.](http://www.mercadopago.com.ar/developers)
 
