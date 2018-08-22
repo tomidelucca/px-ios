@@ -2,26 +2,26 @@
 
 ![Screenshot iOS](https://i.imgur.com/7nDmBpl.jpg)
 
-The MercadoPago iOS SDK make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
+MercadoPagoSDKV4 (PX-Payment Experience) make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
 
 ## Installation
 
-There are two ways to add MercadoPago to your project:
+Add MercadoPagoSDKV4 to your project using CocoaPods.
 
 ### CocoaPods (iOS 9.0 or later)
 
 #### Step 1: Download CocoaPods
 
-[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like MercadoPagoSDK in your projects.
+[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like MercadoPagoSDKV4 in your projects.
 
-CocoaPods is distributed as a ruby gem, and is installed by running the following commands in Terminal.app:
+CocoaPods is distributed as a ruby gem, and is installed by running the following commands in Terminal:
 
     $ sudo gem install cocoapods
     $ pod setup
 
 > Depending on your Ruby installation, you may not have to run as `sudo` to install the cocoapods gem.
 
-> :warning: MercadoPagoSDK requires cocoapods 1.0.0 or higher. With pod --version you can verify the current version you have installed. This framework was built with Swift 3.0 so you will need Xcode 8.0 or higer in order to use it. In case you need support for older Xcode versions just contact the development team creating an issue.
+> :warning: MercadoPagoSDKV4 requires cocoapods 1.4 or higher. With pod --version you can verify the current version you have installed. This framework was built with Swift 4.0 so you will need Xcode 9 or higer in order to use it.
 
 #### Step 2: Create a Podfile
 
@@ -39,9 +39,6 @@ Copy and paste the following lines into the TextEdit window:
     platform :ios, '8.0'
     pod 'MercadoPagoSDK', '3.8.0'
 
-
-> You shouldn’t use TextEdit to edit the pod file because TextEdit likes to replace standard quotes with more graphically appealing quotes. This can cause CocoaPods to get confused and display errors, so it’s best to just use Xcode or another programming text editor.
-
 #### Step 3: Install Dependencies
 
 Now you can install the dependencies in your project:
@@ -52,28 +49,15 @@ From now on, be sure to always open the generated Xcode workspace (`.xcworkspace
 
     $ open <YourProjectName>.xcworkspace
 
-### Copy manually (iOS 7.0 or later)
-
-- Open the MercadoPagoSDK folder, and drag MercadoPagoSDK.xcodeproj into the file navigator of your app project.
-- In Xcode, navigate to the target configuration window by clicking on the blue project icon, and selecting the application target under the "Targets" heading in the sidebar.
-- Ensure that the deployment target of MercadoPagoSDK.framework matches that of the application target.
-- In the tab bar at the top of that window, open the "Build Phases" panel.
-- Expand the "Target Dependencies" group, and add MercadoPagoSDK.framework.
-- Click on the + button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add MercadoPagoSDK.framework.
-
-## Examples
-
-This project includes two Xcode Projects with examples using MercadoPagoSDK: MercadoPagoSDKExamples written in swift and MercadoPagoSDKExamplesObjectiveC. In case you need support contact the development team.
+## Project Example
+This project include an example project using MercadoPagoSDKV4. In case you need support contact the development team.
 
 ## Documentation
-+ [See the GitHub Project](https://github.com/mercadopago/px-ios)
-+ [Read more about this 6 steps integration.](https://mercadopago.github.io/px-ios)
-+ [Check out MercadoPago Developers Site!](http://www.mercadopago.com.ar/developers)
++ [Advanced full documentation.](http://mercadopago.github.io/px-ios/v4/)
++ [Check out MercadoPago Developers Site.](http://www.mercadopago.com.ar/developers)
 
 ## Feedback
-
 You can join the MercadoPago Developers Community on MercadoPago Developers Site:
-
 + [English](https://www.mercadopago.com.ar/developers/en/community/forum/)
 + [Español](https://www.mercadopago.com.ar/developers/es/community/forum/)
 + [Português](https://www.mercadopago.com.br/developers/pt/community/forum/)
