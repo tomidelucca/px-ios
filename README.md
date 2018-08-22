@@ -72,6 +72,11 @@ You can join the MercadoPago Developers Community on MercadoPago Developers Site
 + [Español](https://www.mercadopago.com.ar/developers/es/community/forum/)
 + [Português](https://www.mercadopago.com.br/developers/pt/community/forum/)
 
+
+
+## 👨🏻‍💻 Author
+Mercado Pago / Mercado Libre
+
 ## 👮🏻 License
 
 ```
