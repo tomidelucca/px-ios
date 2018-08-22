@@ -34,6 +34,7 @@ Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 - [x] Easy to use
 - [x] Basic color customization
 - [x] Advanced color customization
+- [x] Lazy loading initialization support
 
 ### 📋 Supported OS & SDK Versions
 * iOS 9.0+
