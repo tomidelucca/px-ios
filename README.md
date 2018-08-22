@@ -1,4 +1,6 @@
-[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-ios)
+![Swift4](https://img.shields.io/badge/Swift-4.0-F16D39.svg?style=flat)
+
+![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-ios)
 
 ![Screenshot iOS](https://i.imgur.com/7nDmBpl.jpg)
 
