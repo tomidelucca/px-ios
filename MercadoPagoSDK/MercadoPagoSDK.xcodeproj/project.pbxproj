@@ -809,6 +809,7 @@
 		FC54C70020A493F600C73A36 /* PXUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC54C6FF20A493F600C73A36 /* PXUIImage.swift */; };
 		FC5B7699212C802500237FB3 /* PXTickAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B7697212C802500237FB3 /* PXTickAnimationView.swift */; };
 		FC5B769A212C802500237FB3 /* PXAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */; };
+		FC5B769F212C974C00237FB3 /* PXAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */; };
 		FC5BCEBF208FA99300447D99 /* PXBankDealDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */; };
 		FC6283F31FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
 		FC6283F41FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
@@ -1370,6 +1371,7 @@
 		FC54C6FF20A493F600C73A36 /* PXUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUIImage.swift; sourceTree = "<group>"; };
 		FC5B7697212C802500237FB3 /* PXTickAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXTickAnimationView.swift; sourceTree = "<group>"; };
 		FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAnimatedImageView.swift; sourceTree = "<group>"; };
+		FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAnimatedView.swift; sourceTree = "<group>"; };
 		FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealDetailsViewModel.swift; sourceTree = "<group>"; };
 		FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentView.swift; sourceTree = "<group>"; };
 		FC65A1E8208E4907000A0DA0 /* PXBankDealComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealComponent.swift; sourceTree = "<group>"; };
@@ -2893,6 +2895,7 @@
 		FC5B769B212C802F00237FB3 /* PX Animated Views */ = {
 			isa = PBXGroup;
 			children = (
+				FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */,
 				FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */,
 				FC5B7697212C802500237FB3 /* PXTickAnimationView.swift */,
 			);
@@ -3622,6 +3625,7 @@
 				FC7E14981F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */,
 				0F9883731AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
 				81ACC8201F9A88F700206F7B /* PXFooterRenderer.swift in Sources */,
+				FC5B769F212C974C00237FB3 /* PXAnimatedView.swift in Sources */,
 				0F9883931AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
 				81ACC8141F9A88EF00206F7B /* PXLayout.swift in Sources */,
 				4BD84D721F1E48FB002219D4 /* MercadoPagoCheckoutServices.swift in Sources */,

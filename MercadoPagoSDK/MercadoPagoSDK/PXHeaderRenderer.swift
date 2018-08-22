@@ -35,7 +35,7 @@ class PXHeaderRenderer: NSObject {
         //Image
         let pximage = PXUIImage(url: header.props.imageURL)
         headerView.circleImage = buildCircleImage(with: pximage)
-        
+
         if let circleImage = headerView.circleImage {
             headerView.addSubview(circleImage)
             PXLayout.centerHorizontally(view: circleImage, to: headerView).isActive = true
@@ -120,11 +120,7 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-public class PXHeaderView: PXComponentView, PXAnimatedView {
-    func animate(duration: Double) {
-        self.badgeImage?.animate(duration: duration)
-    }
-
+public class PXHeaderView: PXComponentView {
     public var circleImage: PXUIImageView?
     public var badgeImage: PXAnimatedImageView?
     public var statusLabel: UILabel?

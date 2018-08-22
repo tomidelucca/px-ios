@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol PXAnimatedView {
-    func animate(duration: Double)
-}
-
 public class PXAnimatedImageView: UIView, PXAnimatedView {
     let imageView: UIImageView
     let image: UIImage?

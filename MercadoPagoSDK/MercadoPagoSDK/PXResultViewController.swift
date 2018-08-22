@@ -47,7 +47,7 @@ class PXResultViewController: PXComponentContainerViewController {
             renderViews()
             super.prepareForAnimation()
             super.animateContentView { (_) in
-                self.headerView?.animate(duration: 0.2)
+                self.headerView?.badgeImage?.animate(duration: 0.2)
             }
         }
     }
