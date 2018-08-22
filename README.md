@@ -59,19 +59,16 @@ From now on, be sure to always open the generated Xcode workspace (`.xcworkspace
 
     $ open <YourProjectName>.xcworkspace
 
-## Project Example
+### 📋 Supported OS & SDK Versions
+* iOS 9.0+
+* Swift 4
+
+### 🔮 Project Example
 This project include an example project using MercadoPagoSDKV4. In case you need support contact the development team.
 
-## Documentation
+### 📚 Documentation
 + [Advanced full documentation.](http://mercadopago.github.io/px-ios/v4/)
 + [Check out MercadoPago Developers Site.](http://www.mercadopago.com.ar/developers)
-
-## Feedback
-You can join the MercadoPago Developers Community on MercadoPago Developers Site:
-+ [English](https://www.mercadopago.com.ar/developers/en/community/forum/)
-+ [Español](https://www.mercadopago.com.ar/developers/es/community/forum/)
-+ [Português](https://www.mercadopago.com.br/developers/pt/community/forum/)
-
 
 ## ❤️ Feedback
 You can join the MercadoPago Developers Community on MercadoPago Developers Site:
