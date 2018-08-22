@@ -186,8 +186,8 @@
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
     PXPayer *payer = [[PXPayer alloc]init];
     payer.email = @"sarasa@gmail.com";
 
@@ -195,14 +195,13 @@
 
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
   //  paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card", nil];
-  //  paymentExclusions.defaultInstallments = 1;
 
     self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
 }
 
 -(void)setCheckoutPref_CardsNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:10 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:1 unitPrice:2.5 description:@"Sugus" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
     PXPayer *payer = [[PXPayer alloc]init];
     payer.email = @"sarasa@gmail.com";
 
