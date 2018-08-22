@@ -24,6 +24,12 @@ Edit your `Podfile` and specify the dependency:
 pod "MercadoPagoSDKV4"
 ```
 
+## 🐒 How to use?
+Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
+- [x] TODO
+- [x] TODO
+- [x] TODO
+
 ## 🌟 Features
 - [x] Easy to install
 - [x] Easy to use
