@@ -1,5 +1,5 @@
 //
-//  Languages.swift
+//  PXLanguages.swift
 //  MercadoPagoSDK
 //
 //  Created by Juan sebastian Sanzone on 5/8/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Languages: String {
+public enum PXLanguages: String {
     case SPANISH = "es"
     case SPANISH_MEXICO = "es-MX"
     case SPANISH_COLOMBIA = "es-CO"

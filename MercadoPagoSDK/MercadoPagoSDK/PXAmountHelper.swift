@@ -17,10 +17,10 @@ internal struct PXAmountHelper {
     internal let campaign: PXCampaign?
     internal let chargeRules: [PXPaymentTypeChargeRule]?
     internal let consumedDiscount: Bool
-    
+
     var preferenceAmount: Double {
         get {
-            return self.preference.getAmount()
+            return self.preference.getTotalAmount()
         }
     }
 

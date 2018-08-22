@@ -36,14 +36,14 @@ internal class Localizator {
 
 // MARK: Getters/ Setters
 extension Localizator {
-    func setLanguage(language: Languages) {
+    func setLanguage(language: PXLanguages) {
         self.language = language.rawValue
     }
 
     func setLanguage(string: String) {
-        let enumLanguage = Languages(rawValue: string)
+        let enumLanguage = PXLanguages(rawValue: string)
         guard let languange = enumLanguage else {
-            self.language = Languages.SPANISH.rawValue
+            self.language = PXLanguages.SPANISH.rawValue
             return
         }
         self.language = languange.rawValue
