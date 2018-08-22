@@ -73,6 +73,15 @@ You can join the MercadoPago Developers Community on MercadoPago Developers Site
 + [Português](https://www.mercadopago.com.br/developers/pt/community/forum/)
 
 
+## ❤️ Feedback
+You can join the MercadoPago Developers Community on MercadoPago Developers Site:
++ [English](https://www.mercadopago.com.ar/developers/en/community/forum/)
++ [Español](https://www.mercadopago.com.ar/developers/es/community/forum/)
++ [Português](https://www.mercadopago.com.br/developers/pt/community/forum/)
+
+This is an open source project, so feel free to contribute. How?
+- Propose your own fixes, suggestions and open a pull request with the changes.
+
 
 ## 👨🏻‍💻 Author
 Mercado Pago / Mercado Libre
