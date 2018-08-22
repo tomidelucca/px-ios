@@ -27,7 +27,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     var installments: Int?
     var viewModel: CardsAdminViewModel!
 
-    var bundle = MercadoPago.getBundle()
+    var bundle = ResourceManager.shared.getBundle()
 
     var titleSectionReference: PaymentVaultTitleCollectionViewCell!
 

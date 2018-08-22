@@ -15,7 +15,6 @@
 
 @synthesize cards;
 @synthesize allowInstallmentsSeletion;
-Card *selectedCard;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,7 +51,6 @@ Card *selectedCard;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    selectedCard = self.cards[indexPath.row];
     [self performSegueWithIdentifier:@"showVaultFormSegue" sender:self];
 }
 
@@ -62,7 +60,6 @@ Card *selectedCard;
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     SimpleVaultFormViewController *form = [segue destinationViewController];
-    form.customerCard = selectedCard;
     form.allowInstallmentsSelection = self.allowInstallmentsSeletion;
     form.amount = 100.00;
 }

@@ -78,7 +78,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     public init(viewModel: SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: CardInformationForm, _ securityCode: String) -> Void ) {
-        super.init(nibName: "SecurityCodeViewController", bundle: MercadoPago.getBundle())
+        super.init(nibName: "SecurityCodeViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = viewModel
         self.viewModel.callback = collectSecurityCodeCallback
     }
@@ -140,10 +140,10 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         self.cardCvvThumbnail.layer.cornerRadius = 3
         if self.viewModel.secCodeInBack() {
             self.securityCodeLabel.isHidden = true
-            self.cardCvvThumbnail.image = MercadoPago.getImage("CardCVVThumbnailBack")
+            self.cardCvvThumbnail.image = ResourceManager.shared.getImage("CardCVVThumbnailBack")
         } else {
             self.securityCodeLabel.isHidden = false
-            self.cardCvvThumbnail.image = MercadoPago.getImage("CardCVVThumbnailFront")
+            self.cardCvvThumbnail.image = ResourceManager.shared.getImage("CardCVVThumbnailFront")
         }
     }
 

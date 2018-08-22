@@ -640,7 +640,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func getEntityTypes() -> [EntityType] {
-        let path = MercadoPago.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
         let dictET = NSDictionary(contentsOfFile: path!)
         let site = SiteManager.shared.getSiteId()
 
@@ -787,7 +787,7 @@ extension MercadoPagoCheckoutViewModel {
             if let paymentOtionSelected = paymentOptionSelected, let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
                 paymentMethodPaymentPlugin = plugin.paymentPlugin
             }
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, binaryMode: checkoutPreference.isBinaryMode(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference)
             self.paymentFlow = paymentFlow
             return paymentFlow
         }

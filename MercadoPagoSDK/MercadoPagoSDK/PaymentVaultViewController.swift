@@ -49,7 +49,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     var installments: Int?
     var viewModel: PaymentVaultViewModel!
 
-    var bundle = MercadoPago.getBundle()
+    var bundle = ResourceManager.shared.getBundle()
 
     var titleSectionReference: PaymentVaultTitleCollectionViewCell?
 

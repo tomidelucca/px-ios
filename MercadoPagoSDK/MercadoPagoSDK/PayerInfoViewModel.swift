@@ -158,7 +158,7 @@ class PayerInfoViewModel: NSObject {
     }
 
     fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
-        let path = MercadoPago.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
 
         if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {

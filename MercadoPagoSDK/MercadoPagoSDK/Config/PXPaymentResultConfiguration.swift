@@ -58,7 +58,7 @@ import MercadoPagoServicesV4
     internal var approvedSubtitle = ""
     internal var approvedURLImage: String?
     internal var approvedIconName = "default_item_icon"
-    internal var approvedIconBundle = MercadoPago.getBundle()!
+    internal var approvedIconBundle = ResourceManager.shared.getBundle()!
 
     // MARK: Pending
     // To deprecate post v4. SP integration.
@@ -69,7 +69,7 @@ import MercadoPagoServicesV4
     internal var pendingContentTitle = PXPaymentResultConfiguration.PENDING_CONTENT_TITLE.localized
     internal var pendingContentText = ""
     internal var pendingIconName = "default_item_icon"
-    internal var pendingIconBundle = MercadoPago.getBundle()!
+    internal var pendingIconBundle = ResourceManager.shared.getBundle()!
     internal var pendingURLImage: String?
     internal var hidePendingContentText = false
     internal var hidePendingContentTitle = false
@@ -83,7 +83,7 @@ import MercadoPagoServicesV4
     internal var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
     internal var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
     internal var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
-    internal var rejectedIconBundle = MercadoPago.getBundle()!
+    internal var rejectedIconBundle = ResourceManager.shared.getBundle()!
     internal var rejectedDefaultIconName: String?
     internal var rejectedURLImage: String?
     internal var rejectedIconName: String?
@@ -98,7 +98,7 @@ import MercadoPagoServicesV4
     internal var showLabelText = true
     internal var pmDefaultIconName = "card_icon"
     internal var pmBolbradescoIconName = "boleto_icon"
-    internal var pmIconBundle = MercadoPago.getBundle()!
+    internal var pmIconBundle = ResourceManager.shared.getBundle()!
     internal var statusBackgroundColor: UIColor?
     internal var hideApprovedPaymentBodyCell = false
     internal var hideContentCell = false
@@ -147,9 +147,9 @@ extension PXPaymentResultConfiguration {
             return nil
         }
         if badge == ApprovedBadge.check {
-            return MercadoPago.getImage("ok_badge")
+            return ResourceManager.shared.getImage("ok_badge")
         } else if badge == ApprovedBadge.pending {
-            return MercadoPago.getImage("pending_badge")
+            return ResourceManager.shared.getImage("pending_badge")
         }
         return nil
     }
@@ -423,7 +423,7 @@ extension PXPaymentResultConfiguration {
                 return image
             }
         }
-        return MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle)
+        return ResourceManager.shared.getImage(approvedIconName)
     }
 
     @available(*, deprecated)
@@ -443,7 +443,7 @@ extension PXPaymentResultConfiguration {
                 return image
             }
         }
-        return MercadoPago.getImage(pendingIconName, bundle: pendingIconBundle)
+        return ResourceManager.shared.getImage(pendingIconName)
     }
 
     @available(*, deprecated)
@@ -500,7 +500,7 @@ extension PXPaymentResultConfiguration {
             }
         }
         if rejectedIconName != nil {
-            return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
+            return ResourceManager.shared.getImage(rejectedIconName)
         }
         return getHeaderImageFor(paymentMethod)
     }
@@ -508,17 +508,17 @@ extension PXPaymentResultConfiguration {
     @available(*, deprecated)
     open func getHeaderImageFor(_ paymentMethod: PXPaymentMethod?) -> UIImage? {
         guard let paymentMethod = paymentMethod else {
-            return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
+            return ResourceManager.shared.getImage(pmDefaultIconName)
         }
 
         if paymentMethod.isBolbradesco {
-            return MercadoPago.getImage(pmBolbradescoIconName, bundle: pmIconBundle)
+            return ResourceManager.shared.getImage(pmBolbradescoIconName)
         }
 
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
-            return MercadoPago.getImage(rejectedPaymentMethodPluginIconName, bundle: rejectedIconBundle)
+            return ResourceManager.shared.getImage(rejectedPaymentMethodPluginIconName)
         }
-        return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
+        return ResourceManager.shared.getImage(pmDefaultIconName)
     }
 
     @available(*, deprecated)

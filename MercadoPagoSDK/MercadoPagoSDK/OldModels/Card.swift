@@ -162,7 +162,7 @@ import MercadoPagoServicesV4
     }
 
     public func getImage() -> UIImage? {
-        return MercadoPago.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
+        return ResourceManager.shared.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
     }
 
     /** PaymentMethodOption implementation */

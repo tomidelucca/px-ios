@@ -11,7 +11,7 @@ import Foundation
 /** :nodoc: */
 extension MercadoPagoCheckout {
     internal class func showPayerCostDescription() -> Bool {
-        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = SiteManager.shared.getSiteId()
 
@@ -25,7 +25,7 @@ extension MercadoPagoCheckout {
     }
 
     internal class func showBankInterestWarning() -> Bool {
-        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = SiteManager.shared.getSiteId()
 
