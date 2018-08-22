@@ -28,12 +28,12 @@ pod "MercadoPagoSDKV4"
 Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 - [x] TODO
 - [x] TODO
-- [x] TODO
 
 ## 🌟 Features
 - [x] Easy to install
 - [x] Easy to use
-- [x] UI Colors customizable
+- [x] Basic color customization
+- [x] Advanced color customization
 
 ### 📋 Supported OS & SDK Versions
 * iOS 9.0+
