@@ -37,7 +37,7 @@ Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 - [x] Lazy loading initialization support
 - [x] Custom UIViews support in certain screens
 - [x] Support to build your own Payment Processor
-- [x] Support to build your own custom Payment Method
+- [x] Support to create your own custom Payment Method
 
 ### 📋 Supported OS & SDK Versions
 * iOS 9.0+
