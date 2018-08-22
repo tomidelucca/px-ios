@@ -69,8 +69,8 @@ class Utils {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
-        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
+        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
+        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -204,7 +204,7 @@ class Utils {
         if let fontSize = fontSize {
             attributes = [NSAttributedStringKey.font: Utils.getFont(size: fontSize)]
         }
-        clockImage.image = MercadoPago.getImage("iconTime")
+        clockImage.image = ResourceManager.shared.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
         let labelAttributedString = NSMutableAttributedString(string: String(describing: " " + text), attributes: attributes)
         labelAttributedString.insert(clockAttributedString, at: 0)
@@ -214,7 +214,7 @@ class Utils {
 
     class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
 
         let descriptionAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
 
@@ -282,7 +282,7 @@ class Utils {
      Ex: formattedString = "100.2", decimalSeparator = "."
      returns 20
      **/
-    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = MercadoPagoContext.getCurrency().getDecimalPlacesOrDefault()) -> String {
+    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = SiteManager.shared.getCurrency().getDecimalPlacesOrDefault()) -> String {
         var range = formattedString.range(of: decimalSeparator)
 
         if range == nil {
@@ -482,7 +482,7 @@ class Utils {
     }
 
     internal static func getSetting<T>(identifier: String) -> T? {
-        let path = MercadoPago.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         return dictPM![identifier] as? T
     }

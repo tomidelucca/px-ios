@@ -22,7 +22,7 @@ final class PXOneTapItemRenderer {
     static let AMOUNT_WITHOUT_DISCOUNT_FONT_SIZE = PXLayout.XXS_FONT
     static let DISCOUNT_DESCRIPTION_FONT_SIZE = PXLayout.XXS_FONT
 
-    let arrow: UIImage? = MercadoPago.getImage("oneTapArrow")
+    let arrow: UIImage? = ResourceManager.shared.getImage("oneTapArrow")
 
     func oneTapRender(_ itemComponent: PXOneTapItemComponent) -> PXOneTapItemContainerView {
         let itemView = PXOneTapItemContainerView()
@@ -73,7 +73,7 @@ final class PXOneTapItemRenderer {
 
         // Discount
         itemView.discountDescription = buildDiscountDescription(with: itemComponent.props.discountDescription, discountLimit: itemComponent.props.discountLimit)
-        
+
         if itemView.discountDescription == nil {
             itemView.discountDescription = buildDisclaimerMessage(with: itemComponent.props.disclaimerMessage)
         }
@@ -151,12 +151,12 @@ extension PXOneTapItemRenderer {
         let disclaimerMessage = NSMutableAttributedString(string: disclaimer, attributes: [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()])
             return buildLabel(attributedText: disclaimerMessage, color: ThemeManager.shared.greyColor(), font: font)
     }
-    
+
     private func buildDiscountDescription(with description: String?, discountLimit: String?) -> UILabel? {
         guard let description = description else {
             return nil
         }
-        
+
         let font = Utils.getFont(size: PXOneTapItemRenderer.DISCOUNT_DESCRIPTION_FONT_SIZE)
         let discountDescription = NSMutableAttributedString(string: description, attributes: [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()])
         if let discountLimit = discountLimit {
@@ -167,12 +167,12 @@ extension PXOneTapItemRenderer {
     }
 
     private func buildAttributedTotalAmount(amount: Double, color: UIColor, fontSize: CGFloat) -> NSAttributedString {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         return Utils.getAttributedAmount(amount, currency: currency, color: color, fontSize: fontSize, centsFontSize: 20, baselineOffset: 16, lightFont: true)
     }
 
     private func buildAttributedTotalAmountWithoutDiscount(amount: Double, color: UIColor, font: UIFont) -> NSAttributedString {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         let amount = Utils.getAmountFormatted(amount: amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, addingCurrencySymbol: currency.symbol).toAttributedString()
         let amountString = NSMutableAttributedString(attributedString: amount)
         amountString.addAttributes([NSAttributedStringKey.font: font], range: NSRange(location: 0, length: amount.length))
@@ -211,7 +211,7 @@ extension PXOneTapItemRenderer {
         if let image = collectorImage {
             return image
         } else {
-            return MercadoPago.getImage("MPSDK_review_iconoCarrito")
+            return ResourceManager.shared.getImage("MPSDK_review_iconoCarrito")
         }
     }
 }

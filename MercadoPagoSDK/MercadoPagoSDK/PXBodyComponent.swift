@@ -37,7 +37,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
 
     fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
+        var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
@@ -49,7 +49,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         let pm = self.props.paymentResult.paymentData!.paymentMethod!
 
         let image = getPaymentMethodIcon(paymentMethod: pm)
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency)
         var subtitle: NSMutableAttributedString? = pm.paymentMethodDescription?.toAttributedString()
         if let payerCost = self.props.paymentResult.paymentData?.payerCost {

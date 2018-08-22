@@ -9,8 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool)
-
+internal typealias InitFlowProperties = (paymentData: PaymentData, checkoutPreference: CheckoutPreference, paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter)
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
@@ -30,7 +29,6 @@ final class InitFlowModel: NSObject, PXFlowModel {
         case FINISH = "Finish step"
     }
 
-    private let serviceAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
     private let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
 
     private var preferenceValidated: Bool = false
@@ -39,7 +37,6 @@ final class InitFlowModel: NSObject, PXFlowModel {
     private var directDiscountSearchStatus: Bool
     private var flowError: InitFlowError?
     private var pendingRetryStep: Steps?
-
 
     var properties: InitFlowProperties
 
@@ -65,7 +62,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 // MARK: Public methods
 extension InitFlowModel {
     func getService() -> MercadoPagoServicesAdapter {
-        return serviceAdapter
+        return properties.serviceAdapter
     }
 
     func getESCService() -> MercadoPagoESC {

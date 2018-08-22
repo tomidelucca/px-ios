@@ -22,7 +22,7 @@ class PaymentVaultViewModel: NSObject {
 
     var displayItems = [PaymentOptionDrawable]()
 
-    var currency: Currency = MercadoPagoContext.getCurrency()
+    var currency: Currency = SiteManager.shared.getCurrency()
 
     var customerId: String?
 

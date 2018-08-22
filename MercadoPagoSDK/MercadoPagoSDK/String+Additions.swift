@@ -13,16 +13,6 @@ internal extension String {
 
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
 
-	var localized: String {
-		var bundle: Bundle? = MercadoPago.getBundle()
-		if bundle == nil {
-			bundle = Bundle.main
-		}
-        let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
-        return languageBundle!.localizedString(forKey: self, value: "", table: nil)
-
-	}
-
     public func existsLocalized() -> Bool {
         let localizedString = self.localized
         return localizedString != self

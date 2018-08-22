@@ -32,8 +32,6 @@
 //    [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
 //    [MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
     
-    [MercadoPagoContext setSiteID:@"MLA"];
-    
     //[MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
     
     //[MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];

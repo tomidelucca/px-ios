@@ -39,7 +39,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     override open var screenName: String { return "IDENTIFICATION_NUMBER" }
 
     public init(identificationTypes: [IdentificationType], callback : @escaping (( _ identification: Identification) -> Void), errorExitCallback: (() -> Void)?) {
-        super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
+        super.init(nibName: "IdentificationViewController", bundle: ResourceManager.shared.getBundle())
         self.callback = callback
         self.identificationTypes = identificationTypes
         self.errorExitCallback = errorExitCallback
@@ -312,7 +312,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
-        let path = MercadoPago.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
 
         if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
@@ -326,10 +326,10 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     fileprivate func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
-        let site = MercadoPagoContext.getSite()
+        let site = SiteManager.shared.getSiteId()
 
-        if IDtype != nil {
-            if let masks = maskFinder(dictID: site+"_"+(IDtype?.identificationTypeId)!, forKey: "identification_mask") {
+        if let identificationType = IDtype {
+            if let identificationTypeId = identificationType.identificationTypeId, let masks = maskFinder(dictID: site + "_" + identificationTypeId, forKey: "identification_mask") {
                 return masks
             } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
                 return masks

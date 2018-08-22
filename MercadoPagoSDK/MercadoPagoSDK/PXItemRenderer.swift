@@ -97,11 +97,11 @@ extension PXItemRenderer {
 
     fileprivate func buildItemImageUrl(imageURL: String?, collectorImage: UIImage? = nil) -> (String?, UIImage?) {
         if imageURL != nil {
-            return (imageURL, collectorImage ?? MercadoPago.getImage("MPSDK_review_iconoCarrito"))
+            return (imageURL, collectorImage ?? ResourceManager.shared.getImage("MPSDK_review_iconoCarrito"))
         } else if let image = collectorImage {
             return (nil, image)
         } else {
-            return (nil, MercadoPago.getImage("MPSDK_review_iconoCarrito"))
+            return (nil, ResourceManager.shared.getImage("MPSDK_review_iconoCarrito"))
         }
     }
 
@@ -147,7 +147,7 @@ extension PXItemRenderer {
     }
 
     fileprivate func buildAttributedUnitAmount(amount: Double, color: UIColor, fontSize: CGFloat) -> NSAttributedString {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         return Utils.getAmountFormatted(amount: amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, addingCurrencySymbol: currency.symbol).toAttributedString()
     }
 

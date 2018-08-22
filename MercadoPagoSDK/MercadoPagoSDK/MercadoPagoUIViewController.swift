@@ -100,22 +100,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
     }
 
-    static func loadFont(_ fontName: String) -> Bool {
-        if let path = MercadoPago.getBundle()!.path(forResource: fontName, ofType: "ttf") {
-            if let inData = try? Data(contentsOf: URL(fileURLWithPath: path)) {
-                var error: Unmanaged<CFError>?
-                let cfdata = CFDataCreate(nil, (inData as NSData).bytes.bindMemory(to: UInt8.self, capacity: inData.count), inData.count)
-                if let provider = CGDataProvider(data: cfdata!), let font = CGFont(provider) {
-                    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-                        print("Failed to load font: \(error.debugDescription)")
-                    }
-                    return true
-                }
-            }
-        }
-        return false
-    }
-
     internal func loadMPStyles() {
         if self.navigationController != nil {
             var titleDict: [NSAttributedStringKey: Any] = [:]
@@ -163,7 +147,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     internal func displayBackButton() {
         if shouldShowBackArrow {
             let backButton = UIBarButtonItem()
-            backButton.image = MercadoPago.getImage("back")
+            backButton.image = ResourceManager.shared.getImage("back")
             backButton.style = .plain
             backButton.target = self
             backButton.tintColor = navBarTextColor

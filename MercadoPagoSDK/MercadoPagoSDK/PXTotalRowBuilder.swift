@@ -11,7 +11,7 @@ import Foundation
 final class PXTotalRowBuilder: PXTotalRowComponent {
 
     init(amountHelper: PXAmountHelper, shouldShowChevron: Bool = false) {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         var title: NSAttributedString?
         var disclaimer: NSAttributedString?
         var mainValue: NSAttributedString?

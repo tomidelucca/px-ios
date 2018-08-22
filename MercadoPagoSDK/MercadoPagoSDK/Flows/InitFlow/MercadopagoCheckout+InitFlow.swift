@@ -12,7 +12,10 @@ import Foundation
 extension MercadoPagoCheckout: InitFlowProtocol {
     func didFailInitFlow(flowError: InitFlowError) {
         if initMode == .lazy {
-            lifecycleProtocol?.lazyInitFailure(errorDetail: ("Error - \(flowError.errorStep.rawValue)"))
+            initProtocol?.failure(checkout: self)
+            #if DEBUG
+                print("Error - \(flowError.errorStep.rawValue)")
+            #endif
         } else {
             var errorDetail = ""
             #if DEBUG
@@ -34,7 +37,7 @@ extension MercadoPagoCheckout: InitFlowProtocol {
 
     func didFinishInitFlow() {
         if initMode == .lazy {
-            lifecycleProtocol?.lazyInitDidFinish()
+            initProtocol?.didFinish(checkout: self)
         } else {
             executeNextStep()
         }

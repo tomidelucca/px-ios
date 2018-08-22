@@ -13,7 +13,7 @@ import MercadoPagoServicesV4
 extension MercadoPagoServicesAdapter {
 
     open func getPXSiteFromId(_ siteId: String) -> PXSite {
-        let currency = MercadoPagoContext.getCurrency()
+        let currency = SiteManager.shared.getCurrency()
         let pxCurrency = getPXCurrencyFromCurrency(currency)
         let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
         return pxSite
@@ -67,11 +67,11 @@ extension MercadoPagoServicesAdapter {
         let title: String = pxItem.title ?? ""
         let quantity: Int = pxItem.quantity ?? 1
         let unitPrice: Double = pxItem.unitPrice ?? 0.0
-        let description: String = pxItem._description ?? ""
-        let currencyId: String = pxItem.currencyId ?? "ARS"
         let picture_URL: String = pxItem.pictureUrl ?? ""
-        let item = Item(itemId: id, title: title, quantity: quantity, unitPrice: unitPrice, description: description, currencyId: currencyId)
+        let item = Item(title: title, quantity: quantity, unitPrice: unitPrice)
         item.pictureUrl = picture_URL
+        item.setDescription(description: pxItem._description ?? "")
+        item.itemId = id
         return item
     }
 
@@ -470,7 +470,7 @@ extension MercadoPagoServicesAdapter {
     open func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
         let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
         pxPayer.id = payer.payerId
-        pxPayer.accessToken = MercadoPagoContext.payerAccessToken()
+        pxPayer.accessToken = payer.accessToken
         pxPayer.identification = getPXIdentificationFromIdentification(payer.identification)
         pxPayer.entityType = payer.entityType?.entityTypeId
         pxPayer.email = payer.email
@@ -489,6 +489,7 @@ extension MercadoPagoServicesAdapter {
             payer.name = pxPayer.firstName
             payer.surname = pxPayer.lastName
             payer.address = nil
+            payer.accessToken = pxPayer.accessToken
         }
         return payer
     }

@@ -69,9 +69,13 @@
     /* self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
                                                          accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController]; */
 
-    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+//    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
+//
+//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
+
+//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
@@ -115,11 +119,12 @@
 
     // [self.mpCheckout discountNotAvailable];
 
-    //[self.mpCheckout lazyStartWithLifecycleDelegate: self];
+    [self.checkoutBuilder setLanguage:@"es"];
+  
+    MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
-
-    [self.mpCheckout startWithNavigationController:self.navigationController];
+    //[mpCheckout startWithLazyInitProtocol:self];
+    [mpCheckout startWithNavigationController:self.navigationController];
 }
 
 // ReviewConfirm
@@ -162,8 +167,8 @@
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
     NSArray *items = [NSArray arrayWithObjects:item, nil];
@@ -176,8 +181,8 @@
 }
 
 -(void)setCheckoutPref_CardsNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:10 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:1 unitPrice:2.5 description:@"Sugus" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
     NSArray *items = [NSArray arrayWithObjects:item, nil];
@@ -210,14 +215,12 @@
 
 -(IBAction)startCardManager:(id)sender  {}
 
-- (void)lazyInitDidFinish {
-    NSLog(@"lazyInitDidFinish");
-    [self.mpCheckout startWithNavigationController:self.navigationController];
+- (void)didFinishWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
+    [checkout startWithNavigationController:self.navigationController];
 }
 
-- (void)lazyInitFailureWithErrorDetail:(NSString *)errorDetail {
-    NSLog(@"lazyInitFailureWithErrorDetail");
-    NSLog(@"%@", errorDetail);
+- (void)failureWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
+    NSLog(@"LazyInit - failureWithCheckout");
 }
 
 @end

@@ -15,7 +15,7 @@ import MercadoPagoServicesV4
     open var items: [Item]!
     open var payer: Payer!
     open var paymentPreference: PaymentPreference!
-    open var siteId: String = "MLA"
+    open var siteId: String = "MLA" // TODO: Ver esto
     open var expirationDateFrom: Date?
     open var expirationDateTo: Date?
     open var differentialPricing: PXDifferentialPricing?
@@ -200,13 +200,8 @@ import MercadoPagoServicesV4
         if Array.isNullOrEmpty(items) {
             return "No hay items".localized
         }
-        let currencyIdAllItems = items[0].currencyId
 
         for item in items {
-            if item.currencyId != currencyIdAllItems {
-                return "Los items tienen diferente moneda".localized
-            }
-
             if let error = item.validate() {
                 return error
             }

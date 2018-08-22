@@ -64,8 +64,6 @@
     UILabel* label = [cell viewWithTag:2];
     
     label.text = [[self.mediosOffArray objectAtIndex:indexPath.row] name];
-    image.image = [MercadoPago getImage:[self.mediosOffArray objectAtIndex:indexPath.row].paymentMethodId bundle: [MercadoPago getBundle]];
-    
     return cell;
 }
 

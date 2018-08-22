@@ -18,7 +18,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     internal var initMode: InitMode = .normal
-    internal var lifecycleProtocol: PXCheckoutLifecycleProtocol?
+    internal var initProtocol: PXLazyInitProtocol?
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
 
@@ -29,18 +29,14 @@ open class MercadoPagoCheckout: NSObject {
             choPref = CheckoutPreference(preferenceId: preferenceId)
         } else if let preference = builder.checkoutPreference {
             choPref = preference
+            SiteManager.shared.setSite(siteId: choPref.getSiteId()) // TODO: Ver esto
         } else {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
 
-        if let accessToken = builder.privateKey {
-            MercadoPagoContext.setPayerAccessToken(accessToken)
-        }
+        PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? "" //TODO: This is temporary.
 
-        MercadoPagoContext.setPublicKey(builder.publicKey)
-        PXServicesURLConfigs.PX_SDK_VERSION = MercadoPagoContext.sharedInstance.sdkVersion() //TODO: This is temporary.
-
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey)
 
         // Set advanced config.
         if let advancedConfig = builder.advancedConfig {
@@ -107,9 +103,9 @@ extension MercadoPagoCheckout {
         }
     }
 
-    public func lazyStart(lifecycleDelegate: PXCheckoutLifecycleProtocol) {
+    public func start(lazyInitProtocol: PXLazyInitProtocol) {
         viewModel.initFlow?.restart()
-        lifecycleProtocol = lifecycleDelegate
+        initProtocol = lazyInitProtocol
         initMode = .lazy
         commondInit()
         executeNextStep()
@@ -192,7 +188,6 @@ extension MercadoPagoCheckout {
             self.showPaymentPluginScreen()
         case .FLOW_ONE_TAP:
             self.startOneTapFlow()
-        default: break
         }
     }
 
@@ -236,8 +231,8 @@ extension MercadoPagoCheckout {
     }
 
     private func startTracking() {
-        MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
-        MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
+        MPXTracker.setPublicKey(viewModel.publicKey)
+        MPXTracker.setSdkVersion(PXServicesURLConfigs.PX_SDK_VERSION ?? "") // TODO: Temporal
         MPXTracker.sharedInstance.startNewFlow()
     }
 

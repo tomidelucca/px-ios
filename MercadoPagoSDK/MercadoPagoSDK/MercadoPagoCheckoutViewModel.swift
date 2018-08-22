@@ -41,11 +41,13 @@ internal enum CheckoutStep: String {
 internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     static var servicePreference = ServicePreference()
-
     var hookService: HookService = HookService()
 
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
-   
+
+    internal var publicKey: String
+    internal var privateKey: String?
+
     static var paymentCallback: ((Payment) -> Void)?
     static var finishFlowCallback: ((Payment?) -> Void)?
     var callbackCancel: (() -> Void)?
@@ -58,7 +60,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
     var checkoutPreference: CheckoutPreference!
-    var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
     //    var paymentMethods: [PaymentMethod]?
     var cardToken: CardToken?
@@ -118,15 +120,17 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
-    init(checkoutPreference: CheckoutPreference) {
+    init(checkoutPreference: CheckoutPreference, publicKey: String, privateKey: String?) {
+        self.publicKey = publicKey
+        self.privateKey = privateKey
+        self.checkoutPreference = checkoutPreference
+
+        mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference, publicKey: publicKey, privateKey: privateKey)
 
         super.init()
 
-        self.checkoutPreference = checkoutPreference
-
         if !isPreferenceLoaded() {
             self.paymentData.payer = self.checkoutPreference.getPayer()
-            MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
 
         // Create Init Flow
@@ -134,7 +138,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference)
+        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, publicKey: publicKey, privateKey: privateKey)
         copyObj.setNavigationHandler(handler: pxNavigationHandler)
         return copyObj
     }
@@ -288,7 +292,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
-        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, reviewConfirmConfig: advancedConfig.reviewConfirmConfiguration)
+        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, reviewConfirmConfig: advancedConfig.reviewConfirmConfiguration, userLogged: !String.isNullOrEmpty(privateKey))
     }
 
     func resultViewModel() -> PXResultViewModel {
@@ -552,30 +556,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentData.updatePaymentDataWith(token: token)
     }
 
-    public class func createMPPayment(preferenceId: String, paymentData: PaymentData, customerId: String? = nil, binaryMode: Bool) -> MPPayment {
-
-        let issuerId: String = paymentData.hasIssuer() ? paymentData.getIssuer()!.issuerId! : ""
-
-        let tokenId: String = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
-
-        let installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
-
-        var transactionDetails = TransactionDetails()
-        if paymentData.transactionDetails != nil {
-            transactionDetails = paymentData.transactionDetails!
-        }
-
-        var payer = Payer()
-        if let targetPayer = paymentData.payer {
-            payer = targetPayer
-        }
-
-        let isBlacklabelPayment = paymentData.hasToken() && paymentData.getToken()!.cardId != nil && String.isNullOrEmpty(customerId)
-
-        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode, discount: paymentData.discount)
-        return mpPayment
-    }
-
     public func updateCheckoutModel(paymentMethodOptions: [PaymentMethodOption]) {
         if self.rootPaymentMethodOptions != nil {
             self.rootPaymentMethodOptions!.insert(contentsOf: paymentMethodOptions, at: 0)
@@ -661,9 +641,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func getEntityTypes() -> [EntityType] {
-        let path = MercadoPago.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
         let dictET = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
+        let site = SiteManager.shared.getSiteId()
 
         if let siteETs = entityTypesFinder(inDict: dictET!, forKey: site) {
             return siteETs
@@ -804,7 +784,7 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
         guard let paymentFlow = paymentFlow else {
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, binaryMode: checkoutPreference.isBinaryMode(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference)
             self.paymentFlow = paymentFlow
             return paymentFlow
         }
