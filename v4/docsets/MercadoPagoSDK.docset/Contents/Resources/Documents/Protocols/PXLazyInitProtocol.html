@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MercadoPagoCheckout Class Reference</title>
+    <title>PXLazyInitProtocol Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/MercadoPagoCheckout" class="dashAnchor"></a>
-    <a title="MercadoPagoCheckout Class Reference"></a>
+    <a name="//apple_ref/swift/Protocol/PXLazyInitProtocol" class="dashAnchor"></a>
+    <a title="PXLazyInitProtocol Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (0% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MercadoPagoCheckout Class Reference
+        PXLazyInitProtocol Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -103,11 +103,11 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>MercadoPagoCheckout</h1>
+            <h1>PXLazyInitProtocol</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">MercadoPagoCheckout</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PXLazyInitProtocol</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
 
                 </div>
               </div>
@@ -120,9 +120,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)MercadoPagoCheckout(im)initWithBuilder:"></a>
-                    <a name="//apple_ref/swift/Method/init(builder:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)MercadoPagoCheckout(im)initWithBuilder:">init(builder:)</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(pl)PXLazyInitProtocol(im)didFinishWithCheckout:"></a>
+                    <a name="//apple_ref/swift/Method/didFinish(checkout:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(pl)PXLazyInitProtocol(im)didFinishWithCheckout:">didFinish(checkout:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -137,53 +137,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">builder</span><span class="p">:</span> <span class="kt"><a href="../Classes/MercadoPagoCheckoutBuilder.html">MercadoPagoCheckoutBuilder</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didFinish</span><span class="p">(</span><span class="nv">checkout</span><span class="p">:</span> <span class="kt"><a href="../Classes/MercadoPagoCheckout.html">MercadoPagoCheckout</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/MercadoPagoCheckout.swift#L25-L78">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Publics"></a>
-                <a name="//apple_ref/swift/Section/Publics" class="dashAnchor"></a>
-                <a href="#/Publics">
-                  <h3 class="section-name">Publics</h3>
-                </a>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)MercadoPagoCheckout(im)startWithNavigationController:"></a>
-                    <a name="//apple_ref/swift/Method/start(navigationController:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)MercadoPagoCheckout(im)startWithNavigationController:">start(navigationController:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">start</span><span class="p">(</span><span class="nv">navigationController</span><span class="p">:</span> <span class="kt">UINavigationController</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/MercadoPagoCheckout.swift#L83-L104">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/InitFlow/PXLazyInitProtocol.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -191,9 +150,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)MercadoPagoCheckout(im)startWithLazyInitProtocol:"></a>
-                    <a name="//apple_ref/swift/Method/start(lazyInitProtocol:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)MercadoPagoCheckout(im)startWithLazyInitProtocol:">start(lazyInitProtocol:)</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(pl)PXLazyInitProtocol(im)failureWithCheckout:"></a>
+                    <a name="//apple_ref/swift/Method/failure(checkout:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(pl)PXLazyInitProtocol(im)failureWithCheckout:">failure(checkout:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -208,12 +167,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">start</span><span class="p">(</span><span class="nv">lazyInitProtocol</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PXLazyInitProtocol.html">PXLazyInitProtocol</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">failure</span><span class="p">(</span><span class="nv">checkout</span><span class="p">:</span> <span class="kt"><a href="../Classes/MercadoPagoCheckout.html">MercadoPagoCheckout</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/MercadoPagoCheckout.swift#L106-L112">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/InitFlow/PXLazyInitProtocol.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

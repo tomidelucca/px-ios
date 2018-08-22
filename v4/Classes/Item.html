@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PXBusinessResult Class Reference</title>
+    <title>Item Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/PXBusinessResult" class="dashAnchor"></a>
-    <a title="PXBusinessResult Class Reference"></a>
+    <a name="//apple_ref/swift/Class/Item" class="dashAnchor"></a>
+    <a title="Item Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (0% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        PXBusinessResult Class Reference
+        Item Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -103,11 +103,11 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>PXBusinessResult</h1>
+            <h1>Item</h1>
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXBusinessResult</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">Item</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                 </div>
               </div>
@@ -120,9 +120,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXBusinessResult(im)initWithReceiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:"></a>
-                    <a name="//apple_ref/swift/Method/init(receiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXBusinessResult(im)initWithReceiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:">init(receiptId:status:title:subtitle:icon:mainAction:secondaryAction:helpMessage:showPaymentMethod:statementDescription:imageUrl:topCustomView:bottomCustomView:paymentStatus:paymentStatusDetail:)</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)Item(im)initWithTitle:quantity:unitPrice:"></a>
+                    <a name="//apple_ref/swift/Method/init(title:quantity:unitPrice:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)Item(im)initWithTitle:quantity:unitPrice:">init(title:quantity:unitPrice:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -137,12 +137,233 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">receiptId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">status</span><span class="p">:</span> <span class="kt"><a href="../Enums/PXBusinessResultStatus.html">PXBusinessResultStatus</a></span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">subtitle</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">icon</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">mainAction</span><span class="p">:</span> <span class="kt">PXComponentAction</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">secondaryAction</span><span class="p">:</span> <span class="kt">PXComponentAction</span><span class="p">?,</span> <span class="nv">helpMessage</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">showPaymentMethod</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">statementDescription</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">imageUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">topCustomView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">bottomCustomView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">paymentStatus</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">paymentStatusDetail</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">quantity</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">unitPrice</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L49-L66">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L20-L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Non%20mandatory%20setters"></a>
+                <a name="//apple_ref/swift/Section/Non mandatory setters" class="dashAnchor"></a>
+                <a href="#/Non%20mandatory%20setters">
+                  <h3 class="section-name">Non mandatory setters</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getQuantity"></a>
+                    <a name="//apple_ref/swift/Method/getQuantity()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getQuantity">getQuantity()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getQuantity</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L38-L40">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getUnitPrice"></a>
+                    <a name="//apple_ref/swift/Method/getUnitPrice()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getUnitPrice">getUnitPrice()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getUnitPrice</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L42-L44">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getTitle"></a>
+                    <a name="//apple_ref/swift/Method/getTitle()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getTitle">getTitle()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getTitle</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L46-L48">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getId"></a>
+                    <a name="//apple_ref/swift/Method/getId()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getId">getId()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L50-L52">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getDescription"></a>
+                    <a name="//apple_ref/swift/Method/getDescription()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getDescription">getDescription()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L54-L56">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getCategoryId"></a>
+                    <a name="//apple_ref/swift/Method/getCategoryId()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getCategoryId">getCategoryId()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getCategoryId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L58-L60">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getPictureURL"></a>
+                    <a name="//apple_ref/swift/Method/getPictureURL()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getPictureURL">getPictureURL()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">getPictureURL</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L62-L64">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -161,9 +382,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getStatus"></a>
-                    <a name="//apple_ref/swift/Method/getStatus()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getStatus">getStatus()</a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setIdWithId:"></a>
+                    <a name="//apple_ref/swift/Method/setId(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setIdWithId:">setId(id:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -178,12 +399,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getStatus</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/PXBusinessResultStatus.html">PXBusinessResultStatus</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setId</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L72-L74">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L69-L71">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -191,9 +412,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getTitle"></a>
-                    <a name="//apple_ref/swift/Method/getTitle()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getTitle">getTitle()</a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setDescriptionWithDescription:"></a>
+                    <a name="//apple_ref/swift/Method/setDescription(description:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setDescriptionWithDescription:">setDescription(description:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -208,12 +429,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getTitle</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setDescription</span><span class="p">(</span><span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L75-L77">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L73-L75">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -221,9 +442,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getStatementDescription"></a>
-                    <a name="//apple_ref/swift/Method/getStatementDescription()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getStatementDescription">getStatementDescription()</a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setPictureURLWithUrl:"></a>
+                    <a name="//apple_ref/swift/Method/setPictureURL(url:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setPictureURLWithUrl:">setPictureURL(url:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -238,12 +459,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getStatementDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setPictureURL</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L78-L80">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L77-L79">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -251,9 +472,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getTopCustomView"></a>
-                    <a name="//apple_ref/swift/Method/getTopCustomView()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getTopCustomView">getTopCustomView()</a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setCategoryIdWithCategoryId:"></a>
+                    <a name="//apple_ref/swift/Method/setCategoryId(categoryId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setCategoryIdWithCategoryId:">setCategoryId(categoryId:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -268,12 +489,53 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getTopCustomView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIView</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setCategoryId</span><span class="p">(</span><span class="nv">categoryId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L81-L83">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L81-L83">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Getters2"></a>
+                <a name="//apple_ref/swift/Section/Getters" class="dashAnchor"></a>
+                <a href="#/Getters2">
+                  <h3 class="section-name">Getters</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(cm)fromJSON:"></a>
+                    <a name="//apple_ref/swift/Method/fromJSON(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(cm)fromJSON:">fromJSON(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">fromJSON</span><span class="p">(</span><span class="n">_</span> <span class="nv">json</span><span class="p">:</span> <span class="kt">NSDictionary</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Item</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L87-L113">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -281,9 +543,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getBottomCustomView"></a>
-                    <a name="//apple_ref/swift/Method/getBottomCustomView()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getBottomCustomView">getBottomCustomView()</a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)toJSONString"></a>
+                    <a name="//apple_ref/swift/Method/toJSONString()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)toJSONString">toJSONString()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -298,282 +560,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getBottomCustomView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIView</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">toJSONString</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L84-L86">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getImageUrl"></a>
-                    <a name="//apple_ref/swift/Method/getImageUrl()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getImageUrl">getImageUrl()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getImageUrl</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L87-L89">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getReceiptId"></a>
-                    <a name="//apple_ref/swift/Method/getReceiptId()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getReceiptId">getReceiptId()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getReceiptId</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L90-L92">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getSubTitle"></a>
-                    <a name="//apple_ref/swift/Method/getSubTitle()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getSubTitle">getSubTitle()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getSubTitle</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L93-L95">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getHelpMessage"></a>
-                    <a name="//apple_ref/swift/Method/getHelpMessage()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getHelpMessage">getHelpMessage()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getHelpMessage</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L96-L98">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getIcon"></a>
-                    <a name="//apple_ref/swift/Method/getIcon()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getIcon">getIcon()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getIcon</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L99-L101">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getMainAction"></a>
-                    <a name="//apple_ref/swift/Method/getMainAction()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getMainAction">getMainAction()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getMainAction</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">PXComponentAction</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L102-L104">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getSecondaryAction"></a>
-                    <a name="//apple_ref/swift/Method/getSecondaryAction()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)getSecondaryAction">getSecondaryAction()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getSecondaryAction</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">PXComponentAction</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L105-L107">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)mustShowPaymentMethod"></a>
-                    <a name="//apple_ref/swift/Method/mustShowPaymentMethod()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)mustShowPaymentMethod">mustShowPaymentMethod()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mustShowPaymentMethod</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L108-L110">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)isApproved"></a>
-                    <a name="//apple_ref/swift/Method/isApproved()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXBusinessResult(im)isApproved">isApproved()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isApproved</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXBusinessResult.swift#L111-L113">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L115-L131">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

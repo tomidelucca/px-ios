@@ -1,6 +1,328 @@
 {
   "warnings": [
     {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": null,
+      "symbol": "CheckoutPreference",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 12,
+      "symbol": "CheckoutPreference",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 13,
+      "symbol": "CheckoutPreference.preferenceId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 14,
+      "symbol": "CheckoutPreference.items",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 15,
+      "symbol": "CheckoutPreference.payer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 16,
+      "symbol": "CheckoutPreference.paymentPreference",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 17,
+      "symbol": "CheckoutPreference.siteId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 18,
+      "symbol": "CheckoutPreference.expirationDateFrom",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 19,
+      "symbol": "CheckoutPreference.expirationDateTo",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 20,
+      "symbol": "CheckoutPreference.differentialPricing",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 23,
+      "symbol": "CheckoutPreference.fromJSON(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 55,
+      "symbol": "CheckoutPreference.init(preferenceId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 59,
+      "symbol": "CheckoutPreference.init(items:payer:paymentMethods:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 65,
+      "symbol": "CheckoutPreference.addItem(item:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 69,
+      "symbol": "CheckoutPreference.addItems(items:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 73,
+      "symbol": "CheckoutPreference.addExcludedPaymentMethod(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 80,
+      "symbol": "CheckoutPreference.setExcludedPaymentMethods(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 84,
+      "symbol": "CheckoutPreference.addExcludedPaymentType(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 92,
+      "symbol": "CheckoutPreference.setExcludedPaymentTypes(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 96,
+      "symbol": "CheckoutPreference.setMaxInstallments(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 100,
+      "symbol": "CheckoutPreference.setDefaultInstallments(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 104,
+      "symbol": "CheckoutPreference.setDefaultPaymentMethodId(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 108,
+      "symbol": "CheckoutPreference.setPayerEmail(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 112,
+      "symbol": "CheckoutPreference.setSite(siteId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 116,
+      "symbol": "CheckoutPreference.setExpirationDate(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 120,
+      "symbol": "CheckoutPreference.setActiveFromDate(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 124,
+      "symbol": "CheckoutPreference.setId(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 128,
+      "symbol": "CheckoutPreference.getId()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 132,
+      "symbol": "CheckoutPreference.getItems()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 136,
+      "symbol": "CheckoutPreference.getPayer()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 140,
+      "symbol": "CheckoutPreference.getSiteId()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 144,
+      "symbol": "CheckoutPreference.getExpirationDate()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 148,
+      "symbol": "CheckoutPreference.getActiveFromDate()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 152,
+      "symbol": "CheckoutPreference.getExcludedPaymentTypesIds()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 156,
+      "symbol": "CheckoutPreference.getDefaultInstallments()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 160,
+      "symbol": "CheckoutPreference.getMaxAcceptedInstallments()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 164,
+      "symbol": "CheckoutPreference.getExcludedPaymentMethodsIds()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 168,
+      "symbol": "CheckoutPreference.getDefaultPaymentMethodId()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 172,
+      "symbol": "CheckoutPreference.validate()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 198,
+      "symbol": "CheckoutPreference.itemsValid()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 212,
+      "symbol": "CheckoutPreference.isExpired()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 220,
+      "symbol": "CheckoutPreference.isActive()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 232,
+      "symbol": "CheckoutPreference.toJSONString()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 250,
+      "symbol": "CheckoutPreference.getAmount()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 261,
+      "symbol": "CheckoutPreference.isBinaryMode()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift",
+      "line": 265,
+      "symbol": "CheckoutPreference.setBinaryMode(isBinaryMode:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift",
       "line": 12,
       "symbol": "PXAdvancedConfiguration",
@@ -24,28 +346,21 @@
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift",
       "line": 15,
-      "symbol": "PXAdvancedConfiguration.binaryMode",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift",
-      "line": 16,
       "symbol": "PXAdvancedConfiguration.bankDealsEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift",
-      "line": 17,
-      "symbol": "PXAdvancedConfiguration.reviewScreenPreference",
+      "line": 16,
+      "symbol": "PXAdvancedConfiguration.reviewConfirmConfiguration",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXAdvancedConfiguration.swift",
-      "line": 18,
-      "symbol": "PXAdvancedConfiguration.paymentResultScreenPreference",
+      "line": 17,
+      "symbol": "PXAdvancedConfiguration.paymentResultConfiguration",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -113,65 +428,93 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXPaymentResultConfiguration.swift",
+      "line": 11,
+      "symbol": "PXPaymentResultConfiguration",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXPaymentResultConfiguration.swift",
+      "line": 20,
+      "symbol": "PXPaymentResultConfiguration.init(topView:bottomView:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXReviewConfirmConfiguration.swift",
+      "line": 11,
+      "symbol": "PXReviewConfirmConfiguration",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Config/PXReviewConfirmConfiguration.swift",
+      "line": 25,
+      "symbol": "PXReviewConfirmConfiguration.init(itemsEnabled:topView:bottomView:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
-      "line": 12,
+      "line": 11,
       "symbol": "Languages",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
+      "line": 12,
+      "symbol": "Languages.SPANISH",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
       "line": 13,
-      "symbol": "Languages._SPANISH",
+      "symbol": "Languages.SPANISH_MEXICO",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
       "line": 14,
-      "symbol": "Languages._SPANISH_MEXICO",
+      "symbol": "Languages.SPANISH_COLOMBIA",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
       "line": 15,
-      "symbol": "Languages._SPANISH_COLOMBIA",
+      "symbol": "Languages.SPANISH_URUGUAY",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
       "line": 16,
-      "symbol": "Languages._SPANISH_URUGUAY",
+      "symbol": "Languages.SPANISH_PERU",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
       "line": 17,
-      "symbol": "Languages._SPANISH_PERU",
+      "symbol": "Languages.SPANISH_VENEZUELA",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
       "line": 18,
-      "symbol": "Languages._SPANISH_VENEZUELA",
+      "symbol": "Languages.PORTUGUESE",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
       "line": 19,
-      "symbol": "Languages._PORTUGUESE",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/Languages.swift",
-      "line": 20,
-      "symbol": "Languages._ENGLISH",
+      "symbol": "Languages.ENGLISH",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -199,56 +542,189 @@
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/MercadoPagoCheckoutBuilder.swift",
       "line": 29,
+      "symbol": "MercadoPagoCheckoutBuilder.init(publicKey:preferenceId:paymentConfiguration:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/MercadoPagoCheckoutBuilder.swift",
+      "line": 35,
       "symbol": "MercadoPagoCheckoutBuilder.init(publicKey:checkoutPreference:paymentConfiguration:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/MercadoPagoCheckoutBuilder.swift",
-      "line": 38,
+      "line": 44,
       "symbol": "MercadoPagoCheckoutBuilder.setPrivateKey(key:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/MercadoPagoCheckoutBuilder.swift",
-      "line": 43,
+      "line": 49,
       "symbol": "MercadoPagoCheckoutBuilder.setAdvancedConfiguration(config:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/MercadoPagoCheckoutBuilder.swift",
-      "line": 48,
+      "line": 54,
       "symbol": "MercadoPagoCheckoutBuilder.setColor(checkoutColor:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Core/MercadoPagoCheckoutBuilder.swift",
-      "line": 53,
-      "symbol": "MercadoPagoCheckoutBuilder.setLanguage(string:)",
+      "line": 59,
+      "symbol": "MercadoPagoCheckoutBuilder.setLanguage(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Flows/InitFlow/MercadopagoCheckoutLifecycleProtocol.swift",
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Flows/InitFlow/PXLazyInitProtocol.swift",
       "line": 11,
-      "symbol": "PXCheckoutLifecycleProtocol",
+      "symbol": "PXLazyInitProtocol",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Flows/InitFlow/MercadopagoCheckoutLifecycleProtocol.swift",
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Flows/InitFlow/PXLazyInitProtocol.swift",
       "line": 12,
-      "symbol": "PXCheckoutLifecycleProtocol.lazyInitDidFinish()",
+      "symbol": "PXLazyInitProtocol.didFinish(checkout:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Flows/InitFlow/MercadopagoCheckoutLifecycleProtocol.swift",
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Flows/InitFlow/PXLazyInitProtocol.swift",
       "line": 13,
-      "symbol": "PXCheckoutLifecycleProtocol.lazyInitFailure(errorDetail:)",
+      "symbol": "PXLazyInitProtocol.failure(checkout:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": null,
+      "symbol": "Item",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": null,
+      "symbol": "Item",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": null,
+      "symbol": "Item",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 11,
+      "symbol": "Item",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 20,
+      "symbol": "Item.init(title:quantity:unitPrice:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 38,
+      "symbol": "Item.getQuantity()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 42,
+      "symbol": "Item.getUnitPrice()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 46,
+      "symbol": "Item.getTitle()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 50,
+      "symbol": "Item.getId()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 54,
+      "symbol": "Item.getDescription()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 58,
+      "symbol": "Item.getCategoryId()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 62,
+      "symbol": "Item.getPictureURL()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 69,
+      "symbol": "Item.setId(id:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 73,
+      "symbol": "Item.setDescription(description:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 77,
+      "symbol": "Item.setPictureURL(url:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 81,
+      "symbol": "Item.setCategoryId(categoryId:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 87,
+      "symbol": "Item.fromJSON(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Item.swift",
+      "line": 115,
+      "symbol": "Item.toJSONString()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -275,15 +751,15 @@
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/MercadoPagoCheckout.swift",
-      "line": 87,
+      "line": 83,
       "symbol": "MercadoPagoCheckout.start(navigationController:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/MercadoPagoCheckout.swift",
-      "line": 110,
-      "symbol": "MercadoPagoCheckout.lazyStart(lifecycleDelegate:)",
+      "line": 106,
+      "symbol": "MercadoPagoCheckout.start(lazyInitProtocol:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -550,6 +1026,223 @@
       "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PXThemeProperty.swift",
       "line": 30,
       "symbol": "PXThemeProperty.getTintColor()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 12,
+      "symbol": "Payer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 13,
+      "symbol": "Payer.email",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 14,
+      "symbol": "Payer.payerId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 15,
+      "symbol": "Payer.identification",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 16,
+      "symbol": "Payer.entityType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 17,
+      "symbol": "Payer.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 18,
+      "symbol": "Payer.surname",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 19,
+      "symbol": "Payer.address",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 20,
+      "symbol": "Payer.accessToken",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 22,
+      "symbol": "Payer.init(payerId:email:identification:entityType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 29,
+      "symbol": "Payer.fromJSON(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 70,
+      "symbol": "Payer.toJSONString()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Payer.swift",
+      "line": 74,
+      "symbol": "Payer.toJSON()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 39,
+      "symbol": "PaymentPreference",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 40,
+      "symbol": "PaymentPreference.excludedPaymentMethodIds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 41,
+      "symbol": "PaymentPreference.excludedPaymentTypeIds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 42,
+      "symbol": "PaymentPreference.defaultPaymentMethodId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 43,
+      "symbol": "PaymentPreference.maxAcceptedInstallments",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 44,
+      "symbol": "PaymentPreference.defaultInstallments",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 45,
+      "symbol": "PaymentPreference.defaultPaymentTypeId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 46,
+      "symbol": "PaymentPreference.cardId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 52,
+      "symbol": "PaymentPreference.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 56,
+      "symbol": "PaymentPreference.fromJSON(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 98,
+      "symbol": "PaymentPreference.autoSelectPayerCost(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 119,
+      "symbol": "PaymentPreference.validate()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 130,
+      "symbol": "PaymentPreference.getExcludedPaymentTypesIds()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 137,
+      "symbol": "PaymentPreference.getDefaultInstallments()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 144,
+      "symbol": "PaymentPreference.getMaxAcceptedInstallments()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 151,
+      "symbol": "PaymentPreference.getExcludedPaymentMethodsIds()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 158,
+      "symbol": "PaymentPreference.getDefaultPaymentMethodId()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentPreference.swift",
+      "line": 165,
+      "symbol": "PaymentPreference.addSettings(_:excludedPaymentMethodsIds:excludedPaymentTypesIds:defaultPaymentMethodId:maxAcceptedInstallment:defaultInstallments:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
