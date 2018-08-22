@@ -1,4 +1,15 @@
-![Swift4](https://img.shields.io/badge/Swift-4.0-F16D39.svg?style=flat) (https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-ios)
+<p align="center">
+    <a href="https://travis-ci.org/mercadopago/px-ios">
+      <img src="https://img.shields.io/travis/mercadopago/px-ios.svg">
+    </a>
+    <img src="https://img.shields.io/badge/Swift-4.1-orange.svg" />
+    <a href="https://cocoapods.org/pods/MercadoPagoSDKV4">
+        <img src="https://img.shields.io/cocoapods/v/px-ios.svg" alt="CocoaPods" />
+    </a>
+    <a href="https://cocoapods.org/pods/MercadoPagoSDKV4">
+        <img src="https://img.shields.io/cocoapods/dt/MercadoPagoSDKV4.svg?style=flat" alt="CocoaPods downloads" />
+    </a>
+</p>
 
 ![Screenshot iOS](https://i.imgur.com/7nDmBpl.jpg)
 
