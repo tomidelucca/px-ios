@@ -12,7 +12,6 @@ internal final class PXPaymentFlowModel: NSObject {
     var paymentData: PaymentData?
     var checkoutPreference: CheckoutPreference?
     let paymentPlugin: PXPaymentProcessor?
-    let paymentMethodPaymentPlugin: PXPaymentPluginComponent?
 
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
@@ -20,9 +19,8 @@ internal final class PXPaymentFlowModel: NSObject {
     var instructionsInfo: InstructionsInfo?
     var businessResult: PXBusinessResult?
 
-    init(paymentPlugin: PXPaymentProcessor?, paymentMethodPaymentPlugin: PXPaymentPluginComponent?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentPlugin = paymentPlugin
-        self.paymentMethodPaymentPlugin = paymentMethodPaymentPlugin
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
     }
 
