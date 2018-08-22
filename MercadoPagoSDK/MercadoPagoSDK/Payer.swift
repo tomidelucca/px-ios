@@ -8,6 +8,7 @@
 
 import Foundation
 
+/** :nodoc: */
 @objcMembers
 open class Payer: NSObject {
 	internal var email: String!
@@ -32,8 +33,8 @@ open class Payer: NSObject {
 
 // MARK: Setters
 extension Payer {
-    open func setId(id: String) {
-        self.payerId = id
+    open func setId(payerId: String) {
+        self.payerId = payerId
     }
 
     open func setIdentification(identification: Identification) {

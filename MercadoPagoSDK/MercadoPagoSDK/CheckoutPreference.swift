@@ -55,7 +55,7 @@ import MercadoPagoServicesV4
     }
 }
 
-// Mark: Setters
+// MARK: Setters
 extension CheckoutPreference {
 
     open func setExpirationDate(_ expirationDate: Date) {
@@ -106,7 +106,7 @@ extension CheckoutPreference {
     }
 }
 
-// Mark: Getters
+// MARK: Getters
 extension CheckoutPreference {
 
     open func getId() -> String {
@@ -163,7 +163,7 @@ extension CheckoutPreference {
 
 }
 
-// Mark: Validation
+// MARK: Validation
 extension CheckoutPreference {
     internal func validate() -> String? {
 
