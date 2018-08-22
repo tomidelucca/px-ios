@@ -32,12 +32,12 @@ Project dependencies to be managed by CocoaPods are specified in a file called `
 
 You just created the pod file and opened it using Xcode! Ready to add some content to the empty pod file?
 
-Copy and paste the following lines into the TextEdit window:  
+Copy and paste the following lines:  
 
     source 'https://github.com/CocoaPods/Specs.git'
     use_frameworks!
-    platform :ios, '8.0'
-    pod 'MercadoPagoSDK', '3.8.0'
+    platform :ios, '9.0'
+    pod 'MercadoPagoSDKV4', '4.0'
 
 #### Step 3: Install Dependencies
 
