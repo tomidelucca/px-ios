@@ -173,8 +173,8 @@
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
     NSArray *items = [NSArray arrayWithObjects:item, nil];
@@ -187,8 +187,8 @@
 }
 
 -(void)setCheckoutPref_CardsNotExcluded {
-    Item *item = [[Item alloc] initWithItemId:@"itemId" title:@"item title" quantity:10 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWithItemId:@"itemId2" title:@"item title 2" quantity:1 unitPrice:2.5 description:@"Sugus" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
     Payer *payer = [[Payer alloc] initWithPayerId:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
     NSArray *items = [NSArray arrayWithObjects:item, nil];
