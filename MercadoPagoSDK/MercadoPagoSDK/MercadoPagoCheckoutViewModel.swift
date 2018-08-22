@@ -34,7 +34,6 @@ internal enum CheckoutStep: String {
     case SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
     case SCREEN_HOOK_BEFORE_PAYMENT
     case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
-    case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
     case SCREEN_PAYMENT_PLUGIN_PAYMENT
     case FLOW_ONE_TAP
 }
@@ -108,7 +107,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
 
     // Payment plugin
-    var paymentPlugin: PXPaymentPluginComponent?
+    var paymentPlugin: PXPaymentProcessor?
     var paymentFlow: PXPaymentFlow?
 
     // Discount and charges
@@ -785,11 +784,7 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
         guard let paymentFlow = paymentFlow else {
-            var paymentMethodPaymentPlugin: PXPaymentPluginComponent?
-            if let paymentOtionSelected = paymentOptionSelected, let plugin = paymentOtionSelected as? PXPaymentMethodPlugin {
-                paymentMethodPaymentPlugin = plugin.paymentPlugin
-            }
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, paymentMethodPaymentPlugin: paymentMethodPaymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference)
             self.paymentFlow = paymentFlow
             return paymentFlow
         }

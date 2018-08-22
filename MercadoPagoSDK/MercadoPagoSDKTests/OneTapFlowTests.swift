@@ -43,7 +43,7 @@ class OneTapFlowTests: BaseTest {
         // 4. Payment plugin
         mpCheckout.viewModel.updateCheckoutModel(paymentData: paymentDataAccountMoney)
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT, step)
+        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_PLUGIN_PAYMENT, step)
 
         // 6. Simular Pago realizado y se muestra congrats
         let paymentMock = MockBuilder.buildPayment("account_money")

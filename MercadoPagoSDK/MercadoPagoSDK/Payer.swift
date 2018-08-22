@@ -8,7 +8,6 @@
 
 import Foundation
 
-/** :nodoc: */
 @objcMembers
 open class Payer: NSObject {
 	open var email: String!
