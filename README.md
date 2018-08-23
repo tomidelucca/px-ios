@@ -22,13 +22,15 @@ MercadoPagoSDKV4 (PX-Payment Experience) make it easy to collect your users' cre
 Edit your `Podfile` and specify the dependency:
 
 ```ruby
-pod "MercadoPagoSDKV4"
+pod 'MercadoPagoSDKV4', '~> 4.0'
 ```
 
 ## 🐒 How to use
 Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
-- [x] TODO
-- [x] TODO
+Import MercadopagoSDKV4 in your peoject.
+```swift
+import MercadoPagoSDKV4
+```
 
 ## 🌟 Features
 - [x] Easy to install
@@ -44,14 +46,14 @@ Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 * iOS 9.0+
 * Swift 4
 * xCode 9.2+
-* @Objc Compatibility
+* @Objc full compatibility
 
 ### 🔮 Project Example
 This project include an example project using MercadoPagoSDKV4. In case you need support contact the MercadoPago Developers Site.
 
 ### 📚 Documentation & DevSite
-+ [Advanced full documentation.](http://mercadopago.github.io/px-ios/v4/)
-+ [Check out MercadoPago Developers Site.](http://www.mercadopago.com.ar/developers)
++ [Advanced full documentation](http://mercadopago.github.io/px-ios/v4/)
++ [Check out MercadoPago Developers Site](http://www.mercadopago.com.ar/developers)
 
 ## ❤️ Feedback
 You can join the MercadoPago Developers Community on MercadoPago Developers Site:
@@ -60,7 +62,7 @@ You can join the MercadoPago Developers Community on MercadoPago Developers Site
 + [Português](https://www.mercadopago.com.br/developers/pt/community/forum/)
 
 This is an open source project, so feel free to contribute. How?
-- Propose your own fixes, suggestions and open a pull request with the changes.
+- Fork this project and propose your own fixes, suggestions and open a pull request with the changes.
 
 
 ## 👨🏻‍💻 Author
