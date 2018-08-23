@@ -46,7 +46,11 @@ checkout.start(navigationController: self.navigationController!)
 ## 💡Advanced integration?
 Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target="_blank"> reference </a>, especially <a href="http://mercadopago.github.io/px-ios/v4/Classes/MercadoPagoCheckoutBuilder.html" target="_blank"> MercadoPagoCheckoutBuilder </a> object to explore all available functionalities.
 
-    
+## 💪One line integration?
+Use MercadoPagoCheckoutBuilder to start your checkout flow in only one line.
+```swift
+MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: "your_public_key", preferenceId: "your_checkout_preference_id")).start(navigationController: self.navigationController!)
+```
     
 ## 🌟 Features
 - [x] Easy to install
