@@ -43,8 +43,8 @@ let checkout = MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init
 checkout.start(navigationController: self.navigationController!)
 ```
 
-## 🐒 Advanced integration?
-Check our official reference, especially <a href="https://travis-ci.org/mercadopago/px-ios"> MercadoPagoCheckoutBuilder object </a>  to explore all available functionalities.
+## 💡Advanced integration?
+Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target="_blank"> reference </a>, especially <a href="http://mercadopago.github.io/px-ios/v4/Classes/MercadoPagoCheckoutBuilder.html" target="_blank"> MercadoPagoCheckoutBuilder </a> object to explore all available functionalities.
 
     
     
