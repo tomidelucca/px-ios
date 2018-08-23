@@ -8,47 +8,53 @@
 
 import Foundation
 
-/** :nodoc: */
 @objcMembers
 open class PXCheckoutStore: NSObject {
     static let sharedInstance = PXCheckoutStore()
+    internal var checkoutPreference: CheckoutPreference?
+    internal var paymentData = PaymentData()
+    internal var paymentOptionSelected: PaymentMethodOption?
     private var data = [String: Any]()
-    var checkoutPreference: CheckoutPreference?
-    var paymentData = PaymentData()
-    var paymentOptionSelected: PaymentMethodOption?
+}
 
-    public func addData(forKey: String, value: Any) {
-        self.data[forKey] = value
-    }
-
-    public func remove(key: String) {
-        data.removeValue(forKey: key)
-    }
-
-    public func removeAll() {
-        data.removeAll()
-    }
-
-    public func getData(forKey: String) -> Any? {
-        return self.data[forKey]
-    }
-
+// MARK: - Getters
+extension PXCheckoutStore {
     public func getPaymentData() -> PaymentData {
         return paymentData
-    }
-
-    public func getPaymentOptionSelected() -> PaymentMethodOption? {
-        return paymentOptionSelected
     }
 
     public func getCheckoutPreference() -> CheckoutPreference? {
         return checkoutPreference
     }
 
-    func clean() {
+    public func getPaymentOptionSelected() -> PaymentMethodOption? {
+        return paymentOptionSelected
+    }
+}
+
+internal extension PXCheckoutStore {
+    internal func clean() {
         removeAll()
         checkoutPreference = nil
         paymentData = PaymentData()
         paymentOptionSelected = nil
+    }
+}
+
+internal extension PXCheckoutStore {
+    internal func addData(forKey: String, value: Any) {
+        self.data[forKey] = value
+    }
+
+    internal func remove(key: String) {
+        data.removeValue(forKey: key)
+    }
+
+    internal func removeAll() {
+        data.removeAll()
+    }
+
+    internal func getData(forKey: String) -> Any? {
+        return self.data[forKey]
     }
 }
