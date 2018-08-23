@@ -182,7 +182,7 @@ import UIKit
         return String(describing: self.idCard)
     }
 
-    public func getChildren() -> [PaymentMethodOption]? {
+    func getChildren() -> [PaymentMethodOption]? {
         return nil
     }
 

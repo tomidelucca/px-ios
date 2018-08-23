@@ -8,10 +8,6 @@
 
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
-#import "CustomTableViewCell.h"
-#import "SubeTableViewCell.h"
-#import "DineroEnCuentaTableViewCell.h"
-#import "CustomItemTableViewCell.h"
 #import "FirstHookViewController.h"
 #import "SecondHookViewController.h"
 #import "ThirdHookViewController.h"
@@ -157,13 +153,7 @@
     [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
 }
 
--(void)setVoidCallback {
-    // Deprecated
-    /* [self.mpCheckout setCallbackCancelWithCallback:^{
-        NSLog(@"Se termino el flujo");
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }]; */
-}
+-(void)setVoidCallback {}
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
     Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
@@ -179,20 +169,6 @@
     self.pref = [[CheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
 }
 
--(void)setServicePreference {
-    ServicePreference * servicePreference = [[ServicePreference alloc] init];
-//    NSDictionary *extraParams = @{
-//                                  @"merchant_access_token" : @"mla-cards-data" };
-
-       NSDictionary *extraParams = @{
-                                   @"access_token" : @"TEST-3284996600758722-031613-bd9e7923837b50bd493d18728eb971f0__LC_LD__-243966003" };
-    //    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
-    //
-    [servicePreference setGetCustomerWithBaseURL:@"https://api.mercadopago.com" URI:@"/v1/customers/261207170-jxqdmty1ClVKjU" additionalInfo:extraParams];
-
-    // Deprecated
-    // [MercadoPagoCheckout setServicePreference:servicePreference];
-}
 
 -(IBAction)startCardManager:(id)sender  {}
 

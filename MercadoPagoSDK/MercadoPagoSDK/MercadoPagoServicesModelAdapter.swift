@@ -9,17 +9,16 @@
 import Foundation
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-extension MercadoPagoServicesAdapter {
+internal extension MercadoPagoServicesAdapter {
 
-    open func getPXSiteFromId(_ siteId: String) -> PXSite {
+    func getPXSiteFromId(_ siteId: String) -> PXSite {
         let currency = SiteManager.shared.getCurrency()
         let pxCurrency = getPXCurrencyFromCurrency(currency)
         let pxSite = PXSite(id: siteId, currencyId: pxCurrency.id)
         return pxSite
     }
 
-    open func getPXCurrencyFromCurrency(_ currency: Currency) -> PXCurrency {
+    func getPXCurrencyFromCurrency(_ currency: Currency) -> PXCurrency {
         let id: String = currency.currencyId
         let description: String = currency.currencyDescription
         let symbol: String = currency.symbol
@@ -30,7 +29,7 @@ extension MercadoPagoServicesAdapter {
         return pxCurrency
     }
 
-    open func getCurrencyFromPXCurrency(_ pxCurrency: PXCurrency?) -> Currency {
+    func getCurrencyFromPXCurrency(_ pxCurrency: PXCurrency?) -> Currency {
         if let pxCurrency = pxCurrency {
             let currencyId: String = pxCurrency.id
             let description: String = pxCurrency._description ?? ""
@@ -44,7 +43,7 @@ extension MercadoPagoServicesAdapter {
         return Currency()
     }
 
-    open func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
+    func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
         let checkoutPreference = CheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
         checkoutPreference.preferenceId = pxCheckoutPreference.id
         if let pxCheckoutPreferenceItems = pxCheckoutPreference.items {
@@ -61,7 +60,7 @@ extension MercadoPagoServicesAdapter {
         return checkoutPreference
     }
 
-    open func getItemFromPXItem(_ pxItem: PXItem) -> Item {
+    func getItemFromPXItem(_ pxItem: PXItem) -> Item {
         let id: String = pxItem.id
         let title: String = pxItem.title ?? ""
         let quantity: Int = pxItem.quantity ?? 1
@@ -74,7 +73,7 @@ extension MercadoPagoServicesAdapter {
         return item
     }
 
-    internal func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
+    func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
         let paymentPreference = PaymentPreference()
         if let pxPaymentPreference = pxPaymentPreference {
             paymentPreference.excludedPaymentMethodIds = Set(pxPaymentPreference.excludedPaymentMethodIds ?? [])
@@ -87,7 +86,7 @@ extension MercadoPagoServicesAdapter {
         return paymentPreference
     }
 
-    open func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
+    func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
         let instructionsInfo = InstructionsInfo()
         instructionsInfo.amountInfo = getAmountInfoFromPXAmountInfo(pxInstructions.amountInfo)
 
@@ -101,7 +100,7 @@ extension MercadoPagoServicesAdapter {
         return instructionsInfo
     }
 
-    open func getInstructionFromPXInstruction(_ pxInstruction: PXInstruction) -> Instruction {
+    func getInstructionFromPXInstruction(_ pxInstruction: PXInstruction) -> Instruction {
         let instruction = Instruction()
         instruction.title = pxInstruction.title ?? ""
         instruction.subtitle = pxInstruction.subtitle
@@ -131,7 +130,7 @@ extension MercadoPagoServicesAdapter {
         return instruction
     }
 
-    open func getInstructionReferenceFromPXInstructionReference(_ pxInstructionReference: PXInstructionReference) -> InstructionReference {
+    func getInstructionReferenceFromPXInstructionReference(_ pxInstructionReference: PXInstructionReference) -> InstructionReference {
         let instructionReference = InstructionReference()
         instructionReference.label = pxInstructionReference.label
         instructionReference.value = pxInstructionReference.fieldValue
@@ -140,7 +139,7 @@ extension MercadoPagoServicesAdapter {
         return instructionReference
     }
 
-    open func getInstructionActionFromPXInstructionAction(_ pxInstructionAction: PXInstructionAction) -> InstructionAction {
+    func getInstructionActionFromPXInstructionAction(_ pxInstructionAction: PXInstructionAction) -> InstructionAction {
         let instructionAction = InstructionAction()
         instructionAction.label = pxInstructionAction.label
         instructionAction.url = pxInstructionAction.url
@@ -148,7 +147,7 @@ extension MercadoPagoServicesAdapter {
         return instructionAction
     }
 
-    open func getAmountInfoFromPXAmountInfo(_ pxAmountInfo: PXAmountInfo?) -> AmountInfo {
+    func getAmountInfoFromPXAmountInfo(_ pxAmountInfo: PXAmountInfo?) -> AmountInfo {
         let amountInfo = AmountInfo()
         if let pxAmountInfo = pxAmountInfo {
             amountInfo.amount = pxAmountInfo.amount
@@ -157,7 +156,7 @@ extension MercadoPagoServicesAdapter {
         return amountInfo
     }
 
-    open func getPXCardTokenFromCardToken(_ cardToken: CardToken) -> PXCardToken {
+    func getPXCardTokenFromCardToken(_ cardToken: CardToken) -> PXCardToken {
         let pxCardToken = PXCardToken()
         pxCardToken.cardholder = getPXCardHolderFromCardHolder(cardToken.cardholder!)
         pxCardToken.cardNumber = cardToken.cardNumber
@@ -168,7 +167,7 @@ extension MercadoPagoServicesAdapter {
         return pxCardToken
     }
 
-    open func getPXSavedESCCardTokenFromSavedESCCardToken(_ savedESCCardToken: SavedESCCardToken) -> PXSavedESCCardToken {
+    func getPXSavedESCCardTokenFromSavedESCCardToken(_ savedESCCardToken: SavedESCCardToken) -> PXSavedESCCardToken {
         let pxSavedESCCardToken = PXSavedESCCardToken()
         pxSavedESCCardToken.cardId = savedESCCardToken.cardId
         pxSavedESCCardToken.securityCode = savedESCCardToken.securityCode
@@ -178,7 +177,7 @@ extension MercadoPagoServicesAdapter {
         return pxSavedESCCardToken
     }
 
-    open func getPXSavedCardTokenFromSavedCardToken(_ savedCardToken: SavedCardToken) -> PXSavedCardToken {
+    func getPXSavedCardTokenFromSavedCardToken(_ savedCardToken: SavedCardToken) -> PXSavedCardToken {
         let pxSavedCardToken = PXSavedCardToken()
         pxSavedCardToken.cardId = savedCardToken.cardId
         pxSavedCardToken.securityCode = savedCardToken.securityCode
@@ -186,7 +185,7 @@ extension MercadoPagoServicesAdapter {
         return pxSavedCardToken
     }
 
-    open func getPXDeviceFromDevice(_ device: Device?) -> PXDevice {
+    func getPXDeviceFromDevice(_ device: Device?) -> PXDevice {
         if let device = device {
             let pxDevice = PXDevice()
             pxDevice.fingerprint = getPXFingerprintFromFingerprint(device.fingerprint)
@@ -196,12 +195,12 @@ extension MercadoPagoServicesAdapter {
         }
     }
 
-    open func getPXFingerprintFromFingerprint(_ fingerprint: Fingerprint) -> PXFingerprint {
+    func getPXFingerprintFromFingerprint(_ fingerprint: Fingerprint) -> PXFingerprint {
         let pxFingerprint = PXFingerprint()
         return pxFingerprint
     }
 
-    open func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
+    func getTokenFromPXToken(_ pxToken: PXToken) -> Token {
         let id: String = pxToken.id
         let publicKey: String = pxToken.publicKey ?? ""
         let cardId: String = pxToken.cardId ?? ""
@@ -224,12 +223,12 @@ extension MercadoPagoServicesAdapter {
         return token
     }
 
-    open func getStringDateFromDate(_ date: Date) -> String {
+    func getStringDateFromDate(_ date: Date) -> String {
         let stringDate = String(describing: date)
         return stringDate
     }
 
-    open func getCardholderFromPXCardHolder(_ pxCardHolder: PXCardHolder?) -> Cardholder {
+    func getCardholderFromPXCardHolder(_ pxCardHolder: PXCardHolder?) -> Cardholder {
         let cardholder = Cardholder()
         if let pxCardHolder = pxCardHolder {
             cardholder.name = pxCardHolder.name
@@ -238,14 +237,14 @@ extension MercadoPagoServicesAdapter {
         return cardholder
     }
 
-    open func getPXCardHolderFromCardHolder(_ cardHolder: Cardholder) -> PXCardHolder {
+    func getPXCardHolderFromCardHolder(_ cardHolder: Cardholder) -> PXCardHolder {
         let name: String = cardHolder.name!
         let pxIdentification: PXIdentification = getPXIdentificationFromIdentification(cardHolder.identification)!
         let pxCardholder = PXCardHolder(name: name, identification: pxIdentification)
         return pxCardholder
     }
 
-    open func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
+    func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
         let bankDeal = BankDeal()
         bankDeal.promoId = pxBankDeal.id
         bankDeal.issuer = getIssuerFromPXIssuer(pxBankDeal.issuer)
@@ -264,7 +263,7 @@ extension MercadoPagoServicesAdapter {
         return bankDeal
     }
 
-    open func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod?) -> PaymentMethod {
+    func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod?) -> PaymentMethod {
         let paymentMethod = PaymentMethod()
         if let pxPaymentMethod = pxPaymentMethod {
             paymentMethod.paymentMethodId = pxPaymentMethod.id
@@ -299,7 +298,7 @@ extension MercadoPagoServicesAdapter {
         return paymentMethod
     }
 
-    open func getSettingFromPXSetting(_ pxSetting: PXSetting) -> Setting {
+    func getSettingFromPXSetting(_ pxSetting: PXSetting) -> Setting {
         let setting = Setting()
         setting.binMask = getBinMaskFromPXBin(pxSetting.bin)
         setting.cardNumber = getCardNumberFromPXCardNumber(pxSetting.cardNumber)
@@ -307,7 +306,7 @@ extension MercadoPagoServicesAdapter {
         return setting
     }
 
-    open func getFinancialInstitutionFromPXFinancialInstitution(_ pxFinancialInstitution: PXFinancialInstitution?) -> FinancialInstitution {
+    func getFinancialInstitutionFromPXFinancialInstitution(_ pxFinancialInstitution: PXFinancialInstitution?) -> FinancialInstitution {
         if let pxFinancialInstitution = pxFinancialInstitution {
             let financialInstitution = FinancialInstitution()
             financialInstitution.financialInstitutionId = Int(pxFinancialInstitution.id)
@@ -319,7 +318,7 @@ extension MercadoPagoServicesAdapter {
         }
     }
 
-    open func getBinMaskFromPXBin(_ pxBin: PXBin?) -> BinMask {
+    func getBinMaskFromPXBin(_ pxBin: PXBin?) -> BinMask {
         if let pxBin = pxBin {
             let binMask = BinMask()
             binMask.exclusionPattern = pxBin.exclusionPattern
@@ -335,7 +334,7 @@ extension MercadoPagoServicesAdapter {
         }
     }
 
-    open func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber?) -> CardNumber {
+    func getCardNumberFromPXCardNumber(_ pxCardNumber: PXCardNumber?) -> CardNumber {
         let cardNumber = CardNumber()
         if let pxCardNumber = pxCardNumber {
             cardNumber.length = pxCardNumber.length ?? 17
@@ -344,7 +343,7 @@ extension MercadoPagoServicesAdapter {
         return cardNumber
     }
 
-    open func getSecurityCodeFromPXSecurityCode(_ pxSecurityCode: PXSecurityCode?) -> SecurityCode {
+    func getSecurityCodeFromPXSecurityCode(_ pxSecurityCode: PXSecurityCode?) -> SecurityCode {
         let securityCode = SecurityCode()
         if let pxSecurityCode = pxSecurityCode {
             securityCode.length = pxSecurityCode.length ?? 3
@@ -354,7 +353,7 @@ extension MercadoPagoServicesAdapter {
         return securityCode
     }
 
-    open func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
+    func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
         let identificationType = IdentificationType()
         identificationType.identificationTypeId = pxIdentificationType.id
         identificationType.name = pxIdentificationType.name
@@ -364,7 +363,7 @@ extension MercadoPagoServicesAdapter {
         return identificationType
     }
 
-    open func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
+    func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
         let payment = Payment()
         payment.binaryMode = pxPayment.binaryMode
         payment.callForAuthorizeId = pxPayment.callForAuthorizeId
@@ -416,7 +415,7 @@ extension MercadoPagoServicesAdapter {
         return payment
     }
 
-    open func getFeesDetailFromPXFeeDetail(_ pxFeeDetail: PXFeeDetail) -> FeesDetail {
+    func getFeesDetailFromPXFeeDetail(_ pxFeeDetail: PXFeeDetail) -> FeesDetail {
         let feesDetail = FeesDetail()
         feesDetail.amount = pxFeeDetail.amount ?? 0.0
         feesDetail.feePayer = pxFeeDetail.feePayer
@@ -424,7 +423,7 @@ extension MercadoPagoServicesAdapter {
         return feesDetail
     }
 
-    open func getOrderFromPXOrder(_ pxOrder: PXOrder?) -> Order {
+    func getOrderFromPXOrder(_ pxOrder: PXOrder?) -> Order {
         let order = Order()
         if let pxOrder = pxOrder {
             order.orderId = Int(pxOrder.id ?? "0") ?? 0 //TODO: FIX
@@ -433,7 +432,7 @@ extension MercadoPagoServicesAdapter {
         return order
     }
 
-    open func getRefundFromPXRefund(_ pxRefund: PXRefund) -> Refund {
+    func getRefundFromPXRefund(_ pxRefund: PXRefund) -> Refund {
         let refund = Refund()
         refund.dateCreated = pxRefund.dateCreated
         refund.refundId = Int(pxRefund.id)!
@@ -444,7 +443,7 @@ extension MercadoPagoServicesAdapter {
         return refund
     }
 
-    open func getTransactionDetailsFromPXTransactionDetails(_ pxTransactionDetails: PXTransactionDetails?) -> TransactionDetails {
+    func getTransactionDetailsFromPXTransactionDetails(_ pxTransactionDetails: PXTransactionDetails?) -> TransactionDetails {
         let transactionDetails = TransactionDetails()
         if let pxTransactionDetails = pxTransactionDetails {
             transactionDetails.couponAmount = nil

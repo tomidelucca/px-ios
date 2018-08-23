@@ -10,7 +10,7 @@ import UIKit
 
 /** :nodoc: */
 @objc
-public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
+internal protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
     func isSecurityCodeRequired() -> Bool
 

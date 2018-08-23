@@ -62,7 +62,7 @@ import UIKit
         return !Array.isNullOrEmpty(self.children)
     }
 
-    public func getChildren() -> [PaymentMethodOption]? {
+    func getChildren() -> [PaymentMethodOption]? {
         return self.children
     }
 

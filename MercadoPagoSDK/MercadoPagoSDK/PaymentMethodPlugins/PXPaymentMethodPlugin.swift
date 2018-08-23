@@ -11,7 +11,7 @@ import Foundation
 /** :nodoc: */
 @objcMembers
 open class PXPaymentMethodPlugin: NSObject {
-    
+
     @objc public enum RemotePaymentStatus: Int {
         case APPROVED
         case REJECTED
@@ -73,7 +73,7 @@ extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
         return false
     }
 
-    public func getChildren() -> [PaymentMethodOption]? {
+    func getChildren() -> [PaymentMethodOption]? {
         return nil
     }
 

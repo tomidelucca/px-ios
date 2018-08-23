@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class TextMaskFormater: NSObject {
+internal class TextMaskFormater: NSObject {
 
     var mask: String!
     open var characterSpace: Character! = "X"
@@ -19,15 +18,15 @@ open class TextMaskFormater: NSObject {
     var leftToRight: Bool = true
     var unmask : (( _ textToUnmask: String) -> String)?
 
-    public init(mask: String!, completeEmptySpaces: Bool = true, leftToRight: Bool = true, completeEmptySpacesWith: Character? = "•") {
+    init(mask: String!, completeEmptySpaces: Bool = true, leftToRight: Bool = true, completeEmptySpacesWith: Character? = "•") {
         super.init()
         self.mask = mask
         self.completeEmptySpaces = completeEmptySpaces
         self.leftToRight = leftToRight
         self.emptyMaskElement = completeEmptySpacesWith
     }
-    open func textMasked(_ text: String!, remasked: Bool = false) -> String! {
 
+    func textMasked(_ text: String!, remasked: Bool = false) -> String! {
         if remasked {
             return textMasked(textUnmasked(text))
         }
@@ -37,8 +36,7 @@ open class TextMaskFormater: NSObject {
         return self.maskText(text)
     }
 
-    open func textUnmasked(_ text: String!) -> String! {
-
+    func textUnmasked(_ text: String!) -> String! {
         if unmask != nil {
             return unmask!(text)
         } else {
@@ -51,22 +49,21 @@ open class TextMaskFormater: NSObject {
             }
             return ints
         }
-
     }
-    fileprivate func emptyTextMasked() -> String! {
+
+    private func emptyTextMasked() -> String! {
         if completeEmptySpaces {
             return (mask?.replacingOccurrences(of: String(characterSpace), with: String(emptyMaskElement)))!
         } else {
             return ""
         }
-
     }
 
-    fileprivate func replaceEmpySpot(_ text: String!) -> String! {
+    private func replaceEmpySpot(_ text: String!) -> String! {
         return (text.replacingOccurrences(of: String(characterSpace), with: String(emptyMaskElement)))
     }
 
-    fileprivate func maskText(_ text: String!) -> String! {
+    private func maskText(_ text: String!) -> String! {
         let maskArray = Array(mask)
         var textToMask = text
         if (!leftToRight)&&(completeEmptySpaces) {
@@ -104,12 +101,10 @@ open class TextMaskFormater: NSObject {
                 indexText += 1
             }
         }
-
         return self.replaceEmpySpot(resultString)
-
     }
 
-    fileprivate func completeWithEmptySpaces(_ text: String) -> String {
+    private func completeWithEmptySpaces(_ text: String) -> String {
         let charset: Set<Character> = [characterSpace]
         var str: String = ""
         for char: Character in mask {
@@ -123,10 +118,9 @@ open class TextMaskFormater: NSObject {
            max = 0
         }
         return (String(repeating: String(spaceChar), count: max) + text)
-
     }
 
-    fileprivate func stringByChoose(_ maskCharacter: Character, textCharacter: Character!) -> String {
+    private func stringByChoose(_ maskCharacter: Character, textCharacter: Character!) -> String {
         if textCharacter == nil {
             return String(maskCharacter)
         }
@@ -135,10 +129,9 @@ open class TextMaskFormater: NSObject {
         }
         return String(textCharacter)
     }
-
 }
 
-struct Number {
+internal struct Number {
     static let formatterWithSepator: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.groupingSeparator = "."
@@ -146,10 +139,3 @@ struct Number {
         return formatter
     }()
 }
-/*
-extension Integer {
-    var stringFormatedWithSepator: String {
-        return Number.formatterWithSepator.string(from: NSNumber(hashValue)) ?? ""
-    }
-}
-*/

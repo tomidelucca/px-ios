@@ -8,17 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class MPTextView: UITextView {
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
+internal class MPTextView: UITextView {
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)

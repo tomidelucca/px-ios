@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PXResultViewModelInterface {
-    func getPaymentData() -> PaymentData
+    func getPaymentData() -> PXPaymentData
     func primaryResultColor() -> UIColor
     func setCallback(callback: @escaping ( _ status: PaymentResult.CongratsState) -> Void)
     func getPaymentStatus() -> String

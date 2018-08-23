@@ -21,8 +21,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     private var discountTermsConditionView: PXTermsAndConditionView?
 
     // MARK: Callbacks
-    var callbackPaymentData: ((PaymentData) -> Void)
-    var callbackConfirm: ((PaymentData) -> Void)
+    var callbackPaymentData: ((PXPaymentData) -> Void)
+    var callbackConfirm: ((PXPaymentData) -> Void)
     var callbackExit: (() -> Void)
     var finishButtonAnimation: (() -> Void)
 
@@ -32,7 +32,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let shouldAnimatePayButton: Bool
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm

@@ -192,21 +192,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
     }
 
     private func getCustomerCards() {
-
-        if self.viewModel!.shouldGetCustomerCardsInfo() {
-            if MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() != nil {
-                self.viewModel.mercadoPagoServicesAdapter.getCustomer(callback: { [weak self] (customer) in
-                    self?.viewModel.customerId = customer.customerId
-                    self?.viewModel.customerPaymentOptions = customer.cards
-                    self?.loadPaymentMethodSearch()
-                }, failure: { (_) in
-                    // Ir a Grupos igual
-                    self.loadPaymentMethodSearch()
-                })
-            }
-        } else {
-            self.loadPaymentMethodSearch()
-        }
+        self.loadPaymentMethodSearch()
     }
 
     fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> Void) {

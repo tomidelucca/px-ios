@@ -39,21 +39,10 @@ internal extension PXPaymentFlow {
         }
 
         var paymentBody: [String: Any]
-        if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MPPayment(preferenceId: checkoutPreference.preferenceId, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
-            paymentBody = mpPayment.toJSON()
-        } else {
-            paymentBody = paymentData.toJSON()
-        }
+        let mpPayment = MPPayment(preferenceId: checkoutPreference.preferenceId, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
+        paymentBody = mpPayment.toJSON()
 
-        var createPaymentQuery: [String: String]? = [:]
-        if let paymentAdditionalInfo = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo() as? [String: String] {
-            createPaymentQuery = paymentAdditionalInfo
-        } else {
-            createPaymentQuery = nil
-        }
-
-        model.mercadoPagoServicesAdapter.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, callback: { (payment) in
+        model.mercadoPagoServicesAdapter.createPayment(url: URLConfigs.MP_API_BASE_URL, uri: URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION, paymentData: paymentBody as NSDictionary, query: nil, callback: { (payment) in
             guard let paymentData = self.model.paymentData else {
                 return
             }

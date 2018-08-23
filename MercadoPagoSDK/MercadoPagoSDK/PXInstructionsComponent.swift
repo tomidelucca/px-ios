@@ -42,7 +42,7 @@ internal class PXInstructionsComponent: NSObject, PXComponentizable {
     }
 
     func shouldShowEmailInSecondaryInfo() -> Bool {
-        return MercadoPagoCheckoutViewModel.servicePreference.shouldShowEmailConfirmationCell()
+        return true
     }
 
     func render() -> UIView {

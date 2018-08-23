@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class SummaryRow: NSObject {
+@objcMembers internal class SummaryRow: NSObject {
     var customDescription: String
     var customAmount: Double
     var colorDescription: UIColor = UIColor.px_grayDark()
@@ -17,7 +16,7 @@ import Foundation
     var separatorLine: Bool = true
     var amountEnable = true
 
-    public init(customDescription: String, descriptionColor: UIColor?, customAmount: Double, amountColor: UIColor?, separatorLine: Bool = true) {
+    init(customDescription: String, descriptionColor: UIColor?, customAmount: Double, amountColor: UIColor?, separatorLine: Bool = true) {
         self.customDescription = customDescription
         self.customAmount = customAmount
         self.separatorLine = separatorLine
@@ -30,15 +29,15 @@ import Foundation
         }
     }
 
-    open func disableAmount() {
+    func disableAmount() {
         amountEnable = false
     }
 
-    open func enableAmount() {
+    func enableAmount() {
         amountEnable = true
     }
 
-    open func isAmountEnable() -> Bool {
+    func isAmountEnable() -> Bool {
         return amountEnable
     }
 }

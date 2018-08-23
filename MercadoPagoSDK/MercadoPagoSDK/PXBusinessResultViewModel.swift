@@ -18,21 +18,21 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     let businessResult: PXBusinessResult
-    let paymentData: PaymentData
+    let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
 
     //Default Image
     private lazy var approvedIconName = "default_item_icon"
     private lazy var approvedIconBundle = ResourceManager.shared.getBundle()
 
-    init(businessResult: PXBusinessResult, paymentData: PaymentData, amountHelper: PXAmountHelper) {
+    init(businessResult: PXBusinessResult, paymentData: PXPaymentData, amountHelper: PXAmountHelper) {
         self.businessResult = businessResult
         self.paymentData = paymentData
         self.amountHelper = amountHelper
         super.init()
     }
 
-    func getPaymentData() -> PaymentData {
+    func getPaymentData() -> PXPaymentData {
         return self.paymentData
     }
 

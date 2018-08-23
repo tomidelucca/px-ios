@@ -8,38 +8,36 @@
 
 import UIKit
 
-/** :nodoc: */
-extension String {
+internal extension String {
     /**
     true iff self contains characters.
     */
-    public var isNotEmpty: Bool {
+    var isNotEmpty: Bool {
         return !isEmpty
     }
 }
 
-/** :nodoc: */
 /**
 A TextFieldEffects object is a control that displays editable text and contains the boilerplates to setup unique animations for text entrey and display. You typically use this class the same way you use UITextField.
 */
-open class TextFieldEffects: MPTextField {
+internal class TextFieldEffects: MPTextField {
 
     /**
     UILabel that holds all the placeholder information
     */
-    open let placeholderLabel = MPLabel()
+    let placeholderLabel = MPLabel()
 
     /**
     Creates all the animations that are used to leave the textfield in the "entering text" state.
     */
-    open func animateViewsForTextEntry() {
+    func animateViewsForTextEntry() {
         fatalError("\(#function) must be overridden")
     }
 
     /**
     Creates all the animations that are used to leave the textfield in the "display input text" state.
     */
-    open func animateViewsForTextDisplay() {
+    func animateViewsForTextDisplay() {
         fatalError("\(#function) must be overridden")
     }
 
@@ -48,11 +46,11 @@ open class TextFieldEffects: MPTextField {
     
     - parameter rect:	The portion of the view’s bounds that needs to be updated.
     */
-    open func drawViewsForRect(_ rect: CGRect) {
+    func drawViewsForRect(_ rect: CGRect) {
         fatalError("\(#function) must be overridden")
     }
 
-    open func updateViewsForBoundsChange(_ bounds: CGRect) {
+    func updateViewsForBoundsChange(_ bounds: CGRect) {
         fatalError("\(#function) must be overridden")
     }
 

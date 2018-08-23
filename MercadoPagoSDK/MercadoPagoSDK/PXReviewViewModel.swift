@@ -125,8 +125,8 @@ extension PXReviewViewModel {
         return nil
     }
 
-    func getClearPaymentData() -> PaymentData {
-        let newPaymentData: PaymentData = self.amountHelper.paymentData.copy() as? PaymentData ?? self.amountHelper.paymentData
+    func getClearPaymentData() -> PXPaymentData {
+        let newPaymentData: PXPaymentData = self.amountHelper.paymentData.copy() as? PXPaymentData ?? self.amountHelper.paymentData
         newPaymentData.clearCollectedData()
         return newPaymentData
     }

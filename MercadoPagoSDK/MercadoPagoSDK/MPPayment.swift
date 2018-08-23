@@ -60,7 +60,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         self.discount = discount
     }
 
-    public init(preferenceId: String, publicKey: String, paymentData: PaymentData, binaryMode: Bool) {
+    public init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
         self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.issuerId! : ""
 
         self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""

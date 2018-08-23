@@ -24,8 +24,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
 
-    var callbackPaymentData: ((PaymentData) -> Void)
-    var callbackConfirm: ((PaymentData) -> Void)
+    var callbackPaymentData: ((PXPaymentData) -> Void)
+    var callbackConfirm: ((PXPaymentData) -> Void)
     var finishButtonAnimation: (() -> Void)
 
     weak var loadingButtonComponent: PXAnimatedButton?
@@ -34,7 +34,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     let shouldAnimatePayButton: Bool
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm

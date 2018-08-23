@@ -55,7 +55,7 @@ extension PaymentVaultViewModel {
     }
 
     func shouldGetCustomerCardsInfo() -> Bool {
-        return MercadoPagoCheckoutViewModel.servicePreference.isCustomerInfoAvailable() && self.isRoot
+       return false
     }
 
     func hasAccountMoneyIn(customerOptions: [CardInformation]) -> Bool {

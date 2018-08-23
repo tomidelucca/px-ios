@@ -9,9 +9,8 @@
 import Foundation
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-@IBDesignable open class CardFrontView: UIView, Updatable {
+@IBDesignable internal class CardFrontView: UIView, Updatable {
   var view: UIView!
 
     @IBOutlet var backgroundView: UIView!
@@ -32,7 +31,7 @@ import UIKit
         loadViewFromNib ()
     }
 
-    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
+    func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
 
         self.cardLogo.image =  paymentMethod.getImage()
         self.cardLogo.alpha = 1
@@ -51,7 +50,7 @@ import UIKit
 
     }
 
-    public func setCornerRadius(radius: CGFloat) {
+    func setCornerRadius(radius: CGFloat) {
         self.layer.cornerRadius = radius
         self.backgroundView.layer.cornerRadius = radius
     }
@@ -73,24 +72,15 @@ import UIKit
         cardCVV.font = UIFont.systemFont(ofSize: cardCVV.font.pointSize)
     }
 
-    open func finishLoad() {
-
-     // var context = NSStringDrawingContext().actualScaleFactor
-
-   //     let actualFontSize : CGFloat = self.cardNumber.font.pointSize * ;
-
-     //   let size = cardNumber.sizeThatFits(CGSize(width: cardNumber.bounds.width, height: cardNumber.bounds.height))
+    func finishLoad() {
         cardNumber.adjustsFontSizeToFitWidth = false
         cardName.adjustsFontSizeToFitWidth = false
         cardCVV.adjustsFontSizeToFitWidth = false
         cardExpirationDate.adjustsFontSizeToFitWidth = false
-
     }
-
 }
 
-/** :nodoc: */
-extension UIView {
+internal extension UIView {
     class func loadFromNibNamed(_ nibNamed: String, bundle: Bundle? = nil) -> UIView? {
         return UINib(
             nibName: nibNamed,
@@ -99,8 +89,7 @@ extension UIView {
     }
 }
 
-/** :nodoc: */
-extension String {
+internal extension String {
     func insert(_ string: String, ind: Int) -> String {
         return  String(self.prefix(ind)) + string + String(self.suffix(self.count-ind))
     }

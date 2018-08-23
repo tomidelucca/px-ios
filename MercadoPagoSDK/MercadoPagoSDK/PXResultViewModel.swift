@@ -50,7 +50,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
         MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: name, properties: metadata)
     }
 
-    func getPaymentData() -> PaymentData {
+    func getPaymentData() -> PXPaymentData {
         return self.paymentResult.paymentData!
     }
 

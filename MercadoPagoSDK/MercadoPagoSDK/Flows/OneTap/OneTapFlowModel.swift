@@ -17,7 +17,7 @@ final internal class OneTapFlowModel: NSObject, PXFlowModel {
         case payment
     }
 
-    var paymentData: PaymentData
+    var paymentData: PXPaymentData
     let checkoutPreference: CheckoutPreference
     var paymentOptionSelected: PaymentMethodOption
     let search: PaymentMethodSearch
@@ -45,9 +45,9 @@ final internal class OneTapFlowModel: NSObject, PXFlowModel {
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(paymentData: PXPaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.consumedDiscount = consumedDiscount
-        self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
+        self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
@@ -99,7 +99,7 @@ internal extension OneTapFlowModel {
 
 // MARK: Update view models
 internal extension OneTapFlowModel {
-    func updateCheckoutModel(paymentData: PaymentData) {
+    func updateCheckoutModel(paymentData: PXPaymentData) {
         self.paymentData = paymentData
         self.readyToPay = true
     }

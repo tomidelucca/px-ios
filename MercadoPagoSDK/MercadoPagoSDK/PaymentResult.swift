@@ -8,11 +8,10 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class PaymentResult: NSObject {
+@objcMembers internal class PaymentResult: NSObject {
 
     @objc
-    public enum CongratsState: Int {
+    internal enum CongratsState: Int {
         case approved = 0
         case cancel_SELECT_OTHER = 1
         case cancel_RETRY = 2
@@ -22,14 +21,14 @@ import Foundation
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.BAD_FILLED_OTHER]
 
-    open var paymentData: PaymentData?
-    open var status: String
-    open var statusDetail: String
-    open var payerEmail: String?
-    open var paymentId: String?
-    open var statementDescription: String?
+    var paymentData: PXPaymentData?
+    var status: String
+    var statusDetail: String
+    var payerEmail: String?
+    var paymentId: String?
+    var statementDescription: String?
 
-    public init (payment: Payment, paymentData: PaymentData) {
+    init (payment: Payment, paymentData: PXPaymentData) {
         self.status = payment.status
         self.statusDetail = payment.statusDetail
         self.paymentData = paymentData
@@ -38,7 +37,7 @@ import Foundation
         self.statementDescription = payment.statementDescriptor
     }
 
-    public init (status: String, statusDetail: String, paymentData: PaymentData, payerEmail: String?, paymentId: String?, statementDescription: String?) {
+    init (status: String, statusDetail: String, paymentData: PXPaymentData, payerEmail: String?, paymentId: String?, statementDescription: String?) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData

@@ -20,9 +20,8 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
 @objcMembers
-open class CardFormViewModel: NSObject {
+internal class CardFormViewModel: NSObject {
 
     var paymentMethods: [PaymentMethod]
     var guessedPMS: [PaymentMethod]?
@@ -41,7 +40,7 @@ open class CardFormViewModel: NSObject {
     var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    public init(paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init (paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
@@ -254,7 +253,7 @@ open class CardFormViewModel: NSObject {
     }
 
     func showBankDeals() -> Bool {
-        return !Array.isNullOrEmpty(self.promos) && CardFormViewController.showBankDeals && MercadoPagoCheckoutViewModel.servicePreference.shouldShowBankDeals()
+        return !Array.isNullOrEmpty(self.promos) && CardFormViewController.showBankDeals
     }
 
     func shoudShowOnlyOneCardMessage() -> Bool {

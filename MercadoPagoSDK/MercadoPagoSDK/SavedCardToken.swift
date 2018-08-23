@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class SavedCardToken: CardToken {
+@objcMembers internal class SavedCardToken: CardToken {
 
     open var cardId: String
     open var securityCodeRequired: Bool = true
