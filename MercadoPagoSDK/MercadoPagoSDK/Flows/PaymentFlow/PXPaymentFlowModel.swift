@@ -62,7 +62,10 @@ internal final class PXPaymentFlowModel: NSObject {
         }
 
         assignToCheckoutStore()
-        if let shouldSkip = paymentPlugin?.support?(checkoutStore: PXCheckoutStore.sharedInstance), !shouldSkip {
+
+        paymentPlugin?.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
+
+        if let shouldSkip = paymentPlugin?.support(), !shouldSkip {
             return false
         }
         return true
@@ -119,7 +122,7 @@ extension PXPaymentFlowModel {
             return false
         }
         assignToCheckoutStore()
-        let view = paymentPlugin.paymentProcessorView()
-        return view != nil
+        let processorViewController = paymentPlugin.paymentProcessorViewController()
+        return processorViewController != nil
     }
 }

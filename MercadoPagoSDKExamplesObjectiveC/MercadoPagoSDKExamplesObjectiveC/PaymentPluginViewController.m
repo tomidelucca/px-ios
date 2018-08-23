@@ -12,7 +12,6 @@
 @interface PaymentPluginViewController ()
 
 @property (strong, nonatomic) PXPaymentPluginNavigationHandler * paymentNavigationHandler;
-
 @end
 
 @implementation PaymentPluginViewController
@@ -21,7 +20,12 @@
     [super viewDidLoad];
 }
 
-- (void)doPayment {
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self makePayment];
+}
+
+- (void)makePayment {
     [self.paymentNavigationHandler showLoading];
 
     double delay = 3.0;
@@ -44,18 +48,21 @@
 }
 
 #pragma mark - Payment Plugin implementation.
-- (UIView * _Nullable)paymentProcessorView {
+- (UIViewController * _Nullable)paymentProcessorViewController {
     return nil;
-    // return self.view;
+    //return self;
 }
 
-- (BOOL)supportWithCheckoutStore:(PXCheckoutStore *)checkoutStore {
+- (void)didReceiveWithCheckoutStore:(PXCheckoutStore *)checkoutStore {
+
+}
+
+- (BOOL)support {
     return true;
 }
 
 - (void)paymentNavigationHandlerWithNavigationHandler:(PXPaymentPluginNavigationHandler *)navigationHandler {
     self.paymentNavigationHandler = navigationHandler;
-    [self doPayment];
 }
 
 -(void)createPaymentWithCheckoutStore:(PXCheckoutStore * _Nonnull)store handler:(id <PXPaymentFlowHandlerProtocol>)handler successWithBusinessResult:(void (^)(PXBusinessResult *))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentPluginResult *))successWithPaymentResult {

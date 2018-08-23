@@ -267,8 +267,6 @@
 		23A366A9200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */; };
 		23A69BF9212EFDA400034429 /* PXPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A69BF8212EFDA300034429 /* PXPaymentProcessor.swift */; };
 		23A69BFA212EFDA400034429 /* PXPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A69BF8212EFDA300034429 /* PXPaymentProcessor.swift */; };
-		23A69BFC212F045100034429 /* PXPaymentProcessorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A69BFB212F045000034429 /* PXPaymentProcessorViewController.swift */; };
-		23A69BFD212F045100034429 /* PXPaymentProcessorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A69BFB212F045000034429 /* PXPaymentProcessorViewController.swift */; };
 		23A7FC0F211C979F002D1CB1 /* MercadoPagoCheckoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7FC0E211C979F002D1CB1 /* MercadoPagoCheckoutBuilder.swift */; };
 		23A7FC10211C979F002D1CB1 /* MercadoPagoCheckoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7FC0E211C979F002D1CB1 /* MercadoPagoCheckoutBuilder.swift */; };
 		23A7FC12211E0EE5002D1CB1 /* PXDiscountConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7FC11211E0EE5002D1CB1 /* PXDiscountConfiguration.swift */; };
@@ -1040,7 +1038,6 @@
 		23A1742B2119051D00B88F7E /* MercadoPagoCheckoutViewModel+MoneyIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MercadoPagoCheckoutViewModel+MoneyIn.swift"; sourceTree = "<group>"; };
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
 		23A69BF8212EFDA300034429 /* PXPaymentProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPaymentProcessor.swift; sourceTree = "<group>"; };
-		23A69BFB212F045000034429 /* PXPaymentProcessorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPaymentProcessorViewController.swift; sourceTree = "<group>"; };
 		23A7FC0E211C979F002D1CB1 /* MercadoPagoCheckoutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MercadoPagoCheckoutBuilder.swift; path = Core/MercadoPagoCheckoutBuilder.swift; sourceTree = "<group>"; };
 		23A7FC11211E0EE5002D1CB1 /* PXDiscountConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXDiscountConfiguration.swift; path = Config/PXDiscountConfiguration.swift; sourceTree = "<group>"; };
 		23A7FC14211E15DF002D1CB1 /* PXPaymentConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PXPaymentConfiguration.swift; path = Config/PXPaymentConfiguration.swift; sourceTree = "<group>"; };
@@ -2014,7 +2011,6 @@
 			isa = PBXGroup;
 			children = (
 				23A69BF8212EFDA300034429 /* PXPaymentProcessor.swift */,
-				23A69BFB212F045000034429 /* PXPaymentProcessorViewController.swift */,
 			);
 			path = PaymentProcessor;
 			sourceTree = "<group>";
@@ -3622,7 +3618,6 @@
 				0F9883651AD2AB6000F750F0 /* CardToken.swift in Sources */,
 				FC3FC85E1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift in Sources */,
 				0F98838F1AD2AB6000F750F0 /* Refund.swift in Sources */,
-				23A69BFC212F045100034429 /* PXPaymentProcessorViewController.swift in Sources */,
 				FCBF13521E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */,
 				0F98835F1AD2AB6000F750F0 /* Cardholder.swift in Sources */,
 				534D84281F5485B000C2C6F9 /* CardAvailableView.swift in Sources */,
@@ -3868,7 +3863,6 @@
 				7622E32F1DF5F00500490C4E /* AdditionalStepTitleTableViewCell.swift in Sources */,
 				23A7FC13211E0EE5002D1CB1 /* PXDiscountConfiguration.swift in Sources */,
 				4B2EC4A320FFC26F008D03F8 /* InitFlow+Services.swift in Sources */,
-				23A69BFD212F045100034429 /* PXPaymentProcessorViewController.swift in Sources */,
 				4BE2B16F1FCF00E4007C58F2 /* PXHookStoreTest.swift in Sources */,
 				0FC4FC191B0FAA6400CF7148 /* BankDeal.swift in Sources */,
 				0F9883901AD2AB6000F750F0 /* Refund.swift in Sources */,

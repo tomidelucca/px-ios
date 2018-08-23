@@ -15,25 +15,13 @@ extension PXPaymentFlow {
             return
         }
 
-        let containerVC = PXPaymentProcessorViewController()
-
-        // By feature definition. Back is not available in make payment plugin.
-        containerVC.shouldShowBackArrow = false
-
         model.assignToCheckoutStore()
 
         // Create navigation handler.
         paymentProcessor.paymentNavigationHandler?(navigationHandler: PXPaymentPluginNavigationHandler(flow: self))
 
-        if let paymentView = paymentProcessor.paymentProcessorView() {
-            paymentView.removeFromSuperview()
-            paymentView.frame = containerVC.view.frame
-            paymentView.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-            containerVC.view.addSubview(paymentView)
+        if let paymentProcessorVC = paymentProcessor.paymentProcessorViewController() {
+            self.pxNavigationHandler.navigationController.pushViewController(paymentProcessorVC, animated: false)
         }
-
-        containerVC.view.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-
-        self.pxNavigationHandler.navigationController.pushViewController(containerVC, animated: false)
     }
 }
