@@ -11,7 +11,7 @@ import Foundation
 /** :nodoc: */
 @objcMembers open class FinancialInstitution: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.financialInstitution
+    var objectType: ObjectTypes = ObjectTypes.financialInstitution
     open var financialInstitutionId: Int?
     open var financialInstitutionDescription: String?
 

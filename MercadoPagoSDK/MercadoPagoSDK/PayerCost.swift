@@ -11,7 +11,7 @@ import Foundation
 /** :nodoc: */
 @objcMembers open class PayerCost: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.payerCost
+    var objectType: ObjectTypes = ObjectTypes.payerCost
     open var installments: Int = 0
     open var installmentRate: Double = 0
     open var labels: [String]!

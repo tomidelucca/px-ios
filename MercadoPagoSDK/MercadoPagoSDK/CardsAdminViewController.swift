@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
@@ -30,13 +29,13 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
 
     var titleSectionReference: PaymentVaultTitleCollectionViewCell!
 
-    fileprivate var tintColor = true
+    private var tintColor = true
 
-    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
 
-    fileprivate var defaultOptionSelected = false
+    private var defaultOptionSelected = false
 
-    fileprivate var callback : ((_ selectedCard: Card?) -> Void)!
+    private var callback : ((_ selectedCard: Card?) -> Void)!
 
     public init(viewModel: CardsAdminViewModel, callback : @escaping (_ selectedCard: Card?) -> Void) {
         super.init(nibName: CardsAdminViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)

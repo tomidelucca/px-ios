@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
+internal class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
 
     var lastContentOffset: CGFloat = 0
     var scrollingDown = false
@@ -54,7 +53,7 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     }
 
 }
-protocol TitleCellScrollable {
+internal protocol TitleCellScrollable {
     func updateTitleFontSize(toSize: CGFloat)
 
 }

@@ -9,19 +9,18 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-public class PXErrorComponent: NSObject, PXComponentizable {
+internal class PXErrorComponent: NSObject, PXComponentizable {
     var props: PXErrorProps
 
     init(props: PXErrorProps) {
         self.props = props
     }
-    public func render() -> UIView {
+    func render() -> UIView {
         return PXErrorRenderer().render(component: self)
     }
 }
 
-class PXErrorProps: NSObject {
+internal class PXErrorProps: NSObject {
     var title: NSAttributedString?
     var message: NSAttributedString?
     var secondaryTitle: NSAttributedString?

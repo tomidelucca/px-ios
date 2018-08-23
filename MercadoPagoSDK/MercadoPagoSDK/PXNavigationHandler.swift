@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-class PXNavigationHandler: NSObject {
+internal class PXNavigationHandler: NSObject {
 
     var countLoadings: Int = 0
     var navigationController: UINavigationController!
@@ -26,7 +25,7 @@ class PXNavigationHandler: NSObject {
         }
     }
 
-    public func goToRootViewController() {
+    func goToRootViewController() {
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)
@@ -123,6 +122,7 @@ class PXNavigationHandler: NSObject {
         }
 
     }
+
     internal func removeRootLoading() {
         let currentViewControllers = self.navigationController.viewControllers.filter { (viewController: UIViewController) -> Bool in
             return viewController != self.rootViewController
@@ -140,8 +140,7 @@ class PXNavigationHandler: NSObject {
     }
 }
 
-/** :nodoc: */
-extension PXNavigationHandler {
+internal extension PXNavigationHandler {
     static func getDefault() -> PXNavigationHandler {
         return PXNavigationHandler.init(navigationController: UINavigationController())
     }

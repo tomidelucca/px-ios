@@ -11,7 +11,7 @@ import Foundation
 /** :nodoc: */
 @objcMembers open class EntityType: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.entityType
+    var objectType: ObjectTypes = ObjectTypes.entityType
     open var entityTypeId: String!
     open var name: String!
 
@@ -41,14 +41,4 @@ import Foundation
             ]
         return obj
     }
-}
-
-/** :nodoc: */
-public func == (obj1: EntityType, obj2: EntityType) -> Bool {
-
-    let areEqual =
-        obj1.entityTypeId == obj2.entityTypeId &&
-            obj1.name == obj2.name
-
-    return areEqual
 }

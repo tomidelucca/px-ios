@@ -8,8 +8,7 @@
 
 import UIKit
 
-/** :nodoc: */
-extension PXResultViewModel {
+internal extension PXResultViewModel {
 
     func getHeaderComponentProps() -> PXHeaderProps {
         let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
@@ -22,9 +21,8 @@ extension PXResultViewModel {
     }
 }
 
-/** :nodoc: */
 // MARK: Build Helpers
-extension PXResultViewModel {
+internal extension PXResultViewModel {
     func iconImageHeader() -> UIImage? {
         if paymentResult.isAccepted() {
             if self.paymentResult.isApproved() {

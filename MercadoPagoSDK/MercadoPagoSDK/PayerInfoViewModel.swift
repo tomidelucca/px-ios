@@ -6,8 +6,7 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-/** :nodoc: */
-public enum PayerInfoFlowStep: String {
+internal enum PayerInfoFlowStep: String {
 
     case CANCEL
     case SCREEN_IDENTIFICATION
@@ -19,7 +18,7 @@ public enum PayerInfoFlowStep: String {
 
 }
 
-class PayerInfoViewModel: NSObject {
+internal class PayerInfoViewModel: NSObject {
     var identificationTypes: [IdentificationType]!
     var masks: [TextMaskFormater]!
     var currentMask: TextMaskFormater?
@@ -101,15 +100,15 @@ class PayerInfoViewModel: NSObject {
         }
     }
 
-    fileprivate func validateName() -> Bool {
+    private func validateName() -> Bool {
         return !String.isNullOrEmpty(name)
     }
 
-    fileprivate func validateLastName() -> Bool {
+    private func validateLastName() -> Bool {
         return !String.isNullOrEmpty(lastName)
     }
 
-    fileprivate func validateIdentificationNumber() -> Bool {
+    private func validateIdentificationNumber() -> Bool {
         let length = currentMask?.textUnmasked(identificationNumber).count
         return identificationType.minLength <= length! &&  length! <= identificationType.maxLength
     }
@@ -156,7 +155,7 @@ class PayerInfoViewModel: NSObject {
         return payer
     }
 
-    fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
+    private func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
 
@@ -170,7 +169,7 @@ class PayerInfoViewModel: NSObject {
         return nil
     }
 
-    fileprivate func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
+    private func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
         let site = SiteManager.shared.getSiteId()
         let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
         let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)

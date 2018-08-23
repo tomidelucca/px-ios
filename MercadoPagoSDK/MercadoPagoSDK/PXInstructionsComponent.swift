@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-public class PXInstructionsComponent: NSObject, PXComponentizable {
+internal class PXInstructionsComponent: NSObject, PXComponentizable {
     var props: PXInstructionsProps
 
     init(props: PXInstructionsProps) {
@@ -34,26 +33,26 @@ public class PXInstructionsComponent: NSObject, PXComponentizable {
         return instructionsSecondaryInfoComponent
     }
 
-    public func hasSubtitle() -> Bool {
+    func hasSubtitle() -> Bool {
         return props.instruction.subtitle != nil
     }
 
-    public func hasSecondaryInfo() -> Bool {
+    func hasSecondaryInfo() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.secondaryInfo)
     }
 
-    public func shouldShowEmailInSecondaryInfo() -> Bool {
+    func shouldShowEmailInSecondaryInfo() -> Bool {
         return MercadoPagoCheckoutViewModel.servicePreference.shouldShowEmailConfirmationCell()
     }
 
-    public func render() -> UIView {
+    func render() -> UIView {
         return PXInstructionsRenderer().render(self)
     }
 }
 
-/** :nodoc: */
-public class PXInstructionsProps: NSObject {
+internal class PXInstructionsProps: NSObject {
     var instruction: Instruction
+
     init(instruction: Instruction) {
         self.instruction = instruction
     }

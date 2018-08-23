@@ -8,10 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
-extension PXResultViewModel {
-
-    open func getBodyComponentProps() -> PXBodyProps {
+internal extension PXResultViewModel {
+    func getBodyComponentProps() -> PXBodyProps {
         let props = PXBodyProps(paymentResult: self.paymentResult, amountHelper: self.amountHelper, instruction: getInstrucion(), callback: getBodyAction())
         return props
     }
@@ -23,8 +21,7 @@ extension PXResultViewModel {
 }
 
 // MARK: Build Helpers
-/** :nodoc: */
-extension PXResultViewModel {
+internal extension PXResultViewModel {
     func getBodyAction() -> (() -> Void) {
         return { [weak self]  in self?.executeBodyCallback() }
     }
@@ -33,7 +30,7 @@ extension PXResultViewModel {
         self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
     }
 
-    open func getInstrucion() -> Instruction? {
+    func getInstrucion() -> Instruction? {
         guard let instructionsInfo = self.instructionsInfo else {
             return nil
         }

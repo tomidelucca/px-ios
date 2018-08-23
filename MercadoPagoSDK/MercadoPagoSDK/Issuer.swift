@@ -11,7 +11,7 @@ import Foundation
 /** :nodoc: */
 @objcMembers open class Issuer: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.issuer
+    var objectType: ObjectTypes = ObjectTypes.issuer
     open var issuerId: String?
     open var name: String?
 

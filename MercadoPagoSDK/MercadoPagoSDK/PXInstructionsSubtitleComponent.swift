@@ -8,22 +8,21 @@
 
 import Foundation
 
-/** :nodoc: */
-public class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
+internal class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
     var props: PXInstructionsSubtitleProps
 
     init(props: PXInstructionsSubtitleProps) {
         self.props = props
     }
 
-    public func render() -> UIView {
+    func render() -> UIView {
         return PXInstructionsSubtitleRenderer().render(self)
     }
 }
 
-/** :nodoc: */
-public class PXInstructionsSubtitleProps: NSObject {
+internal class PXInstructionsSubtitleProps: NSObject {
     var subtitle: String
+
     init(subtitle: String) {
         self.subtitle = subtitle
     }

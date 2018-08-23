@@ -8,29 +8,28 @@
 
 import UIKit
 
-/** :nodoc: */
-open class PXHeaderComponent: PXComponentizable {
-
-    public func render() -> UIView {
-        return PXHeaderRenderer().render(self)
-    }
+internal class PXHeaderComponent: PXComponentizable {
 
     var props: PXHeaderProps
 
-    init(props: PXHeaderProps) {
+    init (props: PXHeaderProps) {
         self.props = props
+    }
+
+    func render() -> UIView {
+        return PXHeaderRenderer().render(self)
     }
 }
 
-/** :nodoc: */
-open class PXHeaderProps: NSObject {
+internal class PXHeaderProps: NSObject {
     var labelText: NSAttributedString?
     var title: NSAttributedString
     var backgroundColor: UIColor
     var productImage: UIImage?
     var statusImage: UIImage?
     var imageURL: String?
-    init(labelText: NSAttributedString?, title: NSAttributedString, backgroundColor: UIColor, productImage: UIImage?, statusImage: UIImage?, imageURL: String? = nil) {
+
+    init (labelText: NSAttributedString?, title: NSAttributedString, backgroundColor: UIColor, productImage: UIImage?, statusImage: UIImage?, imageURL: String? = nil) {
         self.labelText = labelText
         self.title = title
         self.backgroundColor = backgroundColor

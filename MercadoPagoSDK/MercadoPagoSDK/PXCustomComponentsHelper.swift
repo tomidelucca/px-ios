@@ -8,9 +8,8 @@
 
 import Foundation
 
-/** :nodoc: */
-extension PXResultViewModel {
-    open func buildTopCustomView() -> UIView? {
+internal extension PXResultViewModel {
+    func buildTopCustomView() -> UIView? {
         if let customView = preference.getTopCustomView(), self.paymentResult.isApproved() {
             return buildComponentView(customView)
         } else {
@@ -18,7 +17,7 @@ extension PXResultViewModel {
         }
     }
 
-    open func buildBottomCustomView() -> UIView? {
+    func buildBottomCustomView() -> UIView? {
         if let customView = preference.getBottomCustomView(), self.paymentResult.isApproved() {
             return buildComponentView(customView)
         } else {

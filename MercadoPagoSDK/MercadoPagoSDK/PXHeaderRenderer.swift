@@ -126,10 +126,9 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-/** :nodoc: */
 internal class PXHeaderView: PXComponentView {
-    public var circleImage: UIImageView?
-    public var badgeImage: UIImageView?
-    public var statusLabel: UILabel?
-    public var messageLabel: UILabel?
+    var circleImage: UIImageView?
+    var badgeImage: UIImageView?
+    var statusLabel: UILabel?
+    var messageLabel: UILabel?
 }

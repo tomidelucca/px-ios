@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+internal class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var tipoDeDocumentoLabel: UILabel!
     @IBOutlet weak var textField: HoshiTextField!
@@ -311,7 +310,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         self.navigationController?.popViewController(animated: false)
     }
 
-    fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
+    private func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
 
@@ -325,7 +324,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         return nil
     }
 
-    fileprivate func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
+    private func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
         let site = SiteManager.shared.getSiteId()
 
         if let identificationType = IDtype {
@@ -341,7 +340,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         }
     }
 
-    fileprivate func drawMask(masks: [TextMaskFormater]) {
+    private func drawMask(masks: [TextMaskFormater]) {
 
         let charactersCount = numberTextField.text?.count
 
@@ -357,7 +356,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         }
     }
 
-    fileprivate func remask() {
+    private func remask() {
         drawMask(masks: getIdMask(IDtype: identificationType))
     }
 }

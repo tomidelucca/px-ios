@@ -12,7 +12,7 @@ import UIKit
 /** :nodoc: */
 @objcMembers open class PaymentMethod: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.paymentMethod
+    var objectType: ObjectTypes = ObjectTypes.paymentMethod
     open var paymentMethodId: String!
     open var name: String!
     open var paymentTypeId: String!

@@ -9,9 +9,8 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
-/** :nodoc: */
 @objcMembers
-open class ErrorViewController: MercadoPagoUIViewController {
+internal class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var  errorTitle: MPLabel!
 

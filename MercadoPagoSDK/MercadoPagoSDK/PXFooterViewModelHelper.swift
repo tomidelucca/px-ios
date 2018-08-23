@@ -8,8 +8,7 @@
 
 import UIKit
 
-/** :nodoc: */
-extension PXResultViewModel {
+internal extension PXResultViewModel {
 
     func getFooterComponentProps() -> PXFooterProps {
         return PXFooterProps(buttonAction: getActionButton(), linkAction: getActionLink())
@@ -21,9 +20,8 @@ extension PXResultViewModel {
     }
 }
 
-/** :nodoc: */
 // MARK: Build Helpers
-extension PXResultViewModel {
+internal extension PXResultViewModel {
 
     func getActionButton() -> PXAction? {
          var actionButton: PXAction?

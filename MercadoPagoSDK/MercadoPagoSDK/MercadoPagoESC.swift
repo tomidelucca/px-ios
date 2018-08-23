@@ -8,9 +8,8 @@
 
 import Foundation
 
-/** :nodoc: */
 @objc
-public protocol MercadoPagoESC: NSObjectProtocol {
+internal protocol MercadoPagoESC: NSObjectProtocol {
 
     func hasESCEnable() -> Bool
 
