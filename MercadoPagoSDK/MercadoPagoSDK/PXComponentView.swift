@@ -96,9 +96,12 @@ import Foundation
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func removeAllSubviews() {
+
+    override func removeAllSubviews(except views: [UIView] = []) {
         for view in contentView.subviews {
-            view.removeFromSuperview()
+            if !views.contains(view) {
+                view.removeFromSuperview()
+            }
         }
         carryMarginY = 0
     }

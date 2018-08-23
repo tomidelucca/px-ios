@@ -807,6 +807,8 @@
 		FC511EAD20BCD2B8006F098C /* PXDiscountTermsAndConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC511EAC20BCD2B8006F098C /* PXDiscountTermsAndConditionView.swift */; };
 		FC511EAF20BCE7C1006F098C /* PXDiscountDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC511EAE20BCE7C1006F098C /* PXDiscountDetailViewController.swift */; };
 		FC54C70020A493F600C73A36 /* PXUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC54C6FF20A493F600C73A36 /* PXUIImage.swift */; };
+		FC5B769A212C802500237FB3 /* PXAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */; };
+		FC5B769F212C974C00237FB3 /* PXAnimatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */; };
 		FC5BCEBF208FA99300447D99 /* PXBankDealDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */; };
 		FC6283F31FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
 		FC6283F41FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
@@ -1366,6 +1368,8 @@
 		FC511EAC20BCD2B8006F098C /* PXDiscountTermsAndConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDiscountTermsAndConditionView.swift; sourceTree = "<group>"; };
 		FC511EAE20BCE7C1006F098C /* PXDiscountDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDiscountDetailViewController.swift; sourceTree = "<group>"; };
 		FC54C6FF20A493F600C73A36 /* PXUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUIImage.swift; sourceTree = "<group>"; };
+		FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAnimatedImageView.swift; sourceTree = "<group>"; };
+		FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAnimatedView.swift; sourceTree = "<group>"; };
 		FC5BCEBE208FA99300447D99 /* PXBankDealDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealDetailsViewModel.swift; sourceTree = "<group>"; };
 		FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentView.swift; sourceTree = "<group>"; };
 		FC65A1E8208E4907000A0DA0 /* PXBankDealComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBankDealComponent.swift; sourceTree = "<group>"; };
@@ -1451,6 +1455,7 @@
 		0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */ = {
 			isa = PBXGroup;
 			children = (
+				FC9C8125212DC53800B14B56 /* UI */,
 				23A1742A2119051D00B88F7E /* MoneyIn */,
 				232114B0211897E800B50503 /* Plist */,
 				4B2EC4A420FFC284008D03F8 /* Flows */,
@@ -2885,6 +2890,15 @@
 			name = "Instruction Action";
 			sourceTree = "<group>";
 		};
+		FC5B769B212C802F00237FB3 /* PXAnimatedViews */ = {
+			isa = PBXGroup;
+			children = (
+				FC5B769E212C974C00237FB3 /* PXAnimatedView.swift */,
+				FC5B7698212C802500237FB3 /* PXAnimatedImageView.swift */,
+			);
+			path = PXAnimatedViews;
+			sourceTree = "<group>";
+		};
 		FC65A1E7208E48DE000A0DA0 /* Bank Deal Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -2923,6 +2937,14 @@
 				FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */,
 			);
 			name = PXUtils;
+			sourceTree = "<group>";
+		};
+		FC9C8125212DC53800B14B56 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				FC5B769B212C802F00237FB3 /* PXAnimatedViews */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		FC9E62892125C55A0036A99F /* PX Extensions */ = {
@@ -3427,6 +3449,7 @@
 				4BEFBF8F1F06BB20003EA94E /* PayerCostCFTTableViewCell.swift in Sources */,
 				4B2EC4A220FFC26F008D03F8 /* InitFlow+Services.swift in Sources */,
 				232114972114700500B50503 /* PXPaymentPluginViewController.swift in Sources */,
+				FC5B769A212C802500237FB3 /* PXAnimatedImageView.swift in Sources */,
 				15584BB920BDB80600866BE7 /* PXAmountHelper.swift in Sources */,
 				156526C7209F74A800852D39 /* PXCustomComponent.swift in Sources */,
 				4B48541C204825C0001C0921 /* PXItemComponent.swift in Sources */,
@@ -3606,6 +3629,7 @@
 				FC7E14981F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */,
 				0F9883731AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
 				81ACC8201F9A88F700206F7B /* PXFooterRenderer.swift in Sources */,
+				FC5B769F212C974C00237FB3 /* PXAnimatedView.swift in Sources */,
 				0F9883931AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
 				81ACC8141F9A88EF00206F7B /* PXLayout.swift in Sources */,
 				4BD84D721F1E48FB002219D4 /* MercadoPagoCheckoutServices.swift in Sources */,

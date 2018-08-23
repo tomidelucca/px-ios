@@ -92,8 +92,8 @@
 
     //self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
     //Differential pricing
-  //  self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd"
+    self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c";
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2"
                                                          accessToken:nil checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult navigationController:self.navigationController];
 
     //PXDiscount* discount = [[PXDiscount alloc] init];
@@ -124,7 +124,7 @@
 
 //    [self setPaymentMethodPlugins];
 
-//    [self setPaymentPlugin];
+    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
 //    [self setPaymentResultScreenPreference];

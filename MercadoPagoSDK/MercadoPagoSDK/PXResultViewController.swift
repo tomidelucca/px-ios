@@ -15,7 +15,7 @@ class PXResultViewController: PXComponentContainerViewController {
     override open var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT }
 
     let viewModel: PXResultViewModelInterface
-    var headerView: UIView?
+    var headerView: PXHeaderView?
     var receiptView: UIView?
     var topCustomView: UIView?
     var bottomCustomView: UIView?
@@ -46,7 +46,9 @@ class PXResultViewController: PXComponentContainerViewController {
         if contentView.getSubviews().isEmpty {
             renderViews()
             super.prepareForAnimation()
-            super.animateContentView()
+            super.animateContentView { (_) in
+                self.headerView?.badgeImage?.animate(duration: 0.2)
+            }
         }
     }
 
@@ -178,9 +180,12 @@ class PXResultViewController: PXComponentContainerViewController {
 
 // Components
 extension PXResultViewController {
-    func buildHeaderView() -> UIView {
+    func buildHeaderView() -> PXHeaderView? {
         let headerComponent = viewModel.buildHeaderComponent()
-        return headerComponent.render()
+        if let headerView = headerComponent.render() as? PXHeaderView {
+            return headerView
+        }
+        return nil
     }
 
     func buildFooterView() -> UIView {
