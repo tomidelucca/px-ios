@@ -8,25 +8,24 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers open class Instruction: NSObject {
+@objcMembers internal class Instruction: NSObject {
 
-    open var title: String = ""
-    open var subtitle: String?
-    open var accreditationMessage: String = ""
-    open var accreditationComment: [String]?
-    open var references: [InstructionReference]!
-    open var info: [String]!
-    open var secondaryInfo: [String]?
-    open var tertiaryInfo: [String]?
-    open var actions: [InstructionAction]?
-    open var type: String = ""
+    var title: String = ""
+    var subtitle: String?
+    var accreditationMessage: String = ""
+    var accreditationComment: [String]?
+    var references: [InstructionReference]!
+    var info: [String]!
+    var secondaryInfo: [String]?
+    var tertiaryInfo: [String]?
+    var actions: [InstructionAction]?
+    var type: String = ""
 
-    open func toJSONString() -> String {
+    func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> Instruction {
+    class func fromJSON(_ json: NSDictionary) -> Instruction {
                 let instruction = Instruction()
 
                 if json["title"] != nil && !(json["title"]! is NSNull) {
@@ -112,7 +111,7 @@ import UIKit
                 return instruction
             }
 
-    open func toJSON() -> [String: Any] {
+    func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "title": self.title,
             "accreditationMessage": self.accreditationMessage
@@ -120,27 +119,27 @@ import UIKit
         return obj
     }
 
-    open func hasSubtitle() -> Bool {
+    func hasSubtitle() -> Bool {
         return !String.isNullOrEmpty(subtitle)
     }
 
-    open func hasTitle() -> Bool {
+    func hasTitle() -> Bool {
         return !String.isNullOrEmpty(title)
     }
 
-    open func hasAccreditationMessage() -> Bool {
+    func hasAccreditationMessage() -> Bool {
         return !String.isNullOrEmpty(accreditationMessage)
     }
 
-    open func hasSecondaryInformation() -> Bool {
+    func hasSecondaryInformation() -> Bool {
         return !Array.isNullOrEmpty(secondaryInfo)
     }
 
-    open func hasAccreditationComment() -> Bool {
+    func hasAccreditationComment() -> Bool {
         return !Array.isNullOrEmpty(accreditationComment)
     }
 
-    open func hasActions() -> Bool {
+    func hasActions() -> Bool {
         return !Array.isNullOrEmpty(actions)
     }
 }

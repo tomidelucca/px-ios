@@ -29,7 +29,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
 @objcMembers internal class MPPayment: NSObject {
 
     open var preferenceId: String!
@@ -60,7 +59,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         self.discount = discount
     }
 
-    public init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
+    init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
         self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.issuerId! : ""
 
         self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
@@ -86,11 +85,11 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
     }
 
-    open func toJSONString() -> String {
+    func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    func toJSON() -> [String: Any] {
         var obj: [String: Any] = [
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,

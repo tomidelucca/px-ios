@@ -9,8 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers open class MPSDKError: NSObject {
+@objcMembers internal class MPSDKError: NSObject {
 
     open var message: String = ""
     open var errorDetail: String = ""
@@ -22,7 +21,7 @@ import MercadoPagoServicesV4
         super.init()
     }
 
-    public init(message: String, errorDetail: String, retry: Bool, requestOrigin: String?=nil) {
+    init(message: String, errorDetail: String, retry: Bool, requestOrigin: String?=nil) {
         super.init()
         self.message = message
         self.errorDetail = errorDetail
@@ -32,7 +31,7 @@ import MercadoPagoServicesV4
         }
     }
 
-    open class func convertFrom(_ error: Error, requestOrigin: String) -> MPSDKError {
+    class func convertFrom(_ error: Error, requestOrigin: String) -> MPSDKError {
         let mpError = MPSDKError()
         let currentError = error as NSError
 

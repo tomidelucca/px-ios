@@ -8,13 +8,12 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers open class InstructionAction: NSObject {
+@objcMembers internal class InstructionAction: NSObject {
 
     var label: String!
     var url: String!
     var tag: String!
-    open class func fromJSON(_ json: NSDictionary) -> InstructionAction {
+    class func fromJSON(_ json: NSDictionary) -> InstructionAction {
                 let action = InstructionAction()
                     if json["label"] != nil && !(json["label"]! is NSNull) {
                         action.label = json["label"] as! String
@@ -29,8 +28,7 @@ import UIKit
             }
 }
 
-/** :nodoc: */
-public enum ActionTag: String {
+internal enum ActionTag: String {
     case LINK = "link"
     case PRINT = "print"
 }
