@@ -27,8 +27,8 @@ pod 'MercadoPagoSDKV4', '~> 4.0'
 
 ## 🐒 How to use
 Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
-Import MercadopagoSDKV4 in your peoject.
 ```swift
+// Import in your project.
 import MercadoPagoSDKV4
 ```
 
