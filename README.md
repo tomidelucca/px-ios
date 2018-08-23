@@ -13,8 +13,6 @@
    
 </p>
 
-MercadoPagoSDKV4 (PX-Payment Experience) make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
-
 ## 📲 How to Install
 
 #### Using [CocoaPods](https://cocoapods.org)
@@ -55,6 +53,7 @@ Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target
 ## 🌟 Features
 - [x] Easy to install
 - [x] Easy to use
+- [x] PCI compliance
 - [x] Basic color customization
 - [x] Advanced color customization
 - [x] Lazy loading initialization support
