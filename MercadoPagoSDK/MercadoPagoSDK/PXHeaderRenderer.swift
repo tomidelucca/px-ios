@@ -33,8 +33,12 @@ class PXHeaderRenderer: NSObject {
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
         //Image
-        let pximage = PXUIImage(url: header.props.imageURL)
-        headerView.circleImage = buildCircleImage(with: pximage)
+        if let imageURL = header.props.imageURL, imageURL.isNotEmpty {
+            let pximage = PXUIImage(url: imageURL)
+            headerView.circleImage = buildCircleImage(with: pximage)
+        } else {
+            headerView.circleImage = buildCircleImage(with: header.props.productImage)
+        }
         if let circleImage = headerView.circleImage {
             headerView.addSubview(circleImage)
             PXLayout.centerHorizontally(view: circleImage, to: headerView).isActive = true
