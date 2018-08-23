@@ -31,6 +31,7 @@ open class Payer: NSObject {
     }
 }
 
+/** :nodoc: */
 // MARK: Setters
 extension Payer {
     open func setId(payerId: String) {
@@ -58,6 +59,7 @@ extension Payer {
     }
 }
 
+/** :nodoc: */
 // MARK: Getters
 extension Payer {
     open func getEmail() -> String {

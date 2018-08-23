@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OneTapFlowModel: NSObject, PXFlowModel {
+final internal class OneTapFlowModel: NSObject, PXFlowModel {
     enum Steps: String {
         case finish
         case screenReviewOneTap
@@ -98,19 +98,18 @@ extension OneTapFlowModel {
     }
 }
 
-/** :nodoc: */
 // MARK: Update view models
-extension OneTapFlowModel {
+internal extension OneTapFlowModel {
     func updateCheckoutModel(paymentData: PaymentData) {
         self.paymentData = paymentData
         self.readyToPay = true
     }
 
-    public func updateCheckoutModel(token: Token) {
+    func updateCheckoutModel(token: Token) {
         self.paymentData.updatePaymentDataWith(token: token)
     }
 
-    public func updateCheckoutModel(payerCost: PayerCost) {
+    func updateCheckoutModel(payerCost: PayerCost) {
         if paymentOptionSelected.isCard() {
             self.paymentData.updatePaymentDataWith(payerCost: payerCost)
             self.paymentData.cleanToken()
@@ -119,9 +118,8 @@ extension OneTapFlowModel {
 
 }
 
-/** :nodoc: */
 // MARK: Flow logic
-extension OneTapFlowModel {
+internal extension OneTapFlowModel {
     func needReviewAndConfirmForOneTap() -> Bool {
         if readyToPay {
             return false

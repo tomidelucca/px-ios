@@ -113,8 +113,7 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 }
 
-/** :nodoc: */
-extension PXPaymentFlowModel {
+internal extension PXPaymentFlowModel {
     func hasPluginPaymentScreen(plugin: PXPaymentProcessor?) -> Bool {
         guard let paymentPlugin = plugin else {
             return false

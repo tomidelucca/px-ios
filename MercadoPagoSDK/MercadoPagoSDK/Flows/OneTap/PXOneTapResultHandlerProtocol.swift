@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: - Not intended for public use. */
-protocol PXOneTapResultHandlerProtocol: NSObjectProtocol {
+internal protocol PXOneTapResultHandlerProtocol: NSObjectProtocol {
     func finishOneTap(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?)
     func finishOneTap(businessResult: PXBusinessResult)
     func finishOneTap(paymentData: PaymentData)

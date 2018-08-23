@@ -35,7 +35,7 @@ internal class Localizator {
 }
 
 // MARK: Getters/ Setters
-extension Localizator {
+internal extension Localizator {
     func setLanguage(language: PXLanguages) {
         self.language = language.rawValue
     }
@@ -106,8 +106,7 @@ extension Localizator {
     }
 }
 
-/** :nodoc: */
-extension String {
+internal extension String {
     var localized_beta: String {
         return Localizator.sharedInstance.localize(string: self)
     }
