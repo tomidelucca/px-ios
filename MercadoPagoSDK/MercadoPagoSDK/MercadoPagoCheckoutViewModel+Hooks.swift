@@ -49,7 +49,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if pm.isPayerInfoRequired && paymentData.getPayer().identification == nil {
+        if pm.isPayerInfoRequired && paymentData.getPayer()?.identification == nil {
             return false
         }
         return true

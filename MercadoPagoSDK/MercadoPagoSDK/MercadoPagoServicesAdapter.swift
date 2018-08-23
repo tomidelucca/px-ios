@@ -67,7 +67,8 @@ import MercadoPagoServicesV4
 
     open func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        payer.accessToken = mercadoPagoServices.payerAccessToken
+        payer.setAccessToken(accessToken: mercadoPagoServices.payerAccessToken)
+
         let pxSite = getPXSiteFromId(site)
 
         let accountMoneyAvailable: Bool = false // TODO: This is temporary. (Warning: Until AM First Class Member)

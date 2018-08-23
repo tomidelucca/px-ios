@@ -10,9 +10,8 @@
     <a href="https://cocoapods.org/pods/MercadoPagoSDKV4">
         <img src="https://img.shields.io/cocoapods/dt/MercadoPagoSDKV4.svg?style=flat" alt="CocoaPods downloads" />
     </a>
+   
 </p>
-
-MercadoPagoSDKV4 (PX-Payment Experience) make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
 
 ## 📲 How to Install
 
@@ -21,30 +20,61 @@ MercadoPagoSDKV4 (PX-Payment Experience) make it easy to collect your users' cre
 Edit your `Podfile` and specify the dependency:
 
 ```ruby
-pod "MercadoPagoSDKV4"
+pod 'MercadoPagoSDKV4', '~> 4.0'
 ```
 
-## 🐒 How to use?
+## 🐒 How to use
 Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
-- [x] TODO
-- [x] TODO
-- [x] TODO
 
+### 1 - Import into project
+```swift
+import MercadoPagoSDKV4
+```
+
+### 2 - Set your  `PublicKey`  and  `PreferenceId` 
+```swift
+let checkout = MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: "your_public_key", preferenceId: "your_checkout_preference_id"))
+```
+
+### 3 - Start
+```swift
+checkout.start(navigationController: self.navigationController!)
+```
+
+## 💪 One line integration
+```swift
+MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: "your_public_key", preferenceId: "your_checkout_preference_id")).start(navigationController: self.navigationController!)
+```
+
+## 💡Advanced integration
+Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target="_blank"> reference </a>, especially <a href="http://mercadopago.github.io/px-ios/v4/Classes/MercadoPagoCheckoutBuilder.html" target="_blank"> MercadoPagoCheckoutBuilder </a> object to explore all available functionalities.
+
+## 🌈 Color UI customization
+TODO.
+    
 ## 🌟 Features
 - [x] Easy to install
-- [x] Easy to use
-- [x] UI Colors customizable
+- [x] Easy to integrate
+- [x] PCI compliance
+- [x] Basic color customization
+- [x] Advanced color customization
+- [x] Lazy loading initialization support
+- [x] Custom UIViews support in certain screens
+- [x] Support to build your own Payment Processor
+- [x] Support to create your own custom Payment Method
 
 ### 📋 Supported OS & SDK Versions
 * iOS 9.0+
 * Swift 4
+* xCode 9.2+
+* @Objc full compatibility
 
 ### 🔮 Project Example
 This project include an example project using MercadoPagoSDKV4. In case you need support contact the MercadoPago Developers Site.
 
 ### 📚 Documentation & DevSite
-+ [Advanced full documentation.](http://mercadopago.github.io/px-ios/v4/)
-+ [Check out MercadoPago Developers Site.](http://www.mercadopago.com.ar/developers)
++ [Advanced full documentation](http://mercadopago.github.io/px-ios/v4/)
++ [Check out MercadoPago Developers Site](http://www.mercadopago.com.ar/developers)
 
 ## ❤️ Feedback
 You can join the MercadoPago Developers Community on MercadoPago Developers Site:
@@ -53,7 +83,7 @@ You can join the MercadoPago Developers Community on MercadoPago Developers Site
 + [Português](https://www.mercadopago.com.br/developers/pt/community/forum/)
 
 This is an open source project, so feel free to contribute. How?
-- Propose your own fixes, suggestions and open a pull request with the changes.
+- Fork this project and propose your own fixes, suggestions and open a pull request with the changes.
 
 
 ## 👨🏻‍💻 Author

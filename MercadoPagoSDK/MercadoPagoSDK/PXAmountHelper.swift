@@ -20,7 +20,7 @@ internal struct PXAmountHelper {
 
     var preferenceAmount: Double {
         get {
-            return self.preference.getAmount()
+            return self.preference.getTotalAmount()
         }
     }
 

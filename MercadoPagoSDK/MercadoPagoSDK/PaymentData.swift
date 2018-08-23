@@ -181,12 +181,8 @@ import MercadoPagoServicesV4
         return issuer
     }
 
-    public func getPayer() -> PXPayer {
-        var returnedPayer = PXPayer()
-        if let payer = payer {
-            returnedPayer = payer
-        }
-        return returnedPayer
+    public func getPayer() -> PXPayer? {
+        return payer
     }
 
     public func getPaymentMethod() -> PXPaymentMethod? {
@@ -210,5 +206,4 @@ import MercadoPagoServicesV4
         self.discount = nil
         self.campaign = nil
     }
-
 }

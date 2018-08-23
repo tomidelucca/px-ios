@@ -71,7 +71,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
             self.transactionDetails = transactionDetails
         }
 
-        self.payer = PXPayer()
+        self.payer = PXPayer(email: "")
         if let targetPayer = paymentData.payer {
             self.payer = targetPayer
         }

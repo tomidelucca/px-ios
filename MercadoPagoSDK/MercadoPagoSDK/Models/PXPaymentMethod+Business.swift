@@ -173,7 +173,7 @@ extension PXPaymentMethod: Cellable {
         return self.isCard || self.isAccountMoney
     }
 
-    open func conformsPaymentPreferences(_ paymentPreference: PaymentPreference?) -> Bool {
+    internal func conformsPaymentPreferences(_ paymentPreference: PaymentPreference?) -> Bool {
 
         if paymentPreference == nil {
             return true

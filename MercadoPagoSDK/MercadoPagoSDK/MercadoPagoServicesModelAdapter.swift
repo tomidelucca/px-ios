@@ -19,7 +19,7 @@ extension MercadoPagoServicesAdapter {
     }
 
     open func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
-        let checkoutPreference = CheckoutPreference()
+        let checkoutPreference = CheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
         checkoutPreference.preferenceId = pxCheckoutPreference.id
         if let pxCheckoutPreferenceItems = pxCheckoutPreference.items {
             for pxItem in pxCheckoutPreferenceItems {
@@ -30,7 +30,6 @@ extension MercadoPagoServicesAdapter {
         checkoutPreference.differentialPricing = pxCheckoutPreference.differentialPricing
         checkoutPreference.payer = pxCheckoutPreference.payer
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
-        checkoutPreference.siteId = pxCheckoutPreference.siteId ?? ""
         checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom ?? Date()
         checkoutPreference.expirationDateTo = pxCheckoutPreference.expirationDateTo ?? Date()
         return checkoutPreference
@@ -49,7 +48,7 @@ extension MercadoPagoServicesAdapter {
         return item
     }
 
-    open func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
+    internal func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
         let paymentPreference = PaymentPreference()
         if let pxPaymentPreference = pxPaymentPreference {
             paymentPreference.excludedPaymentMethodIds = Set(pxPaymentPreference.excludedPaymentMethodIds ?? [])

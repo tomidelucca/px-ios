@@ -38,24 +38,16 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-@objcMembers open class PaymentPreference: NSObject {
-    open var excludedPaymentMethodIds: Set<String>?
-    open var excludedPaymentTypeIds: Set<String>?
-    open var defaultPaymentMethodId: String?
-    open var maxAcceptedInstallments: Int = 0
-    open var defaultInstallments: Int = 0
-    open var defaultPaymentTypeId: String?
-    open var cardId: String?
+internal class PaymentPreference {
+    var excludedPaymentMethodIds: Set<String>?
+    var excludedPaymentTypeIds: Set<String>?
+    var defaultPaymentMethodId: String?
+    var maxAcceptedInstallments: Int = 0
+    var defaultInstallments: Int = 0
+    var defaultPaymentTypeId: String?
+    var cardId: String?
 
-    //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
-    // excluded_payment_method < payment_methods
-    //excluded_payment_types < payment_types
-
-    public override init() {
-        super.init()
-    }
-
-    open class func fromJSON(_ json: NSDictionary) -> PaymentPreference {
+    internal class func fromJSON(_ json: NSDictionary) -> PaymentPreference {
                let preferencePaymentMethods = PaymentPreference()
 
                var excludedPaymentMethods = Set<String>()
@@ -97,7 +89,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 return preferencePaymentMethods
             }
 
-    open func autoSelectPayerCost(_ payerCostList: [PXPayerCost]) -> PXPayerCost? {
+    internal func autoSelectPayerCost(_ payerCostList: [PXPayerCost]) -> PXPayerCost? {
         if payerCostList.count == 0 {
             return nil
         }
@@ -118,7 +110,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
     }
 
-    open func validate() -> Bool {
+    internal func validate() -> Bool {
         if maxAcceptedInstallments <= 0 {
             return false
         }
@@ -129,42 +121,42 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         return true
     }
 
-    open func getExcludedPaymentTypesIds() -> Set<String>? {
+    internal func getExcludedPaymentTypesIds() -> Set<String>? {
         if excludedPaymentTypeIds != nil {
             return excludedPaymentTypeIds
         }
         return nil
     }
 
-    open func getDefaultInstallments() -> Int {
+    internal func getDefaultInstallments() -> Int {
         if defaultInstallments > 0 {
             return defaultInstallments
         }
         return 0
     }
 
-    open func getMaxAcceptedInstallments() -> Int {
+    internal func getMaxAcceptedInstallments() -> Int {
         if maxAcceptedInstallments > 0 {
             return maxAcceptedInstallments
         }
         return 0
     }
 
-    open func getExcludedPaymentMethodsIds() -> Set<String>? {
+    internal func getExcludedPaymentMethodsIds() -> Set<String>? {
         if excludedPaymentMethodIds != nil {
             return excludedPaymentMethodIds
         }
         return nil
     }
 
-    open func getDefaultPaymentMethodId() -> String? {
+    internal func getDefaultPaymentMethodId() -> String? {
         if defaultPaymentMethodId != nil && defaultPaymentMethodId!.isNotEmpty {
             return defaultPaymentMethodId
         }
         return nil
     }
 
-    open func addSettings(_ defaultPaymentTypeId: String? = nil, excludedPaymentMethodsIds: Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment: Int? = nil, defaultInstallments: Int? = nil) -> PaymentPreference {
+    internal func addSettings(_ defaultPaymentTypeId: String? = nil, excludedPaymentMethodsIds: Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment: Int? = nil, defaultInstallments: Int? = nil) -> PaymentPreference {
 
         if excludedPaymentMethodsIds != nil {
            self.excludedPaymentMethodIds =  excludedPaymentMethodsIds

@@ -33,7 +33,26 @@ import Foundation
 
 }
 
-// MARK: Non mandatory setters
+// MARK: Setters
+extension Item {
+    open func setId(id: String) {
+        self.itemId = id
+    }
+
+    open func setDescription(description: String) {
+        self.itemDescription = description
+    }
+
+    open func setPictureURL(url: String) {
+        self.pictureUrl = url
+    }
+
+    open func setCategoryId(categoryId: String) {
+        self.categoryId = categoryId
+    }
+}
+
+// MARK: Getters
 extension Item {
     open func getQuantity() -> Int {
         return quantity
@@ -64,27 +83,8 @@ extension Item {
     }
 }
 
-// MARK: Getters
 extension Item {
-    open func setId(id: String) {
-        self.itemId = id
-    }
-
-    open func setDescription(description: String) {
-        self.itemDescription = description
-    }
-
-    open func setPictureURL(url: String) {
-        self.pictureUrl = url
-    }
-
-    open func setCategoryId(categoryId: String) {
-        self.categoryId = categoryId
-    }
-}
-
-extension Item {
-    open class func fromJSON(_ json: NSDictionary) -> Item {
+    internal class func fromJSON(_ json: NSDictionary) -> Item {
         let item = Item(title: "", quantity: 0, unitPrice: 0)
 
         item.itemId = JSONHandler.getValue(of: String.self, key: "id", from: json)
@@ -112,7 +112,7 @@ extension Item {
         return item
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         let itemId: Any = (self.itemId == nil) ? JSONHandler.null : self.itemId!
         let title: Any =  (self.title == nil) ? JSONHandler.null : self.title
         let categoryId: Any =  (self.categoryId == nil) ? JSONHandler.null : self.categoryId!
