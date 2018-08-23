@@ -119,7 +119,7 @@ extension PXPaymentFlowModel {
             return false
         }
         assignToCheckoutStore()
-        let view = paymentPlugin.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared)
-        return  view != nil
+        let view = paymentPlugin.paymentProcessorView()
+        return view != nil
     }
 }

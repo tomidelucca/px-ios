@@ -10,43 +10,29 @@ import Foundation
 
 /** :nodoc: */
 extension PXPaymentFlow {
-    func showPaymentPluginComponent(paymentPluginComponent: PXPaymentProcessor?) {
-        guard let paymentPluginComponent = paymentPluginComponent else {
+    func showPaymentProcessor(paymentProcessor: PXPaymentProcessor?) {
+        guard let paymentProcessor = paymentProcessor else {
             return
         }
 
-        let containerVC = PXPaymentPluginViewController()
+        let containerVC = PXPaymentProcessorViewController()
 
         // By feature definition. Back is not available in make payment plugin.
         containerVC.shouldShowBackArrow = false
 
         model.assignToCheckoutStore()
-        paymentPluginComponent.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
         // Create navigation handler.
-        paymentPluginComponent.paymentNavigationHandler?(navigationHandler: PXPaymentPluginNavigationHandler(flow: self))
+        paymentProcessor.paymentNavigationHandler?(navigationHandler: PXPaymentPluginNavigationHandler(flow: self))
 
-        if let navTitle = paymentPluginComponent.titleForNavigationBar?() {
-            containerVC.title = navTitle
-        }
-
-        if let navBarColor = paymentPluginComponent.colorForNavigationBar?() {
-            containerVC.setNavBarBackgroundColor(color: navBarColor)
-        }
-
-        if let shouldShowNavigationBar = paymentPluginComponent.shouldShowNavigationBar?() {
-            containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
-        }
-
-        if let paymentPluginComponentView = paymentPluginComponent.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
-            paymentPluginComponentView.removeFromSuperview()
-            paymentPluginComponentView.frame = containerVC.view.frame
-            paymentPluginComponentView.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-            containerVC.view.addSubview(paymentPluginComponentView)
+        if let paymentView = paymentProcessor.paymentProcessorView() {
+            paymentView.removeFromSuperview()
+            paymentView.frame = containerVC.view.frame
+            paymentView.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
+            containerVC.view.addSubview(paymentView)
         }
 
         containerVC.view.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-        paymentPluginComponent.renderDidFinish?()
 
         self.pxNavigationHandler.navigationController.pushViewController(containerVC, animated: false)
     }

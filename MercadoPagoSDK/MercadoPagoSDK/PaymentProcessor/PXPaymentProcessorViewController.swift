@@ -1,5 +1,5 @@
 //
-//  PXPaymentPluginViewController.swift
+//  PXPaymentProcessorViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by Juan sebastian Sanzone on 3/8/18.
@@ -8,8 +8,9 @@
 
 import Foundation
 
-final class PXPaymentPluginViewController: MercadoPagoUIViewController {
-    override func viewWillAppear(_ animated: Bool) {
+@objcMembers
+open class PXPaymentProcessorViewController: MercadoPagoUIViewController {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Temporary fix for MP/Meli UX incompatibility
         UIApplication.shared.statusBarStyle = .default

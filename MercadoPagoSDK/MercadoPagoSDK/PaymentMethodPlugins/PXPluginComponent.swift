@@ -15,14 +15,6 @@ import Foundation
 }
 
 /** :nodoc: */
-@objc public protocol PXPaymentProcessor: PXPluginComponent {
-    @objc optional func support(checkoutStore: PXCheckoutStore) -> Bool
-    @objc optional func createPayment(checkoutStore: PXCheckoutStore, handler: PXPaymentFlowHandlerProtocol, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXPaymentPluginResult) -> Void))
-    @objc optional func paymentNavigationHandler(navigationHandler: PXPaymentPluginNavigationHandler)
-    @objc optional func paymentTimeOut() -> Double
-}
-
-/** :nodoc: */
 @objc public protocol PXPluginComponent: PXCustomComponentizable {
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
     @objc optional func didReceive(checkoutStore: PXCheckoutStore)
