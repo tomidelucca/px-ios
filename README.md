@@ -44,7 +44,7 @@ checkout.start(navigationController: self.navigationController!)
 ```
 
 ## 💪 One line integration
-Use MercadoPagoCheckoutBuilder to start your checkout flow in only one line.
+Use `MercadoPagoCheckoutBuilder` to start your checkout flow in only one line.
 ```swift
 MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: "your_public_key", preferenceId: "your_checkout_preference_id")).start(navigationController: self.navigationController!)
 ```
