@@ -149,7 +149,7 @@ extension CheckoutPreference {
         return paymentPreference.getDefaultPaymentMethodId()
     }
 
-    internal func getTotalAmount() -> Double {
+    open func getTotalAmount() -> Double {
         var amount = 0.0
         for item in self.items {
             amount += (Double(item.quantity) * item.unitPrice)
