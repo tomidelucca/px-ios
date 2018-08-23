@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objc public protocol PXComponentizable {
+@objc internal protocol PXComponentizable {
     func render() -> UIView
     @objc optional func oneTapRender() -> UIView
 }

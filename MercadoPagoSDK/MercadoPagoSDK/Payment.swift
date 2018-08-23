@@ -201,6 +201,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 
     open func isRejected() -> Bool {
-        return self.status == PaymentStatus.REJECTED
+        return self.status == PXPaymentStatus.REJECTED
     }
 }

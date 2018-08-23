@@ -127,7 +127,7 @@ class PXHeaderRenderer: NSObject {
 }
 
 /** :nodoc: */
-public class PXHeaderView: PXComponentView {
+internal class PXHeaderView: PXComponentView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?
     public var statusLabel: UILabel?

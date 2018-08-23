@@ -20,7 +20,7 @@ import Foundation
         case call_FOR_AUTH = 4
     }
 
-    let warningStatusDetails = [RejectedStatusDetail.INVALID_ESC, RejectedStatusDetail.CALL_FOR_AUTH, RejectedStatusDetail.BAD_FILLED_CARD_NUMBER, RejectedStatusDetail.CARD_DISABLE, RejectedStatusDetail.INSUFFICIENT_AMOUNT, RejectedStatusDetail.BAD_FILLED_DATE, RejectedStatusDetail.BAD_FILLED_SECURITY_CODE, RejectedStatusDetail.BAD_FILLED_OTHER]
+    let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.BAD_FILLED_OTHER]
 
     open var paymentData: PaymentData?
     open var status: String
@@ -48,35 +48,35 @@ import Foundation
     }
 
     func isCallForAuth() -> Bool {
-        return self.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH
+        return self.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH
     }
 
     func isApproved() -> Bool {
-        return self.status == PaymentStatus.APPROVED
+        return self.status == PXPaymentStatus.APPROVED
     }
 
     func isPending() -> Bool {
-        return self.status == PaymentStatus.PENDING
+        return self.status == PXPaymentStatus.PENDING
     }
 
     func isInProcess() -> Bool {
-        return self.status == PaymentStatus.IN_PROCESS
+        return self.status == PXPaymentStatus.IN_PROCESS
     }
 
     func isRejected() -> Bool {
-        return self.status == PaymentStatus.REJECTED
+        return self.status == PXPaymentStatus.REJECTED
     }
 
     func isInvalidESC() -> Bool {
-        return self.statusDetail == RejectedStatusDetail.INVALID_ESC
+        return self.statusDetail == PXRejectedStatusDetail.INVALID_ESC
     }
 
     func isReviewManual() -> Bool {
-        return self.statusDetail == PendingStatusDetail.REVIEW_MANUAL
+        return self.statusDetail == PXPendingStatusDetail.REVIEW_MANUAL
     }
 
     func isWaitingForPayment() -> Bool {
-        return self.statusDetail == PendingStatusDetail.WAITING_PAYMENT
+        return self.statusDetail == PXPendingStatusDetail.WAITING_PAYMENT
     }
 }
 

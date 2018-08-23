@@ -28,7 +28,7 @@ open class PXPaymentPluginNavigationHandler: NSObject {
             return
         }
 
-        if statusDetails == RejectedStatusDetail.INVALID_ESC {
+        if statusDetails == PXRejectedStatusDetail.INVALID_ESC {
             flow?.paymentErrorHandler?.escError()
             return
         }
@@ -36,9 +36,9 @@ open class PXPaymentPluginNavigationHandler: NSObject {
         var statusDetailsStr = statusDetails
 
         // By definition of MVP1, we support only approved or rejected.
-        var paymentStatusStrDefault = PaymentStatus.REJECTED
+        var paymentStatusStrDefault = PXPaymentStatus.REJECTED
         if paymentStatus == .APPROVED {
-            paymentStatusStrDefault = PaymentStatus.APPROVED
+            paymentStatusStrDefault = PXPaymentStatus.APPROVED
         }
 
         // Set paymentPlugin image into payment method.
@@ -48,7 +48,7 @@ open class PXPaymentPluginNavigationHandler: NSObject {
             if paymentStatus == .APPROVED {
                 statusDetailsStr = ""
             } else {
-                statusDetailsStr = RejectedStatusDetail.REJECTED_PLUGIN_PM
+                statusDetailsStr = PXRejectedStatusDetail.REJECTED_PLUGIN_PM
             }
         }
 
@@ -64,7 +64,7 @@ open class PXPaymentPluginNavigationHandler: NSObject {
             return
         }
 
-        if statusDetail == RejectedStatusDetail.INVALID_ESC {
+        if statusDetail == PXRejectedStatusDetail.INVALID_ESC {
             flow?.paymentErrorHandler?.escError()
             return
         }

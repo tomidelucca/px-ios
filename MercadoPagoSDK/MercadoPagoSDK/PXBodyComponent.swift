@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoServicesV4
 
 /** :nodoc: */
-open class PXBodyComponent: NSObject, PXComponentizable {
+internal class PXBodyComponent: NSObject, PXComponentizable {
 
     let rejectedStatusDetailsWithBody = [PXPayment.StatusDetails.REJECTED_OTHER_REASON, PXPayment.StatusDetails.REJECTED_BY_BANK, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA, PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT, PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS, PXPayment.StatusDetails.REJECTED_HIGH_RISK, PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE, PXPayment.StatusDetails.REJECTED_CARD_DISABLED, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT]
 
@@ -163,10 +163,10 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return nil
     }
 
-    public func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXComponentAction? {
+    internal func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXAction? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             let actionText = PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(paymentMethodName)
-            let action = PXComponentAction(label: actionText, action: self.props.callback)
+            let action = PXAction(label: actionText, action: self.props.callback)
             return action
         }
         return nil

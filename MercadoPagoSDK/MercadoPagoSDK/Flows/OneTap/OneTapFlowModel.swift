@@ -77,10 +77,9 @@ final internal class OneTapFlowModel: NSObject, PXFlowModel {
     }
 }
 
-/** :nodoc: */
 // MARK: Create view model
-extension OneTapFlowModel {
-    public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
+internal extension OneTapFlowModel {
+    func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
             fatalError("Cannot convert payment option selected to CardInformation")
         }

@@ -25,7 +25,6 @@
 
 import UIKit
 
-/** :nodoc: */
 internal extension PXSpruce {
 
     /// Use this method to setup all of your views before the animation occurs. This could include hiding, fading, translating them, etc... 

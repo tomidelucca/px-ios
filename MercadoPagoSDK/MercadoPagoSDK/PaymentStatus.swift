@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-struct PaymentStatus {
+public struct PXPaymentStatus {
     static let APPROVED = "approved"
     static let REJECTED = "rejected"
     static let RECOVERY = "recovery"
@@ -17,7 +16,7 @@ struct PaymentStatus {
     static let PENDING = "pending"
 }
 
-struct RejectedStatusDetail {
+public struct PXRejectedStatusDetail {
     static let HIGH_RISK = "rejected_high_risk"
     static let OTHER_REASON = "cc_rejected_other_reason"
     static let MAX_ATTEMPTS = "cc_rejected_max_attempts"
@@ -35,7 +34,7 @@ struct RejectedStatusDetail {
     static let REJECTED_PLUGIN_PM = "cc_rejected_plugin_pm"
 }
 
-struct PendingStatusDetail {
+public struct PXPendingStatusDetail {
     static let CONTINGENCY = "pending_contingency"
     static let REVIEW_MANUAL = "pending_review_manual"
     static let WAITING_PAYMENT = "pending_waiting_payment"

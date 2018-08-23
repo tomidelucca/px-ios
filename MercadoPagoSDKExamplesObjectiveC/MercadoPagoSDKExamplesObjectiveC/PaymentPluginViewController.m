@@ -35,10 +35,11 @@
         [self.paymentNavigationHandler hideLoading];
 
         CustomComponentText* component = [[CustomComponentText alloc] init];
-        PXComponentAction* popeame = [[PXComponentAction alloc] initWithLabel:@"Continuar" action:^{
+        PXAction* popeame = [[PXAction alloc] initWithLabel:@"Continuar" action:^{
             //[self.paymentNavigationHandler cancel];
         }];
-        PXComponentAction* printeaEnConsola = [[PXComponentAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
+
+        PXAction* printeaEnConsola = [[PXAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
             NSLog(@"print !!! action!!");
         }];
 

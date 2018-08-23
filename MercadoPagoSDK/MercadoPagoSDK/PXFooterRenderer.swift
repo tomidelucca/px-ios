@@ -53,7 +53,7 @@ final class PXFooterRenderer: NSObject {
         return fooView
     }
 
-    func buildPrincipalButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> PXPrimaryButton {
+    func buildPrincipalButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXPrimaryButton {
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.buttonTitle = footerAction.label
@@ -61,7 +61,7 @@ final class PXFooterRenderer: NSObject {
         return button
     }
 
-    func buildAnimatedButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> PXAnimatedButton {
+    func buildAnimatedButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXAnimatedButton {
         let button = PXAnimatedButton(normalText: "Confirmar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
         button.backgroundColor = color
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -70,7 +70,7 @@ final class PXFooterRenderer: NSObject {
         return button
     }
 
-    func buildLinkButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> PXSecondaryButton {
+    func buildLinkButton(with footerAction: PXAction, color: UIColor? = .pxBlueMp) -> PXSecondaryButton {
         let linkButton = PXSecondaryButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false
         linkButton.buttonTitle = footerAction.label

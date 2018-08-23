@@ -25,9 +25,9 @@ class PXErrorProps: NSObject {
     var title: NSAttributedString?
     var message: NSAttributedString?
     var secondaryTitle: NSAttributedString?
-    var action: PXComponentAction?
+    var action: PXAction?
 
-    init(title: NSAttributedString? = nil, message: NSAttributedString? = nil, secondaryTitle: NSAttributedString? = nil, action: PXComponentAction? = nil) {
+    init(title: NSAttributedString? = nil, message: NSAttributedString? = nil, secondaryTitle: NSAttributedString? = nil, action: PXAction? = nil) {
         self.title = title
         self.message = message
         self.action = action

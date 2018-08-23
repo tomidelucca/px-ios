@@ -108,7 +108,7 @@ extension PXResultViewModel {
             return "".toAttributedString()
         }
 
-        if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
+        if statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH {
             return getTitleForCallForAuth(paymentMethod)
         }
 

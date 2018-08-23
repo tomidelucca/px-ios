@@ -211,7 +211,7 @@ extension PXReviewViewModel {
 // MARK: - Components builders.
 extension PXReviewViewModel {
 
-    func buildPaymentMethodComponent(withAction: PXComponentAction?) -> PXPaymentMethodComponent? {
+    func buildPaymentMethodComponent(withAction: PXAction?) -> PXPaymentMethodComponent? {
 
         guard let pm = self.amountHelper.paymentData.getPaymentMethod() else {
             return nil

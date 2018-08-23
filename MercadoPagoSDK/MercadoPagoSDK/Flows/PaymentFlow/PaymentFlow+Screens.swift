@@ -8,9 +8,9 @@
 
 import Foundation
 
-/** :nodoc: */
+
 extension PXPaymentFlow {
-    func showPaymentProcessor(paymentProcessor: PXPaymentProcessor?) {
+    internal func showPaymentProcessor(paymentProcessor: PXPaymentProcessor?) {
         guard let paymentProcessor = paymentProcessor else {
             return
         }

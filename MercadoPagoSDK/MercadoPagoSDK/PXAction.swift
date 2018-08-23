@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class PXComponentAction: NSObject {
+open class PXAction: NSObject {
     var label: String
     var action : (() -> Void)
     public init(label: String, action:  @escaping (() -> Void)) {

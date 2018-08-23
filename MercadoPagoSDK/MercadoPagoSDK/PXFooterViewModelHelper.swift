@@ -25,18 +25,18 @@ extension PXResultViewModel {
 // MARK: Build Helpers
 extension PXResultViewModel {
 
-    func getActionButton() -> PXComponentAction? {
-         var actionButton: PXComponentAction?
+    func getActionButton() -> PXAction? {
+         var actionButton: PXAction?
         if let label = self.getButtonLabel(), let action = self.getButtonAction() {
-            actionButton = PXComponentAction(label: label, action: action)
+            actionButton = PXAction(label: label, action: action)
         }
         return actionButton
     }
 
-    func getActionLink() -> PXComponentAction? {
-        var actionLink: PXComponentAction?
+    func getActionLink() -> PXAction? {
+        var actionLink: PXAction?
         if let labelLink = self.getLinkLabel(), let actionOfLink = self.getLinkAction() {
-            actionLink = PXComponentAction(label: labelLink, action: actionOfLink)
+            actionLink = PXAction(label: labelLink, action: actionOfLink)
         }
         return actionLink
     }
@@ -63,9 +63,9 @@ extension PXResultViewModel {
         } else if paymentResult.isWarning() {
             if let labelWarning = preference.getPendingSecondaryButtonText() {
                 return labelWarning
-            } else if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            } else if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
                 return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
-            } else if self.paymentResult.statusDetail == RejectedStatusDetail.CARD_DISABLE {
+            } else if self.paymentResult.statusDetail == PXRejectedStatusDetail.CARD_DISABLE {
                 return PXFooterResultConstants.CARD_DISABLE_BUTTON_TEXT.localized
             } else {
                 return PXFooterResultConstants.WARNING_BUTTON_TEXT.localized
@@ -83,7 +83,7 @@ extension PXResultViewModel {
         } else if paymentResult.isError() {
             return PXFooterResultConstants.ERROR_LINK_TEXT.localized
         } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
                 return PXFooterResultConstants.ERROR_LINK_TEXT.localized
             } else {
                 return PXFooterResultConstants.WARNING_LINK_TEXT.localized
@@ -106,7 +106,7 @@ extension PXResultViewModel {
         } else if paymentResult.isError() {
              self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
         } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
                 self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
             } else {
                 self.callback(PaymentResult.CongratsState.cancel_RETRY)
@@ -120,7 +120,7 @@ extension PXResultViewModel {
         } else if paymentResult.isError() {
             self.callback(PaymentResult.CongratsState.approved) //
         } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
                 self.callback(PaymentResult.CongratsState.approved)
             } else {
                 self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)

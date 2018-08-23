@@ -198,7 +198,7 @@ extension PXReviewViewController {
 
         contentView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         scrollView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
-        
+
         // Add elastic header.
         addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized, textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation())
 
@@ -233,7 +233,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getPaymentMethodComponentView() -> UIView? {
-        let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
+        let action = PXAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
                 self?.viewModel.trackChangePaymentMethodEvent()
                 self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
@@ -281,7 +281,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Confirmar".localized) {
+        let payAction = PXAction(label: "Confirmar".localized) {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
                 self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
