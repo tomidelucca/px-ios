@@ -52,7 +52,7 @@ Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target
     
 ## 🌟 Features
 - [x] Easy to install
-- [x] Easy to use
+- [x] Easy to integrate
 - [x] PCI compliance
 - [x] Basic color customization
 - [x] Advanced color customization
