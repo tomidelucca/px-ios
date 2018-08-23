@@ -770,7 +770,7 @@ class PaymentMethodPluginFlowTest: BaseTest {
 
         // 11 . Pagar
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT, step)
+        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_PLUGIN_PAYMENT, step)
 
         // 12. Simular Pago realizado y se muestra congrats
         let paymentMock = MockBuilder.buildPayment("plugin1")
@@ -834,7 +834,7 @@ class PaymentMethodPluginFlowTest: BaseTest {
 
         // 12 . Pagar
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT, step)
+        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_PLUGIN_PAYMENT, step)
 
         // 13. Simular Pago realizado y se muestra congrats
         let paymentMock = MockBuilder.buildPayment("plugin2")
@@ -894,7 +894,7 @@ class PaymentMethodPluginFlowTest: BaseTest {
 
         // 11 . Pagar
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT, step)
+        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_PLUGIN_PAYMENT, step)
 
         // 12. Simular Pago realizado y se muestra congrats
         let paymentMock = MockBuilder.buildPayment("plugin3")
@@ -942,7 +942,7 @@ class PaymentMethodPluginFlowTest: BaseTest {
 
         // 11 . Pagar
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT, step)
+        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_PLUGIN_PAYMENT, step)
 
         // 12. Simular Pago realizado y se muestra congrats
         let paymentMock = MockBuilder.buildPayment("plugin1")
@@ -994,7 +994,7 @@ class PaymentMethodPluginFlowTest: BaseTest {
 
         // 12 . Pagar
         step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT, step)
+        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_PLUGIN_PAYMENT, step)
 
         // 13. Simular Pago realizado y se muestra congrats
         let paymentMock = MockBuilder.buildPayment("plugin2")

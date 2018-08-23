@@ -24,7 +24,7 @@ final class InitFlow: PXFlow {
         model = InitFlowModel(flowProperties: flowProperties)
     }
 
-    func updateModel(paymentPlugin: PXPaymentPluginComponent?, paymentMethodPlugins: [PXPaymentMethodPlugin]?) {
+    func updateModel(paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin]?) {
         var pmPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
         if let targetPlugins = paymentMethodPlugins {
             pmPlugins = targetPlugins

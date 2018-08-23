@@ -8,14 +8,6 @@
 
 import Foundation
 extension MercadoPagoCheckout {
-
-    func showPaymentMethodPluginPaymentScreen() {
-        guard let paymentMethodPlugin = self.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin else {
-            return
-        }
-        showPaymentPluginComponent(paymentPluginComponent: paymentMethodPlugin.paymentPlugin)
-    }
-
     func showPaymentMethodPluginConfigScreen() {
         guard let paymentMethodPlugin = self.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin else {
             return
@@ -29,10 +21,10 @@ extension MercadoPagoCheckout {
         containerVC.pluginComponentInterface = paymentMethodConfigPluginComponent
         containerVC.paymentMethodId = paymentMethodPlugin.getId()
         viewModel.populateCheckoutStore()
-        paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        paymentMethodConfigPluginComponent.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
         // Create navigation handler.
-        paymentMethodConfigPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
+        paymentMethodConfigPluginComponent.navigationHandler?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
 
         if let navTitle = paymentMethodConfigPluginComponent.titleForNavigationBar?() {
             containerVC.title = navTitle
@@ -69,10 +61,10 @@ extension MercadoPagoCheckout {
         containerVC.shouldShowBackArrow = false
 
         viewModel.populateCheckoutStore()
-        paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        paymentPluginComponent.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
         // Create navigation handler.
-        paymentPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
+        paymentPluginComponent.navigationHandler?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
 
         if let navTitle = paymentPluginComponent.titleForNavigationBar?() {
             containerVC.title = navTitle
@@ -93,7 +85,6 @@ extension MercadoPagoCheckout {
             containerVC.view.addSubview(paymentPluginComponentView)
         }
 
-        //TODO: Change in Q2 - Payment processor by block. Not a view.
         containerVC.view.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
         paymentPluginComponent.renderDidFinish?()
 

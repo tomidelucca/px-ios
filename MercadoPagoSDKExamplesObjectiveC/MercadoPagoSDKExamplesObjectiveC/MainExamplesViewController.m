@@ -161,22 +161,6 @@
 -(void)addPaymentMethodPluginToPaymentConfig {
 }
 
--(void)setPaymentResult {
-
-}
-
--(void) setPaymentData {
-
-}
--(void)setRyCUpdate {
-
-}
-
-
--(void)setPaymentDataCallback {
-
-}
-
 -(void)setVoidCallback {
     // Deprecated
     /* [self.mpCheckout setCallbackCancelWithCallback:^{

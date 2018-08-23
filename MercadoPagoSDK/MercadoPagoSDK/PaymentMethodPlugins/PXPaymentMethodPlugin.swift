@@ -24,25 +24,25 @@ open class PXPaymentMethodPlugin: NSObject {
 
     static let PAYMENT_METHOD_TYPE_ID = PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
 
-    var paymentMethodPluginId: String
-    var name: String
-    var paymentMethodPluginDescription: String?
-    var image: UIImage
-    var paymentPlugin: PXPaymentPluginComponent
-    var paymentMethodConfigPlugin: PXConfigPluginComponent?
-    var displayOrder = DisplayOrder.TOP
+    internal var paymentMethodPluginId: String
+    internal var name: String
+    internal var paymentMethodPluginDescription: String?
+    internal var image: UIImage
+
     open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
         callback(true)
     }
 
+    internal var paymentMethodConfigPlugin: PXConfigPluginComponent?
+    internal var displayOrder = DisplayOrder.TOP
+
     open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 
-    public init (paymentMethodPluginId: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPaymentPluginComponent) {
+    public init (paymentMethodPluginId: String, name: String, image: UIImage, description: String?) {
         self.paymentMethodPluginId = paymentMethodPluginId
         self.name = name
         self.image = image
         self.paymentMethodPluginDescription = description
-        self.paymentPlugin = paymentPlugin
     }
 
     open func setPaymentMethodConfig(plugin: PXConfigPluginComponent) {
@@ -52,7 +52,6 @@ open class PXPaymentMethodPlugin: NSObject {
     open func setDisplayOrder(order: DisplayOrder) {
         self.displayOrder = order
     }
-
 }
 
 /** :nodoc: */

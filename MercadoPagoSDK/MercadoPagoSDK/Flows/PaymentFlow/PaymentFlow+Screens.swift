@@ -10,8 +10,7 @@ import Foundation
 
 /** :nodoc: */
 extension PXPaymentFlow {
-    func showPaymentPluginComponent(paymentPluginComponent: PXPaymentPluginComponent?) {
-
+    func showPaymentPluginComponent(paymentPluginComponent: PXPaymentProcessor?) {
         guard let paymentPluginComponent = paymentPluginComponent else {
             return
         }
@@ -22,10 +21,10 @@ extension PXPaymentFlow {
         containerVC.shouldShowBackArrow = false
 
         model.assignToCheckoutStore()
-        paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
+        paymentPluginComponent.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
         // Create navigation handler.
-        paymentPluginComponent.navigationHandlerForPaymentPlugin?(navigationHandler: PXPaymentPluginNavigationHandler(flow: self))
+        paymentPluginComponent.paymentNavigationHandler?(navigationHandler: PXPaymentPluginNavigationHandler(flow: self))
 
         if let navTitle = paymentPluginComponent.titleForNavigationBar?() {
             containerVC.title = navTitle

@@ -8,9 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
 @objcMembers open class Item: NSObject {
-
     internal var quantity: Int
     internal var unitPrice: Double
     internal var title: String
@@ -115,7 +113,6 @@ extension Item {
     }
 
     open func toJSONString() -> String {
-
         let itemId: Any = (self.itemId == nil) ? JSONHandler.null : self.itemId!
         let title: Any =  (self.title == nil) ? JSONHandler.null : self.title
         let categoryId: Any =  (self.categoryId == nil) ? JSONHandler.null : self.categoryId!

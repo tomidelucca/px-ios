@@ -52,12 +52,11 @@
     });
 }
 
-- (void)navigationHandlerForPaymentPluginWithNavigationHandler:(PXPaymentPluginNavigationHandler *)navigationHandler {
+- (void)paymentNavigationHandlerWithNavigationHandler:(PXPaymentPluginNavigationHandler *)navigationHandler {
     self.paymentNavigationHandler = navigationHandler;
 }
 
-
--(void)createPaymentWithPluginStore:(PXCheckoutStore * _Nonnull)store handler:(id <PXPaymentFlowHandlerProtocol>)handler successWithBusinessResult:(void (^)(PXBusinessResult *))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentPluginResult *))successWithPaymentResult {
+-(void)createPaymentWithCheckoutStore:(PXCheckoutStore * _Nonnull)store handler:(id <PXPaymentFlowHandlerProtocol>)handler successWithBusinessResult:(void (^)(PXBusinessResult *))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentPluginResult *))successWithPaymentResult {
 
     // Result with error
 //        [handler showError];
