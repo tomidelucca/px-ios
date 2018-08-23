@@ -35,7 +35,6 @@ class PXHeaderRenderer: NSObject {
         //Image
         let pximage = PXUIImage(url: header.props.imageURL)
         headerView.circleImage = buildCircleImage(with: pximage)
-
         if let circleImage = headerView.circleImage {
             headerView.addSubview(circleImage)
             PXLayout.centerHorizontally(view: circleImage, to: headerView).isActive = true
@@ -70,6 +69,7 @@ class PXHeaderRenderer: NSObject {
         circleImage.layer.cornerRadius = circleImage.frame.height/2
         circleImage.clipsToBounds = true
         circleImage.translatesAutoresizingMaskIntoConstraints = false
+        circleImage.enableFadeIn()
         circleImage.image = image
         circleImage.contentMode = .scaleAspectFill
         circleImage.backgroundColor = .clear

@@ -11,6 +11,7 @@ import UIKit
 class PXUIImageView: UIImageView {
 
     private var currentImage: UIImage?
+    private var fadeInEnabled = false
     override var image: UIImage? {
         set {
             loadImage(image: newValue)
@@ -26,7 +27,7 @@ class PXUIImageView: UIImageView {
             let placeholder = buildPlaceholderView(image: pxImage)
             let fallback = buildFallbackView(image: pxImage)
 
-            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback) { newImage in
+            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback, fadeInEnabled: fadeInEnabled) { newImage in
                 self.currentImage = newImage
             }
         } else {
@@ -38,7 +39,7 @@ class PXUIImageView: UIImageView {
         if let placeholderString = image.placeholder {
             return buildLabel(with: placeholderString)
         } else {
-            return buildSpinner()
+            return buildEmptyView()
         }
     }
 
@@ -46,15 +47,16 @@ class PXUIImageView: UIImageView {
         if let fallbackString = image.fallback {
             return buildLabel(with: fallbackString)
         } else {
-            return buildSpinner()
+            return buildEmptyView()
         }
     }
 
-    private func buildSpinner() -> UIView {
-        let spinner = PXComponentFactory.SmallSpinner.new(color1: ThemeManager.shared.secondaryColor(), color2: ThemeManager.shared.secondaryColor())
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.show()
-        return spinner
+    private func buildEmptyView() -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.alpha = 0.2
+        return view
     }
 
     private func buildLabel(with text: String?) -> UILabel? {
@@ -67,5 +69,13 @@ class PXUIImageView: UIImageView {
         label.textAlignment = .center
         label.text = text
         return label
+    }
+
+    func enableFadeIn() {
+        fadeInEnabled = true
+    }
+
+    func disableFadeIn() {
+        fadeInEnabled = false
     }
 }
