@@ -33,7 +33,7 @@ Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 import MercadoPagoSDKV4
 ```
 
-### 2 - Set your `PublicKey` and `PreferenceId`
+### 2 - Set your  `PublicKey`  and  `PreferenceId` 
 ```swift
 let checkout = MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: "your_public_key", preferenceId: "your_checkout_preference_id"))
 ```
@@ -43,6 +43,11 @@ let checkout = MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init
 checkout.start(navigationController: self.navigationController!)
 ```
 
+## 🐒 Advanced integration?
+Check our official reference, especially <a href="https://travis-ci.org/mercadopago/px-ios"> MercadoPagoCheckoutBuilder object </a>  to explore all available functionalities.
+
+    
+    
 ## 🌟 Features
 - [x] Easy to install
 - [x] Easy to use
