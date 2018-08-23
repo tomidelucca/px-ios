@@ -15,6 +15,8 @@ extension PXPaymentFlow {
             return
         }
 
+        plugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
+
         plugin.createPayment?(checkoutStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, successWithBusinessResult: { [weak self] businessResult in
             self?.model.businessResult = businessResult
             self?.executeNextStep()
