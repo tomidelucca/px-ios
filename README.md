@@ -58,7 +58,7 @@ checkoutBuilder.setColor(checkoutColor: UIColor.purple)
 ```
 
 ### Advanced color customization
-If you need an advanced integration, you can customize your colors through our `PXTheme` interface/protocol. Check the `PXTheme` <a href="http://mercadopago.github.io/px-ios/v4/Protocols/PXTheme.html" target="_blank"> methods in our reference guide. </a>
+If you need an advanced integration, you can customize your colors through our `PXTheme` interface/protocol. Check the  <a href="http://mercadopago.github.io/px-ios/v4/Protocols/PXTheme.html" target="_blank"> `PXTheme` methods in our reference guide. </a>
 
     
 ## 🌟 Features
