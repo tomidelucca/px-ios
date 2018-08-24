@@ -51,9 +51,9 @@ Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target
 
 
 ## 🎨 UI Custom Colors
-### 🌈 - Basic color customization
+### 🌈 [Basic color customization]
 
-### 🤓 - Advanced color customization
+### 🤓 [Advanced color customization]
 
     
 ## 🌟 Features
