@@ -49,8 +49,12 @@ MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: "yo
 ## 💡Advanced integration
 Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target="_blank"> reference </a>, especially <a href="http://mercadopago.github.io/px-ios/v4/Classes/MercadoPagoCheckoutBuilder.html" target="_blank"> MercadoPagoCheckoutBuilder </a> object to explore all available functionalities.
 
-## 🌈 Color UI customization
-TODO.
+
+## 🎨 UI Custom Colors
+### 🌈 Basic customization
+
+### 🤓 Advanced customization
+
     
 ## 🌟 Features
 - [x] Easy to install
