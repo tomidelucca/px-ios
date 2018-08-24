@@ -52,12 +52,13 @@ Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target
 
 ## 🎨 UI Custom Colors
 ### Basic color customization
-You can define one color (your main color) and we will take care of the rest. Delivering the best Checkout experience based on your color. 🤓
+You can define one color (your main color) and we will take care of the rest. Delivering the best Checkout experience based on your color.
 ```swift
 checkoutBuilder.setColor(checkoutColor: UIColor.purple)
 ```
 
 ### Advanced color customization
+If you need an advanced integration, you can customize your colors through our `PXTheme` interface/protocol. Check the `PXTheme` <a href="http://mercadopago.github.io/px-ios/v4/Protocols/PXTheme.html" target="_blank"> methods in our reference guide. </a>
 
     
 ## 🌟 Features
