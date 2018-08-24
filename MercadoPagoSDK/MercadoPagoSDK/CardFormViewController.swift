@@ -21,7 +21,6 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-@objcMembers
 internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     let NAVIGATION_BAR_COLOR = ThemeManager.shared.navigationBar().backgroundColor

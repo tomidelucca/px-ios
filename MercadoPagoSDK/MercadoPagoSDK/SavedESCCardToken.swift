@@ -6,7 +6,7 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-@objcMembers internal class SavedESCCardToken: SavedCardToken {
+internal class SavedESCCardToken: SavedCardToken {
     open var requireESC: Bool = false
     open var esc: String?
 

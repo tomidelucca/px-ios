@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-@objcMembers
 @IBDesignable internal class CardBackView: UIView {
     var view: UIView!
 

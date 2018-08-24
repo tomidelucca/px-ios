@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-internal class PXErrorComponent: NSObject, PXComponentizable {
+internal class PXErrorComponent: PXComponentizable {
     var props: PXErrorProps
 
     init(props: PXErrorProps) {
@@ -20,7 +20,7 @@ internal class PXErrorComponent: NSObject, PXComponentizable {
     }
 }
 
-internal class PXErrorProps: NSObject {
+internal class PXErrorProps {
     var title: NSAttributedString?
     var message: NSAttributedString?
     var secondaryTitle: NSAttributedString?

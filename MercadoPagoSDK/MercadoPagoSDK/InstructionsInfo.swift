@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers internal class InstructionsInfo: NSObject {
+internal class InstructionsInfo {
 
     var amountInfo: AmountInfo!
     var instructions: [Instruction]!

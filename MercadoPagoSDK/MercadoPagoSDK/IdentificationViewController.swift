@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 internal class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var tipoDeDocumentoLabel: UILabel!

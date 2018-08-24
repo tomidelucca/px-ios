@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 internal class MPLabel: UILabel {
 
     static let defaultColorText = UIColor(red: 51, green: 51, blue: 51)

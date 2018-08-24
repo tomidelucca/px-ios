@@ -8,13 +8,12 @@
 
 import UIKit
 
-@objcMembers internal class AmountInfo: NSObject {
+internal class AmountInfo {
 
     var amount: Double!
     var currency: Currency!
 
-    override init() {
-        super.init()
+    init() {
     }
 
     internal class func fromJSON(_ json: NSDictionary) -> AmountInfo {

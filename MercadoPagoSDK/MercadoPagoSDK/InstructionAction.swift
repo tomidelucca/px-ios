@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers internal class InstructionAction: NSObject {
+internal class InstructionAction {
 
     var label: String!
     var url: String!

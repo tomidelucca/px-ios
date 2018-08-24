@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 internal class IdentificationCardView: UIView, Updatable {
     var view: UIView!
     @IBOutlet weak var tipoDeDocumentoLabel: UILabel!

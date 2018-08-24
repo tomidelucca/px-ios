@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objcMembers internal class SavedCardToken: CardToken {
+internal class SavedCardToken: CardToken {
 
     open var cardId: String
     open var securityCodeRequired: Bool = true

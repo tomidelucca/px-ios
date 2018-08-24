@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objcMembers internal class BankDeal: NSObject {
+internal class BankDeal {
 
 	open var promoId: String!
 	open var issuer: Issuer!

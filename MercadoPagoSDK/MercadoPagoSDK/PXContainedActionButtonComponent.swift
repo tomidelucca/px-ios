@@ -20,7 +20,7 @@ internal class PXContainedActionButtonComponent: PXComponentizable {
     }
 }
 
-internal class PXContainedActionButtonProps: NSObject {
+internal class PXContainedActionButtonProps {
     let title: String
     let action : (() -> Void)
     let backgroundColor: UIColor

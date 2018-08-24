@@ -62,7 +62,7 @@ internal class AvailableCardsViewController: MercadoPagoUIViewController {
 
 }
 
-internal class AvailableCardsViewModel: NSObject {
+internal class AvailableCardsViewModel {
 
     let MARGIN_X_SCROLL_VIEW: CGFloat = 32
     let MIN_HEIGHT_PERCENT: CGFloat = 0.73

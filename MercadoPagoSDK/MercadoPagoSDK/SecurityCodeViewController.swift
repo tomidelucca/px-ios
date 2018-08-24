@@ -9,7 +9,6 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
-@objcMembers
 internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     var securityCodeLabel: PXMonospaceLabel!

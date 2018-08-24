@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class PXInstructionsComponent: NSObject, PXComponentizable {
+internal class PXInstructionsComponent: PXComponentizable {
     var props: PXInstructionsProps
 
     init(props: PXInstructionsProps) {
@@ -50,7 +50,7 @@ internal class PXInstructionsComponent: NSObject, PXComponentizable {
     }
 }
 
-internal class PXInstructionsProps: NSObject {
+internal class PXInstructionsProps {
     var instruction: Instruction
 
     init(instruction: Instruction) {

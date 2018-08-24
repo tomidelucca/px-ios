@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
@@ -86,7 +85,7 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
         return view
     }
 
-    func handleTotalRowTap() {
+    @objc func handleTotalRowTap() {
         PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
     }
 

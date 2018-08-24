@@ -8,11 +8,10 @@
 
 import Foundation
 
-@objcMembers internal class Device: NSObject {
+internal class Device {
     var fingerprint: Fingerprint!
 
-    override init() {
-        super.init()
+    init() {
         self.fingerprint = Fingerprint()
     }
 

@@ -7,7 +7,7 @@
 //
 import Foundation
 
-@objcMembers internal class PaymentMethodSearch: NSObject {
+internal class PaymentMethodSearch {
 
     var groups: [PaymentMethodSearchItem]!
     var paymentMethods: [PaymentMethod]!

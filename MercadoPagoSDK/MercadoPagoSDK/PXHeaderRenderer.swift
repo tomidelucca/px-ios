@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXHeaderRenderer: NSObject {
+internal class PXHeaderRenderer {
 
     //Image
     let IMAGE_WIDTH: CGFloat = 90.0

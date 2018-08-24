@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 internal class MPTextView: UITextView {
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {

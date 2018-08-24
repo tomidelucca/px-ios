@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers internal class Instruction: NSObject {
+internal class Instruction {
 
     var title: String = ""
     var subtitle: String?

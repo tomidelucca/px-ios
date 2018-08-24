@@ -9,13 +9,12 @@
 import Foundation
 import UIKit
 
-@objcMembers internal class Fingerprint: NSObject {
+internal class Fingerprint {
 
     open var fingerprint: [String: Any]
 
-    public override init () {
+    init () {
         self.fingerprint = [:]
-        super.init()
         fingerprint = deviceFingerprint()
 
     }

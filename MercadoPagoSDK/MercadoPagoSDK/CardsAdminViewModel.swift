@@ -8,8 +8,7 @@
 
 import Foundation
 
-@objcMembers
-internal class CardsAdminViewModel: NSObject {
+internal class CardsAdminViewModel {
 
     var cards: [Card]?
     var customerId: String?

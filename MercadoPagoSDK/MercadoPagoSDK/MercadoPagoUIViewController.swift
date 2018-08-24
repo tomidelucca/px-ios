@@ -9,7 +9,6 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
-@objcMembers
 internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     private static let MLNavigationBarBackgroundViewTag = 569242

@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class PXPaymentMethodIconComponent: NSObject, PXComponentizable {
+internal class PXPaymentMethodIconComponent: PXComponentizable {
     var props: PXPaymentMethodIconProps
 
     init(props: PXPaymentMethodIconProps) {
@@ -19,7 +19,7 @@ internal class PXPaymentMethodIconComponent: NSObject, PXComponentizable {
     }
 }
 
-internal class PXPaymentMethodIconProps: NSObject {
+internal class PXPaymentMethodIconProps {
     var paymentMethodIcon: UIImage?
 
     init(paymentMethodIcon: UIImage?) {

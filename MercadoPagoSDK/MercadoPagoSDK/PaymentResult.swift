@@ -8,9 +8,8 @@
 
 import Foundation
 
-@objcMembers internal class PaymentResult: NSObject {
+internal class PaymentResult {
 
-    @objc
     internal enum CongratsState: Int {
         case approved = 0
         case cancel_SELECT_OTHER = 1

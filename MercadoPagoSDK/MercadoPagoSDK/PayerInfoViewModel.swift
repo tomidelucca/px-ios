@@ -18,7 +18,7 @@ internal enum PayerInfoFlowStep: String {
 
 }
 
-internal class PayerInfoViewModel: NSObject {
+internal class PayerInfoViewModel {
     var identificationTypes: [IdentificationType]!
     var masks: [TextMaskFormater]!
     var currentMask: TextMaskFormater?
@@ -34,7 +34,6 @@ internal class PayerInfoViewModel: NSObject {
 
     init(identificationTypes: [IdentificationType], payer: Payer) {
         self.payer = payer
-        super.init()
 
         self.identificationTypes = filterSupported(identificationTypes: identificationTypes)
 

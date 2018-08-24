@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objcMembers internal class SummaryRow: NSObject {
+internal class SummaryRow {
     var customDescription: String
     var customAmount: Double
     var colorDescription: UIColor = UIColor.px_grayDark()

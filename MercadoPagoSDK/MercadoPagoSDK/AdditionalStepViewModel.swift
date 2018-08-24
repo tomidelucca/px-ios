@@ -11,7 +11,7 @@ import UIKit
 import MercadoPagoPXTrackingV4
 import MercadoPagoServicesV4
 
-internal class AdditionalStepViewModel: NSObject {
+internal class AdditionalStepViewModel {
 
     var bundle: Bundle? = ResourceManager.shared.getBundle()
 

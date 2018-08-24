@@ -8,8 +8,7 @@
 
 import Foundation
 
-@objcMembers
-internal class SecurityCodeViewModel: NSObject {
+internal class SecurityCodeViewModel {
     var paymentMethod: PaymentMethod!
     var cardInfo: CardInformationForm!
     var reason: Reason

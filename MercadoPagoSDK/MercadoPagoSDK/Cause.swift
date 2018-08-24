@@ -8,7 +8,8 @@
 
 import Foundation
 
-@objcMembers internal class Cause: NSObject {
+internal class Cause {
+
     open var code: String!
     open var causeDescription: String!
 

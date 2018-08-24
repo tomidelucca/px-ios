@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class OneTapItem: NSObject {
+internal class OneTapItem {
 
     var paymentMethodId: String
     open var paymentTypeId: String?

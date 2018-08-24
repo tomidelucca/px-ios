@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-@objcMembers
 @IBDesignable internal class CardFrontView: UIView, Updatable {
   var view: UIView!
 

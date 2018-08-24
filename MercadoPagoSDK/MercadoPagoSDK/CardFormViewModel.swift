@@ -20,8 +20,7 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-@objcMembers
-internal class CardFormViewModel: NSObject {
+internal class CardFormViewModel {
 
     var paymentMethods: [PaymentMethod]
     var guessedPMS: [PaymentMethod]?

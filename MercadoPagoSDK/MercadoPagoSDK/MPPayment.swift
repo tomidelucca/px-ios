@@ -29,7 +29,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-@objcMembers internal class MPPayment: NSObject {
+internal class MPPayment {
 
     open var preferenceId: String!
     open var publicKey: String!
@@ -41,10 +41,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var binaryMode: Bool = false
     open var transactionDetails: TransactionDetails?
     open var discount: PXDiscount?
-
-    override init() {
-        super.init()
-    }
 
     init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) {
         self.preferenceId = preferenceId

@@ -19,7 +19,7 @@ internal class PXReceiptComponent: PXComponentizable {
     }
 }
 
-internal class PXReceiptProps: NSObject {
+class PXReceiptProps {
     var dateLabelString: String?
     var receiptDescriptionString: String?
     init(dateLabelString: String? = nil, receiptDescriptionString: String? = nil) {

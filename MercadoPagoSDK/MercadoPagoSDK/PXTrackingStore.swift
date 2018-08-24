@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class PXTrackingStore: NSObject {
+internal class PXTrackingStore {
     static let sharedInstance = PXTrackingStore()
     static let PAYMENT_METHOD_OPTIONS = "PAYMENT_METHOD_OPTIONS"
     private var data = [String: String]()

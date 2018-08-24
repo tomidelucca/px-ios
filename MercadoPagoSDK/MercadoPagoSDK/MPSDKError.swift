@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-@objcMembers internal class MPSDKError: NSObject {
+internal class MPSDKError {
 
     open var message: String = ""
     open var errorDetail: String = ""
@@ -17,12 +17,11 @@ import MercadoPagoServicesV4
     open var requestOrigin: String = ""
     open var retry: Bool?
 
-    public override init() {
-        super.init()
+    init () {
+
     }
 
     init(message: String, errorDetail: String, retry: Bool, requestOrigin: String?=nil) {
-        super.init()
         self.message = message
         self.errorDetail = errorDetail
         self.retry = retry

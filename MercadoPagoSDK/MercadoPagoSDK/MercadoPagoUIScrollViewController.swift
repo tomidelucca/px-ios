@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 internal class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
 
     var lastContentOffset: CGFloat = 0

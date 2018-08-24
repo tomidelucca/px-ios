@@ -30,7 +30,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-@objcMembers
 internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
@@ -176,7 +175,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         return view
     }
 
-    func handleTotalRowTap() {
+    @objc func handleTotalRowTap() {
         PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
     }
 

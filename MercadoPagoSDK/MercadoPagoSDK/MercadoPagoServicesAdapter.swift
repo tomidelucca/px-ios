@@ -9,14 +9,13 @@
 import Foundation
 import MercadoPagoServicesV4
 
-@objcMembers internal class MercadoPagoServicesAdapter: NSObject {
+internal class MercadoPagoServicesAdapter {
 
     let mercadoPagoServices: MercadoPagoServices!
 
     init(publicKey: String, privateKey: String?) {
         mercadoPagoServices = MercadoPagoServices(merchantPublicKey: publicKey, payerAccessToken: privateKey ?? "", procesingMode: "aggregator")
         mercadoPagoServices.setLanguage(language: Localizator.sharedInstance.getLanguage())
-        super.init()
     }
 
     func getTimeOut() -> TimeInterval {

@@ -8,7 +8,6 @@
 
 import UIKit
 
-@objcMembers
 internal class PXContainedLabelComponent: PXComponentizable {
 
     public func render() -> UIView {
@@ -22,8 +21,7 @@ internal class PXContainedLabelComponent: PXComponentizable {
     }
 }
 
-@objcMembers
-internal class PXContainedLabelProps: NSObject {
+internal class PXContainedLabelProps {
     var labelText: NSAttributedString
     init(labelText: NSAttributedString) {
         self.labelText = labelText

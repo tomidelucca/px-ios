@@ -8,8 +8,7 @@
 
 import UIKit
 
-@objcMembers
-internal class TextMaskFormater: NSObject {
+internal class TextMaskFormater {
 
     var mask: String!
     open var characterSpace: Character! = "X"
@@ -19,7 +18,6 @@ internal class TextMaskFormater: NSObject {
     var unmask : (( _ textToUnmask: String) -> String)?
 
     init(mask: String!, completeEmptySpaces: Bool = true, leftToRight: Bool = true, completeEmptySpacesWith: Character? = "•") {
-        super.init()
         self.mask = mask
         self.completeEmptySpaces = completeEmptySpaces
         self.leftToRight = leftToRight

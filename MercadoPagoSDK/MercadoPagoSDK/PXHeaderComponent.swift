@@ -21,7 +21,7 @@ internal class PXHeaderComponent: PXComponentizable {
     }
 }
 
-internal class PXHeaderProps: NSObject {
+class PXHeaderProps {
     var labelText: NSAttributedString?
     var title: NSAttributedString
     var backgroundColor: UIColor

@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class PXInstructionsSecondaryInfoComponent: NSObject, PXComponentizable {
+internal class PXInstructionsSecondaryInfoComponent: PXComponentizable {
     var props: PXInstructionsSecondaryInfoProps
 
     init(props: PXInstructionsSecondaryInfoProps) {
@@ -20,7 +20,7 @@ internal class PXInstructionsSecondaryInfoComponent: NSObject, PXComponentizable
     }
 }
 
-internal class PXInstructionsSecondaryInfoProps: NSObject {
+internal class PXInstructionsSecondaryInfoProps {
     var secondaryInfo: [String]
     init(secondaryInfo: [String]) {
         self.secondaryInfo = secondaryInfo

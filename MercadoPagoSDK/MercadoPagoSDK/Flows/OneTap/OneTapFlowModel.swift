@@ -8,7 +8,7 @@
 
 import Foundation
 
-final internal class OneTapFlowModel: NSObject, PXFlowModel {
+final internal class OneTapFlowModel: PXFlowModel {
     enum Steps: String {
         case finish
         case screenReviewOneTap
@@ -54,7 +54,6 @@ final internal class OneTapFlowModel: NSObject, PXFlowModel {
         self.reviewScreenConfiguration = reviewScreenConfiguration
         self.chargeRules = chargeRules
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
-        super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
             updateCheckoutModel(payerCost: payerCost)

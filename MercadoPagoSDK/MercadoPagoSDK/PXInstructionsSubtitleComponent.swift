@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
+internal class PXInstructionsSubtitleComponent: PXComponentizable {
     var props: PXInstructionsSubtitleProps
 
     init(props: PXInstructionsSubtitleProps) {
@@ -20,7 +20,7 @@ internal class PXInstructionsSubtitleComponent: NSObject, PXComponentizable {
     }
 }
 
-internal class PXInstructionsSubtitleProps: NSObject {
+internal class PXInstructionsSubtitleProps {
     var subtitle: String
 
     init(subtitle: String) {
