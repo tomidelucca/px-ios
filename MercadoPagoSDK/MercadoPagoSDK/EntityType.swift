@@ -15,7 +15,7 @@ import Foundation
     open var entityTypeId: String!
     open var name: String!
 
-    open class func fromJSON(_ json: NSDictionary) -> EntityType {
+    internal class func fromJSON(_ json: NSDictionary) -> EntityType {
         let entityType: EntityType = EntityType()
 
         if let entityTypeId = JSONHandler.attemptParseToString(json["id"]) {
@@ -28,11 +28,11 @@ import Foundation
         return entityType
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let id: Any = self.entityTypeId == nil ? JSONHandler.null : self.entityTypeId!
         let name: Any = self.name == nil ? JSONHandler.null : self.name!
         let obj: [String: Any] = [

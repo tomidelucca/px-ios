@@ -51,7 +51,7 @@ internal extension PXDiscount {
         }
     }
 
-    func toJSONDictionary() -> [String: Any] {
+    internal func toJSONDictionary() -> [String: Any] {
 
         var obj: [String: Any] = [
             "id": self.id,

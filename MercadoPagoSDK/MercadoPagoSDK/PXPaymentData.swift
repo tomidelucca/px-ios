@@ -21,6 +21,7 @@ import MercadoPagoServicesV4
     internal private(set) var campaign: PXCampaign?
     private let paymentTypesWithoutInstallments = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue]
 
+    /// :nodoc:
     public func copy(with zone: NSZone? = nil) -> Any {
         let copyObj = PXPaymentData()
         copyObj.paymentMethod = paymentMethod

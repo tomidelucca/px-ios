@@ -27,7 +27,7 @@
         self.device = Device()
     }
 
-    open override func toJSON() -> [String: Any] {
+    internal override func toJSON() -> [String: Any] {
         var obj = super.toJSON()
         obj["require_esc"] = requireESC
         obj["esc"] = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc!

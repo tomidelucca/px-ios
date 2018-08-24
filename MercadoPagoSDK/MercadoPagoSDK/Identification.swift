@@ -31,11 +31,11 @@ import Foundation
         self.number = identificationNumber
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let type: Any = String.isNullOrEmpty(self.type) ?  JSONHandler.null : self.type!
         let number: Any = String.isNullOrEmpty(self.number) ?  JSONHandler.null : self.number!
         let obj: [String: Any] = [

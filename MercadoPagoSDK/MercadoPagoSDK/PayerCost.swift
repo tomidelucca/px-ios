@@ -34,7 +34,7 @@ import Foundation
         self.totalAmount = totalAmount
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> PayerCost {
+    internal class func fromJSON(_ json: NSDictionary) -> PayerCost {
                 let payerCost: PayerCost = PayerCost()
                 if let installments = JSONHandler.attemptParseToInt(json["installments"]) {
                         payerCost.installments = installments
@@ -67,11 +67,11 @@ import Foundation
                 return payerCost
             }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "installments": self.installments,
             "installment_rate": self.installmentRate,

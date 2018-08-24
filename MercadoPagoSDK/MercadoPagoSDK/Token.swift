@@ -49,7 +49,7 @@ import Foundation
             self.esc = esc
 	}
 
-    open class func fromJSON(_ json: NSDictionary) -> Token {
+    internal class func fromJSON(_ json: NSDictionary) -> Token {
         let literalJson = json
         let tokenId = JSONHandler.attemptParseToString(literalJson["id"])
         let key = JSONHandler.attemptParseToString(literalJson["public_key"])
@@ -99,11 +99,11 @@ import Foundation
         return bin
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let tokenId: Any = self.tokenId == nil ? JSONHandler.null : self.tokenId!
         let cardId: Any = self.cardId == nil ? JSONHandler.null : self.cardId!
         let luhn: Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!

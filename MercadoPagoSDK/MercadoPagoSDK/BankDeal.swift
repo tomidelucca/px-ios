@@ -17,7 +17,7 @@ import Foundation
 	open var legals: String!
 	open var url: String?
 
-    class func fromJSON(_ json: NSDictionary) -> BankDeal {
+    internal class func fromJSON(_ json: NSDictionary) -> BankDeal {
 
                 let promo: BankDeal = BankDeal()
                 promo.promoId = json["id"] as? String
@@ -55,11 +55,11 @@ import Foundation
                 return promo
             }
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let issuer: Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
         let url: Any = (self.url != nil) ? self.url! : ""
 

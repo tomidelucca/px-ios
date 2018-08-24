@@ -21,11 +21,11 @@ import UIKit
     var actions: [InstructionAction]?
     var type: String = ""
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    class func fromJSON(_ json: NSDictionary) -> Instruction {
+    internal class func fromJSON(_ json: NSDictionary) -> Instruction {
                 let instruction = Instruction()
 
                 if json["title"] != nil && !(json["title"]! is NSNull) {
@@ -111,7 +111,7 @@ import UIKit
                 return instruction
             }
 
-    func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "title": self.title,
             "accreditationMessage": self.accreditationMessage

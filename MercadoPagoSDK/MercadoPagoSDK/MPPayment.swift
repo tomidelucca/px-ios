@@ -85,11 +85,11 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
     }
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         var obj: [String: Any] = [
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,

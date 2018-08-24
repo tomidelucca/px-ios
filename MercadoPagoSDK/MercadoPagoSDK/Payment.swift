@@ -67,7 +67,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         super.init()
     }
 
-    class func fromJSON(_ json: NSDictionary) -> Payment {
+    internal class func fromJSON(_ json: NSDictionary) -> Payment {
                 let payment: Payment = Payment()
 
                 if let paymentId = JSONHandler.attemptParseToString(json["id"]) {
@@ -183,7 +183,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 return payment
             }
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         let obj: [String: Any] = [
             "id": String(describing: self.paymentId),
             "transaction_amount": self.transactionAmount,

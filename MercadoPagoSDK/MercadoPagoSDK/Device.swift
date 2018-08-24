@@ -16,11 +16,11 @@ import Foundation
         self.fingerprint = Fingerprint()
     }
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let finger: [String: Any] = self.fingerprint.toJSON()
         let obj: [String: Any] = [
             "fingerprint": finger

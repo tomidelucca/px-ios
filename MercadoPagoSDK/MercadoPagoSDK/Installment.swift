@@ -34,7 +34,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var paymentMethodId: String!
     open var paymentTypeId: String!
 
-    open class func fromJSON(_ json: NSDictionary) -> Installment {
+    internal class func fromJSON(_ json: NSDictionary) -> Installment {
                 let installment: Installment = Installment()
 
             if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]) {
@@ -60,7 +60,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 return installment
             }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
 
         let issuer: Any = self.issuer != nil ? JSONHandler.null : self.issuer.toJSONString()
         var obj: [String: Any] = [

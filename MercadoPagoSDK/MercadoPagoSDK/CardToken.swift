@@ -289,13 +289,13 @@ import UIKit
         return sum % 10 == 0
     }
 
-    open func getBin() -> String? {
+    func getBin() -> String? {
         let range =  cardNumber!.startIndex ..< cardNumber!.index(cardNumber!.startIndex, offsetBy: 6)
         let bin: String? = cardNumber!.count >= 6 ? String(cardNumber![range]) : nil
         return bin
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
 
         let card_number: Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
         let cardholder: Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
@@ -312,11 +312,11 @@ import UIKit
         return obj
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func getNumberFormated() -> NSString {
+    func getNumberFormated() -> NSString {
 
         //TODO AMEX
         var str: String
@@ -327,7 +327,7 @@ import UIKit
         return str as NSString
     }
 
-    open func getExpirationDateFormated() -> String {
+    func getExpirationDateFormated() -> String {
 
         let expirationMonth = self.expirationMonth.stringValue
         let expirationYear = self.expirationYear.stringValue
@@ -338,22 +338,22 @@ import UIKit
         return expirationDateFormatted
     }
 
-    open func isCustomerPaymentMethod() -> Bool {
+    func isCustomerPaymentMethod() -> Bool {
         return false
     }
-    open func getCardLastForDigits() -> String? {
+    func getCardLastForDigits() -> String? {
         let index = cardNumber?.count
         return String(cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)])
     }
-    public func getCardBin() -> String? {
+    func getCardBin() -> String? {
         return getBin()
     }
 
-    public func isIssuerRequired() -> Bool {
+    func isIssuerRequired() -> Bool {
         return true
     }
 
-    public func canBeClone() -> Bool {
+    func canBeClone() -> Bool {
         return false
     }
 

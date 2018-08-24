@@ -18,7 +18,7 @@ import Foundation
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> Setting {
+    internal class func fromJSON(_ json: NSDictionary) -> Setting {
                 let setting: Setting = Setting()
                 setting.binMask = BinMask.fromJSON(json["bin"]!  as! NSDictionary)
                 if json["card_number"] != nil && !(json["card_number"]! is NSNull) {
@@ -43,11 +43,11 @@ import Foundation
         return selectedSetting.isEmpty ? nil : selectedSetting
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let binMask: Any = self.binMask == nil ?  JSONHandler.null : self.binMask.toJSON()
         let cardNumber: Any = self.cardNumber == nil ?  JSONHandler.null : self.cardNumber.toJSON()
         let securityCode: Any = self.securityCode == nil ? JSONHandler.null : self.securityCode.toJSON()

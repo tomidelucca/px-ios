@@ -40,7 +40,7 @@ import UIKit
         self.paymentTypeId = paymentTypeId
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> PaymentMethod {
+    internal class func fromJSON(_ json: NSDictionary) -> PaymentMethod {
                 let paymentMethod: PaymentMethod = PaymentMethod()
                 paymentMethod.paymentMethodId = json["id"] as? String
                 paymentMethod.name = json["name"] as? String
@@ -196,11 +196,11 @@ import UIKit
         return false
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let id: Any = String.isNullOrEmpty(self.paymentMethodId) ?  JSONHandler.null : self.paymentMethodId!
         let name: Any = self.name == nil ?  JSONHandler.null : self.name
         let payment_type_id: Any = self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId

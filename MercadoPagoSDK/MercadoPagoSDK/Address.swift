@@ -20,11 +20,11 @@ import Foundation
         self.zipCode = zipCode
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> Address {
+    internal class func fromJSON(_ json: NSDictionary) -> Address {
         let address: Address = Address()
         if let streetName = JSONHandler.attemptParseToString(json["street_name"]) {
             address.streetName = streetName
@@ -38,7 +38,7 @@ import Foundation
         return address
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let streetName: Any = self.streetName == nil ? JSONHandler.null : self.streetName!
         let streetNumber: Any = self.streetNumber == nil ? JSONHandler.null : self.streetNumber!
         let zipCode: Any = self.zipCode == nil ? JSONHandler.null : self.zipCode!

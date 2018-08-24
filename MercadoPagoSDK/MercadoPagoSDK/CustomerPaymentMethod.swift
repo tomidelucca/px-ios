@@ -20,7 +20,7 @@ import UIKit
     var paymentMethod: PaymentMethod?
     var card: Card?
 
-    class func fromJSON(_ json: NSDictionary) -> CustomerPaymentMethod {
+    internal class func fromJSON(_ json: NSDictionary) -> CustomerPaymentMethod {
                 let customerPaymentMethod = CustomerPaymentMethod()
 
                 if json["id"] != nil && !(json["id"]! is NSNull) {
@@ -72,7 +72,7 @@ import UIKit
         return card?.issuer
     }
 
-    func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "_id": self.customerPaymentMethodId,
             "_description": self.customerPaymentMethodDescription == nil ? "" : self.customerPaymentMethodDescription!,

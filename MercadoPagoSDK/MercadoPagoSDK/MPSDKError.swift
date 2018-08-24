@@ -51,7 +51,7 @@ import MercadoPagoServicesV4
         return mpError
     }
 
-    func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "message": self.message,
             "error_detail": self.errorDetail,
@@ -60,7 +60,7 @@ import MercadoPagoServicesV4
         return obj
     }
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 

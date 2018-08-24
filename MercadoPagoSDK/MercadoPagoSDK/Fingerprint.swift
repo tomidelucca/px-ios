@@ -20,11 +20,11 @@ import UIKit
 
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
 
         let obj: [String: Any] = [
             "os": fingerprint["os"] as Any,

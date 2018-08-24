@@ -13,7 +13,7 @@ import UIKit
     var amountInfo: AmountInfo!
     var instructions: [Instruction]!
 
-    class func fromJSON(_ json: NSDictionary) -> InstructionsInfo {
+    internal class func fromJSON(_ json: NSDictionary) -> InstructionsInfo {
         let instructionsInfo: InstructionsInfo = InstructionsInfo()
 
         if json["amount_info"] != nil && !(json["amount_info"]! is NSNull) {
@@ -56,7 +56,7 @@ import UIKit
         }
     }
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         var obj: [String: Any] = [
             "amount_info": self.amountInfo.toJSON()
         ]
