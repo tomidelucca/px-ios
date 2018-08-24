@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JSONHandler: NSObject {
+internal class JSONHandler: NSObject {
 
     class func jsonCoding(_ jsonDictionary: [String: Any]) -> String {
         var result: String = ""
@@ -97,8 +97,7 @@ class JSONHandler: NSObject {
     internal class var null: NSNull { return NSNull() }
  }
 
-/** :nodoc: */
-extension String {
+internal extension String {
     func toBool() -> Bool? {
         switch self {
         case "True", "true", "YES", "yes", "1":
@@ -111,8 +110,7 @@ extension String {
     }
 }
 
-/** :nodoc: */
-extension String {
+internal extension String {
 
     var numberValue: NSNumber? {
         let formatter = NumberFormatter()

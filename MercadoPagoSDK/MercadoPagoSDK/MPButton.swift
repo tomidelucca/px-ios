@@ -8,19 +8,10 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class MPButton: UIButton {
+internal class MPButton: UIButton {
 
     var actionLink: String?
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
 
     override init(frame: CGRect) {
         super.init(frame: frame)

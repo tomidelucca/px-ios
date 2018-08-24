@@ -109,7 +109,7 @@ internal extension PXBusinessResult {
         return self.showPaymentMethod
     }
     func isApproved() -> Bool {
-        return self.paymentStatus == PXPaymentStatus.APPROVED
+        return self.paymentStatus == PXPaymentStatus.APPROVED.rawValue
     }
 }
 

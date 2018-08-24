@@ -173,7 +173,7 @@ import UIKit
 
     func isCard() -> Bool {
 
-        return PaymentTypeId.isCard(paymentTypeId: self.paymentMethodTypeId)
+        return PXPaymentTypes.isCard(paymentTypeId: self.paymentMethodTypeId)
     }
 
     func getDescription() -> String {

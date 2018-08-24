@@ -22,7 +22,7 @@ open class PXPaymentMethodPlugin: NSObject {
         case BOTTOM
     }
 
-    static let PAYMENT_METHOD_TYPE_ID = PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+    static let PAYMENT_METHOD_TYPE_ID = PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
 
     internal var paymentMethodPluginId: String
     internal var name: String

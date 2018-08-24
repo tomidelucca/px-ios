@@ -61,9 +61,9 @@ internal extension PXResultViewModel {
         } else if paymentResult.isWarning() {
             if let labelWarning = preference.getPendingSecondaryButtonText() {
                 return labelWarning
-            } else if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            } else if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue {
                 return PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized
-            } else if self.paymentResult.statusDetail == PXRejectedStatusDetail.CARD_DISABLE {
+            } else if self.paymentResult.statusDetail == PXRejectedStatusDetail.CARD_DISABLE.rawValue {
                 return PXFooterResultConstants.CARD_DISABLE_BUTTON_TEXT.localized
             } else {
                 return PXFooterResultConstants.WARNING_BUTTON_TEXT.localized
@@ -81,7 +81,7 @@ internal extension PXResultViewModel {
         } else if paymentResult.isError() {
             return PXFooterResultConstants.ERROR_LINK_TEXT.localized
         } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue {
                 return PXFooterResultConstants.ERROR_LINK_TEXT.localized
             } else {
                 return PXFooterResultConstants.WARNING_LINK_TEXT.localized
@@ -104,7 +104,7 @@ internal extension PXResultViewModel {
         } else if paymentResult.isError() {
              self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
         } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue {
                 self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
             } else {
                 self.callback(PaymentResult.CongratsState.cancel_RETRY)
@@ -118,7 +118,7 @@ internal extension PXResultViewModel {
         } else if paymentResult.isError() {
             self.callback(PaymentResult.CongratsState.approved) //
         } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT {
+            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue {
                 self.callback(PaymentResult.CongratsState.approved)
             } else {
                 self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)

@@ -211,7 +211,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         for paymentMethodPlugin in paymentMethodPluginsToShow {
-            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\(PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue)|"
+            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\(PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue)|"
         }
         paymentMethodsOptions = String(paymentMethodsOptions.dropLast())
         return paymentMethodsOptions
@@ -529,7 +529,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
             // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
             self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
-                return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+                return element.getPaymentMethodId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
             })
         }
 
@@ -587,7 +587,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func findAndCompletePaymentMethodFor(paymentMethodId: String) {
-        if paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodId))
         } else {
             let cardInformation = (self.paymentOptionSelected as! CardInformation)
@@ -604,7 +604,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func handleCustomerPaymentMethod() {
-        if self.paymentOptionSelected!.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if self.paymentOptionSelected!.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected!.getId()))
         } else {
             // Se necesita completar información faltante de settings y pm para custom payment options

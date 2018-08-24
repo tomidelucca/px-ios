@@ -22,10 +22,10 @@ open class PXPaymentPluginResult: NSObject {
     }
 
     public init(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, statusDetail: String, receiptId: String? = nil) {
-        var paymentStatusStrDefault = PXPaymentStatus.REJECTED
+        var paymentStatusStrDefault = PXPaymentStatus.REJECTED.rawValue
 
         if paymentStatus == .APPROVED {
-            paymentStatusStrDefault = PXPaymentStatus.APPROVED
+            paymentStatusStrDefault = PXPaymentStatus.APPROVED.rawValue
         }
         self.status = paymentStatusStrDefault
         self.statusDetail = statusDetail

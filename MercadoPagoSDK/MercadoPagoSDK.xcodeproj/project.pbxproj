@@ -480,6 +480,8 @@
 		4BDB6472212DCF7700A891DD /* PXSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB6470212DCF7700A891DD /* PXSites.swift */; };
 		4BDB6477212F002100A891DD /* PXAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB6476212F002100A891DD /* PXAction.swift */; };
 		4BDB6478212F002100A891DD /* PXAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB6476212F002100A891DD /* PXAction.swift */; };
+		4BDB647B21303C5600A891DD /* PXPaymentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB647A21303C5600A891DD /* PXPaymentTypes.swift */; };
+		4BDB647C21303C5600A891DD /* PXPaymentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB647A21303C5600A891DD /* PXPaymentTypes.swift */; };
 		4BDC087020EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC086F20EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift */; };
 		4BDC087120EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC086F20EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift */; };
 		4BDC087320EBFBCA001C1F44 /* MercadoPagoCheckout+PaymentErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDC087220EBFBCA001C1F44 /* MercadoPagoCheckout+PaymentErrorHandler.swift */; };
@@ -1168,6 +1170,7 @@
 		4BD84D731F1E4910002219D4 /* MercadoPagoCheckoutScreens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckoutScreens.swift; sourceTree = "<group>"; };
 		4BDB6470212DCF7700A891DD /* PXSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSites.swift; sourceTree = "<group>"; };
 		4BDB6476212F002100A891DD /* PXAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAction.swift; sourceTree = "<group>"; };
+		4BDB647A21303C5600A891DD /* PXPaymentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentTypes.swift; sourceTree = "<group>"; };
 		4BDC086F20EBF9B8001C1F44 /* PXAnimatedButton+CongratsLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PXAnimatedButton+CongratsLogic.swift"; sourceTree = "<group>"; };
 		4BDC087220EBFBCA001C1F44 /* MercadoPagoCheckout+PaymentErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MercadoPagoCheckout+PaymentErrorHandler.swift"; sourceTree = "<group>"; };
 		4BDC087520EBFC38001C1F44 /* MercadoPagoCheckout+PaymentFlowHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MercadoPagoCheckout+PaymentFlowHandler.swift"; sourceTree = "<group>"; };
@@ -1519,6 +1522,7 @@
 				4BCC24452125C6B100B6F6AB /* SiteManager.swift */,
 				4B05C2AA212724B900A1A264 /* ResourceManager.swift */,
 				4BDB6470212DCF7700A891DD /* PXSites.swift */,
+				4BDB647A21303C5600A891DD /* PXPaymentTypes.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -3587,6 +3591,7 @@
 				814139BE202A052700824A10 /* PXPluginConfigViewController.swift in Sources */,
 				C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */,
 				4BAD089F20F006B000F3A77F /* PXOneTapViewModel+PaymentMethodComponent.swift in Sources */,
+				4BDB647B21303C5600A891DD /* PXPaymentTypes.swift in Sources */,
 				23675B5520A073E7008C4E1D /* PXComponentFactory.swift in Sources */,
 				235A3269204B4147002D1F54 /* PXReviewTitleComponent.swift in Sources */,
 				23E2158520062EFC00B968F6 /* PXThemeProperty.swift in Sources */,
@@ -3856,6 +3861,7 @@
 				4B2EC4A320FFC26F008D03F8 /* InitFlow+Services.swift in Sources */,
 				4BE2B16F1FCF00E4007C58F2 /* PXHookStoreTest.swift in Sources */,
 				0FC4FC191B0FAA6400CF7148 /* BankDeal.swift in Sources */,
+				4BDB647C21303C5600A891DD /* PXPaymentTypes.swift in Sources */,
 				0F9883901AD2AB6000F750F0 /* Refund.swift in Sources */,
 				76FB70661E783D00008935DF /* MPCheckoutTestAction.swift in Sources */,
 				15AE1D9E1F60763400B0DAF8 /* Summary.swift in Sources */,

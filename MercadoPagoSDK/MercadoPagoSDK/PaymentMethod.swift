@@ -149,14 +149,14 @@ import UIKit
     }
 
     open var isCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCard()
         }
         return false
     }
 
     open var isCreditCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCreditCard()
         }
         return false
@@ -164,14 +164,14 @@ import UIKit
     }
 
     open var isPrepaidCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isPrepaidCard()
         }
         return false
     }
 
     open var isDebitCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isDebitCard()
         }
         return false
@@ -282,7 +282,7 @@ import UIKit
     }
 
    open var isAccountMoney: Bool {
-        return self.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue
+        return self.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
 
     open func secCodeMandatory() -> Bool {
@@ -449,6 +449,6 @@ import UIKit
     }
 
     var isBolbradesco: Bool {
-        return self.paymentMethodId.contains(PaymentTypeId.BOLBRADESCO.rawValue)
+        return self.paymentMethodId.contains(PXPaymentTypes.BOLBRADESCO.rawValue)
     }
 }

@@ -21,7 +21,7 @@ internal extension PXPaymentFlow {
             self?.executeNextStep()
             }, successWithPaymentResult: { [weak self] paymentPluginResult in
 
-                if paymentPluginResult.statusDetail == PXRejectedStatusDetail.INVALID_ESC {
+                if paymentPluginResult.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue {
                     self?.paymentErrorHandler?.escError()
                     return
                 }

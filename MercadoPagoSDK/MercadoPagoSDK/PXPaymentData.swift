@@ -19,7 +19,7 @@ import MercadoPagoServicesV4
     internal var transactionDetails: TransactionDetails?
     internal private(set) var discount: PXDiscount?
     internal private(set) var campaign: PXCampaign?
-    private let paymentTypesWithoutInstallments = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
+    private let paymentTypesWithoutInstallments = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue]
 
     public func copy(with zone: NSZone? = nil) -> Any {
         let copyObj = PXPaymentData()
@@ -53,7 +53,7 @@ import MercadoPagoServicesV4
             return false
         }
 
-        if paymentMethod.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
+        if paymentMethod.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
 
@@ -93,7 +93,7 @@ import MercadoPagoServicesV4
     }
 }
 
-//MARK: Getters
+// MARK: Getters
 extension PXPaymentData {
     public func getToken() -> Token? {
         return token
@@ -123,7 +123,7 @@ extension PXPaymentData {
     }
 }
 
-//MARK: Setters
+// MARK: Setters
 extension PXPaymentData {
     internal func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
         self.discount = discount
@@ -170,7 +170,7 @@ extension PXPaymentData {
     }
 }
 
-//MARK: Clears
+// MARK: Clears
 extension PXPaymentData {
     internal func cleanToken() {
         self.token = nil
@@ -204,7 +204,7 @@ extension PXPaymentData {
     }
 }
 
-//MARK: JSON
+// MARK: JSON
 extension PXPaymentData {
     internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())

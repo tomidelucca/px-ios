@@ -106,7 +106,7 @@ internal extension PXResultViewModel {
             return "".toAttributedString()
         }
 
-        if statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH {
+        if statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue {
             return getTitleForCallForAuth(paymentMethod)
         }
 

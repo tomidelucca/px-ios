@@ -35,10 +35,10 @@ internal class PXBodyComponent: NSObject, PXComponentizable {
     }
 
     private func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+        let defaultColor = paymentMethod.paymentTypeId == PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+        if paymentMethod.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
         }
         return paymentMethodImage

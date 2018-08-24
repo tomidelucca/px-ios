@@ -26,7 +26,7 @@ internal extension PXResultViewModel {
             return false
         }
         if paymentResult.isApproved() {
-            let isPaymentMethodPlugin = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+            let isPaymentMethodPlugin = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
 
             if isPaymentMethodPlugin {
                 let hasReceiptId = !String.isNullOrEmpty(self.paymentResult.paymentId)

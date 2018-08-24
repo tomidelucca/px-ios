@@ -19,7 +19,7 @@ import Foundation
         case call_FOR_AUTH = 4
     }
 
-    let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.BAD_FILLED_OTHER]
+    let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue, PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue, PXRejectedStatusDetail.CARD_DISABLE.rawValue, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue, PXRejectedStatusDetail.BAD_FILLED_DATE.rawValue, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue, PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
 
     var paymentData: PXPaymentData?
     var status: String
@@ -47,35 +47,35 @@ import Foundation
     }
 
     func isCallForAuth() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH
+        return self.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue
     }
 
     func isApproved() -> Bool {
-        return self.status == PXPaymentStatus.APPROVED
+        return self.status == PXPaymentStatus.APPROVED.rawValue
     }
 
     func isPending() -> Bool {
-        return self.status == PXPaymentStatus.PENDING
+        return self.status == PXPaymentStatus.PENDING.rawValue
     }
 
     func isInProcess() -> Bool {
-        return self.status == PXPaymentStatus.IN_PROCESS
+        return self.status == PXPaymentStatus.IN_PROCESS.rawValue
     }
 
     func isRejected() -> Bool {
-        return self.status == PXPaymentStatus.REJECTED
+        return self.status == PXPaymentStatus.REJECTED.rawValue
     }
 
     func isInvalidESC() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.INVALID_ESC
+        return self.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue
     }
 
     func isReviewManual() -> Bool {
-        return self.statusDetail == PXPendingStatusDetail.REVIEW_MANUAL
+        return self.statusDetail == PXPendingStatusDetail.REVIEW_MANUAL.rawValue
     }
 
     func isWaitingForPayment() -> Bool {
-        return self.statusDetail == PXPendingStatusDetail.WAITING_PAYMENT
+        return self.statusDetail == PXPendingStatusDetail.WAITING_PAYMENT.rawValue
     }
 }
 

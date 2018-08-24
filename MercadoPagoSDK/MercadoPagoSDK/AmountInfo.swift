@@ -8,8 +8,7 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers open class AmountInfo: NSObject {
+@objcMembers internal class AmountInfo: NSObject {
 
     var amount: Double!
     var currency: Currency!
@@ -18,7 +17,7 @@ import UIKit
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> AmountInfo {
+    class func fromJSON(_ json: NSDictionary) -> AmountInfo {
 
         let amountInfo: AmountInfo = AmountInfo()
 
@@ -47,11 +46,11 @@ import UIKit
         return amountInfo
     }
 
-    open func toJSONString() -> String {
+    func toJSONString() -> String {
        return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    func toJSON() -> [String: Any] {
         let thousands_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator)
         let decimal_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator)
         let symbol: Any = self.currency == nil ? JSONHandler.null : self.currency!.symbol
