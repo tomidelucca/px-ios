@@ -155,7 +155,7 @@ extension PXNavigationHandler: UINavigationControllerDelegate {
 
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if !(viewController is MercadoPagoUIViewController) {
-            if let _ = viewController as? PXPaymentProcessor {
+            if (viewController as? PXPaymentProcessor) != nil {
                 return
             }
             ThemeManager.shared.applyAppNavBarStyle(navigationController: navigationController)

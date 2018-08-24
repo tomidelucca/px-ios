@@ -55,20 +55,18 @@ internal final class PXPaymentFlowModel: NSObject {
             return false
         }
 
-        assignToCheckoutStore()
-
         if hasPluginPaymentScreen(plugin: paymentPlugin) {
             return false
         }
 
         assignToCheckoutStore()
-
         paymentPlugin?.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
-        if let shouldSkip = paymentPlugin?.support(), !shouldSkip {
-            return false
+        if let shouldSupport = paymentPlugin?.support() {
+            return shouldSupport
         }
-        return true
+
+        return false
     }
 
     func needToCreatePayment() -> Bool {
@@ -122,6 +120,7 @@ extension PXPaymentFlowModel {
             return false
         }
         assignToCheckoutStore()
+        paymentPlugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
         let processorViewController = paymentPlugin.paymentProcessorViewController()
         return processorViewController != nil
     }

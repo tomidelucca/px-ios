@@ -66,8 +66,8 @@ extension MercadoPagoCheckoutViewModel {
         }
         populateCheckoutStore()
         paymentPlugin?.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
-        if let shouldSkip = paymentPlugin?.support(), !shouldSkip {
-            return false
+        if let shouldSupport = paymentPlugin?.support() {
+            return shouldSupport
         }
         return needToCreatePayment()
     }
