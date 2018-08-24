@@ -8,13 +8,12 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers open class InstructionsInfo: NSObject {
+internal class InstructionsInfo {
 
     var amountInfo: AmountInfo!
     var instructions: [Instruction]!
 
-    open class func fromJSON(_ json: NSDictionary) -> InstructionsInfo {
+    internal class func fromJSON(_ json: NSDictionary) -> InstructionsInfo {
         let instructionsInfo: InstructionsInfo = InstructionsInfo()
 
         if json["amount_info"] != nil && !(json["amount_info"]! is NSNull) {
@@ -33,7 +32,7 @@ import UIKit
         return instructionsInfo
     }
 
-    open func hasSecundaryInformation() -> Bool {
+    func hasSecundaryInformation() -> Bool {
         if instructions.isEmpty {
             return false
         } else {
@@ -41,7 +40,7 @@ import UIKit
         }
     }
 
-    open func hasSubtitle() -> Bool {
+    func hasSubtitle() -> Bool {
         if instructions.isEmpty {
             return false
         } else {
@@ -49,7 +48,7 @@ import UIKit
         }
     }
 
-    open func getInstruction() -> Instruction? {
+    func getInstruction() -> Instruction? {
         if instructions.isEmpty {
             return nil
         } else {
@@ -57,7 +56,7 @@ import UIKit
         }
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         var obj: [String: Any] = [
             "amount_info": self.amountInfo.toJSON()
         ]

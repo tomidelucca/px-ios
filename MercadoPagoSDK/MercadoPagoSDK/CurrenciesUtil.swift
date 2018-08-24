@@ -27,11 +27,10 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
 @objcMembers
-open class CurrenciesUtil {
+internal class CurrenciesUtil {
 
-    open class var currenciesList: [String: Currency] { return [
+    internal class var currenciesList: [String: Currency] { return [
         //Argentina
         "ARS": Currency(currencyId: "ARS", description: "Peso argentino", symbol: "$", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: "."),
         //Brasil
@@ -54,7 +53,7 @@ open class CurrenciesUtil {
 
         ]}
 
-    open class func getCurrencyFor(_ currencyId: String?) -> Currency? {
+    internal class func getCurrencyFor(_ currencyId: String?) -> Currency? {
         return (currencyId != nil && currencyId?.count > 0) ? self.currenciesList[currencyId!] : nil
     }
 

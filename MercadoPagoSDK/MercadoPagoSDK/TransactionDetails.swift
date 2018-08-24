@@ -22,7 +22,7 @@ import Foundation
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> TransactionDetails {
+    internal class func fromJSON(_ json: NSDictionary) -> TransactionDetails {
         let transactionDetails: TransactionDetails = TransactionDetails()
         if let couponAmount = JSONHandler.attemptParseToDouble(json["coupon_amount"]) {
             transactionDetails.couponAmount = couponAmount
@@ -52,7 +52,7 @@ import Foundation
         self.financialInstitution = financialInstitution
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
 
         var obj: [String: Any] = [:]
 

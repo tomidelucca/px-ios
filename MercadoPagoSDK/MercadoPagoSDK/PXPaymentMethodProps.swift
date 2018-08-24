@@ -15,12 +15,12 @@ final class PXPaymentMethodProps: NSObject {
     let descriptionTitle: NSAttributedString?
     let descriptionDetail: NSAttributedString?
     let disclaimer: NSAttributedString?
-    let action: PXComponentAction?
+    let action: PXAction?
     let backgroundColor: UIColor
     let lightLabelColor: UIColor
     let boldLabelColor: UIColor
 
-    public init(paymentMethodIcon: UIImage?, title: NSAttributedString, subtitle: NSAttributedString?, descriptionTitle: NSAttributedString?, descriptionDetail: NSAttributedString?, disclaimer: NSAttributedString?, action: PXComponentAction? = nil, backgroundColor: UIColor, lightLabelColor: UIColor, boldLabelColor: UIColor) {
+    public init(paymentMethodIcon: UIImage?, title: NSAttributedString, subtitle: NSAttributedString?, descriptionTitle: NSAttributedString?, descriptionDetail: NSAttributedString?, disclaimer: NSAttributedString?, action: PXAction? = nil, backgroundColor: UIColor, lightLabelColor: UIColor, boldLabelColor: UIColor) {
         self.paymentMethodIcon = paymentMethodIcon
         self.title = title
         self.subtitle = subtitle

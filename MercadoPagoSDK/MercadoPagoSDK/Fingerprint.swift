@@ -9,23 +9,21 @@
 import Foundation
 import UIKit
 
-/** :nodoc: */
-@objcMembers open class Fingerprint: NSObject {
+internal class Fingerprint {
 
     open var fingerprint: [String: Any]
 
-    public override init () {
+    init () {
         self.fingerprint = [:]
-        super.init()
         fingerprint = deviceFingerprint()
 
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
 
         let obj: [String: Any] = [
             "os": fingerprint["os"] as Any,

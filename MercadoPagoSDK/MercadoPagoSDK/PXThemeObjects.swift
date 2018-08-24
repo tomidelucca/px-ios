@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class PXNavigationHeaderLabel: UILabel {
+internal class PXNavigationHeaderLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,5 +26,4 @@ open class PXNavigationHeaderLabel: UILabel {
     }
 }
 
-/** :nodoc: */
-open class PXToolbar: UIToolbar {}
+internal class PXToolbar: UIToolbar {}

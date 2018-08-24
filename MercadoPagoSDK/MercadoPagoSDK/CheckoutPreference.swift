@@ -11,9 +11,9 @@ import MercadoPagoServicesV4
 
 @objcMembers open class CheckoutPreference: NSObject {
     internal var preferenceId: String!
-    internal var items: [Item]!
+    internal var items: [Item] = []
     internal var payer: Payer!
-    internal var paymentPreference: PaymentPreference!
+    internal var paymentPreference: PaymentPreference = PaymentPreference()
     internal var siteId: String!
     internal var expirationDateFrom: Date?
     internal var expirationDateTo: Date?

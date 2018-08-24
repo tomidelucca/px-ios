@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class BankDeal: NSObject {
+internal class BankDeal {
 
 	open var promoId: String!
 	open var issuer: Issuer!
@@ -18,7 +17,7 @@ import Foundation
 	open var legals: String!
 	open var url: String?
 
-    open class func fromJSON(_ json: NSDictionary) -> BankDeal {
+    internal class func fromJSON(_ json: NSDictionary) -> BankDeal {
 
                 let promo: BankDeal = BankDeal()
                 promo.promoId = json["id"] as? String
@@ -56,11 +55,11 @@ import Foundation
                 return promo
             }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let issuer: Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
         let url: Any = (self.url != nil) ? self.url! : ""
 
@@ -82,13 +81,4 @@ import Foundation
 
         return obj
     }
-	open class func getDateFromString(_ string: String!) -> Date! {
-		if string == nil {
-			return nil
-		}
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-dd"
-		var dateArr = string.split {$0 == "T"}.map(String.init)
-		return dateFormatter.date(from: dateArr[0])
-	}
 }

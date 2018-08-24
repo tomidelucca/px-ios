@@ -8,10 +8,9 @@
 
 import Foundation
 
-/** :nodoc: */
 internal extension NSDictionary {
 
-    public func toJsonString() -> String {
+    func toJsonString() -> String {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
 
@@ -24,7 +23,7 @@ internal extension NSDictionary {
             return error.localizedDescription
         }
     }
-    public func parseToQuery() -> String {
+    func parseToQuery() -> String {
         if !NSDictionary.isNullOrEmpty(self) {
             var parametersString = ""
             for (key, value) in self {
@@ -52,7 +51,7 @@ internal extension NSDictionary {
         }
         return anyDict
     }
-    static public func isNullOrEmpty(_ value: NSDictionary?) -> Bool {
+    static func isNullOrEmpty(_ value: NSDictionary?) -> Bool {
         return value == nil || value?.count == 0
     }
 

@@ -12,11 +12,10 @@ import Foundation
     import MLESCManager
 #endif
 
-/** :nodoc: */
 @objcMembers
-open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
+internal class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
 
-    public func hasESCEnable() -> Bool {
+    func hasESCEnable() -> Bool {
         #if MPESC_ENABLE
             return MercadoPagoCheckoutViewModel.flowPreference.isESCEnable()
          #else
@@ -24,7 +23,7 @@ open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
          #endif
     }
 
-    public func getESC(cardId: String) -> String? {
+    func getESC(cardId: String) -> String? {
         if hasESCEnable() {
             #if MPESC_ENABLE
                 let esc = ESCManager.getESC(cardId: cardId)
@@ -34,7 +33,7 @@ open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
         return nil
     }
 
-    public func saveESC(cardId: String, esc: String) -> Bool {
+    func saveESC(cardId: String, esc: String) -> Bool {
         if hasESCEnable() {
             #if MPESC_ENABLE
                return ESCManager.saveESC(cardId: cardId, esc: esc)
@@ -43,7 +42,7 @@ open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
         return false
     }
 
-    public func deleteESC(cardId: String) {
+    func deleteESC(cardId: String) {
         if hasESCEnable() {
             #if MPESC_ENABLE
                 ESCManager.deleteESC(cardId: cardId)
@@ -51,7 +50,7 @@ open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
         }
     }
 
-    public func deleteAllESC() {
+    func deleteAllESC() {
         if hasESCEnable() {
             #if MPESC_ENABLE
                 ESCManager.deleteAllESC()
@@ -59,7 +58,7 @@ open class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
         }
     }
 
-    public func getSavedCardIds() -> [String] {
+    func getSavedCardIds() -> [String] {
         if hasESCEnable() {
             #if MPESC_ENABLE
                return ESCManager.getSavedCardIds()

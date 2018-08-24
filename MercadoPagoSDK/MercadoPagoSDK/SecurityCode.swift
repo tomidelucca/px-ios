@@ -22,7 +22,7 @@ import Foundation
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "length": self.length,
             "card_location": self.cardLocation == nil ? "" : self.cardLocation!,
@@ -31,7 +31,7 @@ import Foundation
 
         return obj
     }
-    open class func fromJSON(_ json: NSDictionary) -> SecurityCode {
+    internal class func fromJSON(_ json: NSDictionary) -> SecurityCode {
                 let securityCode: SecurityCode = SecurityCode()
                 if let length = JSONHandler.attemptParseToInt(json["length"]) {
                         securityCode.length = length

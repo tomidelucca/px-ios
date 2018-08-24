@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXHeaderRenderer: NSObject {
+internal class PXHeaderRenderer {
 
     //Image
     let IMAGE_WIDTH: CGFloat = 90.0
@@ -126,10 +126,9 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-/** :nodoc: */
-public class PXHeaderView: PXComponentView {
-    public var circleImage: UIImageView?
-    public var badgeImage: UIImageView?
-    public var statusLabel: UILabel?
-    public var messageLabel: UILabel?
+internal class PXHeaderView: PXComponentView {
+    var circleImage: UIImageView?
+    var badgeImage: UIImageView?
+    var statusLabel: UILabel?
+    var messageLabel: UILabel?
 }

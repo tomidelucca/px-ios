@@ -177,7 +177,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !pm.isCreditCard
-        let isCustomerCard = pmSelected.isCustomerPaymentMethod() && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+        let isCustomerCard = pmSelected.isCustomerPaymentMethod() && pmSelected.getId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
             return true
@@ -301,12 +301,12 @@ extension MercadoPagoCheckoutViewModel {
             self.paymentOptionSelected = customOption as? PaymentMethodOption
         } else if !paymentMethod.isOnlinePaymentMethod {
             // Medios off
-            if let paymentTypeId = PaymentTypeId(rawValue: paymentMethod.paymentTypeId) {
+            if let paymentTypeId = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) {
                 self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod.paymentMethodId, paymentTypeId: paymentTypeId)
             }
         } else {
             // Tarjetas, efectivo, crédito, debito
-            if let paymentTypeId = PaymentTypeId(rawValue: paymentMethod.paymentTypeId) {
+            if let paymentTypeId = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) {
                 self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
             }
         }

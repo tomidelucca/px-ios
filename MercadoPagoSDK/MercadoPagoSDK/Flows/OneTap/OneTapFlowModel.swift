@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OneTapFlowModel: NSObject, PXFlowModel {
+final internal class OneTapFlowModel: PXFlowModel {
     enum Steps: String {
         case finish
         case screenReviewOneTap
@@ -17,7 +17,7 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
         case payment
     }
 
-    var paymentData: PaymentData
+    var paymentData: PXPaymentData
     let checkoutPreference: CheckoutPreference
     var paymentOptionSelected: PaymentMethodOption
     let search: PaymentMethodSearch
@@ -45,16 +45,15 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(paymentData: PXPaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.consumedDiscount = consumedDiscount
-        self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
+        self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenConfiguration = reviewScreenConfiguration
         self.chargeRules = chargeRules
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
-        super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
             updateCheckoutModel(payerCost: payerCost)
@@ -77,10 +76,9 @@ final class OneTapFlowModel: NSObject, PXFlowModel {
     }
 }
 
-/** :nodoc: */
 // MARK: Create view model
-extension OneTapFlowModel {
-    public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
+internal extension OneTapFlowModel {
+    func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
             fatalError("Cannot convert payment option selected to CardInformation")
         }
@@ -98,19 +96,18 @@ extension OneTapFlowModel {
     }
 }
 
-/** :nodoc: */
 // MARK: Update view models
-extension OneTapFlowModel {
-    func updateCheckoutModel(paymentData: PaymentData) {
+internal extension OneTapFlowModel {
+    func updateCheckoutModel(paymentData: PXPaymentData) {
         self.paymentData = paymentData
         self.readyToPay = true
     }
 
-    public func updateCheckoutModel(token: Token) {
+    func updateCheckoutModel(token: Token) {
         self.paymentData.updatePaymentDataWith(token: token)
     }
 
-    public func updateCheckoutModel(payerCost: PayerCost) {
+    func updateCheckoutModel(payerCost: PayerCost) {
         if paymentOptionSelected.isCard() {
             self.paymentData.updatePaymentDataWith(payerCost: payerCost)
             self.paymentData.cleanToken()
@@ -119,9 +116,8 @@ extension OneTapFlowModel {
 
 }
 
-/** :nodoc: */
 // MARK: Flow logic
-extension OneTapFlowModel {
+internal extension OneTapFlowModel {
     func needReviewAndConfirmForOneTap() -> Bool {
         if readyToPay {
             return false
@@ -144,7 +140,7 @@ extension OneTapFlowModel {
         }
 
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
-        let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+        let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelected.getId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
             return true

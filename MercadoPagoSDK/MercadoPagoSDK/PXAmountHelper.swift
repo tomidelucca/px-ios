@@ -12,7 +12,7 @@ import MercadoPagoServicesV4
 internal struct PXAmountHelper {
 
     internal let preference: CheckoutPreference
-    internal let paymentData: PaymentData
+    internal let paymentData: PXPaymentData
     internal let discount: PXDiscount?
     internal let campaign: PXCampaign?
     internal let chargeRules: [PXPaymentTypeChargeRule]?

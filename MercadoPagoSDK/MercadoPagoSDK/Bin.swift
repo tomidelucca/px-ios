@@ -18,7 +18,7 @@ import Foundation
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> BinMask {
+    internal class func fromJSON(_ json: NSDictionary) -> BinMask {
         let binMask: BinMask = BinMask()
         if let exclusionPattern = JSONHandler.attemptParseToString(json["exclusion_pattern"]) {
             binMask.exclusionPattern = exclusionPattern
@@ -32,7 +32,7 @@ import Foundation
         return binMask
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let exclusionPattern: Any = String.isNullOrEmpty(self.exclusionPattern) ?  JSONHandler.null : self.exclusionPattern!
         let installmentsPattern: Any = self.installmentsPattern == nil ?  JSONHandler.null : self.installmentsPattern
         let pattern: Any = self.pattern == nil ? JSONHandler.null : self.pattern
@@ -45,7 +45,7 @@ import Foundation
         return obj
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 }

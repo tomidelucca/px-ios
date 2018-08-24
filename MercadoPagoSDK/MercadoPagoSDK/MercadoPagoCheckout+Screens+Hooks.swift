@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-extension MercadoPagoCheckout {
+internal extension MercadoPagoCheckout {
     func showHookScreen(hookStep: PXHookStep) {
 
         if let targetHook = viewModel.hookService.getHookForStep(hookStep: hookStep) {

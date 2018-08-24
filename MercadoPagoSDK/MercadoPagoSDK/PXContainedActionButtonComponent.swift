@@ -8,8 +8,8 @@
 
 import UIKit
 
-class PXContainedActionButtonComponent: PXComponentizable {
-    public func render() -> UIView {
+internal class PXContainedActionButtonComponent: PXComponentizable {
+    internal func render() -> UIView {
         return PXContainedActionButtonRenderer().render(self)
     }
 
@@ -20,8 +20,7 @@ class PXContainedActionButtonComponent: PXComponentizable {
     }
 }
 
-/** :nodoc: */
-open class PXContainedActionButtonProps: NSObject {
+internal class PXContainedActionButtonProps {
     let title: String
     let action : (() -> Void)
     let backgroundColor: UIColor

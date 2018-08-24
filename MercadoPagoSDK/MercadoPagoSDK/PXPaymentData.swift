@@ -1,5 +1,5 @@
 //
-//  PaymentData.swift
+//  PXPaymentData.swift
 //  MercadoPagoSDK
 //
 //  Created by Maria cristina rodriguez on 2/1/17.
@@ -9,35 +9,21 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers public class PaymentData: NSObject, NSCopying {
+@objcMembers public class PXPaymentData: NSObject, NSCopying {
 
-    public var paymentMethod: PaymentMethod?
-    public var issuer: Issuer?
-    public var payerCost: PayerCost?
-    public var token: Token?
-    public var payer: Payer?
-    public var transactionDetails: TransactionDetails?
-    public private(set) var discount: PXDiscount?
-    public private(set) var campaign: PXCampaign?
-    private let paymentTypesWithoutInstallments = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
+    internal var paymentMethod: PaymentMethod?
+    internal var issuer: Issuer?
+    internal var payerCost: PayerCost?
+    internal var token: Token?
+    internal var payer: Payer?
+    internal var transactionDetails: TransactionDetails?
+    internal private(set) var discount: PXDiscount?
+    internal private(set) var campaign: PXCampaign?
+    private let paymentTypesWithoutInstallments = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue]
 
-    /**
-     Este metodo deberia borrar SOLO la data recolectada atraves del flujo de Checkout,
-     i.e. la data ingresada por el payer 
-     */
-    func clearCollectedData() {
-        self.paymentMethod = nil
-        self.issuer = nil
-        self.payerCost = nil
-        self.token = nil
-        self.payer?.clearCollectedData() // No borrar el payer directo
-        self.transactionDetails = nil
-        // No borrar el descuento
-    }
-
+    /// :nodoc:
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copyObj = PaymentData()
+        let copyObj = PXPaymentData()
         copyObj.paymentMethod = paymentMethod
         copyObj.issuer = issuer
         copyObj.payerCost = payerCost
@@ -50,7 +36,7 @@ import MercadoPagoServicesV4
         return copyObj
     }
 
-    func isComplete(shouldCheckForToken: Bool = true) -> Bool {
+    internal func isComplete(shouldCheckForToken: Bool = true) -> Bool {
 
         guard let paymentMethod = self.paymentMethod else {
             return false
@@ -68,7 +54,7 @@ import MercadoPagoServicesV4
             return false
         }
 
-        if paymentMethod.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
+        if paymentMethod.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
 
@@ -87,82 +73,30 @@ import MercadoPagoServicesV4
         return true
     }
 
-    func hasToken() -> Bool {
+    internal func hasToken() -> Bool {
         return token != nil
     }
 
-    func hasIssuer() -> Bool {
+    internal func hasIssuer() -> Bool {
         return issuer != nil
     }
 
-    func hasPayerCost() -> Bool {
+    internal func hasPayerCost() -> Bool {
         return payerCost != nil
     }
 
-    func hasPaymentMethod() -> Bool {
+    internal func hasPaymentMethod() -> Bool {
         return paymentMethod != nil
     }
 
-    func hasCustomerPaymentOption() -> Bool {
+    internal func hasCustomerPaymentOption() -> Bool {
         return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
     }
+}
 
-    public func updatePaymentDataWith(paymentMethod: PaymentMethod?) {
-        guard let paymentMethod = paymentMethod else {
-            return
-        }
-        cleanIssuer()
-        cleanToken()
-        cleanPayerCost()
-        self.paymentMethod = paymentMethod
-    }
-
-    public func updatePaymentDataWith(token: Token?) {
-        guard let token = token else {
-            return
-        }
-        self.token = token
-    }
-
-    public func updatePaymentDataWith(payerCost: PayerCost?) {
-        guard let payerCost = payerCost else {
-            return
-        }
-        self.payerCost = payerCost
-    }
-
-    public func updatePaymentDataWith(issuer: Issuer?) {
-        guard let issuer = issuer else {
-            return
-        }
-        cleanPayerCost()
-        self.issuer = issuer
-    }
-
-    public func updatePaymentDataWith(payer: Payer?) {
-        guard let payer = payer else {
-            return
-        }
-        self.payer = payer
-    }
-
-    public func cleanToken() {
-        self.token = nil
-    }
-
-    public func cleanPayerCost() {
-        self.payerCost = nil
-    }
-
-    func cleanIssuer() {
-        self.issuer = nil
-    }
-
-    func cleanPaymentMethod() {
-        self.paymentMethod = nil
-    }
-
-   public func getToken() -> Token? {
+// MARK: Getters
+extension PXPaymentData {
+    public func getToken() -> Token? {
         return token
     }
 
@@ -188,15 +122,99 @@ import MercadoPagoServicesV4
     public func getPaymentMethod() -> PaymentMethod? {
         return paymentMethod
     }
+}
 
-    func toJSONString() -> String {
+// MARK: Setters
+extension PXPaymentData {
+    internal func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
+        self.discount = discount
+        self.campaign = campaign
+    }
+
+    internal func updatePaymentDataWith(paymentMethod: PaymentMethod?) {
+        guard let paymentMethod = paymentMethod else {
+            return
+        }
+        cleanIssuer()
+        cleanToken()
+        cleanPayerCost()
+        self.paymentMethod = paymentMethod
+    }
+
+    internal func updatePaymentDataWith(token: Token?) {
+        guard let token = token else {
+            return
+        }
+        self.token = token
+    }
+
+    internal func updatePaymentDataWith(payerCost: PayerCost?) {
+        guard let payerCost = payerCost else {
+            return
+        }
+        self.payerCost = payerCost
+    }
+
+    internal func updatePaymentDataWith(issuer: Issuer?) {
+        guard let issuer = issuer else {
+            return
+        }
+        cleanPayerCost()
+        self.issuer = issuer
+    }
+
+    internal func updatePaymentDataWith(payer: Payer?) {
+        guard let payer = payer else {
+            return
+        }
+        self.payer = payer
+    }
+}
+
+// MARK: Clears
+extension PXPaymentData {
+    internal func cleanToken() {
+        self.token = nil
+    }
+
+    internal func cleanPayerCost() {
+        self.payerCost = nil
+    }
+
+    internal func cleanIssuer() {
+        self.issuer = nil
+    }
+
+    internal func cleanPaymentMethod() {
+        self.paymentMethod = nil
+    }
+
+    internal func clearCollectedData() {
+        self.paymentMethod = nil
+        self.issuer = nil
+        self.payerCost = nil
+        self.token = nil
+        self.payer?.clearCollectedData() // No borrar el payer directo
+        self.transactionDetails = nil
+        // No borrar el descuento
+    }
+
+    internal func clearDiscount() {
+        self.discount = nil
+        self.campaign = nil
+    }
+}
+
+// MARK: JSON
+extension PXPaymentData {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    func toJSON() -> [String: Any] {
-       var obj: [String: Any] = [
-        "payer": payer?.toJSON() ?? ""
-       ]
+    internal func toJSON() -> [String: Any] {
+        var obj: [String: Any] = [
+            "payer": payer?.toJSON() ?? ""
+        ]
         if let paymentMethod = self.paymentMethod {
             obj["payment_method"] = paymentMethod.toJSON()
         }
@@ -219,15 +237,4 @@ import MercadoPagoServicesV4
 
         return obj
     }
-
-    public func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        self.discount = discount
-        self.campaign = campaign
-    }
-
-    public func clearDiscount() {
-        self.discount = nil
-        self.campaign = nil
-    }
-
 }

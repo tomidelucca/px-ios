@@ -8,16 +8,12 @@
 
 import Foundation
 
-/** :nodoc: */
-open class OneTapItem: NSObject {
-    /// :nodoc:
-    open var paymentMethodId: String
-    /// :nodoc:
+internal class OneTapItem {
+
+    var paymentMethodId: String
     open var paymentTypeId: String?
-    /// :nodoc:
     open var oneTapCard: OneTapCard?
 
-    /// :nodoc:
     public init(paymentMethodId: String, paymentTypeId: String?, oneTapCard: OneTapCard?) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
@@ -25,7 +21,7 @@ open class OneTapItem: NSObject {
     }
 }
 
-extension OneTapItem {
+internal extension OneTapItem {
     func getPaymentOptionId() -> String {
         if let oneTapCard = oneTapCard {
             return oneTapCard.cardId

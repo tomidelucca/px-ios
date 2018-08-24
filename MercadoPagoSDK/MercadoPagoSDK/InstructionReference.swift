@@ -8,15 +8,14 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers open class InstructionReference: NSObject {
+internal class InstructionReference {
 
     var label: String!
     var value: [String]!
     var separator: String!
     var comment: String?
 
-    open class func fromJSON(_ json: NSDictionary) -> InstructionReference {
+    class func fromJSON(_ json: NSDictionary) -> InstructionReference {
                 let reference = InstructionReference()
                 if json["label"] != nil && !(json["label"]! is NSNull) {
                         reference.label = json["label"] as! String
@@ -42,7 +41,7 @@ import UIKit
                 return reference
             }
 
-    open func getFullReferenceValue() -> String {
+    func getFullReferenceValue() -> String {
         if String.isNullOrEmpty(separator) {
             self.separator = ""
         }

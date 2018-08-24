@@ -6,7 +6,6 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-/** :nodoc: */
 internal extension UIView {
 
     //Eventualmente hay que borrar esto. Cuando summary deje de usarlo

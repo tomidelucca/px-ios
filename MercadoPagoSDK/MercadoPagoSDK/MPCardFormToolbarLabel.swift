@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objcMembers
-open class MPCardFormToolbarLabel: MPLabel {
+internal class MPCardFormToolbarLabel: MPLabel {
 
     override open func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 0)

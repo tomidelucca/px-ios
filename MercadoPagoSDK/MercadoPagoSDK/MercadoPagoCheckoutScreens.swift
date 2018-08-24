@@ -126,7 +126,7 @@ extension MercadoPagoCheckout {
         let timeOut = paymentFlow.getPaymentTimeOut()
         let shouldShowAnimatedPayButton = !paymentFlow.needToShowPaymentPluginScreen()
 
-        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), timeOutPayButton: timeOut, shouldAnimatePayButton: shouldShowAnimatedPayButton, callbackPaymentData: { [weak self] (paymentData: PaymentData) in
+        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), timeOutPayButton: timeOut, shouldAnimatePayButton: shouldShowAnimatedPayButton, callbackPaymentData: { [weak self] (paymentData: PXPaymentData) in
             guard let strongSelf = self else {
                 return
             }
@@ -138,7 +138,7 @@ extension MercadoPagoCheckout {
             }
             strongSelf.executeNextStep()
 
-        }, callbackConfirm: { [weak self] (paymentData: PaymentData) in
+        }, callbackConfirm: { [weak self] (paymentData: PXPaymentData) in
 
             guard let strongSelf = self else {
                 return

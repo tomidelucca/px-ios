@@ -8,9 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers
-open class CardsAdminViewModel: NSObject {
+internal class CardsAdminViewModel {
 
     var cards: [Card]?
     var customerId: String?
@@ -53,15 +51,15 @@ open class CardsAdminViewModel: NSObject {
         return !String.isNullOrEmpty(confirmPromptText)
     }
 
-    public func setScreenTitle(title: String) {
+    func setScreenTitle(title: String) {
         self.titleScreen = title
     }
 
-    public func getScreenTitle() -> String {
+    func getScreenTitle() -> String {
         return titleScreen
     }
 
-    public func getAlertCardTitle(card: Card) -> String {
+    func getAlertCardTitle(card: Card) -> String {
         var title: String = ""
         if !String.isNullOrEmpty(card.paymentMethod?.name) {
             title = card.paymentMethod!.name! + " "
@@ -99,7 +97,7 @@ open class CardsAdminViewModel: NSObject {
         return 0
     }
 
-    public func sizeForItemAt(indexPath: IndexPath) -> CGSize {
+    func sizeForItemAt(indexPath: IndexPath) -> CGSize {
         if self.isHeaderSection(section: indexPath.section) {
             return CGSize(width: screenWidth, height: titleCellHeight)
 

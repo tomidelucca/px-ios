@@ -7,8 +7,7 @@
 //
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class PaymentMethodSearch: NSObject {
+internal class PaymentMethodSearch {
 
     var groups: [PaymentMethodSearchItem]!
     var paymentMethods: [PaymentMethod]!
@@ -24,7 +23,7 @@ import Foundation
     }
 }
 // MARK: One tap
-extension PaymentMethodSearch {
+internal extension PaymentMethodSearch {
     func hasCheckoutDefaultOption() -> Bool {
         return oneTap != nil
     }

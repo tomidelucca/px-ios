@@ -25,7 +25,7 @@ import UIKit
     open var issuer: Issuer?
     open var securityCode: SecurityCode?
 
-    open class func fromJSON(_ json: NSDictionary) -> Card {
+    internal class func fromJSON(_ json: NSDictionary) -> Card {
                 let card: Card = Card()
                 if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
                         card.customerId = customerId
@@ -68,11 +68,11 @@ import UIKit
         return self.issuer
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let cardHolder: Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
         let customer_id: Any = self.customerId == nil ? JSONHandler.null : self.customerId!
         let dateCreated: Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
@@ -182,7 +182,7 @@ import UIKit
         return String(describing: self.idCard)
     }
 
-    public func getChildren() -> [PaymentMethodOption]? {
+    func getChildren() -> [PaymentMethodOption]? {
         return nil
     }
 

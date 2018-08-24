@@ -8,21 +8,11 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers
-open class MPLabel: UILabel {
+internal class MPLabel: UILabel {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-
-    static let defaultColorText = UIColor(red: 51, green: 51, blue: 51)//UIColor(netHex:0x333333)
-    static let highlightedColorText = UIColor(red: 51, green: 51, blue: 51)//UIColor(netHex:0x999999)
-    static let errorColorText = UIColor(red: 51, green: 51, blue: 51)//UIColor(netHex:0xFF0000)
+    static let defaultColorText = UIColor(red: 51, green: 51, blue: 51)
+    static let highlightedColorText = UIColor(red: 51, green: 51, blue: 51)
+    static let errorColorText = UIColor(red: 51, green: 51, blue: 51)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,7 +53,5 @@ open class MPLabel: UILabel {
         }
         attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         self.attributedText = attributedString
-
     }
-
 }

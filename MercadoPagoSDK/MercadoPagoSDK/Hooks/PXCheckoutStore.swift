@@ -5,30 +5,24 @@
 //  Created by Eden Torres on 11/28/17.
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
-
 import Foundation
 
 @objcMembers
 open class PXCheckoutStore: NSObject {
     static let sharedInstance = PXCheckoutStore()
     internal var checkoutPreference: CheckoutPreference?
-    internal var paymentData = PaymentData()
-    internal var paymentOptionSelected: PaymentMethodOption?
+    internal var paymentData = PXPaymentData()
     private var data = [String: Any]()
 }
 
 // MARK: - Getters
 extension PXCheckoutStore {
-    public func getPaymentData() -> PaymentData {
+    public func getPaymentData() -> PXPaymentData {
         return paymentData
     }
 
     public func getCheckoutPreference() -> CheckoutPreference? {
         return checkoutPreference
-    }
-
-    public func getPaymentOptionSelected() -> PaymentMethodOption? {
-        return paymentOptionSelected
     }
 }
 
@@ -36,8 +30,7 @@ internal extension PXCheckoutStore {
     internal func clean() {
         removeAll()
         checkoutPreference = nil
-        paymentData = PaymentData()
-        paymentOptionSelected = nil
+        paymentData = PXPaymentData()
     }
 }
 

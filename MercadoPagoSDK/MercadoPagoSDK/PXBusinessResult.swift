@@ -34,8 +34,8 @@ import UIKit
     private let title: String // Titluo de Congrats
     private let subtitle: String? // Sub Titluo de Congrats
     private let icon: UIImage?  // Icono de Congrats
-    private let mainAction: PXComponentAction? // Boton principal (Azul)
-    private let secondaryAction: PXComponentAction? // Boton secundario (link)
+    private let mainAction: PXAction? // Boton principal (Azul)
+    private let secondaryAction: PXAction? // Boton secundario (link)
     private let helpMessage: String? // Texto
     private let showPaymentMethod: Bool // Si quiere que muestre la celda de PM
     private let statementDescription: String?
@@ -46,7 +46,7 @@ import UIKit
     let paymentStatus: String
     let paymentStatusDetail: String
 
-    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil, paymentStatus: String, paymentStatusDetail: String) {
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXAction? = nil, secondaryAction: PXAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil, paymentStatus: String, paymentStatusDetail: String) {
         self.receiptId = receiptId
         self.status = status
         self.title = title
@@ -67,49 +67,49 @@ import UIKit
 }
 
 // MARK: Getters
-extension PXBusinessResult {
+internal extension PXBusinessResult {
 
-    public func getStatus() -> PXBusinessResultStatus {
+    func getStatus() -> PXBusinessResultStatus {
         return self.status
     }
-    public func getTitle() -> String {
+    func getTitle() -> String {
         return self.title
     }
-    public func getStatementDescription() -> String? {
+    func getStatementDescription() -> String? {
         return self.statementDescription
     }
-    public func getTopCustomView() -> UIView? {
+    func getTopCustomView() -> UIView? {
         return self.topCustomView
     }
-    public func getBottomCustomView() -> UIView? {
+    func getBottomCustomView() -> UIView? {
         return self.bottomCustomView
     }
-    public func getImageUrl() -> String? {
+    func getImageUrl() -> String? {
         return self.imageUrl
     }
-    public func getReceiptId() -> String? {
+    func getReceiptId() -> String? {
         return self.receiptId
     }
-    public func getSubTitle() -> String? {
+    func getSubTitle() -> String? {
         return self.subtitle
     }
-    public func getHelpMessage() -> String? {
+    func getHelpMessage() -> String? {
         return self.helpMessage
     }
-    public func getIcon() -> UIImage? {
+    func getIcon() -> UIImage? {
         return self.icon
     }
-    public func getMainAction() -> PXComponentAction? {
+    func getMainAction() -> PXAction? {
         return self.mainAction
     }
-    public func getSecondaryAction() -> PXComponentAction? {
+    func getSecondaryAction() -> PXAction? {
         return self.secondaryAction
     }
-    public func mustShowPaymentMethod() -> Bool {
+    func mustShowPaymentMethod() -> Bool {
         return self.showPaymentMethod
     }
-    public func isApproved() -> Bool {
-        return self.paymentStatus == PaymentStatus.APPROVED
+    func isApproved() -> Bool {
+        return self.paymentStatus == PXPaymentStatus.APPROVED.rawValue
     }
 }
 

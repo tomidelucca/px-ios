@@ -8,13 +8,12 @@
 
 import Foundation
 
-/** :nodoc: */
 @objcMembers
-open class Regex {
+internal class Regex {
     let internalExpression: NSRegularExpression?
     let pattern: String
 
-    public init(_ pattern: String) {
+    init(_ pattern: String) {
         self.pattern = pattern
 		do {
 			self.internalExpression = try NSRegularExpression(pattern: pattern, options: [NSRegularExpression.Options.caseInsensitive])
@@ -23,7 +22,7 @@ open class Regex {
 		}
     }
 
-    open func test(_ input: String) -> Bool {
+    func test(_ input: String) -> Bool {
 		if self.internalExpression != nil {
             let matches = self.internalExpression!.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
 			return matches.count > 0

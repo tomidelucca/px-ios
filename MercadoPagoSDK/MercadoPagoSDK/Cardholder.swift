@@ -13,7 +13,7 @@ import Foundation
     open var name: String?
     open var identification: Identification!
 
-    open class func fromJSON(_ json: NSDictionary) -> Cardholder {
+    internal class func fromJSON(_ json: NSDictionary) -> Cardholder {
         let cardholder: Cardholder = Cardholder()
 
         if let name = json["name"] as? String {
@@ -26,11 +26,11 @@ import Foundation
         return cardholder
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let name: Any = String.isNullOrEmpty(self.name) ? JSONHandler.null : self.name!
         let identification: Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
         let obj: [String: Any] = [

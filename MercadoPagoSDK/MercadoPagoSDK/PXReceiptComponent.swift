@@ -8,8 +8,7 @@
 
 import UIKit
 
-/** :nodoc: */
-class PXReceiptComponent: PXComponentizable {
+internal class PXReceiptComponent: PXComponentizable {
     var props: PXReceiptProps
 
     init(props: PXReceiptProps) {
@@ -20,8 +19,7 @@ class PXReceiptComponent: PXComponentizable {
     }
 }
 
-/** :nodoc: */
-open class PXReceiptProps: NSObject {
+class PXReceiptProps {
     var dateLabelString: String?
     var receiptDescriptionString: String?
     init(dateLabelString: String? = nil, receiptDescriptionString: String? = nil) {

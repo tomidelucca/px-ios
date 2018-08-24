@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class Currency: NSObject {
+internal class Currency {
 
     open var currencyId: String!
     open var currencyDescription: String!
@@ -18,12 +17,11 @@ import Foundation
     open var decimalSeparator: String!
     open var thousandsSeparator: String!
 
-    public override init() {
-        super.init()
+    init() {
+
     }
 
     public init(currencyId: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: String, thousandSeparator: String) {
-        super.init()
         self.currencyId = currencyId
         self.currencyDescription = description
         self.symbol = symbol

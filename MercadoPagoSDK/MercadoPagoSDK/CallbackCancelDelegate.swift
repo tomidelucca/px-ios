@@ -8,9 +8,7 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers
-open class CallbackCancelTableViewCell: UITableViewCell {
+internal class CallbackCancelTableViewCell: UITableViewCell {
 
     var callbackCancel: (() -> Void)?
     var defaultCallback: (() -> Void)?

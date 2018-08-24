@@ -9,8 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-open class PXBodyComponent: NSObject, PXComponentizable {
+internal class PXBodyComponent: PXComponentizable {
 
     let rejectedStatusDetailsWithBody = [PXPayment.StatusDetails.REJECTED_OTHER_REASON, PXPayment.StatusDetails.REJECTED_BY_BANK, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA, PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT, PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS, PXPayment.StatusDetails.REJECTED_HIGH_RISK, PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE, PXPayment.StatusDetails.REJECTED_CARD_DISABLED, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT]
 
@@ -22,11 +21,11 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         self.props = props
     }
 
-    public func hasInstructions() -> Bool {
+    func hasInstructions() -> Bool {
         return props.instruction != nil
     }
 
-    public func getInstructionsComponent() -> PXInstructionsComponent? {
+    func getInstructionsComponent() -> PXInstructionsComponent? {
         if let instruction = props.instruction {
             let instructionsProps = PXInstructionsProps(instruction: instruction)
             let instructionsComponent = PXInstructionsComponent(props: instructionsProps)
@@ -35,17 +34,17 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return nil
     }
 
-    fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+    private func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
+        let defaultColor = paymentMethod.paymentTypeId == PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+        if paymentMethod.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
         }
         return paymentMethodImage
     }
 
-    public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
+    func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.props.paymentResult.paymentData!.paymentMethod!
 
         let image = getPaymentMethodIcon(paymentMethod: pm)
@@ -103,11 +102,11 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return PXPaymentMethodComponent(props: bodyProps)
     }
 
-    public func hasBodyError() -> Bool {
+    func hasBodyError() -> Bool {
         return isPendingWithBody() || isRejectedWithBody()
     }
 
-    public func getBodyErrorComponent() -> PXErrorComponent {
+    func getBodyErrorComponent() -> PXErrorComponent {
         let status = props.paymentResult.status
         let statusDetail = props.paymentResult.statusDetail
         let paymentMethodName = props.paymentResult.paymentData?.paymentMethod?.name
@@ -122,11 +121,11 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return errorComponent
     }
 
-    public func getErrorTitle() -> String {
+    func getErrorTitle() -> String {
         return PXResourceProvider.getTitleForErrorBody()
     }
 
-    public func getErrorMessage(status: String, statusDetail: String, paymentMethodName: String?) -> String? {
+    func getErrorMessage(status: String, statusDetail: String, paymentMethodName: String?) -> String? {
         if status == PXPayment.Status.PENDING || status == PXPayment.Status.IN_PROCESS {
             switch statusDetail {
             case PXPayment.StatusDetails.PENDING_CONTINGENCY:
@@ -163,47 +162,47 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return nil
     }
 
-    public func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXComponentAction? {
+    internal func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXAction? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             let actionText = PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(paymentMethodName)
-            let action = PXComponentAction(label: actionText, action: self.props.callback)
+            let action = PXAction(label: actionText, action: self.props.callback)
             return action
         }
         return nil
     }
 
-    public func getErrorSecondaryTitle(status: String, statusDetail: String) -> String? {
+    func getErrorSecondaryTitle(status: String, statusDetail: String) -> String? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             return PXResourceProvider.getSecondaryTitleForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE()
         }
         return nil
     }
 
-    public func isCallForAuthorize(status: String, statusDetail: String) -> Bool {
+    func isCallForAuthorize(status: String, statusDetail: String) -> Bool {
         return status == PXPayment.Status.REJECTED && statusDetail == PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE
     }
 
-    public func isPendingWithBody() -> Bool {
+    func isPendingWithBody() -> Bool {
         let hasPendingStatus = props.paymentResult.status == PXPayment.Status.PENDING || props.paymentResult.status == PXPayment.Status.IN_PROCESS
         return hasPendingStatus && pendingStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
 
-    public func isRejectedWithBody() -> Bool {
+    func isRejectedWithBody() -> Bool {
         return props.paymentResult.status == PXPayment.Status.REJECTED && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
 
-    public func render() -> UIView {
+    func render() -> UIView {
         return PXBodyRenderer().render(self)
     }
 
 }
 
-/** :nodoc: */
-open class PXBodyProps: NSObject {
+internal class PXBodyProps {
     let paymentResult: PaymentResult
     let instruction: Instruction?
     let amountHelper: PXAmountHelper
     let callback : (() -> Void)
+
     init(paymentResult: PaymentResult, amountHelper: PXAmountHelper, instruction: Instruction?, callback:  @escaping (() -> Void)) {
         self.paymentResult = paymentResult
         self.instruction = instruction

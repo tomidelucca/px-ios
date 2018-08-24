@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class SavedCardToken: CardToken {
+internal class SavedCardToken: CardToken {
 
     open var cardId: String
     open var securityCodeRequired: Bool = true
@@ -51,7 +50,7 @@ import Foundation
         return true
     }
 
-    open override func toJSON() -> [String: Any] {
+    internal override func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "card_id": String.isNullOrEmpty(self.cardId) ? JSONHandler.null : self.cardId,
             "security_code": String.isNullOrEmpty(self.securityCode!) ? "" : self.securityCode!,
@@ -60,7 +59,7 @@ import Foundation
         return obj
     }
 
-    open override func toJSONString() -> String {
+    internal override func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 }

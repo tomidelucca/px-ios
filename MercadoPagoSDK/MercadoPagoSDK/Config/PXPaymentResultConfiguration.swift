@@ -514,7 +514,7 @@ extension PXPaymentResultConfiguration {
             return ResourceManager.shared.getImage(pmBolbradescoIconName)
         }
 
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+        if paymentMethod.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
             return ResourceManager.shared.getImage(rejectedPaymentMethodPluginIconName)
         }
         return ResourceManager.shared.getImage(pmDefaultIconName)

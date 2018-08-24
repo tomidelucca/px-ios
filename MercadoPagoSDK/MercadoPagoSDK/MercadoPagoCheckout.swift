@@ -118,7 +118,7 @@ extension MercadoPagoCheckout {
         self.viewModel.paymentResult = paymentResult
     }
 
-    internal func setPaymentData(paymentData: PaymentData) {
+    internal func setPaymentData(paymentData: PXPaymentData) {
         self.viewModel.paymentData = paymentData
     }
 

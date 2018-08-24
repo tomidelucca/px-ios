@@ -8,20 +8,19 @@
 
 import Foundation
 
-/** :nodoc: */
-public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponentizable {
+internal class PXInstructionsSecondaryInfoComponent: PXComponentizable {
     var props: PXInstructionsSecondaryInfoProps
 
     init(props: PXInstructionsSecondaryInfoProps) {
         self.props = props
     }
-    public func render() -> UIView {
+
+    func render() -> UIView {
         return PXInstructionsSecondaryInfoRenderer().render(instructionsSecondaryInfo: self)
     }
 }
 
-/** :nodoc: */
-public class PXInstructionsSecondaryInfoProps: NSObject {
+internal class PXInstructionsSecondaryInfoProps {
     var secondaryInfo: [String]
     init(secondaryInfo: [String]) {
         self.secondaryInfo = secondaryInfo

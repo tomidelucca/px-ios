@@ -29,8 +29,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
-@objcMembers internal class MPPayment: NSObject {
+internal class MPPayment {
 
     open var preferenceId: String!
     open var publicKey: String!
@@ -42,10 +41,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var binaryMode: Bool = false
     open var transactionDetails: TransactionDetails?
     open var discount: PXDiscount?
-
-    override init() {
-        super.init()
-    }
 
     init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool, discount: PXDiscount? = nil) {
         self.preferenceId = preferenceId
@@ -60,7 +55,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         self.discount = discount
     }
 
-    public init(preferenceId: String, publicKey: String, paymentData: PaymentData, binaryMode: Bool) {
+    init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
         self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.issuerId! : ""
 
         self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
@@ -86,11 +81,11 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         var obj: [String: Any] = [
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,

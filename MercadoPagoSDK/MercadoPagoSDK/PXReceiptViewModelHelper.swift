@@ -8,9 +8,8 @@
 
 import Foundation
 
-/** :nodoc: */
-extension PXResultViewModel {
-    open func getReceiptComponentProps() -> PXReceiptProps {
+internal extension PXResultViewModel {
+    func getReceiptComponentProps() -> PXReceiptProps {
         if hasReceiptComponent() {
             let date = Date()
             guard let paymentId = self.paymentResult.paymentId else {
@@ -22,12 +21,12 @@ extension PXResultViewModel {
         }
     }
 
-    open func hasReceiptComponent() -> Bool {
+    func hasReceiptComponent() -> Bool {
         if self.paymentResult.paymentId == nil {
             return false
         }
         if paymentResult.isApproved() {
-            let isPaymentMethodPlugin = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+            let isPaymentMethodPlugin = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
 
             if isPaymentMethodPlugin {
                 let hasReceiptId = !String.isNullOrEmpty(self.paymentResult.paymentId)

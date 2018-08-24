@@ -28,11 +28,11 @@ import Foundation
         super.init()
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let validation: Any = String.isNullOrEmpty(self.validation) ? JSONHandler.null : self.validation!
         let obj: [String: Any] = [
             "length": self.length,

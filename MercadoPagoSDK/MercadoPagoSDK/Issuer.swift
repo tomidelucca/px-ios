@@ -11,11 +11,11 @@ import Foundation
 /** :nodoc: */
 @objcMembers open class Issuer: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.issuer
+    var objectType: ObjectTypes = ObjectTypes.issuer
     open var issuerId: String?
     open var name: String?
 
-    open class func fromJSON(_ json: NSDictionary) -> Issuer {
+    internal class func fromJSON(_ json: NSDictionary) -> Issuer {
                 let issuer: Issuer = Issuer()
 
                 if let id = json["id"] as? String {
@@ -29,11 +29,11 @@ import Foundation
                 return issuer
             }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
        return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let id: Any = self.issuerId == nil ? JSONHandler.null : self.issuerId!
         let name: Any = self.name == nil ? JSONHandler.null : self.name!
         let obj: [String: Any] = [
@@ -42,14 +42,4 @@ import Foundation
             ]
         return obj
     }
-}
-
-/** :nodoc: */
-public func == (obj1: Issuer, obj2: Issuer) -> Bool {
-
-    let areEqual =
-        obj1.issuerId == obj2.issuerId &&
-        obj1.name == obj2.name
-
-    return areEqual
 }

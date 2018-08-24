@@ -12,7 +12,7 @@ import UIKit
 /** :nodoc: */
 @objcMembers open class PaymentMethod: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.paymentMethod
+    var objectType: ObjectTypes = ObjectTypes.paymentMethod
     open var paymentMethodId: String!
     open var name: String!
     open var paymentTypeId: String!
@@ -40,7 +40,7 @@ import UIKit
         self.paymentTypeId = paymentTypeId
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> PaymentMethod {
+    internal class func fromJSON(_ json: NSDictionary) -> PaymentMethod {
                 let paymentMethod: PaymentMethod = PaymentMethod()
                 paymentMethod.paymentMethodId = json["id"] as? String
                 paymentMethod.name = json["name"] as? String
@@ -149,14 +149,14 @@ import UIKit
     }
 
     open var isCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCard()
         }
         return false
     }
 
     open var isCreditCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCreditCard()
         }
         return false
@@ -164,14 +164,14 @@ import UIKit
     }
 
     open var isPrepaidCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isPrepaidCard()
         }
         return false
     }
 
     open var isDebitCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isDebitCard()
         }
         return false
@@ -196,11 +196,11 @@ import UIKit
         return false
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let id: Any = String.isNullOrEmpty(self.paymentMethodId) ?  JSONHandler.null : self.paymentMethodId!
         let name: Any = self.name == nil ?  JSONHandler.null : self.name
         let payment_type_id: Any = self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId
@@ -282,7 +282,7 @@ import UIKit
     }
 
    open var isAccountMoney: Bool {
-        return self.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue
+        return self.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
 
     open func secCodeMandatory() -> Bool {
@@ -449,6 +449,6 @@ import UIKit
     }
 
     var isBolbradesco: Bool {
-        return self.paymentMethodId.contains(PaymentTypeId.BOLBRADESCO.rawValue)
+        return self.paymentMethodId.contains(PXPaymentTypes.BOLBRADESCO.rawValue)
     }
 }

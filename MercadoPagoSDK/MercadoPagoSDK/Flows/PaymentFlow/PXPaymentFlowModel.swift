@@ -9,7 +9,7 @@
 import Foundation
 
 internal final class PXPaymentFlowModel: NSObject {
-    var paymentData: PaymentData?
+    var paymentData: PXPaymentData?
     var checkoutPreference: CheckoutPreference?
     let paymentPlugin: PXPaymentProcessor?
 
@@ -96,7 +96,7 @@ internal final class PXPaymentFlowModel: NSObject {
         guard let paymentTypeId = paymentData?.paymentMethod?.paymentTypeId else {
             return false
         }
-        return !PaymentTypeId.isOnlineType(paymentTypeId: paymentTypeId)
+        return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId)
     }
 
     func assignToCheckoutStore() {
@@ -113,8 +113,7 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 }
 
-/** :nodoc: */
-extension PXPaymentFlowModel {
+internal extension PXPaymentFlowModel {
     func hasPluginPaymentScreen(plugin: PXPaymentProcessor?) -> Bool {
         guard let paymentPlugin = plugin else {
             return false

@@ -8,8 +8,7 @@
 
 import UIKit
 
-/** :nodoc: */
-@objcMembers open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
+internal class PaymentMethodSearchItem: PaymentOptionDrawable, PaymentMethodOption {
 
     open var idPaymentMethodSearchItem: String!
     open var type: PaymentMethodSearchItemType!
@@ -20,7 +19,7 @@ import UIKit
     open var showIcon: Bool = false
 
     open func isOfflinePayment() -> Bool {
-        return PaymentTypeId.offlinePaymentTypes().contains(self.idPaymentMethodSearchItem)
+        return PXPaymentTypes.offlinePaymentTypes().contains(self.idPaymentMethodSearchItem)
     }
 
     open func isBitcoin() -> Bool {
@@ -44,7 +43,7 @@ import UIKit
     }
 
     public func getSubtitle() -> String? {
-        if self.idPaymentMethodSearchItem == PaymentTypeId.CREDIT_CARD.rawValue || self.idPaymentMethodSearchItem == PaymentTypeId.DEBIT_CARD.rawValue || self.idPaymentMethodSearchItem == PaymentTypeId.PREPAID_CARD.rawValue {
+        if self.idPaymentMethodSearchItem == PXPaymentTypes.CREDIT_CARD.rawValue || self.idPaymentMethodSearchItem == PXPaymentTypes.DEBIT_CARD.rawValue || self.idPaymentMethodSearchItem == PXPaymentTypes.PREPAID_CARD.rawValue {
             return nil
         }
         return self.comment
@@ -62,12 +61,12 @@ import UIKit
         return !Array.isNullOrEmpty(self.children)
     }
 
-    public func getChildren() -> [PaymentMethodOption]? {
+    func getChildren() -> [PaymentMethodOption]? {
         return self.children
     }
 
     public func isCard() -> Bool {
-        return PaymentTypeId.isCard(paymentTypeId: self.idPaymentMethodSearchItem.lowercased())
+        return PXPaymentTypes.isCard(paymentTypeId: self.idPaymentMethodSearchItem.lowercased())
     }
 
     public func getId() -> String {
@@ -121,8 +120,7 @@ import UIKit
             }
 }
 
-/** :nodoc: */
-public enum PaymentMethodSearchItemType: String {
+internal enum PaymentMethodSearchItemType: String {
     case GROUP = "group"
     case PAYMENT_TYPE = "payment_type"
     case PAYMENT_METHOD = "payment_method"

@@ -8,8 +8,8 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class ApiException: NSObject {
+internal class ApiException {
+
     open var cause: [Cause]?
     open var error: String?
     open var message: String?
