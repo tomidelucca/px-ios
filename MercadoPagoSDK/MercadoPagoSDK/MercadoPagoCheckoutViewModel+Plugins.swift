@@ -64,13 +64,11 @@ extension MercadoPagoCheckoutViewModel {
         if paymentPlugin == nil {
             return false
         }
-
         populateCheckoutStore()
-
-        if let shouldSkip = paymentPlugin?.support?(checkoutStore: PXCheckoutStore.sharedInstance), !shouldSkip {
-            return false
+        paymentPlugin?.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
+        if let shouldSupport = paymentPlugin?.support() {
+            return shouldSupport
         }
-
         return needToCreatePayment()
     }
 }
