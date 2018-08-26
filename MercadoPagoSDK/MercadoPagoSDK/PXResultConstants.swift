@@ -10,7 +10,6 @@ import Foundation
 
 // MARK: Header Constants
 struct PXHeaderResutlConstants {
-
     // Header titles
     static let APPROVED_HEADER_TITLE = "¡Listo! Se acreditó tu pago"
     static let PENDING_HEADER_TITLE = "Estamos procesando el pago"
@@ -18,11 +17,10 @@ struct PXHeaderResutlConstants {
 
     // Icon subtext
     static let REJECTED_ICON_SUBTEXT = "Algo salió mal..."
-
 }
+
 // MARK: Footer Constants
 struct PXFooterResultConstants {
-
     // Button texts
     static let ERROR_BUTTON_TEXT = "Pagar con otro medio"
     static let C4AUTH_BUTTON_TEXT = "Pagar con otro medio"

@@ -1,5 +1,5 @@
 //
-//  PXCustomComponentsHelper.swift
+//  PXResultViewModel+CustomViews.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 1/5/18.

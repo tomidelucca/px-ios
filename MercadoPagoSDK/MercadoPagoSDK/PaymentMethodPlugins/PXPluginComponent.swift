@@ -15,7 +15,7 @@ import Foundation
 }
 
 /** :nodoc: */
-@objc public protocol PXPluginComponent: PXCustomComponentizable {
+@objc public protocol PXPluginComponent: NSObjectProtocol {
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
     @objc optional func didReceive(checkoutStore: PXCheckoutStore)
     @objc optional func renderDidFinish()

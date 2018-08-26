@@ -58,7 +58,7 @@ extension PXSmallSummaryView {
     }
 
     private func getRowComponentView(prop: PXSummaryRowProps) -> UIView {
-        return PXOneTapSummaryRowRenderer(withProps: prop).render()
+        return PXOneTapSummaryRowRenderer(withProps: prop).renderXib()
     }
 }
 

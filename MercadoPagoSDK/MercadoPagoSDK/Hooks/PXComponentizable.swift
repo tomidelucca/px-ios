@@ -13,14 +13,8 @@ import Foundation
     @objc optional func oneTapRender() -> UIView
 }
 
-/** :nodoc: */
-@objc public protocol PXCustomComponentizable {
-    func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
-}
-
-/** :nodoc: */
-@objc public protocol PXXibComponentizable {
+internal protocol PXXibComponentizable {
     func xibName() -> String
     func containerView() -> UIView
-    func render() -> UIView
+    func renderXib() -> UIView
 }
