@@ -14,11 +14,11 @@ import MercadoPagoSDK
     let primaryColor: UIColor = #colorLiteral(red: 0, green: 0.6117647059, blue: 0.9333333333, alpha: 1)
 
     public func navigationBar() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     }
 
     public func loadingComponent() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: primaryColor, tintColor: .white, selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: primaryColor, tintColor: .white)
     }
 
     public func highlightBackgroundColor() -> UIColor {

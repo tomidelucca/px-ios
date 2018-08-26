@@ -187,7 +187,7 @@ extension ThemeManager: PXTheme {
     }
 
     func modalComponent() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: currentStylesheet.modalBackgroundColor, tintColor: currentStylesheet.modalTintColor, selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: currentStylesheet.modalBackgroundColor, tintColor: currentStylesheet.modalTintColor)
     }
 }
 

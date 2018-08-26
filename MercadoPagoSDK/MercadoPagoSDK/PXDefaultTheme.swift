@@ -19,11 +19,11 @@ class PXDefaultTheme: NSObject {
 /** :nodoc: */
 extension PXDefaultTheme: PXTheme {
     public func navigationBar() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     }
 
     public func loadingComponent() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: primaryColor, selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: primaryColor)
     }
 
     public func highlightBackgroundColor() -> UIColor {
