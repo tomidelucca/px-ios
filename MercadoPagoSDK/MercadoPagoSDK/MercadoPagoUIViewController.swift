@@ -21,7 +21,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     var shouldShowBackArrow = true
     var tracked: Bool = false
 
-    var pluginComponentInterface: PXPluginComponent?
+    var pluginComponentInterface: PXPaymentPluginConfigProtocol?
 
     let STATUS_BAR_HEIGTH = ViewUtils.getStatusBarHeight()
     let NAV_BAR_HEIGHT = 44.0
