@@ -8,9 +8,9 @@
 
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
-#import "FirstHookViewController.h"
-#import "SecondHookViewController.h"
-#import "ThirdHookViewController.h"
+//#import "FirstHookViewController.h"
+//#import "SecondHookViewController.h"
+//#import "ThirdHookViewController.h"
 
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"

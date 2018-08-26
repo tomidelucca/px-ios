@@ -9,8 +9,7 @@
 import Foundation
 
 /** :nodoc: */
-@objc
-public protocol PXHookComponent: PXCustomComponentizable {
+@objc internal protocol PXHookComponent: PXCustomComponentizable {
     func hookForStep() -> PXHookStep
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
     @objc optional func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool
