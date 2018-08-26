@@ -45,8 +45,8 @@ open class PXPaymentMethodPlugin: NSObject {
         self.paymentMethodPluginDescription = description
     }
 
-    open func setPaymentMethodConfig(configPlugin: PXPaymentPluginConfigProtocol) {
-        self.paymentMethodConfigPlugin = configPlugin
+    open func setPaymentMethodConfig(config: PXPaymentPluginConfigProtocol) {
+        self.paymentMethodConfigPlugin = config
     }
 
     open func setDisplayOrder(order: DisplayOrder) {
