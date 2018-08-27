@@ -6,8 +6,8 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
   use_frameworks!
 
   # Pods for MercadoPagoSDKExamplesObjectiveC
-    pod 'MercadoPagoPXTrackingV4', '2.1.4'
-    pod 'MercadoPagoServicesV4', '1.0.21'
+    pod 'MercadoPagoPXTrackingV4', '2.1.5'
+    pod 'MercadoPagoServicesV4', '1.0.21.2'
   # UI Meli Lib
     pod 'MLUI', '~> 5.0'
 
