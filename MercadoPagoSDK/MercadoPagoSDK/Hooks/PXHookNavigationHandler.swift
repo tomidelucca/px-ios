@@ -8,9 +8,8 @@
 
 import Foundation
 
-/** :nodoc: */
 @objcMembers
-open class PXHookNavigationHandler: NSObject {
+internal class PXHookNavigationHandler: NSObject {
 
     private var checkout: MercadoPagoCheckout?
     private var targetHook: PXHookStep?

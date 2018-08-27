@@ -27,13 +27,11 @@ final class PXOneTapSummaryRowRenderer: PXXibRenderer {
         super.init(frame: frame)
     }
 
+    // MARK: - Mandatory override PXXibRenderer
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-}
 
-// PXXibComponentizable renderer mandatory protocol.
-extension PXOneTapSummaryRowRenderer {
     override func xibName() -> String {
         return "PXOneTapSummaryRowView"
     }
@@ -42,7 +40,7 @@ extension PXOneTapSummaryRowRenderer {
         return contentView
     }
 
-    override func render() -> UIView {
+    override func renderXib() -> UIView {
         setupStyles()
         populateProps()
         setupConstraints()
@@ -50,8 +48,8 @@ extension PXOneTapSummaryRowRenderer {
     }
 }
 
+// MARK: - Setup methods.
 extension PXOneTapSummaryRowRenderer {
-
     func setupConstraints() {
         PXLayout.setHeight(owner: titleLabel, height: 18).isActive = true
         PXLayout.setHeight(owner: amountLabel, height: 18).isActive = true

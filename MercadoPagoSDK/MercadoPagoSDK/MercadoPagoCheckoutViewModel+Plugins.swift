@@ -17,12 +17,12 @@ internal extension MercadoPagoCheckoutViewModel {
 
         populateCheckoutStore()
 
-        if let shouldSkip = paymentMethodPluginSelected.paymentMethodConfigPlugin?.shouldSkip?(pluginStore: PXCheckoutStore.sharedInstance), shouldSkip {
+        if let shouldSkip = paymentMethodPluginSelected.paymentMethodConfigPlugin?.shouldSkip?(store: PXCheckoutStore.sharedInstance), shouldSkip {
             willShowPaymentMethodConfigPlugin()
             return false
         }
 
-        if  wasPaymentMethodConfigPluginShowed() {
+        if wasPaymentMethodConfigPluginShowed() {
             return false
         }
 

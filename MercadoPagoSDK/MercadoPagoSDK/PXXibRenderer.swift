@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXXibRenderer: UIView {
+class PXXibRenderer: UIView, PXXibComponentizable {
     func loadXib(rendererComponentizableClass: PXXibComponentizable) {
         if let bundle = ResourceManager.shared.getBundle() {
             bundle.loadNibNamed(rendererComponentizableClass.xibName(), owner: rendererComponentizableClass, options: nil)
@@ -20,9 +20,7 @@ class PXXibRenderer: UIView {
             }
         }
     }
-}
 
-extension PXXibRenderer: PXXibComponentizable {
     func xibName() -> String {
         fatalError("\(#function) must be overridden")
     }
@@ -31,7 +29,7 @@ extension PXXibRenderer: PXXibComponentizable {
         fatalError("\(#function) must be overridden")
     }
 
-    func render() -> UIView {
+    func renderXib() -> UIView {
         fatalError("\(#function) must be overridden")
     }
 }

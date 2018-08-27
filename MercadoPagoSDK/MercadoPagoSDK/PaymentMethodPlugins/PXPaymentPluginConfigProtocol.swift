@@ -1,5 +1,5 @@
 //
-//  PXPluginComponent.swift
+//  PXPaymentPluginConfigProtocol.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 12/14/17.
@@ -8,14 +8,9 @@
 
 import Foundation
 
-/** :nodoc: */
-@objc public protocol PXConfigPluginComponent: PXPluginComponent {
-    @objc optional func shouldSkip(pluginStore: PXCheckoutStore) -> Bool
+@objc public protocol PXPaymentPluginConfigProtocol {
+    @objc optional func shouldSkip(store: PXCheckoutStore) -> Bool
     @objc optional func shouldShowBackArrow() -> Bool
-}
-
-/** :nodoc: */
-@objc public protocol PXPluginComponent: PXCustomComponentizable {
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
     @objc optional func didReceive(checkoutStore: PXCheckoutStore)
     @objc optional func renderDidFinish()
