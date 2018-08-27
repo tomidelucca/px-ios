@@ -16,7 +16,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PaymentData?, checkoutPreference: CheckoutPreference?) {
+    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: CheckoutPreference?) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
@@ -24,7 +24,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         self.model.checkoutPreference = checkoutPreference
     }
 
-    func setData(paymentData: PaymentData, checkoutPreference: CheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
+    func setData(paymentData: PXPaymentData, checkoutPreference: CheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
         self.model.paymentData = paymentData
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
@@ -47,7 +47,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         case .createPaymentPlugin:
             createPaymentWithPlugin(plugin: model.paymentPlugin)
         case .createPaymentPluginScreen:
-            showPaymentPluginComponent(paymentPluginComponent: model.paymentPlugin)
+            showPaymentProcessor(paymentProcessor: model.paymentPlugin)
         case .getInstructions:
             getInstructions()
         case .finish:
@@ -87,7 +87,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
 /** :nodoc: */
 extension PXPaymentFlow: PXPaymentFlowHandlerProtocol {
-    public func showError() {
+    func showError() {
         let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: false)
         resultHandler?.finishPaymentFlow(error: error)
     }

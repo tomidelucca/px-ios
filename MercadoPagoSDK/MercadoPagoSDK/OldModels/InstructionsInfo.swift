@@ -29,7 +29,7 @@ import UIKit
         }
     }
 
-    open func getInstruction() -> Instruction? {
+    internal func getInstruction() -> Instruction? {
         if instructions.isEmpty {
             return nil
         } else {

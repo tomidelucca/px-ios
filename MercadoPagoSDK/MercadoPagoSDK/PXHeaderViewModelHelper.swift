@@ -9,8 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-extension PXResultViewModel {
+internal extension PXResultViewModel {
 
     func getHeaderComponentProps() -> PXHeaderProps {
         let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
@@ -23,9 +22,8 @@ extension PXResultViewModel {
     }
 }
 
-/** :nodoc: */
 // MARK: Build Helpers
-extension PXResultViewModel {
+internal extension PXResultViewModel {
     func iconImageHeader() -> UIImage? {
         if paymentResult.isAccepted() {
             if self.paymentResult.isApproved() {
@@ -109,7 +107,7 @@ extension PXResultViewModel {
             return "".toAttributedString()
         }
 
-        if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
+        if statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue {
             return getTitleForCallForAuth(paymentMethod)
         }
 

@@ -68,7 +68,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         super.init()
     }
 
-    open class func fromJSON(_ json: NSDictionary) -> Payment {
+    internal class func fromJSON(_ json: NSDictionary) -> Payment {
                 let payment: Payment = Payment()
 
                 if let paymentId = JSONHandler.attemptParseToString(json["id"]) {
@@ -182,7 +182,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 return payment
             }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         let obj: [String: Any] = [
             "id": String(describing: self.paymentId),
             "transaction_amount": self.transactionAmount,
@@ -199,7 +199,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         return JSONHandler.jsonCoding(obj)
     }
 
-    open func isRejected() -> Bool {
-        return self.status == PaymentStatus.REJECTED
+    internal func isRejected() -> Bool {
+        return self.status == PXPaymentStatus.REJECTED.rawValue
     }
 }

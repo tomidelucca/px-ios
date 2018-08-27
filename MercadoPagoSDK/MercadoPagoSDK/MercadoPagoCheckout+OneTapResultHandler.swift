@@ -8,7 +8,7 @@
 
 import Foundation
 extension MercadoPagoCheckout: PXOneTapResultHandlerProtocol {
-    func finishOneTap(paymentData: PaymentData) {
+    func finishOneTap(paymentData: PXPaymentData) {
         self.viewModel.updateCheckoutModel(paymentData: paymentData)
         self.executeNextStep()
     }

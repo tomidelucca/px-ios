@@ -34,13 +34,11 @@ internal enum CheckoutStep: String {
     case SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
     case SCREEN_HOOK_BEFORE_PAYMENT
     case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
-    case SCREEN_PAYMENT_PLUGIN_PAYMENT
     case FLOW_ONE_TAP
 }
 
 internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
-    static var servicePreference = ServicePreference()
     var hookService: HookService = HookService()
 
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
@@ -56,7 +54,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
         }
     }
     var checkoutPreference: CheckoutPreference!
@@ -80,7 +78,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var rootVC = true
 
-    internal var paymentData = PaymentData()
+    internal var paymentData = PXPaymentData()
     var payment: Payment?
     internal var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
@@ -125,7 +123,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.privateKey = privateKey
         self.checkoutPreference = checkoutPreference
 
-        mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference, publicKey: publicKey, privateKey: privateKey)
+        mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: publicKey, privateKey: privateKey)
 
         super.init()
 
@@ -213,7 +211,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         for paymentMethodPlugin in paymentMethodPluginsToShow {
-            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\(PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue)|"
+            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\(PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue)|"
         }
         paymentMethodsOptions = String(paymentMethodsOptions.dropLast())
         return paymentMethodsOptions
@@ -529,7 +527,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
             // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
             self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
-                return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+                return element.getPaymentMethodId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
             })
         }
 
@@ -563,7 +561,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentMethodOptions = self.rootPaymentMethodOptions
     }
 
-    func updateCheckoutModel(paymentData: PaymentData) {
+    func updateCheckoutModel(paymentData: PXPaymentData) {
         self.paymentData = paymentData
         if paymentData.getPaymentMethod() == nil {
             prepareForNewSelection()
@@ -587,7 +585,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func findAndCompletePaymentMethodFor(paymentMethodId: String) {
-        if paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodId))
         } else {
             let cardInformation = (self.paymentOptionSelected as! CardInformation)
@@ -604,7 +602,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func handleCustomerPaymentMethod() {
-        if self.paymentOptionSelected!.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if self.paymentOptionSelected!.getId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected!.getId()))
         } else {
             // Se necesita completar información faltante de settings y pm para custom payment options
@@ -681,7 +679,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     func populateCheckoutStore() {
         PXCheckoutStore.sharedInstance.paymentData = self.paymentData
-        PXCheckoutStore.sharedInstance.paymentOptionSelected = self.paymentOptionSelected
         PXCheckoutStore.sharedInstance.checkoutPreference = self.checkoutPreference
     }
 
@@ -760,7 +757,6 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     static internal func clearEnviroment() {
-        MercadoPagoCheckoutViewModel.servicePreference = ServicePreference()
         MercadoPagoCheckoutViewModel.paymentCallback = nil
         MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
         MercadoPagoCheckoutViewModel.error = nil

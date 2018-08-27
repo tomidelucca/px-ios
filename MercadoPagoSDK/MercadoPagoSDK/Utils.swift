@@ -30,8 +30,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-/** :nodoc: */
-class Utils {
+internal class Utils {
 
     private static let kSdkSettingsFile = "mpsdk_settings"
 
@@ -348,7 +347,7 @@ class Utils {
         return ""
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PaymentMethodSearch, paymentMethodId: String, paymentTypeId: PaymentTypeId?) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PaymentMethodSearchItem? {
         guard paymentMethodSearch.groups != nil
             else {return nil}
 
@@ -358,10 +357,10 @@ class Utils {
         return nil
     }
 
-    static internal func findCardInformationIn(customOptions: [CardInformation], paymentData: PaymentData, savedESCCardToken: SavedESCCardToken? = nil) -> CardInformation? {
+    static internal func findCardInformationIn(customOptions: [CardInformation], paymentData: PXPaymentData, savedESCCardToken: SavedESCCardToken? = nil) -> CardInformation? {
         let customOptionsFound = customOptions.filter { (cardInformation: CardInformation) -> Bool in
             if paymentData.getPaymentMethod()!.isAccountMoney {
-                return  cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
+                return  cardInformation.getPaymentMethodId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue
             } else {
                 if paymentData.hasToken() {
                     return paymentData.getToken()!.cardId == cardInformation.getCardId()
@@ -374,7 +373,7 @@ class Utils {
         return !Array.isNullOrEmpty(customOptionsFound) ? customOptionsFound[0] : nil
     }
 
-    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList: [PaymentMethodSearchItem], paymentMethodId: String, paymentTypeId: PaymentTypeId?) -> PaymentMethodSearchItem? {
+    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList: [PaymentMethodSearchItem], paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PaymentMethodSearchItem? {
 
         var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PaymentMethodSearchItem) -> Bool in
             arg.idPaymentMethodSearchItem == paymentMethodId
@@ -411,7 +410,7 @@ class Utils {
         return nil
     }
 
-    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems: [PaymentMethodSearchItem], paymentTypeId: PaymentTypeId) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems: [PaymentMethodSearchItem], paymentTypeId: PXPaymentTypes) -> PaymentMethodSearchItem? {
 
         var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter { (arg: PaymentMethodSearchItem) -> Bool in
             arg.idPaymentMethodSearchItem == paymentTypeId.rawValue

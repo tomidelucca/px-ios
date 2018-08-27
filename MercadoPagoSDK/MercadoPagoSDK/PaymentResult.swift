@@ -8,11 +8,9 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class PaymentResult: NSObject {
+internal class PaymentResult {
 
-    @objc
-    public enum CongratsState: Int {
+    internal enum CongratsState: Int {
         case approved = 0
         case cancel_SELECT_OTHER = 1
         case cancel_RETRY = 2
@@ -20,16 +18,16 @@ import Foundation
         case call_FOR_AUTH = 4
     }
 
-    let warningStatusDetails = [RejectedStatusDetail.INVALID_ESC, RejectedStatusDetail.CALL_FOR_AUTH, RejectedStatusDetail.BAD_FILLED_CARD_NUMBER, RejectedStatusDetail.CARD_DISABLE, RejectedStatusDetail.INSUFFICIENT_AMOUNT, RejectedStatusDetail.BAD_FILLED_DATE, RejectedStatusDetail.BAD_FILLED_SECURITY_CODE, RejectedStatusDetail.BAD_FILLED_OTHER]
+    let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue, PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue, PXRejectedStatusDetail.CARD_DISABLE.rawValue, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue, PXRejectedStatusDetail.BAD_FILLED_DATE.rawValue, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue, PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
 
-    open var paymentData: PaymentData?
-    open var status: String
-    open var statusDetail: String
-    open var payerEmail: String?
-    open var paymentId: String?
-    open var statementDescription: String?
+    var paymentData: PXPaymentData?
+    var status: String
+    var statusDetail: String
+    var payerEmail: String?
+    var paymentId: String?
+    var statementDescription: String?
 
-    public init (payment: Payment, paymentData: PaymentData) {
+    init (payment: Payment, paymentData: PXPaymentData) {
         self.status = payment.status
         self.statusDetail = payment.statusDetail
         self.paymentData = paymentData
@@ -38,7 +36,7 @@ import Foundation
         self.statementDescription = payment.statementDescriptor
     }
 
-    public init (status: String, statusDetail: String, paymentData: PaymentData, payerEmail: String?, paymentId: String?, statementDescription: String?) {
+    init (status: String, statusDetail: String, paymentData: PXPaymentData, payerEmail: String?, paymentId: String?, statementDescription: String?) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData
@@ -48,35 +46,35 @@ import Foundation
     }
 
     func isCallForAuth() -> Bool {
-        return self.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH
+        return self.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue
     }
 
     func isApproved() -> Bool {
-        return self.status == PaymentStatus.APPROVED
+        return self.status == PXPaymentStatus.APPROVED.rawValue
     }
 
     func isPending() -> Bool {
-        return self.status == PaymentStatus.PENDING
+        return self.status == PXPaymentStatus.PENDING.rawValue
     }
 
     func isInProcess() -> Bool {
-        return self.status == PaymentStatus.IN_PROCESS
+        return self.status == PXPaymentStatus.IN_PROCESS.rawValue
     }
 
     func isRejected() -> Bool {
-        return self.status == PaymentStatus.REJECTED
+        return self.status == PXPaymentStatus.REJECTED.rawValue
     }
 
     func isInvalidESC() -> Bool {
-        return self.statusDetail == RejectedStatusDetail.INVALID_ESC
+        return self.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue
     }
 
     func isReviewManual() -> Bool {
-        return self.statusDetail == PendingStatusDetail.REVIEW_MANUAL
+        return self.statusDetail == PXPendingStatusDetail.REVIEW_MANUAL.rawValue
     }
 
     func isWaitingForPayment() -> Bool {
-        return self.statusDetail == PendingStatusDetail.WAITING_PAYMENT
+        return self.statusDetail == PXPendingStatusDetail.WAITING_PAYMENT.rawValue
     }
 }
 

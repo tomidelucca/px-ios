@@ -54,12 +54,12 @@ extension PaymentVaultViewModel {
     }
 
     func shouldGetCustomerCardsInfo() -> Bool {
-        return MercadoPagoCheckoutViewModel.servicePreference.isCustomerInfoAvailable() && self.isRoot
+       return false
     }
 
     func hasAccountMoneyIn(customerOptions: [CardInformation]) -> Bool {
         for paymentOption: CardInformation in customerOptions {
-            if paymentOption.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+            if paymentOption.getPaymentMethodId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
                 return true
             }
         }

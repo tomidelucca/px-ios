@@ -8,9 +8,8 @@
 
 import UIKit
 
-/** :nodoc: */
 @objc
-public protocol PaymentOptionDrawable {
+internal protocol PaymentOptionDrawable {
     func getImage() -> UIImage?
 
     func getTitle() -> String
@@ -18,9 +17,8 @@ public protocol PaymentOptionDrawable {
     func getSubtitle() -> String?
 }
 
-/** :nodoc: */
 @objc
-public protocol PaymentMethodOption {
+internal protocol PaymentMethodOption {
     func getId() -> String
 
     func getDescription() -> String

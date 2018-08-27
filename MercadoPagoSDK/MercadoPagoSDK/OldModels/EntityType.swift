@@ -11,11 +11,11 @@ import Foundation
 /** :nodoc: */
 @objcMembers open class EntityType: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.entityType
+    var objectType: ObjectTypes = ObjectTypes.entityType
     open var entityTypeId: String!
     open var name: String!
 
-    open class func fromJSON(_ json: NSDictionary) -> EntityType {
+    internal class func fromJSON(_ json: NSDictionary) -> EntityType {
         let entityType: EntityType = EntityType()
 
         if let entityTypeId = JSONHandler.attemptParseToString(json["id"]) {
@@ -28,11 +28,11 @@ import Foundation
         return entityType
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let id: Any = self.entityTypeId == nil ? JSONHandler.null : self.entityTypeId!
         let name: Any = self.name == nil ? JSONHandler.null : self.name!
         let obj: [String: Any] = [
@@ -41,14 +41,4 @@ import Foundation
             ]
         return obj
     }
-}
-
-/** :nodoc: */
-public func == (obj1: EntityType, obj2: EntityType) -> Bool {
-
-    let areEqual =
-        obj1.entityTypeId == obj2.entityTypeId &&
-            obj1.name == obj2.name
-
-    return areEqual
 }

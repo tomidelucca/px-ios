@@ -9,13 +9,11 @@
 import UIKit
 import MercadoPagoPXTrackingV4
 
-/** :nodoc: */
-@objcMembers
-open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
+internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     private static let MLNavigationBarBackgroundViewTag = 569242
 
-    open var callbackCancel: (() -> Void)?
+    var callbackCancel: (() -> Void)?
     var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
     private var navBarBackgroundColor = ThemeManager.shared.getMainColor()
     var shouldDisplayBackButton = false
@@ -83,11 +81,11 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         pluginComponentInterface?.viewWillDisappear?()
     }
 
-    open func totalContentViewHeigth() -> CGFloat {
+    func totalContentViewHeigth() -> CGFloat {
         return UIScreen.main.bounds.height - getReserveSpace()
     }
 
-    open func getReserveSpace() -> CGFloat {
+    func getReserveSpace() -> CGFloat {
         var totalReserveSpace: CGFloat = CGFloat(STATUS_BAR_HEIGTH)
 
         if !shouldHideNavigationBar {
@@ -252,8 +250,7 @@ extension UINavigationController {
     }
 }
 
-/** :nodoc: */
-extension UINavigationBar {
+internal extension UINavigationBar {
     func removeBottomLine() {
         self.setValue(true, forKey: "hidesShadow")
     }

@@ -8,8 +8,7 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class ApiUtil {
+internal class ApiUtil {
     enum StatusCodes: Int {
         case INTERNAL_SERVER_ERROR = 500
         case PROCESSING = 499
@@ -43,8 +42,7 @@ import Foundation
     }
 }
 
-/** :nodoc: */
-open class ApiParams: NSObject {
+internal class ApiParams: NSObject {
     static let PAYER_ACCESS_TOKEN = "access_token"
     static let PUBLIC_KEY = "public_key"
     static let BIN = "bin"

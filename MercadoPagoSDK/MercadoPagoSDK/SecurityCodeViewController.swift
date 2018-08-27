@@ -10,9 +10,7 @@ import UIKit
 import MercadoPagoServicesV4
 import MercadoPagoPXTrackingV4
 
-/** :nodoc: */
-@objcMembers
-open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
+internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     var securityCodeLabel: PXMonospaceLabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!

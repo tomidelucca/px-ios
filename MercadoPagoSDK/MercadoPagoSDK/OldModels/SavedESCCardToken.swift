@@ -6,8 +6,7 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-/** :nodoc: */
-@objcMembers open class SavedESCCardToken: SavedCardToken {
+internal class SavedESCCardToken: SavedCardToken {
     open var requireESC: Bool = false
     open var esc: String?
 
@@ -28,7 +27,7 @@
         self.device = Device()
     }
 
-    open override func toJSON() -> [String: Any] {
+    internal override func toJSON() -> [String: Any] {
         var obj = super.toJSON()
         obj["require_esc"] = requireESC
         obj["esc"] = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc!

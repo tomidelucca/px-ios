@@ -9,11 +9,8 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers
-open class IdentificationCardView: UIView, Updatable {
-var view: UIView!
-
+internal class IdentificationCardView: UIView, Updatable {
+    var view: UIView!
     @IBOutlet weak var tipoDeDocumentoLabel: UILabel!
     @IBOutlet weak var numberDocLabel: UILabel!
 
@@ -28,11 +25,11 @@ var view: UIView!
         loadViewFromNib ()
     }
 
-    public func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod) {
+    func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod) {
 
     }
 
-    public func setCornerRadius(radius: CGFloat) {
+    func setCornerRadius(radius: CGFloat) {
         self.layer.cornerRadius = radius
     }
 
@@ -41,8 +38,6 @@ var view: UIView!
         let nib = UINib(nibName: "IdentificationCardView", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
-        //       view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(view)
     }
-
 }

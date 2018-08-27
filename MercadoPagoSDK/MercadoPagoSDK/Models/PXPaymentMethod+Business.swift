@@ -47,14 +47,14 @@ extension PXPaymentMethod: Cellable {
     }
 
     internal var isCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCard()
         }
         return false
     }
 
     internal var isCreditCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCreditCard()
         }
         return false
@@ -62,14 +62,14 @@ extension PXPaymentMethod: Cellable {
     }
 
     internal var isPrepaidCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isPrepaidCard()
         }
         return false
     }
 
     internal var isDebitCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
+        if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isDebitCard()
         }
         return false
@@ -114,7 +114,7 @@ extension PXPaymentMethod: Cellable {
     }
 
     internal var isAccountMoney: Bool {
-        return self.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue
+        return self.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
 
     internal func secCodeMandatory() -> Bool {
@@ -275,6 +275,6 @@ extension PXPaymentMethod: Cellable {
     }
 
     var isBolbradesco: Bool {
-        return self.paymentMethodId.contains(PaymentTypeId.BOLBRADESCO.rawValue)
+        return self.paymentMethodId.contains(PXPaymentTypes.BOLBRADESCO.rawValue)
     }
 }

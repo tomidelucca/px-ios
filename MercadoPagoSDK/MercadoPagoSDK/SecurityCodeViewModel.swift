@@ -9,9 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers
-open class SecurityCodeViewModel: NSObject {
+internal class SecurityCodeViewModel {
     var paymentMethod: PXPaymentMethod!
     var cardInfo: CardInformationForm!
     var reason: Reason
@@ -64,7 +62,7 @@ open class SecurityCodeViewModel: NSObject {
         return CGRect(x: getCardX(), y: getCardY(), width: getCardWidth(), height: getCardHeight())
     }
 
-    public enum Reason: String {
+    internal enum Reason: String {
         case INVALID_ESC = "invalid_esc"
         case CALL_FOR_AUTH = "call_for_auth"
         case SAVED_CARD = "saved_card"

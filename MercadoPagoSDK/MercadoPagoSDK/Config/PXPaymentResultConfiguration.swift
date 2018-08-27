@@ -54,7 +54,7 @@ import MercadoPagoServicesV4
     open var approvedBadge: ApprovedBadge? = ApprovedBadge.check
     private var _approvedLabelText = ""
     private var _disableApprovedLabelText = true
-    internal var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized
+    internal lazy var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized
     internal var approvedSubtitle = ""
     internal var approvedURLImage: String?
     internal var approvedIconName = "default_item_icon"
@@ -64,9 +64,9 @@ import MercadoPagoServicesV4
     // To deprecate post v4. SP integration.
     private var _pendingLabelText = ""
     private var _disablePendingLabelText = true
-    internal var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized
+    internal lazy var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized
     internal var pendingSubtitle = ""
-    internal var pendingContentTitle = PXPaymentResultConfiguration.PENDING_CONTENT_TITLE.localized
+    internal lazy var pendingContentTitle = PXPaymentResultConfiguration.PENDING_CONTENT_TITLE.localized
     internal var pendingContentText = ""
     internal var pendingIconName = "default_item_icon"
     internal var pendingIconBundle = ResourceManager.shared.getBundle()!
@@ -77,17 +77,17 @@ import MercadoPagoServicesV4
     // MARK: Rejected
     // To deprecate post v4. SP integration.
     private var disableRejectedLabelText = false
-    internal var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
+    internal lazy var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
     internal var rejectedSubtitle = ""
     internal var rejectedTitleSetted = false
-    internal var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
+    internal lazy var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
     internal var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
     internal var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
     internal var rejectedIconBundle = ResourceManager.shared.getBundle()!
     internal var rejectedDefaultIconName: String?
     internal var rejectedURLImage: String?
     internal var rejectedIconName: String?
-    internal var rejectedContentTitle = PXPaymentResultConfiguration.REJECTED_CONTENT_TITLE.localized
+    internal lazy var rejectedContentTitle = PXPaymentResultConfiguration.REJECTED_CONTENT_TITLE.localized
     internal var rejectedContentText = ""
     internal var hideRejectedContentText = false
     internal var hideRejectedContentTitle = false
@@ -515,7 +515,7 @@ extension PXPaymentResultConfiguration {
             return ResourceManager.shared.getImage(pmBolbradescoIconName)
         }
 
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+        if paymentMethod.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
             return ResourceManager.shared.getImage(rejectedPaymentMethodPluginIconName)
         }
         return ResourceManager.shared.getImage(pmDefaultIconName)

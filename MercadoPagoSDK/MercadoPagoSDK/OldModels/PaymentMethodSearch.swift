@@ -8,8 +8,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers open class PaymentMethodSearch: NSObject {
+internal class PaymentMethodSearch {
 
     var groups: [PaymentMethodSearchItem]!
     var paymentMethods: [PXPaymentMethod]!
@@ -25,7 +24,7 @@ import MercadoPagoServicesV4
     }
 }
 // MARK: One tap
-extension PaymentMethodSearch {
+internal extension PaymentMethodSearch {
     func hasCheckoutDefaultOption() -> Bool {
         return oneTap != nil
     }

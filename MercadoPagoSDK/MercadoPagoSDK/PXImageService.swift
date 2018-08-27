@@ -13,7 +13,7 @@ final class PXImageService: NSObject {
 
     class func getIconImageFor(paymentMethod: PXPaymentMethod) -> UIImage? {
 
-        guard paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue else {
+        guard paymentMethod.paymentTypeId != PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue else {
             return paymentMethod.getImageForExtenalPaymentMethod()
         }
 

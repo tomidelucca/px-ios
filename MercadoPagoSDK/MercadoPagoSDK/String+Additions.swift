@@ -8,17 +8,16 @@
 
 import Foundation
 
-/** :nodoc: */
 internal extension String {
 
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
 
-    public func existsLocalized() -> Bool {
+    func existsLocalized() -> Bool {
         let localizedString = self.localized
         return localizedString != self
     }
 
-    static public func isDigitsOnly(_ number: String) -> Bool {
+    static func isDigitsOnly(_ number: String) -> Bool {
 		if Regex.init("^[0-9]*$").test(number) {
 			return true
 		} else {
@@ -26,7 +25,7 @@ internal extension String {
 		}
     }
 
-    public func startsWith(_ prefix: String) -> Bool {
+    func startsWith(_ prefix: String) -> Bool {
         if prefix == self {
             return true
         }
@@ -37,16 +36,16 @@ internal extension String {
         return true
     }
 
-    public func lastCharacters(number: Int) -> String {
+    func lastCharacters(number: Int) -> String {
         let trimmedString: String = (self as NSString).substring(from: max(self.count - number, 0))
         return trimmedString
     }
 
-    public func indexAt(_ theInt: Int) ->String.Index {
+    func indexAt(_ theInt: Int) ->String.Index {
         return self.index(self.startIndex, offsetBy: theInt)
     }
 
-    public func trimSpaces() -> String {
+    func trimSpaces() -> String {
 
         var stringTrimmed = self.replacingOccurrences(of: " ", with: "")
         stringTrimmed = stringTrimmed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -63,7 +62,7 @@ internal extension String {
         }
     }
 
-    public func toAttributedString(attributes: [NSAttributedStringKey: Any]? = nil) -> NSMutableAttributedString {
+    func toAttributedString(attributes: [NSAttributedStringKey: Any]? = nil) -> NSMutableAttributedString {
         return NSMutableAttributedString(string: self, attributes: attributes)
     }
 }

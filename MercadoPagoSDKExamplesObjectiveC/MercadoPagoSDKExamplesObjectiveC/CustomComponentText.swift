@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoSDKV4
 
-@objc class CustomComponentText: NSObject, PXComponentizable {
+@objc class CustomComponentText: NSObject {
     let HEIGHT: CGFloat = 80.0
     func render() -> UIView {
         let view = UIView()

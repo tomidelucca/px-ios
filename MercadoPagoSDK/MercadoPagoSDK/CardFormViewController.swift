@@ -21,8 +21,6 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-/** :nodoc: */
-@objcMembers
 internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     let NAVIGATION_BAR_COLOR = ThemeManager.shared.navigationBar().backgroundColor
@@ -57,7 +55,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM }
 
-    public init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = cardFormManager
         self.callback = callback
@@ -96,8 +94,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    override func loadMPStyles() {
 
+    override func loadMPStyles() {
         if self.navigationController != nil {
 
             //Navigation bar colors
@@ -533,10 +531,10 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     func showCardNotSupportedErrorMessage() {
-       let paymentMethods = self.viewModel.paymentMethods
+        let paymentMethods = self.viewModel.paymentMethods
 
         if viewModel.shoudShowOnlyOneCardMessage() {
-                setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.UIColorFromRGB(0xF04449), isError: true)
+            setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.UIColorFromRGB(0xF04449), isError: true)
         } else {
             let cardNotAvailableError = CardNotAvailableErrorView(frame: (toolbar?.frame)!, paymentMethods: paymentMethods, showAvaibleCardsCallback: {
                 self.editingLabel?.text = ""
@@ -760,7 +758,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         cardNumberLabel?.textColor = self.viewModel.getLabelTextColor(cardNumber: cardNumberLabel?.text)
         nameLabel?.textColor = self.viewModel.getLabelTextColor(cardNumber: cardNumberLabel?.text)
         expirationDateLabel?.textColor = self.viewModel.getLabelTextColor(cardNumber: cardNumberLabel?.text)
-
         cvvLabel?.textColor = MPLabel.defaultColorText
         cardNumberLabel?.alpha = 0.7
         nameLabel?.alpha =  0.7
@@ -866,7 +863,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         }
         label?.text?.append("•")
         return true
-
     }
 
     func completeCvvLabel() {

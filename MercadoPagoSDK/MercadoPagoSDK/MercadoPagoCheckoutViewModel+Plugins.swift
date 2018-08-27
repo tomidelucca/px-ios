@@ -9,8 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-extension MercadoPagoCheckoutViewModel {
+internal extension MercadoPagoCheckoutViewModel {
 
     func needToShowPaymentMethodConfigPlugin() -> Bool {
         guard let paymentMethodPluginSelected = paymentOptionSelected as? PXPaymentMethodPlugin else {
@@ -47,27 +46,23 @@ extension MercadoPagoCheckoutViewModel {
         paymentMethodConfigPluginShowed = false
     }
 
-    public func paymentMethodPluginToPaymentMethod(plugin: PXPaymentMethodPlugin) {
+    func paymentMethodPluginToPaymentMethod(plugin: PXPaymentMethodPlugin) {
         let paymentMethod = PXPaymentMethod(additionalInfoNeeded: nil, id: plugin.getId(), name: plugin.getTitle(), paymentTypeId: PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID, status: nil, secureThumbnail: nil, thumbnail: nil, deferredCapture: nil, settings: [], minAllowedAmount: nil, maxAllowedAmount: nil, accreditationTime: nil, merchantAccountId: nil, financialInstitutions: financialInstitutions, description: plugin.paymentMethodPluginDescription)
-        paymentMethod.setExternalPaymentMethodImage(externalImage: plugin.getImage())
         self.paymentData.paymentMethod = paymentMethod
     }
 }
 
-/** :nodoc: */
 // MARK: Payment Plugin
-extension MercadoPagoCheckoutViewModel {
+internal extension MercadoPagoCheckoutViewModel {
     func needToCreatePaymentForPaymentPlugin() -> Bool {
         if paymentPlugin == nil {
             return false
         }
-
         populateCheckoutStore()
-
-        if let shouldSkip = paymentPlugin?.support?(checkoutStore: PXCheckoutStore.sharedInstance), !shouldSkip {
-            return false
+        paymentPlugin?.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
+        if let shouldSupport = paymentPlugin?.support() {
+            return shouldSupport
         }
-
         return needToCreatePayment()
     }
 }

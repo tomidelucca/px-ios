@@ -29,8 +29,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
-@objcMembers internal class MPPayment: NSObject {
+internal class MPPayment {
 
     open var preferenceId: String!
     open var publicKey: String!
@@ -43,11 +42,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var transactionDetails: PXTransactionDetails?
     open var discount: PXDiscount?
 
-    override init() {
-        super.init()
-    }
-
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: PXTransactionDetails?, payer: PXPayer, binaryMode: Bool, discount: PXDiscount? = nil) {
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: PXTransactionDetails, payer: PXPayer, binaryMode: Bool, discount: PXDiscount? = nil) {
         self.preferenceId = preferenceId
         self.publicKey = publicKey
         self.paymentMethodId = paymentMethodId
@@ -60,11 +55,9 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         self.discount = discount
     }
 
-    public init(preferenceId: String, publicKey: String, paymentData: PaymentData, binaryMode: Bool) {
+    init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
         self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.id! : ""
-
         self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
-
         self.installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
 
         if let transactionDetails = paymentData.transactionDetails {
@@ -85,11 +78,11 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         var obj: [String: Any] = [
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,

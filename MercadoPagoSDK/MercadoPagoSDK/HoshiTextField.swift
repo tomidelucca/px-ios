@@ -8,18 +8,17 @@
 
 import UIKit
 
-/** :nodoc: */
 /**
  An HoshiTextField is a subclass of the TextFieldEffects object, is a control that displays an UITextField with a customizable visual effect around the lower edge of the control.
  */
-@IBDesignable open class HoshiTextField: TextFieldEffects {
+@IBDesignable internal class HoshiTextField: TextFieldEffects {
 
     /**
      The color of the border when it has no content.
      
      This property applies a color to the lower edge of the control. The default value for this property is a clear color.
      */
-    @IBInspectable dynamic open var borderInactiveColor: UIColor? {
+    @IBInspectable dynamic var borderInactiveColor: UIColor? {
         didSet {
             updateBorder()
         }
@@ -30,7 +29,7 @@ import UIKit
      
      This property applies a color to the lower edge of the control. The default value for this property is a clear color.
      */
-    @IBInspectable dynamic open var borderActiveColor: UIColor? {
+    @IBInspectable dynamic var borderActiveColor: UIColor? {
         didSet {
             updateBorder()
         }
@@ -41,7 +40,7 @@ import UIKit
 
      This property applies a color to the complete placeholder string. The default value for this property is a black color.
      */
-    @IBInspectable dynamic open var placeholderColor: UIColor = .black {
+    @IBInspectable dynamic var placeholderColor: UIColor = .black {
         didSet {
             updatePlaceholder()
         }
@@ -52,7 +51,7 @@ import UIKit
      
      This property determines the size of the placeholder label relative to the font size of the text field.
     */
-    @IBInspectable dynamic open var placeholderFontScale: CGFloat = 0.65 {
+    @IBInspectable dynamic var placeholderFontScale: CGFloat = 0.65 {
         didSet {
             updatePlaceholder()
         }
@@ -64,7 +63,7 @@ import UIKit
         }
     }
 
-    override open var bounds: CGRect {
+    override var bounds: CGRect {
         didSet {
             updateBorder()
             updatePlaceholder()

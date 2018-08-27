@@ -8,7 +8,6 @@
 
 import Foundation
 
-/** :nodoc: */
 extension MercadoPagoCheckout {
     internal class func showPayerCostDescription() -> Bool {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")

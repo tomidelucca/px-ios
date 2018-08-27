@@ -90,9 +90,6 @@
 
 
 #pragma mark - PXHookComponent optional delegates.
-- (BOOL)shouldSkipHookWithHookStore:(PXCheckoutStore * _Nonnull)hookStore {
-    return [[[hookStore getPaymentOptionSelected] getId] isEqualToString:@"bitcoin_payment"];
-}
 
 - (void)renderDidFinish {
     self.messageLabel.text = nil;

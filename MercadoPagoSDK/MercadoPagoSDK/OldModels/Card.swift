@@ -26,7 +26,7 @@ import MercadoPagoServicesV4
     open var issuer: PXIssuer?
     open var securityCode: PXSecurityCode?
 
-    open class func fromJSON(_ json: NSDictionary) -> Card {
+    internal class func fromJSON(_ json: NSDictionary) -> Card {
                 let card: Card = Card()
                 if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
                         card.customerId = customerId
@@ -58,19 +58,16 @@ import MercadoPagoServicesV4
         return self.issuer
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let customer_id: Any = self.customerId == nil ? JSONHandler.null : self.customerId!
         let dateCreated: Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
         let dateLastUpdated: Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
         let firstSixDigits: Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
         let lastFourDigits: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
-//        let paymentMethod: Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
-//        let issuer: Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSON()
-//        let securityCode: Any = self.securityCode == nil ? JSONHandler.null : self.securityCode!.toJSON()
         let obj: [String: Any] = [
             "card_holder": cardHolder,
             "customer_id": customer_id,
@@ -82,7 +79,6 @@ import MercadoPagoServicesV4
             "id": self.idCard,
             "last_four_digits": lastFourDigits,
             "payment_method": paymentMethod,
-//            "issuer": issuer,
             "security_code": securityCode
         ]
         return obj
@@ -171,7 +167,7 @@ import MercadoPagoServicesV4
         return String(describing: self.idCard)
     }
 
-    public func getChildren() -> [PaymentMethodOption]? {
+    func getChildren() -> [PaymentMethodOption]? {
         return nil
     }
 

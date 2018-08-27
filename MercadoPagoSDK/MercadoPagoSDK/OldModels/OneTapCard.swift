@@ -9,8 +9,7 @@
 import Foundation
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-open class OneTapCard: NSObject {
+internal class OneTapCard {
     open var cardId: String
     open var selectedPayerCost: PXPayerCost?
 

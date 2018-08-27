@@ -11,11 +11,11 @@ import Foundation
 /** :nodoc: */
 @objcMembers open class FinancialInstitution: NSObject, Cellable {
 
-    public var objectType: ObjectTypes = ObjectTypes.financialInstitution
+    var objectType: ObjectTypes = ObjectTypes.financialInstitution
     open var financialInstitutionId: Int?
     open var financialInstitutionDescription: String?
 
-    open class func fromJSON(_ json: NSDictionary) -> FinancialInstitution {
+    internal class func fromJSON(_ json: NSDictionary) -> FinancialInstitution {
         let financialInstitution: FinancialInstitution = FinancialInstitution()
         if let financialInstitutionId = JSONHandler.attemptParseToString(json["id"])?.numberValue, let finalId = financialInstitutionId as? Int {
             financialInstitution.financialInstitutionId = finalId
@@ -26,11 +26,11 @@ import Foundation
         return financialInstitution
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let id: Any = self.financialInstitutionId == nil ? JSONHandler.null : self.financialInstitutionId!
         let description: Any = self.financialInstitutionDescription == nil ? JSONHandler.null : self.financialInstitutionDescription!
         let obj: [String: Any] = [

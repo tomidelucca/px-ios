@@ -25,7 +25,6 @@
 
 import UIKit
 
-/** :nodoc: */
 internal extension PXSpruce {
 
     /// The receiver's immediate subviews given the recursive depth. If a subview contains other subviews, they will be listed in the array following their parent view. Consider the following example:
@@ -43,7 +42,7 @@ internal extension PXSpruce {
     /// - Returns: an array of all the subviews in the receiver view. Depending on the `recursiveDepth` this could contain the subviews of subviews also.
     /// - Note: This method will return an array of `View`. These are used so that when we adjust for coordinate space differences, it does not affect the way your screen renders. A `View` is a simple struct with `view: UIView` and `referencePoint: CGPoint` variables.
     /// - Precondition: `recursiveDepth` is an Int >= 0  (0...Int.max).
-    public func subviews(withRecursiveDepth recursiveDepth: Int) -> [View] {
+    func subviews(withRecursiveDepth recursiveDepth: Int) -> [View] {
         let subviews: [UIView]
 
         // Handle special cases for UITableView and UICollectionView

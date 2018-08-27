@@ -8,15 +8,14 @@
 
 import Foundation
 
-/** :nodoc: */
-public class PXInstructionsContentComponent: NSObject, PXComponentizable {
+internal class PXInstructionsContentComponent: PXComponentizable {
     var props: PXInstructionsContentProps
 
     init(props: PXInstructionsContentProps) {
         self.props = props
     }
 
-    public func hasInfo() -> Bool {
+    func hasInfo() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.info)
     }
 
@@ -100,19 +99,19 @@ public class PXInstructionsContentComponent: NSObject, PXComponentizable {
         return actionsComponent
     }
 
-    public func hasReferences() -> Bool {
+    func hasReferences() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.references)
     }
 
-    public func hasTertiaryInfo() -> Bool {
+    func hasTertiaryInfo() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.tertiaryInfo)
     }
 
-    public func hasAccreditationTime() -> Bool {
+    func hasAccreditationTime() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.accreditationComment) || !String.isNullOrEmpty(props.instruction.accreditationMessage)
     }
 
-    public func hasActions() -> Bool {
+    func hasActions() -> Bool {
         if !Array.isNullOrEmpty(props.instruction.actions) {
             for action in props.instruction.actions! where action.tag == ActionTag.LINK.rawValue {
                 return true
@@ -121,18 +120,18 @@ public class PXInstructionsContentComponent: NSObject, PXComponentizable {
         return false
     }
 
-    public func needsBottomMargin() -> Bool {
+    func needsBottomMargin() -> Bool {
         return hasInfo() || hasReferences() || hasAccreditationTime()
     }
 
-    public func render() -> UIView {
+    func render() -> UIView {
         return PXInstructionsContentRenderer().render(self)
     }
 }
 
-/** :nodoc: */
-public class PXInstructionsContentProps: NSObject {
+internal class PXInstructionsContentProps {
     var instruction: Instruction
+
     init(instruction: Instruction) {
         self.instruction = instruction
     }

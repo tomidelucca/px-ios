@@ -9,9 +9,8 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
 @objcMembers
-open class AvailableCardsViewController: MercadoPagoUIViewController {
+internal class AvailableCardsViewController: MercadoPagoUIViewController {
 
     let buttonFontSize: CGFloat = 18
 
@@ -50,9 +49,6 @@ open class AvailableCardsViewController: MercadoPagoUIViewController {
         self.retryButton.setTitleColor(ThemeManager.shared.modalComponent().tintColor, for: .normal)
         self.retryButton.titleLabel?.font = Utils.getFont(size: buttonFontSize)
     }
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 
     @IBAction func exit() {
         guard let callbackCancel = self.callbackCancel else {
@@ -67,7 +63,7 @@ open class AvailableCardsViewController: MercadoPagoUIViewController {
 
 }
 
-class AvailableCardsViewModel: NSObject {
+internal class AvailableCardsViewModel {
 
     let MARGIN_X_SCROLL_VIEW: CGFloat = 32
     let MIN_HEIGHT_PERCENT: CGFloat = 0.73

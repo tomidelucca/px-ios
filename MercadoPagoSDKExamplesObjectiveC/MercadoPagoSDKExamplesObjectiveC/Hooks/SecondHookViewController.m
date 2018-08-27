@@ -11,7 +11,7 @@
 @interface SecondHookViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *paymentMethodLabel;
-@property PaymentData *paymentData;
+@property PXPaymentData *paymentData;
 @property (strong, nonatomic) PXHookNavigationHandler * navigationHandler;
 
 @end
@@ -41,9 +41,6 @@
 
 
 #pragma mark - PXHookComponent optional delegates.
-- (BOOL)shouldSkipHookWithHookStore:(PXCheckoutStore * _Nonnull)hookStore {
-    return [[[hookStore getPaymentOptionSelected] getId] isEqualToString:@"bitcoin_payment"];
-}
 
 - (void)didReceiveWithHookStore:(PXCheckoutStore * _Nonnull)hookStore {
     self.paymentData = [hookStore getPaymentData];

@@ -9,8 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers open class MPSDKError: NSObject {
+internal class MPSDKError {
 
     open var message: String = ""
     open var errorDetail: String = ""
@@ -18,12 +17,11 @@ import MercadoPagoServicesV4
     open var requestOrigin: String = ""
     open var retry: Bool?
 
-    public override init() {
-        super.init()
+    init () {
+
     }
 
-    public init(message: String, errorDetail: String, retry: Bool, requestOrigin: String?=nil) {
-        super.init()
+    init(message: String, errorDetail: String, retry: Bool, requestOrigin: String?=nil) {
         self.message = message
         self.errorDetail = errorDetail
         self.retry = retry
@@ -32,7 +30,7 @@ import MercadoPagoServicesV4
         }
     }
 
-    open class func convertFrom(_ error: Error, requestOrigin: String) -> MPSDKError {
+    class func convertFrom(_ error: Error, requestOrigin: String) -> MPSDKError {
         let mpError = MPSDKError()
         let currentError = error as NSError
 
@@ -52,7 +50,7 @@ import MercadoPagoServicesV4
         return mpError
     }
 
-    func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "message": self.message,
             "error_detail": self.errorDetail,
@@ -61,7 +59,7 @@ import MercadoPagoServicesV4
         return obj
     }
 
-    func toJSONString() -> String {
+    internal func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 

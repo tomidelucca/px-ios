@@ -24,8 +24,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
 
-    var callbackPaymentData: ((PaymentData) -> Void)
-    var callbackConfirm: ((PaymentData) -> Void)
+    var callbackPaymentData: ((PXPaymentData) -> Void)
+    var callbackConfirm: ((PXPaymentData) -> Void)
     var finishButtonAnimation: (() -> Void)
 
     weak var loadingButtonComponent: PXAnimatedButton?
@@ -34,7 +34,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     let shouldAnimatePayButton: Bool
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
@@ -233,7 +233,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getPaymentMethodComponentView() -> UIView? {
-        let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
+        let action = PXAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
                 self?.viewModel.trackChangePaymentMethodEvent()
                 self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
@@ -281,7 +281,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Confirmar".localized) {
+        let payAction = PXAction(label: "Confirmar".localized) {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
                 self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)

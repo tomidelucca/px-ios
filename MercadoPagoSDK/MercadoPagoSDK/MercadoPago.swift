@@ -134,7 +134,7 @@ import MercadoPagoServicesV4
         return screenSize
     }
 
-    open class func getImageFor(searchItem: PaymentMethodSearchItem) -> UIImage? {
+    internal class func getImageFor(searchItem: PaymentMethodSearchItem) -> UIImage? {
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
@@ -195,7 +195,7 @@ import MercadoPagoServicesV4
         return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
     }
 
-    open class func getImageFor(cardInformation: CardInformation) -> UIImage? {
+    internal class func getImageFor(cardInformation: CardInformation) -> UIImage? {
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 

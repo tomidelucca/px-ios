@@ -9,9 +9,8 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
 @objc
-public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
+internal protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
     func isSecurityCodeRequired() -> Bool
 
@@ -37,9 +36,8 @@ public protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
 }
 
-/** :nodoc: */
 @objc
-public protocol CardInformationForm: NSObjectProtocol {
+internal protocol CardInformationForm: NSObjectProtocol {
 
     func getCardBin() -> String?
 

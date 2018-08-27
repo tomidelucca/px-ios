@@ -2,12 +2,12 @@ PODS:
   - FXBlurView (1.6.4)
   - JRSwizzle (1.0)
   - MercadoPagoPXTrackingV4 (2.1.4)
-  - MercadoPagoSDKV4 (4.0.0.beta.40.0.1):
+  - MercadoPagoSDKV4 (4.0.0):
     - MercadoPagoPXTrackingV4 (= 2.1.4)
-    - MercadoPagoSDKV4/Default (= 4.0.0.beta.40.0.1)
+    - MercadoPagoSDKV4/Default (= 4.0.0)
     - MercadoPagoServicesV4 (= 1.0.21.2)
     - MLUI (~> 5.0)
-  - MercadoPagoSDKV4/Default (4.0.0.beta.40.0.1):
+  - MercadoPagoSDKV4/Default (4.0.0):
     - MercadoPagoPXTrackingV4 (= 2.1.4)
     - MercadoPagoServicesV4 (= 1.0.21.2)
     - MLUI (~> 5.0)
@@ -129,7 +129,7 @@ SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   MercadoPagoPXTrackingV4: c29d65296c16872db5a73a01ce1a5aff55bcecb8
-  MercadoPagoSDKV4: 279cbfa21b838c34ebb80fea3ea1be486387400b
+  MercadoPagoSDKV4: 31ba4bd105a26db41d3d96788d77c1d18c55f2ae
   MercadoPagoServicesV4: 9e3c2c7ae9e9e7f4f4b29e4ee1631c1d9e3ab67f
   MLUI: 8b958c99125204d4e69f6c7f1a08a2ef5459297d
 

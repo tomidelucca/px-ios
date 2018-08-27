@@ -19,21 +19,21 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     let businessResult: PXBusinessResult
-    let paymentData: PaymentData
+    let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
 
     //Default Image
     private lazy var approvedIconName = "default_item_icon"
     private lazy var approvedIconBundle = ResourceManager.shared.getBundle()
 
-    init(businessResult: PXBusinessResult, paymentData: PaymentData, amountHelper: PXAmountHelper) {
+    init(businessResult: PXBusinessResult, paymentData: PXPaymentData, amountHelper: PXAmountHelper) {
         self.businessResult = businessResult
         self.paymentData = paymentData
         self.amountHelper = amountHelper
         super.init()
     }
 
-    func getPaymentData() -> PaymentData {
+    func getPaymentData() -> PXPaymentData {
         return self.paymentData
     }
 
@@ -189,10 +189,10 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     fileprivate func getPaymentMethodIcon(paymentMethod: PXPaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+        let defaultColor = paymentMethod.paymentTypeId == PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+        if paymentMethod.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
         }
         return paymentMethodImage

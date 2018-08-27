@@ -15,7 +15,7 @@ import Foundation
     open var feePayer: String!
     open var type: String!
 
-    open class func fromJSON(_ json: NSDictionary) -> FeesDetail {
+    internal class func fromJSON(_ json: NSDictionary) -> FeesDetail {
                 let fd: FeesDetail = FeesDetail()
                 if let type = JSONHandler.attemptParseToString(json["type"]) {
                         fd.type = type
@@ -36,7 +36,7 @@ import Foundation
         return self.type == "financing_fee"
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         let type: Any = self.type != nil ? JSONHandler.null : self.type!
         let obj: [String: Any] = [
             "type": type,

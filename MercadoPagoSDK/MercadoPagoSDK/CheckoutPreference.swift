@@ -11,9 +11,9 @@ import MercadoPagoServicesV4
 
 @objcMembers open class CheckoutPreference: NSObject {
     internal var preferenceId: String!
-    internal var items: [Item]!
+    internal var items: [Item] = []
     internal var payer: PXPayer!
-    internal var paymentPreference: PaymentPreference!
+    internal var paymentPreference: PaymentPreference = PaymentPreference()
     internal var siteId: String!
     internal var expirationDateFrom: Date?
     internal var expirationDateTo: Date?
@@ -149,7 +149,7 @@ extension CheckoutPreference {
         return paymentPreference.getDefaultPaymentMethodId()
     }
 
-    internal func getTotalAmount() -> Double {
+    open func getTotalAmount() -> Double {
         var amount = 0.0
         for item in self.items {
             amount += (Double(item.quantity) * item.unitPrice)

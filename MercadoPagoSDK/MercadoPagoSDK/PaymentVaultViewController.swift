@@ -30,9 +30,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
-@objcMembers
-open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
@@ -53,14 +51,14 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     var titleSectionReference: PaymentVaultTitleCollectionViewCell?
 
-    fileprivate var tintColor = true
-    fileprivate var loadingGroups = true
+    private var tintColor = true
+    private var loadingGroups = true
 
-    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
 
-    fileprivate var defaultOptionSelected = false
+    private var defaultOptionSelected = false
 
-    fileprivate var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
+    private var callback : ((_ paymentMethodSelected: PaymentMethodOption) -> Void)!
 
     private var floatingBottomRowView: UIView?
 
@@ -177,11 +175,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         return view
     }
 
-    func handleTotalRowTap() {
+    @objc func handleTotalRowTap() {
         PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
     }
 
-    fileprivate func cardFormCallbackCancel() -> (() -> Void) {
+    private func cardFormCallbackCancel() -> (() -> Void) {
         return { () -> Void in
             if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
@@ -192,22 +190,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
     }
 
-    fileprivate func getCustomerCards() {
-
-        if self.viewModel!.shouldGetCustomerCardsInfo() {
-            if MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() != nil {
-                self.viewModel.mercadoPagoServicesAdapter.getCustomer(callback: { [weak self] (customer) in
-                    self?.viewModel.customerId = customer.customerId
-                    self?.viewModel.customerPaymentOptions = customer.cards
-                    self?.loadPaymentMethodSearch()
-                }, failure: { (_) in
-                    // Ir a Grupos igual
-                    self.loadPaymentMethodSearch()
-                })
-            }
-        } else {
-            self.loadPaymentMethodSearch()
-        }
+    private func getCustomerCards() {
+        self.loadPaymentMethodSearch()
     }
 
     fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> Void) {
@@ -229,7 +213,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
     }
 
-    fileprivate func registerAllCells() {
+    private func registerAllCells() {
         let collectionSearchCell = UINib(nibName: "PaymentSearchCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
 

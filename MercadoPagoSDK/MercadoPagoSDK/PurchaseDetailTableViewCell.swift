@@ -9,18 +9,13 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers
-open class PurchaseDetailTableViewCell: UITableViewCell {
+internal class PurchaseDetailTableViewCell: UITableViewCell {
 
     static let ROW_HEIGHT = CGFloat(52)
-
     static var separatorLine: UIView?
 
     @IBOutlet weak var purchaseDetailTitle: MPLabel!
-
     @IBOutlet weak var purchaseDetailAmount: MPLabel!
-
     @IBOutlet weak var noRateLabel: MPLabel!
 
     override open func awakeFromNib() {
@@ -32,7 +27,6 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     }
 
     internal func fillCell(_ title: String, amount: Double, currency: PXCurrency, payerCost: PXPayerCost? = nil) {
-
         //Deafult values for cells
         self.purchaseDetailTitle.text = title.localized
         self.purchaseDetailTitle.font = Utils.getFont(size: purchaseDetailTitle.font.pointSize)
@@ -60,7 +54,6 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }
-
     }
 
     public static func getCellHeight(payerCost: PXPayerCost? = nil) -> CGFloat {

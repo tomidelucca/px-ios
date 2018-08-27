@@ -28,7 +28,7 @@ import MercadoPagoServicesV4
     open var phone: Phone?
     open var registrationDate: Date?
 
-    open class func fromJSON(_ json: NSDictionary) -> Customer {
+    internal class func fromJSON(_ json: NSDictionary) -> Customer {
         let customer: Customer = Customer()
         customer.customerId = json["id"] as! String?
         customer.liveMode = json["live_mode"] as? Bool
@@ -62,7 +62,7 @@ import MercadoPagoServicesV4
         return customer
     }
 
-    open func toJSONString() -> String {
+    internal func toJSONString() -> String {
         let defaultCard: Any =  self.defaultCard == nil ? JSONHandler.null : self.defaultCard!
         let description: Any =   self.customerDescription == nil ? JSONHandler.null : self.customerDescription!
         let email: Any =  self.email == nil ? JSONHandler.null : self.email!

@@ -118,7 +118,7 @@ extension MercadoPagoCheckout {
         self.viewModel.paymentResult = paymentResult
     }
 
-    internal func setPaymentData(paymentData: PaymentData) {
+    internal func setPaymentData(paymentData: PXPaymentData) {
         self.viewModel.paymentData = paymentData
     }
 
@@ -184,8 +184,6 @@ extension MercadoPagoCheckout {
             self.showHookScreen(hookStep: .BEFORE_PAYMENT)
         case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
             self.showPaymentMethodPluginConfigScreen()
-        case .SCREEN_PAYMENT_PLUGIN_PAYMENT: //PROCESADORA
-            self.showPaymentPluginScreen()
         case .FLOW_ONE_TAP:
             self.startOneTapFlow()
         }

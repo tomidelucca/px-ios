@@ -9,7 +9,7 @@
 import Foundation
 
 internal final class PXPaymentFlowModel: NSObject {
-    var paymentData: PaymentData?
+    var paymentData: PXPaymentData?
     var checkoutPreference: CheckoutPreference?
     let paymentPlugin: PXPaymentProcessor?
 
@@ -55,17 +55,18 @@ internal final class PXPaymentFlowModel: NSObject {
             return false
         }
 
-        assignToCheckoutStore()
-
         if hasPluginPaymentScreen(plugin: paymentPlugin) {
             return false
         }
 
         assignToCheckoutStore()
-        if let shouldSkip = paymentPlugin?.support?(checkoutStore: PXCheckoutStore.sharedInstance), !shouldSkip {
-            return false
+        paymentPlugin?.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
+
+        if let shouldSupport = paymentPlugin?.support() {
+            return shouldSupport
         }
-        return true
+
+        return false
     }
 
     func needToCreatePayment() -> Bool {
@@ -95,7 +96,7 @@ internal final class PXPaymentFlowModel: NSObject {
         guard let paymentTypeId = paymentData?.paymentMethod?.paymentTypeId else {
             return false
         }
-        return !PaymentTypeId.isOnlineType(paymentTypeId: paymentTypeId)
+        return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId)
     }
 
     func assignToCheckoutStore() {
@@ -112,14 +113,14 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 }
 
-/** :nodoc: */
-extension PXPaymentFlowModel {
+internal extension PXPaymentFlowModel {
     func hasPluginPaymentScreen(plugin: PXPaymentProcessor?) -> Bool {
         guard let paymentPlugin = plugin else {
             return false
         }
         assignToCheckoutStore()
-        let view = paymentPlugin.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared)
-        return  view != nil
+        paymentPlugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
+        let processorViewController = paymentPlugin.paymentProcessorViewController()
+        return processorViewController != nil
     }
 }

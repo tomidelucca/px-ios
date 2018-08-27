@@ -9,8 +9,7 @@
 import UIKit
 import MercadoPagoServicesV4
 
-/** :nodoc: */
-@objcMembers open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
+@objcMembers internal class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
 
     var customerPaymentMethodId: String!
     var customerPaymentMethodDescription: String!
@@ -22,7 +21,7 @@ import MercadoPagoServicesV4
     var paymentMethod: PXPaymentMethod?
     var card: Card?
 
-    open class func fromJSON(_ json: NSDictionary) -> CustomerPaymentMethod {
+    internal class func fromJSON(_ json: NSDictionary) -> CustomerPaymentMethod {
                 let customerPaymentMethod = CustomerPaymentMethod()
 
                 if json["id"] != nil && !(json["id"]! is NSNull) {
@@ -62,18 +61,18 @@ import MercadoPagoServicesV4
         super.init()
     }
 
-    public init(cPaymentMethodId: String, paymentMethodId: String, paymentMethodTypeId: String, description: String) {
+    init(cPaymentMethodId: String, paymentMethodId: String, paymentMethodTypeId: String, description: String) {
         self.customerPaymentMethodId = cPaymentMethodId
         self.paymentMethodId = paymentMethodId
         self.paymentMethodTypeId = paymentMethodTypeId
         self.customerPaymentMethodDescription = description
     }
 
-    public func getIssuer() -> PXIssuer? {
+    func getIssuer() -> PXIssuer? {
         return card?.issuer
     }
 
-    open func toJSON() -> [String: Any] {
+    internal func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "_id": self.customerPaymentMethodId,
             "_description": self.customerPaymentMethodDescription == nil ? "" : self.customerPaymentMethodDescription!,
@@ -84,108 +83,108 @@ import MercadoPagoServicesV4
         return obj
     }
 
-    public func getFirstSixDigits() -> String? {
+    func getFirstSixDigits() -> String? {
         return card?.getCardBin()
     }
 
-    open func toJSONString() -> String {
+    func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    open func isSecurityCodeRequired() -> Bool {
+    func isSecurityCodeRequired() -> Bool {
         return true
     }
 
-    open func getCardId() -> String {
+    func getCardId() -> String {
         return self.customerPaymentMethodId
     }
 
-    open func getCardSecurityCode() -> PXSecurityCode? {
+    func getCardSecurityCode() -> PXSecurityCode? {
         return securityCode
     }
 
-    open func getCardDescription() -> String {
+    func getCardDescription() -> String {
         return self.customerPaymentMethodDescription
     }
 
-    open func getPaymentMethod() -> PXPaymentMethod? {
+    func getPaymentMethod() -> PXPaymentMethod? {
         return paymentMethod
     }
 
-    open func getPaymentMethodId() -> String {
+    func getPaymentMethodId() -> String {
         return self.paymentMethodId
     }
 
-    open func getPaymentTypeId() -> String {
+    func getPaymentTypeId() -> String {
         return self.paymentMethodTypeId
     }
 
-    open func getCardBin() -> String? {
+    func getCardBin() -> String? {
         return card?.getCardBin()
     }
 
-    open func getCardLastForDigits() -> String? {
+    func getCardLastForDigits() -> String? {
         return card?.getCardLastForDigits()
     }
 
-    open func setupPaymentMethod(_ paymentMethod: PXPaymentMethod) {
+    func setupPaymentMethod(_ paymentMethod: PXPaymentMethod) {
         self.paymentMethod = paymentMethod
     }
 
-    open func setupPaymentMethodSettings(_ settings: [PXSetting]) {
+    func setupPaymentMethodSettings(_ settings: [PXSetting]) {
         self.securityCode = settings[0].securityCode
     }
 
-    public func isIssuerRequired() -> Bool {
+    func isIssuerRequired() -> Bool {
         return false
     }
 
     /** PaymentOptionDrawable implementation */
 
-    public func getTitle() -> String {
+    func getTitle() -> String {
         return getCardDescription()
     }
 
-    public func getSubtitle() -> String? {
+    func getSubtitle() -> String? {
         return nil
     }
 
-    public func getImage() -> UIImage? {
+    func getImage() -> UIImage? {
         return ResourceManager.shared.getImageForPaymentMethod(withDescription: self.getPaymentMethodId())
     }
 
     /** PaymentMethodOption  implementation */
 
-    public func hasChildren() -> Bool {
+    func hasChildren() -> Bool {
         return false
     }
 
-    public func getChildren() -> [PaymentMethodOption]? {
+    func getChildren() -> [PaymentMethodOption]? {
         return nil
     }
 
-    public func getId() -> String {
+    func getId() -> String {
         return self.customerPaymentMethodId
     }
 
-    public func isCustomerPaymentMethod() -> Bool {
+    func isCustomerPaymentMethod() -> Bool {
         return true
     }
 
-    public func isCard() -> Bool {
+    func isCard() -> Bool {
 
-        return PaymentTypeId.isCard(paymentTypeId: self.paymentMethodTypeId)
+        return PXPaymentTypes.isCard(paymentTypeId: self.paymentMethodTypeId)
     }
 
-    public func getDescription() -> String {
+    func getDescription() -> String {
         return self.customerPaymentMethodDescription
     }
 
-    public func getComment() -> String {
+    func getComment() -> String {
         return ""
     }
 
-    public func canBeClone() -> Bool {
+    func canBeClone() -> Bool {
         return false
     }
 }

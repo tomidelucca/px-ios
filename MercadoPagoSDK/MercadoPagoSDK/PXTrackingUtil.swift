@@ -9,10 +9,8 @@
 import Foundation
 import MercadoPagoPXTrackingV4
 
-/** :nodoc: */
-
 // MARK: - Metadata/Params
-extension TrackingUtil {
+internal extension TrackingUtil {
     struct Metadata {
         static let INSTALLMENTS = "installments"
         static let HAS_DISCOUNT = "has_discount"
@@ -20,7 +18,7 @@ extension TrackingUtil {
 }
 
 // MARK: - Screens
-extension TrackingUtil {
+internal extension TrackingUtil {
     enum ScreenId {
         static let REVIEW_AND_CONFIRM_ONE_TAP = "/express"
         static let DISCOUNT_TERM_CONDITION = "/discount_terms_conditions"
@@ -28,7 +26,7 @@ extension TrackingUtil {
 }
 
 // MARK: - Events
-extension TrackingUtil {
+internal extension TrackingUtil {
     struct Event {
         static let TAP_SUMMARY_DETAIL = "/open_summary_detail"
         static let TAP_BACK = "/back_action"

@@ -49,8 +49,43 @@ MercadoPagoCheckout.init(builder: MercadoPagoCheckoutBuilder.init(publicKey: "yo
 ## 💡Advanced integration
 Check our official code <a href="http://mercadopago.github.io/px-ios/v4/" target="_blank"> reference </a>, especially <a href="http://mercadopago.github.io/px-ios/v4/Classes/MercadoPagoCheckoutBuilder.html" target="_blank"> MercadoPagoCheckoutBuilder </a> object to explore all available functionalities.
 
-## 🌈 Color UI customization
-TODO.
+
+## 🎨 UI Custom Colors
+### Basic color customization
+You can define one color (your main color) and we will take care of the rest. Delivering the best Checkout experience based on your color.
+```swift
+checkoutBuilder.setColor(checkoutColor: UIColor.purple)
+```
+
+### Advanced color customization
+If you need an advanced color customization, you can customize your colors through our `PXTheme` interface/protocol. Check the  <a href="http://mercadopago.github.io/px-ios/v4/Protocols/PXTheme.html" target="_blank"> `PXTheme` methods in our reference guide. </a>.
+
+The following example implements the protocol `PXTheme` to customize the UI with Mercadolibre style:
+```swift
+final class ExampleTheme: PXTheme {
+    let primaryColor: UIColor = #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1)
+
+    public func navigationBar() -> PXThemeProperty {
+        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))
+    }
+
+    public func loadingComponent() -> PXThemeProperty {
+        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 0.2039215686, green: 0.5137254902, blue: 0.9803921569, alpha: 1))
+    }
+
+    public func highlightBackgroundColor() -> UIColor {
+        return primaryColor
+    }
+
+    public func detailedBackgroundColor() -> UIColor {
+        return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+
+    public func statusBarStyle() -> UIStatusBarStyle {
+        return .default
+    }
+}
+```
     
 ## 🌟 Features
 - [x] Easy to install

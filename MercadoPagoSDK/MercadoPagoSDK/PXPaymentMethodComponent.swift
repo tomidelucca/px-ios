@@ -8,25 +8,24 @@
 
 import UIKit
 
-/** :nodoc: */
-public class PXPaymentMethodComponent: NSObject, PXComponentizable {
+internal class PXPaymentMethodComponent: NSObject, PXComponentizable {
     var props: PXPaymentMethodProps
 
     init(props: PXPaymentMethodProps) {
        self.props = props
     }
 
-    public func render() -> UIView {
+    func render() -> UIView {
         return PXPaymentMethodComponentRenderer().render(component: self)
     }
 
-    public func oneTapRender() -> UIView {
+    func oneTapRender() -> UIView {
         return PXPaymentMethodComponentRenderer().oneTapRender(component: self)
     }
 }
 
 // MARK: - Helper functions
-extension PXPaymentMethodComponent {
+internal extension PXPaymentMethodComponent {
     func getPaymentMethodIconComponent() -> PXPaymentMethodIconComponent {
         let paymentMethodIconProps = PXPaymentMethodIconProps(paymentMethodIcon: self.props.paymentMethodIcon)
         let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: paymentMethodIconProps)
