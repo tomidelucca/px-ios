@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 internal class Instruction {
 
@@ -18,7 +19,7 @@ internal class Instruction {
     var info: [String]!
     var secondaryInfo: [String]?
     var tertiaryInfo: [String]?
-    var actions: [InstructionAction]?
+    var actions: [PXInstructionAction]?
     var type: String = ""
 
     internal func toJSONString() -> String {
@@ -102,10 +103,6 @@ internal class Instruction {
 
                             }
                         instruction.tertiaryInfo = !info.isEmpty ? info : nil
-                    }
-
-                if json["actions"] != nil && !(json["actions"]! is NSNull) {
-                        instruction.actions = (json["actions"] as! Array).map({InstructionAction.fromJSON($0)})
                     }
 
                 return instruction

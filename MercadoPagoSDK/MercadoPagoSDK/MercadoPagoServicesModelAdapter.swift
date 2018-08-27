@@ -91,13 +91,6 @@ internal extension MercadoPagoServicesAdapter {
         instruction.secondaryInfo = pxInstruction.secondaryInfo
         instruction.tertiaryInfo = pxInstruction.tertiaryInfo
 
-        if let pxInstructionAction = pxInstruction.actions {
-            for pxInstructionAction in pxInstructionAction {
-                let instructionAction = getInstructionActionFromPXInstructionAction(pxInstructionAction)
-                instruction.actions = Array.safeAppend(instruction.actions, instructionAction)
-            }
-        }
-
         instruction.type = pxInstruction.type ?? ""
         return instruction
     }
@@ -109,14 +102,6 @@ internal extension MercadoPagoServicesAdapter {
         instructionReference.separator = pxInstructionReference.separator
         instructionReference.comment = pxInstructionReference.comment
         return instructionReference
-    }
-
-    internal func getInstructionActionFromPXInstructionAction(_ pxInstructionAction: PXInstructionAction) -> InstructionAction {
-        let instructionAction = InstructionAction()
-        instructionAction.label = pxInstructionAction.label
-        instructionAction.url = pxInstructionAction.url
-        instructionAction.tag = pxInstructionAction.tag
-        return instructionAction
     }
 
     internal func getPXCardTokenFromCardToken(_ cardToken: CardToken) -> PXCardToken {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 class PXInstructionsActionComponent: NSObject, PXComponentizable {
     var props: PXInstructionsActionProps
@@ -19,8 +20,8 @@ class PXInstructionsActionComponent: NSObject, PXComponentizable {
     }
 }
 class PXInstructionsActionProps: NSObject {
-    var instructionActionInfo: InstructionAction?
-    init(instructionActionInfo: InstructionAction?) {
+    var instructionActionInfo: PXInstructionAction?
+    init(instructionActionInfo: PXInstructionAction?) {
         self.instructionActionInfo = instructionActionInfo
     }
 }
