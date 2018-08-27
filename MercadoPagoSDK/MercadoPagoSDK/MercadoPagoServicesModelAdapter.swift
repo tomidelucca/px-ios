@@ -135,7 +135,6 @@ internal extension MercadoPagoServicesAdapter {
         payment.metadata = pxPayment.metadata! as NSObject
         payment.moneyReleaseDate = pxPayment.moneyReleaseDate
         payment.notificationUrl = pxPayment.notificationUrl
-        payment.order = getOrderFromPXOrder(pxPayment.order)
         payment.payer = pxPayment.payer
         payment.paymentMethodId = pxPayment.paymentMethodId
         payment.paymentTypeId = pxPayment.paymentTypeId
@@ -159,15 +158,6 @@ internal extension MercadoPagoServicesAdapter {
         feesDetail.feePayer = pxFeeDetail.feePayer
         feesDetail.type = pxFeeDetail.type
         return feesDetail
-    }
-
-    internal func getOrderFromPXOrder(_ pxOrder: PXOrder?) -> Order {
-        let order = Order()
-        if let pxOrder = pxOrder {
-            order.orderId = Int(pxOrder.id ?? "0") ?? 0 //TODO: FIX
-            order.type = pxOrder.type
-        }
-        return order
     }
 
     internal func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
