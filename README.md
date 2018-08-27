@@ -60,7 +60,7 @@ checkoutBuilder.setColor(checkoutColor: UIColor.purple)
 ### Advanced color customization
 If you need an advanced color customization, you can customize your colors through our `PXTheme` interface/protocol. Check the  <a href="http://mercadopago.github.io/px-ios/v4/Protocols/PXTheme.html" target="_blank"> `PXTheme` methods in our reference guide. </a>.
 
-The folowing example implement the protocol PXTheme to customize the UI as Mercadolibre style:
+The following example implements the protocol PXTheme to customize the UI with Mercadolibre style:
 ```swift
 final class ExampleTheme: PXTheme {
     let primaryColor: UIColor = #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1)
