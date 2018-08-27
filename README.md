@@ -63,7 +63,6 @@ If you need an advanced color customization, you can customize your colors throu
 The folowing example implement the protocol PXTheme to customize the UI as Mercadolibre style:
 ```swift
 final class ExampleTheme: PXTheme {
-
     let primaryColor: UIColor = #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1)
 
     public func navigationBar() -> PXThemeProperty {
