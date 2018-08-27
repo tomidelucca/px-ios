@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import MercadoPagoServicesV4
 
 @objcMembers open class InstructionsInfo: NSObject {
 
-    var amountInfo: AmountInfo!
+    var amountInfo: PXAmountInfo!
     var instructions: [Instruction]!
 
     open func hasSecundaryInformation() -> Bool {
