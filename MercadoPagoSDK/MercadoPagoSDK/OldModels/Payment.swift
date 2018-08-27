@@ -51,7 +51,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var payer: PXPayer!
     open var paymentMethodId: String!
     open var paymentTypeId: String!
-    open var refunds: [Refund]!
+    open var refunds: [PXRefund]!
     open var statementDescriptor: String!
     open var status: String!
     open var statusDetail: String!
@@ -133,15 +133,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let paymentTypeId = JSONHandler.attemptParseToString(json["payment_type_id"]) {
                         payment.paymentTypeId = paymentTypeId
                     }
-                var refunds: [Refund] = [Refund]()
-                if let refArray = json["refunds"] as? NSArray {
-                        for index in 0..<refArray.count {
-                                if let refDic = refArray[index] as? NSDictionary {
-                                        refunds.append(Refund.fromJSON(refDic))
-                                    }
-                            }
-                    }
-                payment.refunds = refunds
+
                 if let statementDescriptor = JSONHandler.attemptParseToString(json["statement_descriptor"]) {
                         payment.statementDescriptor = statementDescriptor
                     }

@@ -198,14 +198,6 @@ internal extension MercadoPagoServicesAdapter {
         payment.payer = pxPayment.payer
         payment.paymentMethodId = pxPayment.paymentMethodId
         payment.paymentTypeId = pxPayment.paymentTypeId
-
-        if let pxPaymentRefunds = pxPayment.refunds {
-            for pxRefund in pxPaymentRefunds {
-                let refund = getRefundFromPXRefund(pxRefund)
-                payment.refunds = Array.safeAppend(payment.refunds, refund)
-            }
-        }
-
         payment.statementDescriptor = pxPayment.statementDescriptor
         payment.status = pxPayment.status
         payment.statusDetail = pxPayment.statusDetail
@@ -235,17 +227,6 @@ internal extension MercadoPagoServicesAdapter {
             order.type = pxOrder.type
         }
         return order
-    }
-
-    internal func getRefundFromPXRefund(_ pxRefund: PXRefund) -> Refund {
-        let refund = Refund()
-        refund.dateCreated = pxRefund.dateCreated
-        refund.refundId = Int(pxRefund.id)!
-        refund.metadata = pxRefund.metadata! as NSObject
-        refund.paymentId = pxRefund.paymentId != nil ? pxRefund.paymentId! : 0
-        refund.source = pxRefund.source
-        refund.uniqueSequenceNumber = pxRefund.uniqueSecuenceNumber
-        return refund
     }
 
     internal func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
