@@ -1,5 +1,5 @@
 //
-//  PXPaymentPluginConfigProtocol.swift
+//  PXPaymentMethodConfigProtocol.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 12/14/17.
