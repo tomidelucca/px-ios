@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 internal final class PXPaymentFlowModel: NSObject {
     var paymentData: PXPaymentData?
@@ -16,7 +17,7 @@ internal final class PXPaymentFlowModel: NSObject {
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
     var paymentResult: PaymentResult?
-    var instructionsInfo: InstructionsInfo?
+    var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
 
     init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {

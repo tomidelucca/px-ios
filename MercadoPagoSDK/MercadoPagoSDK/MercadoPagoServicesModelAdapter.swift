@@ -60,32 +60,6 @@ internal extension MercadoPagoServicesAdapter {
         return paymentPreference
     }
 
-    internal func getInstructionsInfoFromPXInstructions(_ pxInstructions: PXInstructions) -> InstructionsInfo {
-        let instructionsInfo = InstructionsInfo()
-        if let pxInstructionsInstructions = pxInstructions.instructions {
-            for pxInstruction in pxInstructionsInstructions {
-                let instruction = getInstructionFromPXInstruction(pxInstruction)
-                instructionsInfo.instructions = Array.safeAppend(instructionsInfo.instructions, instruction)
-            }
-        }
-
-        return instructionsInfo
-    }
-
-    internal func getInstructionFromPXInstruction(_ pxInstruction: PXInstruction) -> Instruction {
-        let instruction = Instruction()
-        instruction.title = pxInstruction.title ?? ""
-        instruction.subtitle = pxInstruction.subtitle
-        instruction.accreditationMessage = pxInstruction.accreditationMessage ?? ""
-        instruction.accreditationComment = pxInstruction.accreditationComments
-        instruction.info = pxInstruction.info
-        instruction.secondaryInfo = pxInstruction.secondaryInfo
-        instruction.tertiaryInfo = pxInstruction.tertiaryInfo
-
-        instruction.type = pxInstruction.type ?? ""
-        return instruction
-    }
-
     internal func getPXCardTokenFromCardToken(_ cardToken: CardToken) -> PXCardToken {
         let pxCardToken = PXCardToken()
         pxCardToken.cardholder = cardToken.cardholder

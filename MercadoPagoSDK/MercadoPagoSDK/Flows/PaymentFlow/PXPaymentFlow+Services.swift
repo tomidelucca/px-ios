@@ -82,8 +82,8 @@ internal extension PXPaymentFlow {
             fatalError("Get Instructions - Payment Method Type Id does no exist")
         }
 
-        model.mercadoPagoServicesAdapter.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (instructionsInfo) in
-            self?.model.instructionsInfo = instructionsInfo
+        model.mercadoPagoServicesAdapter.getInstructions(paymentId: paymentId, paymentTypeId: paymentTypeId, callback: { [weak self] (instructions) in
+            self?.model.instructionsInfo = instructions
             self?.executeNextStep()
 
             }, failure: {[weak self] (error) in

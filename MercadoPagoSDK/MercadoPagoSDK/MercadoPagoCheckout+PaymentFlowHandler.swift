@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
+
 extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(error: MPSDKError) {
         guard let reviewScreen = viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController else {
@@ -16,7 +18,7 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
         reviewScreen.resetButton()
     }
 
-    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?) {
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?) {
         viewModel.paymentResult = paymentResult
         viewModel.instructionsInfo = instructionsInfo
 

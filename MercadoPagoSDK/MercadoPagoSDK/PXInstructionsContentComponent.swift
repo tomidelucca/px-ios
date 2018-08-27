@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 internal class PXInstructionsContentComponent: PXComponentizable {
     var props: PXInstructionsContentProps
@@ -88,7 +89,7 @@ internal class PXInstructionsContentComponent: PXComponentizable {
     }
 
     func getAccreditationTimeComponent() -> PXInstructionsAccreditationTimeComponent? {
-        let accreditationTimeProps = PXInstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
+        let accreditationTimeProps = PXInstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComments)
         let accreditationTimeComponent = PXInstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
@@ -108,7 +109,7 @@ internal class PXInstructionsContentComponent: PXComponentizable {
     }
 
     func hasAccreditationTime() -> Bool {
-        return !Array.isNullOrEmpty(props.instruction.accreditationComment) || !String.isNullOrEmpty(props.instruction.accreditationMessage)
+        return !Array.isNullOrEmpty(props.instruction.accreditationComments) || !String.isNullOrEmpty(props.instruction.accreditationMessage)
     }
 
     func hasActions() -> Bool {
@@ -130,9 +131,9 @@ internal class PXInstructionsContentComponent: PXComponentizable {
 }
 
 internal class PXInstructionsContentProps {
-    var instruction: Instruction
+    var instruction: PXInstruction
 
-    init(instruction: Instruction) {
+    init(instruction: PXInstruction) {
         self.instruction = instruction
     }
 }

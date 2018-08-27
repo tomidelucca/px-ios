@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 internal protocol PXPaymentResultHandlerProtocol: NSObjectProtocol {
-    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?)
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?)
     func finishPaymentFlow(businessResult: PXBusinessResult)
     func finishPaymentFlow(error: MPSDKError)
 }

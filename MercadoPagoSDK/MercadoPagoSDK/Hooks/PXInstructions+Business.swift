@@ -1,19 +1,14 @@
 //
-//  InstructionsInfo.swift
-//  MercadoPagoSDK
+//  PXInstructions+Business.swift
+//  MercadoPagoSDKV4
 //
-//  Created by Maria cristina rodriguez on 29/7/16.
-//  Copyright © 2016 MercadoPago. All rights reserved.
+//  Created by Eden Torres on 27/08/2018.
 //
 
-import UIKit
+import Foundation
 import MercadoPagoServicesV4
 
-@objcMembers open class InstructionsInfo: NSObject {
-
-    var amountInfo: PXAmountInfo!
-    var instructions: [Instruction]!
-
+extension PXInstructions {
     open func hasSecundaryInformation() -> Bool {
         if instructions.isEmpty {
             return false
@@ -30,7 +25,7 @@ import MercadoPagoServicesV4
         }
     }
 
-    internal func getInstruction() -> Instruction? {
+    internal func getInstruction() -> PXInstruction? {
         if instructions.isEmpty {
             return nil
         } else {

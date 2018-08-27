@@ -36,7 +36,7 @@ internal class MercadoPagoServicesAdapter {
             }, failure: failure)
     }
 
-    func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let int64PaymentId = Int64(paymentId) //TODO: FIX
 
@@ -44,9 +44,7 @@ internal class MercadoPagoServicesAdapter {
             guard let strongSelf = self else {
                 return
             }
-
-            let instructionsInfo = strongSelf.getInstructionsInfoFromPXInstructions(pxInstructions)
-            callback(instructionsInfo)
+            callback(pxInstructions)
             }, failure: failure)
     }
 

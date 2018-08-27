@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 internal class PXInstructionsComponent: PXComponentizable {
     var props: PXInstructionsProps
@@ -51,9 +52,9 @@ internal class PXInstructionsComponent: PXComponentizable {
 }
 
 internal class PXInstructionsProps {
-    var instruction: Instruction
+    var instruction: PXInstruction
 
-    init(instruction: Instruction) {
+    init(instruction: PXInstruction) {
         self.instruction = instruction
     }
 }

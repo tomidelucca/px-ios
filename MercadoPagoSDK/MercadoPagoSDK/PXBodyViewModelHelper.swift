@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import  MercadoPagoServicesV4
 
 internal extension PXResultViewModel {
     func getBodyComponentProps() -> PXBodyProps {
@@ -30,7 +31,7 @@ internal extension PXResultViewModel {
         self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
     }
 
-    func getInstrucion() -> Instruction? {
+    func getInstrucion() -> PXInstruction? {
         guard let instructionsInfo = self.instructionsInfo else {
             return nil
         }

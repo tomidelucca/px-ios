@@ -121,7 +121,7 @@ internal extension PXResultViewModel {
     }
 
     func titleForInstructions() -> NSMutableAttributedString {
-        guard let instructionsInfo = self.instructionsInfo else {
+        guard let instructionsInfo = self.instructionsInfo, let amountInfo = instructionsInfo.amountInfo else {
             return "".toAttributedString()
         }
         let currency = SiteManager.shared.getCurrency()
@@ -129,15 +129,15 @@ internal extension PXResultViewModel {
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
 
-        let arr = String(instructionsInfo.amountInfo.amount).split(separator: ".").map(String.init)
+        let arr = String(amountInfo.amount).split(separator: ".").map(String.init)
         let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
-        let centsStr = Utils.getCentsFormatted(String(instructionsInfo.amountInfo.amount), decimalSeparator: decimalSeparator)
+        let centsStr = Utils.getCentsFormatted(String(amountInfo.amount), decimalSeparator: decimalSeparator)
         let amountRange = instructionsInfo.getInstruction()!.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
 
         if let range = amountRange {
             let lowerBoundTitle = String(instructionsInfo.instructions[0].title[..<range.lowerBound])
             let attributedTitle = NSMutableAttributedString(string: lowerBoundTitle, attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
-            let attributedAmount = Utils.getAttributedAmount(instructionsInfo.amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize: PXHeaderRenderer.TITLE_FONT_SIZE/2, smallSymbol: true)
+            let attributedAmount = Utils.getAttributedAmount(amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize: PXHeaderRenderer.TITLE_FONT_SIZE/2, smallSymbol: true)
             attributedTitle.append(attributedAmount)
             let upperBoundTitle = String(instructionsInfo.instructions[0].title[range.upperBound...])
             let endingTitle = NSAttributedString(string: upperBoundTitle, attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])

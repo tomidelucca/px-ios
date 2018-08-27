@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
+
 extension OneTapFlow {
     func startPaymentFlow() {
         guard let paymentFlow = model.paymentFlow else {
@@ -29,7 +31,7 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
         reviewScreen.resetButton()
     }
 
-    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: InstructionsInfo?) {
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?) {
         self.model.paymentResult = paymentResult
         self.model.instructionsInfo = instructionsInfo
         if self.model.needToShowLoading() {

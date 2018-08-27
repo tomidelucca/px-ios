@@ -199,11 +199,11 @@ internal class PXBodyComponent: PXComponentizable {
 
 internal class PXBodyProps {
     let paymentResult: PaymentResult
-    let instruction: Instruction?
+    let instruction: PXInstruction?
     let amountHelper: PXAmountHelper
     let callback : (() -> Void)
 
-    init(paymentResult: PaymentResult, amountHelper: PXAmountHelper, instruction: Instruction?, callback:  @escaping (() -> Void)) {
+    init(paymentResult: PaymentResult, amountHelper: PXAmountHelper, instruction: PXInstruction?, callback:  @escaping (() -> Void)) {
         self.paymentResult = paymentResult
         self.instruction = instruction
         self.amountHelper = amountHelper
