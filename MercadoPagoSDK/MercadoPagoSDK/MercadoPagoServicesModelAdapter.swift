@@ -168,17 +168,6 @@ internal extension MercadoPagoServicesAdapter {
         return stringDate
     }
 
-    internal func getBankDealFromPXBankDeal(_ pxBankDeal: PXBankDeal) -> BankDeal {
-        let bankDeal = BankDeal()
-        bankDeal.promoId = pxBankDeal.id
-        bankDeal.issuer = pxBankDeal.issuer
-        bankDeal.recommendedMessage = pxBankDeal.recommendedMessage
-        bankDeal.paymentMethods = pxBankDeal.paymentMethods
-        bankDeal.legals = pxBankDeal.legals
-        bankDeal.url = pxBankDeal.picture?.url ?? ""
-        return bankDeal
-    }
-
     internal func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
         let payment = Payment()
         payment.binaryMode = pxPayment.binaryMode
