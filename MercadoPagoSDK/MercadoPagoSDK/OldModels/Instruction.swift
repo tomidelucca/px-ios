@@ -15,7 +15,7 @@ internal class Instruction {
     var subtitle: String?
     var accreditationMessage: String = ""
     var accreditationComment: [String]?
-    var references: [InstructionReference]!
+    var references: [PXInstructionReference]!
     var info: [String]!
     var secondaryInfo: [String]?
     var tertiaryInfo: [String]?
@@ -58,10 +58,6 @@ internal class Instruction {
                                     }
                             }
                         instruction.accreditationComment = !info.isEmpty ? info : nil
-                    }
-
-            if json["references"] != nil && !(json["references"]! is NSNull) {
-                        instruction.references = (json["references"] as! Array).map({InstructionReference.fromJSON($0)})
                     }
 
                 if json["info"] != nil && !(json["info"]! is NSNull) {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MercadoPagoServicesV4
 
 class PXInstructionsReferenceComponent: NSObject, PXComponentizable {
     var props: PXInstructionsReferenceProps
@@ -19,8 +20,8 @@ class PXInstructionsReferenceComponent: NSObject, PXComponentizable {
     }
 }
 class PXInstructionsReferenceProps: NSObject {
-    var reference: InstructionReference?
-    init(reference: InstructionReference?) {
+    var reference: PXInstructionReference?
+    init(reference: PXInstructionReference?) {
         self.reference = reference
     }
 }
