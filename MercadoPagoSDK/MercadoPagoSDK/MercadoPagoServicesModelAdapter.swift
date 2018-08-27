@@ -413,7 +413,6 @@ internal extension MercadoPagoServicesAdapter {
 
     internal func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
         let customer = Customer()
-        customer.address = getAddressFromPXAddress(pxCustomer.address)
 
         if let pxCustomerCards = pxCustomer.cards {
             customer.cards = []
@@ -440,17 +439,6 @@ internal extension MercadoPagoServicesAdapter {
             customer.metadata = meta as NSDictionary
         }
         return customer
-    }
-
-    internal func getAddressFromPXAddress(_ pxAddress: PXAddress?) -> Address {
-        if let pxAddress = pxAddress {
-            let streetName: String? = pxAddress.streetName
-            let streetNumber: NSNumber? = pxAddress.streetNumber != nil ? NSNumber(value: pxAddress.streetNumber!) : nil
-            let zipCode: String? = pxAddress.zipCode
-            let address = Address(streetName: streetName, streetNumber: streetNumber, zipCode: zipCode)
-            return address
-         }
-        return Address()
     }
 
     internal func getPhoneFromPXPhone(_ pxPhone: PXPhone?) -> Phone {

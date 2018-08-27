@@ -12,7 +12,7 @@ import MercadoPagoServicesV4
 
 /** :nodoc: */
 @objcMembers open class Customer: NSObject {
-    open var address: Address?
+    open var address: PXAddress?
     open var cards: [Card]?
     open var defaultCard: String?
     open var customerDescription: String?
@@ -40,9 +40,6 @@ import MercadoPagoServicesV4
         if let phoneDic = json["phone"] as? NSDictionary {
             customer.phone = Phone.fromJSON(phoneDic)
         }
-        if let addressDic = json["address"] as? NSDictionary {
-            customer.address = Address.fromJSON(addressDic)
-        }
         if let defaultCard = json["default_card"] as? String {
             customer.defaultCard = defaultCard
         }
@@ -69,7 +66,6 @@ import MercadoPagoServicesV4
         let firstName: Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
         let lastName: Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
         let id: Any =   self.customerId == nil ? JSONHandler.null : self.customerId!
-        let address: Any = self.address == nil ? JSONHandler.null : self.address!.toJSON()
         let liveMode: Any = self.liveMode == nil ? JSONHandler.null : self.liveMode!
 
         var obj: [String: Any] = [
