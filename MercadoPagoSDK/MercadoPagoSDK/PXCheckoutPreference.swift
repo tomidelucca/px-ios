@@ -10,7 +10,7 @@ import UIKit
 
 @objcMembers open class PXCheckoutPreference: NSObject {
     internal var preferenceId: String!
-    internal var items: [Item] = []
+    internal var items: [PXItem] = []
     internal var payer: Payer!
     internal var paymentPreference: PaymentPreference = PaymentPreference()
     internal var siteId: String!
@@ -23,7 +23,7 @@ import UIKit
         self.preferenceId = preferenceId
     }
 
-    public init(siteId: String, payerEmail: String, items: [Item]) {
+    public init(siteId: String, payerEmail: String, items: [PXItem]) {
         self.items = items
 
         guard let siteId = PXSites(rawValue: siteId)?.rawValue else {
@@ -112,7 +112,7 @@ extension PXCheckoutPreference {
         return self.preferenceId
     }
 
-    open func getItems() -> [Item]? {
+    open func getItems() -> [PXItem]? {
         return items
     }
 

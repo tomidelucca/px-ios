@@ -153,8 +153,8 @@
 -(void)setVoidCallback {}
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
-    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    PXItem *item2 = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
 
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 

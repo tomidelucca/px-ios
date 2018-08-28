@@ -10,7 +10,7 @@ import Foundation
 /// :nodoc:
 open class PXCheckoutPreferenceNew: NSObject, Codable {
     open var id: String!
-    open var items: [PXItem]?
+    open var items: [PXItemNew]?
     open var payer: PXPayer?
     open var paymentPreference: PXPaymentPreference?
     open var siteId: String?
@@ -19,7 +19,7 @@ open class PXCheckoutPreferenceNew: NSObject, Codable {
     open var site: PXSite?
     open var differentialPricing: PXDifferentialPricing?
 
-    public init(id: String, items: [PXItem]?, payer: PXPayer?, paymentPreference: PXPaymentPreference?, siteId: String?, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?) {
+    public init(id: String, items: [PXItemNew]?, payer: PXPayer?, paymentPreference: PXPaymentPreference?, siteId: String?, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -46,7 +46,7 @@ open class PXCheckoutPreferenceNew: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCheckoutPreferenceKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
-        let items: [PXItem]? = try container.decodeIfPresent([PXItem].self, forKey: .items)
+        let items: [PXItemNew]? = try container.decodeIfPresent([PXItemNew].self, forKey: .items)
         let paymentPreference: PXPaymentPreference? = try container.decodeIfPresent(PXPaymentPreference.self, forKey: .paymentPreference)
         let payer: PXPayer? = try container.decodeIfPresent(PXPayer.self, forKey: .payer)
         let expirationDateTo: Date? = try container.decodeDateFromStringIfPresent(forKey: .expirationDateTo)

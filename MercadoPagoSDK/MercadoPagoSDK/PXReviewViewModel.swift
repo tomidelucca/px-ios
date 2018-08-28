@@ -307,11 +307,11 @@ extension PXReviewViewModel {
         return pxItemComponents
     }
 
-    fileprivate func shouldShowQuantity(item: Item) -> Bool {
+    fileprivate func shouldShowQuantity(item: PXItem) -> Bool {
         return item.quantity > 1 // Quantity must not be shown if it is 1
     }
 
-    fileprivate func shouldShowPrice(item: Item) -> Bool {
+    fileprivate func shouldShowPrice(item: PXItem) -> Bool {
         return amountHelper.preference.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
     }
 
@@ -319,7 +319,7 @@ extension PXReviewViewModel {
         return !amountHelper.preference.hasMultipleItems() && reviewScreenPreference.getCollectorIcon() != nil
     }
 
-    fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
+    fileprivate func buildItemComponent(item: PXItem) -> PXItemComponent? {
         if item.quantity == 1 && String.isNullOrEmpty(item.itemDescription) && !amountHelper.preference.hasMultipleItems() { // Item must not be shown if it has no description and it's one
             return nil
         }
@@ -339,7 +339,7 @@ extension PXReviewViewModel {
     }
 
     // HotFix: TODO - Move to OneTapViewModel
-    private func buildOneTapItemComponent(item: Item) -> PXItemComponent? {
+    private func buildOneTapItemComponent(item: PXItem) -> PXItemComponent? {
         let itemQuantiy = item.quantity
         let itemPrice = item.unitPrice
         let itemTitle = item.title
@@ -354,28 +354,28 @@ extension PXReviewViewModel {
 
 // MARK: Item getters
 extension PXReviewViewModel {
-    fileprivate func getItemTitle(item: Item) -> String? { // Return item real title if it has multiple items, if not return description
+    fileprivate func getItemTitle(item: PXItem) -> String? { // Return item real title if it has multiple items, if not return description
         if amountHelper.preference.hasMultipleItems() {
             return item.title
         }
         return item.itemDescription
     }
 
-    fileprivate func getItemDescription(item: Item) -> String? { // Returns only if it has multiple items
+    fileprivate func getItemDescription(item: PXItem) -> String? { // Returns only if it has multiple items
         if amountHelper.preference.hasMultipleItems() {
             return item.itemDescription
         }
         return nil
     }
 
-    fileprivate func getItemQuantity(item: Item) -> Int? {
+    fileprivate func getItemQuantity(item: PXItem) -> Int? {
         if  !shouldShowQuantity(item: item) {
             return nil
         }
         return item.quantity
     }
 
-    fileprivate func getItemPrice(item: Item) -> Double? {
+    fileprivate func getItemPrice(item: PXItem) -> Double? {
         if  !shouldShowPrice(item: item) {
             return nil
         }

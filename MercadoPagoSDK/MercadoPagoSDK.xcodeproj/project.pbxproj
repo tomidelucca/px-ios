@@ -40,8 +40,8 @@
 		0F98837A1AD2AB6000F750F0 /* Installment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9883461AD2AB6000F750F0 /* Installment.swift */; };
 		0F98837B1AD2AB6000F750F0 /* Issuer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9883471AD2AB6000F750F0 /* Issuer.swift */; };
 		0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9883471AD2AB6000F750F0 /* Issuer.swift */; };
-		0F98837D1AD2AB6000F750F0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9883481AD2AB6000F750F0 /* Item.swift */; };
-		0F98837E1AD2AB6000F750F0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9883481AD2AB6000F750F0 /* Item.swift */; };
+		0F98837D1AD2AB6000F750F0 /* PXItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9883481AD2AB6000F750F0 /* PXItem.swift */; };
+		0F98837E1AD2AB6000F750F0 /* PXItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9883481AD2AB6000F750F0 /* PXItem.swift */; };
 		0F9883811AD2AB6000F750F0 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F98834A1AD2AB6000F750F0 /* Order.swift */; };
 		0F9883821AD2AB6000F750F0 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F98834A1AD2AB6000F750F0 /* Order.swift */; };
 		0F9883831AD2AB6000F750F0 /* Payer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F98834B1AD2AB6000F750F0 /* Payer.swift */; };
@@ -437,7 +437,7 @@
 		4B9F3AEF21358E580024412F /* MPTActionEventInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AC021358E580024412F /* MPTActionEventInfo.swift */; };
 		4B9F3AF021358E580024412F /* TrackingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AC121358E580024412F /* TrackingUtil.swift */; };
 		4B9F3AF121358E580024412F /* TrackingUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AC121358E580024412F /* TrackingUtil.swift */; };
-		4B9F3B43213590F70024412F /* PXItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AF5213590E70024412F /* PXItem.swift */; };
+		4B9F3B43213590F70024412F /* PXItemNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AF5213590E70024412F /* PXItemNew.swift */; };
 		4B9F3B44213590F70024412F /* MercadoPagoServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AF6213590E70024412F /* MercadoPagoServices.swift */; };
 		4B9F3B45213590F70024412F /* KeyedDecodingContainer + Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AF7213590E80024412F /* KeyedDecodingContainer + Additions.swift */; };
 		4B9F3B46213590F70024412F /* MercadoPagoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AF8213590E80024412F /* MercadoPagoService.swift */; };
@@ -1014,7 +1014,7 @@
 		0F9883451AD2AB6000F750F0 /* IdentificationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentificationType.swift; sourceTree = "<group>"; };
 		0F9883461AD2AB6000F750F0 /* Installment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Installment.swift; sourceTree = "<group>"; };
 		0F9883471AD2AB6000F750F0 /* Issuer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issuer.swift; sourceTree = "<group>"; };
-		0F9883481AD2AB6000F750F0 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		0F9883481AD2AB6000F750F0 /* PXItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXItem.swift; sourceTree = "<group>"; };
 		0F98834A1AD2AB6000F750F0 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		0F98834B1AD2AB6000F750F0 /* Payer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payer.swift; sourceTree = "<group>"; };
 		0F98834C1AD2AB6000F750F0 /* PayerCost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayerCost.swift; sourceTree = "<group>"; };
@@ -1253,7 +1253,7 @@
 		4B9F3ABF21358E580024412F /* MPXTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPXTracker.swift; sourceTree = "<group>"; };
 		4B9F3AC021358E580024412F /* MPTActionEventInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTActionEventInfo.swift; sourceTree = "<group>"; };
 		4B9F3AC121358E580024412F /* TrackingUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingUtil.swift; sourceTree = "<group>"; };
-		4B9F3AF5213590E70024412F /* PXItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXItem.swift; sourceTree = "<group>"; };
+		4B9F3AF5213590E70024412F /* PXItemNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXItemNew.swift; sourceTree = "<group>"; };
 		4B9F3AF6213590E70024412F /* MercadoPagoServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoServices.swift; sourceTree = "<group>"; };
 		4B9F3AF7213590E80024412F /* KeyedDecodingContainer + Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer + Additions.swift"; sourceTree = "<group>"; };
 		4B9F3AF8213590E80024412F /* MercadoPagoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoService.swift; sourceTree = "<group>"; };
@@ -1997,7 +1997,7 @@
 				0F9883471AD2AB6000F750F0 /* Issuer.swift */,
 				FCBF13411E7201570092B756 /* FinancialInstituion.swift */,
 				FCBF134D1E7208900092B756 /* EntityType.swift */,
-				0F9883481AD2AB6000F750F0 /* Item.swift */,
+				0F9883481AD2AB6000F750F0 /* PXItem.swift */,
 				0F98834A1AD2AB6000F750F0 /* Order.swift */,
 				0F98834D1AD2AB6000F750F0 /* Payment.swift */,
 				76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */,
@@ -2436,7 +2436,7 @@
 				4B9F3B2D213590F30024412F /* PXInstructionReference.swift */,
 				4B9F3B01213590E90024412F /* PXInstructions.swift */,
 				4B9F3AFD213590E90024412F /* PXIssuer.swift */,
-				4B9F3AF5213590E70024412F /* PXItem.swift */,
+				4B9F3AF5213590E70024412F /* PXItemNew.swift */,
 				4B9F3B0C213590EB0024412F /* PXOneTapCard.swift */,
 				4B9F3B14213590EC0024412F /* PXOneTapItem.swift */,
 				4B9F3B21213590F10024412F /* PXOrder.swift */,
@@ -3746,7 +3746,7 @@
 				4BEF9B511FE2EAAB002ADAFF /* PXPluginNavigationHandler.swift in Sources */,
 				15D79A0A1CA9B6B900623A84 /* MPButton.swift in Sources */,
 				15D79A041CA96D6400623A84 /* MPLabel.swift in Sources */,
-				4B9F3B43213590F70024412F /* PXItem.swift in Sources */,
+				4B9F3B43213590F70024412F /* PXItemNew.swift in Sources */,
 				4BAA55EB1DB0015800501061 /* AdditionalStepCardTableViewCell.swift in Sources */,
 				FC3FC8811FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift in Sources */,
 				4B2EC49C20FFC26F008D03F8 /* MercadopagoCheckoutViewModel+InitFlow.swift in Sources */,
@@ -3795,7 +3795,7 @@
 				23ECADC51EF1C7CC003E4539 /* ApiUtil.swift in Sources */,
 				7656CA1D1C7646600043BDB2 /* InstructionAction.swift in Sources */,
 				0F98837B1AD2AB6000F750F0 /* Issuer.swift in Sources */,
-				0F98837D1AD2AB6000F750F0 /* Item.swift in Sources */,
+				0F98837D1AD2AB6000F750F0 /* PXItem.swift in Sources */,
 				4BAA56251DB6B58D00501061 /* CardTypeTableViewCell.swift in Sources */,
 				FC98A75220C0659E00A791AC /* PXTotalRowBuilder.swift in Sources */,
 				4B08CD9D1F20F66700FE800A /* SavedESCCardToken.swift in Sources */,
@@ -4258,7 +4258,7 @@
 				FC2A09551FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */,
 				23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */,
 				4B6954BF20A46BE200CCF735 /* OneTapCard.swift in Sources */,
-				0F98837E1AD2AB6000F750F0 /* Item.swift in Sources */,
+				0F98837E1AD2AB6000F750F0 /* PXItem.swift in Sources */,
 				8138737B1FA8D2BF002095D6 /* PXResultViewModel.swift in Sources */,
 				4B9F3AF121358E580024412F /* TrackingUtil.swift in Sources */,
 				4BFD90C21F58554C00ABC348 /* DateExtensionTest.swift in Sources */,

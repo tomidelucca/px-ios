@@ -8,7 +8,7 @@
 
 import Foundation
 /// :nodoc:
-open class PXItem: NSObject, Codable {
+open class PXItemNew: NSObject, Codable {
 
     open var categoryId: String?
     open var currencyId: String?
@@ -78,12 +78,12 @@ open class PXItem: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSONToPXItem(data: Data) throws -> PXItem {
-        return try JSONDecoder().decode(PXItem.self, from: data)
+    open class func fromJSONToPXItem(data: Data) throws -> PXItemNew {
+        return try JSONDecoder().decode(PXItemNew.self, from: data)
     }
 
-    open class func fromJSON(data: Data) throws -> [PXItem] {
-        return try JSONDecoder().decode([PXItem].self, from: data)
+    open class func fromJSON(data: Data) throws -> [PXItemNew] {
+        return try JSONDecoder().decode([PXItemNew].self, from: data)
     }
 
 }

@@ -59,13 +59,13 @@ internal extension MercadoPagoServicesAdapter {
         return checkoutPreference
     }
 
-    internal func getItemFromPXItem(_ pxItem: PXItem) -> Item {
+    internal func getItemFromPXItem(_ pxItem: PXItemNew) -> PXItem {
         let id: String = pxItem.id
         let title: String = pxItem.title ?? ""
         let quantity: Int = pxItem.quantity ?? 1
         let unitPrice: Double = pxItem.unitPrice ?? 0.0
         let picture_URL: String = pxItem.pictureUrl ?? ""
-        let item = Item(title: title, quantity: quantity, unitPrice: unitPrice)
+        let item = PXItem(title: title, quantity: quantity, unitPrice: unitPrice)
         item.pictureUrl = picture_URL
         item.setDescription(description: pxItem._description ?? "")
         item.itemId = id
