@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 @import MercadoPagoSDK;
 
-@interface PaymentMethodPluginConfigViewController : UIViewController <PXPaymentPluginConfigProtocol>
+@interface PaymentMethodPluginConfigViewController : UIViewController <PXPaymentMethodConfigProtocol>
 @end

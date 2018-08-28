@@ -8,21 +8,21 @@
 
 import UIKit
 
-class TrackingServices: NSObject {
+internal class TrackingServices: NSObject {
 
-    static let STATUS_OK = 200
+    static internal let STATUS_OK = 200
 
-    static func request(url: String, params: String?, body: String? = nil, method: String, headers: [String: String]? = nil, success: @escaping (Any) -> Void,
-                        failure: ((NSError) -> Void)?) {
+    static internal func request(url: String, params: String?, body: String? = nil, method: String, headers: [String: String]? = nil, success: @escaping (Any) -> Void,
+                                 failure: ((NSError) -> Void)?) {
         var requesturl = url
         if !String.isNullOrEmpty(params) {
             requesturl += "?" + params!
         }
         let finalURL: NSURL = NSURL(string: requesturl)!
 
-        //        #if DEBUG
-        //            print("\n--REQUEST_URL: \(finalURL)")
-        //        #endif
+        #if DEBUG
+        print("\n--REQUEST_URL: \(finalURL)")
+        #endif
 
         let request: NSMutableURLRequest
         request = NSMutableURLRequest(url: finalURL as URL)
@@ -35,9 +35,9 @@ class TrackingServices: NSObject {
             }
         }
         if let body = body {
-            //            #if DEBUG
-            //                print("--REQUEST_BODY: \(body as! NSString)")
-            //            #endif
+            #if DEBUG
+            print("--REQUEST_BODY: \(body as! NSString)")
+            #endif
             request.httpBody = body.data(using: String.Encoding.utf8)
         }
         let session = URLSession.shared

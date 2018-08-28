@@ -49,7 +49,7 @@ enum ReachabilityStatus: CustomStringConvertible {
     }
 }
 
-public class MPXReach {
+internal class MPXReach {
     func connectionStatus() -> ReachabilityStatus {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
@@ -81,7 +81,7 @@ public class MPXReach {
     }
 }
 
-extension ReachabilityStatus {
+internal extension ReachabilityStatus {
     init(reachabilityFlags flags: SCNetworkReachabilityFlags) {
         let connectionRequired = flags.contains(.connectionRequired)
         let isReachable = flags.contains(.reachable)

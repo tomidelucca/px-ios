@@ -8,16 +8,16 @@
 
 import Foundation
 
-protocol TrackingStrategy {
+internal protocol TrackingStrategy {
     func trackScreen(screenTrack: MPTScreenTrackInfo)
 }
 
-class RealTimeStrategy: TrackingStrategy { // V1
-    func trackScreen(screenTrack: MPTScreenTrackInfo) {
+internal class RealTimeStrategy: TrackingStrategy { // V1
+    internal func trackScreen(screenTrack: MPTScreenTrackInfo) {
         self.send(trackList: [screenTrack])
     }
 
-    func trackActionEvent(actionEvenTrack: MPTActionEventInfo) {
+    internal func trackActionEvent(actionEvenTrack: MPTActionEventInfo) {
         self.send(trackList: [actionEvenTrack])
     }
 
@@ -39,14 +39,14 @@ class RealTimeStrategy: TrackingStrategy { // V1
     }
 }
 
-class BatchStrategy: TrackingStrategy { // V2
+internal class BatchStrategy: TrackingStrategy { // V2
 
-    func trackScreen(screenTrack: MPTScreenTrackInfo) {
+    internal func trackScreen(screenTrack: MPTScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
         attemptSendTrackInfo()
     }
 
-    func canSendTrack() -> Bool {
+    internal func canSendTrack() -> Bool {
         let status = MPXReach().connectionStatus()
         if status.description == "Offline" {
             return false
@@ -54,7 +54,7 @@ class BatchStrategy: TrackingStrategy { // V2
         return status.description == "Online (WiFi)" || UIApplication.shared.applicationState == UIApplicationState.background
     }
 
-    func attemptSendTrackInfo() {
+    internal func attemptSendTrackInfo() {
         if canSendTrack() {
             let array = TrackStorageManager.getBatchScreenTracks(force: false)
             guard let batch = array else {
@@ -82,14 +82,14 @@ class BatchStrategy: TrackingStrategy { // V2
 
 }
 
-class ForceTrackStrategy: TrackingStrategy { // V2
+internal class ForceTrackStrategy: TrackingStrategy { // V2
 
-    func trackScreen(screenTrack: MPTScreenTrackInfo) {
+    internal func trackScreen(screenTrack: MPTScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
         attemptSendTrackInfo(force: true)
     }
 
-    func canSendTrack() -> Bool {
+    internal func canSendTrack() -> Bool {
         let status = MPXReach().connectionStatus()
         if status.description == "Offline" {
             return false
@@ -97,7 +97,7 @@ class ForceTrackStrategy: TrackingStrategy { // V2
         return true
     }
 
-    func attemptSendTrackInfo(force: Bool = false) {
+    internal func attemptSendTrackInfo(force: Bool = false) {
         if canSendTrack() {
             let array = TrackStorageManager.getBatchScreenTracks(force: true)
             guard let batch = array else {

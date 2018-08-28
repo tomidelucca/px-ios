@@ -9,5 +9,5 @@
 
 @import MercadoPagoSDK;
 
-@interface MLMyMPPXTrackListener : NSObject <MPTrackListener>
+@interface MLMyMPPXTrackListener : NSObject 
 @end

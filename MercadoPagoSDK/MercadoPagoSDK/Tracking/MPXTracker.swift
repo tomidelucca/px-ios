@@ -8,18 +8,18 @@
 
 import UIKit
 
-@objc public protocol MPTrackListener: NSObjectProtocol {
+@objc internal protocol MPTrackListener: NSObjectProtocol {
     func trackScreen(screenName: String, extraParams: [String: Any]?)
     func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String: Any]?)
 }
 
-public struct MPXTrackingEnvironment {
+internal struct MPXTrackingEnvironment {
     public static let production = "production"
     public static let staging = "staging"
 }
 
 @objc
-public class MPXTracker: NSObject {
+internal class MPXTracker: NSObject {
     @objc open static let sharedInstance = MPXTracker()
 
     var public_key: String = ""
@@ -35,33 +35,33 @@ public class MPXTracker: NSObject {
 }
 
 // MARK: Getters/setters.
-extension MPXTracker {
+internal extension MPXTracker {
 
-    open class func setPublicKey(_ public_key: String) {
+    internal class func setPublicKey(_ public_key: String) {
         sharedInstance.public_key = public_key.trimSpaces()
     }
 
-    open class func setSdkVersion(_ version: String) {
+    internal class func setSdkVersion(_ version: String) {
         sharedInstance.sdkVersion = version
     }
 
-    open func getPublicKey() -> String! {
+    internal func getPublicKey() -> String! {
         return self.public_key
     }
 
-    open func setEnvironment(environment: String) {
+    internal func setEnvironment(environment: String) {
         self.currentEnvironment = environment
     }
 
-    open func getSdkVersion() -> String {
+    internal func getSdkVersion() -> String {
         return sdkVersion
     }
 
-    open func getPlatformType() -> String {
+    internal func getPlatformType() -> String {
         return "/mobile/ios"
     }
 
-    func isEnabled() -> Bool {
+    internal func isEnabled() -> Bool {
         guard let trackiSettings: [String: Any] = TrackingUtils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
             return false
         }
@@ -71,31 +71,31 @@ extension MPXTracker {
         return trackingEnabled
     }
 
-    open class func setTrack(listener: MPTrackListener) {
+    internal class func setTrack(listener: MPTrackListener) {
         sharedInstance.trackListener = listener
     }
 
-    open func getTrackListener() -> MPTrackListener? {
+    internal func getTrackListener() -> MPTrackListener? {
         return trackListener
     }
 
-    open func startNewFlow() {
+    internal func startNewFlow() {
         flowService.startNewFlow()
     }
 
-    open func startNewFlow(externalFlowId: String) {
+    internal func startNewFlow(externalFlowId: String) {
         flowService.startNewFlow(externalFlowId: externalFlowId)
     }
 
-    open func getFlowID() -> String {
+    internal func getFlowID() -> String {
         return flowService.getFlowId()
     }
 }
 
 // MARK: Public interfase.
-extension MPXTracker {
+internal extension MPXTracker {
 
-    open func trackScreen(screenId: String, screenName: String, properties: [String: String] = [:]) {
+    internal func trackScreen(screenId: String, screenName: String, properties: [String: String] = [:]) {
         if let trackListenerInterfase = trackListener {
             trackListenerInterfase.trackScreen(screenName: screenName, extraParams: properties)
         }
@@ -107,7 +107,7 @@ extension MPXTracker {
         trackingStrategy.trackScreen(screenTrack: screenTrack)
     }
 
-    open func trackActionEvent(action: String, screenId: String, screenName: String, properties: [String: String] = [:]) {
+    internal func trackActionEvent(action: String, screenId: String, screenName: String, properties: [String: String] = [:]) {
         if !isEnabled() {
             return
         }
@@ -117,7 +117,7 @@ extension MPXTracker {
         trackingStrategy.trackActionEvent(actionEvenTrack: screenTrack)
     }
 
-    open func setTrackingStrategy(screenID: String) {
+    internal func setTrackingStrategy(screenID: String) {
         let forcedScreens: [String] = [TrackingUtil.SCREEN_ID_PAYMENT_RESULT,
                                        TrackingUtil.SCREEN_ID_PAYMENT_RESULT_APPROVED,
                                        TrackingUtil.SCREEN_ID_PAYMENT_RESULT_PENDING,
@@ -133,7 +133,7 @@ extension MPXTracker {
 }
 
 // MARK: Internal interfase.
-extension MPXTracker {
+internal extension MPXTracker {
 
     internal func generateJSONDefault() -> [String: Any] {
         let deviceJSON = MPTDevice().toJSON()

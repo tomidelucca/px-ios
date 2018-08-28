@@ -7,11 +7,11 @@
 //
 
 import Foundation
-class TrackingUtils: NSObject {
+internal class TrackingUtils: NSObject {
 
     private static let kSdkSettingsFile = "mpx_tracking_settings"
 
-    open class func getBundle() -> Bundle? {
+    internal class func getBundle() -> Bundle? {
         return Bundle(for: Utils.self)
     }
 

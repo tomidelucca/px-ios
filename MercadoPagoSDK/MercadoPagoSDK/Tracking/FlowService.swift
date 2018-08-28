@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class FlowService {
+final internal class FlowService {
 
     static let FLOW_ID_KEY: String = "flow_id"
     private var flowId: String
@@ -31,7 +31,7 @@ final class FlowService {
 }
 
 // MARK: - Internal functions.
-extension FlowService {
+internal extension FlowService {
     static internal func getUUID() -> String {
         return UUID().uuidString.lowercased()
     }

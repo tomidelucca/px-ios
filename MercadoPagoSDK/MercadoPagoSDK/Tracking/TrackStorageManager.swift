@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TrackStorageManager: NSObject {
+internal class TrackStorageManager: NSObject {
 
     static var MAX_BATCH_SIZE = SETTING_MAX_BATCH_SIZE
     static var MAX_AGEING_SECONDS: Int  = SETTING_MAX_AGEING
@@ -93,7 +93,7 @@ class TrackStorageManager: NSObject {
     }
 }
 
-extension TrackStorageManager {
+internal extension TrackStorageManager {
     private static let kMaxBatchSize = "max_batch_size"
     private static let kMaxAgeing = "max_ageing_seconds"
     private static let kMaxLifetime = "max_lifetime_days"

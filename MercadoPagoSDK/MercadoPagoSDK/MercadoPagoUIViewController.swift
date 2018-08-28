@@ -20,8 +20,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     var shouldShowBackArrow = true
     var tracked: Bool = false
 
-    var pluginComponentInterface: PXPaymentPluginConfigProtocol?
-
     let STATUS_BAR_HEIGTH = ViewUtils.getStatusBarHeight()
     let NAV_BAR_HEIGHT = 44.0
     var navBarFontSize: CGFloat = 18
@@ -67,8 +65,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         if let navigationBarBackgroundView = navigationController?.navigationBar.viewWithTag(MercadoPagoUIViewController.MLNavigationBarBackgroundViewTag) {
             navigationBarBackgroundView.backgroundColor = UIColor.clear
         }
-
-        pluginComponentInterface?.viewWillAppear?()
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
@@ -77,7 +73,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }
-        pluginComponentInterface?.viewWillDisappear?()
     }
 
     func totalContentViewHeigth() -> CGFloat {

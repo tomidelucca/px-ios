@@ -11,7 +11,7 @@
 
 @interface PaymentPluginViewController ()
 
-@property (strong, nonatomic) PXPaymentPluginNavigationHandler * paymentNavigationHandler;
+@property (strong, nonatomic) PXPaymentProcessorNavigationHandler * paymentNavigationHandler;
 @end
 
 @implementation PaymentPluginViewController
@@ -51,24 +51,22 @@
 #pragma mark - Payment Plugin implementation.
 - (UIViewController * _Nullable)paymentProcessorViewController {
     return nil;
-    //return self;
-}
-
-- (void)didReceiveWithCheckoutStore:(PXCheckoutStore *)checkoutStore {
-
 }
 
 - (BOOL)support {
     return true;
 }
 
-- (void)paymentNavigationHandlerWithNavigationHandler:(PXPaymentPluginNavigationHandler *)navigationHandler {
+-(void)startPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBusinessResult:(void (^)(PXBusinessResult * _Nonnull))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentProcessorResult * _Nonnull))successWithPaymentResult {
+    PXPaymentProcessorResult* result = [[PXPaymentProcessorResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
+    successWithPaymentResult(result);
+}
+
+-(void)didReceiveWithNavigationHandler:(PXPaymentProcessorNavigationHandler *)navigationHandler {
     self.paymentNavigationHandler = navigationHandler;
 }
 
--(void)createPaymentWithCheckoutStore:(PXCheckoutStore * _Nonnull)store handler:(id <PXPaymentFlowHandlerProtocol>)handler successWithBusinessResult:(void (^)(PXBusinessResult *))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentPluginResult *))successWithPaymentResult {
-    PXPaymentPluginResult* result = [[PXPaymentPluginResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
-    successWithPaymentResult(result);
+-(void)didReceiveWithCheckoutStore:(PXCheckoutStore *)checkoutStore {
 }
 
 @end

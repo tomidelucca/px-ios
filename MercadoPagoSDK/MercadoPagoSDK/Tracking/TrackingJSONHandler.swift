@@ -7,9 +7,9 @@
 //
 
 import Foundation
-class TrackingJSONHandler: NSObject {
+internal class TrackingJSONHandler: NSObject {
 
-    class func jsonCoding(_ jsonDictionary: [String: Any]) -> String {
+    class internal func jsonCoding(_ jsonDictionary: [String: Any]) -> String {
         var result: String = ""
         do {
             let dict = NSMutableDictionary()
@@ -25,7 +25,7 @@ class TrackingJSONHandler: NSObject {
 
     }
 
-    class func convertToDictionary(text: String) -> [String: Any]? {
+    class internal func convertToDictionary(text: String) -> [String: Any]? {
         if let data = text.data(using: .utf8) {
             do {
                 return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]

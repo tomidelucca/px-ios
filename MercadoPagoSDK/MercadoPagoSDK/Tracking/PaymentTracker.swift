@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension MPXTracker {
+internal extension MPXTracker {
 
-    public static func trackToken(token: String) {
+    internal static func trackToken(token: String) {
 
         let obj: [String: Any] = ["public_key": MPXTracker.sharedInstance.getPublicKey(), "token": token, "sdk_flavor": "3", "sdk_platform": "iOS", "sdk_type": MPXTracker.sharedInstance.getPlatformType(), "sdk_version": MPXTracker.sharedInstance.getSdkVersion(), "sdk_framework": ""]
 
@@ -22,7 +22,7 @@ extension MPXTracker {
 
     }
 
-    public static func trackPaymentOff(paymentId: String) {
+    internal static func trackPaymentOff(paymentId: String) {
 
         let obj: [String: Any] = ["public_key": MPXTracker.sharedInstance.getPublicKey(), "payment_id": paymentId, "sdk_flavor": "3", "sdk_platform": "iOS", "sdk_type": MPXTracker.sharedInstance.getPlatformType(), "sdk_version": MPXTracker.sharedInstance.getSdkVersion(), "sdk_framework": ""]
 
