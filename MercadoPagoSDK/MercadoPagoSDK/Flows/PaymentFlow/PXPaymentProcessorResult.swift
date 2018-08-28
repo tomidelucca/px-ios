@@ -1,5 +1,5 @@
 //
-//  PXPaymentPluginResult.swift
+//  PXPaymentProcessorResult.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 26/06/2018.
@@ -10,7 +10,12 @@ import Foundation
 
 /** :nodoc: */
 @objcMembers
-open class PXPaymentPluginResult: NSObject {
+open class PXPaymentProcessorResult: NSObject {
+    @objc public enum RemotePaymentStatus: Int {
+        case APPROVED
+        case REJECTED
+    }
+
     let status: String
     let statusDetail: String
     let receiptId: String?
@@ -21,7 +26,7 @@ open class PXPaymentPluginResult: NSObject {
         self.receiptId = receiptId
     }
 
-    public init(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, statusDetail: String, receiptId: String? = nil) {
+    public init(paymentStatus: PXPaymentProcessorResult.RemotePaymentStatus, statusDetail: String, receiptId: String? = nil) {
         var paymentStatusStrDefault = PXPaymentStatus.REJECTED.rawValue
 
         if paymentStatus == .APPROVED {

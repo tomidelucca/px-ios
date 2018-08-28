@@ -1,5 +1,5 @@
 //
-//  PXPaymentPluginHandler.swift
+//  PXPaymentProcessorNavigationHandler.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 17/07/2018.
@@ -8,9 +8,8 @@
 
 import Foundation
 
-/** :nodoc: */
 @objcMembers
-open class PXPaymentPluginNavigationHandler: NSObject {
+open class PXPaymentProcessorNavigationHandler: NSObject {
     private var flow: PXPaymentFlow?
 
     internal init(flow: PXPaymentFlow) {
@@ -22,7 +21,7 @@ open class PXPaymentPluginNavigationHandler: NSObject {
         self.flow?.executeNextStep()
     }
 
-    open func didFinishPayment(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, statusDetails: String = "", receiptId: String? = nil) {
+    open func didFinishPayment(paymentStatus: PXPaymentProcessorResult.RemotePaymentStatus, statusDetails: String = "", receiptId: String? = nil) {
 
         guard let paymentData = self.flow?.model.paymentData else {
             return

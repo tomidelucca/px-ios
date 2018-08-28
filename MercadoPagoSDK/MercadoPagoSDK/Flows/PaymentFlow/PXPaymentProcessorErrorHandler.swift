@@ -1,5 +1,5 @@
 //
-//  PXPaymentFlowHandler.swift
+//  PXPaymentProcessorErrorHandler.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 26/06/2018.
@@ -9,6 +9,6 @@
 import Foundation
 
 /** :nodoc: */
-@objc public protocol PXPaymentFlowHandlerProtocol: NSObjectProtocol {
+@objc public protocol PXPaymentProcessorErrorHandler: NSObjectProtocol {
     @objc func showError()
 }
