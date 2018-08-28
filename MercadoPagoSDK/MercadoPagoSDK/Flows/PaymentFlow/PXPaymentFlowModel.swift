@@ -10,7 +10,7 @@ import Foundation
 
 internal final class PXPaymentFlowModel: NSObject {
     var paymentData: PXPaymentData?
-    var checkoutPreference: CheckoutPreference?
+    var checkoutPreference: PXCheckoutPreference?
     let paymentPlugin: PXPaymentProcessor?
 
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter

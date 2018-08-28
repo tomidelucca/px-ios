@@ -13,7 +13,7 @@
 
 @property MercadoPagoCheckoutBuilder *checkoutBuilder;
 
-@property CheckoutPreference *pref;
+@property PXCheckoutPreference *pref;
 @property PXPaymentConfiguration *paymentConfig;
 
 +(void)setPaymentDataCallback;

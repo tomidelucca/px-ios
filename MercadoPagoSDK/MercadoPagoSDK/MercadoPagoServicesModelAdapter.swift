@@ -42,8 +42,8 @@ internal extension MercadoPagoServicesAdapter {
         return Currency()
     }
 
-    internal func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
-        let checkoutPreference = CheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
+    internal func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreferenceNew) -> PXCheckoutPreference {
+        let checkoutPreference = PXCheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
         checkoutPreference.preferenceId = pxCheckoutPreference.id
         if let pxCheckoutPreferenceItems = pxCheckoutPreference.items {
             for pxItem in pxCheckoutPreferenceItems {

@@ -12,7 +12,7 @@ import Foundation
 open class MercadoPagoCheckoutBuilder: NSObject {
     internal let publicKey: String
     internal var preferenceId: String?
-    internal var checkoutPreference: CheckoutPreference?
+    internal var checkoutPreference: PXCheckoutPreference?
 
     internal var privateKey: String?
 
@@ -32,7 +32,7 @@ open class MercadoPagoCheckoutBuilder: NSObject {
         self.paymentConfig = paymentConfiguration
     }
 
-    public init(publicKey: String, checkoutPreference: CheckoutPreference, paymentConfiguration: PXPaymentConfiguration) {
+    public init(publicKey: String, checkoutPreference: PXCheckoutPreference, paymentConfiguration: PXPaymentConfiguration) {
         self.publicKey = publicKey
         self.checkoutPreference = checkoutPreference
         self.paymentConfig = paymentConfiguration

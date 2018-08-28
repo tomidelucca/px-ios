@@ -21,10 +21,10 @@ open class MercadoPagoCheckout: NSObject {
     internal var viewModel: MercadoPagoCheckoutViewModel
 
     public init(builder: MercadoPagoCheckoutBuilder) {
-        var choPref: CheckoutPreference
+        var choPref: PXCheckoutPreference
 
         if let preferenceId = builder.preferenceId {
-            choPref = CheckoutPreference(preferenceId: preferenceId)
+            choPref = PXCheckoutPreference(preferenceId: preferenceId)
         } else if let preference = builder.checkoutPreference {
             choPref = preference
             SiteManager.shared.setSite(siteId: choPref.getSiteId()) // TODO: Ver esto
@@ -126,7 +126,7 @@ extension MercadoPagoCheckout {
         PXTrackingSettings.enableBetaServices()
     }
 
-    internal func setCheckoutPreference(checkoutPreference: CheckoutPreference) {
+    internal func setCheckoutPreference(checkoutPreference: PXCheckoutPreference) {
         self.viewModel.checkoutPreference = checkoutPreference
     }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 /// :nodoc:
-open class PXCheckoutPreference: NSObject, Codable {
+open class PXCheckoutPreferenceNew: NSObject, Codable {
     open var id: String!
     open var items: [PXItem]?
     open var payer: PXPayer?
@@ -79,7 +79,7 @@ open class PXCheckoutPreference: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSON(data: Data) throws -> PXCheckoutPreference {
-        return try JSONDecoder().decode(PXCheckoutPreference.self, from: data)
+    open class func fromJSON(data: Data) throws -> PXCheckoutPreferenceNew {
+        return try JSONDecoder().decode(PXCheckoutPreferenceNew.self, from: data)
     }
 }

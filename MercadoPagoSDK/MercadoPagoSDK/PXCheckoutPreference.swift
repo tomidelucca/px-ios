@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers open class CheckoutPreference: NSObject {
+@objcMembers open class PXCheckoutPreference: NSObject {
     internal var preferenceId: String!
     internal var items: [Item] = []
     internal var payer: Payer!
@@ -55,7 +55,7 @@ import UIKit
 }
 
 // MARK: Setters
-extension CheckoutPreference {
+extension PXCheckoutPreference {
 
     open func setExpirationDate(_ expirationDate: Date) {
         self.expirationDateTo = expirationDate
@@ -106,7 +106,7 @@ extension CheckoutPreference {
 }
 
 // MARK: Getters
-extension CheckoutPreference {
+extension PXCheckoutPreference {
 
     open func getId() -> String {
         return self.preferenceId
@@ -163,7 +163,7 @@ extension CheckoutPreference {
 }
 
 // MARK: Validation
-extension CheckoutPreference {
+extension PXCheckoutPreference {
     internal func validate() -> String? {
 
         if let itemError = itemsValid() {
@@ -206,12 +206,12 @@ extension CheckoutPreference {
 }
 
 // MARK: BinaryMode
-extension CheckoutPreference {
+extension PXCheckoutPreference {
     open func isBinaryMode() -> Bool {
         return binaryModeEnabled
     }
 
-    open func setBinaryMode(isBinaryMode: Bool) -> CheckoutPreference {
+    open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self
     }

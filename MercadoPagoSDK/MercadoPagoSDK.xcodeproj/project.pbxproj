@@ -716,9 +716,9 @@
 		7672545F1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672545D1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift */; };
 		7672546B1C7CB34200EB5EBA /* MockBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672546A1C7CB34200EB5EBA /* MockBuilder.swift */; };
 		767254701C7CCBB400EB5EBA /* PaymentVaultViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672546F1C7CCBB400EB5EBA /* PaymentVaultViewControllerTest.swift */; };
-		76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C751C45A00E00120347 /* CheckoutPreference.swift */; };
+		76743C761C45A00E00120347 /* PXCheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C751C45A00E00120347 /* PXCheckoutPreference.swift */; };
 		76743C781C45A24600120347 /* PaymentPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PaymentPreference.swift */; };
-		76743C791C46866D00120347 /* CheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C751C45A00E00120347 /* CheckoutPreference.swift */; };
+		76743C791C46866D00120347 /* PXCheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C751C45A00E00120347 /* PXCheckoutPreference.swift */; };
 		76743C7B1C46951100120347 /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C7A1C46951100120347 /* PaymentType.swift */; };
 		76743C7C1C4695EA00120347 /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C7A1C46951100120347 /* PaymentType.swift */; };
 		767C9CD41E266BF000BB4662 /* ExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C9CD31E266BF000BB4662 /* ExtensionsTest.swift */; };
@@ -1449,7 +1449,7 @@
 		7672545D1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutPreferenceTest.swift; sourceTree = "<group>"; };
 		7672546A1C7CB34200EB5EBA /* MockBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBuilder.swift; sourceTree = "<group>"; };
 		7672546F1C7CCBB400EB5EBA /* PaymentVaultViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVaultViewControllerTest.swift; sourceTree = "<group>"; };
-		76743C751C45A00E00120347 /* CheckoutPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutPreference.swift; sourceTree = "<group>"; };
+		76743C751C45A00E00120347 /* PXCheckoutPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCheckoutPreference.swift; sourceTree = "<group>"; };
 		76743C771C45A24600120347 /* PaymentPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentPreference.swift; sourceTree = "<group>"; };
 		76743C7A1C46951100120347 /* PaymentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentType.swift; sourceTree = "<group>"; };
 		767C9CD31E266BF000BB4662 /* ExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionsTest.swift; sourceTree = "<group>"; };
@@ -1983,7 +1983,7 @@
 			isa = PBXGroup;
 			children = (
 				232FA9291F06D2E2002F7E39 /* ApiException.swift */,
-				76743C751C45A00E00120347 /* CheckoutPreference.swift */,
+				76743C751C45A00E00120347 /* PXCheckoutPreference.swift */,
 				0F98833B1AD2AB6000F750F0 /* CardNumber.swift */,
 				232FA92B1F06D30F002F7E39 /* Cause.swift */,
 				0F9883381AD2AB6000F750F0 /* Card.swift */,
@@ -3725,7 +3725,7 @@
 				4B9F3B7E213590F70024412F /* PromosService.swift in Sources */,
 				81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */,
 				4B9F3AC221358E580024412F /* FlowService.swift in Sources */,
-				76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */,
+				76743C761C45A00E00120347 /* PXCheckoutPreference.swift in Sources */,
 				FC2A09571FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */,
 				4B9F3B77213590F70024412F /* PreferenceService.swift in Sources */,
 				4B9F3B7A213590F70024412F /* PXInstructionReference.swift in Sources */,
@@ -4334,7 +4334,7 @@
 				76CD12081D6F304D0052350D /* CardInformation.swift in Sources */,
 				8138737C1FA8DDD6002095D6 /* PXHeaderComponent.swift in Sources */,
 				239A9C161F0FFA7100C338C7 /* Cause.swift in Sources */,
-				76743C791C46866D00120347 /* CheckoutPreference.swift in Sources */,
+				76743C791C46866D00120347 /* PXCheckoutPreference.swift in Sources */,
 				FC3FC88B1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
 				4B9F3AE321358E580024412F /* TrackingJSONHandler.swift in Sources */,
 				FC7BD8AB1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */,

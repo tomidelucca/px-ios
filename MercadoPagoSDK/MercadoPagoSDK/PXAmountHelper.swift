@@ -10,7 +10,7 @@ import Foundation
 
 internal struct PXAmountHelper {
 
-    internal let preference: CheckoutPreference
+    internal let preference: PXCheckoutPreference
     internal let paymentData: PXPaymentData
     internal let discount: PXDiscount?
     internal let campaign: PXCampaign?

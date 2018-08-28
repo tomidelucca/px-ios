@@ -31,9 +31,9 @@ internal class MercadoPagoServices: NSObject {
         MPXTracker.setPublicKey(merchantPublicKey)
     }
 
-    func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreferenceNew) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let preferenceService = PreferenceService(baseURL: baseURL)
-        preferenceService.getPreference(publicKey: merchantPublicKey, preferenceId: checkoutPreferenceId, success: { (preference : PXCheckoutPreference) in
+        preferenceService.getPreference(publicKey: merchantPublicKey, preferenceId: checkoutPreferenceId, success: { (preference : PXCheckoutPreferenceNew) in
             callback(preference)
         }, failure: failure)
     }
@@ -228,7 +228,7 @@ internal class MercadoPagoServices: NSObject {
         service.getCustomer(params: addInfo, success: callback, failure: failure)
     }
 
-    func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreferenceNew) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 
         let body: String?

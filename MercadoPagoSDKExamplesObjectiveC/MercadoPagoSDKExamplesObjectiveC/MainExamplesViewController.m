@@ -158,12 +158,12 @@
 
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
-    self.pref = [[CheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
+    self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
     [self.pref addExcludedPaymentType:@"ticket"];
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
+    self.pref = [[PXCheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
 }
 
 
