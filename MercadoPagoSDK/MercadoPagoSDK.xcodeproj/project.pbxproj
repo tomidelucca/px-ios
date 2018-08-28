@@ -475,7 +475,7 @@
 		4B9F3B66213590F70024412F /* PXSavedESCCardToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B19213590F00024412F /* PXSavedESCCardToken.swift */; };
 		4B9F3B69213590F70024412F /* PXDeviceId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B1C213590F00024412F /* PXDeviceId.swift */; };
 		4B9F3B6A213590F70024412F /* PXFeeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B1D213590F00024412F /* PXFeeDetail.swift */; };
-		4B9F3B6B213590F70024412F /* PXCheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B1E213590F10024412F /* PXCheckoutPreference.swift */; };
+		4B9F3B6B213590F70024412F /* PXCheckoutPreferenceNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B1E213590F10024412F /* PXCheckoutPreferenceNew.swift */; };
 		4B9F3B6C213590F70024412F /* PXApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B1F213590F10024412F /* PXApiException.swift */; };
 		4B9F3B6D213590F70024412F /* PXDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B20213590F10024412F /* PXDevice.swift */; };
 		4B9F3B6E213590F70024412F /* PXOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B21213590F10024412F /* PXOrder.swift */; };
@@ -1291,7 +1291,7 @@
 		4B9F3B19213590F00024412F /* PXSavedESCCardToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXSavedESCCardToken.swift; sourceTree = "<group>"; };
 		4B9F3B1C213590F00024412F /* PXDeviceId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXDeviceId.swift; sourceTree = "<group>"; };
 		4B9F3B1D213590F00024412F /* PXFeeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXFeeDetail.swift; sourceTree = "<group>"; };
-		4B9F3B1E213590F10024412F /* PXCheckoutPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCheckoutPreference.swift; sourceTree = "<group>"; };
+		4B9F3B1E213590F10024412F /* PXCheckoutPreferenceNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCheckoutPreferenceNew.swift; sourceTree = "<group>"; };
 		4B9F3B1F213590F10024412F /* PXApiException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXApiException.swift; sourceTree = "<group>"; };
 		4B9F3B20213590F10024412F /* PXDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXDevice.swift; sourceTree = "<group>"; };
 		4B9F3B21213590F10024412F /* PXOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXOrder.swift; sourceTree = "<group>"; };
@@ -2415,7 +2415,7 @@
 				4B9F3B37213590F50024412F /* PXCardNumber.swift */,
 				4B9F3B11213590EC0024412F /* PXCardToken.swift */,
 				4B9F3B32213590F40024412F /* PXCause.swift */,
-				4B9F3B1E213590F10024412F /* PXCheckoutPreference.swift */,
+				4B9F3B1E213590F10024412F /* PXCheckoutPreferenceNew.swift */,
 				4B9F3B38213590F50024412F /* PXCurrencies.swift */,
 				4B9F3B23213590F20024412F /* PXCurrency.swift */,
 				4B9F3B3E213590F60024412F /* PXCustomer.swift */,
@@ -3715,7 +3715,7 @@
 				4B9F3B4F213590F70024412F /* PXError.swift in Sources */,
 				4B9F3B8F213590F70024412F /* PXServicesURLConfigs.swift in Sources */,
 				23CC9CA120FE139D006E751C /* PXPropertyStoring.swift in Sources */,
-				4B9F3B6B213590F70024412F /* PXCheckoutPreference.swift in Sources */,
+				4B9F3B6B213590F70024412F /* PXCheckoutPreferenceNew.swift in Sources */,
 				23C3892D20AC432D001EFDA9 /* PXFooterView.swift in Sources */,
 				4B9F3AE421358E580024412F /* MPTApplication.swift in Sources */,
 				4B05C2AB212724B900A1A264 /* ResourceManager.swift in Sources */,

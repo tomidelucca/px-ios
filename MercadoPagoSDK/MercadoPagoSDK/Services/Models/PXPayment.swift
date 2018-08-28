@@ -236,6 +236,7 @@ open class PXPayment: NSObject, Codable {
 
 }
 
+/// :nodoc:
 extension PXPayment {
 
     open class Status: NSObject {

@@ -22,6 +22,7 @@ open class PXError: NSError {
     }
 }
 
+/// :nodoc:
 open class ErrorTypes: NSObject {
     static let API_UNKNOWN_ERROR = -3
     static let API_EXCEPTION_ERROR = -2

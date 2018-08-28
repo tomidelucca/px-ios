@@ -56,7 +56,7 @@ open class PXCardToken: NSObject, Codable {
         return try JSONDecoder().decode(PXCardToken.self, from: data)
     }
 }
-
+/// :nodoc:
 extension PXCardToken {
 
     open func validateCardNumber(_ paymentMethod: PXPaymentMethod) -> Bool {
