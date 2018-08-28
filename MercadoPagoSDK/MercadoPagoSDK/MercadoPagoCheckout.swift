@@ -82,6 +82,7 @@ open class MercadoPagoCheckout: NSObject {
 extension MercadoPagoCheckout {
     public func start(navigationController: UINavigationController) {
         commondInit()
+        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
@@ -210,7 +211,8 @@ extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.goToRootViewController()
     }
 
-    @objc internal func closeCheckout() {
+    /// :nodoc:
+    @objc func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
     }
@@ -221,7 +223,6 @@ extension MercadoPagoCheckout {
     private func initialize() {
         startTracking()
         MercadoPagoCheckout.currentCheckout = self
-        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
