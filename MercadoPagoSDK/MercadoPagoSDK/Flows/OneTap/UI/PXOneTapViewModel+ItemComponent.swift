@@ -11,7 +11,7 @@ extension PXOneTapViewModel {
 
     func getItemComponent() -> PXOneTapItemComponent? {
         let amountWithoutDiscount: Double? = isNoPayerCostAndDiscount() ? self.amountHelper.preferenceAmountWithCharges : nil
-        
+
         var disclaimerMessage: String? = nil
         if amountHelper.consumedDiscount {
             disclaimerMessage = "total_row_consumed_discount".localized_beta

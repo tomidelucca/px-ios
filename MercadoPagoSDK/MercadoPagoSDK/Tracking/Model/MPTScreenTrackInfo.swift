@@ -9,7 +9,7 @@
 import Foundation
 
 internal class MPTScreenTrackInfo: MPTrackInfo {
-    
+
     var screenName: String
     var screenId: String
     var timestamp: Int64
