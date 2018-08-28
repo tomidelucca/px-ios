@@ -21,15 +21,13 @@ open class PXPaymentMethodPlugin: NSObject {
     internal var paymentMethodPluginDescription: String?
     internal var image: UIImage
 
-    internal var paymentMethodConfigPlugin: PXPaymentPluginConfigProtocol?
+    internal var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
     internal var displayOrder = DisplayOrder.TOP
+
 
     open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
         callback(true)
     }
-
-    internal var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
-    internal var displayOrder = DisplayOrder.TOP
 
     open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 
