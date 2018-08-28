@@ -28,6 +28,9 @@ open class PXPaymentMethodPlugin: NSObject {
         callback(true)
     }
 
+    internal var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
+    internal var displayOrder = DisplayOrder.TOP
+
     open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 
     public init (paymentMethodPluginId: String, name: String, image: UIImage, description: String?) {
@@ -40,7 +43,7 @@ open class PXPaymentMethodPlugin: NSObject {
 
 // MARK: - Setters
 extension PXPaymentMethodPlugin {
-    open func setPaymentMethodConfig(config: PXPaymentPluginConfigProtocol) {
+    open func setPaymentMethodConfig(config: PXPaymentMethodConfigProtocol) {
         self.paymentMethodConfigPlugin = config
     }
 

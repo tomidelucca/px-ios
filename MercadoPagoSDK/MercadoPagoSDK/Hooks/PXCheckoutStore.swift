@@ -26,28 +26,29 @@ extension PXCheckoutStore {
     }
 }
 
+// MARK: - DataStore
+extension PXCheckoutStore {
+    public func addData(forKey: String, value: Any) {
+        self.data[forKey] = value
+    }
+
+    public func remove(key: String) {
+        data.removeValue(forKey: key)
+    }
+
+    public func removeAll() {
+        data.removeAll()
+    }
+
+    public func getData(forKey: String) -> Any? {
+        return self.data[forKey]
+    }
+}
+
 internal extension PXCheckoutStore {
     internal func clean() {
         removeAll()
         checkoutPreference = nil
         paymentData = PXPaymentData()
-    }
-}
-
-internal extension PXCheckoutStore {
-    internal func addData(forKey: String, value: Any) {
-        self.data[forKey] = value
-    }
-
-    internal func remove(key: String) {
-        data.removeValue(forKey: key)
-    }
-
-    internal func removeAll() {
-        data.removeAll()
-    }
-
-    internal func getData(forKey: String) -> Any? {
-        return self.data[forKey]
     }
 }
