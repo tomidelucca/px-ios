@@ -23,7 +23,7 @@ import MercadoPagoServicesV4
     public init(preferenceId: String) {
         self.preferenceId = preferenceId
     }
-
+    
     public init(siteId: String, payerEmail: String, items: [Item]) {
         self.items = items
 
@@ -215,5 +215,12 @@ extension CheckoutPreference {
     open func setBinaryMode(isBinaryMode: Bool) -> CheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self
+    }
+}
+
+// MARK: Money In
+extension CheckoutPreference {
+    public func setCardId(cardId:String) {
+        self.paymentPreference.cardId = cardId
     }
 }
