@@ -13,44 +13,19 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let containerVC = PXPluginConfigViewController()
-
         guard let paymentMethodConfigPluginComponent = paymentMethodPlugin.paymentMethodConfigPlugin else {
             return
         }
-        containerVC.pluginComponentInterface = paymentMethodConfigPluginComponent
-        containerVC.paymentMethodId = paymentMethodPlugin.getId()
+
         viewModel.populateCheckoutStore()
-        paymentMethodConfigPluginComponent.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
+
+        paymentMethodConfigPluginComponent.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme())
 
         // Create navigation handler.
         paymentMethodConfigPluginComponent.navigationHandler?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
 
-        if let navTitle = paymentMethodConfigPluginComponent.titleForNavigationBar?() {
-            containerVC.title = navTitle
+        if let configPluginVC = paymentMethodConfigPluginComponent.configViewController() {
+            viewModel.pxNavigationHandler.pushViewController(targetVC: configPluginVC, animated: true)
         }
-
-        if let navBarColor = paymentMethodConfigPluginComponent.colorForNavigationBar?() {
-            containerVC.setNavBarBackgroundColor(color: navBarColor)
-        }
-
-        containerVC.shouldShowBackArrow = true
-        if let shouldShowBackArrow = paymentMethodConfigPluginComponent.shouldShowBackArrow?() {
-            containerVC.shouldShowBackArrow = shouldShowBackArrow
-        }
-
-        if let shouldShowNavigationBar = paymentMethodConfigPluginComponent.shouldShowNavigationBar?() {
-            containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
-        }
-
-        if let paymentMethodConfigPluginComponentView = paymentMethodConfigPluginComponent.render(store: PXCheckoutStore(), theme: ThemeManager.shared.getCurrentTheme()) {
-            paymentMethodConfigPluginComponentView.removeFromSuperview()
-            paymentMethodConfigPluginComponentView.frame = containerVC.view.frame
-            containerVC.view.addSubview(paymentMethodConfigPluginComponentView)
-        }
-
-        paymentMethodConfigPluginComponent.renderDidFinish?()
-
-        viewModel.pxNavigationHandler.pushViewController(viewController: containerVC, animated: true)
     }
 }
