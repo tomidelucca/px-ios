@@ -51,11 +51,15 @@
 #pragma mark - Payment Plugin implementation.
 - (UIViewController * _Nullable)paymentProcessorViewController {
     return nil;
-    //return self;
 }
 
 - (BOOL)support {
     return true;
+}
+
+-(void)startPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBusinessResult:(void (^)(PXBusinessResult * _Nonnull))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentProcessorResult * _Nonnull))successWithPaymentResult {
+    PXPaymentProcessorResult* result = [[PXPaymentProcessorResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
+    successWithPaymentResult(result);
 }
 
 -(void)didReceiveWithNavigationHandler:(PXPaymentProcessorNavigationHandler *)navigationHandler {
@@ -63,12 +67,6 @@
 }
 
 -(void)didReceiveWithCheckoutStore:(PXCheckoutStore *)checkoutStore {
-
-}
-
--(void)createPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBusinessResult:(void (^)(PXBusinessResult * _Nonnull))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentProcessorResult * _Nonnull))successWithPaymentResult {
-    PXPaymentProcessorResult* result = [[PXPaymentProcessorResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
-    successWithPaymentResult(result);
 }
 
 @end
