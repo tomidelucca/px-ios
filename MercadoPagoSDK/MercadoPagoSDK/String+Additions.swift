@@ -12,6 +12,10 @@ internal extension String {
 
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
 
+    static internal func isNullOrEmpty(_ value: String?) -> Bool {
+        return value == nil || value!.isEmpty
+    }
+
     func existsLocalized() -> Bool {
         let localizedString = self.localized
         return localizedString != self
@@ -64,5 +68,14 @@ internal extension String {
 
     func toAttributedString(attributes: [NSAttributedStringKey: Any]? = nil) -> NSMutableAttributedString {
         return NSMutableAttributedString(string: self, attributes: attributes)
+    }
+
+    static internal func getDate(_ string: String?) -> Date? {
+        guard let dateString = string else {
+            return nil
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        return dateFormatter.date(from: dateString)
     }
 }

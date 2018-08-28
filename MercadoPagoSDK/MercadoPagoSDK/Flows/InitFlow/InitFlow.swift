@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 final class InitFlow: PXFlow {
     var pxNavigationHandler: PXNavigationHandler

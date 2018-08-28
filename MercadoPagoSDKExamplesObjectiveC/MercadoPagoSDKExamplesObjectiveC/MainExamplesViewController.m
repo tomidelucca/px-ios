@@ -18,8 +18,6 @@
 #import "MLMyMPPXTrackListener.h"
 
 @import MercadoPagoSDK;
-@import MercadoPagoPXTrackingV4;
-@import MercadoPagoServicesV4;
 
 @implementation MainExamplesViewController
 

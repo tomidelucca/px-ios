@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 final class PXBankDealsViewModel: NSObject {
 

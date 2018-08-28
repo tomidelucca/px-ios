@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 @objcMembers open class CheckoutPreference: NSObject {
     internal var preferenceId: String!

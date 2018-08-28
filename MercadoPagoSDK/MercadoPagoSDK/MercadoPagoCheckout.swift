@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTrackingV4
-import MercadoPagoServicesV4
 
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
