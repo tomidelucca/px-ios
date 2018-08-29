@@ -18,7 +18,7 @@ import UIKit
     internal var transactionDetails: TransactionDetails?
     internal private(set) var discount: PXDiscount?
     internal private(set) var campaign: PXCampaign?
-    private let paymentTypesWithoutInstallments = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue]
+    private let paymentTypesWithoutInstallments = [PXPaymentTypes.PREPAID_CARD.rawValue]
 
     /// :nodoc:
     public func copy(with zone: NSZone? = nil) -> Any {

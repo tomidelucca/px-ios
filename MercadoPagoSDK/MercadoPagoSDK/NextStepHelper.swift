@@ -149,7 +149,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if pm.isCreditCard && !paymentData.hasPayerCost() && payerCosts == nil {
+        if pm.isCard && !paymentData.hasPayerCost() && payerCosts == nil {
             return true
         }
         return false
@@ -159,7 +159,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if pm.isCreditCard && !paymentData.hasPayerCost() && payerCosts != nil {
+        if pm.isCard && !paymentData.hasPayerCost() && payerCosts != nil {
             return true
         }
         return false

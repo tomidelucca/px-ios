@@ -12,7 +12,7 @@ import Foundation
 @objcMembers open class PayerCost: NSObject, Cellable {
 
     var objectType: ObjectTypes = ObjectTypes.payerCost
-    open var installments: Int = 0
+    open var installments: Int = 1
     open var installmentRate: Double = 0
     open var labels: [String]!
     open var minAllowedAmount: Double? = 0
@@ -21,7 +21,7 @@ import Foundation
     open var installmentAmount: Double = 0
     open var totalAmount: Double = 0
 
-    public init (installments: Int = 0, installmentRate: Double = 0, labels: [String] = [],
+    public init (installments: Int = 1, installmentRate: Double = 0, labels: [String] = [],
                  minAllowedAmount: Double = 0, maxAllowedAmount: Double = 0, recommendedMessage: String? = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
 
         self.installments = installments
