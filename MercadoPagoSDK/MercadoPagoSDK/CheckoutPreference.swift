@@ -105,6 +105,7 @@ extension CheckoutPreference {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
     
+    /// :nodoc:
     public func setCardId(cardId:String) {
         self.paymentPreference.cardId = cardId
     }
