@@ -104,6 +104,10 @@ extension CheckoutPreference {
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
+    
+    public func setCardId(cardId:String) {
+        self.paymentPreference.cardId = cardId
+    }
 }
 
 // MARK: Getters
@@ -215,12 +219,5 @@ extension CheckoutPreference {
     open func setBinaryMode(isBinaryMode: Bool) -> CheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self
-    }
-}
-
-// MARK: Money In
-extension CheckoutPreference {
-    public func setCardId(cardId:String) {
-        self.paymentPreference.cardId = cardId
     }
 }
