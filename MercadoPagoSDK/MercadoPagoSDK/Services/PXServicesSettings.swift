@@ -8,9 +8,9 @@
 
 import Foundation
 /// :nodoc:
-open class PXServicesSettings: NSObject {
+internal class PXServicesSettings: NSObject {
 
-    open class func enableBetaServices() {
+    internal class func enableBetaServices() {
         PXServicesURLConfigs.MP_SELECTED_ENV = PXServicesURLConfigs.MP_TEST_ENV
     }
 }

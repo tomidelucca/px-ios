@@ -501,7 +501,6 @@
 		4B9F3B83213590F70024412F /* PXApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B36213590F50024412F /* PXApiUtil.swift */; };
 		4B9F3B84213590F70024412F /* PXCardNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B37213590F50024412F /* PXCardNumber.swift */; };
 		4B9F3B85213590F70024412F /* PXCurrencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B38213590F50024412F /* PXCurrencies.swift */; };
-		4B9F3B86213590F70024412F /* PXPaymentMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B39213590F60024412F /* PXPaymentMethods.swift */; };
 		4B9F3B87213590F70024412F /* PXInstructionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B3A213590F60024412F /* PXInstructionAction.swift */; };
 		4B9F3B88213590F70024412F /* PXPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B3B213590F60024412F /* PXPayment.swift */; };
 		4B9F3B89213590F70024412F /* PXPaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B3C213590F60024412F /* PXPaymentMethodSearch.swift */; };
@@ -1317,7 +1316,6 @@
 		4B9F3B36213590F50024412F /* PXApiUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXApiUtil.swift; sourceTree = "<group>"; };
 		4B9F3B37213590F50024412F /* PXCardNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCardNumber.swift; sourceTree = "<group>"; };
 		4B9F3B38213590F50024412F /* PXCurrencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCurrencies.swift; sourceTree = "<group>"; };
-		4B9F3B39213590F60024412F /* PXPaymentMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPaymentMethods.swift; sourceTree = "<group>"; };
 		4B9F3B3A213590F60024412F /* PXInstructionAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXInstructionAction.swift; sourceTree = "<group>"; };
 		4B9F3B3B213590F60024412F /* PXPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPayment.swift; sourceTree = "<group>"; };
 		4B9F3B3C213590F60024412F /* PXPaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodSearch.swift; sourceTree = "<group>"; };
@@ -2278,7 +2276,6 @@
 			isa = PBXGroup;
 			children = (
 				4B1CA5941FFE94BC00F576AA /* PaymentStatus.swift */,
-				4B6954C020A4BA0800CCF735 /* PXTrackingUtil.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -2397,10 +2394,12 @@
 		4B9F3AF42135908A0024412F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4BE5E5592136D2EB0027AAF4 /* Constants */,
 				4B9F3B9821359D090024412F /* Extensions */,
 				4B9F3B9721359CF40024412F /* Services */,
 				4B9F3B9621359CE50024412F /* Models */,
 				4B9F3AF6213590E70024412F /* MercadoPagoServices.swift */,
+				4B9F3B00213590E90024412F /* PXServicesSettings.swift */,
 				4B9F3B42213590F70024412F /* PXServicesURLConfigs.swift */,
 			);
 			path = Services;
@@ -2444,7 +2443,6 @@
 				4B9F3B27213590F20024412F /* PXPayerCost.swift */,
 				4B9F3B3B213590F60024412F /* PXPayment.swift */,
 				4B9F3B04213590EA0024412F /* PXPaymentMethod.swift */,
-				4B9F3B39213590F60024412F /* PXPaymentMethods.swift */,
 				4B9F3B3C213590F60024412F /* PXPaymentMethodSearch.swift */,
 				4B9F3B16213590ED0024412F /* PXPaymentMethodSearchItem.swift */,
 				4B9F3B05213590EA0024412F /* PXPaymentMethodSearchItemTypes.swift */,
@@ -2456,13 +2454,11 @@
 				4B9F3AFB213590E80024412F /* PXSavedCardToken.swift */,
 				4B9F3B19213590F00024412F /* PXSavedESCCardToken.swift */,
 				4B9F3B2B213590F30024412F /* PXSecurityCode.swift */,
-				4B9F3B00213590E90024412F /* PXServicesSettings.swift */,
 				4B9F3B29213590F20024412F /* PXSetting.swift */,
 				4B9F3B22213590F10024412F /* PXSite.swift */,
 				4B9F3B15213590ED0024412F /* PXToken.swift */,
 				4B9F3AFE213590E90024412F /* PXTransactionDetails.swift */,
 				4B9F3B35213590F50024412F /* PXAmountInfo.swift */,
-				4B9F3B36213590F50024412F /* PXApiUtil.swift */,
 				4B9F3B1F213590F10024412F /* PXApiException.swift */,
 				4B9F3B17213590EE0024412F /* PXBin.swift */,
 				4B9F3B13213590EC0024412F /* PXBankDeal.swift */,
@@ -2633,6 +2629,7 @@
 		4BE5E5572135B1150027AAF4 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4B6954C020A4BA0800CCF735 /* PXTrackingUtil.swift */,
 				4B9F3AAE21358E560024412F /* Date+Additions.swift */,
 				4B9F3AAB21358E550024412F /* Array+Additions.swift */,
 			);
@@ -2649,6 +2646,14 @@
 				4B9F3AB321358E560024412F /* MPTrackInfo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4BE5E5592136D2EB0027AAF4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				4B9F3B36213590F50024412F /* PXApiUtil.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		4BEF80FE1E538C9000797CD1 /* Preferences */ = {
@@ -3886,7 +3891,6 @@
 				4B9F3B6C213590F70024412F /* PXApiException.swift in Sources */,
 				2389DE3120F4D99A0053AF76 /* PXDefaultSortFunction.swift in Sources */,
 				0F9883B51AD2AD0C00F750F0 /* Regex.swift in Sources */,
-				4B9F3B86213590F70024412F /* PXPaymentMethods.swift in Sources */,
 				811B4FD2201F87A40060026A /* PXMonospaceLabel.swift in Sources */,
 				4BD84D741F1E4910002219D4 /* MercadoPagoCheckoutScreens.swift in Sources */,
 				4B9F3B54213590F70024412F /* PaymentMethodSearchService.swift in Sources */,
