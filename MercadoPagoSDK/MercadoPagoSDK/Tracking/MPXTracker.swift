@@ -8,11 +8,6 @@
 
 import UIKit
 
-@objc internal protocol MPTrackListener: NSObjectProtocol {
-    func trackScreen(screenName: String, extraParams: [String: Any]?)
-    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String: Any]?)
-}
-
 internal struct MPXTrackingEnvironment {
     public static let production = "production"
     public static let staging = "staging"
@@ -23,11 +18,11 @@ internal class MPXTracker: NSObject {
     @objc open static let sharedInstance = MPXTracker()
 
     var public_key: String = ""
-    var sdkVersion = ""
+    var sdkVersion = Utils.getSetting(identifier: "sdk_version") ?? ""
     static let kTrackingSettings = "tracking_settings"
     fileprivate static let kTrackingEnabled = "tracking_enabled"
 
-    @objc open var trackListener: MPTrackListener?
+    var trackListener: PXTrackingListener?
     var trackingStrategy: TrackingStrategy = RealTimeStrategy()
 
     fileprivate var flowService: FlowService = FlowService()
@@ -36,13 +31,8 @@ internal class MPXTracker: NSObject {
 
 // MARK: Getters/setters.
 internal extension MPXTracker {
-
-    internal class func setPublicKey(_ public_key: String) {
-        sharedInstance.public_key = public_key.trimSpaces()
-    }
-
-    internal class func setSdkVersion(_ version: String) {
-        sharedInstance.sdkVersion = version
+    internal func setPublicKey(_ public_key: String) {
+        self.public_key = public_key.trimSpaces()
     }
 
     internal func getPublicKey() -> String! {
@@ -71,12 +61,8 @@ internal extension MPXTracker {
         return trackingEnabled
     }
 
-    internal class func setTrack(listener: MPTrackListener) {
-        sharedInstance.trackListener = listener
-    }
-
-    internal func getTrackListener() -> MPTrackListener? {
-        return trackListener
+    internal func setTrack(listener: PXTrackingListener) {
+        trackListener = listener
     }
 
     internal func startNewFlow() {
