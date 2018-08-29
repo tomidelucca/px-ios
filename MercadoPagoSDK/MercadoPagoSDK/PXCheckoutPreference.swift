@@ -103,6 +103,11 @@ extension PXCheckoutPreference {
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
+
+    /// :nodoc:
+    public func setCardId(cardId: String) {
+        self.paymentPreference.cardId = cardId
+    }
 }
 
 // MARK: Getters
