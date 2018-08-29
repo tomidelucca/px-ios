@@ -97,17 +97,11 @@ PODS:
 DEPENDENCIES:
   - MLUI (~> 5.0)
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - FXBlurView
-    - JRSwizzle
-    - MLUI
-
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   MLUI: 4bc30710e102d8348eece6a57f15ca86060f36b2
 
-PODFILE CHECKSUM: 87adc2f5f50b8d3be3f248153ffda54008a9c743
+PODFILE CHECKSUM: cfcf7523c27a6e0cdfbadf21db592c7be78f9c93
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.4.0

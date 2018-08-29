@@ -28,7 +28,7 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func initMercadPagoPXTracking() {
-        MPXTracker.setPublicKey(merchantPublicKey)
+        MPXTracker.sharedInstance.setPublicKey(merchantPublicKey)
     }
 
     func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreferenceNew) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {

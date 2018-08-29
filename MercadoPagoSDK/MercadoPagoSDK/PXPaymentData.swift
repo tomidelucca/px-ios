@@ -121,6 +121,10 @@ extension PXPaymentData {
     public func getPaymentMethod() -> PaymentMethod? {
         return paymentMethod
     }
+
+    public func getDiscount() -> PXDiscount? {
+        return discount
+    }
 }
 
 // MARK: Setters

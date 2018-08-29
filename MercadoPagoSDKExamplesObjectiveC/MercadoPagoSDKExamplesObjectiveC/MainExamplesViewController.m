@@ -68,6 +68,8 @@
 
     self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
 
+    [self.checkoutBuilder setTrackingListener:self];
+
 //    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
     // AdvancedConfig
@@ -191,6 +193,14 @@
         NSLog(@"PXLog - finishCheckoutWithPayment Called");
         [self.navigationController popToRootViewControllerAnimated:YES];
     };
+}
+
+- (void)trackEventWithScreenName:(NSString * _Nullable)screenName action:(NSString * _Null_unspecified)action result:(NSString * _Nullable)result extraParams:(NSDictionary<NSString *,id> * _Nullable)extraParams {
+    // Track event
+}
+
+- (void)trackScreenWithScreenName:(NSString * _Nonnull)screenName extraParams:(NSDictionary<NSString *,id> * _Nullable)extraParams {
+    // Track screen
 }
 
 @end

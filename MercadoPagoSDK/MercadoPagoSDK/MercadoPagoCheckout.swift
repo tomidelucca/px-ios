@@ -32,7 +32,7 @@ open class MercadoPagoCheckout: NSObject {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
 
-        PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? "" //TODO: This is temporary.
+        PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? ""
 
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey)
 
@@ -243,8 +243,7 @@ extension MercadoPagoCheckout {
     }
 
     private func startTracking() {
-        MPXTracker.setPublicKey(viewModel.publicKey)
-        MPXTracker.setSdkVersion(PXServicesURLConfigs.PX_SDK_VERSION ?? "") // TODO: Temporal
+        MPXTracker.sharedInstance.setPublicKey(viewModel.publicKey)
         MPXTracker.sharedInstance.startNewFlow()
     }
 

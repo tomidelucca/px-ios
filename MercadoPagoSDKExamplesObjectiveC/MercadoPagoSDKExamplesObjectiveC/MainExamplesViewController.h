@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @import MercadoPagoSDK;
 
-@interface MainExamplesViewController : UITableViewController <PXLazyInitProtocol, PXLifeCycleProtocol>
+@interface MainExamplesViewController : UITableViewController <PXLazyInitProtocol, PXLifeCycleProtocol, PXTrackingListener>
 
 @property MercadoPagoCheckoutBuilder *checkoutBuilder;
 
