@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 internal extension MercadoPagoServicesAdapter {
 
@@ -43,8 +42,8 @@ internal extension MercadoPagoServicesAdapter {
         return Currency()
     }
 
-    internal func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
-        let checkoutPreference = CheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
+    internal func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreferenceNew) -> PXCheckoutPreference {
+        let checkoutPreference = PXCheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
         checkoutPreference.preferenceId = pxCheckoutPreference.id
         if let pxCheckoutPreferenceItems = pxCheckoutPreference.items {
             for pxItem in pxCheckoutPreferenceItems {
@@ -60,13 +59,13 @@ internal extension MercadoPagoServicesAdapter {
         return checkoutPreference
     }
 
-    internal func getItemFromPXItem(_ pxItem: PXItem) -> Item {
+    internal func getItemFromPXItem(_ pxItem: PXItemNew) -> PXItem {
         let id: String = pxItem.id
         let title: String = pxItem.title ?? ""
         let quantity: Int = pxItem.quantity ?? 1
         let unitPrice: Double = pxItem.unitPrice ?? 0.0
         let picture_URL: String = pxItem.pictureUrl ?? ""
-        let item = Item(title: title, quantity: quantity, unitPrice: unitPrice)
+        let item = PXItem(title: title, quantity: quantity, unitPrice: unitPrice)
         item.pictureUrl = picture_URL
         item.setDescription(description: pxItem._description ?? "")
         item.itemId = id

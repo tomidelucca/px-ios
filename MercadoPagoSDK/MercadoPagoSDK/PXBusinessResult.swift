@@ -19,7 +19,7 @@ import UIKit
     case REJECTED
     case PENDING
     case IN_PROGRESS
-    
+
     func getDescription() -> String {
         switch self {
         case .APPROVED : return "APPROVED"
@@ -50,8 +50,7 @@ import UIKit
     private var receiptId: String?
     let paymentStatus: String
     let paymentStatusDetail: String
-    
-    
+
     // MARK: Initialization
     /**
      Creates a `PXBusinessResult` which represents Business Payment Result.
@@ -93,7 +92,7 @@ import UIKit
 
 // MARK: Getters
 internal extension PXBusinessResult {
-    
+
     func getStatus() -> PXBusinessResultStatus {
         return self.status
     }
@@ -142,11 +141,11 @@ extension PXBusinessResult {
     internal func isAccepted() -> Bool {
         return self.status == .APPROVED
     }
-    
+
     internal func isWarning() -> Bool {
         return self.status == .PENDING || self.status == .IN_PROGRESS
     }
-    
+
     internal func isError() -> Bool {
         return self.status == .REJECTED
     }

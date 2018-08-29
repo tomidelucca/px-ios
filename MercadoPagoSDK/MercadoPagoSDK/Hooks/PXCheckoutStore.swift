@@ -10,7 +10,7 @@ import Foundation
 @objcMembers
 open class PXCheckoutStore: NSObject {
     static let sharedInstance = PXCheckoutStore()
-    internal var checkoutPreference: CheckoutPreference?
+    internal var checkoutPreference: PXCheckoutPreference?
     internal var paymentData = PXPaymentData()
     private var data = [String: Any]()
 }
@@ -21,7 +21,7 @@ extension PXCheckoutStore {
         return paymentData
     }
 
-    public func getCheckoutPreference() -> CheckoutPreference? {
+    public func getCheckoutPreference() -> PXCheckoutPreference? {
         return checkoutPreference
     }
 }
