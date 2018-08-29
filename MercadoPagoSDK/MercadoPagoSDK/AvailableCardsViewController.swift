@@ -22,7 +22,6 @@ internal class AvailableCardsViewController: MercadoPagoUIViewController {
         super.init(nibName: "AvailableCardsViewController", bundle: ResourceManager.shared.getBundle())
         self.callbackCancel = callbackCancel
         self.viewModel = AvailableCardsViewModel(paymentMethods: paymentMethods)
-
     }
 
     init(viewModel: AvailableCardsViewModel, callbackCancel: (() -> Void)? = nil) {

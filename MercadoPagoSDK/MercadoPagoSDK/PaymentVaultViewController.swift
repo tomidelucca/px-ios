@@ -177,17 +177,6 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
     }
 
-    private func cardFormCallbackCancel() -> (() -> Void) {
-        return { () -> Void in
-            if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
-                self.navigationController!.popToViewController(self, animated: true)
-            } else {
-                self.loadingGroups = false
-                self.callbackCancel!()
-            }
-        }
-    }
-
     private func getCustomerCards() {
         self.loadPaymentMethodSearch()
     }

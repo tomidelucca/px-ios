@@ -19,7 +19,7 @@ internal class PXNavigationHandler: NSObject {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         if self.navigationController.viewControllers.count > 0 {
-            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of: MercadoPagoUIViewController.self) || $0.isKind(of: PXReviewViewController.self)
+            let newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of: MercadoPagoUIViewController.self) || $0.isKind(of: PXReviewViewController.self)
             }
             viewControllerBase = newNavigationStack.last
         }
@@ -29,10 +29,6 @@ internal class PXNavigationHandler: NSObject {
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)
-        } else {
-            self.navigationController.dismiss(animated: true, completion: {
-                self.navigationController.setNavigationBarHidden(false, animated: false)
-            })
         }
     }
 
@@ -95,10 +91,9 @@ internal class PXNavigationHandler: NSObject {
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,
                                      animated: Bool, backToFirstPaymentVault: Bool = false) {
-
         viewController.hidesBottomBarWhenPushed = true
-        // let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
-        // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
+
+        // TODO: Review with Product, navigation flow for -> backToFirstPaymentVault = true.
         if backToFirstPaymentVault {
             self.navigationController.navigationBar.isHidden = false
             viewController.callbackCancel = { [weak self] in self?.backToFirstPaymentVaultViewController() }
@@ -129,7 +124,6 @@ internal class PXNavigationHandler: NSObject {
         } else {
             navigationController.popViewController(animated: true)
         }
-
     }
 
     internal func removeRootLoading() {
@@ -163,7 +157,7 @@ extension PXNavigationHandler: UINavigationControllerDelegate {
 
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if !(viewController is MercadoPagoUIViewController) {
-            if (viewController as? PXPaymentProcessor) != nil {
+            if (viewController is PXPaymentProcessor) || (viewController is PXPaymentMethodConfigProtocol) {
                 return
             }
             ThemeManager.shared.applyAppNavBarStyle(navigationController: navigationController)

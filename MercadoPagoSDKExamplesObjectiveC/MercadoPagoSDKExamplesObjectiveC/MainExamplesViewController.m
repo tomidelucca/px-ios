@@ -116,7 +116,7 @@
     MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
     //[mpCheckout startWithLazyInitProtocol:self];
-    [mpCheckout startWithNavigationController:self.navigationController];
+    [mpCheckout startWithLazyInitProtocol:self];
 }
 
 // ReviewConfirm
@@ -170,11 +170,27 @@
 -(IBAction)startCardManager:(id)sender  {}
 
 - (void)didFinishWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
-    [checkout startWithNavigationController:self.navigationController];
+    [checkout startWithNavigationController:self.navigationController lifeCycleProtocol:self];
 }
 
-- (void)failureWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
-    NSLog(@"LazyInit - failureWithCheckout");
+-(void)failureWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
+    NSLog(@"PXLog - LazyInit - failureWithCheckout");
+}
+
+-(void (^ _Nullable)(void))cancelCheckout {
+    // return nil;
+    return ^ {
+        NSLog(@"PXLog - cancelCheckout Called");
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+}
+
+-(void (^)(void))finishCheckoutWithPayment:(PXGenericPayment *)payment {
+    return nil;
+    return ^ {
+        NSLog(@"PXLog - finishCheckoutWithPayment Called");
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    };
 }
 
 @end

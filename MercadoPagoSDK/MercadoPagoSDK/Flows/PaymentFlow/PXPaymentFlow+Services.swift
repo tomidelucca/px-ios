@@ -26,7 +26,7 @@ internal extension PXPaymentFlow {
                     return
                 }
 
-                let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
+                let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.paymentId, statementDescription: nil)
                 self?.model.paymentResult = paymentResult
                 self?.executeNextStep()
         })

@@ -45,10 +45,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     internal var publicKey: String
     internal var privateKey: String?
 
-    static var paymentCallback: ((Payment) -> Void)?
-    static var finishFlowCallback: ((Payment?) -> Void)?
-    var callbackCancel: (() -> Void)?
-    static var changePaymentMethodCallback: (() -> Void)?
+    var lifecycleProtocol: PXLifeCycleProtocol?
+
     var consumedDiscount: Bool = false
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
@@ -686,6 +684,15 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func isPreferenceLoaded() -> Bool {
         return !String.isNullOrEmpty(self.checkoutPreference.preferenceId)
     }
+
+    func getGenericPayment() -> PXGenericPayment? {
+        if let paymentResponse = paymentResult {
+            return PXGenericPayment(status: paymentResponse.status, statusDetail: paymentResponse.statusDetail, paymentId: paymentResponse.paymentId)
+        } else if let businessResultResponse = businessResult {
+            return PXGenericPayment(status: businessResultResponse.paymentStatus, statusDetail: businessResultResponse.paymentStatusDetail, paymentId: businessResultResponse.getReceiptId())
+        }
+        return nil
+    }
 }
 
 extension MercadoPagoCheckoutViewModel {
@@ -758,8 +765,6 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     static internal func clearEnviroment() {
-        MercadoPagoCheckoutViewModel.paymentCallback = nil
-        MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
         MercadoPagoCheckoutViewModel.error = nil
     }
 }

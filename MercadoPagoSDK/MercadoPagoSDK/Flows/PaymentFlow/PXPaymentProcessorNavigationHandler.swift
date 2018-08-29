@@ -21,7 +21,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
         self.flow?.executeNextStep()
     }
 
-    open func didFinishPayment(paymentStatus: PXPaymentProcessorResult.RemotePaymentStatus, statusDetails: String = "", receiptId: String? = nil) {
+    open func didFinishPayment(paymentStatus: PXGenericPayment.RemotePaymentStatus, statusDetails: String = "", paymentId: String? = nil) {
 
         guard let paymentData = self.flow?.model.paymentData else {
             return
@@ -51,13 +51,13 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
             }
         }
 
-        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: statusDetailsStr, paymentData: paymentData, payerEmail: nil, paymentId: receiptId, statementDescription: nil)
+        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: statusDetailsStr, paymentData: paymentData, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
 
         flow?.model.paymentResult = paymentResult
         flow?.executeNextStep()
     }
 
-    open func didFinishPayment(status: String, statusDetail: String, receiptId: String? = nil) {
+    open func didFinishPayment(status: String, statusDetail: String, paymentId: String? = nil) {
 
         guard let paymentData = self.flow?.model.paymentData else {
             return
@@ -68,7 +68,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
             return
         }
 
-        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: receiptId, statementDescription: nil)
+        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
 
         flow?.model.paymentResult = paymentResult
         flow?.executeNextStep()

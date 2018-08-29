@@ -21,6 +21,7 @@ internal class NavigationControllerMemento {
     var navBarStyle: UIBarStyle?
     weak var customDelegate: UINavigationControllerDelegate?
     var swipeBackGesture: Bool = true
+    var isNavigationBarHidden: Bool = true
 
     init(navigationController: UINavigationController) {
         navBarTintColor =  navigationController.navigationBar.barTintColor
@@ -33,6 +34,7 @@ internal class NavigationControllerMemento {
         navShadowImage = navigationController.navigationBar.shadowImage
         navBarStyle = navigationController.navigationBar.barStyle
         customDelegate = navigationController.delegate
+        isNavigationBarHidden = navigationController.isNavigationBarHidden
         if let backGesture = navigationController.interactivePopGestureRecognizer?.isEnabled {
            swipeBackGesture = backGesture
         }

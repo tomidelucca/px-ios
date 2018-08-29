@@ -195,7 +195,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         self.numberTextField.becomeFirstResponder()
     }
 

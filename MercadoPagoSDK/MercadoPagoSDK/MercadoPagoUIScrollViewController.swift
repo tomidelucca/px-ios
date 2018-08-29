@@ -8,8 +8,8 @@
 
 import UIKit
 
+// TODO: Deprecate after PaymentVault & AditionalStep redesign/refactor.
 internal class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
-
     var lastContentOffset: CGFloat = 0
     var scrollingDown = false
     let navBarHeigth: CGFloat = 44
@@ -52,7 +52,8 @@ internal class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     }
 
 }
+
+// TODO: Deprecate after PaymentVault & AditionalStep redesign/refactor.
 internal protocol TitleCellScrollable {
     func updateTitleFontSize(toSize: CGFloat)
-
 }
