@@ -23,7 +23,7 @@ import MercadoPagoServicesV4
     public init(preferenceId: String) {
         self.preferenceId = preferenceId
     }
-
+    
     public init(siteId: String, payerEmail: String, items: [Item]) {
         self.items = items
 
@@ -103,6 +103,11 @@ extension CheckoutPreference {
 
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
+    }
+    
+    /// :nodoc:
+    public func setCardId(cardId:String) {
+        self.paymentPreference.cardId = cardId
     }
 }
 
