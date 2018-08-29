@@ -80,12 +80,13 @@ open class MercadoPagoCheckout: NSObject {
 
 // MARK: Publics
 extension MercadoPagoCheckout {
-    public func start(navigationController: UINavigationController) {
+    public func start(navigationController: UINavigationController, lifeCycleProtocol: PXLifeCycleProtocol?=nil) {
+        viewModel.lifecycleProtocol = lifeCycleProtocol
         commondInit()
-        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         if initMode == .lazy {
             if viewModel.initFlow?.getStatus() == .finished {
                 executeNextStep()
@@ -192,29 +193,43 @@ extension MercadoPagoCheckout {
 
     internal func finish() {
         viewModel.pxNavigationHandler.removeRootLoading()
-        if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
-            paymentCallback(payment)
-            return
-
-        } else if let finishFlowCallback = MercadoPagoCheckoutViewModel.finishFlowCallback {
-            finishFlowCallback(self.viewModel.payment)
+        // LifecycleProtocol.finishCheckout - defined
+        // Exit checkout with payment. (by state machine next)
+        if let genericPayment = viewModel.getGenericPayment(), let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: genericPayment) {
+            finishCallback()
             return
         }
-        viewModel.pxNavigationHandler.goToRootViewController()
+        defaultExitAction()
     }
 
-    internal func cancel() {
-        if let callback = viewModel.callbackCancel {
-            callback()
-            return
-        }
-        viewModel.pxNavigationHandler.goToRootViewController()
+    internal func cancelCheckout() {
+        closeCheckout()
     }
 
     /// :nodoc:
     @objc func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
-        cancel()
+
+        // LifecycleProtocol.finishCheckout - defined
+        // Exit checkout with payment. (by closeAction)
+        if let genericPayment = viewModel.getGenericPayment() {
+            if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: genericPayment) {
+                finishCallback()
+            } else {
+                defaultExitAction()
+            }
+            return
+        }
+
+        // LifecycleProtocol.cancelCheckout - defined
+        // Exit checkout without payment. (by back stack action)
+        if let lifecycle = viewModel.lifecycleProtocol, let cancelCustomAction = lifecycle.cancelCheckout() {
+            cancelCustomAction()
+            return
+        }
+
+        // Default exit. Without LifecycleProtocol returns.
+        defaultExitAction()
     }
 }
 
@@ -251,5 +266,9 @@ extension MercadoPagoCheckout {
 
     private func removeDiscount() {
         self.viewModel.clearDiscount()
+    }
+
+    private func defaultExitAction() {
+        viewModel.pxNavigationHandler.goToRootViewController()
     }
 }

@@ -25,13 +25,13 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     let NAV_BAR_HEIGHT = 44.0
     var navBarFontSize: CGFloat = 18
 
+    var loadingView: UIView?
+
+    // TODO: Deprecate after PaymentVault & AditionalStep redesign/refactor.
     var hideNavBarCallback: (() -> Void)?
 
     open var screenName: String { return TrackingUtil.NO_NAME_SCREEN }
     open var screenId: String { return TrackingUtil.NO_SCREEN_ID }
-
-    var loadingView: UIView?
-    var fistResponder: UITextField?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
 
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
             tracked = true
             trackInfo()
@@ -115,20 +114,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         }
     }
 
-    @objc internal func invokeCallbackCancelShowingNavBar() {
-        if self.callbackCancel != nil {
-            self.showNavBar()
-            self.callbackCancel!()
-        }
-    }
-
-    @objc internal func invokeCallbackCancel() {
-        if self.callbackCancel != nil {
-            self.callbackCancel!()
-        }
-        self.navigationController!.popViewController(animated: true)
-    }
-
     override open var shouldAutorotate: Bool {
         return false
     }
@@ -154,11 +139,18 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     }
 
     @objc internal func executeBack() {
+        if let targetNavigationController = navigationController {
+            let vcs = targetNavigationController.viewControllers.filter {$0.isKind(of: MercadoPagoUIViewController.self)}
+            if vcs.count == 1 {
+                PXNotificationManager.Post.attemptToClose()
+                return
+            }
+        }
         if let callbackCancel = callbackCancel {
             callbackCancel()
             return
         }
-        self.navigationController!.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 
     internal func hideLoading() {

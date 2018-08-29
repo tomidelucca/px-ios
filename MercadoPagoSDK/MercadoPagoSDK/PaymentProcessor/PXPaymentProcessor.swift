@@ -13,6 +13,6 @@ import Foundation
     @objc func support() -> Bool
     @objc optional func didReceive(navigationHandler: PXPaymentProcessorNavigationHandler)
     @objc optional func didReceive(checkoutStore: PXCheckoutStore)
-    @objc optional func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXPaymentProcessorResult) -> Void))
+    @objc optional func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXGenericPayment) -> Void))
     @objc optional func paymentTimeOut() -> Double
 }

@@ -57,8 +57,8 @@
     return true;
 }
 
--(void)startPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBusinessResult:(void (^)(PXBusinessResult * _Nonnull))successWithBusinessResult successWithPaymentResult:(void (^)(PXPaymentProcessorResult * _Nonnull))successWithPaymentResult {
-    PXPaymentProcessorResult* result = [[PXPaymentProcessorResult alloc] initWithStatus:@"approved" statusDetail:@"" receiptId: @""];
+-(void)startPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBusinessResult:(void (^)(PXBusinessResult * _Nonnull))successWithBusinessResult successWithPaymentResult:(void (^)(PXGenericPayment * _Nonnull))successWithPaymentResult {
+    PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"approved" statusDetail:@"" paymentId: @""];
     successWithPaymentResult(result);
 }
 

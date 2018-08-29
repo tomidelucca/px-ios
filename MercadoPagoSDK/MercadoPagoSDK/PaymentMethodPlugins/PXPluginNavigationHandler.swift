@@ -42,7 +42,7 @@ open class PXPluginNavigationHandler: NSObject {
     }
 
     open func cancel() {
-        checkout?.cancel()
+        checkout?.cancelCheckout()
     }
 
     open func showLoading() {
