@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTrackingV4
 
 internal class ErrorViewController: MercadoPagoUIViewController {
 

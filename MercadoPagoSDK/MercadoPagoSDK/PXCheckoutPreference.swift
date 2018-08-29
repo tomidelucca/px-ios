@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
-@objcMembers open class CheckoutPreference: NSObject {
+@objcMembers open class PXCheckoutPreference: NSObject {
     internal var preferenceId: String!
-    internal var items: [Item] = []
+    internal var items: [PXItem] = []
     internal var payer: Payer!
     internal var paymentPreference: PaymentPreference = PaymentPreference()
     internal var siteId: String!
@@ -24,7 +23,7 @@ import MercadoPagoServicesV4
         self.preferenceId = preferenceId
     }
 
-    public init(siteId: String, payerEmail: String, items: [Item]) {
+    public init(siteId: String, payerEmail: String, items: [PXItem]) {
         self.items = items
 
         guard let siteId = PXSites(rawValue: siteId)?.rawValue else {
@@ -56,7 +55,7 @@ import MercadoPagoServicesV4
 }
 
 // MARK: Setters
-extension CheckoutPreference {
+extension PXCheckoutPreference {
 
     open func setExpirationDate(_ expirationDate: Date) {
         self.expirationDateTo = expirationDate
@@ -104,16 +103,21 @@ extension CheckoutPreference {
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
+
+    /// :nodoc:
+    public func setCardId(cardId: String) {
+        self.paymentPreference.cardId = cardId
+    }
 }
 
 // MARK: Getters
-extension CheckoutPreference {
+extension PXCheckoutPreference {
 
     open func getId() -> String {
         return self.preferenceId
     }
 
-    open func getItems() -> [Item]? {
+    open func getItems() -> [PXItem]? {
         return items
     }
 
@@ -164,7 +168,7 @@ extension CheckoutPreference {
 }
 
 // MARK: Validation
-extension CheckoutPreference {
+extension PXCheckoutPreference {
     internal func validate() -> String? {
 
         if let itemError = itemsValid() {
@@ -207,12 +211,12 @@ extension CheckoutPreference {
 }
 
 // MARK: BinaryMode
-extension CheckoutPreference {
+extension PXCheckoutPreference {
     open func isBinaryMode() -> Bool {
         return binaryModeEnabled
     }
 
-    open func setBinaryMode(isBinaryMode: Bool) -> CheckoutPreference {
+    open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self
     }

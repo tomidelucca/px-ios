@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoPXTrackingV4
 
 final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 

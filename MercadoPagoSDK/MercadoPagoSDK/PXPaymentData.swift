@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 @objcMembers public class PXPaymentData: NSObject, NSCopying {
 

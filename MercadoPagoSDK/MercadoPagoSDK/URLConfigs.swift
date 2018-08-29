@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 internal final class URLConfigs: NSObject {
     static let MP_ALPHA_ENV = "/gamma"

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 internal enum CheckoutStep: String {
     case START
@@ -55,7 +54,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
         }
     }
-    var checkoutPreference: CheckoutPreference!
+    var checkoutPreference: PXCheckoutPreference!
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
     //    var paymentMethods: [PaymentMethod]?
@@ -116,7 +115,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
-    init(checkoutPreference: CheckoutPreference, publicKey: String, privateKey: String?) {
+    init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?) {
         self.publicKey = publicKey
         self.privateKey = privateKey
         self.checkoutPreference = checkoutPreference

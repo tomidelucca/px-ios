@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTrackingV4
-import MercadoPagoServicesV4
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {

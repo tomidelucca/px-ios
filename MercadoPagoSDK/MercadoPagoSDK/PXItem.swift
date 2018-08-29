@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objcMembers open class Item: NSObject {
+@objcMembers open class PXItem: NSObject {
     internal var quantity: Int
     internal var unitPrice: Double
     internal var title: String
@@ -34,7 +34,7 @@ import Foundation
 }
 
 // MARK: Setters
-extension Item {
+extension PXItem {
     open func setId(id: String) {
         self.itemId = id
     }
@@ -53,7 +53,7 @@ extension Item {
 }
 
 // MARK: Getters
-extension Item {
+extension PXItem {
     open func getQuantity() -> Int {
         return quantity
     }
@@ -83,9 +83,9 @@ extension Item {
     }
 }
 
-extension Item {
-    internal class func fromJSON(_ json: NSDictionary) -> Item {
-        let item = Item(title: "", quantity: 0, unitPrice: 0)
+extension PXItem {
+    internal class func fromJSON(_ json: NSDictionary) -> PXItem {
+        let item = PXItem(title: "", quantity: 0, unitPrice: 0)
 
         item.itemId = JSONHandler.getValue(of: String.self, key: "id", from: json)
 

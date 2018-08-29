@@ -10,6 +10,7 @@ import Foundation
 
 @objcMembers
 open class PXPaymentMethodPlugin: NSObject {
+    /// :nodoc:
     @objc public enum DisplayOrder: Int {
         case TOP
         case BOTTOM
