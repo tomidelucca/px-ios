@@ -193,7 +193,8 @@ extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.removeRootLoading()
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by state machine next)
-        if let genericPayment = viewModel.getGenericPayment(), let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: genericPayment) {
+        let payment = viewModel.getOurPayment()
+        if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: payment) {
             finishCallback()
             return
         }
@@ -210,8 +211,9 @@ extension MercadoPagoCheckout {
 
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by closeAction)
-        if let genericPayment = viewModel.getGenericPayment() {
-            if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: genericPayment) {
+        if viewModel.getGenericPayment() != nil {
+            let payment = viewModel.getOurPayment()
+            if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: payment) {
                 finishCallback()
             } else {
                 defaultExitAction()
