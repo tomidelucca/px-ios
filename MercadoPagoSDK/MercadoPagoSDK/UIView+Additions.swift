@@ -68,9 +68,11 @@ internal extension UIView {
         PXLayout.setHeight(owner: line, height: height).isActive = true
     }
 
-    func removeAllSubviews() {
+    @objc func removeAllSubviews(except views: [UIView] = []) {
         for subview in self.subviews {
-            subview.removeFromSuperview()
+            if !views.contains(subview) {
+                subview.removeFromSuperview()
+            }
         }
     }
 

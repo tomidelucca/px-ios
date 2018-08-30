@@ -17,16 +17,15 @@ internal struct MPXTrackingEnvironment {
 internal class MPXTracker: NSObject {
     @objc open static let sharedInstance = MPXTracker()
 
-    var public_key: String = ""
-    var sdkVersion = Utils.getSetting(identifier: "sdk_version") ?? ""
-    static let kTrackingSettings = "tracking_settings"
-    fileprivate static let kTrackingEnabled = "tracking_enabled"
+    internal static let kTrackingSettings = "tracking_settings"
+    internal var public_key: String = ""
+    internal var sdkVersion = Utils.getSetting(identifier: "sdk_version") ?? ""
 
-    var trackListener: PXTrackerListener?
-    var trackingStrategy: TrackingStrategy = RealTimeStrategy()
-
-    fileprivate var flowService: FlowService = FlowService()
-    fileprivate lazy var currentEnvironment: String = MPXTrackingEnvironment.production
+    private static let kTrackingEnabled = "tracking_enabled"
+    private var trackListener: PXTrackingListener?
+    private var trackingStrategy: TrackingStrategy = RealTimeStrategy()
+    private var flowService: FlowService = FlowService()
+    private lazy var currentEnvironment: String = MPXTrackingEnvironment.production
 }
 
 // MARK: Getters/setters.
@@ -35,7 +34,7 @@ internal extension MPXTracker {
         self.public_key = public_key.trimSpaces()
     }
 
-    internal func getPublicKey() -> String! {
+    internal func getPublicKey() -> String {
         return self.public_key
     }
 
@@ -80,7 +79,6 @@ internal extension MPXTracker {
 
 // MARK: Public interfase.
 internal extension MPXTracker {
-
     internal func trackScreen(screenId: String, screenName: String, properties: [String: String] = [:]) {
         if let trackListenerInterfase = trackListener {
             trackListenerInterfase.trackScreen(screenName: screenName, extraParams: properties)
@@ -120,7 +118,6 @@ internal extension MPXTracker {
 
 // MARK: Internal interfase.
 internal extension MPXTracker {
-
     internal func generateJSONDefault() -> [String: Any] {
         let deviceJSON = MPTDevice().toJSON()
         let applicationJSON = MPTApplication(checkoutVersion: MPXTracker.sharedInstance.getSdkVersion(), platform: MPXTracker.sharedInstance.getPlatformType(), flowId: flowService.getFlowId(), environment: currentEnvironment).toJSON()

@@ -11,6 +11,7 @@ import UIKit
 class PXUIImageView: UIImageView {
 
     private var currentImage: UIImage?
+    private var fadeInEnabled = false
     override var image: UIImage? {
         set {
             loadImage(image: newValue)
@@ -21,14 +22,41 @@ class PXUIImageView: UIImageView {
     }
 
     private func loadImage(image: UIImage?) {
-        self.contentMode = .scaleAspectFit
+        self.contentMode = .scaleAspectFill
         if let pxImage = image as? PXUIImage {
-            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: buildLabel(with: pxImage.placeholder), fallbackView: buildLabel(with: pxImage.fallback)) { newImage in
+            let placeholder = buildPlaceholderView(image: pxImage)
+            let fallback = buildFallbackView(image: pxImage)
+
+            Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback, fadeInEnabled: fadeInEnabled) { newImage in
                 self.currentImage = newImage
             }
         } else {
             self.currentImage = image
         }
+    }
+
+    private func buildPlaceholderView(image: PXUIImage) -> UIView? {
+        if let placeholderString = image.placeholder {
+            return buildLabel(with: placeholderString)
+        } else {
+            return buildEmptyView()
+        }
+    }
+
+    private func buildFallbackView(image: PXUIImage) -> UIView? {
+        if let fallbackString = image.fallback {
+            return buildLabel(with: fallbackString)
+        } else {
+            return buildEmptyView()
+        }
+    }
+
+    private func buildEmptyView() -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.alpha = 0.2
+        return view
     }
 
     private func buildLabel(with text: String?) -> UILabel? {
@@ -41,5 +69,13 @@ class PXUIImageView: UIImageView {
         label.textAlignment = .center
         label.text = text
         return label
+    }
+
+    func enableFadeIn() {
+        fadeInEnabled = true
+    }
+
+    func disableFadeIn() {
+        fadeInEnabled = false
     }
 }
