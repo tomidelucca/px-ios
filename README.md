@@ -95,10 +95,17 @@ You can set your custom Font by `PXTheme` protocol. Implement the following 3 op
 @objc optional func semiBoldFontName() -> String?
 ```
 
+## 📈 Tracking
+We provide `PXTrackerListener` protocol to notify each tracking event. You can subscribe to this protocol using `PXTracker`.
+```swift
+PXTracker.setListener(self)
+```
+
 ## 🌟 Features
 - [x] Easy to install
 - [x] Easy to integrate
 - [x] PCI compliance
+- [x] Font customization
 - [x] Basic color customization
 - [x] Advanced color customization
 - [x] Lazy loading initialization support
