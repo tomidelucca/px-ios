@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class PXHeaderRenderer {
+internal final class PXHeaderRenderer: NSObject {
 
     //Image
     let IMAGE_WIDTH: CGFloat = 90.0
@@ -33,10 +33,9 @@ internal class PXHeaderRenderer {
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
         //Image
-
-        if let imageURL = header.props.imageURL {
-            headerView.circleImage = buildCircleImage(with: nil)
-            Utils().loadImageWithCache(withUrl: imageURL, targetImageView: headerView.circleImage!, placeholderImage: nil, fallbackImage: header.props.productImage)
+        if let imageURL = header.props.imageURL, imageURL.isNotEmpty {
+            let pximage = PXUIImage(url: imageURL)
+            headerView.circleImage = buildCircleImage(with: pximage)
         } else {
             headerView.circleImage = buildCircleImage(with: header.props.productImage)
         }
@@ -68,12 +67,13 @@ internal class PXHeaderRenderer {
         return headerView
     }
 
-    func buildCircleImage(with image: UIImage?) -> UIImageView {
-        let circleImage = UIImageView(frame: CGRect(x: 0, y: 0, width: IMAGE_WIDTH, height: IMAGE_HEIGHT))
+    func buildCircleImage(with image: UIImage?) -> PXUIImageView {
+        let circleImage = PXUIImageView(frame: CGRect(x: 0, y: 0, width: IMAGE_WIDTH, height: IMAGE_HEIGHT))
         circleImage.layer.masksToBounds = false
         circleImage.layer.cornerRadius = circleImage.frame.height/2
         circleImage.clipsToBounds = true
         circleImage.translatesAutoresizingMaskIntoConstraints = false
+        circleImage.enableFadeIn()
         circleImage.image = image
         circleImage.contentMode = .scaleAspectFill
         circleImage.backgroundColor = .clear
@@ -82,14 +82,12 @@ internal class PXHeaderRenderer {
         return circleImage
     }
 
-    func buildBudgeImage(with image: UIImage?) -> UIImageView {
-        let badgeImage = UIImageView()
-        badgeImage.translatesAutoresizingMaskIntoConstraints = false
-        badgeImage.image = image
-        PXLayout.setHeight(owner: badgeImage, height: BADGE_IMAGE_SIZE).isActive = true
-        PXLayout.setWidth(owner: badgeImage, width: BADGE_IMAGE_SIZE).isActive = true
-        return badgeImage
+    func buildBudgeImage(with image: UIImage?) -> PXAnimatedImageView {
+        let imageView = PXAnimatedImageView(image: image, size: CGSize(width: BADGE_IMAGE_SIZE, height: BADGE_IMAGE_SIZE))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }
+
     func buildStatusLabel(with text: NSAttributedString?, in superView: UIView, onBottomOf upperView: UIView) -> UILabel {
         let statusLabel = UILabel()
         let font = Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)
@@ -126,9 +124,9 @@ internal class PXHeaderRenderer {
     }
 }
 
-internal class PXHeaderView: PXComponentView {
-    var circleImage: UIImageView?
-    var badgeImage: UIImageView?
+internal final class PXHeaderView: PXComponentView {
+    var circleImage: PXUIImageView?
+    var badgeImage: PXAnimatedImageView?
     var statusLabel: UILabel?
     var messageLabel: UILabel?
 }

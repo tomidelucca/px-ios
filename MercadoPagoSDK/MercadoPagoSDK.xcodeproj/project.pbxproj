@@ -212,6 +212,10 @@
 		232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		232FA92C1F06D30F002F7E39 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
+		2344DD9221380985006CBD48 /* PXAnimatedViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2344DD9021380985006CBD48 /* PXAnimatedViewProtocol.swift */; };
+		2344DD9321380985006CBD48 /* PXAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2344DD9121380985006CBD48 /* PXAnimatedImageView.swift */; };
+		2344DD94213809A0006CBD48 /* PXAnimatedViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2344DD9021380985006CBD48 /* PXAnimatedViewProtocol.swift */; };
+		2344DD95213809A2006CBD48 /* PXAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2344DD9121380985006CBD48 /* PXAnimatedImageView.swift */; };
 		2352B753207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */; };
 		2352B754207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */; };
 		2352B756207BD10B00CE46E5 /* PXSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */; };
@@ -1119,6 +1123,8 @@
 		232FA9291F06D2E2002F7E39 /* ApiException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiException.swift; sourceTree = "<group>"; };
 		232FA92B1F06D30F002F7E39 /* Cause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cause.swift; sourceTree = "<group>"; };
 		233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXThemeObjects.swift; sourceTree = "<group>"; };
+		2344DD9021380985006CBD48 /* PXAnimatedViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAnimatedViewProtocol.swift; sourceTree = "<group>"; };
+		2344DD9121380985006CBD48 /* PXAnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXAnimatedImageView.swift; sourceTree = "<group>"; };
 		2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPrimaryButton.swift; sourceTree = "<group>"; };
 		2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecondaryButton.swift; sourceTree = "<group>"; };
 		235A3268204B4147002D1F54 /* PXReviewTitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewTitleComponent.swift; sourceTree = "<group>"; };
@@ -1666,10 +1672,11 @@
 				15C6A37E1F4CA32900DBC32A /* Preferences */,
 				534D84251F54857F00C2C6F9 /* Exclusions */,
 				4B08CDA91F224C7F00FE800A /* ESC */,
-				1553AF311E36452000E36C62 /* MercadoPagoCheckout */,
 				155F58321E3923180070A0D6 /* Images.xcassets */,
-				151A94121DBF934B00A5557B /* Revamp */,
+				1553AF311E36452000E36C62 /* MercadoPagoCheckout */,
 				0F9883C01AD2AD3200F750F0 /* UI */,
+				2344DD8E21380985006CBD48 /* UI */,
+				151A94121DBF934B00A5557B /* Revamp */,
 				0F9883AB1AD2ABB400F750F0 /* Util */,
 				0F9883341AD2AB5000F750F0 /* Model */,
 				0F98832D1AD2AB0D00F750F0 /* Core */,
@@ -2090,6 +2097,23 @@
 				232114B7211897E800B50503 /* UnlockCardLinks.plist */,
 			);
 			path = Plist;
+			sourceTree = "<group>";
+		};
+		2344DD8E21380985006CBD48 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				2344DD8F21380985006CBD48 /* PXAnimatedViews */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		2344DD8F21380985006CBD48 /* PXAnimatedViews */ = {
+			isa = PBXGroup;
+			children = (
+				2344DD9021380985006CBD48 /* PXAnimatedViewProtocol.swift */,
+				2344DD9121380985006CBD48 /* PXAnimatedImageView.swift */,
+			);
+			path = PXAnimatedViews;
 			sourceTree = "<group>";
 		};
 		235A3267204B410A002D1F54 /* Title */ = {
@@ -3784,6 +3808,7 @@
 				FC2E9B9820A5EB2300D43B1E /* PXUIImageView.swift in Sources */,
 				2389DE3620F4D99A0053AF76 /* PXDistanceSortFunction.swift in Sources */,
 				FC7BD8AA1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */,
+				2344DD9221380985006CBD48 /* PXAnimatedViewProtocol.swift in Sources */,
 				FC3FC8761FBE122F00CF29E1 /* PXInstructionsTertiaryInfoRenderer.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				4B9F3B76213590F70024412F /* PXSetting.swift in Sources */,
@@ -3862,6 +3887,7 @@
 				4BAD08A720F006B000F3A77F /* PXOneTapSummaryRowRenderer.swift in Sources */,
 				81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */,
 				4B1EE15F20D0145F00560838 /* PXAnimatedButton.swift in Sources */,
+				2344DD9321380985006CBD48 /* PXAnimatedImageView.swift in Sources */,
 				4B9F3B8D213590F70024412F /* PXCampaings.swift in Sources */,
 				232114A22117D8A500B50503 /* PXLanguages.swift in Sources */,
 				4BE805BC20AB563C001F5C0F /* PXFlow.swift in Sources */,
@@ -4278,6 +4304,7 @@
 				23C3893A20AC451E001EFDA9 /* PXPaymentMethodView.swift in Sources */,
 				237A19FE2050047D00B0C2D2 /* PXSummaryComponentRenderer.swift in Sources */,
 				813873811FA8DECE002095D6 /* PXBodyComponent.swift in Sources */,
+				2344DD94213809A0006CBD48 /* PXAnimatedViewProtocol.swift in Sources */,
 				23F5FEDF205030C1005382E9 /* PXItemContainerView.swift in Sources */,
 				0F98835C1AD2AB6000F750F0 /* Bin.swift in Sources */,
 				0F9883941AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
@@ -4432,6 +4459,7 @@
 				4B4E23171FFFF182007E8FDD /* PXHeaderComponentTest.swift in Sources */,
 				4B760D07204DB5E5001E4976 /* PXItemComponent.swift in Sources */,
 				4BDC087B20EBFD07001C1F44 /* PXPaymentResultHandlerProtocol.swift in Sources */,
+				2344DD95213809A2006CBD48 /* PXAnimatedImageView.swift in Sources */,
 				76EC47D01C85E4CC0086FA53 /* CardTokenTest.swift in Sources */,
 				15A7B18C1C88B2E4007D0C4E /* MockManager.swift in Sources */,
 				0F9883B01AD2ACFE00F750F0 /* CurrenciesUtil.swift in Sources */,

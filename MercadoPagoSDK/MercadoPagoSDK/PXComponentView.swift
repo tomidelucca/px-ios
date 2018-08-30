@@ -52,6 +52,7 @@ import Foundation
         PXLayout.matchWidth(ofView: contentView).isActive = true
         PXLayout.matchWidth(ofView: topGuideView).isActive = true
         PXLayout.matchWidth(ofView: bottomGuideView).isActive = true
+        carryMarginY = 0
     }
 
     public func pinContentViewToTop() {
@@ -94,6 +95,15 @@ import Foundation
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func removeAllSubviews(except views: [UIView] = []) {
+        for view in contentView.subviews {
+            if !views.contains(view) {
+                view.removeFromSuperview()
+            }
+        }
+        carryMarginY = 0
     }
 
     override public func addSubview(_ view: UIView) {
