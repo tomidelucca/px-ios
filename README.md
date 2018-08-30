@@ -90,10 +90,10 @@ final class ExampleTheme: PXTheme {
 ## 🔠 Custom Fonts
 You can set your custom Font by `PXTheme` protocol. Implement the following 3 optional methods:
 ```swift
-    // PXTheme
-    @objc optional func fontName() -> String?
-    @objc optional func lightFontName() -> String?
-    @objc optional func semiBoldFontName() -> String?
+// PXTheme
+@objc optional func fontName() -> String?
+@objc optional func lightFontName() -> String?
+@objc optional func semiBoldFontName() -> String?
 ```
 
 ## 🌟 Features
