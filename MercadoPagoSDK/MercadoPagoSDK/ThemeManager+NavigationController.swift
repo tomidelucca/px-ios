@@ -24,12 +24,13 @@ extension ThemeManager {
         navigationController.navigationBar.isTranslucent = navControllerMemento.navIsTranslucent
         navigationController.navigationBar.backgroundColor = navControllerMemento.navBackgroundColor
         navigationController.navigationBar.restoreBottomLine()
-    navigationController.navigationBar.setBackgroundImage(navControllerMemento.navBackgroundImage, for: UIBarMetrics.default)
+        navigationController.navigationBar.setBackgroundImage(navControllerMemento.navBackgroundImage, for: UIBarMetrics.default)
         navigationController.navigationBar.shadowImage = navControllerMemento.navShadowImage
         navigationController.delegate = navControllerMemento.customDelegate
         if navControllerMemento.navBarStyle != nil {
             navigationController.navigationBar.barStyle = navControllerMemento.navBarStyle!
         }
         navigationController.interactivePopGestureRecognizer?.isEnabled = navControllerMemento.swipeBackGesture
+        navigationController.setNavigationBarHidden(navControllerMemento.isNavigationBarHidden, animated: false)
     }
 }

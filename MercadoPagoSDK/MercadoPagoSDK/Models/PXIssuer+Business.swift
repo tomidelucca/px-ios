@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension PXIssuer: Cellable {
     var objectType: ObjectTypes {

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 @objc
 internal protocol CardInformation: CardInformationForm, PaymentOptionDrawable {

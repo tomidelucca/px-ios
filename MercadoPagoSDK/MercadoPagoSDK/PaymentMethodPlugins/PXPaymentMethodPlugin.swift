@@ -8,33 +8,26 @@
 
 import Foundation
 
-/** :nodoc: */
 @objcMembers
 open class PXPaymentMethodPlugin: NSObject {
-
-    @objc public enum RemotePaymentStatus: Int {
-        case APPROVED
-        case REJECTED
-    }
-
+    /// :nodoc:
     @objc public enum DisplayOrder: Int {
         case TOP
         case BOTTOM
     }
 
-    static let PAYMENT_METHOD_TYPE_ID = PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
-
+    internal static let PAYMENT_METHOD_TYPE_ID = PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
     internal var paymentMethodPluginId: String
     internal var name: String
     internal var paymentMethodPluginDescription: String?
     internal var image: UIImage
 
+    internal var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
+    internal var displayOrder = DisplayOrder.TOP
+
     open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
         callback(true)
     }
-
-    internal var paymentMethodConfigPlugin: PXConfigPluginComponent?
-    internal var displayOrder = DisplayOrder.TOP
 
     open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 
@@ -44,9 +37,12 @@ open class PXPaymentMethodPlugin: NSObject {
         self.image = image
         self.paymentMethodPluginDescription = description
     }
+}
 
-    open func setPaymentMethodConfig(plugin: PXConfigPluginComponent) {
-        self.paymentMethodConfigPlugin = plugin
+// MARK: - Setters
+extension PXPaymentMethodPlugin {
+    open func setPaymentMethodConfig(config: PXPaymentMethodConfigProtocol) {
+        self.paymentMethodConfigPlugin = config
     }
 
     open func setDisplayOrder(order: DisplayOrder) {
@@ -55,7 +51,6 @@ open class PXPaymentMethodPlugin: NSObject {
 }
 
 /** :nodoc: */
-// MARK: PXPaymentMethodPlugin as PaymentOptionDrawable/PaymentMethodOption
 extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
     public func getId() -> String {
         return paymentMethodPluginId

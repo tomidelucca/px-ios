@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension PXPayerCost: Cellable {
     var objectType: ObjectTypes {

@@ -12,15 +12,9 @@ import Foundation
 open class PXThemeProperty: NSObject {
     let backgroundColor: UIColor
     let tintColor: UIColor
-    let selectedColor: UIColor
-    public init (backgroundColor: UIColor, tintColor: UIColor, selectedColor: UIColor) {
+    public init (backgroundColor: UIColor, tintColor: UIColor) {
         self.backgroundColor = backgroundColor
         self.tintColor = tintColor
-        if selectedColor == .clear {
-            self.selectedColor = backgroundColor
-        } else {
-            self.selectedColor = selectedColor
-        }
     }
 
     open func getBackgroundColor() -> UIColor {

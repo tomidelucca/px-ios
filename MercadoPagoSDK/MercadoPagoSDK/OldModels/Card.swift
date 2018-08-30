@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoServicesV4
 
 /** :nodoc: */
 @objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
@@ -112,7 +111,7 @@ import MercadoPagoServicesV4
     }
 
     open func getPaymentMethodId() -> String {
-        return (self.paymentMethod?.paymentMethodId)!
+        return (self.paymentMethod?.id)!
     }
 
     open func getPaymentTypeId() -> String {

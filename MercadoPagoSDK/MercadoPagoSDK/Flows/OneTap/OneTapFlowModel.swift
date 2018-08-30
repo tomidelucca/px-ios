@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 final internal class OneTapFlowModel: PXFlowModel {
     enum Steps: String {
@@ -19,7 +18,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     }
 
     var paymentData: PXPaymentData
-    let checkoutPreference: CheckoutPreference
+    let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption
     let search: PaymentMethodSearch
     var readyToPay: Bool = false
@@ -46,7 +45,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PXPaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference

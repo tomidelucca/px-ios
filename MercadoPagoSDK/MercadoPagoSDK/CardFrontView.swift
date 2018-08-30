@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoServicesV4
 
 @IBDesignable internal class CardFrontView: UIView, Updatable {
   var view: UIView!

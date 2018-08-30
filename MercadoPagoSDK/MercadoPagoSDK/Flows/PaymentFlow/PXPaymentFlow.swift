@@ -16,7 +16,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: CheckoutPreference?) {
+    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: PXCheckoutPreference?) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
@@ -24,7 +24,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         self.model.checkoutPreference = checkoutPreference
     }
 
-    func setData(paymentData: PXPaymentData, checkoutPreference: CheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
+    func setData(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
         self.model.paymentData = paymentData
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
@@ -86,7 +86,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 }
 
 /** :nodoc: */
-extension PXPaymentFlow: PXPaymentFlowHandlerProtocol {
+extension PXPaymentFlow: PXPaymentProcessorErrorHandler {
     func showError() {
         let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: false)
         resultHandler?.finishPaymentFlow(error: error)

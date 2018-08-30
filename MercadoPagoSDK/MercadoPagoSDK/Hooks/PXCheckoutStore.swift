@@ -10,7 +10,7 @@ import Foundation
 @objcMembers
 open class PXCheckoutStore: NSObject {
     static let sharedInstance = PXCheckoutStore()
-    internal var checkoutPreference: CheckoutPreference?
+    internal var checkoutPreference: PXCheckoutPreference?
     internal var paymentData = PXPaymentData()
     private var data = [String: Any]()
 }
@@ -21,8 +21,27 @@ extension PXCheckoutStore {
         return paymentData
     }
 
-    public func getCheckoutPreference() -> CheckoutPreference? {
+    public func getCheckoutPreference() -> PXCheckoutPreference? {
         return checkoutPreference
+    }
+}
+
+// MARK: - DataStore
+extension PXCheckoutStore {
+    public func addData(forKey: String, value: Any) {
+        self.data[forKey] = value
+    }
+
+    public func remove(key: String) {
+        data.removeValue(forKey: key)
+    }
+
+    public func removeAll() {
+        data.removeAll()
+    }
+
+    public func getData(forKey: String) -> Any? {
+        return self.data[forKey]
     }
 }
 
@@ -31,23 +50,5 @@ internal extension PXCheckoutStore {
         removeAll()
         checkoutPreference = nil
         paymentData = PXPaymentData()
-    }
-}
-
-internal extension PXCheckoutStore {
-    internal func addData(forKey: String, value: Any) {
-        self.data[forKey] = value
-    }
-
-    internal func remove(key: String) {
-        data.removeValue(forKey: key)
-    }
-
-    internal func removeAll() {
-        data.removeAll()
-    }
-
-    internal func getData(forKey: String) -> Any? {
-        return self.data[forKey]
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 internal class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
@@ -196,7 +195,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         self.numberTextField.becomeFirstResponder()
     }
 
@@ -260,8 +258,8 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
 
     }
 
-    func rightArrowKeyTapped() {
-        let idnt = PXIdentification(number: defaultEditTextMask.textUnmasked(numberTextField.text), type: self.identificationType?.identificationTypeId)
+    @objc func rightArrowKeyTapped() {
+        let idnt = PXIdentification(number: defaultEditTextMask.textUnmasked(numberTextField.text), type: self.identificationType?.id)
 
         let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber: defaultEditTextMask.textUnmasked(numberTextField.text))
 
@@ -328,7 +326,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         let site = SiteManager.shared.getSiteId()
 
         if let identificationType = IDtype {
-            if let identificationTypeId = identificationType.identificationTypeId, let masks = maskFinder(dictID: site + "_" + identificationTypeId, forKey: "identification_mask") {
+            if let identificationTypeId = identificationType.id, let masks = maskFinder(dictID: site + "_" + identificationTypeId, forKey: "identification_mask") {
                 return masks
             } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
                 return masks

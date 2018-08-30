@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTrackingV4
-import MercadoPagoServicesV4
 
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
@@ -23,10 +21,10 @@ open class MercadoPagoCheckout: NSObject {
     internal var viewModel: MercadoPagoCheckoutViewModel
 
     public init(builder: MercadoPagoCheckoutBuilder) {
-        var choPref: CheckoutPreference
+        var choPref: PXCheckoutPreference
 
         if let preferenceId = builder.preferenceId {
-            choPref = CheckoutPreference(preferenceId: preferenceId)
+            choPref = PXCheckoutPreference(preferenceId: preferenceId)
         } else if let preference = builder.checkoutPreference {
             choPref = preference
             SiteManager.shared.setSite(siteId: choPref.getSiteId()) // TODO: Ver esto
@@ -34,7 +32,7 @@ open class MercadoPagoCheckout: NSObject {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
 
-        PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? "" //TODO: This is temporary.
+        PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? ""
 
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey)
 
@@ -80,11 +78,13 @@ open class MercadoPagoCheckout: NSObject {
 
 // MARK: Publics
 extension MercadoPagoCheckout {
-    public func start(navigationController: UINavigationController) {
+    public func start(navigationController: UINavigationController, lifeCycleProtocol: PXLifeCycleProtocol?=nil) {
+        viewModel.lifecycleProtocol = lifeCycleProtocol
         commondInit()
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         if initMode == .lazy {
             if viewModel.initFlow?.getStatus() == .finished {
                 executeNextStep()
@@ -128,7 +128,7 @@ extension MercadoPagoCheckout {
         PXTrackingSettings.enableBetaServices()
     }
 
-    internal func setCheckoutPreference(checkoutPreference: CheckoutPreference) {
+    internal func setCheckoutPreference(checkoutPreference: PXCheckoutPreference) {
         self.viewModel.checkoutPreference = checkoutPreference
     }
 
@@ -191,28 +191,43 @@ extension MercadoPagoCheckout {
 
     internal func finish() {
         viewModel.pxNavigationHandler.removeRootLoading()
-        if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
-            paymentCallback(payment)
-            return
-
-        } else if let finishFlowCallback = MercadoPagoCheckoutViewModel.finishFlowCallback {
-            finishFlowCallback(self.viewModel.payment)
+        // LifecycleProtocol.finishCheckout - defined
+        // Exit checkout with payment. (by state machine next)
+        if let genericPayment = viewModel.getGenericPayment(), let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: genericPayment) {
+            finishCallback()
             return
         }
-        viewModel.pxNavigationHandler.goToRootViewController()
+        defaultExitAction()
     }
 
-    internal func cancel() {
-        if let callback = viewModel.callbackCancel {
-            callback()
-            return
-        }
-        viewModel.pxNavigationHandler.goToRootViewController()
+    internal func cancelCheckout() {
+        closeCheckout()
     }
 
-    @objc internal func closeCheckout() {
+    /// :nodoc:
+    @objc func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
-        cancel()
+
+        // LifecycleProtocol.finishCheckout - defined
+        // Exit checkout with payment. (by closeAction)
+        if let genericPayment = viewModel.getGenericPayment() {
+            if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: genericPayment) {
+                finishCallback()
+            } else {
+                defaultExitAction()
+            }
+            return
+        }
+
+        // LifecycleProtocol.cancelCheckout - defined
+        // Exit checkout without payment. (by back stack action)
+        if let lifecycle = viewModel.lifecycleProtocol, let cancelCustomAction = lifecycle.cancelCheckout() {
+            cancelCustomAction()
+            return
+        }
+
+        // Default exit. Without LifecycleProtocol returns.
+        defaultExitAction()
     }
 }
 
@@ -221,7 +236,6 @@ extension MercadoPagoCheckout {
     private func initialize() {
         startTracking()
         MercadoPagoCheckout.currentCheckout = self
-        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         if let currentCheckout = MercadoPagoCheckout.currentCheckout {
             PXNotificationManager.SuscribeTo.attemptToClose(currentCheckout, selector: #selector(closeCheckout))
         }
@@ -229,8 +243,7 @@ extension MercadoPagoCheckout {
     }
 
     private func startTracking() {
-        MPXTracker.setPublicKey(viewModel.publicKey)
-        MPXTracker.setSdkVersion(PXServicesURLConfigs.PX_SDK_VERSION ?? "") // TODO: Temporal
+        MPXTracker.sharedInstance.setPublicKey(viewModel.publicKey)
         MPXTracker.sharedInstance.startNewFlow()
     }
 
@@ -250,5 +263,9 @@ extension MercadoPagoCheckout {
 
     private func removeDiscount() {
         self.viewModel.clearDiscount()
+    }
+
+    private func defaultExitAction() {
+        viewModel.pxNavigationHandler.goToRootViewController()
     }
 }

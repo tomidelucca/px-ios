@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 final class PayerCostView: UIView, PXComponent {
 

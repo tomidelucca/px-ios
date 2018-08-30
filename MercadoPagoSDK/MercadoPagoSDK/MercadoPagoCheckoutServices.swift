@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension MercadoPagoCheckout {
 
@@ -17,7 +16,7 @@ extension MercadoPagoCheckout {
             return
         }
         let bin = self.viewModel.cardToken?.getBin()
-        self.viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod.paymentMethodId, bin: bin, callback: { [weak self] (issuers) in
+        self.viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod.id, bin: bin, callback: { [weak self] (issuers) in
 
             guard let strongSelf = self else {
                 return
@@ -178,7 +177,7 @@ extension MercadoPagoCheckout {
 
     func cloneCardToken(token: PXToken, securityCode: String) {
         viewModel.pxNavigationHandler.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.cloneToken(tokenId: token.tokenId, securityCode: securityCode, callback: { [weak self] (token) in
+        self.viewModel.mercadoPagoServicesAdapter.cloneToken(tokenId: token.id, securityCode: securityCode, callback: { [weak self] (token) in
 
             guard let strongSelf = self else {
                 return
@@ -214,7 +213,7 @@ extension MercadoPagoCheckout {
         if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
             diffPricingString = String(describing: differentialPricing)
         }
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, differentialPricingId: diffPricingString, callback: { [weak self] (installments) in
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.id, differentialPricingId: diffPricingString, callback: { [weak self] (installments) in
 
             guard let strongSelf = self else {
                 return

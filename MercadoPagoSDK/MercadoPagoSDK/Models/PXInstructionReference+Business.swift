@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension PXInstructionReference {
     func getFullReferenceValue() -> String {

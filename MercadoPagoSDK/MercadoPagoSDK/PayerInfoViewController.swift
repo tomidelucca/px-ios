@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate, InputComponentListener {
 

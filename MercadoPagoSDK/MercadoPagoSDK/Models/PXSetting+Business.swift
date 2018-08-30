@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
+
 internal extension PXSetting {
     class func getSettingByBin(_ settings: [PXSetting]!, bin: String!) -> [PXSetting]? {
         var selectedSetting = [PXSetting] ()

@@ -16,7 +16,7 @@ internal extension PXPaymentFlow {
 
         plugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
-        plugin.createPayment?(checkoutStore: PXCheckoutStore.sharedInstance, handler: self as PXPaymentFlowHandlerProtocol, successWithBusinessResult: { [weak self] businessResult in
+        plugin.startPayment?(checkoutStore: PXCheckoutStore.sharedInstance, errorHandler: self as PXPaymentProcessorErrorHandler, successWithBusinessResult: { [weak self] businessResult in
             self?.model.businessResult = businessResult
             self?.executeNextStep()
             }, successWithPaymentResult: { [weak self] paymentPluginResult in
@@ -26,7 +26,7 @@ internal extension PXPaymentFlow {
                     return
                 }
 
-                let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.receiptId, statementDescription: nil)
+                let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.paymentId, statementDescription: nil)
                 self?.model.paymentResult = paymentResult
                 self?.executeNextStep()
         })

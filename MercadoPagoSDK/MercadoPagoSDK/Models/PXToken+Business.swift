@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
+
 extension PXToken: CardInformationForm {
     func getBin() -> String? {
         var bin: String? = nil

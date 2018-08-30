@@ -48,7 +48,6 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideNavBar()
-        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         self.extendedLayoutIncludesOpaqueBars = true
         self.titleCellHeight = 44
 

@@ -22,6 +22,6 @@ final class PXSummaryRowComponent: NSObject, PXComponentizable {
     }
 
     func oneTapRender() -> UIView {
-        return PXOneTapSummaryRowRenderer(withProps: props).render()
+        return PXOneTapSummaryRowRenderer(withProps: props).renderXib()
     }
 }

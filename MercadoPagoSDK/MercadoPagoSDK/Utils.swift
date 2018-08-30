@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoServicesV4
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
@@ -433,8 +432,8 @@ internal class Utils {
         var paymentTypeSelected = ""
 
         let paymentMethod = paymentMethods.filter({ (paymentMethod: PXPaymentMethod) -> Bool in
-            if paymentMethodId.startsWith(paymentMethod.paymentMethodId) {
-                let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod.paymentMethodId)
+            if paymentMethodId.startsWith(paymentMethod.id) {
+                let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod.id)
                 // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
                     paymentTypeSelected = String(paymentMethodId[paymentTypeIdRange!.upperBound...])

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 internal class ResourceManager {
 
@@ -63,8 +62,8 @@ extension ResourceManager {
 
     func getImageFor(_ paymentMethod: PXPaymentMethod, forCell: Bool? = false) -> UIImage? {
         if forCell == true {
-            return ResourceManager.shared.getImage(paymentMethod.paymentMethodId.lowercased())
-        } else if let pmImage = ResourceManager.shared.getImage("icoTc_"+paymentMethod.paymentMethodId.lowercased()) {
+            return ResourceManager.shared.getImage(paymentMethod.id.lowercased())
+        } else if let pmImage = ResourceManager.shared.getImage("icoTc_"+paymentMethod.id.lowercased()) {
             return pmImage
         } else {
             return ResourceManager.shared.getCardDefaultLogo()
@@ -75,18 +74,18 @@ extension ResourceManager {
         return ResourceManager.shared.getImage("icoTc_default")
     }
 
-    func getColorFor(_ paymentMethod: PXPaymentMethod, settings: [Setting]?) -> UIColor {
+    func getColorFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?) -> UIColor {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             if let stringColor = pmConfig.value(forKey: "first_color") as? String {
                 return UIColor.fromHex(stringColor)
             } else {
                 return UIColor.cardDefaultColor()
             }
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 if let stringColor = pmConfig.value(forKey: "first_color") as? String {
                     return UIColor.fromHex(stringColor)
                 } else {
@@ -98,17 +97,17 @@ extension ResourceManager {
 
     }
 
-    func getLabelMaskFor(_ paymentMethod: PXPaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String {
+    func getLabelMaskFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?, forCell: Bool? = false) -> String {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             let etMask = pmConfig.value(forKey: "label_mask") as? String
             return etMask ?? defaultMask
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 let etMask = pmConfig.value(forKey: "label_mask") as? String
                 return etMask ?? defaultMask
             }
@@ -116,17 +115,17 @@ extension ResourceManager {
         return defaultMask
     }
 
-    func getEditTextMaskFor(_ paymentMethod: PXPaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String {
+    func getEditTextMaskFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?, forCell: Bool? = false) -> String {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
         let defaultMask = "XXXX XXXX XXXX XXXX"
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             let etMask = pmConfig.value(forKey: "editText_mask") as? String
             return etMask ?? defaultMask
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 let etMask = pmConfig.value(forKey: "editText_mask") as? String
                 return etMask ?? defaultMask
             }
@@ -134,19 +133,19 @@ extension ResourceManager {
         return defaultMask
     }
 
-    func getFontColorFor(_ paymentMethod: PXPaymentMethod, settings: [Setting]?) -> UIColor {
+    func getFontColorFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?) -> UIColor {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.defaultColorText
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             if let stringColor = pmConfig.value(forKey: "font_color") as? String {
                 return UIColor.fromHex(stringColor)
             } else {
                 return defaultColor
             }
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 if let stringColor = pmConfig.value(forKey: "font_color") as? String {
                     return UIColor.fromHex(stringColor)
                 } else {
@@ -157,19 +156,19 @@ extension ResourceManager {
 
     }
 
-    func getEditingFontColorFor(_ paymentMethod: PXPaymentMethod, settings: [Setting]?) -> UIColor {
+    func getEditingFontColorFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?) -> UIColor {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.highlightedColorText
 
-        if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
+        if let pmConfig = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String {
                 return UIColor.fromHex(stringColor)
             } else {
                 return defaultColor
             }
         } else if let setting = settings?[0] {
-            if let pmConfig = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + String(setting.cardNumber.length)) as? NSDictionary {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod.id + "_" + String(setting.cardNumber.length)) as? NSDictionary {
                 if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String {
                     return UIColor.fromHex(stringColor)
                 } else {

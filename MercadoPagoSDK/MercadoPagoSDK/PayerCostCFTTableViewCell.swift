@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 class PayerCostCFTTableViewCell: UITableViewCell {
     @IBOutlet weak var totalLabel: UILabel!

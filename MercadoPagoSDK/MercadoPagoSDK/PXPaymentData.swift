@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 @objcMembers public class PXPaymentData: NSObject, NSCopying {
     internal var paymentMethod: PXPaymentMethod?
@@ -18,7 +17,7 @@ import MercadoPagoServicesV4
     internal var transactionDetails: PXTransactionDetails?
     internal private(set) var discount: PXDiscount?
     internal private(set) var campaign: PXCampaign?
-    private let paymentTypesWithoutInstallments = [PXPaymentTypes.DEBIT_CARD.rawValue, PXPaymentTypes.PREPAID_CARD.rawValue]
+    private let paymentTypesWithoutInstallments = [PXPaymentTypes.PREPAID_CARD.rawValue]
 
     /// :nodoc:
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -53,7 +52,7 @@ import MercadoPagoServicesV4
             return false
         }
 
-        if paymentMethod.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
+        if paymentMethod.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
 
@@ -120,6 +119,10 @@ extension PXPaymentData {
 
     public func getPaymentMethod() -> PXPaymentMethod? {
         return paymentMethod
+    }
+
+    public func getDiscount() -> PXDiscount? {
+        return discount
     }
 }
 

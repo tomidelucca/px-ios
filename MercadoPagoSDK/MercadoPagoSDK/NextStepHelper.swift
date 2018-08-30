@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension MercadoPagoCheckoutViewModel {
 
@@ -150,7 +149,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if pm.isCreditCard && !paymentData.hasPayerCost() && payerCosts == nil {
+        if pm.isCard && !paymentData.hasPayerCost() && payerCosts == nil {
             return true
         }
         return false
@@ -160,7 +159,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if pm.isCreditCard && !paymentData.hasPayerCost() && payerCosts != nil {
+        if pm.isCard && !paymentData.hasPayerCost() && payerCosts != nil {
             return true
         }
         return false
@@ -302,7 +301,7 @@ extension MercadoPagoCheckoutViewModel {
         } else if !paymentMethod.isOnlinePaymentMethod {
             // Medios off
             if let paymentTypeId = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) {
-                self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod.paymentMethodId, paymentTypeId: paymentTypeId)
+                self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod.id, paymentTypeId: paymentTypeId)
             }
         } else {
             // Tarjetas, efectivo, crédito, debito

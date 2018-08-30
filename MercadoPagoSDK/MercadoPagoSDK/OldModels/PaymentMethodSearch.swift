@@ -6,7 +6,6 @@
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 import Foundation
-import MercadoPagoServicesV4
 
 internal class PaymentMethodSearch {
 

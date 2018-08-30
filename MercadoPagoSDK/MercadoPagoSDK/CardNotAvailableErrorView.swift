@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 class CardNotAvailableErrorView: UIView {
 

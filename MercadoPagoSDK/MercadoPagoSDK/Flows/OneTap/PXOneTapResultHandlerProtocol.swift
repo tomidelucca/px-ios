@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 internal protocol PXOneTapResultHandlerProtocol: NSObjectProtocol {
     func finishOneTap(paymentResult: PaymentResult, instructionsInfo: PXInstructions?)

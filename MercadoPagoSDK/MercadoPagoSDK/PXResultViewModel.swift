@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTrackingV4
-import MercadoPagoServicesV4
 
 internal class PXResultViewModel: PXResultViewModelInterface {
     var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
@@ -35,7 +33,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
                         TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.getPaymentStatusDetail(),
                         TrackingUtil.METADATA_PAYMENT_ID: self.getPaymentId() ?? ""]
         if let pm = self.getPaymentData().getPaymentMethod() {
-            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.paymentMethodId
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.id
         }
         if let issuer = self.getPaymentData().getIssuer() {
             metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.id

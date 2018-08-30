@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoServicesV4
 
 @objcMembers internal class CardToken: NSObject, CardInformationForm {
 

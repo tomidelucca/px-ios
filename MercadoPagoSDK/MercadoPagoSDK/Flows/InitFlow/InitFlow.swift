@@ -7,17 +7,16 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 final class InitFlow: PXFlow {
     var pxNavigationHandler: PXNavigationHandler
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
-    private let finishInitCallback: ((CheckoutPreference, PaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void)
+    private let finishInitCallback: ((PXCheckoutPreference, PaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
 
-    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((CheckoutPreference, PaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
+    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
         pxNavigationHandler = PXNavigationHandler.getDefault()
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback

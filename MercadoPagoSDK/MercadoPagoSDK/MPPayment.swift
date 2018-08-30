@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -57,7 +56,7 @@ internal class MPPayment {
 
     init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
         self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.id! : ""
-        self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
+        self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.id : ""
         self.installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
 
         if let transactionDetails = paymentData.transactionDetails {
@@ -70,7 +69,7 @@ internal class MPPayment {
         }
 
         self.discount = paymentData.discount
-        self.paymentMethodId = paymentData.getPaymentMethod()?.paymentMethodId ?? ""
+        self.paymentMethodId = paymentData.getPaymentMethod()?.id ?? ""
 
         self.preferenceId = preferenceId
         self.publicKey = publicKey

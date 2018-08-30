@@ -8,8 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoPXTrackingV4
-import MercadoPagoServicesV4
 
 internal class AdditionalStepViewModel {
 
@@ -186,7 +184,7 @@ internal class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER }
 
     override func track() {
-        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].paymentMethodId, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethods[0].paymentMethodId]
+        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].id, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethods[0].id]
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
@@ -216,7 +214,7 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override func track() {
-        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].paymentMethodId]
+        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].id]
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 

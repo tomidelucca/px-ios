@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
-import MercadoPagoPXTrackingV4
 
 internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 

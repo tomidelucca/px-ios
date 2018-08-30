@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 class PXInstructionsActionComponent: NSObject, PXComponentizable {
     var props: PXInstructionsActionProps

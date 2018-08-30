@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import  MercadoPagoServicesV4
 
 internal extension PXResultViewModel {
     func getBodyComponentProps() -> PXBodyProps {

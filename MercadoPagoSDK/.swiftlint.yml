@@ -1,7 +1,7 @@
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Pods/
   - MercadoPagoSDKTests/ #Sacar proyecto de tests por ahora
-
+  - MercadoPagoSDK/Services/
 opt_in_rules:
 
 # Reglas custom de MELI

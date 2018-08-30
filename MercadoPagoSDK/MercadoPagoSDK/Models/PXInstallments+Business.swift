@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 internal extension PXInstallment {
     func numberOfPayerCostToShow(_ maxNumberOfInstallments: Int = 0) -> Int {

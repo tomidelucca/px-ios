@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
+
 extension PXPaymentMethod: Cellable {
 
     var objectType: ObjectTypes {
@@ -101,8 +101,8 @@ extension PXPaymentMethod: Cellable {
         guard let setting = PXSetting.getSettingByBin(settings, bin: bin) else {
             return nil
         }
-        let paymentMethod: PXPaymentMethod = PXPaymentMethod(additionalInfoNeeded: additionalInfoNeeded, id: paymentMethodId, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: setting, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions, description: paymentMethodDescription)
-        paymentMethod.paymentMethodId = paymentMethodId
+        let paymentMethod: PXPaymentMethod = PXPaymentMethod(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: setting, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions, description: paymentMethodDescription)
+        paymentMethod.id = id
         paymentMethod.name = self.name
         paymentMethod.paymentTypeId = self.paymentTypeId
         paymentMethod.additionalInfoNeeded = self.additionalInfoNeeded
@@ -110,11 +110,11 @@ extension PXPaymentMethod: Cellable {
     }
 
     internal var isAmex: Bool {
-        return self.paymentMethodId == "amex"
+        return self.id == "amex"
     }
 
     internal var isAccountMoney: Bool {
-        return self.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue
+        return self.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
 
     internal func secCodeMandatory() -> Bool {
@@ -179,7 +179,7 @@ extension PXPaymentMethod: Cellable {
             return true
         }
         if paymentPreference!.defaultPaymentMethodId != nil {
-            if paymentMethodId != paymentPreference!.defaultPaymentMethodId {
+            if id != paymentPreference!.defaultPaymentMethodId {
                 return false
             }
         }
@@ -190,7 +190,7 @@ extension PXPaymentMethod: Cellable {
         }
 
         if let excludedPaymentMethodIds = paymentPreference?.excludedPaymentMethodIds {
-            for excludedPaymentMethodId  in excludedPaymentMethodIds where excludedPaymentMethodId == paymentMethodId {
+            for excludedPaymentMethodId  in excludedPaymentMethodIds where excludedPaymentMethodId == id {
                 return false
             }
         }
@@ -206,7 +206,7 @@ extension PXPaymentMethod: Cellable {
 
     // IMAGE
     internal func getImage() -> UIImage? {
-        return MercadoPago.getImageFor(self)
+        return ResourceManager.shared.getImageFor(self)
     }
 
     internal func setExternalPaymentMethodImage(externalImage: UIImage?) {
@@ -231,7 +231,7 @@ extension PXPaymentMethod: Cellable {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
         }
 
-        return MercadoPago.getColorFor(self, settings: settings)
+        return ResourceManager.shared.getColorFor(self, settings: settings)
     }
     // Font Color
     internal func getFontColor(bin: String?) -> UIColor {
@@ -241,7 +241,7 @@ extension PXPaymentMethod: Cellable {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
         }
 
-        return MercadoPago.getFontColorFor(self, settings: settings)
+        return ResourceManager.shared.getFontColorFor(self, settings: settings)
     }
     // Edit Font Color
     internal func getEditingFontColor(bin: String?) -> UIColor {
@@ -251,7 +251,7 @@ extension PXPaymentMethod: Cellable {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
         }
 
-        return MercadoPago.getEditingFontColorFor(self, settings: settings)
+        return ResourceManager.shared.getEditingFontColorFor(self, settings: settings)
     }
 
     // MASKS
@@ -262,7 +262,7 @@ extension PXPaymentMethod: Cellable {
         if let bin = bin {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
         }
-        return MercadoPago.getLabelMaskFor(self, settings: settings)
+        return ResourceManager.shared.getLabelMaskFor(self, settings: settings)
     }
     // Edit Text Mask
     internal func getEditTextMask(bin: String?) -> String {
@@ -271,10 +271,10 @@ extension PXPaymentMethod: Cellable {
         if let bin = bin {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
         }
-        return MercadoPago.getEditTextMaskFor(self, settings: settings)
+        return ResourceManager.shared.getEditTextMaskFor(self, settings: settings)
     }
 
     var isBolbradesco: Bool {
-        return self.paymentMethodId.contains(PXPaymentTypes.BOLBRADESCO.rawValue)
+        return self.id.contains(PXPaymentTypes.BOLBRADESCO.rawValue)
     }
 }

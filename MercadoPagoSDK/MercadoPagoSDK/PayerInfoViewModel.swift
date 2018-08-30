@@ -5,7 +5,6 @@
 //  Created by Demian Tejo on 9/29/17.
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
-import MercadoPagoServicesV4
 
 internal enum PayerInfoFlowStep: String {
 
@@ -47,14 +46,14 @@ internal class PayerInfoViewModel {
     }
 
     func filterSupported(identificationTypes: [PXIdentificationType]) -> [PXIdentificationType] {
-        let supportedIdentificationTypes = identificationTypes.filter {$0.identificationTypeId == "CPF"}
+        let supportedIdentificationTypes = identificationTypes.filter {$0.id == "CPF"}
         return supportedIdentificationTypes
     }
 
     func getDropdownOptions() -> [String] {
         var options: [String] = []
         for identificationType in self.identificationTypes {
-            options.append(identificationType.identificationTypeId!)
+            options.append(identificationType.id!)
         }
         return options
     }
@@ -175,7 +174,7 @@ internal class PayerInfoViewModel {
         let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
 
         if IDtype != nil {
-            if let masks = maskFinder(dictID: site + "_" + (IDtype?.identificationTypeId)!, forKey: "identification_mask") {
+            if let masks = maskFinder(dictID: site + "_" + (IDtype?.id)!, forKey: "identification_mask") {
                 return masks
             } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
                 return masks

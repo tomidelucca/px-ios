@@ -8,18 +8,16 @@
 
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
-#import "FirstHookViewController.h"
-#import "SecondHookViewController.h"
-#import "ThirdHookViewController.h"
+//#import "FirstHookViewController.h"
+//#import "SecondHookViewController.h"
+//#import "ThirdHookViewController.h"
 
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
 #import "MLMyMPPXTrackListener.h"
 
-@import MercadoPagoSDKV4;
-@import MercadoPagoPXTrackingV4;
-@import MercadoPagoServicesV4;
+@import MercadoPagoSDK;
 
 @implementation MainExamplesViewController
 
@@ -56,7 +54,6 @@
     dc = nil;
 */
     
-    [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
 
     // self.pref.preferenceId = @"243962506-ca09fbc6-7fa6-461d-951c-775b37d19abc";
@@ -69,7 +66,9 @@
 //
 //    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44" paymentConfiguration:[self getPaymentConfiguration]];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
+
+    [self.checkoutBuilder setTrackingListener:self];
 
 //    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
@@ -128,7 +127,7 @@
     MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
     //[mpCheckout startWithLazyInitProtocol:self];
-    [mpCheckout startWithNavigationController:self.navigationController];
+    [mpCheckout startWithLazyInitProtocol:self];
 }
 
 // ReviewConfirm
@@ -159,28 +158,52 @@
 -(void)setVoidCallback {}
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    Item *item = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
-    Item *item2 = [[Item alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    PXItem *item2 = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
 
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
-    self.pref = [[CheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
+    self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
     [self.pref addExcludedPaymentType:@"ticket"];
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
+    self.pref = [[PXCheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
 }
 
 
 -(IBAction)startCardManager:(id)sender  {}
 
 - (void)didFinishWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
-    [checkout startWithNavigationController:self.navigationController];
+    [checkout startWithNavigationController:self.navigationController lifeCycleProtocol:self];
 }
 
-- (void)failureWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
-    NSLog(@"LazyInit - failureWithCheckout");
+-(void)failureWithCheckout:(MercadoPagoCheckout * _Nonnull)checkout {
+    NSLog(@"PXLog - LazyInit - failureWithCheckout");
+}
+
+-(void (^ _Nullable)(void))cancelCheckout {
+    // return nil;
+    return ^ {
+        NSLog(@"PXLog - cancelCheckout Called");
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+}
+
+-(void (^)(void))finishCheckoutWithPayment:(PXGenericPayment *)payment {
+    return nil;
+    return ^ {
+        NSLog(@"PXLog - finishCheckoutWithPayment Called");
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    };
+}
+
+- (void)trackEventWithScreenName:(NSString * _Nullable)screenName action:(NSString * _Null_unspecified)action result:(NSString * _Nullable)result extraParams:(NSDictionary<NSString *,id> * _Nullable)extraParams {
+    // Track event
+}
+
+- (void)trackScreenWithScreenName:(NSString * _Nonnull)screenName extraParams:(NSDictionary<NSString *,id> * _Nullable)extraParams {
+    // Track screen
 }
 
 @end

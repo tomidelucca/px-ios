@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension PXInstruction {
     func hasSubtitle() -> Bool {

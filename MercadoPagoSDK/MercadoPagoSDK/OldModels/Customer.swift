@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoServicesV4
 
 /** :nodoc: */
 @objcMembers open class Customer: NSObject {

@@ -16,8 +16,7 @@ extension PXPaymentFlow {
 
         model.assignToCheckoutStore()
 
-        // Create navigation handler.
-        paymentProcessor.paymentNavigationHandler?(navigationHandler: PXPaymentPluginNavigationHandler(flow: self))
+        paymentProcessor.didReceive?(navigationHandler: PXPaymentProcessorNavigationHandler(flow: self))
 
         if let paymentProcessorVC = paymentProcessor.paymentProcessorViewController() {
             self.pxNavigationHandler.navigationController.pushViewController(paymentProcessorVC, animated: false)

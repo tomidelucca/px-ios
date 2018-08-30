@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
 @objcMembers internal class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
 

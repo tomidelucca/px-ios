@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 // One Tap - Payment method component.
 extension PXOneTapViewModel {

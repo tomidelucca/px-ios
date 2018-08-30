@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import MercadoPagoServicesV4
 
+//TODO: Delete post v4.0
 internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
@@ -49,12 +49,7 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.hideNavBar()
-        if self.navigationItem.leftBarButtonItem != nil {
-            self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
-        }
-
         self.navigationController!.navigationBar.shadowImage = nil
         self.extendedLayoutIncludesOpaqueBars = true
     }

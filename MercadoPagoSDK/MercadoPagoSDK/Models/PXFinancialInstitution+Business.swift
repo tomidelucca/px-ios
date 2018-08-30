@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension PXFinancialInstitution: Cellable {
     var objectType: ObjectTypes {

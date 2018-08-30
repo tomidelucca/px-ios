@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 final class PXImageService: NSObject {
 
@@ -20,9 +19,9 @@ final class PXImageService: NSObject {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
 
-        if let pm = dictPM?.value(forKey: paymentMethod.paymentMethodId) as? NSDictionary {
+        if let pm = dictPM?.value(forKey: paymentMethod.id) as? NSDictionary {
             return ResourceManager.shared.getImage(pm.object(forKey: "image_name") as? String ?? nil)
-        } else if let pmPt = dictPM?.value(forKey: paymentMethod.paymentMethodId + "_" + paymentMethod.paymentTypeId) as? NSDictionary {
+        } else if let pmPt = dictPM?.value(forKey: paymentMethod.id + "_" + paymentMethod.paymentTypeId) as? NSDictionary {
             return ResourceManager.shared.getImage(pmPt.object(forKey: "image_name") as? String ?? nil)
         }
 

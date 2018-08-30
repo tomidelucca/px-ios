@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension PXInstructions {
     open func hasSecundaryInformation() -> Bool {

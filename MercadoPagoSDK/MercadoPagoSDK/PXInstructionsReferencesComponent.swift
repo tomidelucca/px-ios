@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 class PXInstructionsReferencesComponent: NSObject, PXComponentizable {
     var props: PXInstructionsReferencesProps

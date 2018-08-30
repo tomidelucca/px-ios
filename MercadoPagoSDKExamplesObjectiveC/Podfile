@@ -1,3 +1,4 @@
+
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
@@ -6,11 +7,9 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
   use_frameworks!
 
   # Pods for MercadoPagoSDKExamplesObjectiveC
-    pod 'MercadoPagoPXTrackingV4', '2.1.4'
-  pod 'MercadoPagoServicesV4', :path => '../../px-ios_services'
-    pod 'MercadoPagoSDKV4', :path => '../'
   # UI Meli Lib
     pod 'MLUI', '~> 5.0'
+    pod 'MercadoPagoSDKV4', :path => '../'
 
   target 'MercadoPagoSDKExamplesObjectiveCTests' do
     inherit! :search_paths

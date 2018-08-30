@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoServicesV4
 
 class AdditionalStepCellFactory: NSObject {
 

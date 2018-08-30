@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 @objcMembers open class PXPaymentResultConfiguration: NSObject {
 

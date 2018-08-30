@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTrackingV4
-import MercadoPagoServicesV4
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -177,17 +175,6 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     @objc func handleTotalRowTap() {
         PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
-    }
-
-    private func cardFormCallbackCancel() -> (() -> Void) {
-        return { () -> Void in
-            if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
-                self.navigationController!.popToViewController(self, animated: true)
-            } else {
-                self.loadingGroups = false
-                self.callbackCancel!()
-            }
-        }
     }
 
     private func getCustomerCards() {

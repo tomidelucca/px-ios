@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 extension MercadoPagoCheckout {
 
@@ -132,9 +131,6 @@ extension MercadoPagoCheckout {
 
             strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
 
-            if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
-                MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
-            }
             strongSelf.executeNextStep()
 
         }, callbackConfirm: { [weak self] (paymentData: PXPaymentData) in

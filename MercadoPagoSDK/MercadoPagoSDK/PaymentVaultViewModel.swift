@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 class PaymentVaultViewModel: NSObject {
 

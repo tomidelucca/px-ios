@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 internal extension PXPayer {
-    func clearCollectedData() {
+    internal func clearCollectedData() {
         entityType = nil
         identification = nil
         firstName = nil

@@ -7,12 +7,8 @@
 //
 
 import Foundation
-import MercadoPagoServicesV4
 
 @objc internal protocol Updatable {
-
     func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod)
-
     func setCornerRadius(radius: CGFloat)
-
 }

@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTrackingV4
-import MercadoPagoServicesV4
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
@@ -135,21 +133,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     open override func viewWillAppear(_ animated: Bool) {
-
         super.viewWillAppear(animated)
         updateLabelsFontColors()
-
-        if let navigation = self.navigationController {
-            if navigation.viewControllers.first == self {
-                self.callbackCancel = {
-                    self.dismiss(animated: true, completion: {})
-                }
-            }
-        }
-        if callbackCancel != nil {
-            self.navigationItem.leftBarButtonItem?.target = self
-            self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
-        }
         textEditMaskFormater.emptyMaskElement = nil
     }
 

@@ -26,9 +26,10 @@
     [self setupNextButton];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [_walletTextField becomeFirstResponder];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     _messageLabel.text = nil;
+    [_walletTextField becomeFirstResponder];
 }
 
 #pragma mark - Setup methods
@@ -55,30 +56,16 @@
 }
 
 #pragma mark - Plugin implementation.
-
 - (UIView * _Nullable)renderWithStore:(PXCheckoutStore * _Nonnull)store theme:(id<PXTheme> _Nonnull)theme {
     return self.view;
 }
 
-- (void)viewWillAppear {
-    NSLog(@"PXPlugin viewWillAppear");
-}
-
-- (void)viewWillDisappear {
-    NSLog(@"PXPlugin viewWillDisappear");
-}
-
-- (NSString * _Nullable)titleForNavigationBar {
-    return @"Pagar con Bitcoin";
-}
-
-- (void)renderDidFinish {
-    _messageLabel.text = nil;
-    [_walletTextField becomeFirstResponder];
-}
-
 - (void)navigationHandlerForPluginWithNavigationHandler:(PXPluginNavigationHandler *)navigationHandler {
     self.pluginNavigationHandler = navigationHandler;
+}
+
+- (UIViewController * _Nullable)configViewController {
+    return self;
 }
 
 @end

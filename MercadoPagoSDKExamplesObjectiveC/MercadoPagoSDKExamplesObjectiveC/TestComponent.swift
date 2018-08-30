@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoSDKV4
 
-@objc public class TestComponent: NSObject, PXCustomComponentizable {
+@objc public class TestComponent: NSObject {
     public func getView() -> UIView {
         let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
         let view = UIView(frame: frame)
@@ -29,10 +29,6 @@ import MercadoPagoSDKV4
         NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
 
         return view
-    }
-
-    public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
-        return nil
     }
 }
 
