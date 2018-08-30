@@ -22,7 +22,7 @@ internal class MPXTracker: NSObject {
     internal var sdkVersion = Utils.getSetting(identifier: "sdk_version") ?? ""
 
     private static let kTrackingEnabled = "tracking_enabled"
-    private var trackListener: PXTrackingListener?
+    private var trackListener: PXTrackerListener?
     private var trackingStrategy: TrackingStrategy = RealTimeStrategy()
     private var flowService: FlowService = FlowService()
     private lazy var currentEnvironment: String = MPXTrackingEnvironment.production
