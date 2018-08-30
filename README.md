@@ -97,6 +97,16 @@ You can set your custom Font by `PXTheme` protocol. Implement the following 3 op
 
 ## 📈 Tracking
 We provide `PXTrackerListener` protocol to notify each tracking event. You can subscribe to this protocol using `PXTracker`.
+
+### Implement PXTrackerListener protocol.
+```objc
+@objc public protocol PXTrackerListener: NSObjectProtocol {
+    func trackScreen(screenName: String, extraParams: [String: Any]?)
+    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String: Any]?)
+}
+```
+
+### Set listener
 ```swift
 PXTracker.setListener(self)
 ```
