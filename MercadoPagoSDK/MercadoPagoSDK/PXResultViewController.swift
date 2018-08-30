@@ -46,7 +46,9 @@ class PXResultViewController: PXComponentContainerViewController {
         if contentView.getSubviews().isEmpty {
             renderViews()
             super.prepareForAnimation()
-            super.animateContentView()
+            super.animateContentView { (_) in
+                self.headerView?.badgeImage?.animate(duration: 0.2)
+            }
         }
     }
 
