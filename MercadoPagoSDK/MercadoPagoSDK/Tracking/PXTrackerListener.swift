@@ -1,5 +1,5 @@
 //
-//  PXTrackingListener.swift
+//  PXTrackerListener.swift
 //  MercadoPagoSDK
 //
 //  Created by Juan sebastian Sanzone on 29/8/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public protocol PXTrackingListener: NSObjectProtocol {
+@objc public protocol PXTrackerListener: NSObjectProtocol {
     func trackScreen(screenName: String, extraParams: [String: Any]?)
     func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String: Any]?)
 }

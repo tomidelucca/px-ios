@@ -22,7 +22,7 @@ internal class MPXTracker: NSObject {
     static let kTrackingSettings = "tracking_settings"
     fileprivate static let kTrackingEnabled = "tracking_enabled"
 
-    var trackListener: PXTrackingListener?
+    var trackListener: PXTrackerListener?
     var trackingStrategy: TrackingStrategy = RealTimeStrategy()
 
     fileprivate var flowService: FlowService = FlowService()
@@ -61,7 +61,7 @@ internal extension MPXTracker {
         return trackingEnabled
     }
 
-    internal func setTrack(listener: PXTrackingListener) {
+    internal func setTrack(listener: PXTrackerListener) {
         trackListener = listener
     }
 

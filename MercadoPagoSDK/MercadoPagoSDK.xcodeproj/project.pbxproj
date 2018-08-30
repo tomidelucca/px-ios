@@ -210,6 +210,8 @@
 		232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		232FA92C1F06D30F002F7E39 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
+		2344DD9721382CE9006CBD48 /* PXTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2344DD9621382CE9006CBD48 /* PXTracker.swift */; };
+		2344DD9821382CE9006CBD48 /* PXTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2344DD9621382CE9006CBD48 /* PXTracker.swift */; };
 		2352B753207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */; };
 		2352B754207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */; };
 		2352B756207BD10B00CE46E5 /* PXSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */; };
@@ -291,8 +293,8 @@
 		23CC9CA120FE139D006E751C /* PXPropertyStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CC9CA020FE139D006E751C /* PXPropertyStoring.swift */; };
 		23CDA33321370D8D008CE025 /* PXLifecycleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CDA33221370D8D008CE025 /* PXLifecycleProtocol.swift */; };
 		23CDA33521370DBD008CE025 /* PXGenericPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CDA33421370DBD008CE025 /* PXGenericPayment.swift */; };
-		23CDA33721370EF2008CE025 /* PXTrackingListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CDA33621370EF2008CE025 /* PXTrackingListener.swift */; };
-		23CDA33821370EF2008CE025 /* PXTrackingListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CDA33621370EF2008CE025 /* PXTrackingListener.swift */; };
+		23CDA33721370EF2008CE025 /* PXTrackerListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CDA33621370EF2008CE025 /* PXTrackerListener.swift */; };
+		23CDA33821370EF2008CE025 /* PXTrackerListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CDA33621370EF2008CE025 /* PXTrackerListener.swift */; };
 		23CF4ED02099603100EC9399 /* PXDefaultMLStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CF4ECF2099603100EC9399 /* PXDefaultMLStyleSheet.swift */; };
 		23E2157E2005360600B968F6 /* PXTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E2157D2005360600B968F6 /* PXTheme.swift */; };
 		23E2158320062E4600B968F6 /* PXDefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E2158220062E4600B968F6 /* PXDefaultTheme.swift */; };
@@ -1113,6 +1115,7 @@
 		232FA9291F06D2E2002F7E39 /* ApiException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiException.swift; sourceTree = "<group>"; };
 		232FA92B1F06D30F002F7E39 /* Cause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cause.swift; sourceTree = "<group>"; };
 		233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXThemeObjects.swift; sourceTree = "<group>"; };
+		2344DD9621382CE9006CBD48 /* PXTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTracker.swift; sourceTree = "<group>"; };
 		2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPrimaryButton.swift; sourceTree = "<group>"; };
 		2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecondaryButton.swift; sourceTree = "<group>"; };
 		235A3268204B4147002D1F54 /* PXReviewTitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewTitleComponent.swift; sourceTree = "<group>"; };
@@ -1161,7 +1164,7 @@
 		23CC9CA020FE139D006E751C /* PXPropertyStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PXPropertyStoring.swift; path = Core/PXPropertyStoring.swift; sourceTree = "<group>"; };
 		23CDA33221370D8D008CE025 /* PXLifecycleProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PXLifecycleProtocol.swift; path = Core/PXLifecycleProtocol.swift; sourceTree = "<group>"; };
 		23CDA33421370DBD008CE025 /* PXGenericPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXGenericPayment.swift; sourceTree = "<group>"; };
-		23CDA33621370EF2008CE025 /* PXTrackingListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTrackingListener.swift; sourceTree = "<group>"; };
+		23CDA33621370EF2008CE025 /* PXTrackerListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTrackerListener.swift; sourceTree = "<group>"; };
 		23CF4ECF2099603100EC9399 /* PXDefaultMLStyleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDefaultMLStyleSheet.swift; sourceTree = "<group>"; };
 		23E2157D2005360600B968F6 /* PXTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTheme.swift; sourceTree = "<group>"; };
 		23E2158220062E4600B968F6 /* PXDefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDefaultTheme.swift; sourceTree = "<group>"; };
@@ -2383,7 +2386,8 @@
 				4B9F3AC121358E580024412F /* TrackingUtil.swift */,
 				4B9F3AB421358E570024412F /* TrackStorageManager.swift */,
 				4B9F3AB721358E570024412F /* TrackingUtils.swift */,
-				23CDA33621370EF2008CE025 /* PXTrackingListener.swift */,
+				23CDA33621370EF2008CE025 /* PXTrackerListener.swift */,
+				2344DD9621382CE9006CBD48 /* PXTracker.swift */,
 			);
 			path = Tracking;
 			sourceTree = "<group>";
@@ -3862,6 +3866,7 @@
 				4B9F3B82213590F70024412F /* PXAmountInfo.swift in Sources */,
 				4B9F3B6A213590F70024412F /* PXFeeDetail.swift in Sources */,
 				819C88DA2045CFB8001E9216 /* PXReviewViewController.swift in Sources */,
+				2344DD9721382CE9006CBD48 /* PXTracker.swift in Sources */,
 				2389DE3820F4D99A0053AF76 /* PXDirectionSortFunction.swift in Sources */,
 				23CDA33521370DBD008CE025 /* PXGenericPayment.swift in Sources */,
 				15DF3F831D6347BF0051C798 /* TextMaskFormater.swift in Sources */,
@@ -4103,7 +4108,7 @@
 				766012EF1CF284A600897F9D /* WebViewController.swift in Sources */,
 				4BAD089D20F006B000F3A77F /* PXOneTapViewController.swift in Sources */,
 				FC511EAF20BCE7C1006F098C /* PXDiscountDetailViewController.swift in Sources */,
-				23CDA33721370EF2008CE025 /* PXTrackingListener.swift in Sources */,
+				23CDA33721370EF2008CE025 /* PXTrackerListener.swift in Sources */,
 				FC3FC8731FBE122000CF29E1 /* PXInstructionsTertiaryInfoComponent.swift in Sources */,
 				4B9F3B81213590F70024412F /* PXIdentification.swift in Sources */,
 				4B9F3B57213590F70024412F /* PXInstallment.swift in Sources */,
@@ -4380,7 +4385,7 @@
 				FC3FC88B1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
 				4B9F3AE321358E580024412F /* TrackingJSONHandler.swift in Sources */,
 				FC7BD8AB1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */,
-				23CDA33821370EF2008CE025 /* PXTrackingListener.swift in Sources */,
+				23CDA33821370EF2008CE025 /* PXTrackerListener.swift in Sources */,
 				4BDC088220EBFDAB001C1F44 /* MercadoPagoCheckout+OneTapResultHandler.swift in Sources */,
 				76EC47D21C85E77A0086FA53 /* CurrencyTest.swift in Sources */,
 				2376C8B620A11A2E00EF3DBE /* PXDefaultMLStyleSheet.swift in Sources */,
@@ -4414,6 +4419,7 @@
 				0F98836E1AD2AB6000F750F0 /* Device.swift in Sources */,
 				4BAD08B020F006B000F3A77F /* PXOneTapItemComponentProps.swift in Sources */,
 				FC3FC8621FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift in Sources */,
+				2344DD9821382CE9006CBD48 /* PXTracker.swift in Sources */,
 				4B4E23191FFFF2E2007E8FDD /* PXFooterComponentTest.swift in Sources */,
 				767C9CD61E266C0600BB4662 /* MPPaymentTest.swift in Sources */,
 				7656CA181C7644F10043BDB2 /* Instruction.swift in Sources */,

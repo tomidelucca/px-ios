@@ -60,8 +60,4 @@ extension MercadoPagoCheckoutBuilder {
         Localizator.sharedInstance.setLanguage(string: string)
         return self
     }
-
-    open func setTrackingListener(_ listener: PXTrackingListener) {
-        MPXTracker.sharedInstance.setTrack(listener: listener)
-    }
 }
