@@ -404,6 +404,7 @@
 		4B811DD81FCDCDF6000611AD /* PXHookComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DD61FCDCDF6000611AD /* PXHookComponent.swift */; };
 		4B811DE01FCDD31A000611AD /* MercadoPagoCheckoutViewModel+Hooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DDF1FCDD31A000611AD /* MercadoPagoCheckoutViewModel+Hooks.swift */; };
 		4B811DE11FCDD31A000611AD /* MercadoPagoCheckoutViewModel+Hooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B811DDF1FCDD31A000611AD /* MercadoPagoCheckoutViewModel+Hooks.swift */; };
+		4B8478502138632300378CD5 /* MLUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B84784F2138632300378CD5 /* MLUI.framework */; };
 		4B8D73511E780F8F009C1209 /* SummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D73501E780F8F009C1209 /* SummaryRow.swift */; };
 		4B8D73521E780F8F009C1209 /* SummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D73501E780F8F009C1209 /* SummaryRow.swift */; };
 		4B9F3AC221358E580024412F /* FlowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3AA921358E550024412F /* FlowService.swift */; };
@@ -518,7 +519,6 @@
 		4B9F3B8D213590F70024412F /* PXCampaings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B40213590F70024412F /* PXCampaings.swift */; };
 		4B9F3B8E213590F70024412F /* PXPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B41213590F70024412F /* PXPhone.swift */; };
 		4B9F3B8F213590F70024412F /* PXServicesURLConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B42213590F70024412F /* PXServicesURLConfigs.swift */; };
-		4B9F3B92213596340024412F /* MLUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9F3B91213596340024412F /* MLUI.framework */; };
 		4B9FEFCF1EA64E12002B78A2 /* PXReviewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCD1EA64E12002B78A2 /* PXReviewViewModelTest.swift */; };
 		4B9FEFD11EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFD01EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift */; };
 		4BA2934020659220000BC40D /* PXTrackingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE3C55120581048005BE20C /* PXTrackingStore.swift */; };
@@ -1248,6 +1248,7 @@
 		4B811DD61FCDCDF6000611AD /* PXHookComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHookComponent.swift; sourceTree = "<group>"; };
 		4B811DDC1FCDCE51000611AD /* PXCheckoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCheckoutStore.swift; sourceTree = "<group>"; };
 		4B811DDF1FCDD31A000611AD /* MercadoPagoCheckoutViewModel+Hooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MercadoPagoCheckoutViewModel+Hooks.swift"; sourceTree = "<group>"; };
+		4B84784F2138632300378CD5 /* MLUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MLUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B8D73501E780F8F009C1209 /* SummaryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryRow.swift; sourceTree = "<group>"; };
 		4B9F3AA921358E550024412F /* FlowService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowService.swift; sourceTree = "<group>"; };
 		4B9F3AAB21358E550024412F /* Array+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Additions.swift"; sourceTree = "<group>"; };
@@ -1614,7 +1615,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B9F3B92213596340024412F /* MLUI.framework in Frameworks */,
+				4B8478502138632300378CD5 /* MLUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3093,6 +3094,7 @@
 		C21B34312E09C5D174785343 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B84784F2138632300378CD5 /* MLUI.framework */,
 				4B9F3B91213596340024412F /* MLUI.framework */,
 				4BF55559210609590048BD76 /* MercadoPagoPXTrackingV4.framework */,
 				4BF55557210609520048BD76 /* MercadoPagoServicesV4.framework */,
@@ -3422,7 +3424,6 @@
 				0F9883071AD2A97A00F750F0 /* Headers */,
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
-				68D6C46836A168F0D26FD866 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3443,7 +3444,6 @@
 				0F9883121AD2A97A00F750F0 /* Frameworks */,
 				7622E33F1DF5F5F900490C4E /* Headers */,
 				CD8B4823CA6F70CBE1A2A425 /* [CP] Embed Pods Frameworks */,
-				9F1C6FA5CAF9AE5B2B7BAA4C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3607,36 +3607,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		68D6C46836A168F0D26FD866 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9F1C6FA5CAF9AE5B2B7BAA4C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CD8B4823CA6F70CBE1A2A425 /* [CP] Embed Pods Frameworks */ = {
