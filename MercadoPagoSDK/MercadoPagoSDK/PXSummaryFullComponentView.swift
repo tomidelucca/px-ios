@@ -76,8 +76,8 @@ extension PXSummaryFullComponentView {
     }
 
     fileprivate func addDetailsViews(typeDetailDictionary: [SummaryType: SummaryDetail]) {
-
-        for type in iterateEnum(SummaryType.self) {
+        let summaryTypes = [SummaryType.PRODUCT, SummaryType.DISCOUNT, SummaryType.CHARGE, SummaryType.TAXES, SummaryType.ARREARS, SummaryType.SHIPPING]
+        for type in summaryTypes {
             let frame = CGRect(x: 0.0, y: requiredHeight, width: self.frame.size.width, height: DETAILS_HEIGHT)
 
             if let detail = typeDetailDictionary[type] {
