@@ -1,5 +1,5 @@
 //
-//  Payment.swift
+//  PXPayment.swift
 //  MercadoPagoSDK
 //
 //  Created by Matias Gualino on 6/3/15.
@@ -28,7 +28,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 /** :nodoc: */
-@objcMembers open class Payment: NSObject {
+@objcMembers open class PXPayment: NSObject {
     open var binaryMode: Bool!
     open var callForAuthorizeId: String!
     open var captured: Bool!
@@ -67,8 +67,8 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
         super.init()
     }
 
-    internal class func fromJSON(_ json: NSDictionary) -> Payment {
-                let payment: Payment = Payment()
+    internal class func fromJSON(_ json: NSDictionary) -> PXPayment {
+                let payment: PXPayment = PXPayment()
 
                 if let paymentId = JSONHandler.attemptParseToString(json["id"]) {
                         payment.paymentId = paymentId

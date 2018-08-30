@@ -1,5 +1,5 @@
 //
-//  PXPayment.swift
+//  PXPaymentNew.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/20/17.
@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 
-open class PXPayment: NSObject, Codable {
+open class PXPaymentNew: NSObject, Codable {
     open var binaryMode: Bool?
     open var callForAuthorizeId: String?
     open var captured: Bool?
@@ -226,8 +226,8 @@ open class PXPayment: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSON(data: Data) throws -> PXPayment {
-        return try JSONDecoder().decode(PXPayment.self, from: data)
+    open class func fromJSON(data: Data) throws -> PXPaymentNew {
+        return try JSONDecoder().decode(PXPaymentNew.self, from: data)
     }
 
     open func isCardPaymentType() -> Bool {
@@ -237,7 +237,7 @@ open class PXPayment: NSObject, Codable {
 }
 
 /// :nodoc:
-extension PXPayment {
+extension PXPaymentNew {
 
     open class Status: NSObject {
         public static let APPROVED = "approved"

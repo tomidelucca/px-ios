@@ -76,7 +76,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var rootVC = true
 
     internal var paymentData = PXPaymentData()
-    var payment: Payment?
+    var payment: PXPayment?
     internal var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
     open var payerCosts: [PayerCost]?
@@ -570,7 +570,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    public func updateCheckoutModel(payment: Payment) {
+    public func updateCheckoutModel(payment: PXPayment) {
         self.payment = payment
         self.paymentResult = PaymentResult(payment: self.payment!, paymentData: self.paymentData)
     }
@@ -692,6 +692,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return PXGenericPayment(status: businessResultResponse.paymentStatus, statusDetail: businessResultResponse.paymentStatusDetail, paymentId: businessResultResponse.getReceiptId())
         }
         return nil
+    }
+
+    func getOurPayment() -> PXPayment? {
+        return payment
     }
 }
 

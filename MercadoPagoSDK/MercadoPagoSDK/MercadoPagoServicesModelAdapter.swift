@@ -362,8 +362,8 @@ internal extension MercadoPagoServicesAdapter {
         return identificationType
     }
 
-    internal func getPaymentFromPXPayment(_ pxPayment: PXPayment) -> Payment {
-        let payment = Payment()
+    internal func getPaymentFromPXPayment(_ pxPayment: PXPaymentNew) -> PXPayment {
+        let payment = PXPayment()
         payment.binaryMode = pxPayment.binaryMode
         payment.callForAuthorizeId = pxPayment.callForAuthorizeId
         payment.captured = pxPayment.captured
