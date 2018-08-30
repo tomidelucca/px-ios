@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Item Class Reference</title>
+    <title>PXItem Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/Item" class="dashAnchor"></a>
-    <a title="Item Class Reference"></a>
+    <a name="//apple_ref/swift/Class/PXItem" class="dashAnchor"></a>
+    <a title="PXItem Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (1% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Item Class Reference
+        PXItem Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -32,12 +32,6 @@
           <li class="nav-group-name">
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Classes/CheckoutPreference.html">CheckoutPreference</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/Item.html">Item</a>
-              </li>
               <li class="nav-group-task">
                 <a href="../Classes/MercadoPagoCheckout.html">MercadoPagoCheckout</a>
               </li>
@@ -54,16 +48,31 @@
                 <a href="../Classes/PXBusinessResult.html">PXBusinessResult</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/PXCheckoutPreference.html">PXCheckoutPreference</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/PXCheckoutStore.html">PXCheckoutStore</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/PXDiscountConfiguration.html">PXDiscountConfiguration</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/PXGenericPayment.html">PXGenericPayment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXItem.html">PXItem</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/PXPaymentConfiguration.html">PXPaymentConfiguration</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/PXPaymentData.html">PXPaymentData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentMethodPlugin.html">PXPaymentMethodPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXPaymentProcessorNavigationHandler.html">PXPaymentProcessorNavigationHandler</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/PXPaymentResultConfiguration.html">PXPaymentResultConfiguration</a>
@@ -76,6 +85,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/PXThemeProperty.html">PXThemeProperty</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PXTracker.html">PXTracker</a>
               </li>
             </ul>
           </li>
@@ -112,7 +124,19 @@
                 <a href="../Protocols/PXLazyInitProtocol.html">PXLazyInitProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/PXLifeCycleProtocol.html">PXLifeCycleProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentMethodConfigProtocol.html">PXPaymentMethodConfigProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXPaymentProcessor.html">PXPaymentProcessor</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/PXTheme.html">PXTheme</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PXTrackerListener.html">PXTrackerListener</a>
               </li>
             </ul>
           </li>
@@ -121,11 +145,11 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>Item</h1>
+            <h1>PXItem</h1>
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">Item</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXItem</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                 </div>
               </div>
@@ -138,9 +162,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)Item(im)initWithTitle:quantity:unitPrice:"></a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXItem(im)initWithTitle:quantity:unitPrice:"></a>
                     <a name="//apple_ref/swift/Method/init(title:quantity:unitPrice:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)Item(im)initWithTitle:quantity:unitPrice:">init(title:quantity:unitPrice:)</a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXItem(im)initWithTitle:quantity:unitPrice:">init(title:quantity:unitPrice:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -160,7 +184,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L20-L24">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L20-L24">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -179,9 +203,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setIdWithId:"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setIdWithId:"></a>
                     <a name="//apple_ref/swift/Method/setId(id:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setIdWithId:">setId(id:)</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setIdWithId:">setId(id:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -201,7 +225,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L38-L40">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L38-L40">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -209,9 +233,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setDescriptionWithDescription:"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setDescriptionWithDescription:"></a>
                     <a name="//apple_ref/swift/Method/setDescription(description:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setDescriptionWithDescription:">setDescription(description:)</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setDescriptionWithDescription:">setDescription(description:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -231,7 +255,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L42-L44">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L42-L44">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -239,9 +263,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setPictureURLWithUrl:"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setPictureURLWithUrl:"></a>
                     <a name="//apple_ref/swift/Method/setPictureURL(url:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setPictureURLWithUrl:">setPictureURL(url:)</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setPictureURLWithUrl:">setPictureURL(url:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -261,7 +285,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L46-L48">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L46-L48">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -269,9 +293,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setCategoryIdWithCategoryId:"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setCategoryIdWithCategoryId:"></a>
                     <a name="//apple_ref/swift/Method/setCategoryId(categoryId:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)setCategoryIdWithCategoryId:">setCategoryId(categoryId:)</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)setCategoryIdWithCategoryId:">setCategoryId(categoryId:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -291,7 +315,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L50-L52">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L50-L52">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -310,9 +334,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getQuantity"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getQuantity"></a>
                     <a name="//apple_ref/swift/Method/getQuantity()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getQuantity">getQuantity()</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getQuantity">getQuantity()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -332,7 +356,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L57-L59">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L57-L59">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -340,9 +364,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getUnitPrice"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getUnitPrice"></a>
                     <a name="//apple_ref/swift/Method/getUnitPrice()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getUnitPrice">getUnitPrice()</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getUnitPrice">getUnitPrice()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -362,7 +386,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L61-L63">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L61-L63">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -370,9 +394,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getTitle"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getTitle"></a>
                     <a name="//apple_ref/swift/Method/getTitle()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getTitle">getTitle()</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getTitle">getTitle()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -392,7 +416,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L65-L67">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L65-L67">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -400,9 +424,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getId"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getId"></a>
                     <a name="//apple_ref/swift/Method/getId()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getId">getId()</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getId">getId()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -422,7 +446,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L69-L71">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L69-L71">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -430,9 +454,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getDescription"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getDescription"></a>
                     <a name="//apple_ref/swift/Method/getDescription()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getDescription">getDescription()</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getDescription">getDescription()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -452,7 +476,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L73-L75">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L73-L75">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -460,9 +484,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getCategoryId"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getCategoryId"></a>
                     <a name="//apple_ref/swift/Method/getCategoryId()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getCategoryId">getCategoryId()</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getCategoryId">getCategoryId()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -482,7 +506,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L77-L79">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L77-L79">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -490,9 +514,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getPictureURL"></a>
+                    <a name="/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getPictureURL"></a>
                     <a name="//apple_ref/swift/Method/getPictureURL()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)Item(im)getPictureURL">getPictureURL()</a>
+                    <a class="token" href="#/c:@CM@MercadoPagoSDK@objc(cs)PXItem(im)getPictureURL">getPictureURL()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -512,7 +536,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Item.swift#L81-L83">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXItem.swift#L81-L83">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -522,7 +546,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-24)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/mercadopago/px-ios" target="_blank" rel="external">Mercadopago</a>. All rights reserved. (Last updated: 2018-08-30)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

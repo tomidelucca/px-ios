@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PXAction Class Reference</title>
+    <title>PXPaymentMethodConfigProtocol Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/PXAction" class="dashAnchor"></a>
-    <a title="PXAction Class Reference"></a>
+    <a name="//apple_ref/swift/Protocol/PXPaymentMethodConfigProtocol" class="dashAnchor"></a>
+    <a title="PXPaymentMethodConfigProtocol Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (1% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        PXAction Class Reference
+        PXPaymentMethodConfigProtocol Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -145,11 +145,11 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>PXAction</h1>
+            <h1>PXPaymentMethodConfigProtocol</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXAction</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PXPaymentMethodConfigProtocol</span></code></pre>
 
                 </div>
               </div>
@@ -162,9 +162,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXAction(im)initWithLabel:action:"></a>
-                    <a name="//apple_ref/swift/Method/init(label:action:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXAction(im)initWithLabel:action:">init(label:action:)</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)configViewController"></a>
+                    <a name="//apple_ref/swift/Method/configViewController()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)configViewController">configViewController()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -179,12 +179,106 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">label</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span>  <span class="kd">@escaping</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">func</span> <span class="nf">configViewController</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PXAction.swift#L15-L18">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentMethodPlugins/PXPaymentMethodConfigProtocol.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)shouldSkipWithStore:"></a>
+                    <a name="//apple_ref/swift/Method/shouldSkip(store:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)shouldSkipWithStore:">shouldSkip(store:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">func</span> <span class="nf">shouldSkip</span><span class="p">(</span><span class="nv">store</span><span class="p">:</span> <span class="kt"><a href="../Classes/PXCheckoutStore.html">PXCheckoutStore</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentMethodPlugins/PXPaymentMethodConfigProtocol.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)didReceiveWithCheckoutStore:theme:"></a>
+                    <a name="//apple_ref/swift/Method/didReceive(checkoutStore:theme:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)didReceiveWithCheckoutStore:theme:">didReceive(checkoutStore:theme:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">didReceive</span><span class="p">(</span><span class="nv">checkoutStore</span><span class="p">:</span> <span class="kt"><a href="../Classes/PXCheckoutStore.html">PXCheckoutStore</a></span><span class="p">,</span> <span class="nv">theme</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PXTheme.html">PXTheme</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentMethodPlugins/PXPaymentMethodConfigProtocol.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)navigationHandlerWithNavigationHandler:"></a>
+                    <a name="//apple_ref/swift/Method/navigationHandler(navigationHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(pl)PXPaymentMethodConfigProtocol(im)navigationHandlerWithNavigationHandler:">navigationHandler(navigationHandler:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">navigationHandler</span><span class="p">(</span><span class="nv">navigationHandler</span><span class="p">:</span> <span class="kt">PXPluginNavigationHandler</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentMethodPlugins/PXPaymentMethodConfigProtocol.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
