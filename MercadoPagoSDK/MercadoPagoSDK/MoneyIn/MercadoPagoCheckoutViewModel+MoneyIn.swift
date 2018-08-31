@@ -15,6 +15,8 @@ extension MercadoPagoCheckoutViewModel {
             return nil
         }
 
+        amountHelper.preference.clearCardId()
+
         if let search = self.search {
             guard let customerPaymentMethods = search.customerPaymentMethods else {
                 return nil

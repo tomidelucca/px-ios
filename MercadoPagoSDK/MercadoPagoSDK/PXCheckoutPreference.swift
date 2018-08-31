@@ -52,6 +52,10 @@ import UIKit
     internal func hasMultipleItems() -> Bool {
         return items.count > 1
     }
+
+    internal func clearCardId() {
+        self.paymentPreference.cardId = nil
+    }
 }
 
 // MARK: Setters

@@ -41,11 +41,11 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
     }
 
-    let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
+    let mpESCManager: MercadoPagoESC
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
@@ -54,6 +54,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         self.reviewScreenConfiguration = reviewScreenConfiguration
         self.chargeRules = chargeRules
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.mpESCManager = MercadoPagoESCImplementation(enabled: advancedConfiguration.escEnabled)
 
         if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
             updateCheckoutModel(payerCost: payerCost)

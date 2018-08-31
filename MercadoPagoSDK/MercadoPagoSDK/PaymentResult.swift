@@ -27,7 +27,7 @@ internal class PaymentResult {
     var paymentId: String?
     var statementDescription: String?
 
-    init (payment: Payment, paymentData: PXPaymentData) {
+    init (payment: PXPayment, paymentData: PXPaymentData) {
         self.status = payment.status
         self.statusDetail = payment.statusDetail
         self.paymentData = paymentData

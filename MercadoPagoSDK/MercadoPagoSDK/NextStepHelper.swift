@@ -175,7 +175,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !pm.isCreditCard
+        let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !(pm.isCreditCard || pm.isDebitCard)
         let isCustomerCard = pmSelected.isCustomerPaymentMethod() && pmSelected.getId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
 
         if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {

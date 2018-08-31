@@ -520,7 +520,7 @@ internal class Utils {
 
     static let imageCache = NSCache<NSString, AnyObject>()
 
-    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, didFinish: ((UIImage) -> Void)? = nil) {
+    func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, fadeInEnabled: Bool = false, didFinish: ((UIImage) -> Void)? = nil) {
 
         guard let urlString = urlStr else {
             if let fallbackView = fallbackView {
@@ -566,8 +566,21 @@ internal class Utils {
 
                         //Add image
                         let imageView = self.createImageView(with: image, contentMode: targetView.contentMode)
-                        targetView.removeAllSubviews()
+                        imageView.alpha = 0
                         targetView.addSubviewAtFullSize(with: imageView)
+
+                        if fadeInEnabled {
+                            //ImageView fade in animation
+                            UIView.animate(withDuration: 0.5, animations: {
+                                imageView.alpha = 1
+                            }, completion: { (_) in
+                                targetView.removeAllSubviews(except: [imageView])
+                            })
+                        } else {
+                            targetView.removeAllSubviews(except: [imageView])
+                            imageView.alpha = 1
+                        }
+
                         didFinish?(image)
                     } else if let fallbackView = fallbackView {
                         targetView.removeAllSubviews()

@@ -23,6 +23,18 @@ Edit your `Podfile` and specify the dependency:
 pod 'MercadoPagoSDKV4', '~> 4.0'
 ```
 
+## 🌟 Features
+- [x] Easy to install
+- [x] Easy to integrate
+- [x] PCI compliance
+- [x] Font customization
+- [x] Basic color customization
+- [x] Advanced color customization
+- [x] Lazy loading initialization support
+- [x] Custom UIViews support in certain screens
+- [x] Support to build your own Payment Processor
+- [x] Support to create your own custom Payment Method
+
 ## 🐒 How to use
 Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 
@@ -86,17 +98,30 @@ final class ExampleTheme: PXTheme {
     }
 }
 ```
-    
-## 🌟 Features
-- [x] Easy to install
-- [x] Easy to integrate
-- [x] PCI compliance
-- [x] Basic color customization
-- [x] Advanced color customization
-- [x] Lazy loading initialization support
-- [x] Custom UIViews support in certain screens
-- [x] Support to build your own Payment Processor
-- [x] Support to create your own custom Payment Method
+
+## 🔠 Custom Fonts
+You can set your custom Font by `PXTheme` protocol. Implement the following 3 optional methods:
+```swift
+@objc optional func fontName() -> String?
+@objc optional func lightFontName() -> String?
+@objc optional func semiBoldFontName() -> String?
+```
+
+## 📈 Tracking
+We provide `PXTrackerListener` protocol to notify each tracking event. You can subscribe to this protocol using `PXTracker`.
+
+### Implement PXTrackerListener protocol.
+```swift
+@objc public protocol PXTrackerListener: NSObjectProtocol {
+    func trackScreen(screenName: String, extraParams: [String: Any]?)
+    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String: Any]?)
+}
+```
+
+### Set listener
+```swift
+PXTracker.setListener(self)
+```
 
 ### 📋 Supported OS & SDK Versions
 * iOS 9.0+

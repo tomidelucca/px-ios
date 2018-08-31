@@ -10,5 +10,5 @@ import Foundation
 
 @objc public protocol PXLifeCycleProtocol: NSObjectProtocol {
     @objc func cancelCheckout() -> (() -> Void)?
-    @objc func finishCheckout(payment: PXGenericPayment) -> (() -> Void)?
+    @objc func finishCheckout(payment: PXPayment?) -> (() -> Void)?
 }

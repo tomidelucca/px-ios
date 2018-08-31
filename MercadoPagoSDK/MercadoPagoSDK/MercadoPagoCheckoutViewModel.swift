@@ -76,7 +76,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var rootVC = true
 
     internal var paymentData = PXPaymentData()
-    var payment: Payment?
+    var payment: PXPayment?
     internal var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
     open var payerCosts: [PXPayerCost]?
@@ -95,7 +95,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
 
-    var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
+    var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation(enabled: false)
 
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
@@ -568,7 +568,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    public func updateCheckoutModel(payment: Payment) {
+    public func updateCheckoutModel(payment: PXPayment) {
         self.payment = payment
         self.paymentResult = PaymentResult(payment: self.payment!, paymentData: self.paymentData)
     }
@@ -691,6 +691,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
         return nil
     }
+
+    func getOurPayment() -> PXPayment? {
+        return payment
+    }
 }
 
 extension MercadoPagoCheckoutViewModel {
@@ -771,6 +775,7 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func setAdvancedConfiguration(advancedConfig: PXAdvancedConfiguration) {
         self.advancedConfig = advancedConfig
+        self.mpESCManager = MercadoPagoESCImplementation(enabled: advancedConfig.escEnabled)
     }
 
     func getAdvancedConfiguration() -> PXAdvancedConfiguration {
