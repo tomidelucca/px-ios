@@ -14,6 +14,10 @@
 		23346C361FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */; };
 		2385C5DA20125871002C147D /* MeliTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2385C5D920125871002C147D /* MeliTheme.swift */; };
 		23CF4ECE20994D1A00EC9399 /* MPTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CF4ECC20994D1A00EC9399 /* MPTheme.swift */; };
+		4B10DBC3213989C500EA2208 /* PaymentMethodPlugins.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */; };
+		4B10DBC4213989CB00EA2208 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7ECE1D2559140087C785 /* LaunchScreen.storyboard */; };
+		4B10DBC5213989D000EA2208 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7ECC1D2559140087C785 /* Assets.xcassets */; };
+		4B10DBC821398A0300EA2208 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B10DBC621398A0200EA2208 /* Main.storyboard */; };
 		4B1A74F0209204B900E39587 /* MLMyMPPXTrackListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1A74EF209204B900E39587 /* MLMyMPPXTrackListener.m */; };
 		4B34DC331E5DA33100FDD295 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC41D2559140087C785 /* AppDelegate.m */; };
 		74126DB947528ECCFF4C442F /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1A98C81D073320D7B6BE4E /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */; };
@@ -66,6 +70,7 @@
 		2385C5D920125871002C147D /* MeliTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeliTheme.swift; sourceTree = "<group>"; };
 		23CF4ECC20994D1A00EC9399 /* MPTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTheme.swift; sourceTree = "<group>"; };
 		392EDBEF73BC9D8801C9B109 /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B10DBC721398A0200EA2208 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B1A74EF209204B900E39587 /* MLMyMPPXTrackListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLMyMPPXTrackListener.m; sourceTree = "<group>"; };
 		4B1A74F22092068700E39587 /* MLMyMPPXTrackListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLMyMPPXTrackListener.h; sourceTree = "<group>"; };
 		542D8564F6FA62CFC4F0CBCB /* Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveCTests/Pods-MercadoPagoSDKExamplesObjectiveCTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,7 +87,6 @@
 		76EF7EC11D2559140087C785 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		76EF7EC31D2559140087C785 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		76EF7EC41D2559140087C785 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		76EF7ECA1D2559140087C785 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		76EF7ECC1D2559140087C785 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76EF7ECF1D2559140087C785 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76EF7ED11D2559140087C785 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -198,13 +202,13 @@
 		76EF7EBF1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */ = {
 			isa = PBXGroup;
 			children = (
+				4B10DBC621398A0200EA2208 /* Main.storyboard */,
 				2385C5DB20125873002C147D /* Themes */,
 				23346C371FE83738005FD8C9 /* PaymentMethodPlugins */,
 				76E6E0601D2AD29C006CE49B /* Example */,
 				76EF7F1E1D255B5F0087C785 /* Component Examples */,
 				76EF7EC31D2559140087C785 /* AppDelegate.h */,
 				76EF7EC41D2559140087C785 /* AppDelegate.m */,
-				76EF7EC91D2559140087C785 /* Main.storyboard */,
 				76EF7ECC1D2559140087C785 /* Assets.xcassets */,
 				76EF7ECE1D2559140087C785 /* LaunchScreen.storyboard */,
 				76EF7ED11D2559140087C785 /* Info.plist */,
@@ -279,6 +283,7 @@
 				76EF7EBA1D2559140087C785 /* Frameworks */,
 				15AF42AE1D36848100E70343 /* Embed Frameworks */,
 				919666A439BCB004ABDC1576 /* [CP] Embed Pods Frameworks */,
+				4B10DBC02139891C00EA2208 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -345,6 +350,20 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4B10DBC02139891C00EA2208 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B10DBC5213989D000EA2208 /* Assets.xcassets in Resources */,
+				4B10DBC4213989CB00EA2208 /* LaunchScreen.storyboard in Resources */,
+				4B10DBC3213989C500EA2208 /* PaymentMethodPlugins.storyboard in Resources */,
+				4B10DBC821398A0300EA2208 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		919666A439BCB004ABDC1576 /* [CP] Embed Pods Frameworks */ = {
@@ -455,10 +474,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		76EF7EC91D2559140087C785 /* Main.storyboard */ = {
+		4B10DBC621398A0200EA2208 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				76EF7ECA1D2559140087C785 /* Base */,
+				4B10DBC721398A0200EA2208 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

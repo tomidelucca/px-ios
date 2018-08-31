@@ -25,6 +25,7 @@ internal extension MercadoPagoServicesAdapter {
                 checkoutPreference.items = Array.safeAppend(checkoutPreference.items, item)
             }
         }
+        checkoutPreference.payer = pxCheckoutPreference.payer
         checkoutPreference.differentialPricing = pxCheckoutPreference.differentialPricing
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
         checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom ?? Date()
