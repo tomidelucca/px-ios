@@ -23,6 +23,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.consumedDiscount = self.consumedDiscount
         initFlowProperties.discount = self.paymentData.discount
         initFlowProperties.serviceAdapter = self.mercadoPagoServicesAdapter
+        initFlowProperties.advancedConfig = self.getAdvancedConfiguration()
 
         // Create init flow.
         initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse, pxCampaigns, pxDiscount)  in

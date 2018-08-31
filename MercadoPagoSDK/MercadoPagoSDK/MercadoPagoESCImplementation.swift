@@ -15,9 +15,15 @@ import Foundation
 @objcMembers
 internal class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
 
+    private var isESCEnabled: Bool = false
+
+    init(enabled: Bool) {
+        isESCEnabled = enabled
+    }
+
     func hasESCEnable() -> Bool {
         #if MPESC_ENABLE
-            return MercadoPagoCheckoutViewModel.flowPreference.isESCEnable()
+            return isESCEnabled
          #else
             return false
          #endif

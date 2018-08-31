@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter)
+internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration)
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
@@ -28,7 +28,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
         case FINISH = "Finish step"
     }
 
-    private let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
+    private let mpESCManager: MercadoPagoESC
 
     private var preferenceValidated: Bool = false
     private var needPaymentMethodPluginInit = true
@@ -49,6 +49,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
         self.properties = flowProperties
         self.loadPreferenceStatus = !String.isNullOrEmpty(flowProperties.checkoutPreference.preferenceId)
         self.directDiscountSearchStatus = flowProperties.paymentData.isComplete()
+        self.mpESCManager = MercadoPagoESCImplementation(enabled: flowProperties.advancedConfig.escEnabled)
         super.init()
     }
 
