@@ -23,6 +23,18 @@ Edit your `Podfile` and specify the dependency:
 pod 'MercadoPagoSDKV4', '~> 4.0'
 ```
 
+## 🌟 Features
+- [x] Easy to install
+- [x] Easy to integrate
+- [x] PCI compliance
+- [x] Font customization
+- [x] Basic color customization
+- [x] Advanced color customization
+- [x] Lazy loading initialization support
+- [x] Custom UIViews support in certain screens
+- [x] Support to build your own Payment Processor
+- [x] Support to create your own custom Payment Method
+
 ## 🐒 How to use
 Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
 
@@ -110,18 +122,6 @@ We provide `PXTrackerListener` protocol to notify each tracking event. You can s
 ```swift
 PXTracker.setListener(self)
 ```
-
-## 🌟 Features
-- [x] Easy to install
-- [x] Easy to integrate
-- [x] PCI compliance
-- [x] Font customization
-- [x] Basic color customization
-- [x] Advanced color customization
-- [x] Lazy loading initialization support
-- [x] Custom UIViews support in certain screens
-- [x] Support to build your own Payment Processor
-- [x] Support to create your own custom Payment Method
 
 ### 📋 Supported OS & SDK Versions
 * iOS 9.0+
