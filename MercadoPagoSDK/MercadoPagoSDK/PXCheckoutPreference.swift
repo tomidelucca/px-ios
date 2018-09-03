@@ -186,6 +186,27 @@ extension PXCheckoutPreference {
     }
 }
 
+// MARK: BinaryMode
+extension PXCheckoutPreference {
+    /**
+     Determinate if binaryMode feature is enabled/disabled.
+     */
+    open func isBinaryMode() -> Bool {
+        return binaryModeEnabled
+    }
+
+    /**
+     Default value is `FALSE`.
+     `TRUE` value processed payment can only be APPROVED or REJECTED.
+     Non compatible with PaymentProcessor or off payments methods.
+     - parameter isBinaryMode: Binary mode Bool value.
+     */
+    open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
+        self.binaryModeEnabled = isBinaryMode
+        return self
+    }
+}
+
 // MARK: Getters
 extension PXCheckoutPreference {
     open func getId() -> String {
@@ -283,26 +304,5 @@ extension PXCheckoutPreference {
         }
 
         return nil
-    }
-}
-
-// MARK: BinaryMode
-extension PXCheckoutPreference {
-    /**
-     Determinate if binaryMode feature is enabled/disabled.
-     */
-    open func isBinaryMode() -> Bool {
-        return binaryModeEnabled
-    }
-
-    /**
-     Default value is `false`. `true` value processed payment can only be APPROVED or REJECTED.
-     `Non compatible with PaymentProcessor`.
-     `Non compatible with off payments methods.`
-     - parameter isBinaryMode: Binary mode Bool value.
-     */
-    open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
-        self.binaryModeEnabled = isBinaryMode
-        return self
     }
 }

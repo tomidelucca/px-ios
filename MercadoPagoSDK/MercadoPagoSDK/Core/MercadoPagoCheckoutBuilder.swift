@@ -74,7 +74,7 @@ extension MercadoPagoCheckoutBuilder {
     /**
      It provides support for custom checkout functionality/configure special behaviour
      You can enable/disable several functionality.
-     - parameter config: PXAdvancedConfiguration object.
+     - parameter config: `PXAdvancedConfiguration` object.
      */
     open func setAdvancedConfiguration(config: PXAdvancedConfiguration) -> MercadoPagoCheckoutBuilder {
         self.advancedConfig = config
@@ -91,7 +91,7 @@ extension MercadoPagoCheckoutBuilder {
     }
 
     /**
-     You can set the Language locale string. (`es` is the default value). For more values explore our `PXLanguage` public enum.
+     You can set the Language locale string. (`es` is the default value). For more values explore our `PXLanguages` public enum.
      - parameter _string: Your locale string Language.
      */
     open func setLanguage(_ string: String) -> MercadoPagoCheckoutBuilder {
