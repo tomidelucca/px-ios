@@ -24,7 +24,7 @@ import UIKit
     open var lastName: String?
     open var liveMode: Bool?
     open var metadata: NSDictionary?
-    open var phone: Phone?
+    open var phone: PXPhone?
     open var registrationDate: Date?
 
 }

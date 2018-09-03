@@ -136,21 +136,12 @@ internal extension MercadoPagoServicesAdapter {
         customer.identification = pxCustomer.identification
         customer.lastName = pxCustomer.lastName
         customer.liveMode = pxCustomer.liveMode
-        customer.phone = getPhoneFromPXPhone(pxCustomer.phone)
+        customer.phone = pxCustomer.phone
         customer.registrationDate = pxCustomer.registrationDate
 
         if let meta = pxCustomer.metadata {
             customer.metadata = meta as NSDictionary
         }
         return customer
-    }
-
-    internal func getPhoneFromPXPhone(_ pxPhone: PXPhone?) -> Phone {
-        let phone = Phone()
-        if let pxPhone = pxPhone {
-            phone.areaCode = pxPhone.areaCode
-            phone.number = pxPhone.number
-        }
-        return phone
     }
 }
