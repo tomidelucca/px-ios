@@ -17,7 +17,7 @@ class PaymentVaultViewModel: NSObject {
     var customerPaymentOptions: [CardInformation]?
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
     var paymentMethods: [PXPaymentMethod]!
-    var defaultPaymentOption: PaymentMethodSearchItem?
+    var defaultPaymentOption: PXPaymentMethodSearchItem?
 
     var displayItems = [PaymentOptionDrawable]()
     var currency: PXCurrency = SiteManager.shared.getCurrency()

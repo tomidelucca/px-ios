@@ -346,7 +346,7 @@ internal class Utils {
         return ""
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
         guard paymentMethodSearch.groups != nil
             else {return nil}
 
@@ -372,25 +372,25 @@ internal class Utils {
         return !Array.isNullOrEmpty(customOptionsFound) ? customOptionsFound[0] : nil
     }
 
-    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList: [PaymentMethodSearchItem], paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PaymentMethodSearchItem? {
+    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList: [PXPaymentMethodSearchItem], paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
 
-        var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PaymentMethodSearchItem) -> Bool in
-            arg.idPaymentMethodSearchItem == paymentMethodId
+        var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+            arg.id == paymentMethodId
         }
 
         if filterPaymentMethodSearchFound.count > 0 {
             return filterPaymentMethodSearchFound[0]
         } else if paymentTypeId != nil {
-            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PaymentMethodSearchItem) -> Bool in
-                arg.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId!.rawValue
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+                arg.id == paymentMethodId + "_" + paymentTypeId!.rawValue
             }
 
             if filterPaymentMethodSearchFound.count > 0 {
                 return filterPaymentMethodSearchFound[0]
             }
         } else {
-            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PaymentMethodSearchItem) -> Bool in
-                arg.idPaymentMethodSearchItem.startsWith(paymentMethodId)
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+                arg.id.startsWith(paymentMethodId)
             }
             if filterPaymentMethodSearchFound.count > 0 {
                 return filterPaymentMethodSearchFound[0]
@@ -409,10 +409,10 @@ internal class Utils {
         return nil
     }
 
-    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems: [PaymentMethodSearchItem], paymentTypeId: PXPaymentTypes) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems: [PXPaymentMethodSearchItem], paymentTypeId: PXPaymentTypes) -> PXPaymentMethodSearchItem? {
 
-        var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter { (arg: PaymentMethodSearchItem) -> Bool in
-            arg.idPaymentMethodSearchItem == paymentTypeId.rawValue
+        var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+            arg.id == paymentTypeId.rawValue
         }
 
         if !Array.isNullOrEmpty(filterPaymentMethodSearchFound) {

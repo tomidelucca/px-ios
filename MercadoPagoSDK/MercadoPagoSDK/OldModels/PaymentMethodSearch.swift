@@ -9,11 +9,11 @@ import Foundation
 
 internal class PaymentMethodSearch {
 
-    var groups: [PaymentMethodSearchItem]!
+    var groups: [PXPaymentMethodSearchItem]!
     var paymentMethods: [PXPaymentMethod]!
     var customerPaymentMethods: [CardInformation]?
     var cards: [Card]?
-    var defaultOption: PaymentMethodSearchItem?
+    var defaultOption: PXPaymentMethodSearchItem?
     var oneTap: PXOneTapItem?
 
     func getPaymentOptionsCount() -> Int {

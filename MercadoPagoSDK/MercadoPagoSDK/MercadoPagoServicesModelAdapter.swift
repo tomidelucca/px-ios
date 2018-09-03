@@ -176,7 +176,7 @@ internal extension MercadoPagoServicesAdapter {
         if let pxPaymentMethodSearchPaymentMethodSearchItem = pxPaymentMethodSearch.paymentMethodSearchItem {
             paymentMethodSearch.groups = []
             for pxPaymentMethodSearchItem in pxPaymentMethodSearchPaymentMethodSearchItem {
-                let paymentMethodSearchItem = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxPaymentMethodSearchItem)
+                let paymentMethodSearchItem = pxPaymentMethodSearchItem
                 paymentMethodSearch.groups = Array.safeAppend(paymentMethodSearch.groups, paymentMethodSearchItem)
             }
         }
@@ -205,7 +205,7 @@ internal extension MercadoPagoServicesAdapter {
         }
 
         if let pxDefaultOption = pxPaymentMethodSearch.defaultOption {
-            paymentMethodSearch.defaultOption = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxDefaultOption)
+            paymentMethodSearch.defaultOption = pxPaymentMethodSearch.defaultOption
         }
 
         if let pxOneTap = pxPaymentMethodSearch.oneTap {
@@ -221,45 +221,6 @@ internal extension MercadoPagoServicesAdapter {
         let description: String = pxCustomOptionSearchItem._description ?? ""
         let customerPaymentMethod = CustomerPaymentMethod(cPaymentMethodId: id, paymentMethodId: paymentMethodId, paymentMethodTypeId: paymentMethodTypeId, description: description)
         return customerPaymentMethod
-    }
-
-    internal func getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(_ pxPaymentMethodSearchItem: PXPaymentMethodSearchItem) -> PaymentMethodSearchItem {
-        let paymentMethodSearchItem = PaymentMethodSearchItem()
-        paymentMethodSearchItem.idPaymentMethodSearchItem = pxPaymentMethodSearchItem.id
-        paymentMethodSearchItem.type = getPaymentMethodSearchItemTypeFromString(pxPaymentMethodSearchItem.type)
-        paymentMethodSearchItem.paymentMethodSearchItemDescription = pxPaymentMethodSearchItem._description
-        paymentMethodSearchItem.comment = pxPaymentMethodSearchItem.comment
-        paymentMethodSearchItem.childrenHeader = pxPaymentMethodSearchItem.childrenHeader
-
-        if let pxChildren = pxPaymentMethodSearchItem.children {
-            for pxPaymentMethodSearchItem in pxChildren {
-                let childrenItem = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxPaymentMethodSearchItem)
-                paymentMethodSearchItem.children = Array.safeAppend(paymentMethodSearchItem.children, childrenItem)
-            }
-        } else {
-            paymentMethodSearchItem.children = []
-        }
-
-        paymentMethodSearchItem.showIcon = pxPaymentMethodSearchItem.showIcon ?? true
-
-        return paymentMethodSearchItem
-    }
-
-    internal func getPaymentMethodSearchItemTypeFromString(_ typeString: String?) -> PaymentMethodSearchItemType {
-        if let typeString = typeString {
-            switch typeString {
-            case PaymentMethodSearchItemType.GROUP.rawValue:
-                return PaymentMethodSearchItemType.GROUP
-            case PaymentMethodSearchItemType.PAYMENT_METHOD.rawValue:
-                return PaymentMethodSearchItemType.PAYMENT_METHOD
-            case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:
-                return PaymentMethodSearchItemType.PAYMENT_TYPE
-            default:
-                return PaymentMethodSearchItemType.GROUP
-            }
-        } else {
-            return PaymentMethodSearchItemType.GROUP
-        }
     }
 
     internal func getCardFromPXCard(_ pxCard: PXCard?) -> Card {
