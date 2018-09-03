@@ -40,7 +40,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var dateLastUpdated: Date!
     open var paymentDescription: String!
     open var externalReference: String!
-    open var feesDetails: [FeesDetail]!
+    open var feesDetails: [PXFeeDetail]!
     open var paymentId: String = ""
     open var installments: Int = 0
     open var liveMode: Bool!
@@ -110,15 +110,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let notificationUrl = JSONHandler.attemptParseToString(json["notification_url"]) {
                         payment.notificationUrl = notificationUrl
                     }
-                var feesDetails: [FeesDetail] = [FeesDetail]()
-                if let feesDetailsArray = json["fee_details"] as? NSArray {
-                        for index in 0..<feesDetailsArray.count {
-                                if let feedDic = feesDetailsArray[index] as? NSDictionary {
-                                        feesDetails.append(FeesDetail.fromJSON(feedDic))
-                                    }
-                            }
-                    }
-                payment.feesDetails = feesDetails
 
                 if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]) {
                         payment.paymentMethodId = paymentMethodId

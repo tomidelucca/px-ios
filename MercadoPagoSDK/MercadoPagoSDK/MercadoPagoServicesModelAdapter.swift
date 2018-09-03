@@ -120,14 +120,7 @@ internal extension MercadoPagoServicesAdapter {
         payment.dateLastUpdated = pxPayment.dateLastUpdated
         payment.paymentDescription = pxPayment._description
         payment.externalReference = pxPayment.externalReference
-
-        if let pxPaymentFeeDetails = pxPayment.feeDetails {
-            for pxFeeDetail in pxPaymentFeeDetails {
-                let feesDetail = getFeesDetailFromPXFeeDetail(pxFeeDetail)
-                payment.feesDetails = Array.safeAppend(payment.feesDetails, feesDetail)
-            }
-        }
-
+        payment.feesDetails = pxPayment.feeDetails
         payment.paymentId = pxPayment.id.stringValue
         payment.installments = pxPayment.installments ?? 1
         payment.liveMode = pxPayment.liveMode
@@ -149,14 +142,6 @@ internal extension MercadoPagoServicesAdapter {
         payment.issuerId = Int(pxPayment.issuerId ?? "0") ?? 0
         payment.tokenId = pxPayment.tokenId
         return payment
-    }
-
-    internal func getFeesDetailFromPXFeeDetail(_ pxFeeDetail: PXFeeDetail) -> FeesDetail {
-        let feesDetail = FeesDetail()
-        feesDetail.amount = pxFeeDetail.amount ?? 0.0
-        feesDetail.feePayer = pxFeeDetail.feePayer
-        feesDetail.type = pxFeeDetail.type
-        return feesDetail
     }
 
     internal func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
