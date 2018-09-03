@@ -8,6 +8,12 @@
 
 import UIKit
 
+
+/**
+ Model that represents curl -X OPTIONS "https://api.mercadopago.com/checkout/preferences" | json_pp
+ It can be not exactly the same because exists custom configurations for open Preference.
+ Some values like: binary mode are not present on API call.
+ */
 @objcMembers open class PXCheckoutPreference: NSObject {
     internal var preferenceId: String!
     internal var items: [PXItem] = []
@@ -19,10 +25,24 @@ import UIKit
     internal var differentialPricing: PXDifferentialPricing?
     private var binaryModeEnabled: Bool = false
 
+    // MARK: Initialization
+    /**
+     Mandatory init.
+     - parameter preferenceId: The preference id that represents the payment information.
+     */
     public init(preferenceId: String) {
         self.preferenceId = preferenceId
     }
 
+    /**
+     Mandatory init.
+     Builder for custom CheckoutPreference construction.
+     It should be only used if you are processing the payment
+     with a Payment processor. Otherwise you should use the ID constructor.
+     - parameter siteId: Preference site.
+     - parameter payerEmail: Payer email.
+     - parameter items: Items to pay.
+     */
     public init(siteId: String, payerEmail: String, items: [PXItem]) {
         self.items = items
 
@@ -60,19 +80,36 @@ import UIKit
 
 // MARK: Setters
 extension PXCheckoutPreference {
-
+    /**
+     Date that indicates when this preference expires.
+     If the preference is expired, then the checkout will show an error.
+     - parameter expirationDate: Date expiration.
+     */
     open func setExpirationDate(_ expirationDate: Date) {
         self.expirationDateTo = expirationDate
     }
 
+    /**
+     Date that indicates when this preference start.
+     - parameter date: Date active.
+     */
     open func setActiveFromDate(_ date: Date) {
         self.expirationDateFrom = date
     }
 
+    /**
+     Differential pricing configuration for this preference.
+     This object is related with the way the installments are asked.
+     - parameter differentialPricing: `PXDifferentialPricing` pricing object.
+     */
     open func setDifferentialPricing(differentialPricing: PXDifferentialPricing) {
         self.differentialPricing = differentialPricing
     }
 
+    /**
+     Add exclusion payment method id. If you exclude it, it's not going appear as a payment method available on checkout.
+     - parameter paymentMethodId: paymentMethodId exclusion id.
+     */
     public func addExcludedPaymentMethod(_ paymentMethodId: String) {
         if self.paymentPreference.excludedPaymentMethodIds != nil {
             self.paymentPreference.excludedPaymentMethodIds?.insert(paymentMethodId)
@@ -80,10 +117,20 @@ extension PXCheckoutPreference {
             self.paymentPreference.excludedPaymentMethodIds = [paymentMethodId]
         }
     }
+
+    /**
+     Add exclusion list by payment method id. If you exclude it, it's not going appear as a payment method available on checkout.
+     - parameter paymentMethodIds: paymentMethodId exclusion id.
+     */
     public func setExcludedPaymentMethods(_ paymentMethodIds: Set<String>) {
         self.paymentPreference.excludedPaymentMethodIds = paymentMethodIds
     }
 
+    /**
+     Add exclusion by payment type
+     If you exclude it, it's not going appear as a payment method available on checkout
+     - parameter paymentTypeId: paymentTypeId exclusion type
+     */
     public func addExcludedPaymentType(_ paymentTypeId: String) {
         if self.paymentPreference.excludedPaymentTypeIds != nil {
             self.paymentPreference.excludedPaymentTypeIds?.insert(paymentTypeId)
@@ -92,23 +139,48 @@ extension PXCheckoutPreference {
         }
     }
 
+    /**
+     Add exclusion list by payment type
+     If you exclude it, it's not going appear as a payment method available on checkout
+     - parameter paymentTypeIds: paymentTypeIds exclusion list.
+     */
     public func setExcludedPaymentTypes(_ paymentTypeIds: Set<String>) {
         self.paymentPreference.excludedPaymentTypeIds = paymentTypeIds
     }
 
+    /**
+     This value limits the amount of installments to be shown by the user.
+     - parameter maxInstallments: max installments to be shown
+     */
     public func setMaxInstallments(_ maxInstallments: Int) {
         self.paymentPreference.maxAcceptedInstallments = maxInstallments
     }
 
+    /**
+     When default installments is not null
+     then this value will be forced as installment selected if it matches
+     with one provided by the Installments service.
+     - parameter defaultInstallments: number of the value to be forced
+     */
     public func setDefaultInstallments(_ defaultInstallments: Int) {
         self.paymentPreference.defaultInstallments = defaultInstallments
     }
 
+    /**
+     Default paymetMethodId selection.
+     WARNING: This is an internal method not intended for public use.
+     It is not considered part of the public API.
+     */
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
 
-    /// :nodoc:
+    // MARK: MoneyIn
+    /**
+     Default cardId selection.
+     WARNING: This is an internal method not intended for public use.
+     It is not considered part of the public API. Only to support Moneyin feature.
+     */
     public func setCardId(cardId: String) {
         self.paymentPreference.cardId = cardId
     }
@@ -116,7 +188,6 @@ extension PXCheckoutPreference {
 
 // MARK: Getters
 extension PXCheckoutPreference {
-
     open func getId() -> String {
         return self.preferenceId
     }
@@ -164,17 +235,18 @@ extension PXCheckoutPreference {
         }
         return amount
     }
+}
 
+// MARK: Internal.
+extension PXCheckoutPreference {
     internal func getPayer() -> Payer {
         return payer
     }
-
 }
 
 // MARK: Validation
 extension PXCheckoutPreference {
     internal func validate() -> String? {
-
         if let itemError = itemsValid() {
             return itemError
         }
@@ -216,10 +288,19 @@ extension PXCheckoutPreference {
 
 // MARK: BinaryMode
 extension PXCheckoutPreference {
+    /**
+     Determinate if binaryMode feature is enabled/disabled.
+     */
     open func isBinaryMode() -> Bool {
         return binaryModeEnabled
     }
 
+    /**
+     Default value is `false`. `true` value processed payment can only be APPROVED or REJECTED.
+     `Non compatible with PaymentProcessor`.
+     `Non compatible with off payments methods.`
+     - parameter isBinaryMode: Binary mode Bool value.
+     */
     open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self
