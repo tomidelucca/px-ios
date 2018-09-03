@@ -14,7 +14,7 @@ internal class PaymentMethodSearch {
     var customerPaymentMethods: [CardInformation]?
     var cards: [Card]?
     var defaultOption: PaymentMethodSearchItem?
-    var oneTap: OneTapItem?
+    var oneTap: PXOneTapItem?
 
     func getPaymentOptionsCount() -> Int {
         let customOptionsCount = (self.customerPaymentMethods != nil) ? self.customerPaymentMethods!.count : 0

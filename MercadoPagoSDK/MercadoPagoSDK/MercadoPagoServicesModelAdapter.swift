@@ -209,27 +209,9 @@ internal extension MercadoPagoServicesAdapter {
         }
 
         if let pxOneTap = pxPaymentMethodSearch.oneTap {
-            paymentMethodSearch.oneTap = getOneTapItemFromPXOneTapItem(pxOneTap)
+            paymentMethodSearch.oneTap = pxPaymentMethodSearch.oneTap
         }
         return paymentMethodSearch
-    }
-
-    internal func getOneTapItemFromPXOneTapItem(_ pxOneTapItem: PXOneTapItem) -> OneTapItem {
-        let paymentMethodId = pxOneTapItem.paymentMethodId
-        let paymentTypeId = pxOneTapItem.paymentTypeId
-        var oneTapCard: OneTapCard? = nil
-        if let pxOneTapCard = pxOneTapItem.oneTapCard {
-            oneTapCard = getOneTapCardFromPXOneTapCard(pxOneTapCard)
-        }
-
-        let oneTapItem = OneTapItem(paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, oneTapCard: oneTapCard)
-        return oneTapItem
-    }
-
-    internal func getOneTapCardFromPXOneTapCard(_ pxOneTapCard: PXOneTapCard) -> OneTapCard {
-        let cardId = pxOneTapCard.cardId
-        let oneTapCard = OneTapCard(cardId: cardId, selectedPayerCost: pxOneTapCard.selectedPayerCost)
-        return oneTapCard
     }
 
     internal func getCustomerPaymentMethodFromPXCustomOptionSearchItem(_ pxCustomOptionSearchItem: PXCustomOptionSearchItem) -> CustomerPaymentMethod {

@@ -113,7 +113,7 @@ internal class PXInstructionsContentComponent: PXComponentizable {
 
     func hasActions() -> Bool {
         if !Array.isNullOrEmpty(props.instruction.actions) {
-            for action in props.instruction.actions! where action.tag == ActionTag.LINK.rawValue {
+            for action in props.instruction.actions! where action.tag == PXActionTag.LINK.rawValue {
                 return true
             }
         }
