@@ -8,8 +8,10 @@
 
 import UIKit
 
+/**
+ Data needed for payment.
+ */
 @objcMembers public class PXPaymentData: NSObject, NSCopying {
-
     internal var paymentMethod: PaymentMethod?
     internal var issuer: Issuer?
     internal var payerCost: PayerCost?
@@ -36,7 +38,6 @@ import UIKit
     }
 
     internal func isComplete(shouldCheckForToken: Bool = true) -> Bool {
-
         guard let paymentMethod = self.paymentMethod else {
             return false
         }
