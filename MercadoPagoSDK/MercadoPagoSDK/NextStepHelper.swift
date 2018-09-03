@@ -255,7 +255,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, paymentMethodPlugins: paymentMethodPluginsToShow) {
+        if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, customPaymentOptions: customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow) {
             updateCheckoutModel(paymentOptionSelected: paymentMethodSelected)
             return true
         }
@@ -306,7 +306,7 @@ extension MercadoPagoCheckoutViewModel {
         } else {
             // Tarjetas, efectivo, crédito, debito
             if let paymentTypeId = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) {
-                self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
+                self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.paymentMethodSearchItem, paymentTypeId: paymentTypeId)
             }
         }
     }

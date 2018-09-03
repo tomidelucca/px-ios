@@ -16,7 +16,7 @@ final class OneTapFlow: NSObject, PXFlow {
 
     let advancedConfig: PXAdvancedConfiguration
 
-    init(navigationController: PXNavigationHandler, paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, consumedDiscount: Bool, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(navigationController: PXNavigationHandler, paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, consumedDiscount: Bool, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         pxNavigationHandler = navigationController
         resultHandler = oneTapResultHandler
         advancedConfig = advancedConfiguration
@@ -84,7 +84,7 @@ extension OneTapFlow {
     ///   - search: payment method search item
     ///   - paymentMethodPlugins: payment Methods plugins that can be show
     /// - Returns: selected payment option if possible
-    static func autoSelectOneTapOption(search: PaymentMethodSearch, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
+    static func autoSelectOneTapOption(search: PXPaymentMethodSearch, customPaymentOptions: [CustomerPaymentMethod]?, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
 
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
@@ -96,12 +96,10 @@ extension OneTapFlow {
                 selectedPaymentOption = paymentMethodPlugin
             } else {
                 // Check if can autoselect customer card
-                guard let customerPaymentMethods = search.customerPaymentMethods else {
+                guard let customerPaymentMethods = customPaymentOptions else {
                     return nil
                 }
-                let customOptionsFound = customerPaymentMethods.filter { (cardInformation: PXCardInformation) -> Bool in
-                    return cardInformation.getCardId() == search.oneTap?.oneTapCard?.cardId
-                }
+                let customOptionsFound = customerPaymentMethods.filter { return $0.getCardId() == search.oneTap?.oneTapCard?.cardId }
                 if let customerPaymentMethod = customOptionsFound.first, let customerPaymentOption = customerPaymentMethod as? PaymentMethodOption {
                     // Check if one tap response has payer costs
                     if let oneTap = search.oneTap, oneTap.oneTapCard?.selectedPayerCost != nil {

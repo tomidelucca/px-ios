@@ -51,7 +51,7 @@ internal class MercadoPagoServicesAdapter {
     typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
     typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?)
 
-    func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         payer.setAccessToken(accessToken: mercadoPagoServices.payerAccessToken)
 
@@ -72,8 +72,7 @@ internal class MercadoPagoServicesAdapter {
                 guard let strongSelf = self else {
                     return
                 }
-                let paymentMethodSearch = strongSelf.getPaymentMethodSearchFromPXPaymentMethodSearch(pxPaymentMethodSearch)
-                callback(paymentMethodSearch)
+                callback(pxPaymentMethodSearch)
             }, failure: failure)
     }
 

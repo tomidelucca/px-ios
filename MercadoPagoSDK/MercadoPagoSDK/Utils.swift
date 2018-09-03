@@ -346,11 +346,11 @@ internal class Utils {
         return ""
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
-        guard paymentMethodSearch.groups != nil
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXPaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
+        guard paymentMethodSearch.paymentMethodSearchItem != nil
             else {return nil}
 
-        if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+        if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.paymentMethodSearchItem, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
             return result
         }
         return nil

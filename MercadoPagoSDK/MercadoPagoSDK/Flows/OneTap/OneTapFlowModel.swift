@@ -20,7 +20,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption
-    let search: PaymentMethodSearch
+    let search: PXPaymentMethodSearch
     var readyToPay: Bool = false
     var payerCosts: [PXPayerCost]?
     var paymentResult: PaymentResult?
@@ -45,7 +45,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference

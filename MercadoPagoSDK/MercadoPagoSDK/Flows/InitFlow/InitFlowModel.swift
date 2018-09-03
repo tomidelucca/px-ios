@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration)
+internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PXPaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration)
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
@@ -116,11 +116,11 @@ extension InitFlowModel {
         return properties.checkoutPreference.getExcludedPaymentMethodsIds()
     }
 
-    func updateInitModel(paymentMethodsResponse: PaymentMethodSearch?) {
+    func updateInitModel(paymentMethodsResponse: PXPaymentMethodSearch?) {
         properties.paymentMethodSearchResult = paymentMethodsResponse
     }
 
-    func getPaymentMethodSearch() -> PaymentMethodSearch? {
+    func getPaymentMethodSearch() -> PXPaymentMethodSearch? {
         return properties.paymentMethodSearchResult
     }
 

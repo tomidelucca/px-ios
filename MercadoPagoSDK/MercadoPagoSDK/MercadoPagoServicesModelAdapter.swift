@@ -170,55 +170,6 @@ internal extension MercadoPagoServicesAdapter {
         }
     }
 
-    internal func getPaymentMethodSearchFromPXPaymentMethodSearch(_ pxPaymentMethodSearch: PXPaymentMethodSearch) -> PaymentMethodSearch {
-        let paymentMethodSearch = PaymentMethodSearch()
-
-        if let pxPaymentMethodSearchPaymentMethodSearchItem = pxPaymentMethodSearch.paymentMethodSearchItem {
-            paymentMethodSearch.groups = []
-            for pxPaymentMethodSearchItem in pxPaymentMethodSearchPaymentMethodSearchItem {
-                let paymentMethodSearchItem = pxPaymentMethodSearchItem
-                paymentMethodSearch.groups = Array.safeAppend(paymentMethodSearch.groups, paymentMethodSearchItem)
-            }
-        }
-
-        paymentMethodSearch.paymentMethods = pxPaymentMethodSearch.paymentMethods
-        if let pxPaymentMethodSearchCards = pxPaymentMethodSearch.cards {
-            paymentMethodSearch.cards = pxPaymentMethodSearchCards
-        }
-
-        if let pxPaymentMethodSearchCustomOptionSearchItems = pxPaymentMethodSearch.customOptionSearchItems {
-            paymentMethodSearch.customerPaymentMethods = []
-            for pxCustomOptionSearchItem in pxPaymentMethodSearchCustomOptionSearchItems {
-                let customerPaymentMethod = getCustomerPaymentMethodFromPXCustomOptionSearchItem(pxCustomOptionSearchItem)
-                if let paymentMethodSearchCards = paymentMethodSearch.cards {
-                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.id == customerPaymentMethod.customerPaymentMethodId})
-                    if !Array.isNullOrEmpty(filteredCustomerCard) {
-                        customerPaymentMethod.card = filteredCustomerCard[0]
-                    }
-                }
-                paymentMethodSearch.customerPaymentMethods = Array.safeAppend(paymentMethodSearch.customerPaymentMethods, customerPaymentMethod)
-            }
-        }
-
-        if let pxDefaultOption = pxPaymentMethodSearch.defaultOption {
-            paymentMethodSearch.defaultOption = pxPaymentMethodSearch.defaultOption
-        }
-
-        if let pxOneTap = pxPaymentMethodSearch.oneTap {
-            paymentMethodSearch.oneTap = pxPaymentMethodSearch.oneTap
-        }
-        return paymentMethodSearch
-    }
-
-    internal func getCustomerPaymentMethodFromPXCustomOptionSearchItem(_ pxCustomOptionSearchItem: PXCustomOptionSearchItem) -> CustomerPaymentMethod {
-        let id: String = pxCustomOptionSearchItem.id
-        let paymentMethodId: String = pxCustomOptionSearchItem.paymentMethodId ?? ""
-        let paymentMethodTypeId: String = pxCustomOptionSearchItem.paymentTypeId ?? ""
-        let description: String = pxCustomOptionSearchItem._description ?? ""
-        let customerPaymentMethod = CustomerPaymentMethod(cPaymentMethodId: id, paymentMethodId: paymentMethodId, paymentMethodTypeId: paymentMethodTypeId, description: description)
-        return customerPaymentMethod
-    }
-
     internal func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
         let customer = Customer()
 

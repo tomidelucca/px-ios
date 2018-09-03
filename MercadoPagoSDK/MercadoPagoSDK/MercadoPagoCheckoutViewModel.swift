@@ -68,10 +68,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var availablePaymentMethods: [PXPaymentMethod]?
 
     var rootPaymentMethodOptions: [PaymentMethodOption]?
-    var customPaymentOptions: [PXCardInformation]?
+    var customPaymentOptions: [CustomerPaymentMethod]?
     var identificationTypes: [PXIdentificationType]?
 
-    var search: PaymentMethodSearch?
+    var search: PXPaymentMethodSearch?
 
     var rootVC = true
 
@@ -497,10 +497,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.advancedConfig.reviewConfirmConfiguration.disableChangeMethodOption()
         }
 
-        if !Array.isNullOrEmpty(search.groups) && search.groups.count == 1 {
-            self.updateCheckoutModel(paymentOptionSelected: search.groups[0])
-        } else if !Array.isNullOrEmpty(search.customerPaymentMethods) && search.customerPaymentMethods?.count == 1 {
-            guard let customOption = search.customerPaymentMethods![0] as? PaymentMethodOption else {
+        if !Array.isNullOrEmpty(search.paymentMethodSearchItem) && search.paymentMethodSearchItem.count == 1 {
+            self.updateCheckoutModel(paymentOptionSelected: search.paymentMethodSearchItem[0])
+        } else if !Array.isNullOrEmpty(search.customOptionSearchItems) && search.customOptionSearchItems.count == 1 {
+            guard let customOption = search.customOptionSearchItems[0] as? PaymentMethodOption else {
                 fatalError("Cannot conver customerPaymentMethod to PaymentMethodOption")
             }
             self.updateCheckoutModel(paymentOptionSelected: customOption)
@@ -509,7 +509,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    public func updateCheckoutModel(paymentMethodSearch: PaymentMethodSearch) {
+    public func updateCheckoutModel(paymentMethodSearch: PXPaymentMethodSearch) {
 
         self.search = paymentMethodSearch
 
@@ -517,15 +517,22 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return
         }
 
-        self.rootPaymentMethodOptions = paymentMethodSearch.groups
+        self.rootPaymentMethodOptions = paymentMethodSearch.paymentMethodSearchItem
         self.paymentMethodOptions = self.rootPaymentMethodOptions
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
 
-        if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
+        for pxCustomOptionSearchItem in search.customOptionSearchItems {
             // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
-            self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: PXCardInformation) -> Bool in
-                return element.getPaymentMethodId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
-            })
+            if pxCustomOptionSearchItem.paymentMethodId != PXPaymentTypes.ACCOUNT_MONEY.rawValue {
+                let customerPaymentMethod =  pxCustomOptionSearchItem.getCustomerPaymentMethod()
+                if let paymentMethodSearchCards = paymentMethodSearch.cards {
+                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.id == customerPaymentMethod.customerPaymentMethodId})
+                    if !Array.isNullOrEmpty(filteredCustomerCard) {
+                        customerPaymentMethod.card = filteredCustomerCard[0]
+                    }
+                }
+                customPaymentOptions = Array.safeAppend(customPaymentOptions, customerPaymentMethod)
+            }
         }
 
         let totalPaymentMethodSearchCount = search.getPaymentOptionsCount()

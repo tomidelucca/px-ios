@@ -17,15 +17,14 @@ extension MercadoPagoCheckoutViewModel {
 
         amountHelper.preference.clearCardId()
 
-        if let search = self.search {
-            guard let customerPaymentMethods = search.customerPaymentMethods else {
+        if self.search != nil {
+            guard let customerPaymentMethods = customPaymentOptions else {
                 return nil
             }
-            let customOptionsFound = customerPaymentMethods.filter { (cardInformation: PXCardInformation) -> Bool in
-                return cardInformation.getCardId() == cardId
-            }
-            if let customerPaymentMethod = customOptionsFound.first, let customerPaymentOption = customerPaymentMethod as? PaymentMethodOption {
-                return customerPaymentOption
+            let customOptionsFound = customerPaymentMethods.filter { return $0.getCardId() == cardId }
+
+            if let customerPaymentMethod = customOptionsFound.first {
+                return customerPaymentMethod
             }
         }
 
