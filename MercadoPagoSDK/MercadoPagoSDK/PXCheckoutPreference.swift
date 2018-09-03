@@ -8,9 +8,8 @@
 
 import UIKit
 
-
 /**
- Model that represents curl -X OPTIONS "https://api.mercadopago.com/checkout/preferences" | json_pp
+ Model that represents `curl -X OPTIONS` (https://api.mercadopago.com/checkout/preferences) `| json_pp`
  It can be not exactly the same because exists custom configurations for open Preference.
  Some values like: binary mode are not present on API call.
  */
@@ -170,6 +169,7 @@ extension PXCheckoutPreference {
      Default paymetMethodId selection.
      WARNING: This is an internal method not intended for public use.
      It is not considered part of the public API.
+     - parameter paymetMethodId: Payment method ID to make default.
      */
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
         self.paymentPreference.defaultPaymentMethodId = paymetMethodId
@@ -180,6 +180,7 @@ extension PXCheckoutPreference {
      Default cardId selection.
      WARNING: This is an internal method not intended for public use.
      It is not considered part of the public API. Only to support Moneyin feature.
+     - parameter paymetMethodId: cardId to autoselection Moneyin feature.
      */
     public func setCardId(cardId: String) {
         self.paymentPreference.cardId = cardId
