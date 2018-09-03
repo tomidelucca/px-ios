@@ -43,16 +43,16 @@ internal class CustomService: MercadoPagoService {
         })
     }
 
-    internal func createPayment(_ method: String = "POST", headers: [String: String]? = nil, body: String, params: String?, success: @escaping (_ jsonResult: PXPaymentNew) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    internal func createPayment(_ method: String = "POST", headers: [String: String]? = nil, body: String, params: String?, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: PXError) -> Void)?) {
 
         self.request(uri: self.URI, params: params, body: body, method: method, headers: headers, cache: false, success: { (data: Data) -> Void in
                             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if paymentDic["status"] as? Int == PXApitUtil.PROCESSING {
-                        let inProcessPayment = PXPaymentNew()
-                        inProcessPayment.status = PXPaymentNew.Status.IN_PROCESS
-                        inProcessPayment.statusDetail = PXPaymentNew.StatusDetails.PENDING_CONTINGENCY
+                        let inProcessPayment = PXPayment(id: 0, status: PXPayment.Status.IN_PROCESS)
+                        inProcessPayment.status = PXPayment.Status.IN_PROCESS
+                        inProcessPayment.statusDetail = PXPayment.StatusDetails.PENDING_CONTINGENCY
                         success(inProcessPayment)
                     } else if failure != nil {
                         let apiException = try! PXApiException.fromJSON(data: data)
@@ -60,7 +60,7 @@ internal class CustomService: MercadoPagoService {
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
-                        let payment = try! PXPaymentNew.fromJSON(data: data)
+                        let payment = try! PXPayment.fromJSON(data: data)
                         if !payment.isCardPaymentType() {
                             MPXTracker.trackPaymentOff(paymentId: payment.id.stringValue)
                         }

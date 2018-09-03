@@ -108,42 +108,6 @@ internal extension MercadoPagoServicesAdapter {
         return stringDate
     }
 
-    internal func getPaymentFromPXPayment(_ pxPayment: PXPaymentNew) -> PXPayment {
-        let payment = PXPayment()
-        payment.binaryMode = pxPayment.binaryMode
-        payment.callForAuthorizeId = pxPayment.callForAuthorizeId
-        payment.captured = pxPayment.captured
-        payment.card = pxPayment.card
-        payment.currencyId = pxPayment.currencyId
-        payment.dateApproved = pxPayment.dateApproved
-        payment.dateCreated = pxPayment.dateCreated
-        payment.dateLastUpdated = pxPayment.dateLastUpdated
-        payment.paymentDescription = pxPayment._description
-        payment.externalReference = pxPayment.externalReference
-        payment.feesDetails = pxPayment.feeDetails
-        payment.paymentId = pxPayment.id.stringValue
-        payment.installments = pxPayment.installments ?? 1
-        payment.liveMode = pxPayment.liveMode
-        payment.metadata = pxPayment.metadata! as NSObject
-        payment.moneyReleaseDate = pxPayment.moneyReleaseDate
-        payment.notificationUrl = pxPayment.notificationUrl
-        payment.payer = pxPayment.payer
-        payment.paymentMethodId = pxPayment.paymentMethodId
-        payment.paymentTypeId = pxPayment.paymentTypeId
-        payment.statementDescriptor = pxPayment.statementDescriptor
-        payment.status = pxPayment.status
-        payment.statusDetail = pxPayment.statusDetail
-        payment.transactionAmount = pxPayment.transactionAmount ?? 0.0
-        payment.transactionAmountRefunded = pxPayment.transactionAmountRefunded ?? 0.0
-        payment.transactionDetails = pxPayment.transactionDetails
-        payment.collectorId = String(describing: pxPayment.collectorId)
-        payment.couponAmount = pxPayment.couponAmount ?? 0.0
-        payment.differentialPricingId = NSNumber(value: pxPayment.differentialPricingId ?? 0)
-        payment.issuerId = Int(pxPayment.issuerId ?? "0") ?? 0
-        payment.tokenId = pxPayment.tokenId
-        return payment
-    }
-
     internal func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
         if let entityTypeId = entityTypeId {
             let entityType = EntityType()

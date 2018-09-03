@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 
-open class PXPaymentNew: NSObject, Codable {
+open class PXPayment: NSObject, Codable {
     open var binaryMode: Bool?
     open var callForAuthorizeId: String?
     open var captured: Bool?
@@ -24,7 +24,7 @@ open class PXPaymentNew: NSObject, Codable {
     open var differentialPricingId: Int64?
     open var externalReference: String?
     open var feeDetails: [PXFeeDetail]?
-    open var id: Int64!
+    open var id: Int64
     open var installments: Int?
     open var issuerId: String?
     open var liveMode: Bool?
@@ -38,18 +38,19 @@ open class PXPaymentNew: NSObject, Codable {
     open var paymentTypeId: String?
     open var refunds: [PXRefund]?
     open var statementDescriptor: String?
-    open var status: String?
-    open var statusDetail: String?
+    open var status: String
+    open var statusDetail: String = ""
     open var transactionAmount: Double?
     open var transactionAmountRefunded: Double?
     open var transactionDetails: PXTransactionDetails?
     open var tokenId: String?
 
-    public override init() {
-
+    internal init(id: Int64, status: String) {
+        self.id = id
+        self.status = status
     }
 
-    public init(binaryMode: Bool?, callForAuthorizeId: String?, captured: Bool?, card: PXCard?, collectorId: Int?, couponAmount: Double?, currencyId: String?, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String?, differentialPricingId: Int64?, externalReference: String?, feeDetails: [PXFeeDetail]?, id: Int64, installments: Int?, issuerId: String?, liveMode: Bool?, metadata: [String: String]?, moneyReleaseDate: Date?, notificationUrl: String?, operationType: String?, order: PXOrder?, payer: PXPayer?, paymentMethodId: String?, paymentTypeId: String?, refunds: [PXRefund]?, statementDescriptor: String?, status: String?, statusDetail: String?, transactionAmount: Double?, transactionAmountRefunded: Double?, transactionDetails: PXTransactionDetails?, tokenId: String?) {
+    public init(binaryMode: Bool?, callForAuthorizeId: String?, captured: Bool?, card: PXCard?, collectorId: Int?, couponAmount: Double?, currencyId: String?, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String?, differentialPricingId: Int64?, externalReference: String?, feeDetails: [PXFeeDetail]?, id: Int64, installments: Int?, issuerId: String?, liveMode: Bool?, metadata: [String: String]?, moneyReleaseDate: Date?, notificationUrl: String?, operationType: String?, order: PXOrder?, payer: PXPayer?, paymentMethodId: String?, paymentTypeId: String?, refunds: [PXRefund]?, statementDescriptor: String?, status: String, statusDetail: String, transactionAmount: Double?, transactionAmountRefunded: Double?, transactionDetails: PXTransactionDetails?, tokenId: String?) {
 
         self.binaryMode = binaryMode
         self.callForAuthorizeId = callForAuthorizeId
@@ -155,8 +156,8 @@ open class PXPaymentNew: NSObject, Codable {
         let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
         let refunds: [PXRefund]? = try container.decodeIfPresent([PXRefund].self, forKey: .refunds)
         let statementDescriptor: String? = try container.decodeIfPresent(String.self, forKey: .statementDescriptor)
-        let status: String? = try container.decodeIfPresent(String.self, forKey: .status)
-        let statusDetail: String? = try container.decodeIfPresent(String.self, forKey: .statusDetail)
+        let status: String = try container.decode(String.self, forKey: .status)
+        let statusDetail: String = try container.decodeIfPresent(String.self, forKey: .statusDetail) ?? ""
         let transactionAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .transactionAmount)
         let transactionAmountRefunded: Double? = try container.decodeIfPresent(Double.self, forKey: .transactionAmountRefunded)
         let transactionDetails: PXTransactionDetails? = try container.decodeIfPresent(PXTransactionDetails.self, forKey: .transactionDetails)
@@ -226,8 +227,8 @@ open class PXPaymentNew: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSON(data: Data) throws -> PXPaymentNew {
-        return try JSONDecoder().decode(PXPaymentNew.self, from: data)
+    open class func fromJSON(data: Data) throws -> PXPayment {
+        return try JSONDecoder().decode(PXPayment.self, from: data)
     }
 
     open func isCardPaymentType() -> Bool {
@@ -237,7 +238,7 @@ open class PXPaymentNew: NSObject, Codable {
 }
 
 /// :nodoc:
-extension PXPaymentNew {
+extension PXPayment {
 
     open class Status: NSObject {
         public static let APPROVED = "approved"

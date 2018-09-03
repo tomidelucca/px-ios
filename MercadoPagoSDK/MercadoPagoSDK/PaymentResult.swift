@@ -31,7 +31,7 @@ internal class PaymentResult {
         self.status = payment.status
         self.statusDetail = payment.statusDetail
         self.paymentData = paymentData
-        self.paymentId = payment.paymentId
+        self.paymentId = payment.id.stringValue
         self.payerEmail = paymentData.payer?.email
         self.statementDescription = payment.statementDescriptor
     }

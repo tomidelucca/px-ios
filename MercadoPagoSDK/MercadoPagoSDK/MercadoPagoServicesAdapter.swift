@@ -82,8 +82,7 @@ internal class MercadoPagoServicesAdapter {
             guard let strongSelf = self else {
                 return
             }
-            let payment = strongSelf.getPaymentFromPXPayment(pxPayment)
-            callback(payment)
+            callback(pxPayment)
             }, failure: failure)
     }
 
