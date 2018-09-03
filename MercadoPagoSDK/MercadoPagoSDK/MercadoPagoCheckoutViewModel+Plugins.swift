@@ -15,17 +15,14 @@ internal extension MercadoPagoCheckoutViewModel {
             return false
         }
 
+        if wasPaymentMethodConfigPluginShowed() {
+            return false
+        }
+
         populateCheckoutStore()
 
         if let shouldSkip = paymentMethodPluginSelected.paymentMethodConfigPlugin?.shouldSkip(store: PXCheckoutStore.sharedInstance) {
-            if !shouldSkip {
-                willShowPaymentMethodConfigPlugin()
-            }
             return !shouldSkip
-        }
-
-        if wasPaymentMethodConfigPluginShowed() {
-            return false
         }
 
         return paymentMethodPluginSelected.paymentMethodConfigPlugin != nil
