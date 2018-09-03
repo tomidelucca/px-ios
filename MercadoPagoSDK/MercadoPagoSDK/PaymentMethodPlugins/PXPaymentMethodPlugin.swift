@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Use to create yout custom payment option. We´ll display this option in the payment method selection screen.
+ */
 @objcMembers
 open class PXPaymentMethodPlugin: NSObject {
     /// :nodoc:
@@ -21,22 +24,29 @@ open class PXPaymentMethodPlugin: NSObject {
     internal var name: String
     internal var paymentMethodPluginDescription: String?
     internal var image: UIImage
-
     internal var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
     internal var displayOrder = DisplayOrder.TOP
 
-    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
-        callback(true)
-    }
-
-    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
-
+    // MARK: Init.
+    /**
+     Builder construction.
+     - parameter paymentMethodPluginId: Id for your custom payment method.
+     - parameter name: Name for your custom payment method.
+     - parameter image: Image icon for your custom payment method.
+     - parameter image: Image icon for your custom payment method.
+     */
     public init (paymentMethodPluginId: String, name: String, image: UIImage, description: String?) {
         self.paymentMethodPluginId = paymentMethodPluginId
         self.name = name
         self.image = image
         self.paymentMethodPluginDescription = description
     }
+
+    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
+        callback(true)
+    }
+
+    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 }
 
 // MARK: - Setters
