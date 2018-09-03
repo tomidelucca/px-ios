@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@objcMembers internal class CardToken: NSObject, CardInformationForm {
+@objcMembers internal class CardToken: NSObject, PXCardInformationForm {
 
     let MIN_LENGTH_NUMBER: Int = 10
     let MAX_LENGTH_NUMBER: Int = 19

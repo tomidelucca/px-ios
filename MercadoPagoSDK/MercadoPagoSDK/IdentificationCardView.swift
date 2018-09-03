@@ -24,7 +24,7 @@ internal class IdentificationCardView: UIView, Updatable {
         loadViewFromNib ()
     }
 
-    func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod) {
+    func updateCard(token: PXCardInformationForm?, paymentMethod: PXPaymentMethod) {
 
     }
 

@@ -42,8 +42,8 @@ extension MercadoPagoCheckout {
         })
     }
 
-    func createCardToken(cardInformation: CardInformation? = nil, securityCode: String? = nil) {
-        guard let cardInfo = self.viewModel.paymentOptionSelected as? CardInformation else {
+    func createCardToken(cardInformation: PXCardInformation? = nil, securityCode: String? = nil) {
+        guard let cardInfo = self.viewModel.paymentOptionSelected as? PXCardInformation else {
             createNewCardToken()
             return
         }
@@ -106,10 +106,10 @@ extension MercadoPagoCheckout {
         })
     }
 
-    func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
+    func createSavedCardToken(cardInformation: PXCardInformation, securityCode: String) {
         viewModel.pxNavigationHandler.presentLoading()
 
-        let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
+        let cardInformation = self.viewModel.paymentOptionSelected as! PXCardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
         self.viewModel.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
@@ -147,7 +147,7 @@ extension MercadoPagoCheckout {
             }
 
             if token.lastFourDigits.isEmpty {
-                let cardInformation = strongSelf.viewModel.paymentOptionSelected as? CardInformation
+                let cardInformation = strongSelf.viewModel.paymentOptionSelected as? PXCardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
             strongSelf.viewModel.updateCheckoutModel(token: token)

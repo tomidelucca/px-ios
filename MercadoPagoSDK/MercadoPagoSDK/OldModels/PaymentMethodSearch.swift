@@ -11,8 +11,8 @@ internal class PaymentMethodSearch {
 
     var groups: [PXPaymentMethodSearchItem]!
     var paymentMethods: [PXPaymentMethod]!
-    var customerPaymentMethods: [CardInformation]?
-    var cards: [Card]?
+    var customerPaymentMethods: [PXCardInformation]?
+    var cards: [PXCard]?
     var defaultOption: PXPaymentMethodSearchItem?
     var oneTap: PXOneTapItem?
 

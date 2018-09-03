@@ -8,8 +8,7 @@
 
 import UIKit
 
-@objc
-internal protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
+internal protocol PXCardInformation: PXCardInformationForm, PaymentOptionDrawable {
 
     func isSecurityCodeRequired() -> Bool
 
@@ -31,18 +30,6 @@ internal protocol CardInformation: CardInformationForm, PaymentOptionDrawable {
 
     func getIssuer() -> PXIssuer?
 
-    func getFirstSixDigits() -> String!
+    func getFirstSixDigits() -> String
 
-}
-
-@objc
-internal protocol CardInformationForm: NSObjectProtocol {
-
-    func getCardBin() -> String?
-
-    func getCardLastForDigits() -> String?
-
-    func isIssuerRequired() -> Bool
-
-    func canBeClone() -> Bool
 }

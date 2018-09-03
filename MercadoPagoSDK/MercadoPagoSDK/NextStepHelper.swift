@@ -316,7 +316,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if let card = pmSelected as? CardInformation {
+        if let card = pmSelected as? PXCardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
         return false

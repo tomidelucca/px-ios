@@ -10,7 +10,7 @@ import Foundation
 
 internal class CardsAdminViewModel {
 
-    var cards: [Card]?
+    var cards: [PXCard]?
     var customerId: String?
     var extraOptionTitle: String?
     var confirmPromptText: String?
@@ -24,7 +24,7 @@ internal class CardsAdminViewModel {
     lazy var availableWidth: CGFloat = self.screenWidth - self.paddingSpace
     lazy var widthPerItem: CGFloat = self.availableWidth / CGFloat(self.itemsPerRow)
 
-    public init(cards: [Card]? = nil, extraOptionTitle: String? = nil, confirmPromptText: String? = nil) {
+    public init(cards: [PXCard]? = nil, extraOptionTitle: String? = nil, confirmPromptText: String? = nil) {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
         self.confirmPromptText = confirmPromptText
@@ -59,7 +59,7 @@ internal class CardsAdminViewModel {
         return titleScreen
     }
 
-    func getAlertCardTitle(card: Card) -> String {
+    func getAlertCardTitle(card: PXCard) -> String {
         var title: String = ""
         if !String.isNullOrEmpty(card.paymentMethod?.name) {
             title = card.paymentMethod!.name! + " "

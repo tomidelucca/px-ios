@@ -9,6 +9,6 @@
 import Foundation
 
 @objc internal protocol Updatable {
-    func updateCard(token: CardInformationForm?, paymentMethod: PXPaymentMethod)
+    func updateCard(token: PXCardInformationForm?, paymentMethod: PXPaymentMethod)
     func setCornerRadius(radius: CGFloat)
 }

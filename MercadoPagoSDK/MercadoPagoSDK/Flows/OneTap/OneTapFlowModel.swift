@@ -80,7 +80,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 // MARK: Create view model
 internal extension OneTapFlowModel {
     func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
-        guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+        guard let cardInformation = self.paymentOptionSelected as? PXCardInformation else {
             fatalError("Cannot convert payment option selected to CardInformation")
         }
 
@@ -167,7 +167,7 @@ internal extension OneTapFlowModel {
     }
 
     func hasSavedESC() -> Bool {
-        if let card = paymentOptionSelected as? CardInformation {
+        if let card = paymentOptionSelected as? PXCardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
         return false

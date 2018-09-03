@@ -11,7 +11,7 @@
 
 @interface SimpleVaultFormViewController : UITableViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic) Card *customerCard;
+@property(nonatomic) PXCard *customerCard;
 @property(nonatomic) bool allowInstallmentsSelection;
 @property(nonatomic) double amount;
 

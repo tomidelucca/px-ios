@@ -14,7 +14,7 @@ class PaymentVaultViewModel: NSObject {
     var groupName: String?
     var email: String
     var paymentMethodOptions: [PaymentMethodOption]
-    var customerPaymentOptions: [CardInformation]?
+    var customerPaymentOptions: [PXCardInformation]?
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
     var paymentMethods: [PXPaymentMethod]!
     var defaultPaymentOption: PXPaymentMethodSearchItem?
@@ -29,7 +29,7 @@ class PaymentVaultViewModel: NSObject {
 
     internal var isRoot = true
 
-    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((PXDiscount) -> Void)? = nil) {
+    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [PXCardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((PXDiscount) -> Void)? = nil) {
         self.amountHelper = amountHelper
         self.email = email
         self.groupName = groupName
@@ -56,8 +56,8 @@ extension PaymentVaultViewModel {
        return false
     }
 
-    func hasAccountMoneyIn(customerOptions: [CardInformation]) -> Bool {
-        for paymentOption: CardInformation in customerOptions {
+    func hasAccountMoneyIn(customerOptions: [PXCardInformation]) -> Bool {
+        for paymentOption: PXCardInformation in customerOptions {
             if paymentOption.getPaymentMethodId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
                 return true
             }

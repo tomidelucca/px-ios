@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension PXToken: CardInformationForm {
+extension PXToken: PXCardInformationForm {
     func getBin() -> String? {
         var bin: String? = nil
         if firstSixDigits != nil && firstSixDigits.count > 0 {

@@ -113,7 +113,7 @@ internal extension MercadoPagoServicesAdapter {
         payment.binaryMode = pxPayment.binaryMode
         payment.callForAuthorizeId = pxPayment.callForAuthorizeId
         payment.captured = pxPayment.captured
-        payment.card = getCardFromPXCard(pxPayment.card)
+        payment.card = pxPayment.card
         payment.currencyId = pxPayment.currencyId
         payment.dateApproved = pxPayment.dateApproved
         payment.dateCreated = pxPayment.dateCreated
@@ -183,11 +183,7 @@ internal extension MercadoPagoServicesAdapter {
 
         paymentMethodSearch.paymentMethods = pxPaymentMethodSearch.paymentMethods
         if let pxPaymentMethodSearchCards = pxPaymentMethodSearch.cards {
-            paymentMethodSearch.cards = []
-            for pxCard in pxPaymentMethodSearchCards {
-                let card = getCardFromPXCard(pxCard)
-                paymentMethodSearch.cards = Array.safeAppend(paymentMethodSearch.cards, card)
-            }
+            paymentMethodSearch.cards = pxPaymentMethodSearchCards
         }
 
         if let pxPaymentMethodSearchCustomOptionSearchItems = pxPaymentMethodSearch.customOptionSearchItems {
@@ -195,7 +191,7 @@ internal extension MercadoPagoServicesAdapter {
             for pxCustomOptionSearchItem in pxPaymentMethodSearchCustomOptionSearchItems {
                 let customerPaymentMethod = getCustomerPaymentMethodFromPXCustomOptionSearchItem(pxCustomOptionSearchItem)
                 if let paymentMethodSearchCards = paymentMethodSearch.cards {
-                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.idCard == customerPaymentMethod.customerPaymentMethodId})
+                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.id == customerPaymentMethod.customerPaymentMethodId})
                     if !Array.isNullOrEmpty(filteredCustomerCard) {
                         customerPaymentMethod.card = filteredCustomerCard[0]
                     }
@@ -223,35 +219,11 @@ internal extension MercadoPagoServicesAdapter {
         return customerPaymentMethod
     }
 
-    internal func getCardFromPXCard(_ pxCard: PXCard?) -> Card {
-        let card = Card()
-        if let pxCard = pxCard {
-            card.cardHolder = pxCard.cardHolder
-            card.customerId = pxCard.customerId
-            card.dateCreated = pxCard.dateCreated
-            card.dateLastUpdated = pxCard.dateLastUpdated
-            card.expirationMonth = pxCard.expirationMonth ?? 0
-            card.expirationYear = pxCard.expirationYear ?? 0
-            card.firstSixDigits = pxCard.firstSixDigits
-            card.idCard = pxCard.id ?? ""
-            card.lastFourDigits = pxCard.lastFourDigits
-            card.paymentMethod = pxCard.paymentMethod
-            card.issuer = pxCard.issuer
-            card.securityCode = pxCard.securityCode
-            return card
-        }
-        return card
-    }
-
     internal func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
         let customer = Customer()
 
         if let pxCustomerCards = pxCustomer.cards {
-            customer.cards = []
-            for pxCard in pxCustomerCards {
-                let card = getCardFromPXCard(pxCard)
-                customer.cards = Array.safeAppend(customer.cards, card)
-            }
+            customer.cards = pxCustomerCards
         }
 
         customer.defaultCard = pxCustomer.defaultCard

@@ -32,7 +32,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var binaryMode: Bool!
     open var callForAuthorizeId: String!
     open var captured: Bool!
-    open var card: Card!
+    open var card: PXCard!
     open var currencyId: String!
     open var dateApproved: Date!
     open var dateCreated: Date!
@@ -118,10 +118,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                             }
                     }
                 payment.feesDetails = feesDetails
-                let cardDic = json["card"] as? NSDictionary
-                if cardDic != nil && cardDic?.count > 0 {
-                        payment.card = Card.fromJSON(cardDic!)
-                    }
+
                 if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]) {
                         payment.paymentMethodId = paymentMethodId
                     }
@@ -175,8 +172,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
             "installments": self.installments == 0 ? 0 : self.installments,
             "payment_method_id": self.paymentMethodId,
             "status": self.status,
-            "status_detail": self.statusDetail,
-            "card": card == nil ? "" : card.toJSONString()
+            "status_detail": self.statusDetail
         ]
 
         return JSONHandler.jsonCoding(obj)

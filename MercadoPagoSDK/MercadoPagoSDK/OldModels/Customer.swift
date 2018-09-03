@@ -12,7 +12,7 @@ import UIKit
 /** :nodoc: */
 @objcMembers open class Customer: NSObject {
     open var address: PXAddress?
-    open var cards: [Card]?
+    open var cards: [PXCard]?
     open var defaultCard: String?
     open var customerDescription: String?
     open var dateCreated: Date?
@@ -27,70 +27,4 @@ import UIKit
     open var phone: Phone?
     open var registrationDate: Date?
 
-    internal class func fromJSON(_ json: NSDictionary) -> Customer {
-        let customer: Customer = Customer()
-        customer.customerId = json["id"] as! String?
-        customer.liveMode = json["live_mode"] as? Bool
-        customer.email = json["email"] as? String
-        customer.firstName = json["first_name"] as? String
-        customer.lastName = json["last_name"] as? String
-        customer.customerDescription = json["description"] as? String
-
-        if let phoneDic = json["phone"] as? NSDictionary {
-            customer.phone = Phone.fromJSON(phoneDic)
-        }
-        if let defaultCard = json["default_card"] as? String {
-            customer.defaultCard = defaultCard
-        }
-        customer.metadata = json["metadata"] as? NSDictionary
-        customer.dateCreated = Utils.getDateFromString(json["date_created"] as? String)
-        customer.dateLastUpdated = Utils.getDateFromString(json["date_last_updated"] as? String)
-        customer.registrationDate = Utils.getDateFromString(json["date_registered"] as? String)
-        var cards: [Card] = [Card]()
-        if let cardsArray = json["cards"] as? NSArray {
-            for index in 0..<cardsArray.count {
-                if let cardDic = cardsArray[index] as? NSDictionary {
-                    cards.append(Card.fromJSON(cardDic))
-                }
-            }
-        }
-        customer.cards = cards.isEmpty ? nil : cards
-        return customer
-    }
-
-    internal func toJSONString() -> String {
-        let defaultCard: Any =  self.defaultCard == nil ? JSONHandler.null : self.defaultCard!
-        let description: Any =   self.customerDescription == nil ? JSONHandler.null : self.customerDescription!
-        let email: Any =  self.email == nil ? JSONHandler.null : self.email!
-        let firstName: Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
-        let lastName: Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
-        let id: Any =   self.customerId == nil ? JSONHandler.null : self.customerId!
-        let liveMode: Any = self.liveMode == nil ? JSONHandler.null : self.liveMode!
-
-        var obj: [String: Any] = [
-            "default_card": defaultCard,
-            "description": description,
-            "date_created": Utils.getStringFromDate(self.dateCreated) ?? JSONHandler.null,
-            "email": email,
-            "first_name": firstName,
-            "last_name": lastName,
-            "id": id,
-            "identification": identification,
-            "live_mode": liveMode,
-            "address": address
-        ]
-
-        var cardsJson: [[String: Any]] = []
-        if !Array.isNullOrEmpty(cards) {
-            for card in cards! {
-                cardsJson.append(card.toJSON())
-            }
-            obj["cards"] = cardsJson
-
-        } else {
-            obj["cards"] = JSONHandler.null
-        }
-
-        return JSONHandler.jsonCoding(obj)
-    }
 }

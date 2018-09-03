@@ -11,7 +11,7 @@
 
 @interface SimpleVaultViewController : UITableViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property Card *customerCard;
+@property PXCard *customerCard;
 @property bool allowInstallmentsSelection;
 
 @end

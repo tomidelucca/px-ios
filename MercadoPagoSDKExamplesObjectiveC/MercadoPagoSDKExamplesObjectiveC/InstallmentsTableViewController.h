@@ -11,7 +11,7 @@
 
 @interface InstallmentsTableViewController : UITableViewController
 
-@property Card *card;
+@property PXCard *card;
 @property double amount;
 
 @end

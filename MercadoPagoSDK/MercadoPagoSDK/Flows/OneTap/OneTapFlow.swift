@@ -99,7 +99,7 @@ extension OneTapFlow {
                 guard let customerPaymentMethods = search.customerPaymentMethods else {
                     return nil
                 }
-                let customOptionsFound = customerPaymentMethods.filter { (cardInformation: CardInformation) -> Bool in
+                let customOptionsFound = customerPaymentMethods.filter { (cardInformation: PXCardInformation) -> Bool in
                     return cardInformation.getCardId() == search.oneTap?.oneTapCard?.cardId
                 }
                 if let customerPaymentMethod = customOptionsFound.first, let customerPaymentOption = customerPaymentMethod as? PaymentMethodOption {

@@ -8,8 +8,8 @@
 
 import Foundation
 extension OneTapFlow {
-    func createCardToken(cardInformation: CardInformation? = nil, securityCode: String? = nil) {
-        guard let cardInfo = model.paymentOptionSelected as? CardInformation else {
+    func createCardToken(cardInformation: PXCardInformation? = nil, securityCode: String? = nil) {
+        guard let cardInfo = model.paymentOptionSelected as? PXCardInformation else {
             return
         }
         if self.model.mpESCManager.hasESCEnable() {
@@ -32,12 +32,12 @@ extension OneTapFlow {
         }
     }
 
-    func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
+    func createSavedCardToken(cardInformation: PXCardInformation, securityCode: String) {
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
 
-        let cardInformation = model.paymentOptionSelected as! CardInformation
+        let cardInformation = model.paymentOptionSelected as! PXCardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
         self.model.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
@@ -72,7 +72,7 @@ extension OneTapFlow {
         self.model.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
-                let cardInformation = self?.model.paymentOptionSelected as? CardInformation
+                let cardInformation = self?.model.paymentOptionSelected as? PXCardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
             self?.model.updateCheckoutModel(token: token)

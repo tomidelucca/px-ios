@@ -68,7 +68,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var availablePaymentMethods: [PXPaymentMethod]?
 
     var rootPaymentMethodOptions: [PaymentMethodOption]?
-    var customPaymentOptions: [CardInformation]?
+    var customPaymentOptions: [PXCardInformation]?
     var identificationTypes: [PXIdentificationType]?
 
     var search: PaymentMethodSearch?
@@ -255,9 +255,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             fatalError("Cannot find payment method")
         }
-        var cardInformation: CardInformationForm? = self.cardToken
+        var cardInformation: PXCardInformationForm? = self.cardToken
         if cardInformation == nil {
-            if let token = paymentOptionSelected as? CardInformationForm {
+            if let token = paymentOptionSelected as? PXCardInformationForm {
                 cardInformation = token
             }
         }
@@ -266,7 +266,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
-        guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+        guard let cardInformation = self.paymentOptionSelected as? PXCardInformation else {
             fatalError("Cannot conver payment option selected to CardInformation")
         }
         var reason: SecurityCodeViewModel.Reason
@@ -523,7 +523,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
             // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
-            self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
+            self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: PXCardInformation) -> Bool in
                 return element.getPaymentMethodId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
             })
         }
@@ -585,7 +585,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodId))
         } else {
-            let cardInformation = (self.paymentOptionSelected as! CardInformation)
+            let cardInformation = (self.paymentOptionSelected as! PXCardInformation)
             let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: cardInformation.getPaymentMethodId())
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
@@ -603,7 +603,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected!.getId()))
         } else {
             // Se necesita completar información faltante de settings y pm para custom payment options
-            guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+            guard let cardInformation = self.paymentOptionSelected as? PXCardInformation else {
                 fatalError("Cannot convert paymentOptionSelected to CardInformation")
             }
             let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: cardInformation.getPaymentMethodId())

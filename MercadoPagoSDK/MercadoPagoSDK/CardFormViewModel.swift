@@ -23,7 +23,7 @@ internal class CardFormViewModel {
 
     var paymentMethods: [PXPaymentMethod]
     var guessedPMS: [PXPaymentMethod]?
-    var customerCard: CardInformation?
+    var customerCard: PXCardInformation?
     var token: PXToken?
     var cardToken: CardToken?
 
@@ -38,7 +38,7 @@ internal class CardFormViewModel {
     var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    init (paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: CardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init (paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: PXCardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter

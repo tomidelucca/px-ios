@@ -11,7 +11,7 @@
 
 @interface SavedCardsTableViewController : UITableViewController
 
-@property NSArray<Card *> *cards;
+@property NSArray<PXCard *> *cards;
 @property bool allowInstallmentsSeletion;
 
 @end

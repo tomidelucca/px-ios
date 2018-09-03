@@ -25,7 +25,7 @@ internal class SavedCardToken: CardToken {
         self.device = Device()
     }
 
-    public init(card: CardInformation, securityCode: String?, securityCodeRequired: Bool) {
+    public init(card: PXCardInformation, securityCode: String?, securityCodeRequired: Bool) {
         self.cardId = card.getCardId()
         super.init()
         self.securityCode = securityCode

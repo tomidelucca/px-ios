@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers internal class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
+@objcMembers internal class CustomerPaymentMethod: NSObject, PXCardInformation, PaymentMethodOption {
 
     var customerPaymentMethodId: String!
     var customerPaymentMethodDescription: String!
@@ -18,7 +18,7 @@ import UIKit
 
     var securityCode: PXSecurityCode?
     var paymentMethod: PXPaymentMethod?
-    var card: Card?
+    var card: PXCard?
 
     internal class func fromJSON(_ json: NSDictionary) -> CustomerPaymentMethod {
                 let customerPaymentMethod = CustomerPaymentMethod()
@@ -82,8 +82,8 @@ import UIKit
         return obj
     }
 
-    func getFirstSixDigits() -> String? {
-        return card?.getCardBin()
+    func getFirstSixDigits() -> String {
+        return card?.getCardBin() ?? ""
     }
 
     func toJSONString() -> String {
