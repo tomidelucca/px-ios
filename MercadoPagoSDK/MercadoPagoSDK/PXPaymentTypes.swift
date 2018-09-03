@@ -7,16 +7,50 @@
 //
 
 import Foundation
+
+/**
+Use this enum only for reference.
+ */
 public enum PXPaymentTypes: String {
+    /**
+     DEBIT_CARD - Payment type
+     */
     case DEBIT_CARD = "debit_card"
+    /**
+     CREDIT_CARD - Payment type
+     */
     case CREDIT_CARD = "credit_card"
+    /**
+     ACCOUNT_MONEY - Payment type
+     */
     case ACCOUNT_MONEY = "account_money"
+    /**
+     TICKET - Payment type
+     */
     case TICKET = "ticket"
+    /**
+     BANK_TRANSFER - Payment type
+     */
     case BANK_TRANSFER = "bank_transfer"
+    /**
+     ATM - Payment type
+     */
     case ATM = "atm"
+    /**
+     BITCOIN - Payment type
+     */
     case BITCOIN = "digital_currency"
+    /**
+     PREPAID_CARD - Payment type
+     */
     case PREPAID_CARD = "prepaid_card"
+    /**
+     BOLBRADESCO - Payment type
+     */
     case BOLBRADESCO = "bolbradesco"
+    /**
+     PAYMENT_METHOD_PLUGIN - Payment type
+     */
     case PAYMENT_METHOD_PLUGIN = "payment_method_plugin"
 
     internal func isCard() -> Bool {
