@@ -15,9 +15,21 @@ import UIKit
  - IN_PROGRESS
  */
 @objc public enum PXBusinessResultStatus: Int {
+    /**
+     APPROVED payment.
+     */
     case APPROVED
+    /**
+     REJECTED payment.
+     */
     case REJECTED
+    /**
+     PENDING payment.
+     */
     case PENDING
+    /**
+     IN_PROGRESS payment.
+     */
     case IN_PROGRESS
 
     func getDescription() -> String {
