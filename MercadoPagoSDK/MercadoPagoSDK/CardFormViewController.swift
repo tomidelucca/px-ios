@@ -38,7 +38,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     var expirationLabelEmpty: Bool = true
     var cvvLabel: UILabel?
     var editingLabel: UILabel?
-    var callback : (( _ paymentMethods: [PXPaymentMethod], _ cardtoken: CardToken?) -> Void)?
+    var callback : (( _ paymentMethods: [PXPaymentMethod], _ cardtoken: PXCardToken?) -> Void)?
 
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
@@ -53,7 +53,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM }
 
-    init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = cardFormManager
         self.callback = callback
@@ -121,7 +121,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
 
-    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel
@@ -766,7 +766,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         label.textColor = MPLabel.errorColorText
     }
 
-    fileprivate func createSavedCardToken() -> CardToken {
+    fileprivate func createSavedCardToken() -> PXCardToken {
         let securityCode = self.viewModel.customerCard!.isSecurityCodeRequired() ? self.cvvLabel?.text : nil
         return  SavedCardToken(card: viewModel.customerCard!, securityCode: securityCode, securityCodeRequired: self.viewModel.customerCard!.isSecurityCodeRequired())
     }
@@ -786,7 +786,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     func makeToken() {
         if viewModel.token != nil { // C4A
-            let ct = CardToken()
+            let ct = PXCardToken()
             ct.securityCode = cvvLabel?.text
             self.callback!(viewModel.guessedPMS!, ct)
             return
@@ -798,7 +798,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                 markErrorLabel(cvvLabel!)
             }
         } else if self.viewModel.token != nil { // C4A
-            let ct = CardToken()
+            let ct = PXCardToken()
             ct.securityCode = cvvLabel?.text
             self.callback!(viewModel.guessedPMS!, ct)
             return

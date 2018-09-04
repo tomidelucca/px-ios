@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal class SavedCardToken: CardToken {
+internal class SavedCardToken: PXCardToken {
 
     open var cardId: String
     open var securityCodeRequired: Bool = true
@@ -33,7 +33,11 @@ internal class SavedCardToken: CardToken {
         self.device = PXDevice()
     }
 
-    open override func validate() -> Bool {
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+
+    @objc open override func validate() -> Bool {
         return self.validateCardId() && (!securityCodeRequired || self.validateSecurityCodeNumbers())
     }
 
@@ -46,7 +50,7 @@ internal class SavedCardToken: CardToken {
         return !isEmptySecurityCode && self.securityCode!.count >= 3 && self.securityCode!.count <= 4
     }
 
-    open override func isCustomerPaymentMethod() -> Bool {
+    @objc open override func isCustomerPaymentMethod() -> Bool {
         return true
     }
 }

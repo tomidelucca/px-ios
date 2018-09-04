@@ -261,7 +261,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     @objc func rightArrowKeyTapped() {
         let idnt = PXIdentification(number: defaultEditTextMask.textUnmasked(numberTextField.text), type: self.identificationType?.id)
 
-        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber: defaultEditTextMask.textUnmasked(numberTextField.text))
+        let cardToken = PXCardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber: defaultEditTextMask.textUnmasked(numberTextField.text))
 
         if (cardToken.validateIdentificationNumber(self.identificationType)) == nil {
             self.numberTextField.resignFirstResponder()

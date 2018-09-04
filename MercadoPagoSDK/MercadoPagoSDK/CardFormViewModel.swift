@@ -25,7 +25,7 @@ internal class CardFormViewModel {
     var guessedPMS: [PXPaymentMethod]?
     var customerCard: PXCardInformation?
     var token: PXToken?
-    var cardToken: CardToken?
+    var cardToken: PXCardToken?
 
     let textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     let textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
@@ -223,10 +223,10 @@ internal class CardFormViewModel {
         let secCode = cvvEmpty ? "" :cvv
         let name = cardholderNameEmpty ? "" : cardholderName
 
-        self.cardToken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name, docType: "", docNumber: "")
+        self.cardToken = PXCardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name, docType: "", docNumber: "")
     }
 
-    func buildSavedCardToken(_ cvv: String) -> CardToken {
+    func buildSavedCardToken(_ cvv: String) -> PXCardToken {
         let securityCode = self.customerCard!.isSecurityCodeRequired() ? cvv : ""
         self.cardToken = SavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
         return self.cardToken!

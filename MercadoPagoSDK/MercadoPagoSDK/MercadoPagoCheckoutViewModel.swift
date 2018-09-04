@@ -58,7 +58,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
     //    var paymentMethods: [PaymentMethod]?
-    var cardToken: CardToken?
+    var cardToken: PXCardToken?
     var customerId: String?
 
     // Payment methods disponibles en selección de medio de pago
@@ -290,7 +290,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     //SEARCH_PAYMENT_METHODS
-    public func updateCheckoutModel(paymentMethods: [PXPaymentMethod], cardToken: CardToken?) {
+    public func updateCheckoutModel(paymentMethods: [PXPaymentMethod], cardToken: PXCardToken?) {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
         self.cleanIdentificationTypesSearch()

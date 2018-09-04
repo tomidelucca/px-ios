@@ -26,4 +26,8 @@ internal class SavedESCCardToken: SavedCardToken {
         self.esc = esc
         self.device = PXDevice()
     }
+
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
 }

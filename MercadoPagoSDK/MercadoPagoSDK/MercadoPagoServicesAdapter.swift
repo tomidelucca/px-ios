@@ -72,10 +72,9 @@ internal class MercadoPagoServicesAdapter {
             }, failure: failure)
     }
 
-    func createToken(cardToken: CardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        let pxCardToken = getPXCardTokenFromCardToken(cardToken)
+    func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createToken(cardToken: pxCardToken, callback: { [weak self] (pxToken) in
+        mercadoPagoServices.createToken(cardToken: cardToken, callback: { [weak self] (pxToken) in
                 callback(pxToken)
             }, failure: failure)
     }
