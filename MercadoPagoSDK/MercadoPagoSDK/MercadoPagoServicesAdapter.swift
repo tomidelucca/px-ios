@@ -79,20 +79,15 @@ internal class MercadoPagoServicesAdapter {
             }, failure: failure)
     }
 
-    func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createToken(savedESCCardToken: PXSavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        let pxSavedESCCardToken = getPXSavedESCCardTokenFromSavedESCCardToken(savedESCCardToken)
-
-        mercadoPagoServices.createToken(savedESCCardToken: pxSavedESCCardToken, callback: { [weak self] (pxToken) in
+        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (pxToken) in
                 callback(pxToken)
             }, failure: failure)
     }
 
-    func createToken(savedCardToken: SavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        let pxSavedCardToken = getPXSavedCardTokenFromSavedCardToken(savedCardToken)
-
-        mercadoPagoServices.createToken(savedCardToken: pxSavedCardToken, callback: { [weak self] (pxToken) in
+    func createToken(savedCardToken: PXSavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        mercadoPagoServices.createToken(savedCardToken: savedCardToken, callback: { [weak self] (pxToken) in
                 callback(pxToken)
             }, failure: failure)
     }

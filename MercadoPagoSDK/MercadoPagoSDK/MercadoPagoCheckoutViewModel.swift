@@ -91,7 +91,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var readyToPay: Bool = false
     var initWithPaymentData = false
-    var savedESCCardToken: SavedESCCardToken?
+    var savedESCCardToken: PXSavedESCCardToken?
     private var checkoutComplete = false
     var paymentMethodConfigPluginShowed = false
 
@@ -764,7 +764,7 @@ extension MercadoPagoCheckoutViewModel {
     func prepareForInvalidPaymentWithESC() {
         if self.paymentData.isComplete() {
             readyToPay = true
-            self.savedESCCardToken = SavedESCCardToken(cardId: self.paymentData.getToken()!.cardId, esc: nil, requireESC: advancedConfig.escEnabled)
+            self.savedESCCardToken = PXSavedESCCardToken(cardId: self.paymentData.getToken()!.cardId, esc: nil, requireESC: advancedConfig.escEnabled)
             mpESCManager.deleteESC(cardId: self.paymentData.getToken()!.cardId)
         }
         self.paymentData.cleanToken()

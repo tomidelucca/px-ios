@@ -16,23 +16,6 @@ internal extension MercadoPagoServicesAdapter {
         return pxSite
     }
 
-    internal func getPXSavedESCCardTokenFromSavedESCCardToken(_ savedESCCardToken: SavedESCCardToken) -> PXSavedESCCardToken {
-        let pxSavedESCCardToken = PXSavedESCCardToken()
-        pxSavedESCCardToken.cardId = savedESCCardToken.cardId
-        pxSavedESCCardToken.securityCode = savedESCCardToken.securityCode
-        pxSavedESCCardToken.device = PXDevice()
-        pxSavedESCCardToken.requireEsc = savedESCCardToken.requireESC
-        pxSavedESCCardToken.esc = savedESCCardToken.esc
-        return pxSavedESCCardToken
-    }
-
-    internal func getPXSavedCardTokenFromSavedCardToken(_ savedCardToken: SavedCardToken) -> PXSavedCardToken {
-        let pxSavedCardToken = PXSavedCardToken()
-        pxSavedCardToken.cardId = savedCardToken.cardId
-        pxSavedCardToken.securityCode = savedCardToken.securityCode
-        return pxSavedCardToken
-    }
-
     func getStringDateFromDate(_ date: Date) -> String {
         let stringDate = String(describing: date)
         return stringDate

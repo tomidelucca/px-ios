@@ -13,14 +13,14 @@ extension OneTapFlow {
             return
         }
         if self.model.mpESCManager.hasESCEnable() {
-            var savedESCCardToken: SavedESCCardToken
+            var savedESCCardToken: PXSavedESCCardToken
 
             let esc = self.model.mpESCManager.getESC(cardId: cardInfo.getCardId())
 
             if !String.isNullOrEmpty(esc) {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: advancedConfig.escEnabled)
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: advancedConfig.escEnabled)
             } else {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: advancedConfig.escEnabled)
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: advancedConfig.escEnabled)
             }
             createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 
@@ -38,7 +38,7 @@ extension OneTapFlow {
         }
 
         let cardInformation = model.paymentOptionSelected as! PXCardInformation
-        let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
+        let saveCardToken = PXSavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
         self.model.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
 
@@ -64,7 +64,7 @@ extension OneTapFlow {
         })
     }
 
-    func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
+    func createSavedESCCardToken(savedESCCardToken: PXSavedESCCardToken) {
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }

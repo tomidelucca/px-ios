@@ -228,7 +228,7 @@ internal class CardFormViewModel {
 
     func buildSavedCardToken(_ cvv: String) -> PXCardToken {
         let securityCode = self.customerCard!.isSecurityCodeRequired() ? cvv : ""
-        self.cardToken = SavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
+        self.cardToken = PXSavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
         return self.cardToken!
     }
     func getGuessedPM() -> PXPaymentMethod? {

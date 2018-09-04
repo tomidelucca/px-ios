@@ -768,7 +768,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     fileprivate func createSavedCardToken() -> PXCardToken {
         let securityCode = self.viewModel.customerCard!.isSecurityCodeRequired() ? self.cvvLabel?.text : nil
-        return  SavedCardToken(card: viewModel.customerCard!, securityCode: securityCode, securityCodeRequired: self.viewModel.customerCard!.isSecurityCodeRequired())
+        return  PXSavedCardToken(card: viewModel.customerCard!, securityCode: securityCode, securityCodeRequired: self.viewModel.customerCard!.isSecurityCodeRequired())
     }
 
     fileprivate func getTextboxPlaceholder() -> String {

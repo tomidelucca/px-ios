@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 
-open class PXPayment: NSObject, Codable {
+@objcMembers open class PXPayment: NSObject, Codable {
     open var binaryMode: Bool?
     open var callForAuthorizeId: String?
     open var captured: Bool?

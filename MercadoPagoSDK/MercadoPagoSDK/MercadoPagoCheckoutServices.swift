@@ -54,14 +54,14 @@ extension MercadoPagoCheckout {
             cloneCardToken(token: token, securityCode: securityCode!)
 
         } else if self.viewModel.mpESCManager.hasESCEnable() {
-            var savedESCCardToken: SavedESCCardToken
+            var savedESCCardToken: PXSavedESCCardToken
 
             let esc = self.viewModel.mpESCManager.getESC(cardId: cardInfo.getCardId())
 
             if !String.isNullOrEmpty(esc) {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
             } else {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: viewModel.getAdvancedConfiguration().escEnabled)
             }
 
             createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
@@ -110,7 +110,7 @@ extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.presentLoading()
 
         let cardInformation = self.viewModel.paymentOptionSelected as! PXCardInformation
-        let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
+        let saveCardToken = PXSavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
         self.viewModel.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
 
@@ -138,7 +138,7 @@ extension MercadoPagoCheckout {
         })
     }
 
-    func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
+    func createSavedESCCardToken(savedESCCardToken: PXSavedESCCardToken) {
         viewModel.pxNavigationHandler.presentLoading()
         self.viewModel.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
 
@@ -161,9 +161,7 @@ extension MercadoPagoCheckout {
             let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
 
             if let apiException = mpError.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) ||  apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {
-
-                strongSelf.viewModel.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
-
+                    strongSelf.viewModel.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
             } else {
                 strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] () in
                     self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)

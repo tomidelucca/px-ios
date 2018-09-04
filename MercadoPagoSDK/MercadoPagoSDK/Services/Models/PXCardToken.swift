@@ -8,8 +8,7 @@
 
 import Foundation
 /// :nodoc:
-open class PXCardToken: NSObject, Codable {
-
+open class PXCardToken: NSObject, Encodable {
     open var cardholder: PXCardHolder?
     open var cardNumber: String?
     open var device: PXDevice = PXDevice()
@@ -64,9 +63,5 @@ open class PXCardToken: NSObject, Codable {
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
-    }
-
-    open class func fromJSON(data: Data) throws -> PXCardToken {
-        return try JSONDecoder().decode(PXCardToken.self, from: data)
     }
 }
