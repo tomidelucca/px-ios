@@ -16,31 +16,6 @@ internal extension MercadoPagoServicesAdapter {
         return pxSite
     }
 
-    internal func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreferenceNew) -> PXCheckoutPreference {
-        let checkoutPreference = PXCheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
-        checkoutPreference.preferenceId = pxCheckoutPreference.id
-        checkoutPreference.items = pxCheckoutPreference.items!
-        checkoutPreference.payer = pxCheckoutPreference.payer
-        checkoutPreference.differentialPricing = pxCheckoutPreference.differentialPricing
-        checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
-        checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom ?? Date()
-        checkoutPreference.expirationDateTo = pxCheckoutPreference.expirationDateTo ?? Date()
-        return checkoutPreference
-    }
-
-    internal func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
-        let paymentPreference = PaymentPreference()
-        if let pxPaymentPreference = pxPaymentPreference {
-            paymentPreference.excludedPaymentMethodIds = Set(pxPaymentPreference.excludedPaymentMethodIds ?? [])
-            paymentPreference.excludedPaymentTypeIds = Set(pxPaymentPreference.excludedPaymentTypeIds ?? [])
-            paymentPreference.defaultPaymentMethodId = pxPaymentPreference.defaultPaymentMethodId
-            paymentPreference.maxAcceptedInstallments = pxPaymentPreference.maxAcceptedInstallments != nil ? pxPaymentPreference.maxAcceptedInstallments! : paymentPreference.maxAcceptedInstallments
-            paymentPreference.defaultInstallments = pxPaymentPreference.defaultInstallments != nil ? pxPaymentPreference.defaultInstallments! : paymentPreference.defaultInstallments
-            paymentPreference.defaultPaymentTypeId = pxPaymentPreference.defaultPaymentTypeId
-        }
-        return paymentPreference
-    }
-
     internal func getPXCardTokenFromCardToken(_ cardToken: CardToken) -> PXCardToken {
         let pxCardToken = PXCardToken()
         pxCardToken.cardholder = cardToken.cardholder

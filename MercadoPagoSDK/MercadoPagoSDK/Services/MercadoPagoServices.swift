@@ -31,9 +31,9 @@ internal class MercadoPagoServices: NSObject {
         MPXTracker.sharedInstance.setPublicKey(merchantPublicKey)
     }
 
-    func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreferenceNew) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let preferenceService = PreferenceService(baseURL: baseURL)
-        preferenceService.getPreference(publicKey: merchantPublicKey, preferenceId: checkoutPreferenceId, success: { (preference : PXCheckoutPreferenceNew) in
+        preferenceService.getPreference(publicKey: merchantPublicKey, preferenceId: checkoutPreferenceId, success: { (preference : PXCheckoutPreference) in
             callback(preference)
         }, failure: failure)
     }
@@ -45,7 +45,7 @@ internal class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, cardsWithEsc: [String]?, supportedPlugins: [String]?, defaultPaymentMethod: String?, payer: PXPayer, site: PXSite, differentialPricingId: String?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, defaultPaymentMethod: String?, payer: PXPayer, site: PXSite, differentialPricingId: String?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, cardsWithEsc: cardsWithEsc, supportedPlugins: supportedPlugins, site: site, payer: payer, language: language, differentialPricingId: differentialPricingId, success: callback, failure: failure)
     }
@@ -228,7 +228,7 @@ internal class MercadoPagoServices: NSObject {
         service.getCustomer(params: addInfo, success: callback, failure: failure)
     }
 
-    func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreferenceNew) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 
         let body: String?

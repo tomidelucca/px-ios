@@ -1,38 +1,12 @@
 //
-//  CheckoutPreference.swift
-//  MercadoPagoSDK
+//  PXCheckoutPreference+Business.swift
+//  MercadoPagoSDKV4
 //
-//  Created by Maria cristina rodriguez on 12/1/16.
-//  Copyright © 2016 MercadoPago. All rights reserved.
+//  Created by Eden Torres on 04/09/2018.
 //
 
-import UIKit
-
-@objcMembers open class PXCheckoutPreference: NSObject {
-    internal var preferenceId: String!
-    internal var items: [PXItem] = []
-    internal var payer: PXPayer!
-    internal var paymentPreference: PaymentPreference = PaymentPreference()
-    internal var siteId: String!
-    internal var expirationDateFrom: Date?
-    internal var expirationDateTo: Date?
-    internal var differentialPricing: PXDifferentialPricing?
-    private var binaryModeEnabled: Bool = false
-
-    public init(preferenceId: String) {
-        self.preferenceId = preferenceId
-    }
-
-    public init(siteId: String, payerEmail: String, items: [PXItem]) {
-        self.items = items
-
-        guard let siteId = PXSites(rawValue: siteId)?.rawValue else {
-            fatalError("Invalid site id")
-        }
-        self.siteId = siteId
-        self.payer = PXPayer(email: payerEmail)
-    }
-
+import Foundation
+extension PXCheckoutPreference {
     internal func isExpired() -> Bool {
         let date = Date()
         if let expirationDateTo = expirationDateTo {
@@ -54,7 +28,7 @@ import UIKit
     }
 
     internal func clearCardId() {
-        self.paymentPreference.cardId = nil
+        self.paymentPreference?.cardId = nil
     }
 }
 
@@ -74,43 +48,41 @@ extension PXCheckoutPreference {
     }
 
     public func addExcludedPaymentMethod(_ paymentMethodId: String) {
-        if self.paymentPreference.excludedPaymentMethodIds != nil {
-            self.paymentPreference.excludedPaymentMethodIds?.insert(paymentMethodId)
-        } else {
-            self.paymentPreference.excludedPaymentMethodIds = [paymentMethodId]
+        guard let paymentPreference = paymentPreference else {
+            return
         }
+        paymentPreference.excludedPaymentMethodIds.append(paymentMethodId)
     }
-    public func setExcludedPaymentMethods(_ paymentMethodIds: Set<String>) {
-        self.paymentPreference.excludedPaymentMethodIds = paymentMethodIds
+    public func setExcludedPaymentMethods(_ paymentMethodIds: [String]) {
+        self.paymentPreference?.excludedPaymentMethodIds = paymentMethodIds
     }
 
     public func addExcludedPaymentType(_ paymentTypeId: String) {
-        if self.paymentPreference.excludedPaymentTypeIds != nil {
-            self.paymentPreference.excludedPaymentTypeIds?.insert(paymentTypeId)
-        } else {
-            self.paymentPreference.excludedPaymentTypeIds = [paymentTypeId]
+        guard let paymentPreference = paymentPreference else {
+            return
         }
+        paymentPreference.excludedPaymentMethodIds.append(paymentTypeId)
     }
 
-    public func setExcludedPaymentTypes(_ paymentTypeIds: Set<String>) {
-        self.paymentPreference.excludedPaymentTypeIds = paymentTypeIds
+    public func setExcludedPaymentTypes(_ paymentTypeIds: [String]) {
+        self.paymentPreference?.excludedPaymentTypeIds = paymentTypeIds
     }
 
     public func setMaxInstallments(_ maxInstallments: Int) {
-        self.paymentPreference.maxAcceptedInstallments = maxInstallments
+        self.paymentPreference?.maxAcceptedInstallments = maxInstallments
     }
 
     public func setDefaultInstallments(_ defaultInstallments: Int) {
-        self.paymentPreference.defaultInstallments = defaultInstallments
+        self.paymentPreference?.defaultInstallments = defaultInstallments
     }
 
     public func setDefaultPaymentMethodId(_ paymetMethodId: String) {
-        self.paymentPreference.defaultPaymentMethodId = paymetMethodId
+        self.paymentPreference?.defaultPaymentMethodId = paymetMethodId
     }
 
     /// :nodoc:
     public func setCardId(cardId: String) {
-        self.paymentPreference.cardId = cardId
+        self.paymentPreference?.cardId = cardId
     }
 }
 
@@ -118,7 +90,7 @@ extension PXCheckoutPreference {
 extension PXCheckoutPreference {
 
     open func getId() -> String {
-        return self.preferenceId
+        return self.id
     }
 
     open func getItems() -> [PXItem]? {
@@ -137,24 +109,24 @@ extension PXCheckoutPreference {
         return expirationDateFrom
     }
 
-    open func getExcludedPaymentTypesIds() -> Set<String>? {
-        return paymentPreference.getExcludedPaymentTypesIds()
+    open func getExcludedPaymentTypesIds() -> [String] {
+        return paymentPreference?.getExcludedPaymentTypesIds() ?? []
     }
 
     open func getDefaultInstallments() -> Int {
-        return paymentPreference.getDefaultInstallments()
+        return paymentPreference?.getDefaultInstallments() ?? 0
     }
 
     open func getMaxAcceptedInstallments() -> Int {
-        return paymentPreference.getMaxAcceptedInstallments()
+        return paymentPreference?.getMaxAcceptedInstallments() ?? 0
     }
 
-    open func getExcludedPaymentMethodsIds() -> Set<String>? {
-        return paymentPreference.getExcludedPaymentMethodsIds()
+    open func getExcludedPaymentMethodsIds() -> [String] {
+        return paymentPreference?.getExcludedPaymentMethodsIds() ?? []
     }
 
     open func getDefaultPaymentMethodId() -> String? {
-        return paymentPreference.getDefaultPaymentMethodId()
+        return paymentPreference?.getDefaultPaymentMethodId()
     }
 
     open func getTotalAmount() -> Double {

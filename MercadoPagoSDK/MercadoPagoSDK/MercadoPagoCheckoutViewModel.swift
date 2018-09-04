@@ -154,14 +154,11 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentData.clearDiscount()
     }
 
-    public func getPaymentPreferences() -> PaymentPreference? {
+    public func getPaymentPreferences() -> PXPaymentPreference? {
         return self.checkoutPreference.paymentPreference
     }
 
     public func cardFormManager() -> CardFormViewModel {
-        let paymentPreference = PaymentPreference()
-        paymentPreference.defaultPaymentTypeId = self.paymentOptionSelected?.getId()
-        // TODO : está bien que la paymentPreference se cree desde cero? puede que vengan exclusiones de entrada ya?
         return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
@@ -687,7 +684,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func isPreferenceLoaded() -> Bool {
-        return !String.isNullOrEmpty(self.checkoutPreference.preferenceId)
+        return !String.isNullOrEmpty(self.checkoutPreference.id)
     }
 
     func getGenericPayment() -> PXGenericPayment? {

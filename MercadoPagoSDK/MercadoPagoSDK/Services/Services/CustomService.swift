@@ -78,7 +78,7 @@ internal class CustomService: MercadoPagoService {
         })
     }
 
-    internal func createPreference(_ method: String = "POST", body: String?, success: @escaping (_ jsonResult: PXCheckoutPreferenceNew) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    internal func createPreference(_ method: String = "POST", body: String?, success: @escaping (_ jsonResult: PXCheckoutPreference) -> Void, failure: ((_ error: PXError) -> Void)?) {
 
         self.request(uri: self.URI, params: nil, body: body, method: method, cache: false, success: {
             (data) in
@@ -91,7 +91,7 @@ internal class CustomService: MercadoPagoService {
                     failure!(PXError(domain: "mercadopago.customServer.createCheckoutPreference", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: ["message": "PREFERENCE_ERROR"], apiException: apiException))
                 } else {
                     if preferenceDic.allKeys.count > 0 {
-                        success(try! PXCheckoutPreferenceNew.fromJSON(data: data))
+                        success(try! PXCheckoutPreference.fromJSON(data: data))
                     } else {
                         failure?(PXError(domain: "mercadopago.customServer.createCheckoutPreference", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: ["message": "PREFERENCE_ERROR"]))
                     }

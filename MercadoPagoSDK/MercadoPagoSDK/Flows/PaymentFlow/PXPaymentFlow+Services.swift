@@ -39,7 +39,7 @@ internal extension PXPaymentFlow {
         }
 
         var paymentBody: [String: Any]
-        let mpPayment = MPPayment(preferenceId: checkoutPreference.preferenceId, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
+        let mpPayment = MPPayment(preferenceId: checkoutPreference.id, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
         paymentBody = mpPayment.toJSON()
 
         model.mercadoPagoServicesAdapter.createPayment(url: URLConfigs.MP_API_BASE_URL, uri: URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION, paymentData: paymentBody as NSDictionary, query: nil, callback: { (payment) in

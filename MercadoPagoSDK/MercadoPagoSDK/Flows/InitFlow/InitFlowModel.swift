@@ -47,7 +47,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     init(flowProperties: InitFlowProperties) {
         self.properties = flowProperties
-        self.loadPreferenceStatus = !String.isNullOrEmpty(flowProperties.checkoutPreference.preferenceId)
+        self.loadPreferenceStatus = !String.isNullOrEmpty(flowProperties.checkoutPreference.id)
         self.directDiscountSearchStatus = flowProperties.paymentData.isComplete()
         self.mpESCManager = MercadoPagoESCImplementation(enabled: flowProperties.advancedConfig.escEnabled)
         super.init()
@@ -98,7 +98,7 @@ extension InitFlowModel {
         needPaymentMethodPluginInit = false
     }
 
-    func getExcludedPaymentTypesIds() -> Set<String>? {
+    func getExcludedPaymentTypesIds() -> [String] {
         if properties.checkoutPreference.siteId == "MLC" || properties.checkoutPreference.siteId == "MCO" ||
             properties.checkoutPreference.siteId == "MLV" {
             properties.checkoutPreference.addExcludedPaymentType("atm")
@@ -112,7 +112,7 @@ extension InitFlowModel {
         return properties.checkoutPreference.getDefaultPaymentMethodId()
     }
 
-    func getExcludedPaymentMethodsIds() -> Set<String>? {
+    func getExcludedPaymentMethodsIds() -> [String] {
         return properties.checkoutPreference.getExcludedPaymentMethodsIds()
     }
 

@@ -41,7 +41,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
 
@@ -49,13 +49,13 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         let newExcludedPaymentTypesIds = excludedPaymentTypeIds
 
-        if newExcludedPaymentTypesIds != nil && newExcludedPaymentTypesIds!.count > 0 {
-            let excludedPaymentTypesParams = newExcludedPaymentTypesIds!.map({$0}).joined(separator: ",")
+        if newExcludedPaymentTypesIds.count > 0 {
+            let excludedPaymentTypesParams = newExcludedPaymentTypesIds.map({$0}).joined(separator: ",")
             params.paramsAppend(key: ApiParams.EXCLUDED_PAYMET_TYPES, value: String(excludedPaymentTypesParams).trimSpaces())
         }
 
-        if excludedPaymentMethodIds != nil && excludedPaymentMethodIds!.count > 0 {
-            let excludedPaymentMethodsParams = excludedPaymentMethodIds!.joined(separator: ",")
+        if excludedPaymentMethodIds.count > 0 {
+            let excludedPaymentMethodsParams = excludedPaymentMethodIds.joined(separator: ",")
             params.paramsAppend(key: ApiParams.EXCLUDED_PAYMENT_METHOD, value: excludedPaymentMethodsParams.trimSpaces())
         }
 

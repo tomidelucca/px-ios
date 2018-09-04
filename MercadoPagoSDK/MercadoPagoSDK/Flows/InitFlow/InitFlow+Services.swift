@@ -10,7 +10,7 @@ import Foundation
 
 extension InitFlow {
     func getCheckoutPreference() {
-        model.getService().getCheckoutPreference(checkoutPreferenceId: model.properties.checkoutPreference.preferenceId, callback: { [weak self] (checkoutPreference) in
+        model.getService().getCheckoutPreference(checkoutPreferenceId: model.properties.checkoutPreference.id, callback: { [weak self] (checkoutPreference) in
             guard let strongSelf = self else {
                 return
             }
