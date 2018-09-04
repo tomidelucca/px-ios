@@ -8,12 +8,11 @@
 
 import Foundation
 
-/** :nodoc: */
-@objcMembers open class EntityType: NSObject, Cellable {
+internal class EntityType: NSObject, Cellable {
 
     var objectType: ObjectTypes = ObjectTypes.entityType
-    open var entityTypeId: String!
-    open var name: String!
+    var entityTypeId: String!
+    var name: String!
 
     internal class func fromJSON(_ json: NSDictionary) -> EntityType {
         let entityType: EntityType = EntityType()

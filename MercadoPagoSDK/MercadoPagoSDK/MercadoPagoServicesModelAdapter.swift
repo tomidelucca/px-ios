@@ -47,15 +47,4 @@ internal extension MercadoPagoServicesAdapter {
         let stringDate = String(describing: date)
         return stringDate
     }
-
-    internal func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
-        if let entityTypeId = entityTypeId {
-            let entityType = EntityType()
-            entityType.entityTypeId = entityTypeId
-            entityType.name = ""
-            return entityType
-        } else {
-            return nil
-        }
-    }
 }
