@@ -202,55 +202,6 @@
       "symbol": "PXPaymentData.getDiscount()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentProcessor/PXPaymentProcessor.swift",
-      "line": 11,
-      "symbol": "PXPaymentProcessor",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentProcessor/PXPaymentProcessor.swift",
-      "line": 12,
-      "symbol": "PXPaymentProcessor.paymentProcessorViewController()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentProcessor/PXPaymentProcessor.swift",
-      "line": 13,
-      "symbol": "PXPaymentProcessor.support()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentProcessor/PXPaymentProcessor.swift",
-      "line": 14,
-      "symbol": "PXPaymentProcessor.didReceive(navigationHandler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentProcessor/PXPaymentProcessor.swift",
-      "line": 15,
-      "symbol": "PXPaymentProcessor.didReceive(checkoutStore:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentProcessor/PXPaymentProcessor.swift",
-      "line": 16,
-      "symbol": "PXPaymentProcessor.startPayment(checkoutStore:errorHandler:successWithBusinessResult:successWithPaymentResult:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentProcessor/PXPaymentProcessor.swift",
-      "line": 17,
-      "symbol": "PXPaymentProcessor.paymentTimeOut()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
     }
   ],
   "source_directory": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK"
