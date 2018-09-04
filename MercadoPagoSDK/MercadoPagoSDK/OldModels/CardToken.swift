@@ -14,7 +14,7 @@ import UIKit
     let MIN_LENGTH_NUMBER: Int = 10
     let MAX_LENGTH_NUMBER: Int = 19
 
-    var device: Device?
+    var device: PXDevice?
     var securityCode: String?
 
     let now = (Calendar.current as NSCalendar).components([.year, .month], from: Date())

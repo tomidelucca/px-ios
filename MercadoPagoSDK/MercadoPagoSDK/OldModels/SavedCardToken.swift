@@ -22,7 +22,7 @@ internal class SavedCardToken: CardToken {
     internal init(cardId: String) {
         self.cardId = cardId
         super.init()
-        self.device = Device()
+        self.device = PXDevice()
     }
 
     public init(card: PXCardInformation, securityCode: String?, securityCodeRequired: Bool) {
@@ -30,7 +30,7 @@ internal class SavedCardToken: CardToken {
         super.init()
         self.securityCode = securityCode
         self.securityCodeRequired = securityCodeRequired
-        self.device = Device()
+        self.device = PXDevice()
     }
 
     open override func validate() -> Bool {

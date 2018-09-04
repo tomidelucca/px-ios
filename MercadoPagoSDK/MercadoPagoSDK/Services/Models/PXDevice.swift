@@ -10,7 +10,7 @@ import Foundation
 /// :nodoc:
 open class PXDevice: NSObject, Codable {
 
-    open var fingerprint: PXFingerprint? = PXFingerprint()
+    open var fingerprint: PXFingerprint = PXFingerprint()
 
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()

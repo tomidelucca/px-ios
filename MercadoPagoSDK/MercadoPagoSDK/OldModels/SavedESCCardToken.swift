@@ -15,7 +15,7 @@ internal class SavedESCCardToken: SavedCardToken {
         self.securityCode = securityCode
         self.cardId = cardId
         self.requireESC = requireESC
-        self.device = Device()
+        self.device = PXDevice()
     }
 
     init (cardId: String, esc: String?, requireESC: Bool) {
@@ -24,6 +24,6 @@ internal class SavedESCCardToken: SavedCardToken {
         self.cardId = cardId
         self.requireESC = requireESC
         self.esc = esc
-        self.device = Device()
+        self.device = PXDevice()
     }
 }
