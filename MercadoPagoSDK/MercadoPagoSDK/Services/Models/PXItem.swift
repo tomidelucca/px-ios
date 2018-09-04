@@ -7,19 +7,27 @@
 //
 
 import Foundation
-/// :nodoc:
-open class PXItemNew: NSObject, Codable {
 
+@objcMembers
+open class PXItem: NSObject, Codable {
+    
     open var categoryId: String?
     open var currencyId: String?
     open var _description: String?
     open var id: String!
     open var pictureUrl: String?
-    open var quantity: Int?
-    open var title: String?
-    open var unitPrice: Double?
+    open var quantity: Int = 0
+    open var title: String = ""
+    open var unitPrice: Double = 0
 
-    public init(categoryId: String?, currencyId: String?, description: String?, id: String, pictureUrl: String?, quantity: Int?, title: String?, unitPrice: Double?) {
+    public init(title: String, quantity: Int, unitPrice: Double) {
+        self.title = title
+        self.quantity = quantity
+        self.unitPrice = unitPrice
+        self.id = ""
+    }
+
+    internal init(categoryId: String?, currencyId: String?, description: String?, id: String, pictureUrl: String?, quantity: Int, title: String, unitPrice: Double) {
         self.categoryId = categoryId
         self.currencyId = currencyId
         self._description = description
@@ -48,9 +56,9 @@ open class PXItemNew: NSObject, Codable {
         let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
         let id: String = try container.decode(String.self, forKey: .id)
         let pictureUrl: String? = try container.decodeIfPresent(String.self, forKey: .pictureUrl)
-        let title: String? = try container.decodeIfPresent(String.self, forKey: .title)
-        let unitPrice: Double? = try container.decodeIfPresent(Double.self, forKey: .unitPrice)
-        let quantity: Int? = try container.decodeIfPresent(Int.self, forKey: .quantity)
+        let title: String = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        let unitPrice: Double = try container.decodeIfPresent(Double.self, forKey: .unitPrice) ?? 0
+        let quantity: Int = try container.decodeIfPresent(Int.self, forKey: .quantity) ?? 0
 
         self.init(categoryId: categoryId, currencyId: currencyId, description: description, id: id, pictureUrl: pictureUrl, quantity: quantity, title: title, unitPrice: unitPrice)
     }
@@ -78,12 +86,62 @@ open class PXItemNew: NSObject, Codable {
         return try encoder.encode(self)
     }
 
-    open class func fromJSONToPXItem(data: Data) throws -> PXItemNew {
-        return try JSONDecoder().decode(PXItemNew.self, from: data)
+    open class func fromJSONToPXItem(data: Data) throws -> PXItem {
+        return try JSONDecoder().decode(PXItem.self, from: data)
     }
 
-    open class func fromJSON(data: Data) throws -> [PXItemNew] {
-        return try JSONDecoder().decode([PXItemNew].self, from: data)
+    open class func fromJSON(data: Data) throws -> [PXItem] {
+        return try JSONDecoder().decode([PXItem].self, from: data)
     }
 
+}
+
+// MARK: Setters
+extension PXItem {
+    open func setId(id: String) {
+        self.id = id
+    }
+
+    open func setDescription(description: String) {
+        self._description = description
+    }
+
+    open func setPictureURL(url: String) {
+        self.pictureUrl = url
+    }
+
+    open func setCategoryId(categoryId: String) {
+        self.categoryId = categoryId
+    }
+}
+
+// MARK: Getters
+extension PXItem {
+    open func getQuantity() -> Int {
+        return quantity
+    }
+
+    open func getUnitPrice() -> Double {
+        return unitPrice
+    }
+
+    open func getTitle() -> String {
+        return title
+    }
+
+    open func getId() -> String? {
+        return id
+    }
+
+    open func getDescription() -> String? {
+        return _description
+    }
+
+    open func getCategoryId() -> String? {
+        return categoryId
+    }
+
+    open func getPictureURL() -> String? {
+        return pictureUrl
+    }
 }

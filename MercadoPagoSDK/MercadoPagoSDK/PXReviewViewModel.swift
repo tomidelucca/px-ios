@@ -320,7 +320,7 @@ extension PXReviewViewModel {
     }
 
     fileprivate func buildItemComponent(item: PXItem) -> PXItemComponent? {
-        if item.quantity == 1 && String.isNullOrEmpty(item.itemDescription) && !amountHelper.preference.hasMultipleItems() { // Item must not be shown if it has no description and it's one
+        if item.quantity == 1 && String.isNullOrEmpty(item._description) && !amountHelper.preference.hasMultipleItems() { // Item must not be shown if it has no description and it's one
             return nil
         }
 
@@ -343,7 +343,7 @@ extension PXReviewViewModel {
         let itemQuantiy = item.quantity
         let itemPrice = item.unitPrice
         let itemTitle = item.title
-        let itemDescription = item.itemDescription
+        let itemDescription = item._description
 
         let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
 
@@ -358,12 +358,12 @@ extension PXReviewViewModel {
         if amountHelper.preference.hasMultipleItems() {
             return item.title
         }
-        return item.itemDescription
+        return item._description
     }
 
     fileprivate func getItemDescription(item: PXItem) -> String? { // Returns only if it has multiple items
         if amountHelper.preference.hasMultipleItems() {
-            return item.itemDescription
+            return item._description
         }
         return nil
     }

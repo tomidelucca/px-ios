@@ -19,31 +19,13 @@ internal extension MercadoPagoServicesAdapter {
     internal func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreferenceNew) -> PXCheckoutPreference {
         let checkoutPreference = PXCheckoutPreference(siteId: pxCheckoutPreference.siteId ?? "", payerEmail: "", items: [])
         checkoutPreference.preferenceId = pxCheckoutPreference.id
-        if let pxCheckoutPreferenceItems = pxCheckoutPreference.items {
-            for pxItem in pxCheckoutPreferenceItems {
-                let item = getItemFromPXItem(pxItem)
-                checkoutPreference.items = Array.safeAppend(checkoutPreference.items, item)
-            }
-        }
+        checkoutPreference.items = pxCheckoutPreference.items!
         checkoutPreference.payer = pxCheckoutPreference.payer
         checkoutPreference.differentialPricing = pxCheckoutPreference.differentialPricing
         checkoutPreference.paymentPreference = getPaymentPreferenceFromPXPaymentPreference(pxCheckoutPreference.paymentPreference)
         checkoutPreference.expirationDateFrom = pxCheckoutPreference.expirationDateFrom ?? Date()
         checkoutPreference.expirationDateTo = pxCheckoutPreference.expirationDateTo ?? Date()
         return checkoutPreference
-    }
-
-    internal func getItemFromPXItem(_ pxItem: PXItemNew) -> PXItem {
-        let id: String = pxItem.id
-        let title: String = pxItem.title ?? ""
-        let quantity: Int = pxItem.quantity ?? 1
-        let unitPrice: Double = pxItem.unitPrice ?? 0.0
-        let picture_URL: String = pxItem.pictureUrl ?? ""
-        let item = PXItem(title: title, quantity: quantity, unitPrice: unitPrice)
-        item.pictureUrl = picture_URL
-        item.setDescription(description: pxItem._description ?? "")
-        item.itemId = id
-        return item
     }
 
     internal func getPaymentPreferenceFromPXPaymentPreference(_ pxPaymentPreference: PXPaymentPreference?) -> PaymentPreference {
@@ -117,31 +99,5 @@ internal extension MercadoPagoServicesAdapter {
         } else {
             return nil
         }
-    }
-
-    internal func getCustomerFromPXCustomer(_ pxCustomer: PXCustomer) -> Customer {
-        let customer = Customer()
-
-        if let pxCustomerCards = pxCustomer.cards {
-            customer.cards = pxCustomerCards
-        }
-
-        customer.defaultCard = pxCustomer.defaultCard
-        customer.customerDescription = pxCustomer._description
-        customer.dateCreated = pxCustomer.dateCreated
-        customer.dateLastUpdated = pxCustomer.dateLastUpdated
-        customer.email = pxCustomer.email
-        customer.firstName = pxCustomer.firstName
-        customer.customerId = pxCustomer.id
-        customer.identification = pxCustomer.identification
-        customer.lastName = pxCustomer.lastName
-        customer.liveMode = pxCustomer.liveMode
-        customer.phone = pxCustomer.phone
-        customer.registrationDate = pxCustomer.registrationDate
-
-        if let meta = pxCustomer.metadata {
-            customer.metadata = meta as NSDictionary
-        }
-        return customer
     }
 }
