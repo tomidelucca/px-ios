@@ -26,11 +26,4 @@ internal class SavedESCCardToken: SavedCardToken {
         self.esc = esc
         self.device = Device()
     }
-
-    internal override func toJSON() -> [String: Any] {
-        var obj = super.toJSON()
-        obj["require_esc"] = requireESC
-        obj["esc"] = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc!
-        return obj
-    }
 }

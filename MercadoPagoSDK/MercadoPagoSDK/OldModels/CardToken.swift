@@ -291,26 +291,6 @@ import UIKit
         return bin
     }
 
-    internal func toJSON() -> [String: Any] {
-
-        let card_number: Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
-        let security_code: Any = String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!
-        let device: Any = self.device == nil ? JSONHandler.null : self.device!.toJSON()
-        let obj: [String: Any] = [
-            "card_number": card_number,
-            "cardholder": cardholder,
-            "security_code": security_code,
-            "expiration_month": self.expirationMonth,
-            "expiration_year": self.expirationYear,
-            "device": device
-        ]
-        return obj
-    }
-
-    internal func toJSONString() -> String {
-        return JSONHandler.jsonCoding(toJSON())
-    }
-
     func getNumberFormated() -> NSString {
         //TODO AMEX
         var str: String

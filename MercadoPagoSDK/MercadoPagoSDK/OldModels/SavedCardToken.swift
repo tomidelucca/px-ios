@@ -49,17 +49,4 @@ internal class SavedCardToken: CardToken {
     open override func isCustomerPaymentMethod() -> Bool {
         return true
     }
-
-    internal override func toJSON() -> [String: Any] {
-        let obj: [String: Any] = [
-            "card_id": String.isNullOrEmpty(self.cardId) ? JSONHandler.null : self.cardId,
-            "security_code": String.isNullOrEmpty(self.securityCode!) ? "" : self.securityCode!,
-            "device": self.device == nil ? JSONHandler.null : self.device!.toJSON()
-        ]
-        return obj
-    }
-
-    internal override func toJSONString() -> String {
-        return JSONHandler.jsonCoding(toJSON())
-    }
 }

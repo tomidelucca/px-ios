@@ -20,7 +20,6 @@ internal extension MercadoPagoServicesAdapter {
         let pxCardToken = PXCardToken()
         pxCardToken.cardholder = cardToken.cardholder
         pxCardToken.cardNumber = cardToken.cardNumber
-        pxCardToken.device = getPXDeviceFromDevice(cardToken.device)
         pxCardToken.expirationMonth = cardToken.expirationMonth
         pxCardToken.expirationYear = cardToken.expirationYear
         pxCardToken.securityCode = cardToken.securityCode
@@ -41,23 +40,7 @@ internal extension MercadoPagoServicesAdapter {
         let pxSavedCardToken = PXSavedCardToken()
         pxSavedCardToken.cardId = savedCardToken.cardId
         pxSavedCardToken.securityCode = savedCardToken.securityCode
-        pxSavedCardToken.device = getPXDeviceFromDevice(savedCardToken.device)
         return pxSavedCardToken
-    }
-
-    internal func getPXDeviceFromDevice(_ device: Device?) -> PXDevice {
-        if let device = device {
-            let pxDevice = PXDevice()
-            pxDevice.fingerprint = getPXFingerprintFromFingerprint(device.fingerprint)
-            return pxDevice
-        } else {
-            return PXDevice()
-        }
-    }
-
-    internal func getPXFingerprintFromFingerprint(_ fingerprint: Fingerprint) -> PXFingerprint {
-        let pxFingerprint = PXFingerprint()
-        return pxFingerprint
     }
 
     func getStringDateFromDate(_ date: Date) -> String {

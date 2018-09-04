@@ -9,21 +9,9 @@
 import Foundation
 
 internal class Device {
-    var fingerprint: Fingerprint!
+    var fingerprint: PXFingerprint
 
     init() {
-        self.fingerprint = Fingerprint()
-    }
-
-    internal func toJSONString() -> String {
-        return JSONHandler.jsonCoding(toJSON())
-    }
-
-    internal func toJSON() -> [String: Any] {
-        let finger: [String: Any] = self.fingerprint.toJSON()
-        let obj: [String: Any] = [
-            "fingerprint": finger
-        ]
-        return obj
+        self.fingerprint = PXFingerprint()
     }
 }
