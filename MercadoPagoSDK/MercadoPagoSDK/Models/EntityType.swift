@@ -13,31 +13,4 @@ internal class EntityType: NSObject, Cellable {
     var objectType: ObjectTypes = ObjectTypes.entityType
     var entityTypeId: String!
     var name: String!
-
-    internal class func fromJSON(_ json: NSDictionary) -> EntityType {
-        let entityType: EntityType = EntityType()
-
-        if let entityTypeId = JSONHandler.attemptParseToString(json["id"]) {
-            entityType.entityTypeId = entityTypeId
-        }
-        if let name = JSONHandler.attemptParseToString(json["name"]) {
-            entityType.name = name
-        }
-
-        return entityType
-    }
-
-    internal func toJSONString() -> String {
-        return JSONHandler.jsonCoding(toJSON())
-    }
-
-    internal func toJSON() -> [String: Any] {
-        let id: Any = self.entityTypeId == nil ? JSONHandler.null : self.entityTypeId!
-        let name: Any = self.name == nil ? JSONHandler.null : self.name!
-        let obj: [String: Any] = [
-            "id": id,
-            "name": name
-            ]
-        return obj
-    }
 }
