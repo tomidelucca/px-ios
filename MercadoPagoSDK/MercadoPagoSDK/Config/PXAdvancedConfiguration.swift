@@ -31,12 +31,12 @@ open class PXAdvancedConfiguration: NSObject {
     open var bankDealsEnabled: Bool = true
 
     /**
-     Enable to preset configurations to customize visualization on the 'Congrats' screen / 'PaymentResult' screen.
+     Enable to preset configurations to customize visualization on the 'Review and Confirm screen'
      */
     open var reviewConfirmConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration()
 
     /**
-     Enable to preset configurations to customize visualization on the 'Review and Confirm screen'
+     Enable to preset configurations to customize visualization on the 'Congrats' screen / 'PaymentResult' screen.
      */
     open var paymentResultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()
 }

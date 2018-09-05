@@ -9,8 +9,7 @@
 import Foundation
 
 /**
-We use PXLanguages raw string values. Use this enum only for reference.
- ## WARNING:
+We use PXLanguages raw string values. `WARNING:` Use this enum only for reference.
  - This is an internal method not intended for public use. Only for reference.
  - It is not considered part of the public API.
  */

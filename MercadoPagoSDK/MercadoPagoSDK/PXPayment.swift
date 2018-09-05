@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l__?, r__?):
@@ -27,8 +28,11 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
+/**
+ This is our Payment object. When we make the payment, we return this object in the checkout exit. More details in: `PXLifeCycleProtocol` finishCheckout method.
+ */
 @objcMembers open class PXPayment: NSObject {
+    // MARK: Public accessors.
     open var binaryMode: Bool!
     open var callForAuthorizeId: String!
     open var captured: Bool!
@@ -63,6 +67,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var issuerId: Int = 0
     open var tokenId: String?
 
+    // MARK: Init.
     override public init() {
         super.init()
     }
@@ -196,7 +201,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
             "status_detail": self.statusDetail,
             "card": card == nil ? "" : card.toJSONString()
         ]
-
         return JSONHandler.jsonCoding(obj)
     }
 

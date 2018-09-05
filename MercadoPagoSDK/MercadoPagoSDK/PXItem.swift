@@ -27,7 +27,7 @@ Model that represents the item which will be paid.
      it is initialize with a preference created programmatically.
      - parameter title: Item title.
      - parameter quantity: Item quantity.
-     - @parameter unitPrice: Item price.
+     - parameter unitPrice: Item price.
      */
     public init(title: String, quantity: Int, unitPrice: Double) {
         self.title = title
