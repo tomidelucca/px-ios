@@ -71,6 +71,15 @@ open class PXCampaign: NSObject, Codable {
     open var collectors: [Int64]?
 
     // MARK: Init.
+    /**
+     Mandatory init.
+     - parameter id: Campaign id.
+     - parameter code: Campaign code.
+     - parameter maxRedeemPerUser: Campaign max redeem per user.
+     - parameter name: Campaign name.
+     - parameter maxCouponAmount: Campaign max coupon amount.
+     - parameter endDate: Campaign end date.
+     */
     @objc
     public init(id: Int64, code: String?, maxRedeemPerUser: Int = 1, name: String?, maxCouponAmount: Double, endDate: Date) {
         self.id = id
