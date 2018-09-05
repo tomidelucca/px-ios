@@ -210,46 +210,79 @@ extension PXCheckoutPreference {
 
 // MARK: Getters
 extension PXCheckoutPreference {
+    /**
+     getId
+     */
     open func getId() -> String {
         return self.preferenceId
     }
 
+    /**
+     getItems
+     */
     open func getItems() -> [PXItem]? {
         return items
     }
 
+    /**
+     getSiteId
+     */
     open func getSiteId() -> String {
         return self.siteId
     }
 
+    /**
+     getExpirationDate
+     */
     open func getExpirationDate() -> Date? {
         return expirationDateTo
     }
 
+    /**
+     getActiveFromDate
+     */
     open func getActiveFromDate() -> Date? {
         return expirationDateFrom
     }
 
+    /**
+     getExcludedPaymentTypesIds
+     */
     open func getExcludedPaymentTypesIds() -> Set<String>? {
         return paymentPreference.getExcludedPaymentTypesIds()
     }
 
+    /**
+     getDefaultInstallments
+     */
     open func getDefaultInstallments() -> Int {
         return paymentPreference.getDefaultInstallments()
     }
 
+    /**
+     getMaxAcceptedInstallments
+     */
     open func getMaxAcceptedInstallments() -> Int {
         return paymentPreference.getMaxAcceptedInstallments()
     }
 
+    /**
+     getExcludedPaymentMethodsIds
+     */
     open func getExcludedPaymentMethodsIds() -> Set<String>? {
         return paymentPreference.getExcludedPaymentMethodsIds()
     }
 
+    /**
+     getDefaultPaymentMethodId
+     */
     open func getDefaultPaymentMethodId() -> String? {
         return paymentPreference.getDefaultPaymentMethodId()
     }
 
+    /**
+     getTotalAmount
+     */
     open func getTotalAmount() -> Double {
         var amount = 0.0
         for item in self.items {

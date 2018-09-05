@@ -13,34 +13,61 @@ import Foundation
  */
 @objc
 open class PXCampaign: NSObject, Codable {
-    // MARK: Public Accessors.
+    /// :nodoc:
     open var id: Int64!
+    /// :nodoc:
     open var code: String?
+    /// :nodoc:
     open var name: String?
+    /// :nodoc:
     open var discountType: String?
+    /// :nodoc:
     open var value: Double?
+    /// :nodoc:
     open var endDate: Date?
+    /// :nodoc:
     open var minPaymentAmount: Double?
+    /// :nodoc:
     open var maxPaymentAmount: Double?
+    /// :nodoc:
     open var maxCouponAmount: Double
+    /// :nodoc:
     open var totalAmountLimit: Double?
+    /// :nodoc:
     open var maxCoupons: Int64?
+    /// :nodoc:
     open var maxCouponsByCode: Int?
+    /// :nodoc:
     open var maxRedeemPerUser: Int?
+    /// :nodoc:
     open var siteId: String?
+    /// :nodoc:
     open var marketplace: String?
+    /// :nodoc:
     open var codeType: String?
+    /// :nodoc:
     open var maxUserAmountPerCampaign: Double?
+    /// :nodoc:
     open var labels: [String]?
+    /// :nodoc:
     open var paymentMethodsIds: [String]?
+    /// :nodoc:
     open var paymentTypesIds: [String]?
+    /// :nodoc:
     open var cardIssuersIds: [String]?
+    /// :nodoc:
     open var shippingModes: [String]?
+    /// :nodoc:
     open var clientId: Int64?
+    /// :nodoc:
     open var tags: [String]?
+    /// :nodoc:
     open var multipleCodeLimit: Int?
+    /// :nodoc:
     open var codeCount: Int?
+    /// :nodoc:
     open var couponAmount: Double?
+    /// :nodoc:
     open var collectors: [Int64]?
 
     // MARK: Init.

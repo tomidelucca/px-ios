@@ -96,14 +96,23 @@ import UIKit
 
 // MARK: Getters
 extension PXPaymentData {
+    /**
+     getToken
+     */
     public func getToken() -> Token? {
         return token
     }
 
+    /**
+     getPayerCost
+     */
     public func getPayerCost() -> PayerCost? {
         return payerCost
     }
 
+    /**
+     getNumberOfInstallments
+     */
     public func getNumberOfInstallments() -> Int {
         guard let installments = payerCost?.installments else {
             return 0
@@ -111,18 +120,30 @@ extension PXPaymentData {
         return installments
     }
 
+    /**
+     getIssuer
+     */
     public func getIssuer() -> Issuer? {
         return issuer
     }
 
+    /**
+     getPayer
+     */
     public func getPayer() -> Payer? {
         return payer
     }
 
+    /**
+     getPaymentMethod
+     */
     public func getPaymentMethod() -> PaymentMethod? {
         return paymentMethod
     }
 
+    /**
+     getDiscount
+     */
     public func getDiscount() -> PXDiscount? {
         return discount
     }

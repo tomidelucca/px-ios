@@ -49,18 +49,34 @@ Model that represents the item which will be paid.
 
 // MARK: Setters
 extension PXItem {
+    /**
+    setId
+     - parameter id: ID.
+     */
     open func setId(id: String) {
         self.itemId = id
     }
 
+    /**
+     setDescription
+     - parameter description: Description.
+     */
     open func setDescription(description: String) {
         self.itemDescription = description
     }
 
+    /**
+     setPictureURL
+     - parameter url: Url remote picture.
+     */
     open func setPictureURL(url: String) {
         self.pictureUrl = url
     }
 
+    /**
+     setCategoryId
+     - parameter categoryId: Category id.
+     */
     open func setCategoryId(categoryId: String) {
         self.categoryId = categoryId
     }
@@ -68,30 +84,51 @@ extension PXItem {
 
 // MARK: Getters
 extension PXItem {
+    /**
+     getQuantity
+     */
     open func getQuantity() -> Int {
         return quantity
     }
 
+    /**
+     getUnitPrice
+     */
     open func getUnitPrice() -> Double {
         return unitPrice
     }
 
+    /**
+     getTitle
+     */
     open func getTitle() -> String {
         return title
     }
 
+    /**
+     getId
+     */
     open func getId() -> String? {
         return itemId
     }
 
+    /**
+     getDescription
+     */
     open func getDescription() -> String? {
         return itemDescription
     }
 
+    /**
+     getCategoryId
+     */
     open func getCategoryId() -> String? {
         return categoryId
     }
 
+    /**
+     getPictureURL
+     */
     open func getPictureURL() -> String? {
         return pictureUrl
     }
