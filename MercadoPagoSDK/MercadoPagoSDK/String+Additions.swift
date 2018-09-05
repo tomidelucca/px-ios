@@ -70,6 +70,10 @@ internal extension String {
         return NSMutableAttributedString(string: self, attributes: attributes)
     }
 
+    func getAttributedStringNewLine() -> NSMutableAttributedString {
+        return "\n".toAttributedString()
+    }
+
     static internal func getDate(_ string: String?) -> Date? {
         guard let dateString = string else {
             return nil
