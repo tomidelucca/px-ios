@@ -516,7 +516,7 @@
 		4B9F3B89213590F70024412F /* PXPaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B3C213590F60024412F /* PXPaymentMethodSearch.swift */; };
 		4B9F3B8A213590F70024412F /* PXPayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B3D213590F60024412F /* PXPayer.swift */; };
 		4B9F3B8B213590F70024412F /* PXCustomer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B3E213590F60024412F /* PXCustomer.swift */; };
-		4B9F3B8D213590F70024412F /* PXCampaing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B40213590F70024412F /* PXCampaing.swift */; };
+		4B9F3B8D213590F70024412F /* PXCampaign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B40213590F70024412F /* PXCampaign.swift */; };
 		4B9F3B8E213590F70024412F /* PXPhone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B41213590F70024412F /* PXPhone.swift */; };
 		4B9F3B8F213590F70024412F /* PXServicesURLConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F3B42213590F70024412F /* PXServicesURLConfigs.swift */; };
 		4B9FEFCF1EA64E12002B78A2 /* PXReviewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCD1EA64E12002B78A2 /* PXReviewViewModelTest.swift */; };
@@ -1338,7 +1338,7 @@
 		4B9F3B3C213590F60024412F /* PXPaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodSearch.swift; sourceTree = "<group>"; };
 		4B9F3B3D213590F60024412F /* PXPayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPayer.swift; sourceTree = "<group>"; };
 		4B9F3B3E213590F60024412F /* PXCustomer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCustomer.swift; sourceTree = "<group>"; };
-		4B9F3B40213590F70024412F /* PXCampaing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCampaing.swift; sourceTree = "<group>"; };
+		4B9F3B40213590F70024412F /* PXCampaign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXCampaign.swift; sourceTree = "<group>"; };
 		4B9F3B41213590F70024412F /* PXPhone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXPhone.swift; sourceTree = "<group>"; };
 		4B9F3B42213590F70024412F /* PXServicesURLConfigs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXServicesURLConfigs.swift; sourceTree = "<group>"; };
 		4B9F3B91213596340024412F /* MLUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MLUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2443,7 +2443,7 @@
 		4B9F3B9621359CE50024412F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4B9F3B40213590F70024412F /* PXCampaing.swift */,
+				4B9F3B40213590F70024412F /* PXCampaign.swift */,
 				4B9F3AF9213590E80024412F /* PXCard.swift */,
 				4B9F3B10213590EC0024412F /* PXCardHolder.swift */,
 				4B9F3B37213590F50024412F /* PXCardNumber.swift */,
@@ -3844,7 +3844,7 @@
 				81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */,
 				4B1EE15F20D0145F00560838 /* PXAnimatedButton.swift in Sources */,
 				2344DD9321380985006CBD48 /* PXAnimatedImageView.swift in Sources */,
-				4B9F3B8D213590F70024412F /* PXCampaing.swift in Sources */,
+				4B9F3B8D213590F70024412F /* PXCampaign.swift in Sources */,
 				232114A22117D8A500B50503 /* PXLanguages.swift in Sources */,
 				4BE805BC20AB563C001F5C0F /* PXFlow.swift in Sources */,
 				812BA9BE1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift in Sources */,
