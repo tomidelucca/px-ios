@@ -125,7 +125,9 @@ extension PXPayer {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXPayerKeys.self)
-        try container.encodeIfPresent(self.accessToken, forKey: .accessToken)
+        if !String.isNullOrEmpty(accessToken) {
+            try container.encodeIfPresent(self.accessToken, forKey: .accessToken)
+        }
         try container.encodeIfPresent(self.type, forKey: .type)
         try container.encodeIfPresent(self.email, forKey: .email)
         try container.encodeIfPresent(self.id, forKey: .id)

@@ -206,39 +206,3 @@ extension PXPaymentData {
         self.campaign = nil
     }
 }
-
-// MARK: JSON
-extension PXPaymentData {
-    internal func toJSONString() -> String {
-        return JSONHandler.jsonCoding(toJSON())
-    }
-
-    internal func toJSON() -> [String: Any] {
-//        var obj: [String: Any] = [
-//            "payer": payer?.toJSON() ?? ""
-//        ]
-//        if let paymentMethod = self.paymentMethod {
-//            obj["payment_method"] = paymentMethod.toJSON()
-//        }
-//
-//        if let payerCost = self.payerCost {
-//            obj["payer_cost"] = payerCost.toJSON()
-//        }
-//
-//        if let token = self.token {
-//            obj["card_token"] = token.toJSON()
-//        }
-//
-//        if let issuer = self.issuer {
-//            obj["issuer"] = issuer.toJSON()
-//        }
-//
-//        if let discount = self.discount {
-//            obj["discount"] = discount.toJSONDictionary()
-//        }
-
-//        return obj
-
-        return [:]
-    }
-}

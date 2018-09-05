@@ -65,9 +65,9 @@ internal class MercadoPagoServicesAdapter {
             }, failure: failure)
     }
 
-    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: String, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, query: query, callback: { [weak self] (pxPayment) in
+        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentDataJSON: paymentDataJSON, query: query, callback: { [weak self] (pxPayment) in
             callback(pxPayment)
             }, failure: failure)
     }

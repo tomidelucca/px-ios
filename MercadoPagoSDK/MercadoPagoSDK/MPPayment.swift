@@ -8,27 +8,7 @@
 
 import UIKit
 
-private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l__?, r__?):
-    return l__ < r__
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l__?, r__?):
-    return l__ > r__
-  default:
-    return rhs < lhs
-  }
-}
-
-internal class MPPayment {
+internal class MPPayment: Encodable {
 
     open var preferenceId: String!
     open var publicKey: String!
@@ -54,6 +34,20 @@ internal class MPPayment {
         self.discount = discount
     }
 
+    public enum PXMPPaymentKeys: String, CodingKey {
+        case publicKey = "public_key"
+        case paymentMethodId = "payment_method_id"
+        case binaryMode = "binary_mode"
+        case prefId = "pref_id"
+        case payer
+        case installments
+        case token
+        case issuerId = "issuer_id"
+        case campaignId = "campaign_id"
+        case couponAmount = "coupon_amount"
+        case transactionDetails = "transaction_details"
+    }
+
     init(preferenceId: String, publicKey: String, paymentData: PXPaymentData, binaryMode: Bool) {
         self.issuerId = paymentData.hasIssuer() ? paymentData.getIssuer()!.id! : ""
         self.tokenId = paymentData.hasToken() ? paymentData.getToken()!.id : ""
@@ -77,37 +71,37 @@ internal class MPPayment {
 
     }
 
-    internal func toJSONString() -> String {
-        return JSONHandler.jsonCoding(toJSON())
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXMPPaymentKeys.self)
+
+        if installments > 0 {
+            try container.encodeIfPresent(self.installments, forKey: .installments)
+        }
+        if !String.isNullOrEmpty(tokenId) {
+            try container.encodeIfPresent(self.tokenId, forKey: .token)
+        }
+        if !String.isNullOrEmpty(issuerId) {
+            try container.encodeIfPresent(self.issuerId, forKey: .issuerId)
+        }
+
+        try container.encodeIfPresent(self.publicKey, forKey: .publicKey)
+        try container.encodeIfPresent(self.paymentMethodId, forKey: .paymentMethodId)
+        try container.encodeIfPresent(self.binaryMode, forKey: .binaryMode)
+        try container.encodeIfPresent(self.preferenceId, forKey: .prefId)
+        try container.encodeIfPresent(self.payer, forKey: .payer)
+        try container.encodeIfPresent(self.discount?.id, forKey: .campaignId)
+        try container.encodeIfPresent(self.discount?.couponAmount, forKey: .couponAmount)
+        try container.encodeIfPresent(self.transactionDetails, forKey: .transactionDetails)
     }
 
-    internal func toJSON() -> [String: Any] {
-        var obj: [String: Any] = [
-            "public_key": self.publicKey,
-            "payment_method_id": self.paymentMethodId,
-            "pref_id": self.preferenceId,
-            "binary_mode": self.binaryMode,
-            "payer" : ["email": self.payer?.email]
-            ]
+    internal func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
 
-        if self.tokenId != nil && self.tokenId?.count > 0 {
-            obj["token"] = self.tokenId!
-        }
-
-        obj["installments"] = self.installments
-
-        if self.issuerId != nil && self.issuerId?.count > 0 {
-            obj["issuer_id"] = self.issuerId
-        }
-
-//        if self.transactionDetails != nil {
-//            obj["transaction_details"] = self.transactionDetails?.toJSON()
-//        }
-        if let discount = self.discount {
-            obj["campaign_id"] = discount.id
-            obj["coupon_amount"] = discount.couponAmount
-        }
-
-        return obj
+    internal func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
     }
 }
