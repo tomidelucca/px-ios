@@ -48,14 +48,15 @@ internal class PXBodyComponent: PXComponentizable {
 
         let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = SiteManager.shared.getCurrency()
-        var amountTitle = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency)
+        var amountTitle: NSMutableAttributedString = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency).toAttributedString()
         var subtitle: NSMutableAttributedString? = pm.paymentMethodDescription?.toAttributedString()
         if let payerCost = self.props.paymentResult.paymentData?.payerCost {
             if payerCost.installments > 1 {
-                amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
+                amountTitle = String(String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)).toAttributedString()
                 subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
             }
         }
+
         if self.props.amountHelper.discount != nil {
             var amount = self.props.amountHelper.preferenceAmountWithCharges
 
@@ -68,11 +69,14 @@ internal class PXBodyComponent: PXComponentizable {
             if subtitle == nil {
                 subtitle = preferenceAmountString
             } else {
-                subtitle?.append(String.NON_BREAKING_LINE_SPACE.toAttributedString())
-                subtitle?.append(preferenceAmountString)
+                let discountStrikethroughFont = Utils.getFont(size: PXLayout.XXS_FONT)
+                preferenceAmountString.addAttribute(NSAttributedStringKey.font, value: discountStrikethroughFont, range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
+                preferenceAmountString.addAttribute(NSAttributedStringKey.foregroundColor, value: ThemeManager.shared.greyColor(), range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
+                amountTitle.append("".getAttributedStringNewLine())
+                amountTitle.append(preferenceAmountString)
             }
-
         }
+
         var pmDescription: String = ""
         let paymentMethodName = pm.name ?? ""
 
@@ -96,7 +100,7 @@ internal class PXBodyComponent: PXComponentizable {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: .white, lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle, subtitle: subtitle, descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: .white, lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
