@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l__?, r__?):
@@ -27,42 +28,145 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-/** :nodoc: */
+/**
+ This is our Payment object. When we make the payment, we return this object in the checkout exit. More details in: `PXLifeCycleProtocol` finishCheckout method.
+ */
 @objcMembers open class PXPayment: NSObject {
+    // MARK: Public accessors.
+    /**
+     * binaryMode
+     */
     open var binaryMode: Bool!
+    /**
+     * callForAuthorizeId
+     */
     open var callForAuthorizeId: String!
+    /**
+     * captured
+     */
     open var captured: Bool!
+    /**
+     * card
+     */
     open var card: Card!
+    /**
+     * currencyId
+     */
     open var currencyId: String!
+    /**
+     * dateApproved
+     */
     open var dateApproved: Date!
+    /**
+     * dateCreated
+     */
     open var dateCreated: Date!
+    /**
+     * dateLastUpdated
+     */
     open var dateLastUpdated: Date!
+    /**
+     * paymentDescription
+     */
     open var paymentDescription: String!
+    /**
+     * externalReference
+     */
     open var externalReference: String!
+    /**
+     * feesDetails
+     */
     open var feesDetails: [FeesDetail]!
+    /**
+     * paymentId
+     */
     open var paymentId: String = ""
+    /**
+     * installments
+     */
     open var installments: Int = 0
+    /**
+     * liveMode
+     */
     open var liveMode: Bool!
+    /**
+     * metadata
+     */
     open var metadata: NSObject!
+    /**
+     * moneyReleaseDate
+     */
     open var moneyReleaseDate: Date!
+    /**
+     * notificationUrl
+     */
     open var notificationUrl: String!
+    /**
+     * order
+     */
     open var order: Order!
+    /**
+     * payer
+     */
     open var payer: Payer!
+    /**
+     * paymentMethodId
+     */
     open var paymentMethodId: String!
+    /**
+     * paymentTypeId
+     */
     open var paymentTypeId: String!
+    /**
+     * refunds
+     */
     open var refunds: [Refund]!
+    /**
+     * statementDescriptor
+     */
     open var statementDescriptor: String!
+    /**
+     * status
+     */
     open var status: String!
+    /**
+     * statusDetail
+     */
     open var statusDetail: String!
+    /**
+     * transactionAmount
+     */
     open var transactionAmount: Double = 0
+    /**
+     * transactionAmountRefunded
+     */
     open var transactionAmountRefunded: Double = 0
+    /**
+     * transactionDetails
+     */
     open var transactionDetails: TransactionDetails!
+    /**
+     * collectorId
+     */
     open var collectorId: String!
+    /**
+     * couponAmount
+     */
     open var couponAmount: Double = 0
+    /**
+     * differentialPricingId
+     */
     open var differentialPricingId: NSNumber = 0
+    /**
+     * issuerId
+     */
     open var issuerId: Int = 0
+    /**
+     * tokenId
+     */
     open var tokenId: String?
 
+    /// :nodoc:
     override public init() {
         super.init()
     }
@@ -196,7 +300,6 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
             "status_detail": self.statusDetail,
             "card": card == nil ? "" : card.toJSONString()
         ]
-
         return JSONHandler.jsonCoding(obj)
     }
 

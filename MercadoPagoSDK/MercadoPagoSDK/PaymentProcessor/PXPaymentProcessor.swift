@@ -31,7 +31,7 @@ import Foundation
      */
     @objc optional func didReceive(checkoutStore: PXCheckoutStore)
     /**
-     Method that we will call if `paymentProcessorViewController`()` is nil. You can return the data of your custom payment. You can return a `PXGenericPayment` or `PXBusinessResult`.
+     Method that we will call if `paymentProcessorViewController()` is nil. You can return the data of your custom payment. You can return a `PXGenericPayment` or `PXBusinessResult`.
      - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
      - parameter errorHandler: Use to receive an error handler.
      - parameter successWithBusinessResult: Use to return a custom PXBusinessResult.
