@@ -55,7 +55,7 @@ internal extension NSDictionary {
         return value == nil || value?.count == 0
     }
 
-    public func isKeyValid(_ dictKey: String) -> Bool {
+    func isKeyValid(_ dictKey: String) -> Bool {
         let dictValue: Any? = self[dictKey]
         return (dictValue == nil || dictValue is NSNull) ? false : true
     }
