@@ -1,12 +1,6 @@
 {
   "warnings": [
-    {
-      "file": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK/MercadoPagoSDK/Services/Models/PXCampaing.swift",
-      "line": 75,
-      "symbol": "PXCampaign.init(id:code:maxRedeemPerUser:name:maxCouponAmount:endDate:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    }
+
   ],
   "source_directory": "/Users/jsanzone/ios/px-ios/MercadoPagoSDK"
 }
