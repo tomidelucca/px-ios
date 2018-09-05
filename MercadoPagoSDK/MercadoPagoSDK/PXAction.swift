@@ -8,10 +8,19 @@
 
 import UIKit
 
+/**
+ This is for custom actionas. Label + clousure action. We need this object in certains scenarios. For example in `PXBusinessResult` custom button actions.
+ */
 @objcMembers
 open class PXAction: NSObject {
     var label: String
     var action : (() -> Void)
+    // MARK: Initialization
+    /**
+     Mandatory init.
+     - parameter label: The label for your custom action.
+     - parameter action: Clousure custom block.
+     */
     public init(label: String, action:  @escaping (() -> Void)) {
         self.label = label
         self.action = action

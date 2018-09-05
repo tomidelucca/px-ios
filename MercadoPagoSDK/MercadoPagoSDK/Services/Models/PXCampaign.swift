@@ -7,41 +7,81 @@
 //
 
 import Foundation
-/// :nodoc:
+
+/**
+ * Model that represents a discount campaign.
+ */
 @objc
 open class PXCampaign: NSObject, Codable {
-
+    /// :nodoc:
     open var id: Int64!
+    /// :nodoc:
     open var code: String?
+    /// :nodoc:
     open var name: String?
+    /// :nodoc:
     open var discountType: String?
+    /// :nodoc:
     open var value: Double?
+    /// :nodoc:
     open var endDate: Date?
+    /// :nodoc:
     open var minPaymentAmount: Double?
+    /// :nodoc:
     open var maxPaymentAmount: Double?
+    /// :nodoc:
     open var maxCouponAmount: Double
+    /// :nodoc:
     open var totalAmountLimit: Double?
+    /// :nodoc:
     open var maxCoupons: Int64?
+    /// :nodoc:
     open var maxCouponsByCode: Int?
+    /// :nodoc:
     open var maxRedeemPerUser: Int?
+    /// :nodoc:
     open var siteId: String?
+    /// :nodoc:
     open var marketplace: String?
+    /// :nodoc:
     open var codeType: String?
+    /// :nodoc:
     open var maxUserAmountPerCampaign: Double?
+    /// :nodoc:
     open var labels: [String]?
+    /// :nodoc:
     open var paymentMethodsIds: [String]?
+    /// :nodoc:
     open var paymentTypesIds: [String]?
+    /// :nodoc:
     open var cardIssuersIds: [String]?
+    /// :nodoc:
     open var shippingModes: [String]?
+    /// :nodoc:
     open var clientId: Int64?
+    /// :nodoc:
     open var tags: [String]?
+    /// :nodoc:
     open var multipleCodeLimit: Int?
+    /// :nodoc:
     open var codeCount: Int?
+    /// :nodoc:
     open var couponAmount: Double?
+    /// :nodoc:
     open var collectors: [Int64]?
 
+    // MARK: Init.
+    /**
+     Mandatory init.
+     - parameter id: Campaign id.
+     - parameter code: Campaign code.
+     - parameter maxRedeemPerUser: Campaign max redeem per user.
+     - parameter name: Campaign name.
+     - parameter maxCouponAmount: Campaign max coupon amount.
+     - parameter endDate: Campaign end date.
+     */
     @objc
-    public init(id: Int64, code: String?, maxRedeemPerUser: Int, name: String?, maxCouponAmount: Double, endDate: Date) {
+    public init(id: Int64, code: String?, maxRedeemPerUser: Int = 1, name: String?, maxCouponAmount: Double, endDate: Date) {
         self.id = id
         self.code = code
         self.name = name
@@ -50,6 +90,7 @@ open class PXCampaign: NSObject, Codable {
         self.endDate = endDate
     }
 
+    /// :nodoc:
     @objc
     public init(id: Int64, code: String?, name: String?, maxCouponAmount: Double) {
         self.id = id
@@ -58,8 +99,8 @@ open class PXCampaign: NSObject, Codable {
         self.maxCouponAmount = maxCouponAmount
     }
 
+    /// :nodoc:
     public init(id: Int64, code: String?, name: String?, discountType: String?, value: Double?, endDate: Date?, minPaymentAmount: Double?, maxPaymentAmount: Double?, maxCouponAmount: Double?, totalAmountLimit: Double?, maxCoupons: Int64?, maxCouponsByCode: Int?, maxRedeemPerUser: Int?, siteId: String?, marketplace: String?, codeType: String?, maxUserAmountPerCampaign: Double?, labels: [String]?, paymentMethodsIds: [String]?, paymentTypesIds: [String]?, cardIssuersIds: [String]?, shippingModes: [String]?, clientId: Int64?, tags: [String]?, multipleCodeLimit: Int?, codeCount: Int?, couponAmount: Double?, collectors: [Int64]?) {
-
             self.id = id
             self.code = code
             self.name = name
@@ -90,6 +131,7 @@ open class PXCampaign: NSObject, Codable {
             self.collectors = collectors
     }
 
+    /// :nodoc:
     public enum PXCampaignKeys: String, CodingKey {
         case id
         case code
@@ -121,6 +163,7 @@ open class PXCampaign: NSObject, Codable {
         case collectors
     }
 
+    /// :nodoc:
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCampaignKeys.self)
         let id: Int64 = try container.decode(Int64.self, forKey: .id)
@@ -155,6 +198,7 @@ open class PXCampaign: NSObject, Codable {
        self.init(id: id, code: code, name: name, discountType: discountType, value: value, endDate: endDate, minPaymentAmount: minPaymentAmount, maxPaymentAmount: maxPaymentAmount, maxCouponAmount: maxCouponAmount, totalAmountLimit: totalAmountLimit, maxCoupons: maxCoupons, maxCouponsByCode: maxCouponsByCode, maxRedeemPerUser: maxRedeemPerUser, siteId: siteId, marketplace: marketplace, codeType: codeType, maxUserAmountPerCampaign: maxUserAmountPerCampaign, labels: labels, paymentMethodsIds: paymentMethodsIds, paymentTypesIds: paymentTypesIds, cardIssuersIds: cardIssuersIds, shippingModes: shippingModes, clientId: clientId, tags: tags, multipleCodeLimit: multipleCodeLimit, codeCount: codeCount, couponAmount: couponAmount, collectors: collectors)
     }
 
+    /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXCampaignKeys.self)
         try container.encodeIfPresent(self.id, forKey: .id)
@@ -187,23 +231,26 @@ open class PXCampaign: NSObject, Codable {
         try container.encodeIfPresent(self, forKey: .collectors)
     }
 
+    /// :nodoc:
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
         return String(data: data, encoding: .utf8)
     }
 
+    /// :nodoc:
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
 
+    /// :nodoc:
     open class func fromJSONToPXCampaing(data: Data) throws -> PXCampaign {
         return try JSONDecoder().decode(PXCampaign.self, from: data)
     }
 
+    /// :nodoc:
     open class func fromJSON(data: Data) throws -> [PXCampaign] {
         return try JSONDecoder().decode([PXCampaign].self, from: data)
     }
-
 }

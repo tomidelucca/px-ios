@@ -67,7 +67,7 @@ extension PXPaymentMethodComponentRenderer {
             PXLayout.pinLeft(view: detailLabel, to: pmTitle).isActive = true
             PXLayout.pinTop(view: pmTitle, to: pmIcon).isActive = true
             PXLayout.put(view: detailLabel, onBottomOf: pmTitle, withMargin: PXLayout.XXXS_MARGIN).isActive = true
-            PXLayout.setWidth(owner: detailLabel, width: detailLabel.intrinsicContentSize.width).isActive = true
+            PXLayout.pinRight(view: detailLabel, withMargin: PXLayout.M_MARGIN).isActive = true
             pmView.paymentMethodSubtitle = detailLabel
             pmTitle.layoutIfNeeded()
             defaultHeight += pmTitle.frame.height - PXLayout.XXXS_MARGIN

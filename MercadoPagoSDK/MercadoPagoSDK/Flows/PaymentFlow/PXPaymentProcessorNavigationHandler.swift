@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Navigation handler to manage communication between your Processor and our Checkout. You should use this navigation handler only with custom Processor view. When you use a custom `UIViewController` to present youur own view, you can use this Object in order to notify: `didFinishPayment`, `showLoading`, `hideLoading`.
+ */
 @objcMembers
 open class PXPaymentProcessorNavigationHandler: NSObject {
     private var flow: PXPaymentFlow?
@@ -16,11 +19,17 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
         self.flow = flow
     }
 
+    // MARK: Notify your payment.
+    /**
+     Notify that your custom payment was finish. Send your custom `PXBusinessResult` object.
+     - parameter businessResult: Your custom `PXBusinessResult`.
+     */
     open func didFinishPayment(businessResult: PXBusinessResult) {
         self.flow?.model.businessResult = businessResult
         self.flow?.executeNextStep()
     }
 
+    /// :nodoc:
     open func didFinishPayment(paymentStatus: PXGenericPayment.RemotePaymentStatus, statusDetails: String = "", paymentId: String? = nil) {
 
         guard let paymentData = self.flow?.model.paymentData else {
@@ -57,6 +66,12 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
         flow?.executeNextStep()
     }
 
+    /**
+     Notify that your payment was finish. Send a default Payment.
+     - parameter status: Status of your payment.
+     - parameter statusDetail: Status detail of your payment.
+     - parameter paymentId: Id of your payment.
+     */
     open func didFinishPayment(status: String, statusDetail: String, paymentId: String? = nil) {
 
         guard let paymentData = self.flow?.model.paymentData else {
@@ -74,10 +89,18 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
         flow?.executeNextStep()
     }
 
+    // MARK: Navigation actions.
+
+    /**
+     Call to Checkout next screen.
+     */
     open func next() {
         flow?.executeNextStep()
     }
 
+    /**
+     Call to Checkout next screen and remove current screen from stack.
+     */
     open func nextAndRemoveCurrentScreenFromStack() {
         guard let currentViewController = self.flow?.pxNavigationHandler.navigationController.viewControllers.last else {
             flow?.executeNextStep()
@@ -91,10 +114,16 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
         }
     }
 
+    /**
+     Show our Checkout loading full screen.
+     */
     open func showLoading() {
         flow?.pxNavigationHandler.presentLoading()
     }
 
+    /**
+     Hide our Checkout loading full screen.
+     */
     open func hideLoading() {
         flow?.pxNavigationHandler.dismissLoading()
     }

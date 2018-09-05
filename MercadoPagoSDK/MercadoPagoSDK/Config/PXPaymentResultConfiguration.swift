@@ -8,8 +8,10 @@
 
 import Foundation
 
+/**
+ This object declare custom preferences (customizations) for "Congrats" screen.
+ */
 @objcMembers open class PXPaymentResultConfiguration: NSObject {
-
     // V4 final.
     private var topCustomView: UIView?
     private var bottomCustomView: UIView?
@@ -17,6 +19,12 @@ import Foundation
     /// :nodoc:
     override init() {}
 
+    // MARK: Init.
+    /**
+     Define your custom UIViews. `topView` and `bottomView` of the screen.
+     - parameter topView: Optional custom top view.
+     - parameter bottomView: Optional custom bottom view.
+     */
     public init(topView: UIView?  = nil, bottomView: UIView? = nil) {
         self.topCustomView = topView
         self.bottomCustomView = bottomView

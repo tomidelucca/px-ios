@@ -8,6 +8,11 @@
 
 import Foundation
 
+/**
+ Model that represents `curl -X OPTIONS` (https://api.mercadopago.com/checkout/preferences) `| json_pp`
+ It can be not exactly the same because exists custom configurations for open Preference.
+ Some values like: binary mode are not present on API call.
+ */
 @objcMembers open class PXCheckoutPreference: NSObject, Codable {
     open var id: String!
     open var items: [PXItem] = []
@@ -19,11 +24,25 @@ import Foundation
     open var site: PXSite?
     open var differentialPricing: PXDifferentialPricing?
     internal var binaryModeEnabled: Bool = false
-    
 
+    // MARK: Initialization
+    /**
+     Mandatory init.
+     - parameter preferenceId: The preference id that represents the payment information.
+     */
     public init(preferenceId: String) {
         self.id = preferenceId
     }
+
+    /**
+     Mandatory init.
+     Builder for custom CheckoutPreference construction.
+     It should be only used if you are processing the payment
+     with a Payment processor. Otherwise you should use the ID constructor.
+     - parameter siteId: Preference site.
+     - parameter payerEmail: Payer email.
+     - parameter items: Items to pay.
+     */
 
     public init(siteId: String, payerEmail: String, items: [PXItem]) {
         self.items = items

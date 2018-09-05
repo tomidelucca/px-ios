@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ Data needed for payment.
+ */
 @objcMembers public class PXPaymentData: NSObject, NSCopying {
     internal var paymentMethod: PXPaymentMethod?
     internal var issuer: PXIssuer?
@@ -94,14 +97,23 @@ import UIKit
 
 // MARK: Getters
 extension PXPaymentData {
+    /**
+     getToken
+     */
     public func getToken() -> PXToken? {
         return token
     }
 
+    /**
+     getPayerCost
+     */
     public func getPayerCost() -> PXPayerCost? {
         return payerCost
     }
 
+    /**
+     getNumberOfInstallments
+     */
     public func getNumberOfInstallments() -> Int {
         guard let installments = payerCost?.installments else {
             return 0
@@ -109,18 +121,30 @@ extension PXPaymentData {
         return installments
     }
 
+    /**
+     getIssuer
+     */
     public func getIssuer() -> PXIssuer? {
         return issuer
     }
 
+    /**
+     getPayer
+     */
     public func getPayer() -> PXPayer? {
         return payer
     }
 
+    /**
+     getPaymentMethod
+     */
     public func getPaymentMethod() -> PXPaymentMethod? {
         return paymentMethod
     }
 
+    /**
+     getDiscount
+     */
     public func getDiscount() -> PXDiscount? {
         return discount
     }

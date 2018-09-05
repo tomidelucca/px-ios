@@ -64,9 +64,12 @@
 
 //    self.pref.preferenceId = @"99628543-518e6477-ac0d-4f4a-8097-51c2fcc00b71";
 //
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
+    [self setCheckoutPref_CreditCardNotExcluded];
+
+self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+
+    //self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44"];
 
     [PXTracker setListener:self];
 
@@ -95,11 +98,8 @@
 
     // [self.mpCheckout discountNotAvailable];
 
-    // PXDiscount* discount = [[PXDiscount alloc] init];
 
-    PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
-    PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
-    
+
     // [self.mpCheckout setDiscount:discount withCampaign:campaign];
     
     NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
@@ -150,10 +150,24 @@
     PaymentPluginViewController *paymentProcessorPlugin = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
     self.paymentConfig = [[PXPaymentConfiguration alloc] initWithPaymentProcessor:paymentProcessorPlugin];
     [self addPaymentMethodPluginToPaymentConfig];
+    [self addDiscount];
     return self.paymentConfig;
 }
 
 -(void)addPaymentMethodPluginToPaymentConfig {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
+
+    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"account_money" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"Estas usando dinero invertido"];
+
+    [self.paymentConfig addPaymentMethodPluginWithPlugin:bitcoinPaymentMethodPlugin];
+}
+
+-(void)addDiscount {
+    PXDiscount* discount = [[PXDiscount alloc] initWithId:@"34295216" name:@"nada" percentOff:20 amountOff:0 couponAmount:7 currencyId:@"ARG"];
+    PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
+    PXDiscountConfiguration * configDiscount = [[PXDiscountConfiguration alloc] initWithDiscount:discount campaign:campaign];
+    [self.paymentConfig setDiscountConfigurationWithConfig:configDiscount];
 }
 
 -(void)setVoidCallback {}

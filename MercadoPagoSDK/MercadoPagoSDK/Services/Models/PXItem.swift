@@ -10,7 +10,7 @@ import Foundation
 
 @objcMembers
 open class PXItem: NSObject, Codable {
-    
+
     open var categoryId: String?
     open var currencyId: String?
     open var _description: String?
@@ -20,6 +20,15 @@ open class PXItem: NSObject, Codable {
     open var title: String = ""
     open var unitPrice: Double = 0
 
+    // MARK: Init.
+    /**
+     Builder for item construction.
+     It should be used when checkout initialize without a preference id and
+     it is initialize with a preference created programmatically.
+     - parameter title: Item title.
+     - parameter quantity: Item quantity.
+     - parameter unitPrice: Item price.
+     */
     public init(title: String, quantity: Int, unitPrice: Double) {
         self.title = title
         self.quantity = quantity
@@ -98,18 +107,34 @@ open class PXItem: NSObject, Codable {
 
 // MARK: Setters
 extension PXItem {
+    /**
+     setId
+     - parameter id: ID.
+     */
     open func setId(id: String) {
         self.id = id
     }
 
+    /**
+     setDescription
+     - parameter description: Description.
+     */
     open func setDescription(description: String) {
         self._description = description
     }
 
+    /**
+     setPictureURL
+     - parameter url: Url remote picture.
+     */
     open func setPictureURL(url: String) {
         self.pictureUrl = url
     }
 
+    /**
+     setCategoryId
+     - parameter categoryId: Category id.
+     */
     open func setCategoryId(categoryId: String) {
         self.categoryId = categoryId
     }
@@ -117,30 +142,51 @@ extension PXItem {
 
 // MARK: Getters
 extension PXItem {
+    /**
+     getQuantity
+     */
     open func getQuantity() -> Int {
         return quantity
     }
 
+    /**
+     getUnitPrice
+     */
     open func getUnitPrice() -> Double {
         return unitPrice
     }
 
+    /**
+     getTitle
+     */
     open func getTitle() -> String {
         return title
     }
 
+    /**
+     getId
+     */
     open func getId() -> String? {
         return id
     }
 
+    /**
+     getDescription
+     */
     open func getDescription() -> String? {
         return _description
     }
 
+    /**
+     getCategoryId
+     */
     open func getCategoryId() -> String? {
         return categoryId
     }
 
+    /**
+     getPictureURL
+     */
     open func getPictureURL() -> String? {
         return pictureUrl
     }

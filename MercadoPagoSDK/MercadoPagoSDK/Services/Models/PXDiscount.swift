@@ -7,16 +7,49 @@
 //
 
 import Foundation
-/// :nodoc:
+
+/**
+ * Model that represents the discount which will be applied to a payment.
+ */
 @objc
 open class PXDiscount: NSObject, Codable {
+    // MARK: Public Accessors.
+    /**
+     * ID
+     */
     open var id: String!
+    /**
+     * NAME
+     */
     open var name: String?
+    /**
+     * percentOff
+     */
     open var percentOff: Double
+    /**
+     * amountOff
+     */
     open var amountOff: Double
+    /**
+     * couponAmount
+     */
     open var couponAmount: Double
+    /**
+     * currencyId
+     */
     open var currencyId: String?
 
+    // MARK: Init.
+    /**
+     Builder for discount construction.
+     This discount have to be created in Mercado Pago.
+     - parameter id: Discount id
+     - parameter name: Discount name (Optional)
+     - parameter percentOff: Number of percent off.
+     - parameter amountOff: Number of amount off.
+     - parameter couponAmount: Coupon amount value.
+     - parameter currencyId: Currency id string symbol.
+     */
     @objc
     public init(id: String, name: String?, percentOff: Double, amountOff: Double, couponAmount: Double, currencyId: String?) {
         self.id = id
@@ -27,6 +60,7 @@ open class PXDiscount: NSObject, Codable {
         self.currencyId = currencyId
     }
 
+    /// :nodoc:
     public enum PXDiscountKeys: String, CodingKey {
         case id
         case name
@@ -36,6 +70,7 @@ open class PXDiscount: NSObject, Codable {
         case currencyId = "currency_id"
     }
 
+    /// :nodoc:
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXDiscountKeys.self)
         let percentOff: Double = try container.decodeIfPresent(Double.self, forKey: .percentOff) ?? 0
@@ -55,6 +90,7 @@ open class PXDiscount: NSObject, Codable {
         self.init(id: id, name: name, percentOff: percentOff, amountOff: amountOff, couponAmount: couponAmount, currencyId: currencyId)
     }
 
+    /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXDiscountKeys.self)
         try container.encodeIfPresent(self.percentOff, forKey: .percentOff)
@@ -65,19 +101,21 @@ open class PXDiscount: NSObject, Codable {
         try container.encodeIfPresent(self.currencyId, forKey: .currencyId)
     }
 
+    /// :nodoc:
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
         return String(data: data, encoding: .utf8)
     }
 
+    /// :nodoc:
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
 
+    /// :nodoc:
     open class func fromJSON(data: Data) throws -> PXDiscount {
         return try JSONDecoder().decode(PXDiscount.self, from: data)
     }
-
 }

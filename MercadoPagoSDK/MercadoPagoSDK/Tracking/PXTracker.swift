@@ -8,8 +8,14 @@
 
 import Foundation
 
+/**
+Use this object to call methods related to our PX tracker.
+ */
 @objcMembers
 open class PXTracker: NSObject {
+    /**
+     Set your own tracker listener protocol to be aware of PX-Checkout tracking events
+     */
     open static func setListener(_ listener: PXTrackerListener) {
         MPXTracker.sharedInstance.setTrack(listener: listener)
     }

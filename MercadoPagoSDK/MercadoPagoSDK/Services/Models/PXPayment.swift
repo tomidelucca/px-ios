@@ -1,5 +1,5 @@
 //
-//  PXPaymentNew.swift
+//  PXPayment.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/20/17.
@@ -7,50 +7,155 @@
 //
 
 import Foundation
-/// :nodoc:
 
+/**
+ This is our Payment object. When we make the payment, we return this object in the checkout exit. More details in: `PXLifeCycleProtocol` finishCheckout method.
+ */
 @objcMembers open class PXPayment: NSObject, Codable {
+    /**
+     * binaryMode
+     */
     open var binaryMode: Bool?
+    /**
+     * callForAuthorizeId
+     */
     open var callForAuthorizeId: String?
+    /**
+     * captured
+     */
     open var captured: Bool?
+    /**
+     * card
+     */
     open var card: PXCard?
+    /**
+     * collectorId
+     */
     open var collectorId: Int?
+    /**
+     * couponAmount
+     */
     open var couponAmount: Double?
+    /**
+     * currencyId
+     */
     open var currencyId: String?
+    /**
+     * dateApproved
+     */
     open var dateApproved: Date?
+    /**
+     * dateCreated
+     */
     open var dateCreated: Date?
+    /**
+     * dateLastUpdated
+     */
     open var dateLastUpdated: Date?
+    /**
+     * description
+     */
     open var _description: String?
+    /**
+     * differentialPricingId
+     */
     open var differentialPricingId: Int64?
+    /**
+     * externalReference
+     */
     open var externalReference: String?
+    /**
+     * feesDetails
+     */
     open var feeDetails: [PXFeeDetail]?
+    /**
+     * paymentId
+     */
     open var id: Int64
+    /**
+     * installments
+     */
     open var installments: Int?
+    /**
+     * issuer
+     */
     open var issuerId: String?
+    /**
+     * liveMode
+     */
     open var liveMode: Bool?
+    /**
+     * metadata
+     */
     open var metadata: [String: String]?
+    /**
+     * moneyReleaseDate
+     */
     open var moneyReleaseDate: Date?
+    /**
+     * notificationUrl
+     */
     open var notificationUrl: String?
+    /**
+     * operationType
+     */
     open var operationType: String?
+    /**
+     * order
+     */
     open var order: PXOrder?
+    /**
+     * payer
+     */
     open var payer: PXPayer?
+    /**
+     * paymentMethodId
+     */
     open var paymentMethodId: String?
+    /**
+     * paymentTypeId
+     */
     open var paymentTypeId: String?
+    /**
+     * refunds
+     */
     open var refunds: [PXRefund]?
+    /**
+     * statementDescriptor
+     */
     open var statementDescriptor: String?
+    /**
+     * status
+     */
     open var status: String
+    /**
+     * statusDetail
+     */
     open var statusDetail: String = ""
+    /**
+     * transactionAmount
+     */
     open var transactionAmount: Double?
+    /**
+     * transactionAmountRefunded
+     */
     open var transactionAmountRefunded: Double?
+    /**
+     * transactionDetails
+     */
     open var transactionDetails: PXTransactionDetails?
+    /**
+     * tokenId
+     */
     open var tokenId: String?
 
+    /// :nodoc:
     internal init(id: Int64, status: String) {
         self.id = id
         self.status = status
     }
 
-    public init(binaryMode: Bool?, callForAuthorizeId: String?, captured: Bool?, card: PXCard?, collectorId: Int?, couponAmount: Double?, currencyId: String?, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String?, differentialPricingId: Int64?, externalReference: String?, feeDetails: [PXFeeDetail]?, id: Int64, installments: Int?, issuerId: String?, liveMode: Bool?, metadata: [String: String]?, moneyReleaseDate: Date?, notificationUrl: String?, operationType: String?, order: PXOrder?, payer: PXPayer?, paymentMethodId: String?, paymentTypeId: String?, refunds: [PXRefund]?, statementDescriptor: String?, status: String, statusDetail: String, transactionAmount: Double?, transactionAmountRefunded: Double?, transactionDetails: PXTransactionDetails?, tokenId: String?) {
+    internal init(binaryMode: Bool?, callForAuthorizeId: String?, captured: Bool?, card: PXCard?, collectorId: Int?, couponAmount: Double?, currencyId: String?, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String?, differentialPricingId: Int64?, externalReference: String?, feeDetails: [PXFeeDetail]?, id: Int64, installments: Int?, issuerId: String?, liveMode: Bool?, metadata: [String: String]?, moneyReleaseDate: Date?, notificationUrl: String?, operationType: String?, order: PXOrder?, payer: PXPayer?, paymentMethodId: String?, paymentTypeId: String?, refunds: [PXRefund]?, statementDescriptor: String?, status: String, statusDetail: String, transactionAmount: Double?, transactionAmountRefunded: Double?, transactionDetails: PXTransactionDetails?, tokenId: String?) {
 
         self.binaryMode = binaryMode
         self.callForAuthorizeId = callForAuthorizeId
@@ -89,6 +194,7 @@ import Foundation
 
     }
 
+    /// :nodoc:
     public enum PXPaymentKeys: String, CodingKey {
         case binaryMode = "binary_mode"
         case callForAuthorizeId = "call_for_authorize_id"
@@ -126,6 +232,7 @@ import Foundation
         case tokenId = "token_id"
     }
 
+    /// :nodoc:
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentKeys.self)
         let binaryMode: Bool? = try container.decodeIfPresent(Bool.self, forKey: .binaryMode)
@@ -166,6 +273,7 @@ import Foundation
         self.init(binaryMode: binaryMode, callForAuthorizeId: callForAuthorizeId, captured: captured, card: card, collectorId: collectorId, couponAmount: couponAmount, currencyId: currencyId, dateApproved: dateApproved, dateCreated: dateCreated, dateLastUpdated: dateLastUpdated, description: description, differentialPricingId: differentialPricingId, externalReference: externalReference, feeDetails: feeDetails, id: id, installments: installments, issuerId: issuerId, liveMode: liveMode, metadata: metadata, moneyReleaseDate: moneyReleaseDate, notificationUrl: notificationUrl, operationType: operationType, order: order, payer: payer, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, refunds: refunds, statementDescriptor: statementDescriptor, status: status, statusDetail: statusDetail, transactionAmount: transactionAmount, transactionAmountRefunded: transactionAmountRefunded, transactionDetails: transactionDetails, tokenId: tokenId)
     }
 
+    /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXPaymentKeys.self)
         try container.encodeIfPresent(self.binaryMode, forKey: .binaryMode)
@@ -204,6 +312,7 @@ import Foundation
         try container.encodeIfPresent(self.tokenId, forKey: .tokenId)
     }
 
+    /// :nodoc:
     open func getDateFromString(_ string: String?) -> Date? {
         if let dateString = string {
             let dateFormatter = DateFormatter()
@@ -216,21 +325,25 @@ import Foundation
         }
     }
 
+    /// :nodoc:
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
         return String(data: data, encoding: .utf8)
     }
 
+    /// :nodoc:
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
 
+    /// :nodoc:
     open class func fromJSON(data: Data) throws -> PXPayment {
         return try JSONDecoder().decode(PXPayment.self, from: data)
     }
 
+    /// :nodoc:
     open func isCardPaymentType() -> Bool {
         return self.paymentTypeId == PXPaymentTypes.CREDIT_CARD.rawValue || self.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue || paymentTypeId == PXPaymentTypes.PREPAID_CARD.rawValue
     }
