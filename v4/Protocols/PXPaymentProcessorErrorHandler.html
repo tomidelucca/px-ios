@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PXPendingStatusDetail Enumeration Reference</title>
+    <title>PXPaymentProcessorErrorHandler Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/PXPendingStatusDetail" class="dashAnchor"></a>
-    <a title="PXPendingStatusDetail Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Protocol/PXPaymentProcessorErrorHandler" class="dashAnchor"></a>
+    <a title="PXPaymentProcessorErrorHandler Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (99% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        PXPendingStatusDetail Enumeration Reference
+        PXPaymentProcessorErrorHandler Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -157,14 +157,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>PXPendingStatusDetail</h1>
+            <h1>PXPaymentProcessorErrorHandler</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PXPendingStatusDetail</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PXPaymentProcessorErrorHandler</span> <span class="p">:</span> <span class="kt">NSObjectProtocol</span></code></pre>
 
                 </div>
               </div>
-            <p>Use this enum only for reference.</p>
+            <p>Handler protocol to manage wrong scenarios related with your custom Processor</p>
 
           </section>
           <section class="section task-group-section">
@@ -173,9 +174,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14MercadoPagoSDK21PXPendingStatusDetailO11CONTINGENCYA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/CONTINGENCY" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK21PXPendingStatusDetailO11CONTINGENCYA2CmF">CONTINGENCY</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(pl)PXPaymentProcessorErrorHandler(im)showError"></a>
+                    <a name="//apple_ref/swift/Method/showError()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(pl)PXPaymentProcessorErrorHandler(im)showError">showError()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -183,79 +184,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>CONTINGENCY - PXPendingStatusDetail.</p>
+                        <p>Use this method to make a shake action on the loading progress payment button and change the color to red</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">CONTINGENCY</span> <span class="o">=</span> <span class="s">"pending_contingency"</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">func</span> <span class="nf">showError</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L110">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14MercadoPagoSDK21PXPendingStatusDetailO13REVIEW_MANUALA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/REVIEW_MANUAL" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK21PXPendingStatusDetailO13REVIEW_MANUALA2CmF">REVIEW_MANUAL</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>REVIEW_MANUAL - PXPendingStatusDetail.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">REVIEW_MANUAL</span> <span class="o">=</span> <span class="s">"pending_review_manual"</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L114">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14MercadoPagoSDK21PXPendingStatusDetailO15WAITING_PAYMENTA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/WAITING_PAYMENT" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK21PXPendingStatusDetailO15WAITING_PAYMENTA2CmF">WAITING_PAYMENT</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>WAITING_PAYMENT - PXPendingStatusDetail.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">WAITING_PAYMENT</span> <span class="o">=</span> <span class="s">"pending_waiting_payment"</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L118">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/PaymentFlow/PXPaymentProcessorErrorHandler.swift#L14">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

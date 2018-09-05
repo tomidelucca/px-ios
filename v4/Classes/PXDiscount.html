@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PXPaymentProcessorNavigationHandler Class Reference</title>
+    <title>PXDiscount Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/PXPaymentProcessorNavigationHandler" class="dashAnchor"></a>
-    <a title="PXPaymentProcessorNavigationHandler Class Reference"></a>
+    <a name="//apple_ref/swift/Class/PXDiscount" class="dashAnchor"></a>
+    <a title="PXDiscount Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (99% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        PXPaymentProcessorNavigationHandler Class Reference
+        PXDiscount Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -157,33 +157,33 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>PXPaymentProcessorNavigationHandler</h1>
+            <h1>PXDiscount</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXPaymentProcessorNavigationHandler</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXDiscount</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
-            <p>Navigation handler to manage communication between your Processor and our Checkout. You should use this navigation handler only with custom Processor view. When you use a custom <code>UIViewController</code> to present youur own view, you can use this Object in order to notify: <code>didFinishPayment</code>, <code>showLoading</code>, <code>hideLoading</code>.</p>
+            <p>Model that represents the discount which will be applied to a payment.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Notify%20your%20payment."></a>
-                <a name="//apple_ref/swift/Section/Notify your payment." class="dashAnchor"></a>
-                <a href="#/Notify%20your%20payment.">
-                  <h3 class="section-name">Notify your payment.</h3>
+                <a name="/Public%20Accessors."></a>
+                <a name="//apple_ref/swift/Section/Public Accessors." class="dashAnchor"></a>
+                <a href="#/Public%20Accessors.">
+                  <h3 class="section-name">Public Accessors.</h3>
                 </a>
               </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)didFinishPaymentWithBusinessResult:"></a>
-                    <a name="//apple_ref/swift/Method/didFinishPayment(businessResult:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)didFinishPaymentWithBusinessResult:">didFinishPayment(businessResult:)</a>
+                    <a name="/s:14MercadoPagoSDK10PXDiscountC2idSQySSGv"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK10PXDiscountC2idSQySSGv">id</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -191,38 +191,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Notify that your custom payment was finish. Send your custom <code><a href="../Classes/PXBusinessResult.html">PXBusinessResult</a></code> object.</p>
+                        <p>ID</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didFinishPayment</span><span class="p">(</span><span class="nv">businessResult</span><span class="p">:</span> <span class="kt"><a href="../Classes/PXBusinessResult.html">PXBusinessResult</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>businessResult</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Your custom <code><a href="../Classes/PXBusinessResult.html">PXBusinessResult</a></code>.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/PaymentFlow/PXPaymentProcessorNavigationHandler.swift#L27-L30">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXDiscount.swift#L20">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -230,9 +211,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)didFinishPaymentWithStatus:statusDetail:paymentId:"></a>
-                    <a name="//apple_ref/swift/Method/didFinishPayment(status:statusDetail:paymentId:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)didFinishPaymentWithStatus:statusDetail:paymentId:">didFinishPayment(status:statusDetail:paymentId:)</a>
+                    <a name="/s:14MercadoPagoSDK10PXDiscountC4nameSSSgv"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK10PXDiscountC4nameSSSgv">name</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -240,62 +221,139 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Notify that your payment was finish. Send a default Payment.</p>
+                        <p>NAME</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didFinishPayment</span><span class="p">(</span><span class="nv">status</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">statusDetail</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">paymentId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>status</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Status of your payment.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>statusDetail</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Status detail of your payment.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>paymentId</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Id of your payment.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXDiscount.swift#L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK10PXDiscountC10percentOffSdv"></a>
+                    <a name="//apple_ref/swift/Property/percentOff" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK10PXDiscountC10percentOffSdv">percentOff</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>percentOff</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">percentOff</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/PaymentFlow/PXPaymentProcessorNavigationHandler.swift#L75-L90">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXDiscount.swift#L28">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK10PXDiscountC9amountOffSdv"></a>
+                    <a name="//apple_ref/swift/Property/amountOff" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK10PXDiscountC9amountOffSdv">amountOff</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>amountOff</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">amountOff</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXDiscount.swift#L32">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK10PXDiscountC12couponAmountSdv"></a>
+                    <a name="//apple_ref/swift/Property/couponAmount" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK10PXDiscountC12couponAmountSdv">couponAmount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>couponAmount</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">couponAmount</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXDiscount.swift#L36">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14MercadoPagoSDK10PXDiscountC10currencyIdSSSgv"></a>
+                    <a name="//apple_ref/swift/Property/currencyId" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14MercadoPagoSDK10PXDiscountC10currencyIdSSSgv">currencyId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>currencyId</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">currencyId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXDiscount.swift#L40">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -304,19 +362,19 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Navigation%20actions."></a>
-                <a name="//apple_ref/swift/Section/Navigation actions." class="dashAnchor"></a>
-                <a href="#/Navigation%20actions.">
-                  <h3 class="section-name">Navigation actions.</h3>
+                <a name="/Init."></a>
+                <a name="//apple_ref/swift/Section/Init." class="dashAnchor"></a>
+                <a href="#/Init.">
+                  <h3 class="section-name">Init.</h3>
                 </a>
               </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)next"></a>
-                    <a name="//apple_ref/swift/Method/next()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)next">next()</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXDiscount(im)initWithId:name:percentOff:amountOff:couponAmount:currencyId:"></a>
+                    <a name="//apple_ref/swift/Method/init(id:name:percentOff:amountOff:couponAmount:currencyId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXDiscount(im)initWithId:name:percentOff:amountOff:couponAmount:currencyId:">init(id:name:percentOff:amountOff:couponAmount:currencyId:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -324,109 +382,100 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Call to Checkout next screen.</p>
+                        <p>Builder for discount construction.
+This discount have to be created in Mercado Pago.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">next</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">percentOff</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">amountOff</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">couponAmount</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">currencyId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/PaymentFlow/PXPaymentProcessorNavigationHandler.swift#L97-L99">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)nextAndRemoveCurrentScreenFromStack"></a>
-                    <a name="//apple_ref/swift/Method/nextAndRemoveCurrentScreenFromStack()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)nextAndRemoveCurrentScreenFromStack">nextAndRemoveCurrentScreenFromStack()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Call to Checkout next screen and remove current screen from stack.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">nextAndRemoveCurrentScreenFromStack</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/PaymentFlow/PXPaymentProcessorNavigationHandler.swift#L104-L115">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)showLoading"></a>
-                    <a name="//apple_ref/swift/Method/showLoading()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)showLoading">showLoading()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Show our Checkout loading full screen.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">showLoading</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/PaymentFlow/PXPaymentProcessorNavigationHandler.swift#L120-L122">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)hideLoading"></a>
-                    <a name="//apple_ref/swift/Method/hideLoading()" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXPaymentProcessorNavigationHandler(im)hideLoading">hideLoading()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Hide our Checkout loading full screen.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">hideLoading</span><span class="p">()</span></code></pre>
-
-                        </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Discount id</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Discount name (Optional)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>percentOff</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Number of percent off.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>amountOff</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Number of amount off.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>couponAmount</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Coupon amount value.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>currencyId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Currency id string symbol.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Flows/PaymentFlow/PXPaymentProcessorNavigationHandler.swift#L127-L129">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXDiscount.swift#L54-L61">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

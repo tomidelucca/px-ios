@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PXPendingStatusDetail Enumeration Reference</title>
+    <title>PXCampaign Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/PXPendingStatusDetail" class="dashAnchor"></a>
-    <a title="PXPendingStatusDetail Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Class/PXCampaign" class="dashAnchor"></a>
+    <a title="PXCampaign Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">MercadoPagoSDK Docs</a> (99% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">MercadoPagoSDK Reference</a>
         <img id="carat" src="../img/carat.png" />
-        PXPendingStatusDetail Enumeration Reference
+        PXCampaign Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -157,25 +157,33 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>PXPendingStatusDetail</h1>
+            <h1>PXCampaign</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PXPendingStatusDetail</span> <span class="p">:</span> <span class="kt">String</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">PXCampaign</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
-            <p>Use this enum only for reference.</p>
+            <p>Model that represents a discount campaign.</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Init."></a>
+                <a name="//apple_ref/swift/Section/Init." class="dashAnchor"></a>
+                <a href="#/Init.">
+                  <h3 class="section-name">Init.</h3>
+                </a>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:14MercadoPagoSDK21PXPendingStatusDetailO11CONTINGENCYA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/CONTINGENCY" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK21PXPendingStatusDetailO11CONTINGENCYA2CmF">CONTINGENCY</a>
+                    <a name="/c:@M@MercadoPagoSDK@objc(cs)PXCampaign(im)initWithId:code:maxRedeemPerUser:name:maxCouponAmount:endDate:"></a>
+                    <a name="//apple_ref/swift/Method/init(id:code:maxRedeemPerUser:name:maxCouponAmount:endDate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@MercadoPagoSDK@objc(cs)PXCampaign(im)initWithId:code:maxRedeemPerUser:name:maxCouponAmount:endDate:">init(id:code:maxRedeemPerUser:name:maxCouponAmount:endDate:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -183,79 +191,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>CONTINGENCY - PXPendingStatusDetail.</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">CONTINGENCY</span> <span class="o">=</span> <span class="s">"pending_contingency"</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int64</span><span class="p">,</span> <span class="nv">code</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">maxRedeemPerUser</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">maxCouponAmount</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">endDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L110">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14MercadoPagoSDK21PXPendingStatusDetailO13REVIEW_MANUALA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/REVIEW_MANUAL" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK21PXPendingStatusDetailO13REVIEW_MANUALA2CmF">REVIEW_MANUAL</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>REVIEW_MANUAL - PXPendingStatusDetail.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">REVIEW_MANUAL</span> <span class="o">=</span> <span class="s">"pending_review_manual"</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L114">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:14MercadoPagoSDK21PXPendingStatusDetailO15WAITING_PAYMENTA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/WAITING_PAYMENT" class="dashAnchor"></a>
-                    <a class="token" href="#/s:14MercadoPagoSDK21PXPendingStatusDetailO15WAITING_PAYMENTA2CmF">WAITING_PAYMENT</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>WAITING_PAYMENT - PXPendingStatusDetail.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">WAITING_PAYMENT</span> <span class="o">=</span> <span class="s">"pending_waiting_payment"</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/PaymentStatus.swift#L118">Show on GitHub</a>
+                        <a href="https://github.com/mercadopago/px-ios/tree/4.0.0.beta.36/MercadoPagoSDK/Services/Models/PXCampaing.swift#L75-L82">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
