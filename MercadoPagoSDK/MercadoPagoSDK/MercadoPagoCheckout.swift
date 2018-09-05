@@ -8,6 +8,10 @@
 
 import UIKit
 
+/**
+ Main class of this project.
+ It provides access to most of the checkout experience.
+ */
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
     internal enum InitMode {
@@ -20,6 +24,11 @@ open class MercadoPagoCheckout: NSObject {
     internal static var currentCheckout: MercadoPagoCheckout?
     internal var viewModel: MercadoPagoCheckoutViewModel
 
+    // MARK: Initialization
+    /**
+     Mandatory init. Based on `MercadoPagoCheckoutBuilder`
+     - parameter builder: MercadoPagoCheckoutBuilder object.
+     */
     public init(builder: MercadoPagoCheckoutBuilder) {
         var choPref: PXCheckoutPreference
 
@@ -78,6 +87,12 @@ open class MercadoPagoCheckout: NSObject {
 
 // MARK: Publics
 extension MercadoPagoCheckout {
+
+    /**
+     Start checkout experience. This method push our ViewController in your navigation stack.
+     - parameter navigationController: Instance of your `UINavigationController`.
+     - parameter lifeCycleProtocol: Instance of `PXLifeCycleProtocol` implementation. Provide this protocol in order to get notifications related to our checkout lifecycle. (`FinishCheckout` and `CancelCheckout`)
+     */
     public func start(navigationController: UINavigationController, lifeCycleProtocol: PXLifeCycleProtocol?=nil) {
         viewModel.lifecycleProtocol = lifeCycleProtocol
         commondInit()
@@ -103,6 +118,10 @@ extension MercadoPagoCheckout {
         }
     }
 
+    /**
+     Start checkout init services in lazy mode (without UI). Start our init methods and provide a protocol to notify when the checkout is ready to launch `PXLazyInitProtocol`
+     - parameter lazyInitProtocol: Implementation of `PXLazyInitProtocol`.
+     */
     public func start(lazyInitProtocol: PXLazyInitProtocol) {
         viewModel.initFlow?.restart()
         initProtocol = lazyInitProtocol

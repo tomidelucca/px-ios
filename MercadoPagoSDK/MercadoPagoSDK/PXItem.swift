@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+Model that represents the item which will be paid.
+ */
 @objcMembers open class PXItem: NSObject {
     internal var quantity: Int
     internal var unitPrice: Double
@@ -17,20 +20,31 @@ import Foundation
     internal var categoryId: String?
     internal var pictureUrl: String?
 
+    // MARK: Init.
+    /**
+     Builder for item construction.
+     It should be used when checkout initialize without a preference id and
+     it is initialize with a preference created programmatically.
+     - parameter title: Item title.
+     - parameter quantity: Item quantity.
+     - @parameter unitPrice: Item price.
+     */
     public init(title: String, quantity: Int, unitPrice: Double) {
         self.title = title
         self.quantity = quantity
         self.unitPrice = unitPrice
     }
 
+    // MARK: Validation.
+    /**
+     Validation based on quantity. If item quantity > 0, the item should be valid and the string response should be nil.
+     */
     func validate() -> String? {
         if quantity <= 0 {
             return "La cantidad de items no es valida".localized
         }
-
         return nil
     }
-
 }
 
 // MARK: Setters

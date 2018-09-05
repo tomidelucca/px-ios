@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Use to create yout custom payment option. We´ll display this option in the payment method selection screen.
+ */
 @objcMembers
 open class PXPaymentMethodPlugin: NSObject {
     /// :nodoc:
@@ -21,30 +24,52 @@ open class PXPaymentMethodPlugin: NSObject {
     internal var name: String
     internal var paymentMethodPluginDescription: String?
     internal var image: UIImage
-
     internal var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
     internal var displayOrder = DisplayOrder.TOP
 
-    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
-        callback(true)
-    }
-
-    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
-
+    // MARK: Init.
+    /**
+     Builder construction.
+     - parameter paymentMethodPluginId: Id for your custom payment method.
+     - parameter name: Name for your custom payment method.
+     - parameter image: Image icon for your custom payment method.
+     - parameter description: Description for your custom payment method.
+     */
     public init (paymentMethodPluginId: String, name: String, image: UIImage, description: String?) {
         self.paymentMethodPluginId = paymentMethodPluginId
         self.name = name
         self.image = image
         self.paymentMethodPluginDescription = description
     }
+
+    // MARK: Public accessors.
+    /**
+     Async block to initialize your payment method plugin.
+     */
+    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
+        callback(true)
+    }
+
+    /**
+     Determinate if your payment method plugin should be show.
+     */
+    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 }
 
 // MARK: - Setters
 extension PXPaymentMethodPlugin {
+    /**
+     Set config screen for payment method. Implementing `PXPaymentMethodConfigProtocol`
+     - parameter config: PXPaymentMethodConfigProtocol implementation.
+     */
     open func setPaymentMethodConfig(config: PXPaymentMethodConfigProtocol) {
         self.paymentMethodConfigPlugin = config
     }
 
+    /**
+     Set display order for your custom payment method. The values are `TOP` or `BOTTOM`.
+     - parameter order: Display order value.
+     */
     open func setDisplayOrder(order: DisplayOrder) {
         self.displayOrder = order
     }
