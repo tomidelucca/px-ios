@@ -68,6 +68,10 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         return model.needToShowPaymentPluginScreenForPaymentPlugin()
     }
 
+    func hasPaymentPluginScreen() -> Bool {
+        return model.hasPluginPaymentScreen()
+    }
+
     func finishFlow() {
         if let paymentResult = model.paymentResult {
             self.resultHandler?.finishPaymentFlow(paymentResult: (paymentResult), instructionsInfo: model.instructionsInfo)
