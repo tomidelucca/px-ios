@@ -178,7 +178,7 @@ internal extension OneTapFlowModel {
             return true
         }
         if let paymentFlow = paymentFlow, paymentMethod.isAccountMoney || hasSavedESC() {
-            return paymentFlow.needToShowPaymentPluginScreen()
+            return paymentFlow.hasPaymentPluginScreen()
         }
         return true
     }
