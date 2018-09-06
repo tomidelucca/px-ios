@@ -7,12 +7,11 @@
 //
 
 #import "MediosOffTableViewController.h"
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 
 @implementation MediosOffTableViewController
 
-@synthesize mediosOffArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,9 +50,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return mediosOffArray.count;
-   
+    return 0;
 }
 
 
@@ -62,8 +59,8 @@
    
     UIImageView* image = [cell viewWithTag:1];
     UILabel* label = [cell viewWithTag:2];
+
     
-    label.text = [[self.mediosOffArray objectAtIndex:indexPath.row] name];
     return cell;
 }
 
@@ -77,8 +74,6 @@
 
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog([[self.mediosOffArray objectAtIndex:indexPath.row] name]);
-    
     [self performSegueWithIdentifier:@"unwindFromOff" sender:self];
 }
 

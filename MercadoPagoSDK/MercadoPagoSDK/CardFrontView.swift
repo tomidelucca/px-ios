@@ -30,8 +30,7 @@ import UIKit
         loadViewFromNib ()
     }
 
-    func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
-
+    func updateCard(token: PXCardInformationForm?, paymentMethod: PXPaymentMethod) {
         self.cardLogo.image =  paymentMethod.getImage()
         self.cardLogo.alpha = 1
         let fontColor = paymentMethod.getFontColor(bin: token?.getCardBin())

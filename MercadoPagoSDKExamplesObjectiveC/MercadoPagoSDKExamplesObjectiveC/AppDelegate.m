@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ExampleUtils.h"
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 
 @interface AppDelegate ()

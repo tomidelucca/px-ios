@@ -9,8 +9,29 @@
 import Foundation
 /// :nodoc:
 open class PXSavedESCCardToken: PXSavedCardToken {
-    open var requireEsc: Bool?
+    open var requireESC: Bool = false
     open var esc: String?
+
+    init (cardId: String, securityCode: String?, requireESC: Bool) {
+        super.init(cardId: cardId)
+        self.securityCode = securityCode
+        self.cardId = cardId
+        self.requireESC = requireESC
+        self.device = PXDevice()
+    }
+
+    init (cardId: String, esc: String?, requireESC: Bool) {
+        super.init(cardId: cardId)
+        self.securityCode = ""
+        self.cardId = cardId
+        self.requireESC = requireESC
+        self.esc = esc
+        self.device = PXDevice()
+    }
+
+    public required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
 
     public enum PXSavedESCCardTokenKeys: String, CodingKey {
         case requireEsc = "require_esc"
@@ -25,7 +46,7 @@ open class PXSavedESCCardToken: PXSavedCardToken {
         try container.encodeIfPresent(self.cardId, forKey: .cardId)
         try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
         try container.encodeIfPresent(self.device, forKey: .device)
-        try container.encodeIfPresent(self.requireEsc, forKey: .requireEsc)
+        try container.encodeIfPresent(self.requireESC, forKey: .requireEsc)
         try container.encode(self.esc, forKey: .esc)
     }
 
@@ -39,9 +60,4 @@ open class PXSavedESCCardToken: PXSavedCardToken {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
-
-    open override class func fromJSON(data: Data) throws -> PXSavedESCCardToken {
-        return try JSONDecoder().decode(PXSavedESCCardToken.self, from: data)
-    }
-
 }

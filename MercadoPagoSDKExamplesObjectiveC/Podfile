@@ -1,3 +1,4 @@
+
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
@@ -8,6 +9,7 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
   # Pods for MercadoPagoSDKExamplesObjectiveC
   # UI Meli Lib
     pod 'MLUI', '~> 5.0'
+    pod 'MercadoPagoSDKV4', :path => '../'
 
   target 'MercadoPagoSDKExamplesObjectiveCTests' do
     inherit! :search_paths

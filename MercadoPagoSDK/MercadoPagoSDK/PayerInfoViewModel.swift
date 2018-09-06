@@ -19,20 +19,20 @@ internal enum PayerInfoFlowStep: String {
 }
 
 internal class PayerInfoViewModel {
-    var identificationTypes: [IdentificationType]!
+    var identificationTypes: [PXIdentificationType]!
     var masks: [TextMaskFormater]!
     var currentMask: TextMaskFormater?
 
     var name: String = ""
     var lastName: String = ""
     var identificationNumber: String = ""
-    let payer: Payer!
+    let payer: PXPayer!
 
-    var identificationType: IdentificationType!
+    var identificationType: PXIdentificationType!
 
     var currentStep: PayerInfoFlowStep = PayerInfoFlowStep.SCREEN_IDENTIFICATION
 
-    init(identificationTypes: [IdentificationType], payer: Payer) {
+    init(identificationTypes: [PXIdentificationType], payer: PXPayer) {
         self.payer = payer
 
         self.identificationTypes = filterSupported(identificationTypes: identificationTypes)
@@ -45,15 +45,15 @@ internal class PayerInfoViewModel {
         self.currentMask = masks[0]
     }
 
-    func filterSupported(identificationTypes: [IdentificationType]) -> [IdentificationType] {
-        let supportedIdentificationTypes = identificationTypes.filter {$0.identificationTypeId == "CPF"}
+    func filterSupported(identificationTypes: [PXIdentificationType]) -> [PXIdentificationType] {
+        let supportedIdentificationTypes = identificationTypes.filter {$0.id == "CPF"}
         return supportedIdentificationTypes
     }
 
     func getDropdownOptions() -> [String] {
         var options: [String] = []
         for identificationType in self.identificationTypes {
-            options.append(identificationType.identificationTypeId!)
+            options.append(identificationType.id!)
         }
         return options
     }
@@ -145,11 +145,11 @@ internal class PayerInfoViewModel {
         }
     }
 
-    func getFinalPayer() -> Payer {
-        let identification = Identification(identificationType: identificationType, identificationNumber: identificationNumber)
+    func getFinalPayer() -> PXPayer {
+        let identification = PXIdentification(identificationType: identificationType, identificationNumber: identificationNumber)
         self.payer.identification = identification
-        self.payer.name = name
-        self.payer.surname = lastName
+        self.payer.firstName = name
+        self.payer.lastName = lastName
 
         return payer
     }
@@ -168,13 +168,13 @@ internal class PayerInfoViewModel {
         return nil
     }
 
-    private func getIdMask(IDtype: IdentificationType?) -> [TextMaskFormater] {
+    private func getIdMask(IDtype: PXIdentificationType?) -> [TextMaskFormater] {
         let site = SiteManager.shared.getSiteId()
         let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
         let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
 
         if IDtype != nil {
-            if let masks = maskFinder(dictID: site + "_" + (IDtype?.identificationTypeId)!, forKey: "identification_mask") {
+            if let masks = maskFinder(dictID: site + "_" + (IDtype?.id)!, forKey: "identification_mask") {
                 return masks
             } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
                 return masks

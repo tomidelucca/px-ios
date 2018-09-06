@@ -11,7 +11,7 @@ import UIKit
 class CardTypeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var cardTypeLable: UILabel!
-    var paymentMethod: PaymentMethod!
+    var paymentMethod: PXPaymentMethod!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,11 +20,11 @@ class CardTypeTableViewCell: UITableViewCell {
     func setText(text: String) {
         cardTypeLable.text = text
     }
-    func setPaymentMethod(paymentMethod: PaymentMethod) {
+    func setPaymentMethod(paymentMethod: PXPaymentMethod) {
         self.paymentMethod = paymentMethod
         fillCell()
     }
-    func getPaymentMethod() -> PaymentMethod {
+    func getPaymentMethod() -> PXPaymentMethod {
         return self.paymentMethod
     }
     func fillCell() {

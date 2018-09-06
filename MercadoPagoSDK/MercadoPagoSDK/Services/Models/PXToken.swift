@@ -11,23 +11,23 @@ import Foundation
 open class PXToken: NSObject, Codable {
     open var id: String!
     open var publicKey: String?
-    open var cardId: String?
+    open var cardId: String = ""
     open var luhnValidation: Bool?
     open var status: String?
     open var usedDate: Date?
-    open var cardNumberLength: Int?
+    open var cardNumberLength: Int = 0
     open var dateCreated: Date?
-    open var securityCodeLength: Int?
-    open var expirationMonth: Int?
-    open var expirationYear: Int?
+    open var securityCodeLength: Int = 0
+    open var expirationMonth: Int = 0
+    open var expirationYear: Int = 0
     open var dateLastUpdated: Date?
     open var dueDate: Date?
-    open var firstSixDigits: String?
-    open var lastFourDigits: String?
+    open var firstSixDigits: String = ""
+    open var lastFourDigits: String = ""
     open var cardholder: PXCardHolder?
     open var esc: String?
 
-    public init(id: String, publicKey: String?, cardId: String?, luhnValidation: Bool?, status: String?, usedDate: Date?, cardNumberLength: Int?, dateCreated: Date?, securityCodeLength: Int?, expirationMonth: Int?, expirationYear: Int?, dateLastUpdated: Date?, dueDate: Date?, firstSixDigits: String?, lastFourDigits: String?, cardholder: PXCardHolder?, esc: String?) {
+    public init(id: String, publicKey: String?, cardId: String, luhnValidation: Bool?, status: String?, usedDate: Date?, cardNumberLength: Int, dateCreated: Date?, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, dateLastUpdated: Date?, dueDate: Date?, firstSixDigits: String, lastFourDigits: String, cardholder: PXCardHolder?, esc: String?) {
 
         self.id = id
         self.publicKey = publicKey
@@ -72,19 +72,19 @@ open class PXToken: NSObject, Codable {
         let container = try decoder.container(keyedBy: PXTokenKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
         let publicKey: String? = try container.decodeIfPresent(String.self, forKey: .publicKey)
-        let cardId: String? = try container.decodeIfPresent(String.self, forKey: .cardId)
+        let cardId: String = try container.decodeIfPresent(String.self, forKey: .cardId) ?? ""
         let luhnValidation: Bool? = try container.decodeIfPresent(Bool.self, forKey: .luhnValidation)
         let status: String? = try container.decodeIfPresent(String.self, forKey: .status)
         let usedDate: Date? = try container.decodeDateFromStringIfPresent(forKey: .usedDate)
-        let cardNumberLength: Int? = try container.decodeIfPresent(Int.self, forKey: .cardNumberLength)
+        let cardNumberLength: Int = try container.decodeIfPresent(Int.self, forKey: .cardNumberLength) ?? 0
         let dateCreated: Date? = try container.decodeDateFromStringIfPresent(forKey: .dateCreated)
-        let securityCodeLength: Int? = try container.decodeIfPresent(Int.self, forKey: .securityCodeLength)
-        let expirationMonth: Int? = try container.decodeIfPresent(Int.self, forKey: .expirationMonth)
-        let expirationYear: Int? = try container.decodeIfPresent(Int.self, forKey: .expirationYear)
+        let securityCodeLength: Int = try container.decodeIfPresent(Int.self, forKey: .securityCodeLength) ?? 0
+        let expirationMonth: Int = try container.decodeIfPresent(Int.self, forKey: .expirationMonth) ?? 0
+        let expirationYear: Int = try container.decodeIfPresent(Int.self, forKey: .expirationYear) ?? 0
         let dateLastUpdated: Date? = try container.decodeDateFromStringIfPresent(forKey: .dateLastUpdated)
         let dueDate: Date? = try container.decodeDateFromStringIfPresent(forKey: .dueDate)
-        let firstSixDigits: String? = try container.decodeIfPresent(String.self, forKey: .firstSixDigits)
-        let lastFourDigits: String? = try container.decodeIfPresent(String.self, forKey: .lastFourDigits)
+        let firstSixDigits: String = try container.decodeIfPresent(String.self, forKey: .firstSixDigits) ?? ""
+        let lastFourDigits: String = try container.decodeIfPresent(String.self, forKey: .lastFourDigits) ?? ""
         let cardholder: PXCardHolder? = try container.decodeIfPresent(PXCardHolder.self, forKey: .cardholder)
         let esc: String? = try container.decodeIfPresent(String.self, forKey: .esc)
 

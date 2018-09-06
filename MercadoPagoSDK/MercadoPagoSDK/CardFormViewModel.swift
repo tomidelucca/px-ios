@@ -21,11 +21,11 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 internal class CardFormViewModel {
 
-    var paymentMethods: [PaymentMethod]
-    var guessedPMS: [PaymentMethod]?
-    var customerCard: CardInformation?
-    var token: Token?
-    var cardToken: CardToken?
+    var paymentMethods: [PXPaymentMethod]
+    var guessedPMS: [PXPaymentMethod]?
+    var customerCard: PXCardInformation?
+    var token: PXToken?
+    var cardToken: PXCardToken?
 
     let textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     let textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
@@ -38,14 +38,14 @@ internal class CardFormViewModel {
     var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    init (paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init (paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: PXCardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
 
         if customerCard != nil {
             self.customerCard = customerCard
-            self.guessedPMS = [PaymentMethod]()
+            self.guessedPMS = [PXPaymentMethod]()
             self.guessedPMS?.append((customerCard?.getPaymentMethod())!)
         }
         self.token = token
@@ -65,18 +65,14 @@ internal class CardFormViewModel {
     }
 
     func cvvLenght() -> Int {
-        var lenght: Int
-
-        if self.customerCard != nil {
-            lenght = (self.customerCard?.getCardSecurityCode().length)!
+        if let securityCode = customerCard?.getCardSecurityCode() {
+            return  securityCode.length
         } else {
-            if (getGuessedPM()?.settings == nil)||(getGuessedPM()?.settings.count == 0) {
-                lenght = 3 // Default
-            } else {
-                lenght = (getGuessedPM()?.settings[0].securityCode.length)!
+            guard let guessedPMFisrtSetting = getGuessedPM()?.settings.first else {
+                return 3
             }
+            return guessedPMFisrtSetting.securityCode?.length ?? 3
         }
-        return lenght
     }
 
     func getLabelTextColor(cardNumber: String?) -> UIColor {
@@ -111,7 +107,7 @@ internal class CardFormViewModel {
 
     func getBIN(_ cardNumber: String) -> String? {
         if token != nil {
-            return token?.firstSixDigit
+            return token?.firstSixDigits
         }
 
         var trimmedNumber = cardNumber.replacingOccurrences(of: " ", with: "")
@@ -195,7 +191,7 @@ internal class CardFormViewModel {
         }
     }
 
-    func matchedPaymentMethod (_ cardNumber: String) -> [PaymentMethod]? {
+    func matchedPaymentMethod (_ cardNumber: String) -> [PXPaymentMethod]? {
 
         if self.guessedPMS != nil {
             return self.guessedPMS
@@ -205,7 +201,7 @@ internal class CardFormViewModel {
             return nil
         }
 
-        var paymentMethods = [PaymentMethod]()
+        var paymentMethods = [PXPaymentMethod]()
 
         for paymentMethod in self.paymentMethods {
             if paymentMethod.conformsToBIN(getBIN(cardNumber)!) {
@@ -227,15 +223,15 @@ internal class CardFormViewModel {
         let secCode = cvvEmpty ? "" :cvv
         let name = cardholderNameEmpty ? "" : cardholderName
 
-        self.cardToken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name, docType: "", docNumber: "")
+        self.cardToken = PXCardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name, docType: "", docNumber: "")
     }
 
-    func buildSavedCardToken(_ cvv: String) -> CardToken {
+    func buildSavedCardToken(_ cvv: String) -> PXCardToken {
         let securityCode = self.customerCard!.isSecurityCodeRequired() ? cvv : ""
-        self.cardToken = SavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
+        self.cardToken = PXSavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
         return self.cardToken!
     }
-    func getGuessedPM() -> PaymentMethod? {
+    func getGuessedPM() -> PXPaymentMethod? {
         if let card = customerCard {
             return card.getPaymentMethod()
         } else {
@@ -263,8 +259,8 @@ internal class CardFormViewModel {
         if Array.isNullOrEmpty(paymentMethods) {
             return defaultMessage
         }
-        if !String.isNullOrEmpty(paymentMethods[0].name) {
-            return "Solo puedes pagar con ".localized + paymentMethods[0].name
+        if let paymentMethodName = paymentMethods[0].name {
+            return "Solo puedes pagar con ".localized + paymentMethodName
         } else {
             return defaultMessage
         }

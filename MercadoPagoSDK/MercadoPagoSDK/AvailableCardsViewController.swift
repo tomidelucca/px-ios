@@ -18,7 +18,7 @@ internal class AvailableCardsViewController: MercadoPagoUIViewController {
     var availableCardsDetailView: AvailableCardsDetailView!
     var viewModel: AvailableCardsViewModel!
 
-    init(paymentMethods: [PaymentMethod], callbackCancel: (() -> Void)? = nil) {
+    init(paymentMethods: [PXPaymentMethod], callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "AvailableCardsViewController", bundle: ResourceManager.shared.getBundle())
         self.callbackCancel = callbackCancel
         self.viewModel = AvailableCardsViewModel(paymentMethods: paymentMethods)
@@ -69,8 +69,8 @@ internal class AvailableCardsViewModel {
     let screenHeight: CGFloat!
     let screenWidth: CGFloat!
 
-    var paymentMethods: [PaymentMethod]!
-    init(paymentMethods: [PaymentMethod]) {
+    var paymentMethods: [PXPaymentMethod]!
+    init(paymentMethods: [PXPaymentMethod]) {
         self.paymentMethods = paymentMethods
         self.screenSize = UIScreen.main.bounds
         self.screenHeight = screenSize.height

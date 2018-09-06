@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @interface MediosOffTableViewController : UITableViewController
     
-    @property NSMutableArray<PaymentMethod *>* mediosOffArray;
 
 
 @end

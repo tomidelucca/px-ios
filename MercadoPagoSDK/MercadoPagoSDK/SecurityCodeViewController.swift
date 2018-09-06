@@ -73,7 +73,7 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         super.init(coder: aDecoder)
     }
 
-    public init(viewModel: SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: CardInformationForm, _ securityCode: String) -> Void ) {
+    public init(viewModel: SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: PXCardInformationForm, _ securityCode: String) -> Void ) {
         super.init(nibName: "SecurityCodeViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = viewModel
         self.viewModel.callback = collectSecurityCodeCallback
@@ -124,7 +124,7 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         self.executeBack()
     }
 
-    func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod) {
+    func updateCardSkin(cardInformation: PXCardInformationForm?, paymentMethod: PXPaymentMethod) {
         self.updateCardThumbnail(paymentMethodColor: paymentMethod.getColor(bin: cardInformation?.getCardBin()))
         self.cardFront.updateCard(token: cardInformation, paymentMethod: paymentMethod)
         cardFront.cardCVV.alpha = 0.8

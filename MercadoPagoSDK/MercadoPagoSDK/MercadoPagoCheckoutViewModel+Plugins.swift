@@ -45,12 +45,7 @@ internal extension MercadoPagoCheckoutViewModel {
     }
 
     func paymentMethodPluginToPaymentMethod(plugin: PXPaymentMethodPlugin) {
-        let paymentMethod = PaymentMethod()
-        paymentMethod.paymentMethodId = plugin.getId()
-        paymentMethod.name = plugin.getTitle()
-        paymentMethod.paymentTypeId = PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID
-        paymentMethod.setExternalPaymentMethodImage(externalImage: plugin.getImage())
-        paymentMethod.paymentMethodDescription = plugin.paymentMethodPluginDescription
+        let paymentMethod = PXPaymentMethod(additionalInfoNeeded: nil, id: plugin.getId(), name: plugin.getTitle(), paymentTypeId: PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID, status: nil, secureThumbnail: nil, thumbnail: nil, deferredCapture: nil, settings: [], minAllowedAmount: nil, maxAllowedAmount: nil, accreditationTime: nil, merchantAccountId: nil, financialInstitutions: financialInstitutions, description: plugin.paymentMethodPluginDescription)
         self.paymentData.paymentMethod = paymentMethod
     }
 }

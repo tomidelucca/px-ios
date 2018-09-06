@@ -18,7 +18,7 @@ class PXInstructionsActionsComponent: NSObject, PXComponentizable {
     public func getActionComponents() -> [PXInstructionsActionComponent] {
         var actionComponents: [PXInstructionsActionComponent] = []
         if let actions = props.instructionActions, !actions.isEmpty {
-            for action in actions where action.tag == ActionTag.LINK.rawValue {
+            for action in actions where action.tag == PXActionTag.LINK.rawValue {
                 let actionProps = PXInstructionsActionProps(instructionActionInfo: action)
                 let actionComponent = PXInstructionsActionComponent(props: actionProps)
                 actionComponents.append(actionComponent)
@@ -32,8 +32,8 @@ class PXInstructionsActionsComponent: NSObject, PXComponentizable {
     }
 }
 class PXInstructionsActionsProps: NSObject {
-    var instructionActions: [InstructionAction]?
-    init(instructionActions: [InstructionAction]?) {
+    var instructionActions: [PXInstructionAction]?
+    init(instructionActions: [PXInstructionAction]?) {
         self.instructionActions = instructionActions
     }
 }

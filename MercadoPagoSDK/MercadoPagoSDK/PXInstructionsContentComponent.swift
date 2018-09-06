@@ -88,7 +88,7 @@ internal class PXInstructionsContentComponent: PXComponentizable {
     }
 
     func getAccreditationTimeComponent() -> PXInstructionsAccreditationTimeComponent? {
-        let accreditationTimeProps = PXInstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
+        let accreditationTimeProps = PXInstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComments)
         let accreditationTimeComponent = PXInstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
@@ -108,12 +108,12 @@ internal class PXInstructionsContentComponent: PXComponentizable {
     }
 
     func hasAccreditationTime() -> Bool {
-        return !Array.isNullOrEmpty(props.instruction.accreditationComment) || !String.isNullOrEmpty(props.instruction.accreditationMessage)
+        return !Array.isNullOrEmpty(props.instruction.accreditationComments) || !String.isNullOrEmpty(props.instruction.accreditationMessage)
     }
 
     func hasActions() -> Bool {
         if !Array.isNullOrEmpty(props.instruction.actions) {
-            for action in props.instruction.actions! where action.tag == ActionTag.LINK.rawValue {
+            for action in props.instruction.actions! where action.tag == PXActionTag.LINK.rawValue {
                 return true
             }
         }
@@ -130,9 +130,9 @@ internal class PXInstructionsContentComponent: PXComponentizable {
 }
 
 internal class PXInstructionsContentProps {
-    var instruction: Instruction
+    var instruction: PXInstruction
 
-    init(instruction: Instruction) {
+    init(instruction: PXInstruction) {
         self.instruction = instruction
     }
 }

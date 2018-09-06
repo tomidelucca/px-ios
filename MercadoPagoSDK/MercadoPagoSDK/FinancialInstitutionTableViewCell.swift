@@ -12,12 +12,12 @@ class FinancialInstitutionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var financialInstitutionImage: UIImageView!
 
-    func fillCell(financialInstitution: FinancialInstitution, bundle: Bundle) {
-        if let image = UIImage(named: "financial_institution_\(financialInstitution.financialInstitutionId!)", in: bundle, compatibleWith: nil) {
+    func fillCell(financialInstitution: PXFinancialInstitution, bundle: Bundle) {
+        if let image = UIImage(named: "financial_institution_\(financialInstitution.id!)", in: bundle, compatibleWith: nil) {
             financialInstitutionImage.image = image
         } else {
             financialInstitutionImage.image = nil
-            textLabel?.text = financialInstitution.financialInstitutionDescription
+            textLabel?.text = financialInstitution.id
             textLabel?.textAlignment = .center
         }
     }

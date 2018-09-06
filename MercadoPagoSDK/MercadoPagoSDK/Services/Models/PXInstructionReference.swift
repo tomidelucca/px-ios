@@ -11,11 +11,11 @@ import Foundation
 open class PXInstructionReference: NSObject, Codable {
 
     open var label: String?
-    open var fieldValue: [String]?
-    open var separator: String?
+    open var fieldValue: [String] = []
+    open var separator: String = ""
     open var comment: String?
 
-    public init(label: String?, fieldValue: [String]?, separator: String?, comment: String?) {
+    public init(label: String?, fieldValue: [String], separator: String, comment: String?) {
         self.label = label
         self.fieldValue = fieldValue
         self.separator = separator
@@ -32,8 +32,8 @@ open class PXInstructionReference: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionReferenceKeys.self)
         let label: String? = try container.decodeIfPresent(String.self, forKey: .label)
-        let fieldValue: [String]? = try container.decodeIfPresent([String].self, forKey: .fieldValue)
-        let separator: String? = try container.decodeIfPresent(String.self, forKey: .separator)
+        let fieldValue: [String] = try container.decodeIfPresent([String].self, forKey: .fieldValue) ?? []
+        let separator: String = try container.decodeIfPresent(String.self, forKey: .separator) ?? ""
         let comment: String? = try container.decodeIfPresent(String.self, forKey: .comment)
 
         self.init(label: label, fieldValue: fieldValue, separator: separator, comment: comment)

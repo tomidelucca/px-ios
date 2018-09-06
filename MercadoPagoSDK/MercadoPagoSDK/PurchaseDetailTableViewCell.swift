@@ -25,7 +25,7 @@ internal class PurchaseDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    internal func fillCell(_ title: String, amount: Double, currency: Currency, payerCost: PayerCost? = nil) {
+    internal func fillCell(_ title: String, amount: Double, currency: PXCurrency, payerCost: PXPayerCost? = nil) {
         //Deafult values for cells
         self.purchaseDetailTitle.text = title.localized
         self.purchaseDetailTitle.font = Utils.getFont(size: purchaseDetailTitle.font.pointSize)
@@ -49,20 +49,20 @@ internal class PurchaseDetailTableViewCell: UITableViewCell {
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         } else {
-            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 18, centsFontSize: 12, baselineOffset: 5)
+            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: ThemeManager.shared.boldLabelTintColor(), fontSize: 18, centsFontSize: 12, baselineOffset: 5)
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }
     }
 
-    public static func getCellHeight(payerCost: PayerCost? = nil) -> CGFloat {
+    public static func getCellHeight(payerCost: PXPayerCost? = nil) -> CGFloat {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() {
             return ROW_HEIGHT + 30
         }
         return ROW_HEIGHT
     }
 
-    private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
+    private func getInstallmentsAmount(payerCost: PXPayerCost) -> NSAttributedString {
         return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: SiteManager.shared.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.boldLabelTintColor(), fontSize: 24, baselineOffset: 8)
     }
 }

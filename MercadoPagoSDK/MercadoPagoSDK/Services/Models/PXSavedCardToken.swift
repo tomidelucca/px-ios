@@ -8,11 +8,30 @@
 
 import Foundation
 /// :nodoc:
-open class PXSavedCardToken: NSObject, Codable {
+open class PXSavedCardToken: PXCardToken {
 
-    open var cardId: String?
-    open var securityCode: String?
-    open var device: PXDevice?
+    open var cardId: String
+    open var securityCodeRequired: Bool = true
+
+    public init(cardId: String, securityCode: String) {
+        self.cardId = cardId
+        super.init()
+        self.securityCode = securityCode
+    }
+
+    internal init(cardId: String) {
+        self.cardId = cardId
+        super.init()
+        self.device = PXDevice()
+    }
+
+    internal init(card: PXCardInformation, securityCode: String?, securityCodeRequired: Bool) {
+        self.cardId = card.getCardId()
+        super.init()
+        self.securityCode = securityCode
+        self.securityCodeRequired = securityCodeRequired
+        self.device = PXDevice()
+    }
 
     public enum PXSavedCardTokenKeys: String, CodingKey {
         case cardId = "card_id"
@@ -20,25 +39,38 @@ open class PXSavedCardToken: NSObject, Codable {
         case device
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXSavedCardTokenKeys.self)
         try container.encodeIfPresent(self.cardId, forKey: .cardId)
         try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
         try container.encodeIfPresent(self.device, forKey: .device)
     }
 
-    open func toJSONString() throws -> String? {
+    open override func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
         return String(data: data, encoding: .utf8)
     }
 
-    open func toJSON() throws -> Data {
+    open override func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
 
-    open class func fromJSON(data: Data) throws -> PXSavedCardToken {
-        return try JSONDecoder().decode(PXSavedCardToken.self, from: data)
+    @objc open override func validate() -> Bool {
+        return self.validateCardId() && (!securityCodeRequired || self.validateSecurityCodeNumbers())
+    }
+
+    open func validateCardId() -> Bool {
+        return !String.isNullOrEmpty(cardId) && String.isDigitsOnly(cardId)
+    }
+
+    open func validateSecurityCodeNumbers() -> Bool {
+        let isEmptySecurityCode: Bool = String.isNullOrEmpty(self.securityCode)
+        return !isEmptySecurityCode && self.securityCode!.count >= 3 && self.securityCode!.count <= 4
+    }
+
+    @objc open override func isCustomerPaymentMethod() -> Bool {
+        return true
     }
 }

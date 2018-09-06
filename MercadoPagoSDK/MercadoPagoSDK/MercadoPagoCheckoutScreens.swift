@@ -42,7 +42,7 @@ extension MercadoPagoCheckout {
     }
 
     func showIdentificationScreen() {
-        let identificationStep = IdentificationViewController (identificationTypes: self.viewModel.identificationTypes!, callback: { [weak self] (identification : Identification) in
+        let identificationStep = IdentificationViewController (identificationTypes: self.viewModel.identificationTypes!, callback: { [weak self] (identification : PXIdentification) in
             guard let strongSelf = self else {
                 return
             }
@@ -76,15 +76,13 @@ extension MercadoPagoCheckout {
     func showIssuersScreen() {
         let issuerStep = AdditionalStepViewController(viewModel: self.viewModel.issuerViewModel(), callback: { [weak self](issuer) in
 
-            guard let issuer = issuer as? Issuer else {
+            guard let issuer = issuer as? PXIssuer else {
                 fatalError("Cannot convert issuer to type Issuer")
             }
-
             self?.viewModel.updateCheckoutModel(issuer: issuer)
             self?.executeNextStep()
 
         })
-
         viewModel.pxNavigationHandler.pushViewController(viewController: issuerStep, animated: true)
     }
 
@@ -92,7 +90,7 @@ extension MercadoPagoCheckout {
         let payerCostViewModel = self.viewModel.payerCostViewModel()
 
         let payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
-            guard let payerCost = payerCost as? PayerCost else {
+            guard let payerCost = payerCost as? PXPayerCost else {
                 fatalError("Cannot convert payerCost to type PayerCost")
             }
 
@@ -153,15 +151,15 @@ extension MercadoPagoCheckout {
 
     func showSecurityCodeScreen() {
 
-        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
-            self?.createCardToken(cardInformation: cardInformation as? CardInformation, securityCode: securityCode)
+        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: PXCardInformationForm, securityCode: String) -> Void in
+            self?.createCardToken(cardInformation: cardInformation as? PXCardInformation, securityCode: securityCode)
         })
         viewModel.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToFirstPaymentVault: true)
     }
 
     func collectSecurityCodeForRetry() {
-        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.cloneTokenSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
-            guard let token = cardInformation as? Token else {
+        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.cloneTokenSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: PXCardInformationForm, securityCode: String) -> Void in
+            guard let token = cardInformation as? PXToken else {
                 fatalError("Cannot convert cardInformation to Token")
             }
             self?.cloneCardToken(token: token, securityCode: securityCode)
@@ -231,7 +229,7 @@ extension MercadoPagoCheckout {
             } else {
                 let financialInstitutionStep = AdditionalStepViewController(viewModel:
                     self.viewModel.financialInstitutionViewModel(), callback: { [weak self] (financialInstitution) in
-                        guard let financialInstitution = financialInstitution as? FinancialInstitution else {
+                        guard let financialInstitution = financialInstitution as? PXFinancialInstitution else {
                             fatalError("Cannot convert entityType to type EntityType")
                         }
                         self?.viewModel.updateCheckoutModel(financialInstitution: financialInstitution)

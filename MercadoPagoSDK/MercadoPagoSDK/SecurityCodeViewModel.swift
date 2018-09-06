@@ -9,13 +9,13 @@
 import Foundation
 
 internal class SecurityCodeViewModel {
-    var paymentMethod: PaymentMethod!
-    var cardInfo: CardInformationForm!
+    var paymentMethod: PXPaymentMethod!
+    var cardInfo: PXCardInformationForm!
     var reason: Reason
 
-    var callback: ((_ cardInformation: CardInformationForm, _ securityCode: String) -> Void)?
+    var callback: ((_ cardInformation: PXCardInformationForm, _ securityCode: String) -> Void)?
 
-    public init(paymentMethod: PaymentMethod, cardInfo: CardInformationForm, reason: Reason) {
+    public init(paymentMethod: PXPaymentMethod, cardInfo: PXCardInformationForm, reason: Reason) {
         self.paymentMethod = paymentMethod
         self.cardInfo = cardInfo
         self.reason = reason

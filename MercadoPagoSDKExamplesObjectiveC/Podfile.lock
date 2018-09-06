@@ -1,6 +1,11 @@
 PODS:
   - FXBlurView (1.6.4)
   - JRSwizzle (1.0)
+  - MercadoPagoSDKV4 (4.0.1):
+    - MercadoPagoSDKV4/Default (= 4.0.1)
+    - MLUI (~> 5.0)
+  - MercadoPagoSDKV4/Default (4.0.1):
+    - MLUI (~> 5.0)
   - MLUI (5.1.0):
     - MLUI/ActionButton (= 5.1.0)
     - MLUI/Core (= 5.1.0)
@@ -95,13 +100,25 @@ PODS:
   - MLUI/StyleSheet (5.1.0)
 
 DEPENDENCIES:
+  - MercadoPagoSDKV4 (from `../`)
   - MLUI (~> 5.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FXBlurView
+    - JRSwizzle
+    - MLUI
+
+EXTERNAL SOURCES:
+  MercadoPagoSDKV4:
+    :path: "../"
 
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  MercadoPagoSDKV4: 0aa007412e25840df7e4ddabf696ad0b24eae197
   MLUI: 4bc30710e102d8348eece6a57f15ca86060f36b2
 
-PODFILE CHECKSUM: cfcf7523c27a6e0cdfbadf21db592c7be78f9c93
+PODFILE CHECKSUM: 9fbf5d290aaabfdd7a4deecec6a5e7d7ba6a6d53
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

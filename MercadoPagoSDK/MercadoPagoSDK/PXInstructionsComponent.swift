@@ -51,9 +51,9 @@ internal class PXInstructionsComponent: PXComponentizable {
 }
 
 internal class PXInstructionsProps {
-    var instruction: Instruction
+    var instruction: PXInstruction
 
-    init(instruction: Instruction) {
+    init(instruction: PXInstruction) {
         self.instruction = instruction
     }
 }

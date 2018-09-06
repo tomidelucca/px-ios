@@ -20,9 +20,9 @@ class AvailableCardsDetailView: UIView {
     let titleFontSize: CGFloat = 20
     let baselineOffSet: Int = 6
 
-    var paymentMethods: [PaymentMethod]!
+    var paymentMethods: [PXPaymentMethod]!
 
-    init(frame: CGRect, paymentMethods: [PaymentMethod]) {
+    init(frame: CGRect, paymentMethods: [PXPaymentMethod]) {
         super.init(frame: frame)
         self.paymentMethods = paymentMethods
 
@@ -79,7 +79,7 @@ class AvailableCardsDetailView: UIView {
         return headerView
     }
 
-    func getCardAvailableView(posY: CGFloat, paymentMethod: PaymentMethod) -> CardAvailableView {
+    func getCardAvailableView(posY: CGFloat, paymentMethod: PXPaymentMethod) -> CardAvailableView {
         return CardAvailableView(frame: CGRect(x: 0, y: posY, width: self.frame.size.width, height: AvailableCardsDetailView.ITEMS_HEIGHT), paymentMethod: paymentMethod)
     }
 

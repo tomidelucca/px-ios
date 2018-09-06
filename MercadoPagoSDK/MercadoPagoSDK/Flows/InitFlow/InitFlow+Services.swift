@@ -10,7 +10,7 @@ import Foundation
 
 extension InitFlow {
     func getCheckoutPreference() {
-        model.getService().getCheckoutPreference(checkoutPreferenceId: model.properties.checkoutPreference.preferenceId, callback: { [weak self] (checkoutPreference) in
+        model.getService().getCheckoutPreference(checkoutPreferenceId: model.properties.checkoutPreference.id, callback: { [weak self] (checkoutPreference) in
             guard let strongSelf = self else {
                 return
             }
@@ -115,7 +115,8 @@ extension InitFlow {
         if let diffPricing = model.properties.checkoutPreference.differentialPricing?.id {
             differentialPricingString = String(describing: diffPricing)
         }
-        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? Payer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString), callback: { [weak self] (paymentMethodSearch) in
+
+        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString), callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return

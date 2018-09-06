@@ -12,12 +12,9 @@
 
 @implementation SimpleVaultFormViewController 
 
-@synthesize paymentMethod;
 @synthesize customerCard;
 @synthesize allowInstallmentsSelection;
 @synthesize amount;
-@synthesize selectedPayerCost;
-@synthesize identificationTypes;
 UIImageView *cardIcon;
 UITextView *cardNumber;
 UITextView *securityCode;
@@ -29,9 +26,7 @@ UILabel *installmentsTitle;
 UILabel *identificationType;
 
 
-
-
-- (IBAction)payButtonAction:(id)sender {    
+- (IBAction)payButtonAction:(id)sender {
 }
 
 - (void)viewDidLoad {
@@ -77,13 +72,8 @@ UILabel *identificationType;
                 expirationMonth = [cell viewWithTag:1];
                 expirationYear = [cell viewWithTag:2];
                 return cell;
-            } else if (self.selectedPayerCost == nil) {
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
-                installmentsTitle = [cell viewWithTag:1];
-                return cell;
             }
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];
-            cell.textLabel.text = self.selectedPayerCost.recommendedMessage;
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];;
             return cell;
 
         }
@@ -102,13 +92,8 @@ UILabel *identificationType;
         }
             break;
         case 5:{
-            if (self.selectedPayerCost == nil) {
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
-                installmentsTitle = [cell viewWithTag:1];
-                return cell;
-            }
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];
-            cell.textLabel.text = self.selectedPayerCost.recommendedMessage;
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
+            installmentsTitle = [cell viewWithTag:1];
             return cell;
             
         }
@@ -151,7 +136,6 @@ UILabel *identificationType;
 
 -(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
     InstallmentsTableViewController *installmentsVC = [segue sourceViewController];
-    self.selectedPayerCost = installmentsVC.selectedPayerCost;
     [[self tableView] reloadData];
     
 }

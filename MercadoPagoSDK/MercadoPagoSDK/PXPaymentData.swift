@@ -12,12 +12,12 @@ import UIKit
  Data needed for payment.
  */
 @objcMembers public class PXPaymentData: NSObject, NSCopying {
-    internal var paymentMethod: PaymentMethod?
-    internal var issuer: Issuer?
-    internal var payerCost: PayerCost?
-    internal var token: Token?
-    internal var payer: Payer?
-    internal var transactionDetails: TransactionDetails?
+    internal var paymentMethod: PXPaymentMethod?
+    internal var issuer: PXIssuer?
+    internal var payerCost: PXPayerCost?
+    internal var token: PXToken?
+    internal var payer: PXPayer?
+    internal var transactionDetails: PXTransactionDetails?
     internal private(set) var discount: PXDiscount?
     internal private(set) var campaign: PXCampaign?
     private let paymentTypesWithoutInstallments = [PXPaymentTypes.PREPAID_CARD.rawValue]
@@ -38,6 +38,7 @@ import UIKit
     }
 
     internal func isComplete(shouldCheckForToken: Bool = true) -> Bool {
+
         guard let paymentMethod = self.paymentMethod else {
             return false
         }
@@ -54,7 +55,7 @@ import UIKit
             return false
         }
 
-        if paymentMethod.paymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
+        if paymentMethod.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
 
@@ -99,14 +100,14 @@ extension PXPaymentData {
     /**
      getToken
      */
-    public func getToken() -> Token? {
+    public func getToken() -> PXToken? {
         return token
     }
 
     /**
      getPayerCost
      */
-    public func getPayerCost() -> PayerCost? {
+    public func getPayerCost() -> PXPayerCost? {
         return payerCost
     }
 
@@ -123,21 +124,21 @@ extension PXPaymentData {
     /**
      getIssuer
      */
-    public func getIssuer() -> Issuer? {
+    public func getIssuer() -> PXIssuer? {
         return issuer
     }
 
     /**
      getPayer
      */
-    public func getPayer() -> Payer? {
+    public func getPayer() -> PXPayer? {
         return payer
     }
 
     /**
      getPaymentMethod
      */
-    public func getPaymentMethod() -> PaymentMethod? {
+    public func getPaymentMethod() -> PXPaymentMethod? {
         return paymentMethod
     }
 
@@ -156,7 +157,7 @@ extension PXPaymentData {
         self.campaign = campaign
     }
 
-    internal func updatePaymentDataWith(paymentMethod: PaymentMethod?) {
+    internal func updatePaymentDataWith(paymentMethod: PXPaymentMethod?) {
         guard let paymentMethod = paymentMethod else {
             return
         }
@@ -166,21 +167,21 @@ extension PXPaymentData {
         self.paymentMethod = paymentMethod
     }
 
-    internal func updatePaymentDataWith(token: Token?) {
+    internal func updatePaymentDataWith(token: PXToken?) {
         guard let token = token else {
             return
         }
         self.token = token
     }
 
-    internal func updatePaymentDataWith(payerCost: PayerCost?) {
+    internal func updatePaymentDataWith(payerCost: PXPayerCost?) {
         guard let payerCost = payerCost else {
             return
         }
         self.payerCost = payerCost
     }
 
-    internal func updatePaymentDataWith(issuer: Issuer?) {
+    internal func updatePaymentDataWith(issuer: PXIssuer?) {
         guard let issuer = issuer else {
             return
         }
@@ -188,7 +189,7 @@ extension PXPaymentData {
         self.issuer = issuer
     }
 
-    internal func updatePaymentDataWith(payer: Payer?) {
+    internal func updatePaymentDataWith(payer: PXPayer?) {
         guard let payer = payer else {
             return
         }
@@ -227,39 +228,5 @@ extension PXPaymentData {
     internal func clearDiscount() {
         self.discount = nil
         self.campaign = nil
-    }
-}
-
-// MARK: JSON
-extension PXPaymentData {
-    internal func toJSONString() -> String {
-        return JSONHandler.jsonCoding(toJSON())
-    }
-
-    internal func toJSON() -> [String: Any] {
-        var obj: [String: Any] = [
-            "payer": payer?.toJSON() ?? ""
-        ]
-        if let paymentMethod = self.paymentMethod {
-            obj["payment_method"] = paymentMethod.toJSON()
-        }
-
-        if let payerCost = self.payerCost {
-            obj["payer_cost"] = payerCost.toJSON()
-        }
-
-        if let token = self.token {
-            obj["card_token"] = token.toJSON()
-        }
-
-        if let issuer = self.issuer {
-            obj["issuer"] = issuer.toJSON()
-        }
-
-        if let discount = self.discount {
-            obj["discount"] = discount.toJSONDictionary()
-        }
-
-        return obj
     }
 }

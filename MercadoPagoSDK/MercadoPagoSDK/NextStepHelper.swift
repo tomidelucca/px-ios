@@ -251,11 +251,11 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         // MoneyIn default card - OneTap safe business check.
-        if amountHelper.preference.paymentPreference.cardId != nil {
+        if amountHelper.preference.paymentPreference?.cardId != nil {
             return false
         }
 
-        if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, paymentMethodPlugins: paymentMethodPluginsToShow) {
+        if let paymentMethodSelected = OneTapFlow.autoSelectOneTapOption(search: search, customPaymentOptions: customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow) {
             updateCheckoutModel(paymentOptionSelected: paymentMethodSelected)
             return true
         }
@@ -301,12 +301,12 @@ extension MercadoPagoCheckoutViewModel {
         } else if !paymentMethod.isOnlinePaymentMethod {
             // Medios off
             if let paymentTypeId = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) {
-                self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod.paymentMethodId, paymentTypeId: paymentTypeId)
+                self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentMethod.id, paymentTypeId: paymentTypeId)
             }
         } else {
             // Tarjetas, efectivo, crédito, debito
             if let paymentTypeId = PXPaymentTypes(rawValue: paymentMethod.paymentTypeId) {
-                self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
+                self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.paymentMethodSearchItem, paymentTypeId: paymentTypeId)
             }
         }
     }
@@ -316,7 +316,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if let card = pmSelected as? CardInformation {
+        if let card = pmSelected as? PXCardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
         return false

@@ -41,7 +41,7 @@ class AdditionalStepCardTableViewCell: UITableViewCell {
         self.cell.backgroundColor = UIColor.primaryColor()
 
     }
-    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod, view: Updatable) {
+    func updateCardSkin(token: PXCardInformationForm?, paymentMethod: PXPaymentMethod, view: Updatable) {
 
         view.updateCard(token: token, paymentMethod: paymentMethod)
 

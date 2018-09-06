@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @interface InstallmentsTableViewController : UITableViewController
 
-@property Card *card;
+@property PXCard *card;
 @property double amount;
-@property PayerCost *selectedPayerCost;
 
 @end

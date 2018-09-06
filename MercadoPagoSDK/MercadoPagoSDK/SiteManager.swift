@@ -13,7 +13,7 @@ internal class SiteManager {
     // TODO: REMOVE FORCE
     private var siteId: String = ""
     private var termsAndConditionsSite: String = ""
-    private var currency: Currency!
+    private var currency: PXCurrency!
 
     static let shared = SiteManager()
 
@@ -50,7 +50,7 @@ internal class SiteManager {
         return termsAndConditionsSite
     }
 
-    func getCurrency() -> Currency {
+    func getCurrency() -> PXCurrency {
         return currency
     }
 

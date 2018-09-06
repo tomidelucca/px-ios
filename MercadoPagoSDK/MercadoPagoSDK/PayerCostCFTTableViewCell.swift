@@ -18,7 +18,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
         self.CFTLabel.text = ""
         self.installmentsLabel.text = ""
     }
-    func fillCell(payerCost: PayerCost) {
+    func fillCell(payerCost: PXPayerCost) {
 
         fillTotalOrNoInterestLabel(payerCost: payerCost)
 
@@ -27,7 +27,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
         fillCFTLabel(payerCost: payerCost)
     }
 
-    func fillTotalOrNoInterestLabel(payerCost: PayerCost) {
+    func fillTotalOrNoInterestLabel(payerCost: PXPayerCost) {
         let currency = SiteManager.shared.getCurrency()
 
         if !payerCost.hasInstallmentsRate() && payerCost.installments != 1 {
@@ -44,12 +44,12 @@ class PayerCostCFTTableViewCell: UITableViewCell {
         }
     }
 
-    func fillInstallmentsLabel(payerCost: PayerCost) {
+    func fillInstallmentsLabel(payerCost: PXPayerCost) {
         let currency = SiteManager.shared.getCurrency()
         self.installmentsLabel.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), currency: currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string: ""), color: UIColor.px_grayBaseText(), fontSize: 20, centsFontSize: 12, baselineOffset: 6)
     }
 
-    func fillCFTLabel(payerCost: PayerCost) {
+    func fillCFTLabel(payerCost: PXPayerCost) {
         CFTLabel.textColor = UIColor.px_grayDark()
         CFTLabel.text = payerCost.hasCFTValue() ? "CFT " + payerCost.getCFTValue()! : ""
     }

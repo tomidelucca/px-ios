@@ -68,5 +68,4 @@
 
 -(void)didReceiveWithCheckoutStore:(PXCheckoutStore *)checkoutStore {
 }
-
 @end

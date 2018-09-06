@@ -20,11 +20,11 @@ final internal class OneTapFlowModel: PXFlowModel {
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption
-    let search: PaymentMethodSearch
+    let search: PXPaymentMethodSearch
     var readyToPay: Bool = false
-    var payerCosts: [PayerCost]?
+    var payerCosts: [PXPayerCost]?
     var paymentResult: PaymentResult?
-    var instructionsInfo: InstructionsInfo?
+    var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
     var consumedDiscount: Bool = false
 
@@ -45,7 +45,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
@@ -80,7 +80,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 // MARK: Create view model
 internal extension OneTapFlowModel {
     func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
-        guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+        guard let cardInformation = self.paymentOptionSelected as? PXCardInformation else {
             fatalError("Cannot convert payment option selected to CardInformation")
         }
 
@@ -104,17 +104,16 @@ internal extension OneTapFlowModel {
         self.readyToPay = true
     }
 
-    func updateCheckoutModel(token: Token) {
+    func updateCheckoutModel(token: PXToken) {
         self.paymentData.updatePaymentDataWith(token: token)
     }
 
-    func updateCheckoutModel(payerCost: PayerCost) {
+    func updateCheckoutModel(payerCost: PXPayerCost) {
         if paymentOptionSelected.isCard() {
             self.paymentData.updatePaymentDataWith(payerCost: payerCost)
             self.paymentData.cleanToken()
         }
     }
-
 }
 
 // MARK: Flow logic
@@ -168,7 +167,7 @@ internal extension OneTapFlowModel {
     }
 
     func hasSavedESC() -> Bool {
-        if let card = paymentOptionSelected as? CardInformation {
+        if let card = paymentOptionSelected as? PXCardInformation {
             return mpESCManager.getESC(cardId: card.getCardId()) == nil ? false : true
         }
         return false

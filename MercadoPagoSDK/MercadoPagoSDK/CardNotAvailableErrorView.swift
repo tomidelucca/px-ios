@@ -15,12 +15,12 @@ class CardNotAvailableErrorView: UIView {
     var errorMessage: String!
     var moreInfoMessage: String!
     var moreInfoLabel: MPLabel!
-    var paymentMethods: [PaymentMethod]!
+    var paymentMethods: [PXPaymentMethod]!
     var showAvaibleCardsCallback: (() -> Void)?
     let MESSAGE_WIDTH_PERCENT: CGFloat = 0.75
     let MORE_INFO_WIDTH_PERCENT: CGFloat = 0.25
 
-    init(frame: CGRect, paymentMethods: [PaymentMethod], showAvaibleCardsCallback: (() -> Void)?) {
+    init(frame: CGRect, paymentMethods: [PXPaymentMethod], showAvaibleCardsCallback: (() -> Void)?) {
         super.init(frame: frame)
         self.backgroundColor = ThemeManager.shared.rejectedColor()
         self.paymentMethods = paymentMethods

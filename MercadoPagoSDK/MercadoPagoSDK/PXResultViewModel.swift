@@ -13,14 +13,14 @@ internal class PXResultViewModel: PXResultViewModelInterface {
     var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT }
 
     var paymentResult: PaymentResult
-    var instructionsInfo: InstructionsInfo?
+    var instructionsInfo: PXInstructions?
     var preference: PXPaymentResultConfiguration
     var callback: ((PaymentResult.CongratsState) -> Void)!
     let amountHelper: PXAmountHelper
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.BAD_FILLED_OTHER]
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: InstructionsInfo? = nil, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstructions? = nil, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
         self.preference =  resultConfiguration
@@ -33,10 +33,10 @@ internal class PXResultViewModel: PXResultViewModelInterface {
                         TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.getPaymentStatusDetail(),
                         TrackingUtil.METADATA_PAYMENT_ID: self.getPaymentId() ?? ""]
         if let pm = self.getPaymentData().getPaymentMethod() {
-            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.paymentMethodId
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.id
         }
         if let issuer = self.getPaymentData().getIssuer() {
-            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.issuerId
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.id
         }
 
         let finalId = "\(screenId)/\(self.getPaymentStatus())"

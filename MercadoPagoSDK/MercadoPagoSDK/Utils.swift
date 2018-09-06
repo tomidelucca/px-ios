@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l__?, r__?):
@@ -82,8 +83,8 @@ internal class Utils {
         return attributedSymbol
     }
 
-    class func getAttributedAmount(_ amount: Double, currency: Currency, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
-        return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount, lightFont: lightFont)
+    class func getAttributedAmount(_ amount: Double, currency: PXCurrency, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
+        return getAttributedAmount(amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount, lightFont: lightFont)
     }
 
     class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, smallSymbol: Bool = false, lightFont: Bool = false) -> NSMutableAttributedString {
@@ -119,13 +120,13 @@ internal class Utils {
         return attributedSymbol
     }
 
-    class func getAmountFormated(amount: Double, forCurrency currency: Currency, addingParenthesis: Bool = false) -> String {
+    class func getAmountFormated(amount: Double, forCurrency currency: PXCurrency, addingParenthesis: Bool = false) -> String {
         return getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis)
     }
 
-    class func getAttributedAmount(withAttributes attributes: [NSAttributedStringKey: Any], amount: Double, currency: Currency, negativeAmount: Bool) -> NSMutableAttributedString {
+    class func getAttributedAmount(withAttributes attributes: [NSAttributedStringKey: Any], amount: Double, currency: PXCurrency, negativeAmount: Bool) -> NSMutableAttributedString {
 
-        let amount = getAmountFormatted(amount: amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, addingCurrencySymbol: currency.symbol, addingParenthesis: false)
+        let amount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
 
         var symbols = ""
         if negativeAmount {
@@ -191,7 +192,7 @@ internal class Utils {
         return amountFotmated
     }
 
-    class func getStrikethroughAmount(amount: Double, forCurrency currency: Currency, addingParenthesis: Bool = false) -> NSMutableAttributedString {
+    class func getStrikethroughAmount(amount: Double, forCurrency currency: PXCurrency, addingParenthesis: Bool = false) -> NSMutableAttributedString {
         let formatedAttrAmount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis).toAttributedString()
         formatedAttrAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: formatedAttrAmount.string.count))
         return formatedAttrAmount
@@ -211,7 +212,7 @@ internal class Utils {
         return labelTitle
     }
 
-    class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments: String, currency: PXCurrency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         let currency = SiteManager.shared.getCurrency()
 
@@ -345,18 +346,18 @@ internal class Utils {
         return ""
     }
 
-    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PaymentMethodSearchItem? {
-        guard paymentMethodSearch.groups != nil
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXPaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
+        guard paymentMethodSearch.paymentMethodSearchItem != nil
             else {return nil}
 
-        if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+        if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.paymentMethodSearchItem, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
             return result
         }
         return nil
     }
 
-    static internal func findCardInformationIn(customOptions: [CardInformation], paymentData: PXPaymentData, savedESCCardToken: SavedESCCardToken? = nil) -> CardInformation? {
-        let customOptionsFound = customOptions.filter { (cardInformation: CardInformation) -> Bool in
+    static internal func findCardInformationIn(customOptions: [PXCardInformation], paymentData: PXPaymentData, savedESCCardToken: PXSavedESCCardToken? = nil) -> PXCardInformation? {
+        let customOptionsFound = customOptions.filter { (cardInformation: PXCardInformation) -> Bool in
             if paymentData.getPaymentMethod()!.isAccountMoney {
                 return  cardInformation.getPaymentMethodId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue
             } else {
@@ -371,25 +372,25 @@ internal class Utils {
         return !Array.isNullOrEmpty(customOptionsFound) ? customOptionsFound[0] : nil
     }
 
-    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList: [PaymentMethodSearchItem], paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PaymentMethodSearchItem? {
+    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList: [PXPaymentMethodSearchItem], paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
 
-        var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PaymentMethodSearchItem) -> Bool in
-            arg.idPaymentMethodSearchItem == paymentMethodId
+        var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+            arg.id == paymentMethodId
         }
 
         if filterPaymentMethodSearchFound.count > 0 {
             return filterPaymentMethodSearchFound[0]
         } else if paymentTypeId != nil {
-            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PaymentMethodSearchItem) -> Bool in
-                arg.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId!.rawValue
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+                arg.id == paymentMethodId + "_" + paymentTypeId!.rawValue
             }
 
             if filterPaymentMethodSearchFound.count > 0 {
                 return filterPaymentMethodSearchFound[0]
             }
         } else {
-            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PaymentMethodSearchItem) -> Bool in
-                arg.idPaymentMethodSearchItem.startsWith(paymentMethodId)
+            filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+                arg.id.startsWith(paymentMethodId)
             }
             if filterPaymentMethodSearchFound.count > 0 {
                 return filterPaymentMethodSearchFound[0]
@@ -408,10 +409,10 @@ internal class Utils {
         return nil
     }
 
-    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems: [PaymentMethodSearchItem], paymentTypeId: PXPaymentTypes) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems: [PXPaymentMethodSearchItem], paymentTypeId: PXPaymentTypes) -> PXPaymentMethodSearchItem? {
 
-        var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter { (arg: PaymentMethodSearchItem) -> Bool in
-            arg.idPaymentMethodSearchItem == paymentTypeId.rawValue
+        var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter { (arg: PXPaymentMethodSearchItem) -> Bool in
+            arg.id == paymentTypeId.rawValue
         }
 
         if !Array.isNullOrEmpty(filterPaymentMethodSearchFound) {
@@ -427,12 +428,12 @@ internal class Utils {
         return nil
     }
 
-    internal static func findPaymentMethod(_ paymentMethods: [PaymentMethod], paymentMethodId: String) -> PaymentMethod {
+    internal static func findPaymentMethod(_ paymentMethods: [PXPaymentMethod], paymentMethodId: String) -> PXPaymentMethod {
         var paymentTypeSelected = ""
 
-        let paymentMethod = paymentMethods.filter({ (paymentMethod: PaymentMethod) -> Bool in
-            if paymentMethodId.startsWith(paymentMethod.paymentMethodId) {
-                let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod.paymentMethodId)
+        let paymentMethod = paymentMethods.filter({ (paymentMethod: PXPaymentMethod) -> Bool in
+            if paymentMethodId.startsWith(paymentMethod.id) {
+                let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod.id)
                 // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
                     paymentTypeSelected = String(paymentMethodId[paymentTypeIdRange!.upperBound...])

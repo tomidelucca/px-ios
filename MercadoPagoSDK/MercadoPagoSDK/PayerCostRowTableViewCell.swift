@@ -13,7 +13,7 @@ class PayerCostRowTableViewCell: UITableViewCell {
     @IBOutlet weak var interestDescription: UILabel!
     @IBOutlet weak var installmentDescription: UILabel!
 
-    func fillCell(payerCost: PayerCost, showDescription: Bool? = true) {
+    func fillCell(payerCost: PXPayerCost, showDescription: Bool? = true) {
         let currency = SiteManager.shared.getCurrency()
         if payerCost.installments == 1 {
             self.interestDescription.clearAttributedText()
@@ -40,7 +40,7 @@ class PayerCostRowTableViewCell: UITableViewCell {
         }
         var installmentNumber = String(format: "%i", payerCost.installments)
         installmentNumber = "\(installmentNumber) x "
-        let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor.black, centsFontSize: 14, baselineOffset: 5)
+        let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: UIColor.black, centsFontSize: 14, baselineOffset: 5)
 
         let atribute = [NSAttributedStringKey.font: Utils.getFont(size: 20), NSAttributedStringKey.foregroundColor: UIColor.black]
         let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: atribute)

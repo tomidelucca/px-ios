@@ -25,130 +25,82 @@ internal class MercadoPagoServicesAdapter {
     func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { [weak self] (pxCheckoutPreference) in
-            guard let strongSelf = self, let siteId = pxCheckoutPreference.siteId else {
+            guard let siteId = pxCheckoutPreference.siteId else {
                 // TODO: faltal error?
                 return
             }
             SiteManager.shared.setSite(siteId: siteId)
-            let checkoutPreference = strongSelf.getCheckoutPreferenceFromPXCheckoutPreference(pxCheckoutPreference)
-            callback(checkoutPreference)
+            callback(pxCheckoutPreference)
             }, failure: failure)
     }
 
-    func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (PXInstructions) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         let int64PaymentId = Int64(paymentId) //TODO: FIX
 
         mercadoPagoServices.getInstructions(paymentId: int64PaymentId!, paymentTypeId: paymentTypeId, callback: { [weak self] (pxInstructions) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            let instructionsInfo = strongSelf.getInstructionsInfoFromPXInstructions(pxInstructions)
-            callback(instructionsInfo)
+            callback(pxInstructions)
             }, failure: failure)
     }
 
-    typealias PaymentSearchExclusions = (excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?)
+    typealias PaymentSearchExclusions = (excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String])
     typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
     typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?)
 
-    func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: Payer, site: String, extraParams: ExtraParams?, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         payer.setAccessToken(accessToken: mercadoPagoServices.payerAccessToken)
-        let pxPayer = getPXPayerFromPayer(payer)
+
         let pxSite = getPXSiteFromId(site)
 
         let accountMoneyAvailable: Bool = false // TODO: This is temporary. (Warning: Until AM First Class Member)
 
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
         if !accountMoneyAvailable {
-            if excludedPaymentTypesIds != nil {
-                excludedPaymentTypesIds?.insert("account_money")
-            } else {
-                excludedPaymentTypesIds = ["account_money"]
-            }
+            excludedPaymentTypesIds.append("account_money")
         }
 
-        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: pxPayer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, callback: {  [weak self] (pxPaymentMethodSearch) in
-                guard let strongSelf = self else {
-                    return
-                }
-                let paymentMethodSearch = strongSelf.getPaymentMethodSearchFromPXPaymentMethodSearch(pxPaymentMethodSearch)
-                callback(paymentMethodSearch)
+        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, callback: {  [weak self] (pxPaymentMethodSearch) in
+                callback(pxPaymentMethodSearch)
             }, failure: failure)
     }
 
-    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: String, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentData: paymentData, query: query, callback: { [weak self] (pxPayment) in
-            guard let strongSelf = self else {
-                return
-            }
-            let payment = strongSelf.getPaymentFromPXPayment(pxPayment)
-            callback(payment)
+        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentDataJSON: paymentDataJSON, query: query, callback: { [weak self] (pxPayment) in
+            callback(pxPayment)
             }, failure: failure)
     }
 
-    func createToken(cardToken: CardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        let pxCardToken = getPXCardTokenFromCardToken(cardToken)
-
-        mercadoPagoServices.createToken(cardToken: pxCardToken, callback: { [weak self] (pxToken) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+        mercadoPagoServices.createToken(cardToken: cardToken, callback: { [weak self] (pxToken) in
+                callback(pxToken)
             }, failure: failure)
     }
 
-    func createToken(savedESCCardToken: SavedESCCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createToken(savedESCCardToken: PXSavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        let pxSavedESCCardToken = getPXSavedESCCardTokenFromSavedESCCardToken(savedESCCardToken)
-
-        mercadoPagoServices.createToken(savedESCCardToken: pxSavedESCCardToken, callback: { [weak self] (pxToken) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (pxToken) in
+                callback(pxToken)
             }, failure: failure)
     }
 
-    func createToken(savedCardToken: SavedCardToken, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        let pxSavedCardToken = getPXSavedCardTokenFromSavedCardToken(savedCardToken)
-
-        mercadoPagoServices.createToken(savedCardToken: pxSavedCardToken, callback: { [weak self] (pxToken) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+    func createToken(savedCardToken: PXSavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        mercadoPagoServices.createToken(savedCardToken: savedCardToken, callback: { [weak self] (pxToken) in
+                callback(pxToken)
             }, failure: failure)
     }
 
-    func createToken(cardTokenJSON: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         mercadoPagoServices.createToken(cardTokenJSON: cardTokenJSON, callback: { [weak self] (pxToken) in
-            guard let strongSelf = self else {
-                return
-            }
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+                callback(pxToken)
             }, failure: failure)
     }
 
-    func cloneToken(tokenId: String, securityCode: String, callback : @escaping (Token) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         mercadoPagoServices.cloneToken(tokenId: tokenId, securityCode: securityCode, callback: { [weak self] (pxToken) in
-            guard let strongSelf = self else {
-                return
-            }
-            let token = strongSelf.getTokenFromPXToken(pxToken)
-            callback(token)
+                callback(pxToken)
             }, failure: failure)
     }
 
@@ -156,19 +108,9 @@ internal class MercadoPagoServicesAdapter {
         mercadoPagoServices.getBankDeals(callback: callback, failure: failure)
     }
 
-    func getIdentificationTypes(callback: @escaping ([IdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
+    func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         mercadoPagoServices.getIdentificationTypes(callback: { [weak self] (pxIdentificationTypes) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            var identificationTypes: [IdentificationType] = []
-            for pxIdentificationTypes in pxIdentificationTypes {
-                let identificationType = strongSelf.getIdentificationTypeFromPXIdentificationType(pxIdentificationTypes)
-                identificationTypes.append(identificationType)
-            }
-            callback(identificationTypes)
+            callback(pxIdentificationTypes)
             }, failure: failure)
     }
 
@@ -187,39 +129,25 @@ internal class MercadoPagoServicesAdapter {
         getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, callback: callback, failure: failure)
     }
 
-    func getInstallments(bin: String?, amount: Double, issuer: Issuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getInstallments(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.issuerId, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (pxInstallments) in
+        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (pxInstallments) in
             guard let strongSelf = self else {
                 return
             }
 
-            var installments: [Installment] = []
-            for pxInstallment in pxInstallments {
-                let installment = strongSelf.getInstallmentFromPXInstallment(pxInstallment)
-                installments.append(installment)
-            }
-            if let installment = installments.first, !installment.payerCosts.isEmpty {
-                callback(installments)
+            if let installment = pxInstallments.first, !installment.payerCosts.isEmpty {
+                callback(pxInstallments)
             } else {
                 failure(strongSelf.createSerializationError(requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS))
             }
             }, failure: failure)
     }
 
-    func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([Issuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getIssuers(paymentMethodId: paymentMethodId, bin: bin, callback: { [weak self] (pxIssuers) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            var issuers: [Issuer] = []
-            for pxIssuer in pxIssuers {
-                let issuer = strongSelf.getIssuerFromPXIssuer(pxIssuer)
-                issuers.append(issuer)
-            }
-            callback(issuers)
+            callback(pxIssuers)
             }, failure: failure)
     }
 

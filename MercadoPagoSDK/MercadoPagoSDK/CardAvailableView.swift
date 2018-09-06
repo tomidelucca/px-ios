@@ -16,13 +16,16 @@ class CardAvailableView: UIView {
     var imageMargin: CGFloat!
     var imageWidth: CGFloat!
 
-    init(frame: CGRect, paymentMethod: PaymentMethod) {
+    init(frame: CGRect, paymentMethod: PXPaymentMethod) {
         super.init(frame: frame)
         self.backgroundColor = .white
 
-        let image =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: false)
+        let image =  ResourceManager.shared.getImageForPaymentMethod(withDescription: paymentMethod.id, defaultColor: false)
         setImageView(image: image)
-        setPaymentMethodNameLabel(name: paymentMethod.name)
+
+        if let paymentMethodName = paymentMethod.name {
+            setPaymentMethodNameLabel(name: paymentMethodName)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

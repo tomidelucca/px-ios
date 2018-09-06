@@ -18,6 +18,11 @@ open class PXIdentification: NSObject, Codable {
         self.number = number
     }
 
+    public init (identificationType: PXIdentificationType, identificationNumber: String) {
+        self.type = identificationType.type
+        self.number = identificationNumber
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

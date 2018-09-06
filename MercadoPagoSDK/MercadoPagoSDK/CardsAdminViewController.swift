@@ -20,7 +20,7 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
     var merchantBaseUrl: String!
     var merchantAccessToken: String!
     var publicKey: String!
-    var currency: Currency!
+    var currency: PXCurrency!
     var defaultInstallments: Int?
     var installments: Int?
     var viewModel: CardsAdminViewModel!
@@ -35,9 +35,9 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
 
     private var defaultOptionSelected = false
 
-    private var callback : ((_ selectedCard: Card?) -> Void)!
+    private var callback : ((_ selectedCard: PXCard?) -> Void)!
 
-    public init(viewModel: CardsAdminViewModel, callback : @escaping (_ selectedCard: Card?) -> Void) {
+    public init(viewModel: CardsAdminViewModel, callback : @escaping (_ selectedCard: PXCard?) -> Void) {
         super.init(nibName: CardsAdminViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.viewModel = viewModel
         self.callback = callback
@@ -126,7 +126,7 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
         }
     }
 
-    func deleteCardAlertView(card: Card, message: String) {
+    func deleteCardAlertView(card: PXCard, message: String) {
 
         let title = self.viewModel.getAlertCardTitle(card: card)
 

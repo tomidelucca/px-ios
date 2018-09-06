@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@import MercadoPagoSDK;
+@import MercadoPagoSDKV4;
 
 @interface SavedCardsTableViewController : UITableViewController
 
-@property NSArray<Card *> *cards;
+@property NSArray<PXCard *> *cards;
 @property bool allowInstallmentsSeletion;
 
 @end
