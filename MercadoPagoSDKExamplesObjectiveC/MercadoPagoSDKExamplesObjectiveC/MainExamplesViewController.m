@@ -211,5 +211,10 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 - (void)trackScreenWithScreenName:(NSString * _Nonnull)screenName extraParams:(NSDictionary<NSString *,id> * _Nullable)extraParams {
     // Track screen
 }
+    
+-(IBAction)startAddCardFlow:(id)sender  {
+    AddCardFlow *cardFlow = [[AddCardFlow alloc] initWithAccessToken:@"APP_USR-1945000207238192-090613-edc2f54853c49e445829144c635d932c-251276461" navigationController:self.navigationController];
+    [cardFlow start];
+}
 
 @end
