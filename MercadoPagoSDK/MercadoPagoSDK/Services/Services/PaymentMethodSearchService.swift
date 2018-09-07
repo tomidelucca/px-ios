@@ -92,7 +92,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
                 } else {
 
                     if paymentSearchDic.allKeys.count > 0 {
-                        let paymentSearch = try! PXPaymentMethodSearch.fromJSON(data: data)
+                        let paymentSearch = try PXPaymentMethodSearch.fromJSON(data: data)
                         success(paymentSearch)
                     } else {
                         failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))

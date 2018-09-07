@@ -24,7 +24,7 @@ internal class MercadoPagoServicesAdapter {
 
     func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { [weak self] (pxCheckoutPreference) in
+        mercadoPagoServices.getCheckoutPreference(checkoutPreferenceId: checkoutPreferenceId, callback: { (pxCheckoutPreference) in
             guard let siteId = pxCheckoutPreference.siteId else {
                 // TODO: faltal error?
                 return
@@ -38,7 +38,7 @@ internal class MercadoPagoServicesAdapter {
 
         let int64PaymentId = Int64(paymentId) //TODO: FIX
 
-        mercadoPagoServices.getInstructions(paymentId: int64PaymentId!, paymentTypeId: paymentTypeId, callback: { [weak self] (pxInstructions) in
+        mercadoPagoServices.getInstructions(paymentId: int64PaymentId!, paymentTypeId: paymentTypeId, callback: { (pxInstructions) in
             callback(pxInstructions)
             }, failure: failure)
     }
@@ -60,48 +60,48 @@ internal class MercadoPagoServicesAdapter {
             excludedPaymentTypesIds.append("account_money")
         }
 
-        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, callback: {  [weak self] (pxPaymentMethodSearch) in
-                callback(pxPaymentMethodSearch)
-            }, failure: failure)
+        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, callback: { (pxPaymentMethodSearch) in
+            callback(pxPaymentMethodSearch)
+        }, failure: failure)
     }
 
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentDataJSON: paymentDataJSON, query: query, callback: { [weak self] (pxPayment) in
+        mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentDataJSON: paymentDataJSON, query: query, callback: { (pxPayment) in
             callback(pxPayment)
-            }, failure: failure)
+        }, failure: failure)
     }
 
     func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createToken(cardToken: cardToken, callback: { [weak self] (pxToken) in
-                callback(pxToken)
+        mercadoPagoServices.createToken(cardToken: cardToken, callback: { (pxToken) in
+            callback(pxToken)
             }, failure: failure)
     }
 
     func createToken(savedESCCardToken: PXSavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (pxToken) in
-                callback(pxToken)
-            }, failure: failure)
+        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { (pxToken) in
+            callback(pxToken)
+        }, failure: failure)
     }
 
     func createToken(savedCardToken: PXSavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        mercadoPagoServices.createToken(savedCardToken: savedCardToken, callback: { [weak self] (pxToken) in
-                callback(pxToken)
-            }, failure: failure)
+        mercadoPagoServices.createToken(savedCardToken: savedCardToken, callback: { (pxToken) in
+            callback(pxToken)
+        }, failure: failure)
     }
 
-    func createToken(cardTokenJSON: Data, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        mercadoPagoServices.createToken(cardTokenJSON: cardTokenJSON, callback: { [weak self] (pxToken) in
-                callback(pxToken)
-            }, failure: failure)
+    func createToken(cardToken: Data, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        mercadoPagoServices.createToken(cardToken: cardToken, callback: { (pxToken) in
+            callback(pxToken)
+        }, failure: failure)
     }
 
     func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        mercadoPagoServices.cloneToken(tokenId: tokenId, securityCode: securityCode, callback: { [weak self] (pxToken) in
-                callback(pxToken)
-            }, failure: failure)
+        mercadoPagoServices.cloneToken(tokenId: tokenId, securityCode: securityCode, callback: { (pxToken) in
+            callback(pxToken)
+        }, failure: failure)
     }
 
     func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -109,9 +109,9 @@ internal class MercadoPagoServicesAdapter {
     }
 
     func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        mercadoPagoServices.getIdentificationTypes(callback: { [weak self] (pxIdentificationTypes) in
+        mercadoPagoServices.getIdentificationTypes(callback: { (pxIdentificationTypes) in
             callback(pxIdentificationTypes)
-            }, failure: failure)
+        }, failure: failure)
     }
 
     func getCampaigns(payerEmail: String?, callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -121,8 +121,8 @@ internal class MercadoPagoServicesAdapter {
     func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: nil, callback: { (pxDiscount) in
-                callback(pxDiscount)
-            }, failure: failure)
+            callback(pxDiscount)
+        }, failure: failure)
     }
 
     func getDirectDiscount(amount: Double, payerEmail: String, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -146,14 +146,14 @@ internal class MercadoPagoServicesAdapter {
 
     func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        mercadoPagoServices.getIssuers(paymentMethodId: paymentMethodId, bin: bin, callback: { [weak self] (pxIssuers) in
+        mercadoPagoServices.getIssuers(paymentMethodId: paymentMethodId, bin: bin, callback: { (pxIssuers) in
             callback(pxIssuers)
-            }, failure: failure)
+        }, failure: failure)
     }
 
     func createSerializationError(requestOrigin: ApiUtil.RequestOrigin) -> NSError {
         #if DEBUG
-            print("--REQUEST_ERROR: Cannot serlialize data in \(requestOrigin.rawValue)\n")
+        print("--REQUEST_ERROR: Cannot serlialize data in \(requestOrigin.rawValue)\n")
         #endif
 
         return NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey: "Hubo un error"])

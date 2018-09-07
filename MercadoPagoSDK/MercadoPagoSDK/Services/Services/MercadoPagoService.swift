@@ -12,9 +12,9 @@ internal class MercadoPagoService: NSObject {
 
     let MP_DEFAULT_TIME_OUT = 15.0
 
-    var baseURL: String!
+    var baseURL: String
+
     init (baseURL: String) {
-        super.init()
         self.baseURL = baseURL
     }
 
