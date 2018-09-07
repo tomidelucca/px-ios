@@ -32,6 +32,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
+    internal var changePaymentMethodCallback: (() -> Void)? = nil
+
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
@@ -234,8 +236,13 @@ extension PXReviewViewController {
     fileprivate func getPaymentMethodComponentView() -> UIView? {
         let action = PXAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
-                self?.viewModel.trackChangePaymentMethodEvent()
-                self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
+                if let callBackAction = self?.changePaymentMethodCallback {
+                    self?.viewModel.trackChangePaymentMethodEvent()
+                    callBackAction()
+                } else {
+                    self?.viewModel.trackChangePaymentMethodEvent()
+                    self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
+                }
             }
         })
         if let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction: action) {

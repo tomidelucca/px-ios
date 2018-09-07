@@ -143,8 +143,14 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
 
         }, finishButtonAnimation: {
-                self.executeNextStep()
+            self.executeNextStep()
         })
+
+        if let changePaymentMethodAction = viewModel.lifecycleProtocol?.changePaymentMethodTapped?() {
+            reviewVC.changePaymentMethodCallback = changePaymentMethodAction
+        } else {
+            reviewVC.changePaymentMethodCallback = nil
+        }
 
         viewModel.pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
     }
