@@ -22,6 +22,8 @@ class PXResultViewController: PXComponentContainerViewController {
     var bodyView: UIView?
     var footerView: UIView?
 
+    internal var changePaymentMethodCallback: (() -> Void)? = nil
+
     init(viewModel: PXResultViewModelInterface, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
