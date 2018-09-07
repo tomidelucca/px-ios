@@ -18,19 +18,19 @@ internal class GatewayService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getToken(_ url: String = PXServicesURLConfigs.MP_CREATE_TOKEN_URI, method: String = "POST", cardTokenJSON: String, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: PXError) -> Void)?) {
+    internal func getToken(_ url: String = PXServicesURLConfigs.MP_CREATE_TOKEN_URI, cardTokenJSON: Data, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: PXError) -> Void)?) {
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
 
-        self.request(uri: url, params: params, body: cardTokenJSON, method: method, success: success, failure: { (error) -> Void in
+        self.request(uri: url, params: params, body: cardTokenJSON, method: HTTPMethod.post, success: success, failure: { (error) -> Void in
             if let failure = failure {
                 failure(PXError(domain: "mercadopago.sdk.GatewayService.getToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
             }
         })
     }
 
-    internal func cloneToken(_ url: String = PXServicesURLConfigs.MP_CREATE_TOKEN_URI, method: String = "POST", public_key: String, tokenId: String, securityCode: String, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: PXError) -> Void)?) {
-        self.request(uri: url + "/" + tokenId + "/clone", params: "public_key=" + public_key, body: nil, method: method, success: { (data) in
+    internal func cloneToken(_ url: String = PXServicesURLConfigs.MP_CREATE_TOKEN_URI, public_key: String, tokenId: String, securityCode: String, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: PXError) -> Void)?) {
+        self.request(uri: url + "/" + tokenId + "/clone", params: "public_key=" + public_key, body: nil, method: HTTPMethod.post, success: { (data) in
              let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
 
             var token : PXToken? = nil
@@ -44,8 +44,9 @@ internal class GatewayService: MercadoPagoService {
                 }
             }
             let secCodeDic : [String: Any] = ["security_code": securityCode]
+            let jsonData = try! JSONSerialization.data(withJSONObject: secCodeDic, options: .prettyPrinted)
 
-            self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: JSONHandler.jsonCoding(secCodeDic), method: "PUT", success: success, failure: { (error) in
+            self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: jsonData, method: HTTPMethod.put, success: success, failure: { (error) in
                 failure?(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
                 })
 

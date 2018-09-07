@@ -65,7 +65,7 @@ internal class MercadoPagoServicesAdapter {
             }, failure: failure)
     }
 
-    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: String, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.createPayment(url: url, uri: uri, transactionId: transactionId, paymentDataJSON: paymentDataJSON, query: query, callback: { [weak self] (pxPayment) in
             callback(pxPayment)
@@ -92,7 +92,7 @@ internal class MercadoPagoServicesAdapter {
             }, failure: failure)
     }
 
-    func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func createToken(cardTokenJSON: Data, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         mercadoPagoServices.createToken(cardTokenJSON: cardTokenJSON, callback: { [weak self] (pxToken) in
                 callback(pxToken)
             }, failure: failure)

@@ -33,7 +33,7 @@ internal class InstructionsService: MercadoPagoService {
 
         let headers = ["Accept-Language": language]
 
-        self.request(uri: PXServicesURLConfigs.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (data: Data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: HTTPMethod.get, headers: headers, cache: false, success: { (data: Data) -> Void in
 
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
 

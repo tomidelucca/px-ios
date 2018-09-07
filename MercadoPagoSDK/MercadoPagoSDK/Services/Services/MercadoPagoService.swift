@@ -18,7 +18,7 @@ internal class MercadoPagoService: NSObject {
         self.baseURL = baseURL
     }
 
-    internal func request(uri: String, params: String?, body: String?, method: String, headers: [String: String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
+    internal func request(uri: String, params: String?, body: Data?, method: HTTPMethod, headers: [String: String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
                         failure: ((_ error: NSError) -> Void)?) {
 
         let url = baseURL + uri
@@ -28,14 +28,24 @@ internal class MercadoPagoService: NSObject {
             requesturl += "?" + escapedParams
         }
 
-        Alamofire.request(requesturl).responseData { response in
+        let Rurl = URL(string: requesturl)
+        var request = URLRequest(url: Rurl!)
+        request.httpMethod = HTTPMethod.post.rawValue
+        //request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+
+        MercadoPagoSDKV4.request(requesturl, method: method).responseData { response in
+            print("Request: \(response.request)")
+            print("Response: \(response.response)")
+            print("Error: \(response.error)")
             debugPrint("All Response Info: \(response)")
 
             if let data = response.result.value, let utf8Text = String(data: data, encoding: .utf8) {
                 print("Data: \(utf8Text)")
+                success(data)
             }
         }
-//
+
 //        let finalURL: NSURL = NSURL(string: requesturl)!
 //        let request: NSMutableURLRequest
 //        if cache {
@@ -89,5 +99,6 @@ internal class MercadoPagoService: NSObject {
 //                failure?(error! as NSError)
 //            }
 //        }
-    }
+//    }
+}
 }

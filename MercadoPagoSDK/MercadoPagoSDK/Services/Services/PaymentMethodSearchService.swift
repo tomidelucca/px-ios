@@ -78,11 +78,11 @@ internal class PaymentMethodSearchService: MercadoPagoService {
             params.paramsAppend(key: "support_plugins", value: supportedPluginsParams)
         }
 
-        let groupsPayerBody = try! payer.toJSONString()
+        let groupsPayerBody = try? payer.toJSON()
 
         let headers = ["Accept-Language": language]
 
-        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
