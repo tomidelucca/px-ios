@@ -28,10 +28,17 @@ internal class MercadoPagoService: NSObject {
             requesturl += "?" + escapedParams
         }
 
+        var cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy
+        if cache {
+            cachePolicy = .returnCacheDataElseLoad
+        }
+
         let Rurl = URL(string: requesturl)
         var request = URLRequest(url: Rurl!)
         request.httpMethod = method.rawValue
         request.httpBody = body
+        request.cachePolicy = cachePolicy
+        request.timeoutInterval = MP_DEFAULT_TIME_OUT
 
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if let sdkVersion = PXServicesURLConfigs.PX_SDK_VERSION {
@@ -46,16 +53,9 @@ internal class MercadoPagoService: NSObject {
         }
 
         MercadoPagoSDKV4.request(request).responseData { response in
-            #if DEBUG
-            print("Request: \(String(describing: response.request))")
-            if let body = response.request?.httpBody {
-                print("Request Body: \(String(describing: String(data: body, encoding: .utf8)))")
-            }
-            print("Error: \(String(describing: response.error))")
-            #endif
+            MercadoPagoService.debugPrint(response: response)
 
-            if let data = response.result.value, let utf8Text = String(data: data, encoding: .utf8), response.error == nil {
-                print("Data: \(utf8Text)")
+            if let data = response.result.value, response.error == nil {
                 success(data)
             } else if let error = response.error as NSError? {
                 failure?(error)
@@ -64,60 +64,23 @@ internal class MercadoPagoService: NSObject {
                 failure?(error)
             }
         }
+    }
+}
 
-        //        let finalURL: NSURL = NSURL(string: requesturl)!
-        //        let request: NSMutableURLRequest
-        //        if cache {
-        //            request  = NSMutableURLRequest(url: finalURL as URL,
-        //                                           cachePolicy: .returnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
-        //        } else {
-        //            request = NSMutableURLRequest(url: finalURL as URL,
-        //                                          cachePolicy: .useProtocolCachePolicy, timeoutInterval: MP_DEFAULT_TIME_OUT)
-        //        }
-        //
-        //        #if DEBUG
-        //            print("\n--REQUEST_URL: \(finalURL)")
-        //        #endif
-        //
-        //        request.url = finalURL as URL
-        //        request.httpMethod = method
-        //        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        //        if let sdkVersion = PXServicesURLConfigs.PX_SDK_VERSION {
-        //            let value = "PX/iOS/" + sdkVersion
-        //            request.setValue(value, forHTTPHeaderField: "User-Agent")
-        //        }
-        //
-        //        if headers !=  nil && headers!.count > 0 {
-        //            for header in headers! {
-        //                request.setValue(header.value, forHTTPHeaderField: header.key)
-        //            }
-        //        }
-        //        if let body = body {
-        //            #if DEBUG
-        //                print("--REQUEST_BODY: \(body as! NSString)")
-        //            #endif
-        //            request.httpBody = body.data(using: String.Encoding.utf8)
-        //        }
-        //
-        //        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        //
-        //        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
-        //            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        //            if error == nil && data != nil {
-        //                do {
-        //                    #if DEBUG
-        //                        print("--REQUEST_RESPONSE: \(String(data: data!, encoding: String.Encoding.utf8) as! NSString)\n")
-        //                    #endif
-        //                    success(data!)
-        //                } catch {
-        //
-        //                    let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-        //                    failure?(e)
-        //                }
-        //            } else {
-        //                failure?(error! as NSError)
-        //            }
-        //        }
-        //    }
+extension MercadoPagoService {
+    static func debugPrint(response: DataResponse<Data>?) {
+        guard let response = response else {
+            return
+        }
+        #if DEBUG
+        print("--Request: \(String(describing: response.request))")
+        if let body = response.request?.httpBody {
+            print("--Request Body: \(String(describing: String(data: body, encoding: .utf8)))")
+        }
+        if let data = response.result.value, let utf8Text = String(data: data, encoding: .utf8) {
+            print("--Data: \(utf8Text)")
+        }
+        print("--Error: \(String(describing: response.error))")
+        #endif
     }
 }
