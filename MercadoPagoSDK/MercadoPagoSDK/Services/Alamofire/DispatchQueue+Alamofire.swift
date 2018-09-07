@@ -25,7 +25,7 @@
 import Dispatch
 import Foundation
 
-extension DispatchQueue {
+internal extension DispatchQueue {
     static var userInteractive: DispatchQueue { return DispatchQueue.global(qos: .userInteractive) }
     static var userInitiated: DispatchQueue { return DispatchQueue.global(qos: .userInitiated) }
     static var utility: DispatchQueue { return DispatchQueue.global(qos: .utility) }
