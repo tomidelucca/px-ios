@@ -83,10 +83,11 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         let headers = ["Accept-Language": language]
 
         self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
-            let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+            do {
+            let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
-                    let apiException = try! PXApiException.fromJSON(data: data)
+                    let apiException = try PXApiException.fromJSON(data: data)
                     failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"], apiException: apiException))
                 } else {
 
@@ -97,6 +98,9 @@ internal class PaymentMethodSearchService: MercadoPagoService {
                         failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
                     }
                 }
+                }
+            } catch {
+                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
             }
 
         }, failure: { (error) -> Void in
