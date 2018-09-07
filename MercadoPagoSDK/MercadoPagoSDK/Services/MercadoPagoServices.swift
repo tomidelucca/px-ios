@@ -50,7 +50,7 @@ internal class MercadoPagoServices: NSObject {
         paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, cardsWithEsc: cardsWithEsc, supportedPlugins: supportedPlugins, site: site, payer: payer, language: language, differentialPricingId: differentialPricingId, success: callback, failure: failure)
     }
 
-    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: String, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
         var headers: [String: String]?
         if !String.isNullOrEmpty(transactionId), let transactionId = transactionId {
@@ -67,18 +67,18 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        createToken(cardTokenJSON: try! cardToken.toJSONString()!, callback: callback, failure: failure)
+        createToken(cardTokenJSON: try! cardToken.toJSON(), callback: callback, failure: failure)
     }
 
     func createToken(savedESCCardToken: PXSavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        createToken(cardTokenJSON: try! savedESCCardToken.toJSONString()!, callback: callback, failure: failure)
+        createToken(cardTokenJSON: try! savedESCCardToken.toJSON(), callback: callback, failure: failure)
     }
 
     func createToken(savedCardToken: PXSavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        createToken(cardTokenJSON: try! savedCardToken.toJSONString()!, callback: callback, failure: failure)
+        createToken(cardTokenJSON: try! savedCardToken.toJSON(), callback: callback, failure: failure)
     }
 
-    func createToken(cardTokenJSON: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func createToken(cardTokenJSON: Data, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data) -> Void in
 
@@ -231,9 +231,9 @@ internal class MercadoPagoServices: NSObject {
     func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (PXCheckoutPreference) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: CustomService = CustomService(baseURL: url, URI: uri)
 
-        let body: String?
+        let body: Data?
         if let bodyInfo = bodyInfo {
-            body = bodyInfo.toJsonString()
+            body = NSKeyedArchiver.archivedData(withRootObject: bodyInfo)
         } else {
             body = nil
         }

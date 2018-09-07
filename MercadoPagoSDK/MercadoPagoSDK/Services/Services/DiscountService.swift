@@ -32,7 +32,7 @@ internal class DiscountService: MercadoPagoService {
             params += "&" + additionalInfo!
         }
 
-        self.request(uri: self.URI, params: params, body: nil, method: "GET", cache: false, success: { (data) -> Void in
+        self.request(uri: self.URI, params: params, body: nil, method: HTTPMethod.get, cache: false, success: { (data) -> Void in
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
 
             if let discount = jsonResult as? NSDictionary {
@@ -57,7 +57,7 @@ internal class DiscountService: MercadoPagoService {
             params += "&email=" + payerEmail
         }
 
-        self.request(uri: self.URI, params: params, body: nil, method: "GET", cache: false, success: { (data) -> Void in
+        self.request(uri: self.URI, params: params, body: nil, method: HTTPMethod.get, cache: false, success: { (data) -> Void in
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
 
             if let errorDic = jsonResult as? NSDictionary {

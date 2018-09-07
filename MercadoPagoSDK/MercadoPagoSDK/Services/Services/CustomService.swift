@@ -19,9 +19,9 @@ internal class CustomService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getCustomer(_ method: String = "GET", params: String, success: @escaping (_ jsonResult: PXCustomer) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    internal func getCustomer(params: String, success: @escaping (_ jsonResult: PXCustomer) -> Void, failure: ((_ error: PXError) -> Void)?) {
 
-        self.request(uri: self.URI, params: params, body: nil, method: method, cache: false, success: { (data) -> Void in
+        self.request(uri: self.URI, params: params, body: nil, method: HTTPMethod.get, cache: false, success: { (data) -> Void in
           let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let custDic = jsonResult as? NSDictionary {
                 if custDic["error"] != nil {
@@ -43,9 +43,9 @@ internal class CustomService: MercadoPagoService {
         })
     }
 
-    internal func createPayment(_ method: String = "POST", headers: [String: String]? = nil, body: String, params: String?, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    internal func createPayment(headers: [String: String]? = nil, body: Data, params: String?, success: @escaping (_ jsonResult: PXPayment) -> Void, failure: ((_ error: PXError) -> Void)?) {
 
-        self.request(uri: self.URI, params: params, body: body, method: method, headers: headers, cache: false, success: { (data: Data) -> Void in
+        self.request(uri: self.URI, params: params, body: body, method: HTTPMethod.post, headers: headers, cache: false, success: { (data: Data) -> Void in
                             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
@@ -78,9 +78,9 @@ internal class CustomService: MercadoPagoService {
         })
     }
 
-    internal func createPreference(_ method: String = "POST", body: String?, success: @escaping (_ jsonResult: PXCheckoutPreference) -> Void, failure: ((_ error: PXError) -> Void)?) {
+    internal func createPreference(body: Data?, success: @escaping (_ jsonResult: PXCheckoutPreference) -> Void, failure: ((_ error: PXError) -> Void)?) {
 
-        self.request(uri: self.URI, params: nil, body: body, method: method, cache: false, success: {
+        self.request(uri: self.URI, params: nil, body: body, method: HTTPMethod.post, cache: false, success: {
             (data) in
 
             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
