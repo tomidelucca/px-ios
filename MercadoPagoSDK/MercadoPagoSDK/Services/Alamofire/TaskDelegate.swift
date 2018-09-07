@@ -26,18 +26,18 @@ import Foundation
 
 /// The task delegate is responsible for handling all delegate callbacks for the underlying task as well as
 /// executing all operations attached to the serial operation queue upon task completion.
-open class TaskDelegate: NSObject {
+internal class TaskDelegate: NSObject {
 
     // MARK: Properties
 
     /// The serial operation queue used to execute all operations after the task completes.
-    public let queue: OperationQueue
+    internal let queue: OperationQueue
 
     /// The data returned by the server.
-    public var data: Data? { return nil }
+    internal var data: Data? { return nil }
 
     /// The error generated throughout the lifecyle of the task.
-    public var error: Error?
+    internal var error: Error?
 
     var task: URLSessionTask? {
         set {
@@ -181,7 +181,7 @@ open class TaskDelegate: NSObject {
 
 // MARK: -
 
-class DataTaskDelegate: TaskDelegate, URLSessionDataDelegate {
+internal class DataTaskDelegate: TaskDelegate, URLSessionDataDelegate {
 
     // MARK: Properties
 
@@ -409,7 +409,7 @@ class DownloadTaskDelegate: TaskDelegate, URLSessionDownloadDelegate {
 
 // MARK: -
 
-class UploadTaskDelegate: DataTaskDelegate {
+internal class UploadTaskDelegate: DataTaskDelegate {
 
     // MARK: Properties
 

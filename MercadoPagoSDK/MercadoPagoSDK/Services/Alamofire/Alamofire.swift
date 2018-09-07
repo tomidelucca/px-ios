@@ -26,7 +26,7 @@ import Foundation
 
 /// Types adopting the `URLConvertible` protocol can be used to construct URLs, which are then used to construct
 /// URL requests.
-public protocol URLConvertible {
+internal protocol URLConvertible {
     /// Returns a URL that conforms to RFC 2396 or throws an `Error`.
     ///
     /// - throws: An `Error` if the type cannot be converted to a `URL`.
@@ -41,7 +41,7 @@ extension String: URLConvertible {
     /// - throws: An `AFError.invalidURL` if `self` is not a valid URL string.
     ///
     /// - returns: A URL or throws an `AFError`.
-    public func asURL() throws -> URL {
+    internal func asURL() throws -> URL {
         guard let url = URL(string: self) else { throw AFError.invalidURL(url: self) }
         return url
     }
@@ -49,7 +49,7 @@ extension String: URLConvertible {
 
 extension URL: URLConvertible {
     /// Returns self.
-    public func asURL() throws -> URL { return self }
+    internal func asURL() throws -> URL { return self }
 }
 
 extension URLComponents: URLConvertible {
@@ -58,7 +58,7 @@ extension URLComponents: URLConvertible {
     /// - throws: An `AFError.invalidURL` if `url` is `nil`.
     ///
     /// - returns: A URL or throws an `AFError`.
-    public func asURL() throws -> URL {
+    internal func asURL() throws -> URL {
         guard let url = url else { throw AFError.invalidURL(url: self) }
         return url
     }
@@ -67,7 +67,7 @@ extension URLComponents: URLConvertible {
 // MARK: -
 
 /// Types adopting the `URLRequestConvertible` protocol can be used to construct URL requests.
-public protocol URLRequestConvertible {
+internal protocol URLRequestConvertible {
     /// Returns a URL request or throws if an `Error` was encountered.
     ///
     /// - throws: An `Error` if the underlying `URLRequest` is `nil`.
@@ -78,12 +78,12 @@ public protocol URLRequestConvertible {
 
 extension URLRequestConvertible {
     /// The URL request.
-    public var urlRequest: URLRequest? { return try? asURLRequest() }
+    internal var urlRequest: URLRequest? { return try? asURLRequest() }
 }
 
 extension URLRequest: URLRequestConvertible {
     /// Returns a URL request or throws if an `Error` was encountered.
-    public func asURLRequest() throws -> URLRequest { return self }
+    internal func asURLRequest() throws -> URLRequest { return self }
 }
 
 // MARK: -
@@ -96,7 +96,7 @@ extension URLRequest {
     /// - parameter headers: The HTTP headers. `nil` by default.
     ///
     /// - returns: The new `URLRequest` instance.
-    public init(url: URLConvertible, method: HTTPMethod, headers: HTTPHeaders? = nil) throws {
+    internal init(url: URLConvertible, method: HTTPMethod, headers: HTTPHeaders? = nil) throws {
         let url = try url.asURL()
 
         self.init(url: url)
@@ -129,7 +129,7 @@ extension URLRequest {
 ///
 /// - returns: The created `DataRequest`.
 @discardableResult
-public func request(
+internal func request(
     _ url: URLConvertible,
     method: HTTPMethod = .get,
     parameters: Parameters? = nil,
@@ -152,7 +152,7 @@ public func request(
 ///
 /// - returns: The created `DataRequest`.
 @discardableResult
-public func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
+internal func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
     return SessionManager.default.request(urlRequest)
 }
 
@@ -175,7 +175,7 @@ public func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
 ///
 /// - returns: The created `DownloadRequest`.
 @discardableResult
-public func download(
+internal func download(
     _ url: URLConvertible,
     method: HTTPMethod = .get,
     parameters: Parameters? = nil,
@@ -204,7 +204,7 @@ public func download(
 ///
 /// - returns: The created `DownloadRequest`.
 @discardableResult
-public func download(
+internal func download(
     _ urlRequest: URLRequestConvertible,
     to destination: DownloadRequest.DownloadFileDestination? = nil)
     -> DownloadRequest {
@@ -233,7 +233,7 @@ public func download(
 ///
 /// - returns: The created `DownloadRequest`.
 @discardableResult
-public func download(
+internal func download(
     resumingWith resumeData: Data,
     to destination: DownloadRequest.DownloadFileDestination? = nil)
     -> DownloadRequest {
@@ -254,7 +254,7 @@ public func download(
 ///
 /// - returns: The created `UploadRequest`.
 @discardableResult
-public func upload(
+internal func upload(
     _ fileURL: URL,
     to url: URLConvertible,
     method: HTTPMethod = .post,
@@ -271,7 +271,7 @@ public func upload(
 ///
 /// - returns: The created `UploadRequest`.
 @discardableResult
-public func upload(_ fileURL: URL, with urlRequest: URLRequestConvertible) -> UploadRequest {
+internal func upload(_ fileURL: URL, with urlRequest: URLRequestConvertible) -> UploadRequest {
     return SessionManager.default.upload(fileURL, with: urlRequest)
 }
 
@@ -287,7 +287,7 @@ public func upload(_ fileURL: URL, with urlRequest: URLRequestConvertible) -> Up
 ///
 /// - returns: The created `UploadRequest`.
 @discardableResult
-public func upload(
+internal func upload(
     _ data: Data,
     to url: URLConvertible,
     method: HTTPMethod = .post,
@@ -304,7 +304,7 @@ public func upload(
 ///
 /// - returns: The created `UploadRequest`.
 @discardableResult
-public func upload(_ data: Data, with urlRequest: URLRequestConvertible) -> UploadRequest {
+internal func upload(_ data: Data, with urlRequest: URLRequestConvertible) -> UploadRequest {
     return SessionManager.default.upload(data, with: urlRequest)
 }
 
@@ -320,7 +320,7 @@ public func upload(_ data: Data, with urlRequest: URLRequestConvertible) -> Uplo
 ///
 /// - returns: The created `UploadRequest`.
 @discardableResult
-public func upload(
+internal func upload(
     _ stream: InputStream,
     to url: URLConvertible,
     method: HTTPMethod = .post,
@@ -337,7 +337,7 @@ public func upload(
 ///
 /// - returns: The created `UploadRequest`.
 @discardableResult
-public func upload(_ stream: InputStream, with urlRequest: URLRequestConvertible) -> UploadRequest {
+internal func upload(_ stream: InputStream, with urlRequest: URLRequestConvertible) -> UploadRequest {
     return SessionManager.default.upload(stream, with: urlRequest)
 }
 
@@ -366,7 +366,7 @@ public func upload(_ stream: InputStream, with urlRequest: URLRequestConvertible
 /// - parameter method:                  The HTTP method. `.post` by default.
 /// - parameter headers:                 The HTTP headers. `nil` by default.
 /// - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
-public func upload(
+internal func upload(
     multipartFormData: @escaping (MultipartFormData) -> Void,
     usingThreshold encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
     to url: URLConvertible,
@@ -404,7 +404,7 @@ public func upload(
 ///                                      `multipartFormDataEncodingMemoryThreshold` by default.
 /// - parameter urlRequest:              The URL request.
 /// - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
-public func upload(
+internal func upload(
     multipartFormData: @escaping (MultipartFormData) -> Void,
     usingThreshold encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
     with urlRequest: URLRequestConvertible,
@@ -434,7 +434,7 @@ public func upload(
 /// - returns: The created `StreamRequest`.
 @discardableResult
 @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
-public func stream(withHostName hostName: String, port: Int) -> StreamRequest {
+internal func stream(withHostName hostName: String, port: Int) -> StreamRequest {
     return SessionManager.default.stream(withHostName: hostName, port: port)
 }
 
@@ -449,7 +449,7 @@ public func stream(withHostName hostName: String, port: Int) -> StreamRequest {
 /// - returns: The created `StreamRequest`.
 @discardableResult
 @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
-public func stream(with netService: NetService) -> StreamRequest {
+internal func stream(with netService: NetService) -> StreamRequest {
     return SessionManager.default.stream(with: netService)
 }
 

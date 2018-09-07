@@ -25,9 +25,9 @@
 import Foundation
 
 /// Responsible for managing the mapping of `ServerTrustPolicy` objects to a given host.
-open class ServerTrustPolicyManager {
+internal class ServerTrustPolicyManager {
     /// The dictionary of policies mapped to a particular host.
-    public let policies: [String: ServerTrustPolicy]
+    internal let policies: [String: ServerTrustPolicy]
 
     /// Initializes the `ServerTrustPolicyManager` instance with the given policies.
     ///
@@ -39,7 +39,7 @@ open class ServerTrustPolicyManager {
     /// - parameter policies: A dictionary of all policies mapped to a particular host.
     ///
     /// - returns: The new `ServerTrustPolicyManager` instance.
-    public init(policies: [String: ServerTrustPolicy]) {
+    internal init(policies: [String: ServerTrustPolicy]) {
         self.policies = policies
     }
 
@@ -51,14 +51,14 @@ open class ServerTrustPolicyManager {
     /// - parameter host: The host to use when searching for a matching policy.
     ///
     /// - returns: The server trust policy for the given host if found.
-    open func serverTrustPolicy(forHost host: String) -> ServerTrustPolicy? {
+    internal func serverTrustPolicy(forHost host: String) -> ServerTrustPolicy? {
         return policies[host]
     }
 }
 
 // MARK: -
 
-extension URLSession {
+internal extension URLSession {
     private struct AssociatedKeys {
         static var managerKey = "URLSession.ServerTrustPolicyManager"
     }

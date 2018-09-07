@@ -25,7 +25,7 @@
 import Foundation
 
 /// Responsible for creating and managing `Request` objects, as well as their underlying `NSURLSession`.
-open class SessionManager {
+internal class SessionManager {
 
     // MARK: - Helper Types
 
@@ -36,7 +36,7 @@ open class SessionManager {
     ///            streaming information.
     /// - Failure: Used to represent a failure in the `MultipartFormData` encoding and also contains the encoding
     ///            error.
-    public enum MultipartFormDataEncodingResult {
+    internal enum MultipartFormDataEncodingResult {
         case success(request: UploadRequest, streamingFromDisk: Bool, streamFileURL: URL?)
         case failure(Error)
     }
@@ -45,7 +45,7 @@ open class SessionManager {
 
     /// A default instance of `SessionManager`, used by top-level Alamofire request methods, and suitable for use
     /// directly for any ad hoc requests.
-    public static let `default`: SessionManager = {
+    internal static let `default`: SessionManager = {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
 
@@ -53,7 +53,7 @@ open class SessionManager {
     }()
 
     /// Creates default values for the "Accept-Encoding", "Accept-Language" and "User-Agent" headers.
-    public static let defaultHTTPHeaders: HTTPHeaders = {
+    internal static let defaultHTTPHeaders: HTTPHeaders = {
         // Accept-Encoding HTTP Header; see https://tools.ietf.org/html/rfc7230#section-4.2.3
         let acceptEncoding: String = "gzip;q=1.0, compress;q=0.5"
 
@@ -118,22 +118,22 @@ open class SessionManager {
     }()
 
     /// Default memory threshold used when encoding `MultipartFormData` in bytes.
-    public static let multipartFormDataEncodingMemoryThreshold: UInt64 = 10_000_000
+    internal static let multipartFormDataEncodingMemoryThreshold: UInt64 = 10_000_000
 
     /// The underlying session.
-    public let session: URLSession
+    internal let session: URLSession
 
     /// The session delegate handling all the task and session delegate callbacks.
-    public let delegate: SessionDelegate
+    internal let delegate: SessionDelegate
 
     /// Whether to start requests immediately after being constructed. `true` by default.
-    open var startRequestsImmediately: Bool = true
+    internal var startRequestsImmediately: Bool = true
 
     /// The request adapter called each time a new request is created.
-    open var adapter: RequestAdapter?
+    internal var adapter: RequestAdapter?
 
     /// The request retrier called each time a request encounters an error to determine whether to retry the request.
-    open var retrier: RequestRetrier? {
+    internal var retrier: RequestRetrier? {
         get { return delegate.retrier }
         set { delegate.retrier = newValue }
     }
@@ -147,7 +147,7 @@ open class SessionManager {
     /// SessionDelegate `sessionDidFinishEventsForBackgroundURLSession` and manually call the handler when finished.
     ///
     /// `nil` by default.
-    open var backgroundCompletionHandler: (() -> Void)?
+    internal var backgroundCompletionHandler: (() -> Void)?
 
     let queue = DispatchQueue(label: "org.alamofire.session-manager." + UUID().uuidString)
 
@@ -163,7 +163,7 @@ open class SessionManager {
     ///                                       challenges. `nil` by default.
     ///
     /// - returns: The new `SessionManager` instance.
-    public init(
+    internal init(
         configuration: URLSessionConfiguration = URLSessionConfiguration.default,
         delegate: SessionDelegate = SessionDelegate(),
         serverTrustPolicyManager: ServerTrustPolicyManager? = nil) {
@@ -181,7 +181,7 @@ open class SessionManager {
     ///                                       challenges. `nil` by default.
     ///
     /// - returns: The new `SessionManager` instance if the URL session's delegate matches; `nil` otherwise.
-    public init?(
+    internal init?(
         session: URLSession,
         delegate: SessionDelegate,
         serverTrustPolicyManager: ServerTrustPolicyManager? = nil) {
@@ -221,7 +221,7 @@ open class SessionManager {
     ///
     /// - returns: The created `DataRequest`.
     @discardableResult
-    open func request(
+    internal func request(
         _ url: URLConvertible,
         method: HTTPMethod = .get,
         parameters: Parameters? = nil,
@@ -247,7 +247,7 @@ open class SessionManager {
     ///
     /// - returns: The created `DataRequest`.
     @discardableResult
-    open func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
+    internal func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
         var originalRequest: URLRequest?
 
         do {
@@ -310,7 +310,7 @@ open class SessionManager {
     ///
     /// - returns: The created `DownloadRequest`.
     @discardableResult
-    open func download(
+    internal func download(
         _ url: URLConvertible,
         method: HTTPMethod = .get,
         parameters: Parameters? = nil,
@@ -340,7 +340,7 @@ open class SessionManager {
     ///
     /// - returns: The created `DownloadRequest`.
     @discardableResult
-    open func download(
+    internal func download(
         _ urlRequest: URLRequestConvertible,
         to destination: DownloadRequest.DownloadFileDestination? = nil)
         -> DownloadRequest {
@@ -376,7 +376,7 @@ open class SessionManager {
     ///
     /// - returns: The created `DownloadRequest`.
     @discardableResult
-    open func download(
+    internal func download(
         resumingWith resumeData: Data,
         to destination: DownloadRequest.DownloadFileDestination? = nil)
         -> DownloadRequest {
@@ -445,7 +445,7 @@ open class SessionManager {
     ///
     /// - returns: The created `UploadRequest`.
     @discardableResult
-    open func upload(
+    internal func upload(
         _ fileURL: URL,
         to url: URLConvertible,
         method: HTTPMethod = .post,
@@ -468,7 +468,7 @@ open class SessionManager {
     ///
     /// - returns: The created `UploadRequest`.
     @discardableResult
-    open func upload(_ fileURL: URL, with urlRequest: URLRequestConvertible) -> UploadRequest {
+    internal func upload(_ fileURL: URL, with urlRequest: URLRequestConvertible) -> UploadRequest {
         do {
             let urlRequest = try urlRequest.asURLRequest()
             return upload(.file(fileURL, urlRequest))
@@ -490,7 +490,7 @@ open class SessionManager {
     ///
     /// - returns: The created `UploadRequest`.
     @discardableResult
-    open func upload(
+    internal func upload(
         _ data: Data,
         to url: URLConvertible,
         method: HTTPMethod = .post,
@@ -513,7 +513,7 @@ open class SessionManager {
     ///
     /// - returns: The created `UploadRequest`.
     @discardableResult
-    open func upload(_ data: Data, with urlRequest: URLRequestConvertible) -> UploadRequest {
+    internal func upload(_ data: Data, with urlRequest: URLRequestConvertible) -> UploadRequest {
         do {
             let urlRequest = try urlRequest.asURLRequest()
             return upload(.data(data, urlRequest))
@@ -535,7 +535,7 @@ open class SessionManager {
     ///
     /// - returns: The created `UploadRequest`.
     @discardableResult
-    open func upload(
+    internal func upload(
         _ stream: InputStream,
         to url: URLConvertible,
         method: HTTPMethod = .post,
@@ -558,7 +558,7 @@ open class SessionManager {
     ///
     /// - returns: The created `UploadRequest`.
     @discardableResult
-    open func upload(_ stream: InputStream, with urlRequest: URLRequestConvertible) -> UploadRequest {
+    internal func upload(_ stream: InputStream, with urlRequest: URLRequestConvertible) -> UploadRequest {
         do {
             let urlRequest = try urlRequest.asURLRequest()
             return upload(.stream(stream, urlRequest))
@@ -594,7 +594,7 @@ open class SessionManager {
     /// - parameter method:                  The HTTP method. `.post` by default.
     /// - parameter headers:                 The HTTP headers. `nil` by default.
     /// - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
-    open func upload(
+    internal func upload(
         multipartFormData: @escaping (MultipartFormData) -> Void,
         usingThreshold encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
         to url: URLConvertible,
@@ -638,7 +638,7 @@ open class SessionManager {
     ///                                      `multipartFormDataEncodingMemoryThreshold` by default.
     /// - parameter urlRequest:              The URL request.
     /// - parameter encodingCompletion:      The closure called when the `MultipartFormData` encoding is complete.
-    open func upload(
+    internal func upload(
         multipartFormData: @escaping (MultipartFormData) -> Void,
         usingThreshold encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
         with urlRequest: URLRequestConvertible,
@@ -781,7 +781,7 @@ open class SessionManager {
     /// - returns: The created `StreamRequest`.
     @discardableResult
     @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
-    open func stream(withHostName hostName: String, port: Int) -> StreamRequest {
+    internal func stream(withHostName hostName: String, port: Int) -> StreamRequest {
         return stream(.stream(hostName: hostName, port: port))
     }
 
@@ -796,7 +796,7 @@ open class SessionManager {
     /// - returns: The created `StreamRequest`.
     @discardableResult
     @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
-    open func stream(with netService: NetService) -> StreamRequest {
+    internal func stream(with netService: NetService) -> StreamRequest {
         return stream(.netService(netService))
     }
 
