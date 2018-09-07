@@ -30,30 +30,36 @@ internal class GatewayService: MercadoPagoService {
     }
 
     internal func cloneToken(_ url: String = PXServicesURLConfigs.MP_CREATE_TOKEN_URI, public_key: String, tokenId: String, securityCode: String, success: @escaping (_ data: Data) -> Void, failure:  ((_ error: PXError) -> Void)?) {
-        self.request(uri: url + "/" + tokenId + "/clone", params: "public_key=" + public_key, body: nil, method: HTTPMethod.post, success: { (data) in
-             let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+        do {
+            self.request(uri: url + "/" + tokenId + "/clone", params: "public_key=" + public_key, body: nil, method: HTTPMethod.post, success: { (data) in
+                do {
+                    let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
 
-            var token : PXToken? = nil
-            if let tokenDic = jsonResult as? NSDictionary {
-                if tokenDic["error"] == nil {
-                    token = try! PXToken.fromJSON(data: data)
-                } else {
-                    let apiException = try! PXApiException.fromJSON(data: data)
-                    failure?(PXError(domain: "mercadopago.sdk.cloneToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
-                    return
+                    var token : PXToken? = nil
+                    if let tokenDic = jsonResult as? NSDictionary {
+                        if tokenDic["error"] == nil {
+                            token = try PXToken.fromJSON(data: data)
+                        } else {
+                            let apiException = try PXApiException.fromJSON(data: data)
+                            failure?(PXError(domain: "mercadopago.sdk.cloneToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+                            return
+                        }
+                    }
+                    let secCodeDic : [String: Any] = ["security_code": securityCode]
+                    let jsonData = try JSONSerialization.data(withJSONObject: secCodeDic, options: .prettyPrinted)
+
+                    self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: jsonData, method: HTTPMethod.put, success: success, failure: { (error) in
+                        failure?(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+                    })
+                } catch {
+                    failure?(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
                 }
-            }
-            let secCodeDic : [String: Any] = ["security_code": securityCode]
-            let jsonData = try! JSONSerialization.data(withJSONObject: secCodeDic, options: .prettyPrinted)
 
-            self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: jsonData, method: HTTPMethod.put, success: success, failure: { (error) in
-                failure?(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
-                })
-
-        }, failure: { (error) -> Void in
-            if let failure = failure {
-                failure(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
-            }
-        })
+            }, failure: { (error) -> Void in
+                if let failure = failure {
+                    failure(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
+                }
+            })
+        }
     }
 }

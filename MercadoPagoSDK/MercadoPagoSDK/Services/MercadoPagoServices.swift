@@ -67,32 +67,38 @@ internal class MercadoPagoServices: NSObject {
     }
 
     func createToken(cardToken: PXCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        createToken(cardTokenJSON: try! cardToken.toJSON(), callback: callback, failure: failure)
+        createToken(cardToken: try? cardToken.toJSON(), callback: callback, failure: failure)
     }
 
     func createToken(savedESCCardToken: PXSavedESCCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        createToken(cardTokenJSON: try! savedESCCardToken.toJSON(), callback: callback, failure: failure)
+        createToken(cardToken: try? savedESCCardToken.toJSON(), callback: callback, failure: failure)
     }
 
     func createToken(savedCardToken: PXSavedCardToken, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        createToken(cardTokenJSON: try! savedCardToken.toJSON(), callback: callback, failure: failure)
+        createToken(cardToken: try? savedCardToken.toJSON(), callback: callback, failure: failure)
     }
 
-    func createToken(cardTokenJSON: Data, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func createToken(cardToken: Data?, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
-        service.getToken(cardTokenJSON: cardTokenJSON, success: {(data: Data) -> Void in
-
-            let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-            var token : PXToken
-            if let tokenDic = jsonResult as? NSDictionary {
-                if tokenDic["error"] == nil {
-                    token = try! PXToken.fromJSON(data: data)
-                    MPXTracker.trackToken(token: token.id)
-                    callback(token)
-                } else {
-                    let apiException = try! PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: "mercadopago.sdk.createToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+        guard let cardToken = cardToken else {
+            return
+        }
+        service.getToken(cardTokenJSON: cardToken, success: {(data: Data) -> Void in
+            do {
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                var token : PXToken
+                if let tokenDic = jsonResult as? NSDictionary {
+                    if tokenDic["error"] == nil {
+                        token = try PXToken.fromJSON(data: data)
+                        MPXTracker.trackToken(token: token.id)
+                        callback(token)
+                    } else {
+                        let apiException = try PXApiException.fromJSON(data: data)
+                        failure(PXError(domain: "mercadopago.sdk.createToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+                    }
                 }
+            } catch {
+                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido crear el token"]))
             }
         }, failure: failure)
     }
@@ -100,17 +106,21 @@ internal class MercadoPagoServices: NSObject {
     func cloneToken(tokenId: String, securityCode: String, callback : @escaping (PXToken) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         let service: GatewayService = GatewayService(baseURL: getGatewayURL(), merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
         service.cloneToken(public_key: merchantPublicKey, tokenId: tokenId, securityCode: securityCode, success: {(data: Data) -> Void in
-            let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-            var token : PXToken
-            if let tokenDic = jsonResult as? NSDictionary {
-                if tokenDic["error"] == nil {
-                    token = try! PXToken.fromJSON(data: data)
-                    MPXTracker.trackToken(token: token.id)
-                    callback(token)
-                } else {
-                    let apiException = try! PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: "mercadopago.sdk.createToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+            do {
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                var token : PXToken
+                if let tokenDic = jsonResult as? NSDictionary {
+                    if tokenDic["error"] == nil {
+                        token = try PXToken.fromJSON(data: data)
+                        MPXTracker.trackToken(token: token.id)
+                        callback(token)
+                    } else {
+                        let apiException = try PXApiException.fromJSON(data: data)
+                        failure(PXError(domain: "mercadopago.sdk.createToken", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: tokenDic as? [String: Any], apiException: apiException))
+                    }
                 }
+            } catch {
+                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido clonar el token"]))
             }
         }, failure: failure)
     }
@@ -118,31 +128,38 @@ internal class MercadoPagoServices: NSObject {
     func getBankDeals(callback : @escaping ([PXBankDeal]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: PromosService = PromosService(baseURL: baseURL)
         service.getPromos(public_key: merchantPublicKey, success: { (jsonResult) -> Void in
-            var promos : [PXBankDeal] = [PXBankDeal]()
-            if let data = jsonResult {
-                promos = try! PXBankDeal.fromJSON(data: data)
+            do {
+                var promos : [PXBankDeal] = [PXBankDeal]()
+                if let data = jsonResult {
+                    promos = try PXBankDeal.fromJSON(data: data)
+                }
+                callback(promos)
+            } catch {
+                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las promociones"]))
             }
-            callback(promos)
         }, failure: failure)
     }
 
     func getIdentificationTypes(callback: @escaping ([PXIdentificationType]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: IdentificationService = IdentificationService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken)
-        service.getIdentificationTypes(success: {(data: Data!) -> Void in
-            let jsonResult = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+        service.getIdentificationTypes(success: {(data: Data!) -> Void in do {
+            let jsonResult = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
 
             if let error = jsonResult as? NSDictionary {
                 if (error["status"]! as? Int) == 404 {
-                    let apiException = try! PXApiException.fromJSON(data: data)
+                    let apiException = try PXApiException.fromJSON(data: data)
                     failure(PXError(domain: "mercadopago.sdk.getIdentificationTypes", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
                 } else if error["error"] != nil {
-                    let apiException = try! PXApiException.fromJSON(data: data)
+                    let apiException = try PXApiException.fromJSON(data: data)
                     failure(PXError(domain: "mercadopago.sdk.getIdentificationTypes", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: error as? [String: Any], apiException: apiException))
                 }
             } else {
                 var identificationTypes : [PXIdentificationType] = [PXIdentificationType]()
-                identificationTypes = try! PXIdentificationType.fromJSON(data: data)
+                identificationTypes = try PXIdentificationType.fromJSON(data: data)
                 callback(identificationTypes)
+            }
+        } catch {
+            failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los tipos de identificación"]))
             }
         }, failure: failure)
     }
@@ -155,18 +172,22 @@ internal class MercadoPagoServices: NSObject {
     func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(data: Data) -> Void in
+            do {
 
-            let jsonResponse = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                let jsonResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
 
-            if let errorDic = jsonResponse as? NSDictionary {
-                if errorDic["error"] != nil {
-                    let apiException = try! PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: "mercadopago.sdk.getIssuers", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: errorDic as? [String: Any], apiException: apiException))
+                if let errorDic = jsonResponse as? NSDictionary {
+                    if errorDic["error"] != nil {
+                        let apiException = try PXApiException.fromJSON(data: data)
+                        failure(PXError(domain: "mercadopago.sdk.getIssuers", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: errorDic as? [String: Any], apiException: apiException))
+                    }
+                } else {
+                    var issuers : [PXIssuer] = [PXIssuer]()
+                    issuers =  try PXIssuer.fromJSON(data: data)
+                    callback(issuers)
                 }
-            } else {
-                var issuers : [PXIssuer] = [PXIssuer]()
-                issuers =  try! PXIssuer.fromJSON(data: data)
-                callback(issuers)
+            } catch {
+                failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los bancos"]))
             }
         }, failure: failure)
     }
@@ -174,17 +195,19 @@ internal class MercadoPagoServices: NSObject {
     func getPaymentMethods(callback: @escaping ([PXPaymentMethod]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         service.getPaymentMethods(success: {(data: Data) -> Void in
-
-            let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-            if let errorDic = jsonResult as? NSDictionary {
-                if errorDic["error"] != nil {
-                    let apiException = try! PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: "mercadopago.sdk.getPaymentMethods", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: errorDic as? [String: Any], apiException: apiException))
-                }
-            } else {
-                var paymentMethods : [PXPaymentMethod] = [PXPaymentMethod]()
-                paymentMethods = try! PXPaymentMethod.fromJSON(data: data)
-                callback(paymentMethods)
+            do {
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                if let errorDic = jsonResult as? NSDictionary {
+                    if errorDic["error"] != nil {
+                        let apiException = try PXApiException.fromJSON(data: data)
+                        failure(PXError(domain: "mercadopago.sdk.getPaymentMethods", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: errorDic as? [String: Any], apiException: apiException))
+                    }
+                } else {
+                    var paymentMethods : [PXPaymentMethod] = [PXPaymentMethod]()
+                    paymentMethods = try PXPaymentMethod.fromJSON(data: data)
+                    callback(paymentMethods)
+                }} catch {
+                    failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
             }
         }, failure: failure)
     }

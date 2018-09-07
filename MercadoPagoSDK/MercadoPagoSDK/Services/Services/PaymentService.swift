@@ -44,18 +44,22 @@ internal class PaymentService: MercadoPagoService {
         params.paramsAppend(key: ApiParams.DIFFERENTIAL_PRICING_ID, value: differential_pricing_id)
 
         self.request( uri: uri, params: params, body: nil, method: HTTPMethod.get, success: {(data: Data) -> Void in
-            let jsonResult = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+            do {
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
 
-            if let errorDic = jsonResult as? NSDictionary {
-                if errorDic["error"] != nil {
-                    let apiException = try! PXApiException.fromJSON(data: data)
-                    failure(PXError(domain: "mercadopago.sdk.paymentService.getInstallments", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: errorDic["error"] as? String ?? "Unknowed Error"], apiException: apiException))
+                if let errorDic = jsonResult as? NSDictionary {
+                    if errorDic["error"] != nil {
+                        let apiException = try PXApiException.fromJSON(data: data)
+                        failure(PXError(domain: "mercadopago.sdk.paymentService.getInstallments", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: errorDic["error"] as? String ?? "Unknowed Error"], apiException: apiException))
 
+                    }
+                } else {
+                    var installments : [PXInstallment] = [PXInstallment]()
+                    installments =  try PXInstallment.fromJSON(data: data)
+                    success(installments)
                 }
-            } else {
-                var installments : [PXInstallment] = [PXInstallment]()
-                installments =  try! PXInstallment.fromJSON(data: data)
-                success(installments)
+            } catch {
+                failure(PXError(domain: "mercadopago.sdk.paymentService.getInstallments", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener las cuotas"]))
             }
         }, failure: { (error) in
             failure(PXError(domain: "mercadopago.sdk.paymentService.getInstallments", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
