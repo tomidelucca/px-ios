@@ -198,9 +198,12 @@ extension MercadoPagoCheckout {
                 strongSelf.viewModel.prepareForClone()
                 strongSelf.collectSecurityCodeForRetry()
             } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
-                strongSelf.viewModel.prepareForNewSelection()
-                strongSelf.executeNextStep()
-
+                if let changePaymentMethodAction = strongSelf.viewModel.lifecycleProtocol?.changePaymentMethodTapped?(), state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
+                    changePaymentMethodAction()
+                } else {
+                    strongSelf.viewModel.prepareForNewSelection()
+                    strongSelf.executeNextStep()
+                }
             } else {
                 strongSelf.finish()
             }
