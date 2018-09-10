@@ -241,8 +241,8 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
             toolbar.barStyle = UIBarStyle.default
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-            let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(IdentificationViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(IdentificationViewController.leftArrowKeyTapped))
 
             buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
             buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
@@ -304,7 +304,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         self.numberTextField.becomeFirstResponder()
     }
 
-    func leftArrowKeyTapped() {
+    @objc func leftArrowKeyTapped() {
         self.navigationController?.popViewController(animated: false)
     }
 
