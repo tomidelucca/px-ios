@@ -9,9 +9,10 @@
 import Foundation
 
 /**
-We use PXLanguages raw string values. `WARNING:` Use this enum only for reference.
+We use PXLanguages raw string values. `WARNING:`
  - This is an internal method not intended for public use. Only for reference.
  - It is not considered part of the public API.
+ - warning: Use this enum only for reference. Don´t use it.
  */
 public enum PXLanguages: String {
     /**

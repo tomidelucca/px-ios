@@ -7,8 +7,8 @@
 
 import Foundation
 
+/// :nodoc:
 extension PXPaymentMethod: Cellable {
-
     var objectType: ObjectTypes {
         get {
             return ObjectTypes.paymentMethod

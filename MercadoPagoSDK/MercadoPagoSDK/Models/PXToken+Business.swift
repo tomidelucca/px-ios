@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// :nodoc:
 extension PXToken: PXCardInformationForm {
     func getBin() -> String? {
         var bin: String? = nil
