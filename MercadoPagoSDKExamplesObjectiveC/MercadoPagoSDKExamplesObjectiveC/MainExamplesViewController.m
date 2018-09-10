@@ -173,7 +173,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 -(void)setVoidCallback {}
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:90.0];
     PXItem *item2 = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
 
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
