@@ -213,6 +213,13 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     };
 }
 
+-(void (^)(void))changePaymentMethodTapped {
+    return ^ {
+        NSLog(@"PXLog - changePaymentMethodTapped Called");
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    };
+}
+
 - (void)trackEventWithScreenName:(NSString * _Nullable)screenName action:(NSString * _Null_unspecified)action result:(NSString * _Nullable)result extraParams:(NSDictionary<NSString *,id> * _Nullable)extraParams {
     // Track event
 }
