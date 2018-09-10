@@ -87,6 +87,7 @@ class MPCheckoutTestAction: NSObject {
         let oneTapItem = PXOneTapItem(paymentMethodId: "account_money", paymentTypeId: "account_money", oneTapCard: nil)
 
         let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption, offlineOption], paymentMethods: [paymentMethodVisa, paymentMethodMaster, paymentMethodAM, offlinePaymentMethod, paymentMethodTicket, paymentMethodTicket2], customOptions: [customerCardOption, accountMoneyOption], oneTapItem: oneTapItem)
+        mpCheckoutViewModel.customPaymentOptions = [customerCardOption, accountMoneyOption] as! [CustomerPaymentMethod]
         mpCheckoutViewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
     }
 

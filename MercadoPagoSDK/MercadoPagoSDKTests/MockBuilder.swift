@@ -190,26 +190,25 @@ open class MockBuilder: NSObject {
         return paymentMethodSearchItem
     }
 
-//    class func buildPaymentMethodPlugin(id: String, name: String, displayOrder: PXPaymentMethodPlugin.DisplayOrder = .TOP, shouldSkipPaymentPlugin: Bool = false, configPaymentMethodPlugin: MockConfigPaymentMethodPlugin?) -> PXPaymentMethodPlugin {
-//        let paymentPlugin = MockPaymentPluginViewController()
-//
-//        let plugin = PXPaymentMethodPlugin(paymentMethodPluginId: id, name: name, image: UIImage(), description: nil, paymentPlugin: paymentPlugin)
-//
-//        if let configPaymentMethodPlugin = configPaymentMethodPlugin {
-//            plugin.setPaymentMethodConfig(plugin: configPaymentMethodPlugin)
-//        }
-//
-//        plugin.setDisplayOrder(order: displayOrder)
-//
-//        return plugin
-//    }
+    class func buildPaymentMethodPlugin(id: String, name: String, displayOrder: PXPaymentMethodPlugin.DisplayOrder = .TOP, shouldSkipPaymentPlugin: Bool = false, configPaymentMethodPlugin: MockConfigPaymentMethodPlugin?) -> PXPaymentMethodPlugin {
 
-//    class func buildPaymentPlugin() -> PXPaymentPluginComponent {
-//        return MockPaymentPluginViewController()
-//    }
+        let plugin = PXPaymentMethodPlugin(paymentMethodPluginId: id, name: name, image: UIImage(), description: nil)
+
+        if let configPaymentMethodPlugin = configPaymentMethodPlugin {
+            plugin.setPaymentMethodConfig(config: configPaymentMethodPlugin)
+        }
+
+        plugin.setDisplayOrder(order: displayOrder)
+
+        return plugin
+    }
+
+    class func buildPaymentPlugin() -> PXPaymentProcessor {
+        return MockPaymentPluginViewController()
+    }
 
     class func buildPaymentMethodSearch(groups: [PXPaymentMethodSearchItem]? = nil, paymentMethods: [PXPaymentMethod]? = nil, customOptions: [PXCardInformation]? = nil, oneTapItem: PXOneTapItem? = nil) -> PXPaymentMethodSearch {
-        let paymentMethodSearch = PXPaymentMethodSearch(paymentMethodSearchItem: groups!, customOptionSearchItems: customOptions as! [PXCustomOptionSearchItem], paymentMethods: paymentMethods!, cards: nil, defaultOption: nil, oneTap: oneTapItem)
+        let paymentMethodSearch = PXPaymentMethodSearch(paymentMethodSearchItem: groups!, customOptionSearchItems: [], paymentMethods: paymentMethods!, cards: nil, defaultOption: nil, oneTap: oneTapItem)
         return paymentMethodSearch
     }
 
@@ -482,6 +481,12 @@ open class MockBuilder: NSObject {
         cause.append(invalidIdCause)
         apiException.cause = cause
         return apiException
+    }
+
+    class func buildPXPaymentConfiguration(paymentPluginId: String = "account_money") -> PXPaymentConfiguration {
+        let paymentConfiguration = PXPaymentConfiguration(paymentProcessor: buildPaymentPlugin())
+        paymentConfiguration.addPaymentMethodPlugin(plugin: buildPaymentMethodPlugin(id: paymentPluginId, name: "account_money", configPaymentMethodPlugin: nil))
+        return paymentConfiguration
     }
 
 }

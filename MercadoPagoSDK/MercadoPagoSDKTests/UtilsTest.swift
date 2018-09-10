@@ -211,13 +211,6 @@ class UtilsTest: BaseTest {
         let debvisaOutput = Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "debvisa")
         XCTAssertEqual(debvisa, debvisaOutput)
         XCTAssertEqual("debit_card", debvisa.paymentTypeId)
-
-        //XCTAssertThrowsError(Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "thisisnotavalidinput"), x"", file: (Error) -> Void)
-
-        //XCTAssertNil(invalidOutput)
-
-       // let emptyOutput = Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "")
-       // XCTAssertNil(emptyOutput)
     }
 
     /**
