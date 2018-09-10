@@ -25,6 +25,7 @@ import Foundation
      User tap on our change payment method action. If you return a block,
      you can override the change payment method action. For example to
      go to specific viewController, etc.
+     - warning: This is and internal method. Use it at your own risk.
      */
     @objc optional func changePaymentMethodTapped() -> (() -> Void)?
 }

@@ -1,35 +1,6 @@
 PODS:
   - FXBlurView (1.6.4)
   - JRSwizzle (1.0)
-<<<<<<< HEAD
-  - MercadoPagoPXTrackingV4 (2.1.4)
-  - MercadoPagoServicesV4 (1.0.21.2):
-    - MercadoPagoPXTrackingV4
-  - MLUI (5.0.1):
-    - MLUI/ActionButton (= 5.0.1)
-    - MLUI/Core (= 5.0.1)
-    - MLUI/Helpers (= 5.0.1)
-    - MLUI/MLButton (= 5.0.1)
-    - MLUI/MLCheckBox (= 5.0.1)
-    - MLUI/MLColorPalette (= 5.0.1)
-    - MLUI/MLContextualMenu (= 5.0.1)
-    - MLUI/MLFonts (= 5.0.1)
-    - MLUI/MLGenericErrorView (= 5.0.1)
-    - MLUI/MLHtml (= 5.0.1)
-    - MLUI/MLModal (= 5.0.1)
-    - MLUI/MLRadioButton (= 5.0.1)
-    - MLUI/MLSnackBar (= 5.0.1)
-    - MLUI/MLSpacing (= 5.0.1)
-    - MLUI/MLSpinner (= 5.0.1)
-    - MLUI/MLSwitch (= 5.0.1)
-    - MLUI/MLTextView (= 5.0.1)
-    - MLUI/MLTitledMultiLineTextField (= 5.0.1)
-    - MLUI/MLTitledSingleLineTextField (= 5.0.1)
-    - MLUI/PriceView (= 5.0.1)
-    - MLUI/SnackBarView (= 5.0.1)
-    - MLUI/StyleSheet (= 5.0.1)
-  - MLUI/ActionButton (5.0.1):
-=======
   - MLUI (5.1.0):
     - MLUI/ActionButton (= 5.1.0)
     - MLUI/Core (= 5.1.0)
@@ -54,7 +25,6 @@ PODS:
     - MLUI/SnackBarView (= 5.1.0)
     - MLUI/StyleSheet (= 5.1.0)
   - MLUI/ActionButton (5.1.0):
->>>>>>> origin/release/v4
     - MLUI/Core
   - MLUI/Core (5.1.0):
     - MLUI/MLFonts
@@ -125,31 +95,6 @@ PODS:
   - MLUI/StyleSheet (5.1.0)
 
 DEPENDENCIES:
-<<<<<<< HEAD
-  - MercadoPagoPXTrackingV4 (= 2.1.4)
-  - MercadoPagoServicesV4 (from `../../px-ios_services`)
-  - MLUI (~> 5.0)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - FXBlurView
-    - JRSwizzle
-    - MercadoPagoPXTrackingV4
-    - MLUI
-
-EXTERNAL SOURCES:
-  MercadoPagoServicesV4:
-    :path: "../../px-ios_services"
-
-SPEC CHECKSUMS:
-  FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
-  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
-  MercadoPagoPXTrackingV4: c29d65296c16872db5a73a01ce1a5aff55bcecb8
-  MercadoPagoServicesV4: 9e3c2c7ae9e9e7f4f4b29e4ee1631c1d9e3ab67f
-  MLUI: 8b958c99125204d4e69f6c7f1a08a2ef5459297d
-
-PODFILE CHECKSUM: 476b1ad2c3653b35802833a5835c4ee5a9efbda1
-=======
   - MLUI (~> 5.0)
 
 SPEC CHECKSUMS:
@@ -158,6 +103,5 @@ SPEC CHECKSUMS:
   MLUI: 4bc30710e102d8348eece6a57f15ca86060f36b2
 
 PODFILE CHECKSUM: 87adc2f5f50b8d3be3f248153ffda54008a9c743
->>>>>>> origin/release/v4
 
 COCOAPODS: 1.4.0
