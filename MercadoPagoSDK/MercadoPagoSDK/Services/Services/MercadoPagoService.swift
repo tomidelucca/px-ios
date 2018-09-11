@@ -21,8 +21,7 @@ internal class MercadoPagoService: NSObject {
     internal func request(uri: String, params: String?, body: Data?, method: HTTPMethod, headers: [String: String]? = nil, cache: Bool = true, success: @escaping (_ data: Data) -> Void,
                           failure: ((_ error: NSError) -> Void)?) {
 
-        let url = baseURL + uri
-        var requesturl = url
+        var requesturl = baseURL + uri
 
         if let params = params, !String.isNullOrEmpty(params), let escapedParams = params.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
             requesturl += "?" + escapedParams
@@ -33,8 +32,13 @@ internal class MercadoPagoService: NSObject {
             cachePolicy = .returnCacheDataElseLoad
         }
 
-        let Rurl = URL(string: requesturl)
-        var request = URLRequest(url: Rurl!)
+        let urlRequest = URL(string: requesturl)
+        guard let url = urlRequest else {
+            let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotFindHost, userInfo: nil)
+            failure?(error)
+            return
+        }
+        var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         request.httpBody = body
         request.cachePolicy = cachePolicy
@@ -52,8 +56,11 @@ internal class MercadoPagoService: NSObject {
             }
         }
 
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         MercadoPagoSDKV4.request(request).responseData { response in
+
             MercadoPagoService.debugPrint(response: response)
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
 
             if let data = response.result.value, response.error == nil {
                 success(data)
