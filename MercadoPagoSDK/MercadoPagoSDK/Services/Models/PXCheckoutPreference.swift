@@ -31,7 +31,7 @@ import Foundation
     /**
      paymentPreference
      */
-    open var paymentPreference: PXPaymentPreference?
+    open var paymentPreference: PXPaymentPreference = PXPaymentPreference()
     /**
         siteId
      */
@@ -86,7 +86,9 @@ import Foundation
         self.id = id
         self.items = items
         self.payer = payer
-        self.paymentPreference = paymentPreference
+        if let payPref = paymentPreference {
+            self.paymentPreference = payPref
+        }
         self.siteId = siteId
         self.expirationDateTo = expirationDateTo
         self.expirationDateFrom = expirationDateFrom
