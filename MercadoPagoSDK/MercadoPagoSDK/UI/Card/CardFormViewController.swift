@@ -43,7 +43,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: false)
 
-    static public var showBankDeals = true
     private var isShowingTextBoxMessage = false
     var toolbar: PXToolbar?
     var errorLabel: MPLabel?
@@ -229,7 +228,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
             self.updateCardSkin()
         }, failure: { _ in
             // Si no se pudieron obtener promociones se ignora tal caso
-            CardFormViewController.showBankDeals = false
+            self.viewModel.bankDealsEnabled = false
             self.updateCardSkin()
         })
     }
