@@ -20,10 +20,6 @@ internal class TrackingServices: NSObject {
         }
         let finalURL: NSURL = NSURL(string: requesturl)!
 
-//        #if DEBUG
-//        print("\n--REQUEST_URL: \(finalURL)")
-//        #endif
-
         let request: NSMutableURLRequest
         request = NSMutableURLRequest(url: finalURL as URL)
         request.url = finalURL as URL
@@ -35,10 +31,7 @@ internal class TrackingServices: NSObject {
             }
         }
         if let body = body {
-//            #if DEBUG
-//            print("--REQUEST_BODY: \(body as! NSString)")
-//            #endif
-//            request.httpBody = body.data(using: String.Encoding.utf8)
+            request.httpBody = body.data(using: String.Encoding.utf8)
         }
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
