@@ -21,11 +21,8 @@ DerivedData
 .fastlane/.bundle/
 .fastlane/Gemfile.lock
 
-MercadoPagoSDK/MercadoPagoSDK.framework
-PodTester/Pods/*
-MercadoPagoSDKExamplesObjectiveC/Pods/*
-MercadoPagoSDK/Pods/*
-
+ExampleObjectiveC/Pods/
+ExampleObjectiveC/Podfile.lock
 
 # CocoaPods
 #
