@@ -121,9 +121,9 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
 
-    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil, bankDealsEnabled: Bool) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
-        self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, bankDealsEnabled: bankDealsEnabled)
         self.callbackCancel = callbackCancel
         self.callback = callback
     }
