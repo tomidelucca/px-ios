@@ -39,7 +39,8 @@ internal class PXAnimatedButton: UIButton {
         case normal
         case loading
         case expanding
-        case shaking
+        // MARK: Uncomment for Shake button
+        //        case shaking
     }
 }
 
@@ -135,33 +136,44 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         progressView?.doReset()
     }
 
-    func shake() {
-        status = .shaking
-        resetButton()
-        setTitle(retryText, for: .normal)
-        UIView.animate(withDuration: 0.1, animations: {
-            self.backgroundColor = ThemeManager.shared.rejectedColor()
-        }, completion: { _ in
-            let animation = CABasicAnimation(keyPath: "position")
-            animation.duration = 0.1
-            animation.repeatCount = 4
-            animation.autoreverses = true
-            animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 3, y: self.center.y))
-            animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 3, y: self.center.y))
-
-            CATransaction.setCompletionBlock {
-                self.isUserInteractionEnabled = true
-                self.animationDelegate?.shakeDidFinish()
-                self.status = .normal
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.backgroundColor = ThemeManager.shared.getAccentColor()
-                })
-            }
-            self.layer.add(animation, forKey: "position")
-
-            CATransaction.commit()
-        })
+    func showErrorToast() {
+        self.status = .normal
+        self.resetButton()
+        self.isUserInteractionEnabled = false
+        PXComponentFactory.SnackBar.showShortDurationMessage(message: "Hubo un error".localized) {
+            self.animationDelegate?.shakeDidFinish()
+            self.isUserInteractionEnabled = true
+        }
     }
+
+    // MARK: Uncomment for Shake button
+    //    func shake() {
+    //        status = .shaking
+    //        resetButton()
+    //        setTitle(retryText, for: .normal)
+    //        UIView.animate(withDuration: 0.1, animations: {
+    //            self.backgroundColor = ThemeManager.shared.rejectedColor()
+    //        }, completion: { _ in
+    //            let animation = CABasicAnimation(keyPath: "position")
+    //            animation.duration = 0.1
+    //            animation.repeatCount = 4
+    //            animation.autoreverses = true
+    //            animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 3, y: self.center.y))
+    //            animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 3, y: self.center.y))
+    //
+    //            CATransaction.setCompletionBlock {
+    //                self.isUserInteractionEnabled = true
+    //                self.animationDelegate?.shakeDidFinish()
+    //                self.status = .normal
+    //                UIView.animate(withDuration: 0.3, animations: {
+    //                    self.backgroundColor = ThemeManager.shared.getAccentColor()
+    //                })
+    //            }
+    //            self.layer.add(animation, forKey: "position")
+    //
+    //            CATransaction.commit()
+    //        })
+    //    }
 
     func progressTimeOut() {
         progressView?.doReset()
@@ -169,6 +181,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     }
 
     func resetButton() {
+        setTitle(normalText, for: .normal)
         progressView?.stopTimer()
         progressView?.doReset()
     }
