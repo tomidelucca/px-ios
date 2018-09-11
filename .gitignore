@@ -23,6 +23,8 @@ DerivedData
 
 ExampleObjectiveC/Pods/
 ExampleObjectiveC/Podfile.lock
+ExampleSwift/Pods/
+ExampleSwift/Podfile.lock
 
 # CocoaPods
 #
