@@ -159,7 +159,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func cardFormManager() -> CardFormViewModel {
-        return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, bankDealsEnabled: advancedConfig.bankDealsEnabled)
     }
 
     public func getPaymentMethodsForSelection() -> [PXPaymentMethod] {
