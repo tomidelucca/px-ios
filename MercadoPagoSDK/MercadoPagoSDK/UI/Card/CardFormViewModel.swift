@@ -38,10 +38,13 @@ internal class CardFormViewModel {
     var promos: [PXBankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    init (paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: PXCardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    internal var bankDealsEnabled: Bool = true
+
+    init(paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: PXCardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, bankDealsEnabled: Bool) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.bankDealsEnabled = bankDealsEnabled
 
         if customerCard != nil {
             self.customerCard = customerCard
@@ -247,7 +250,7 @@ internal class CardFormViewModel {
     }
 
     func showBankDeals() -> Bool {
-        return !Array.isNullOrEmpty(self.promos) && CardFormViewController.showBankDeals
+        return !Array.isNullOrEmpty(self.promos) && bankDealsEnabled
     }
 
     func shoudShowOnlyOneCardMessage() -> Bool {
