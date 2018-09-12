@@ -32,50 +32,50 @@ class PXCheckoutPreferenceTest: XCTestCase {
 
     }
 
-//    func testSetMaxInstallments() {
-//        XCTAssertEqual(preference.getMaxAcceptedInstallments(), 0)
-//        preference.setMaxInstallments(5)
-//        XCTAssertEqual(preference.getMaxAcceptedInstallments(), 5)
-//    }
-//
-//    func testSetDefaultInstallments() {
-//        XCTAssertEqual(preference.getDefaultInstallments(), 0)
-//        preference.setDefaultInstallments(5)
-//        XCTAssertEqual(preference.getDefaultInstallments(), 5)
-//    }
-//
-//    func testAddExcludedPaymentTypes() {
-//        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), nil)
-//        preference.setExcludedPaymentTypes(["credit_card"])
-//        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), ["credit_card"])
-//    }
-//
-//    func testAddExcludedPaymentType() {
-//        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), nil)
-//        preference.addExcludedPaymentType("credit_card")
-//        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), ["credit_card"])
-//        preference.addExcludedPaymentType("debit_card")
-//        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), ["debit_card", "credit_card"])
-//    }
-//
-//    func testAddExcludedPaymentMethods() {
-//        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), nil)
-//        preference.setExcludedPaymentMethods(["credit_card"])
-//        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), ["credit_card"])
-//    }
-//
-//    func testAddExcludedPaymentMethod() {
-//        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), nil)
-//        preference.addExcludedPaymentMethod("credit_card")
-//        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), ["credit_card"])
-//        preference.addExcludedPaymentMethod("debit_card")
-//        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), ["debit_card", "credit_card"])
-//    }
-//
-//    func testSetDefaultPaymentMethodId() {
-//        preference.setDefaultPaymentMethodId("visa")
-//        XCTAssertEqual(preference.getDefaultPaymentMethodId(), "visa")
-//    }
+    func testSetMaxInstallments() {
+        XCTAssertEqual(preference.getMaxAcceptedInstallments(), 0)
+        preference.setMaxInstallments(5)
+        XCTAssertEqual(preference.getMaxAcceptedInstallments(), 5)
+    }
+
+    func testSetDefaultInstallments() {
+        XCTAssertEqual(preference.getDefaultInstallments(), 0)
+        preference.setDefaultInstallments(5)
+        XCTAssertEqual(preference.getDefaultInstallments(), 5)
+    }
+
+    func testAddExcludedPaymentTypes() {
+        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), [])
+        preference.setExcludedPaymentTypes(["credit_card"])
+        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), ["credit_card"])
+    }
+
+    func testAddExcludedPaymentType() {
+        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), [])
+        preference.addExcludedPaymentType("credit_card")
+        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), ["credit_card"])
+        preference.addExcludedPaymentType("debit_card")
+        XCTAssertEqual(preference.getExcludedPaymentTypesIds(), ["credit_card", "debit_card"])
+    }
+
+    func testAddExcludedPaymentMethods() {
+        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), [])
+        preference.setExcludedPaymentMethods(["credit_card"])
+        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), ["credit_card"])
+    }
+
+    func testAddExcludedPaymentMethod() {
+        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), [])
+        preference.addExcludedPaymentMethod("credit_card")
+        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), ["credit_card"])
+        preference.addExcludedPaymentMethod("debit_card")
+        XCTAssertEqual(preference.getExcludedPaymentMethodsIds(), ["credit_card", "debit_card"])
+    }
+
+    func testSetDefaultPaymentMethodId() {
+        preference.setDefaultPaymentMethodId("visa")
+        XCTAssertEqual(preference.getDefaultPaymentMethodId(), "visa")
+    }
 
     func testSetExpirationDate() {
         let date = Date()
