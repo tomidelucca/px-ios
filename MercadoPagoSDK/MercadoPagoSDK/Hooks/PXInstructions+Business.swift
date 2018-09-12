@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// :nodoc:
 extension PXInstructions {
     open func hasSecundaryInformation() -> Bool {
         if instructions.isEmpty {

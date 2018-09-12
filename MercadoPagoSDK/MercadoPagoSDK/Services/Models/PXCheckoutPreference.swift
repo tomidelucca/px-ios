@@ -14,14 +14,43 @@ import Foundation
  Some values like: binary mode are not present on API call.
  */
 @objcMembers open class PXCheckoutPreference: NSObject, Codable {
+
+    // MARK: Public accessors.
+    /**
+     id
+     */
     open var id: String!
+    /**
+     items
+     */
     open var items: [PXItem] = []
+    /**
+    payer
+     */
     open var payer: PXPayer!
-    open var paymentPreference: PXPaymentPreference?
+    /**
+     paymentPreference
+     */
+    open var paymentPreference: PXPaymentPreference = PXPaymentPreference()
+    /**
+        siteId
+     */
     open var siteId: String!
+    /**
+     expirationDateTo
+     */
     open var expirationDateTo: Date?
+    /**
+     expirationDateFrom
+     */
     open var expirationDateFrom: Date?
+    /**
+     site
+     */
     open var site: PXSite?
+    /**
+     differentialPricing
+     */
     open var differentialPricing: PXDifferentialPricing?
     internal var binaryModeEnabled: Bool = false
 
@@ -43,7 +72,6 @@ import Foundation
      - parameter payerEmail: Payer email.
      - parameter items: Items to pay.
      */
-
     public init(siteId: String, payerEmail: String, items: [PXItem]) {
         self.items = items
 
@@ -58,7 +86,9 @@ import Foundation
         self.id = id
         self.items = items
         self.payer = payer
-        self.paymentPreference = paymentPreference
+        if let payPref = paymentPreference {
+            self.paymentPreference = payPref
+        }
         self.siteId = siteId
         self.expirationDateTo = expirationDateTo
         self.expirationDateFrom = expirationDateFrom
@@ -66,6 +96,7 @@ import Foundation
         self.differentialPricing = differentialPricing
     }
 
+    /// :nodoc:
     public enum PXCheckoutPreferenceKeys: String, CodingKey {
         case id
         case items
@@ -92,7 +123,8 @@ import Foundation
         self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing)
     }
 
-     public func encode(to encoder: Encoder) throws {
+    /// :nodoc:
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXCheckoutPreferenceKeys.self)
         try container.encodeIfPresent(self.id, forKey: .id)
         try container.encodeIfPresent(self.items, forKey: .items)
@@ -103,17 +135,20 @@ import Foundation
         try container.encodeIfPresent(self.differentialPricing, forKey: .differentialPricing)
     }
 
+    /// :nodoc:
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
         return String(data: data, encoding: .utf8)
     }
 
+    /// :nodoc:
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
 
+    /// :nodoc:
     open class func fromJSON(data: Data) throws -> PXCheckoutPreference {
         return try JSONDecoder().decode(PXCheckoutPreference.self, from: data)
     }

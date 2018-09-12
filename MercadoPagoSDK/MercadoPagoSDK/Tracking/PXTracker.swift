@@ -13,6 +13,7 @@ Use this object to call methods related to our PX tracker.
  */
 @objcMembers
 open class PXTracker: NSObject {
+    // MARK: Static Setter.
     /**
      Set your own tracker listener protocol to be aware of PX-Checkout tracking events
      */

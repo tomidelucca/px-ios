@@ -8,16 +8,26 @@
 
 import Foundation
 
+/**
+ * Model that represents the Item.
+ */
 @objcMembers
 open class PXItem: NSObject, Codable {
-
+    /// :nodoc:
     open var categoryId: String?
+    /// :nodoc:
     open var currencyId: String?
+    /// :nodoc:
     open var _description: String?
+    /// :nodoc:
     open var id: String!
+    /// :nodoc:
     open var pictureUrl: String?
+    /// :nodoc:
     open var quantity: Int = 0
+    /// :nodoc:
     open var title: String = ""
+    /// :nodoc:
     open var unitPrice: Double = 0
 
     // MARK: Init.
@@ -47,6 +57,7 @@ open class PXItem: NSObject, Codable {
         self.unitPrice = unitPrice
     }
 
+    /// :nodoc:
     public enum PXItemKeys: String, CodingKey {
         case categoryId = "category_id"
         case currencyId = "currency_id"
@@ -72,6 +83,7 @@ open class PXItem: NSObject, Codable {
         self.init(categoryId: categoryId, currencyId: currencyId, description: description, id: id, pictureUrl: pictureUrl, quantity: quantity, title: title, unitPrice: unitPrice)
     }
 
+    /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXItemKeys.self)
         try container.encodeIfPresent(self.categoryId, forKey: .categoryId)
@@ -84,21 +96,25 @@ open class PXItem: NSObject, Codable {
         try container.encodeIfPresent(self.quantity, forKey: .quantity)
     }
 
+    /// :nodoc:
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
         return String(data: data, encoding: .utf8)
     }
 
+    /// :nodoc:
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
 
+    /// :nodoc:
     open class func fromJSONToPXItem(data: Data) throws -> PXItem {
         return try JSONDecoder().decode(PXItem.self, from: data)
     }
 
+    /// :nodoc:
     open class func fromJSON(data: Data) throws -> [PXItem] {
         return try JSONDecoder().decode([PXItem].self, from: data)
     }
