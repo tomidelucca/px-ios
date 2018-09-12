@@ -32,6 +32,10 @@ class PXResultViewController: PXComponentContainerViewController {
         self.shouldHideNavigationBar = true
     }
 
+    override func adjustInsets() {
+
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
