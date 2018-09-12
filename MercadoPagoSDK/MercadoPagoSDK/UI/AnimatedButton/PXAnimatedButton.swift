@@ -140,7 +140,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         self.status = .normal
         self.resetButton()
         self.isUserInteractionEnabled = false
-        PXComponentFactory.SnackBar.showShortDurationMessage(message: "Hubo un error".localized) {
+        PXComponentFactory.SnackBar.showShortDurationMessage(message: "review_and_confirm_toast_error".localized_beta) {
             self.animationDelegate?.shakeDidFinish()
             self.isUserInteractionEnabled = true
         }
