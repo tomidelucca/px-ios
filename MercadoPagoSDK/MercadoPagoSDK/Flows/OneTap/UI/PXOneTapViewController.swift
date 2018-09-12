@@ -80,6 +80,10 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
     }
+
+    override func adjustInsets() {
+
+    }
 }
 
 // MARK: UI Methods.
