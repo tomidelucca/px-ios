@@ -7,7 +7,6 @@ opt_out_crash_reporting
 
 # Require Fastlane's UI to handle log messages. To be sure which method you should use check: https://github.com/fastlane/fastlane/blob/master/fastlane_core/lib/fastlane_core/ui/interface.rb
 require 'fastlane_core/ui/ui.rb'
-require 'fileutils'
 
 
 before_all do
@@ -98,7 +97,7 @@ lane :deploy_private do
     UI.success 'Release created'
 
     UI.message 'Publishing private pod'
-    CIHelper::push_pod(pod_version)
+    CIHelper::push_pod("MercadoPagoSDKV4")
     UI.success 'Pod privately published successfully'
 
 end
