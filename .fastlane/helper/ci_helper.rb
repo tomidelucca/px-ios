@@ -139,7 +139,7 @@ module CIHelper
           end
       end
 
-      publish_command = "pod repo push MLPods #{CIProvider::BUILD_DIR}/#{pod_name}.podspec --allow-warnings --sources='#{CIHelper::POD_SPECS_SOURCES}' --use-libraries"
+      publish_command = "pod repo push MLPods #{CIHelper::BUILD_DIR}/#{pod_name}.podspec --allow-warnings --sources='#{CIHelper::POD_SPECS_SOURCES}' --use-libraries"
 
       unless system(publish_command)
           raise 'Private deploy has failed. Check the above log'
