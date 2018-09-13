@@ -49,7 +49,7 @@ internal class PXBodyComponent: PXComponentizable {
         let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = SiteManager.shared.getCurrency()
         var amountTitle: NSMutableAttributedString = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency).toAttributedString()
-        var subtitle: NSMutableAttributedString? = pm.paymentMethodDescription?.toAttributedString()
+        var subtitle: NSMutableAttributedString? = nil
         if let payerCost = self.props.paymentResult.paymentData?.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)).toAttributedString()
