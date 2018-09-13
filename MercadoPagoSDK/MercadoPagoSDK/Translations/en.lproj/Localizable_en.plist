@@ -207,5 +207,12 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Promotions</string>
 	</dict>
+	<key>review_and_confirm_toast_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Something went wrong</string>
+	</dict>
 </dict>
 </plist>

@@ -70,7 +70,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         loadingButtonComponent?.resetButton()
-        loadingButtonComponent?.setTitle("Confirmar".localized, for: .normal)
     }
 
     override func trackInfo() {
@@ -228,7 +227,10 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     }
 
     func resetButton() {
-        loadingButtonComponent?.shake()
+        loadingButtonComponent?.resetButton()
+        loadingButtonComponent?.showErrorToast()
+// MARK: Uncomment for Shake button
+//        loadingButtonComponent?.shake()
     }
 
     private func cancelPayment() {
@@ -263,7 +265,10 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
     }
 
     func progressButtonAnimationTimeOut() {
-        loadingButtonComponent?.shake()
+        loadingButtonComponent?.resetButton()
+        loadingButtonComponent?.showErrorToast()
+// MARK: Uncomment for Shake button
+//        loadingButtonComponent?.shake()
     }
 }
 
