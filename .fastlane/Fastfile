@@ -70,6 +70,9 @@ lane :deploy_public do
     UI.message 'Publishing public pod'
     pod_push(path: "MercadoPagoSDKV4.podspec", allow_warnings: true)
     UI.success 'Pod publicly published successfully'
+    communicate_build_to_slack(
+      enviroment: "Public"
+    )
 
 end
 
@@ -103,5 +106,28 @@ lane :deploy_private do
     UI.message 'Publishing private pod'
     CIHelper::push_pod("MercadoPagoSDKV4")
     UI.success 'Pod privately published successfully'
+    communicate_build_to_slack(
+      enviroment: "Private"
+    )
 
 end
+
+lane :communicate_build_to_slack do |options|
+    pod_version = CIHelper::spec_version()
+    slack(
+      message: "Lib de PX publicada",
+      username: 'Release PX',
+      default_payloads: [:git_author],
+      attachment_properties: {
+        fields: [
+              {
+                title: "Lib Version Number",
+                value: pod_version
+              },{
+                title: "Entorno",
+                value: options[:enviroment]
+              }
+            ]
+      }
+    )
+  end
