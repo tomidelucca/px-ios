@@ -134,12 +134,12 @@ module CIHelper
 
     def self.push_pod(pod_name)
       if not `pod repo list`.strip.split("\n").include?("MLPods")
-          unless system("pod repo add MLPods #{IOSHelper::POD_SPECS_REPO_TO_PUBLISH}")
+          unless system("pod repo add MLPods #{CIHelper::POD_SPECS_REPO_TO_PUBLISH}")
               raise 'Private deploy has failed. Check the above log'
           end
       end
 
-      publish_command = "pod repo push MLPods #{CIProvider::BUILD_DIR}/#{pod_name}.podspec --allow-warnings --sources='#{IOSHelper::POD_SPECS_SOURCES}' --use-libraries"
+      publish_command = "pod repo push MLPods #{CIProvider::BUILD_DIR}/#{pod_name}.podspec --allow-warnings --sources='#{CIHelper::POD_SPECS_SOURCES}' --use-libraries"
 
       unless system(publish_command)
           raise 'Private deploy has failed. Check the above log'
