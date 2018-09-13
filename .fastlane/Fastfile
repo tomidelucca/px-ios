@@ -3,7 +3,7 @@
 fastlane_version "2.55.0"
 
 # Disable Fastlane crash reporting because we're using UI.* methods for our custom errors and those aren't Fastlane bugs.
-opt_out_crash_reporting
+opt_out_usage
 
 # Require Fastlane's UI to handle log messages. To be sure which method you should use check: https://github.com/fastlane/fastlane/blob/master/fastlane_core/lib/fastlane_core/ui/interface.rb
 require 'fastlane_core/ui/ui.rb'
@@ -53,8 +53,8 @@ lane :deploy_public do
     # All submodules should have the same version, so I take the version from the first module
     pod_version = CIHelper::spec_version()
 
-    if CIHelper::tag_already_exists(version)
-        errors << "[!] A tag for version #{version} already exists. Please change the version to public publish and try again\n"
+    if CIHelper::tag_already_exists(pod_version)
+        errors << "[!] A tag for version #{pod_version} already exists. Please change the version to public publish and try again\n"
     end
 
     UI.message "Creating release #{pod_version} in GitHub"
@@ -87,8 +87,8 @@ lane :deploy_private do
     # All submodules should have the same version, so I take the version from the first module
     pod_version = CIHelper::spec_version()
 
-    if CIHelper::tag_already_exists(version)
-        errors << "[!] A tag for version #{version} already exists. Please change the version to private publish and try again\n"
+    if CIHelper::tag_already_exists(pod_version)
+        errors << "[!] A tag for version #{pod_version} already exists. Please change the version to private publish and try again\n"
     end
 
     UI.message "Creating release #{pod_version} in GitHub"
