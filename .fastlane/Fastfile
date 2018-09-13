@@ -76,7 +76,12 @@ end
 desc 'Publish private lib'
 lane :deploy_private do
 
-    File.rename 'MercadoPagoSDK/MercadoPagoSDKV4-esc.podspec', 'MercadoPagoSDKV4.podspec'
+    new_spec_path = "#{CIHelper::BUILD_DIR}/MercadoPagoSDK/MercadoPagoSDKV4-esc.podspec"
+    unless File.exist?(new_spec_path)
+        puts "No private spec file found in: '#{new_spec_path}'"
+        return ""
+    end
+    File.rename new_spec_path, "#{CIHelper::BUILD_DIR}/MercadoPagoSDKV4.podspec"
 
     UI.message 'Checking private pod version'
     # All submodules should have the same version, so I take the version from the first module
