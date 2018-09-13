@@ -19,6 +19,7 @@ DerivedData
 .DS_Store
 .bundle
 .fastlane/.bundle/
+vendor/
 
 ExampleObjectiveC/Pods/
 ExampleObjectiveC/Podfile.lock

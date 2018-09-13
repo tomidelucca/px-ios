@@ -146,9 +146,12 @@ GEM
     netrc (0.11.0)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    octokit (4.7.0)
+      sawyer (~> 0.8.0, >= 0.5.3)
     os (1.0.0)
     plist (3.4.0)
     public_suffix (2.0.5)
+    rake (12.3.1)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -157,6 +160,9 @@ GEM
     rouge (2.0.7)
     ruby-macho (1.2.0)
     rubyzip (1.2.2)
+    sawyer (0.8.1)
+      addressable (>= 2.3.5, < 2.6)
+      faraday (~> 0.8, < 1.0)
     security (0.1.3)
     signet (0.9.1)
       addressable (~> 2.3)
@@ -207,7 +213,9 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (= 1.4.0)
-  fastlane
+  fastlane (~> 2.55)
+  octokit (~> 4.7.0)
+  rake
   slather (= 2.4.3)
   xcpretty-json-formatter (~> 0.1)
 
