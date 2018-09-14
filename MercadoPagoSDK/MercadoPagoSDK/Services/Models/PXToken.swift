@@ -129,7 +129,7 @@ open class PXToken: NSObject, Codable {
 }
 
 // MARK: Getters
-extension PXPaymentMethod {
+extension PXToken {
     /// :nodoc:
     public func getId() -> String? {
         return id
