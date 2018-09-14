@@ -133,8 +133,8 @@ open class MockBuilder: NSObject {
         return identification
     }
 
-    class func buildIdentificationTypes() -> [IdentificationType] {
-        let identificationType = IdentificationType()
+    class func buildIdentificationTypes() -> [PXIdentificationType] {
+        let identificationType = PXIdentificationType(id: "String", name: nil, minLength: 0, maxLength: 0, type: nil)
         return [identificationType]
     }
 
@@ -442,6 +442,11 @@ open class MockBuilder: NSObject {
         return discount
     }
 
+    class func buildCampaign() -> PXCampaign {
+        let campaign = PXCampaign(id: 1, code: nil, name: nil, maxCouponAmount: 1)
+        return campaign
+    }
+
     class func buildPaymentResult(withESC: Bool = false) -> PaymentResult {
         return PaymentResult(payment: MockBuilder.buildPayment("visa"), paymentData: MockBuilder.buildPaymentData(withESC: withESC))
     }
@@ -487,6 +492,14 @@ open class MockBuilder: NSObject {
         let paymentConfiguration = PXPaymentConfiguration(paymentProcessor: buildPaymentPlugin())
         paymentConfiguration.addPaymentMethodPlugin(plugin: buildPaymentMethodPlugin(id: paymentPluginId, name: "account_money", configPaymentMethodPlugin: nil))
         return paymentConfiguration
+    }
+
+    class func buildMercadoPagoServicesAdapter() -> MercadoPagoServicesAdapter {
+        return MercadoPagoServicesAdapter(publicKey: "", privateKey: "")
+    }
+
+    class func buildAmountHelper() -> PXAmountHelper {
+        return PXAmountHelper(preference: MockBuilder.buildCheckoutPreference(), paymentData: MockBuilder.buildPaymentData(), discount: nil, campaign: nil, chargeRules: [], consumedDiscount: false)
     }
 
 }
