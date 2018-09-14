@@ -6,7 +6,12 @@
 //
 
 import Foundation
-internal extension PXCard {
+extension PXCard: PXCardInformation {
+
+    func getIssuer() -> PXIssuer? {
+        return issuer
+    }
+
     func isSecurityCodeRequired() -> Bool {
         if securityCode != nil {
             if securityCode!.length != 0 {
@@ -19,8 +24,8 @@ internal extension PXCard {
         }
     }
 
-    func getFirstSixDigits() -> String! {
-        return firstSixDigits
+    func getFirstSixDigits() -> String {
+        return firstSixDigits ?? ""
     }
     func getCardDescription() -> String {
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
@@ -42,8 +47,8 @@ internal extension PXCard {
         return self.paymentMethod?.paymentTypeId ?? ""
     }
 
-    func getCardSecurityCode() -> PXSecurityCode {
-        return self.securityCode!
+    func getCardSecurityCode() -> PXSecurityCode? {
+        return self.securityCode
     }
 
     func getCardBin() -> String? {
