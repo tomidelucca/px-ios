@@ -127,3 +127,11 @@ open class PXToken: NSObject, Codable {
         return try JSONDecoder().decode(PXToken.self, from: data)
     }
 }
+
+// MARK: Getters
+extension PXToken {
+    /// :nodoc:
+    public func getId() -> String? {
+        return id
+    }
+}
