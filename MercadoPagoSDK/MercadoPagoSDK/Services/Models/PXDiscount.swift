@@ -121,7 +121,7 @@ open class PXDiscount: NSObject, Codable {
 }
 
 // MARK: Getters
-extension PXPaymentMethod {
+extension PXDiscount {
     /// :nodoc:
     public func getId() -> String? {
         return id
