@@ -124,6 +124,7 @@ open class PXPaymentMethod: NSObject, Codable {
 // MARK: Getters
 extension PXPaymentMethod {
     /// :nodoc:
+    @objc
     public func getId() -> String? {
         return id
     }
