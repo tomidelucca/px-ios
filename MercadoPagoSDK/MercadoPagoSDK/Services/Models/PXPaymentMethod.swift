@@ -120,3 +120,11 @@ open class PXPaymentMethod: NSObject, Codable {
         return try JSONDecoder().decode([PXPaymentMethod].self, from: data)
     }
 }
+
+// MARK: Getters
+extension PXPaymentMethod {
+    /// :nodoc:
+    public func getId() -> String? {
+        return id
+    }
+}

@@ -130,7 +130,7 @@ PXTracker.setListener(self)
 * @Objc full compatibility
 
 ### 🔮 Project Example
-This project include an example project using MercadoPagoSDKV4. In case you need support contact the MercadoPago Developers Site.
+This project include an example project using MercadoPagoSDKV4. `ExampleObjectiveC & ExampleSwift`. In case you need support contact the MercadoPago Developers Site.
 
 ### 📚 Documentation & DevSite
 + [Advanced full documentation](http://mercadopago.github.io/px-ios/v4/)

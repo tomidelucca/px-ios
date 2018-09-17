@@ -32,6 +32,10 @@ class PXResultViewController: PXComponentContainerViewController {
         self.shouldHideNavigationBar = true
     }
 
+    override func adjustInsets() {
+
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,6 +71,7 @@ class PXResultViewController: PXComponentContainerViewController {
         self.headerView = self.buildHeaderView()
         if let headerView = self.headerView {
             headerView.pxShouldAnimated = false
+            headerView.accessibilityIdentifier = "result_header_view"
             contentView.addSubview(headerView)
             PXLayout.pinTop(view: headerView, to: contentView).isActive = true
             PXLayout.matchWidth(ofView: headerView).isActive = true
@@ -197,7 +202,6 @@ extension PXResultViewController {
             PXLayout.matchWidth(ofView: topCustomView).isActive = true
             PXLayout.centerHorizontally(view: topCustomView).isActive = true
             topCustomView.layoutIfNeeded()
-            PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
         }
 
         if let bodyView = buildBodyView() {
@@ -214,7 +218,6 @@ extension PXResultViewController {
             PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
             PXLayout.centerHorizontally(view: bottomCustomView).isActive = true
             bottomCustomView.layoutIfNeeded()
-            PXLayout.setHeight(owner: bottomCustomView, height: bottomCustomView.frame.height).isActive = true
         }
 
         view.pinLastSubviewToBottom()?.isActive = true

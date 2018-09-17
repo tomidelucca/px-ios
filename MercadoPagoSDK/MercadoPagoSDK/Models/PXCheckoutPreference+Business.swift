@@ -82,7 +82,7 @@ extension PXCheckoutPreference {
      - parameter paymentTypeId: paymentTypeId exclusion type
      */
     public func addExcludedPaymentType(_ paymentTypeId: String) {
-        paymentPreference.excludedPaymentMethodIds.append(paymentTypeId)
+        paymentPreference.excludedPaymentTypeIds.append(paymentTypeId)
     }
 
     /**
