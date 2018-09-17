@@ -17,7 +17,6 @@ Pod::Spec.new do |s|
     s.dependency 'MLUI', '~> 5.0'
   end
 
-  
   s.subspec 'ESC' do |esc|
     esc.dependency 'MercadoPagoSDKV4/Default'
     esc.dependency 'MLESCManager'
