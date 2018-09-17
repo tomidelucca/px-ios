@@ -258,6 +258,7 @@ open class PXCampaign: NSObject, Codable {
 // MARK: Getters
 extension PXCampaign {
     /// :nodoc:
+    @objc
     public func getId() -> Int64 {
         return id
     }

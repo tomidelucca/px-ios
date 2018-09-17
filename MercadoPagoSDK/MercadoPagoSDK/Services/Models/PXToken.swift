@@ -131,6 +131,7 @@ open class PXToken: NSObject, Codable {
 // MARK: Getters
 extension PXToken {
     /// :nodoc:
+    @objc
     public func getId() -> String? {
         return id
     }

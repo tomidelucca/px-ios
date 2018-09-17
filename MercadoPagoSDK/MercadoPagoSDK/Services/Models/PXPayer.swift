@@ -52,23 +52,23 @@ open class PXPayer: NSObject, Codable {
 /** :nodoc: */
 // MARK: Setters
 extension PXPayer {
-    open func setId(payerId: String) {
+    @objc open func setId(payerId: String) {
         self.id = payerId
     }
-
-    open func setIdentification(identification: PXIdentification) {
+    
+    @objc open func setIdentification(identification: PXIdentification) {
         self.identification = identification
     }
 
-    open func setEntityType(entityType: String) {
+    @objc open func setEntityType(entityType: String) {
         self.entityType = entityType
     }
 
-    open func setFirstName(name: String) {
+    @objc open func setFirstName(name: String) {
         self.firstName = name
     }
 
-    open func setLastName(lastName: String) {
+    @objc open func setLastName(lastName: String) {
         self.lastName = lastName
     }
 
