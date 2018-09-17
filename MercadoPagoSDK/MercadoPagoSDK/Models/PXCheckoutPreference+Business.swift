@@ -10,7 +10,7 @@ extension PXCheckoutPreference {
     internal func isExpired() -> Bool {
         let date = Date()
         if let expirationDateTo = expirationDateTo {
-            return expirationDateTo < date
+            return expirationDateTo > date
         }
         return false
     }
