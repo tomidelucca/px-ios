@@ -160,7 +160,6 @@ extension PXNavigationHandler: UINavigationControllerDelegate {
             if (viewController is PXPaymentProcessor) || (viewController is PXPaymentMethodConfigProtocol) {
                 return
             }
-            ThemeManager.shared.applyAppNavBarStyle(navigationController: navigationController)
             PXCheckoutStore.sharedInstance.clean()
         }
     }

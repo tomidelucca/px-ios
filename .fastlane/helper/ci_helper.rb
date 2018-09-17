@@ -4,6 +4,9 @@ module CIHelper
     BUILD_DIR = ENV['CIRCLE_WORKING_DIRECTORY'] ? ENV['CIRCLE_WORKING_DIRECTORY'].gsub(/\~/, "#{ENV['HOME']}") : "#{ENV['HOME']}/#{ENV['CIRCLE_PROJECT_REPONAME']}"
     REPO_SLUG = "#{ENV['CIRCLE_PROJECT_USERNAME']}/#{ENV['CIRCLE_PROJECT_REPONAME']}"
     CHANGED_FILES_PATTERS_WHITELIST = ['.pbxproj', 'Podfile.lock']
+
+    POD_SPECS_SOURCES = ENV['POD_SPECS_SOURCES'] 
+    POD_SPECS_REPO_TO_PUBLISH = ENV['POD_SPECS_REPO_TO_PUBLISH']
     @@pr_info = nil # PR info from GitHub API: https://developer.github.com/v3/pulls/#get-a-single-pull-request
 
     # Run a given command from the ci build directory
@@ -122,14 +125,24 @@ module CIHelper
             errors <<  ">>> Untracked changes: " << untracked_changes
         end
 
-        if CIHelper::tag_already_exists(version)
-            errors << "[!] A tag for version #{version} already exists. Please change the version and try again\n"
-        end
-
         if errors.length>0
             $stderr.puts errors
             return false
         end
         return true
+    end
+
+    def self.push_pod(pod_name)
+      if not `pod repo list`.strip.split("\n").include?("MLPods")
+          unless system("pod repo add MLPods #{CIHelper::POD_SPECS_REPO_TO_PUBLISH}")
+              raise 'Private deploy has failed. Check the above log'
+          end
+      end
+
+      publish_command = "pod repo push MLPods #{CIHelper::BUILD_DIR}/#{pod_name}.podspec --allow-warnings --sources='#{CIHelper::POD_SPECS_SOURCES}'"
+
+      unless system(publish_command)
+          raise 'Private deploy has failed. Check the above log'
+      end
     end
 end

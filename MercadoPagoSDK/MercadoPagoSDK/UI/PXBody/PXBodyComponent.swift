@@ -49,7 +49,7 @@ internal class PXBodyComponent: PXComponentizable {
         let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = SiteManager.shared.getCurrency()
         var amountTitle: NSMutableAttributedString = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency).toAttributedString()
-        var subtitle: NSMutableAttributedString? = pm.paymentMethodDescription?.toAttributedString()
+        var subtitle: NSMutableAttributedString?
         if let payerCost = self.props.paymentResult.paymentData?.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)).toAttributedString()
@@ -82,7 +82,7 @@ internal class PXBodyComponent: PXComponentizable {
 
         let issuer = self.props.paymentResult.paymentData?.getIssuer()
         let paymentMethodIssuerName = issuer?.name ?? ""
-        var descriptionDetail: NSAttributedString? = nil
+        var descriptionDetail: NSAttributedString?
 
         if pm.isCard {
             if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
@@ -95,7 +95,7 @@ internal class PXBodyComponent: PXComponentizable {
             pmDescription = paymentMethodName
         }
 
-        var disclaimerText: String? = nil
+        var disclaimerText: String?
         if let statementDescription = self.props.paymentResult.statementDescription {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }

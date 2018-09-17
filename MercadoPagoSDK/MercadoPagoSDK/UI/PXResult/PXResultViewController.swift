@@ -22,7 +22,7 @@ class PXResultViewController: PXComponentContainerViewController {
     var bodyView: UIView?
     var footerView: UIView?
 
-    internal var changePaymentMethodCallback: (() -> Void)? = nil
+    internal var changePaymentMethodCallback: (() -> Void)?
 
     init(viewModel: PXResultViewModelInterface, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
@@ -30,6 +30,10 @@ class PXResultViewController: PXComponentContainerViewController {
         super.init()
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
         self.shouldHideNavigationBar = true
+    }
+
+    override func adjustInsets() {
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -197,7 +201,6 @@ extension PXResultViewController {
             PXLayout.matchWidth(ofView: topCustomView).isActive = true
             PXLayout.centerHorizontally(view: topCustomView).isActive = true
             topCustomView.layoutIfNeeded()
-            PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
         }
 
         if let bodyView = buildBodyView() {
@@ -214,7 +217,6 @@ extension PXResultViewController {
             PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
             PXLayout.centerHorizontally(view: bottomCustomView).isActive = true
             bottomCustomView.layoutIfNeeded()
-            PXLayout.setHeight(owner: bottomCustomView, height: bottomCustomView.frame.height).isActive = true
         }
 
         view.pinLastSubviewToBottom()?.isActive = true

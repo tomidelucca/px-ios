@@ -32,7 +32,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
-    internal var changePaymentMethodCallback: (() -> Void)? = nil
+    internal var changePaymentMethodCallback: (() -> Void)?
 
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
@@ -73,9 +73,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         loadingButtonComponent?.resetButton()
-        loadingButtonComponent?.setTitle("Confirmar".localized, for: .normal)
         loadingFloatingButtonComponent?.resetButton()
-        loadingFloatingButtonComponent?.setTitle("Confirmar".localized, for: .normal)
     }
 
     override func trackInfo() {
@@ -276,7 +274,7 @@ extension PXReviewViewController {
                 self.loadingFloatingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
             }
             self.confirmPayment()
-            }, animationDelegate: self))
+        }, animationDelegate: self))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         loadingFloatingButtonComponent = containedButtonView.button
         loadingFloatingButtonComponent?.layer.cornerRadius = 4
@@ -324,7 +322,7 @@ extension PXReviewViewController {
     }
 
     func checkFloatingButtonVisibility() {
-       if !isConfirmButtonVisible() {
+        if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1
             self.footerView?.alpha = 0
         } else {
@@ -346,8 +344,17 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
     }
 
     func resetButton() {
-        loadingFloatingButtonComponent?.shake()
-        loadingButtonComponent?.shake()
+        loadingButtonComponent?.resetButton()
+        loadingFloatingButtonComponent?.resetButton()
+        if isConfirmButtonVisible() {
+            loadingButtonComponent?.showErrorToast()
+        } else {
+            loadingFloatingButtonComponent?.showErrorToast()
+        }
+
+// MARK: Uncomment for Shake button
+//        loadingFloatingButtonComponent?.shake()
+//        loadingButtonComponent?.shake()
     }
 
     func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
@@ -389,8 +396,14 @@ extension PXReviewViewController: PXAnimatedButtonDelegate {
     func progressButtonAnimationTimeOut() {
         loadingButtonComponent?.resetButton()
         loadingFloatingButtonComponent?.resetButton()
-        loadingFloatingButtonComponent?.shake()
-        loadingButtonComponent?.shake()
+        if isConfirmButtonVisible() {
+            loadingButtonComponent?.showErrorToast()
+        } else {
+            loadingFloatingButtonComponent?.showErrorToast()
+        }
+// MARK: Uncomment for Shake button
+//        loadingFloatingButtonComponent?.shake()
+//        loadingButtonComponent?.shake()
     }
 
     func hideNavBarForAnimation() {

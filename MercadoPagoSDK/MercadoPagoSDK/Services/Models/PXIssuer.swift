@@ -55,5 +55,13 @@ open class PXIssuer: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXIssuer] {
         return try JSONDecoder().decode([PXIssuer].self, from: data)
     }
+}
 
+// MARK: Getters
+extension PXIssuer {
+    /// :nodoc:
+    @objc
+    public func getId() -> String? {
+        return id
+    }
 }

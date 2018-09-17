@@ -254,3 +254,12 @@ open class PXCampaign: NSObject, Codable {
         return try JSONDecoder().decode([PXCampaign].self, from: data)
     }
 }
+
+// MARK: Getters
+extension PXCampaign {
+    /// :nodoc:
+    @objc
+    public func getId() -> Int64 {
+        return id
+    }
+}
