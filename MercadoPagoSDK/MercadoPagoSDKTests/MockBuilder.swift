@@ -251,6 +251,7 @@ open class MockBuilder: NSObject {
     class func buildCardToken() -> PXCardToken {
         let cardToken = PXCardToken()
         cardToken.cardholder = MockBuilder.buildCardholder()
+        cardToken.cardholder?.identification?.number = ""
         return cardToken
     }
 
