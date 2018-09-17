@@ -39,12 +39,16 @@ struct PXComponentFactory {
     }
 
     struct SnackBar {
-        static func showShortDurationMessage(message: String) {
-            MLSnackbar.show(withTitle: message, type: .default(), duration: .short)
+        static func showShortDurationMessage(message: String, dismissBlock: @escaping (() -> Void)) {
+            MLSnackbar.show(withTitle: message, type: .error(), duration: .short) { (_) in
+                dismissBlock()
+            }
         }
 
-        static func showLongDurationMessage(message: String) {
-            MLSnackbar.show(withTitle: message, type: .default(), duration: .long)
+        static func showLongDurationMessage(message: String, dismissBlock: @escaping (() -> Void)) {
+            MLSnackbar.show(withTitle: message, type: .error(), duration: .long) { (_) in
+                dismissBlock()
+            }
         }
 
         static func showPersistentMessage(message: String) {

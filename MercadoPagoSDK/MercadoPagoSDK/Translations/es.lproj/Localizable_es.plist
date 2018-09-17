@@ -333,5 +333,12 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Este descuento ya no aplica porque consumiste el tope máximo.</string>
 	</dict>
+	<key>review_and_confirm_toast_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Algo salió mal</string>
+	</dict>
 </dict>
 </plist>

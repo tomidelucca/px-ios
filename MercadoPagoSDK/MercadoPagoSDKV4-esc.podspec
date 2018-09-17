@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.0.3"
+  s.version          = "4.0.5"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -17,5 +17,14 @@ Pod::Spec.new do |s|
     s.dependency 'MLUI', '~> 5.0'
   end
 
+  s.subspec 'ESC' do |esc|
+    esc.dependency 'MercadoPagoSDKV4/Default'
+    esc.dependency 'MLESCManager'
+    esc.pod_target_xcconfig = {
+      'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE',
+      'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE',
+      'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D MPESC_ENABLE'
+    }
+  end
 
 end

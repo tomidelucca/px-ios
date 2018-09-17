@@ -333,5 +333,12 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Este desconto não é aplicável, porque você atingiu o limite.</string>
 	</dict>
+	<key>review_and_confirm_toast_error</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Algo não vai bem</string>
+	</dict>
 </dict>
 </plist>
