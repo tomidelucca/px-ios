@@ -52,6 +52,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         setupUI()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
+        UIApplication.shared.statusBarStyle = .default
     }
 
     override func viewWillDisappear(_ animated: Bool) {
