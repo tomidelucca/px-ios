@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import MercadoPagoSDKV4
+@testable import MercadoPagoSDKV4
 
 class BaseTest: XCTestCase {
 
@@ -18,6 +18,7 @@ class BaseTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        SiteManager.shared.setSite(siteId: "MLA")
 //        MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
 //        MercadoPagoTestContext.sharedInstance.testEnvironment = self
     }
