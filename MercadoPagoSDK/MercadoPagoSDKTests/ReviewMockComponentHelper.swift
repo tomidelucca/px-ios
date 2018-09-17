@@ -13,7 +13,8 @@ public class ReviewMockComponentHelper: NSObject {
 
     static func buildReviewViewModel(checkoutPreference: PXCheckoutPreference, reviewScreenPreference: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration()) -> PXReviewViewModel {
         let paymentOptionSelected = MockBuilder.buildPaymentOptionSelected("id")
-        let reviewViewModel = PXReviewViewModel(amountHelper: MockBuilder.buildAmountHelper(), paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenPreference, userLogged: true)
+        let amountHelper = PXAmountHelper(preference: checkoutPreference, paymentData: MockBuilder.buildPaymentData(), discount: nil, campaign: nil, chargeRules: [], consumedDiscount: false)
+        let reviewViewModel = PXReviewViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenPreference, userLogged: true)
         return reviewViewModel
     }
 
