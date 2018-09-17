@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct PXAnimatedButtonNotificationObject {
+    var status: String
+    var statusDetail: String?
+}
+
 struct PXNotificationManager {
 
 }
@@ -19,19 +24,9 @@ extension PXNotificationManager {
             notificationCenter.addObserver(observer, selector: selector, name: .attemptToClose, object: nil)
         }
 
-        static func animateButtonForSuccess(_ observer: Any, selector: Selector) {
+        static func animateButton(_ observer: Any, selector: Selector) {
             let notificationCenter = NotificationCenter.default
-            notificationCenter.addObserver(observer, selector: selector, name: .animateButtonForSuccess, object: nil)
-        }
-
-        static func animateButtonForError(_ observer: Any, selector: Selector) {
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.addObserver(observer, selector: selector, name: .animateButtonForError, object: nil)
-        }
-
-        static func animateButtonForWarning(_ observer: Any, selector: Selector) {
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.addObserver(observer, selector: selector, name: .animateButtonForWarning, object: nil)
+            notificationCenter.addObserver(observer, selector: selector, name: .animateButton, object: nil)
         }
     }
 }
@@ -43,28 +38,12 @@ extension PXNotificationManager {
             notificationCenter.removeObserver(observer, name: .attemptToClose, object: nil)
         }
 
-        static func animateButtonForSuccess(_ observer: Any?) {
+        static func animateButton(_ observer: Any?) {
             guard let observer = observer else {
                 return
             }
             let notificationCenter = NotificationCenter.default
-            notificationCenter.removeObserver(observer, name: .animateButtonForSuccess, object: nil)
-        }
-
-        static func animateButtonForError(_ observer: Any?) {
-            guard let observer = observer else {
-                return
-            }
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.removeObserver(observer, name: .animateButtonForError, object: nil)
-        }
-
-        static func animateButtonForWarning(_ observer: Any?) {
-            guard let observer = observer else {
-                return
-            }
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.removeObserver(observer, name: .animateButtonForWarning, object: nil)
+            notificationCenter.removeObserver(observer, name: .animateButton, object: nil)
         }
     }
 }
@@ -76,26 +55,14 @@ extension PXNotificationManager {
             notificationCenter.post(name: .attemptToClose, object: nil)
         }
 
-        static func animateButtonForSuccess() {
+        static func animateButton(with object: PXAnimatedButtonNotificationObject) {
             let notificationCenter = NotificationCenter.default
-            notificationCenter.post(name: .animateButtonForSuccess, object: nil)
-        }
-
-        static func animateButtonForError() {
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.post(name: .animateButtonForError, object: nil)
-        }
-
-        static func animateButtonForWarning() {
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.post(name: .animateButtonForWarning, object: nil)
+            notificationCenter.post(name: .animateButton, object: object)
         }
     }
 }
 
 internal extension NSNotification.Name {
     static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
-    static let animateButtonForSuccess = Notification.Name(rawValue: "PXAnimateButtonForSucces")
-    static let animateButtonForError = Notification.Name(rawValue: "PXAnimateButtonForError")
-    static let animateButtonForWarning = Notification.Name(rawValue: "PXAnimateButtonForWarning")
+    static let animateButton = Notification.Name(rawValue: "PXAnimateButton")
 }

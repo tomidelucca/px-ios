@@ -73,15 +73,6 @@ internal class PXResultViewModel: PXResultViewModelInterface {
     }
 
     func primaryResultColor() -> UIColor {
-        if paymentResult.isAccepted() {
-            return ThemeManager.shared.successColor()
-        }
-        if paymentResult.isError() {
-            return ThemeManager.shared.rejectedColor()
-        }
-        if paymentResult.isWarning() {
-            return ThemeManager.shared.warningColor()
-        }
-        return .pxWhite
+        return ResourceManager.shared.getResultColorWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
     }
 }

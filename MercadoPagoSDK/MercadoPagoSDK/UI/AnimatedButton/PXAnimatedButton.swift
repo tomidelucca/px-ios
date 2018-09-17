@@ -53,10 +53,8 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         status = .loading
     }
 
-    func finishAnimatingButton(style: FinishStyle) {
+    func finishAnimatingButton(style: FinishStyle, color: UIColor, image: UIImage?) {
         status = .expanding
-        let color: UIColor = getColor(style: style)
-        let image = getImage(style: style)
 
         let newFrame = CGRect(x: self.frame.midX - self.frame.height / 2, y: self.frame.midY - self.frame.height / 2, width: self.frame.height, height: self.frame.height)
 
@@ -193,37 +191,12 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
 // MARK: Business Logic
 extension PXAnimatedButton {
-    func getColor(style: FinishStyle) -> UIColor {
-        switch style {
-        case .success:
-            return ThemeManager.shared.successColor()
-        case .error:
-            return ThemeManager.shared.rejectedColor()
-        case .warning:
-            return ThemeManager.shared.warningColor()
+
+    @objc func animateFinish(_ sender: NSNotification) {
+        if let notificationObject = sender.object as? PXAnimatedButtonNotificationObject {
+            let image = ResourceManager.shared.getBadgeImageWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail, clearBackground: true)
+            let color = ResourceManager.shared.getResultColorWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail)
+            finishAnimatingButton(style: .success, color: color, image: image)
         }
-    }
-
-    func getImage(style: FinishStyle) -> UIImage? {
-        switch style {
-        case .success:
-            return ResourceManager.shared.getImage("one_tap_button_check")
-        case .error:
-            return ResourceManager.shared.getImage("one_tap_button_error")
-        case .warning:
-            return ResourceManager.shared.getImage("one_tap_button_error")
-        }
-    }
-
-    @objc func animateFinishSuccess() {
-        finishAnimatingButton(style: .success)
-    }
-
-    @objc func animateFinishError() {
-        finishAnimatingButton(style: .error)
-    }
-
-    @objc func animateFinishWarning() {
-        finishAnimatingButton(style: .warning)
     }
 }

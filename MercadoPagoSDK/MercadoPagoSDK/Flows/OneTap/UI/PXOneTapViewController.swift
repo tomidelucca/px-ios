@@ -61,9 +61,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         }
 
         if shouldAnimatePayButton {
-            PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
-            PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
-            PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
+            PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
         }
     }
 
@@ -278,14 +276,11 @@ extension PXOneTapViewController {
         guard let loadingButton = loadingButtonComponent else {
             return
         }
-        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButton, selector: #selector(loadingButton.animateFinishSuccess))
-        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButton, selector: #selector(loadingButton.animateFinishError))
-        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButton, selector: #selector(loadingButton.animateFinishWarning))
+
+        PXNotificationManager.SuscribeTo.animateButton(loadingButton, selector: #selector(loadingButton.animateFinish))
     }
 
     func unsubscribeFromNotifications() {
-        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
     }
 }
