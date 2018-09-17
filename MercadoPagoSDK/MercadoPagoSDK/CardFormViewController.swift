@@ -121,7 +121,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
 
-    public init(paymentSettings: PaymentPreference?, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter?, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel
@@ -224,7 +224,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     private func getPromos() {
-        self.viewModel.mercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
+        self.viewModel.mercadoPagoServicesAdapter?.getBankDeals(callback: { (bankDeals) in
             self.viewModel.promos = bankDeals
             self.updateCardSkin()
         }, failure: { _ in

@@ -20,10 +20,13 @@ class PaymentMethodsUserService: MercadoPagoService {
     
     func getPaymentMethods(success: @escaping ([PaymentMethod]) -> (), failure: @escaping (Error) -> ()) {
         self.request(uri: uri, params: "access_token=\(accessToken)", body: nil, method: "GET", success: { (data) in
-            if let jsonResult = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) {
-                print(jsonResult)
+            let jsonResult = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+            if let jsonResult = jsonResult as? [[String: Any]] {
+                let paymentMethods = jsonResult.flatMap({return PaymentMethod.fromJSON($0 as NSDictionary)})
+                success(paymentMethods)
+            } else {
+                success([])
             }
-            success([])
         }) { (error) in
             failure(PXError(domain: "mercadopago.sdk.PaymentMethodsUserService.getPaymentMethods", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         }

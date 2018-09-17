@@ -9,11 +9,17 @@
 import UIKit
 
 class AddCardFlowModel: NSObject, PXFlowModel {
+    
+    var paymentMethods: [PaymentMethod]?
+    var cardToken: CardToken?
+    var selectedPaymentMethod: PaymentMethod?
+    var tokenizedCard: Token?
 
     enum Steps {
         case start
         case getPaymentMethods
         case openCardForm
+        case createToken
         case associateTokenWithUser
         case finish
     }
@@ -27,8 +33,10 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         case .getPaymentMethods:
             currentStep = .openCardForm
         case .openCardForm:
+            currentStep = .createToken
+        case .createToken:
             currentStep = .associateTokenWithUser
-        default:
+        case .associateTokenWithUser:
             currentStep = .finish
         }
         return currentStep
