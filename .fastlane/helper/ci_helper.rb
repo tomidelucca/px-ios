@@ -89,6 +89,10 @@ module CIHelper
         CIHelper::get_base_branch =~ /^release.*$/
     end
 
+    def self.is_development_branch?
+        CIHelper::get_base_branch =~ /^develop$/
+    end
+
     # Checks if untracked changes are present in the current HEAD
     def self.has_untracked_changes?
         whitelist = CHANGED_FILES_PATTERS_WHITELIST.join(' -e ')
@@ -109,8 +113,8 @@ module CIHelper
     # Checks if can deploy library as release
     def self.can_deploy_library? (version)
         errors = ''
-        if not CIHelper::is_release_branch?
-            errors << "[!] Deployment runs only 'release' branch\n"
+        if not (CIHelper::is_release_branch? || CIHelper::is_development_branch?)
+            errors << "[!] Deployment runs only 'release' or 'develop' branch\n"
         end
 
         # This check has mixed behaviors. We definitely should remove it from here.
