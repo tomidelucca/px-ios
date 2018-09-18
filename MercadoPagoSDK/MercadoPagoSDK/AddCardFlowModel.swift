@@ -38,6 +38,8 @@ class AddCardFlowModel: NSObject, PXFlowModel {
             currentStep = .associateTokenWithUser
         case .associateTokenWithUser:
             currentStep = .finish
+        default:
+            break
         }
         return currentStep
     }

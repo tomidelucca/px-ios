@@ -36,7 +36,9 @@ public class AddCardFlow: NSObject, PXFlow {
         case .associateTokenWithUser:
             self.associateTokenWithUser()
         case .finish:
-            self.finishFlow()
+            self.finish()
+        default:
+            break
         }
     }
     
@@ -89,7 +91,7 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.navigationHandler.dismissLoading()
             self?.model.tokenizedCard = token
             self?.executeNextStep()
-            }, failure: {(error) in
+            }, failure: {[weak self] (error) in
             self?.navigationHandler.dismissLoading()
         })
     }
@@ -100,16 +102,16 @@ public class AddCardFlow: NSObject, PXFlow {
         }
         self.navigationHandler.presentLoading()
         let associateCardService = AssociateCardService(accessToken: self.accessToken)
-        associateCardService.associateCardToUser(paymentMethod: selectedPaymentMethod, cardToken: token, success: { (json) in
-            self.navigationHandler.dismissLoading()
+        associateCardService.associateCardToUser(paymentMethod: selectedPaymentMethod, cardToken: token, success: { [weak self] (json) in
+            self?.navigationHandler.dismissLoading()
             print(json)
             self?.executeNextStep()
-        }) { (error) in
-            self.navigationHandler.dismissLoading()
+        }) { [weak self] (error) in
+            self?.navigationHandler.dismissLoading()
         }
     }
     
-    private func finishFlow() {
+    private func finish() {
         self.navigationHandler.goToRootViewController()
     }
 

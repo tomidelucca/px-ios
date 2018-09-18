@@ -25,8 +25,10 @@ class AssociateCardService: MercadoPagoService {
         }
         let jsonString = String(data: jsonData, encoding: .utf8)
         self.request(uri: uri, params: "access_token=\(accessToken)", body: jsonString, method: "POST", success: { (data) in
-            let json = JSONDecoder().decode([String : Any].self, from: data)
-            success(json)
+            let jsonResult = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+            if let jsonResult = jsonResult as? [String : Any] {
+                success(jsonResult)
+            }
         }) { (error) in
             failure(error)
         }

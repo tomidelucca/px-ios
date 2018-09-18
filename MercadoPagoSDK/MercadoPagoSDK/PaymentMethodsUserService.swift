@@ -10,7 +10,7 @@ import UIKit
 
 class PaymentMethodsUserService: MercadoPagoService {
     
-    let uri = "/px_mobile_api/payment_methods/cards"
+    let uri = "/px_mobile_api/beta/payment_methods/cards"
     let accessToken: String
     
     init(accessToken: String) {
