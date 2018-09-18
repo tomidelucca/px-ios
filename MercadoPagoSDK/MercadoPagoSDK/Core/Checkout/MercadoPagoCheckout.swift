@@ -209,12 +209,13 @@ extension MercadoPagoCheckout {
     }
 
     internal func finish() {
+        print("PXLog - holala")
         viewModel.pxNavigationHandler.removeRootLoading()
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by state machine next)
-        let payment = viewModel.getOurPayment()
-        if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: payment) {
-            finishCallback()
+        let result = viewModel.getResult()
+        if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout() {
+            finishCallback(result)
             return
         }
         defaultExitAction()
@@ -226,14 +227,15 @@ extension MercadoPagoCheckout {
 
     /// :nodoc:
     @objc func closeCheckout() {
+        print("PXLog - holala 2")
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
 
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by closeAction)
         if viewModel.getGenericPayment() != nil {
-            let payment = viewModel.getOurPayment()
-            if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout(payment: payment) {
-                finishCallback()
+            let result = viewModel.getResult()
+            if let finishCallback = viewModel.lifecycleProtocol?.finishCheckout() {
+                finishCallback(result)
             } else {
                 defaultExitAction()
             }

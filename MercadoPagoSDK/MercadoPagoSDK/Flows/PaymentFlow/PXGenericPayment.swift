@@ -12,7 +12,18 @@ import Foundation
  Use this object in order to notify you own custom payment using `PXPaymentProcessor`.
  */
 @objcMembers
-open class PXGenericPayment: NSObject {
+open class PXGenericPayment: NSObject, PXResult {
+    public func getPaymentId() -> String? {
+        return paymentId
+    }
+    public func getStatus() -> String {
+        return status
+    }
+    
+    public func getStatusDetail() -> String {
+        return statusDetail
+    }
+    
     /// :nodoc:
     @objc public enum RemotePaymentStatus: Int {
         case APPROVED
@@ -58,4 +69,10 @@ open class PXGenericPayment: NSObject {
         self.statusDetail = statusDetail
         self.paymentId = receiptId
     }
+}
+@objc
+public protocol PXResult {
+    func getPaymentId() -> String?
+    func getStatus() -> String
+    func getStatusDetail() -> String
 }

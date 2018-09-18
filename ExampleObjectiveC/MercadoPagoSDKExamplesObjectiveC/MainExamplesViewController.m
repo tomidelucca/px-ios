@@ -209,14 +209,15 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     };
 }
 
--(void (^)(void))finishCheckoutWithPayment:(PXGenericPayment *)payment {
-    //return nil;
-    NSLog(@"PXLog - finishCheckoutWithPayment outside Called");
-    return ^ {
+-( void (^)(PXGenericPayment*)) finishCheckout {
+    //return nil;x
+    NSLog(@"PXLog - finishCheckoutWithPayment outside Called ");
+    return ^ (PXGenericPayment* payment) {
         NSLog(@"PXLog - finishCheckoutWithPayment Called");
         [self.navigationController popToRootViewControllerAnimated:YES];
     };
 }
+
 
 -(void (^)(void))changePaymentMethodTapped {
     NSLog(@"PXLog - changePaymentMethodTapped outside Called");

@@ -20,7 +20,7 @@ import Foundation
      User finish checkout with Payment information `PXPayment`. You can return an optional block, to override the default exit behavior. Default exit behavior is `popToRoot`.
      - parameter payment: Optional PXPayment object. (Payment info)
      */
-    @objc func finishCheckout(payment: PXPayment?) -> (() -> Void)?
+    @objc func finishCheckout() -> ((_ payment: PXResult?) -> Void)?
 
     /**
      User tap on our change payment method action. If you return a block,
