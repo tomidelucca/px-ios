@@ -201,7 +201,8 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 }
 
 -(void (^ _Nullable)(void))cancelCheckout {
-    // return nil;
+    //return nil;
+    NSLog(@"PXLog - cancelCheckout outside Called");
     return ^ {
         NSLog(@"PXLog - cancelCheckout Called");
         [self.navigationController popViewControllerAnimated:YES];
@@ -209,7 +210,8 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 }
 
 -(void (^)(void))finishCheckoutWithPayment:(PXGenericPayment *)payment {
-    return nil;
+    //return nil;
+    NSLog(@"PXLog - finishCheckoutWithPayment outside Called");
     return ^ {
         NSLog(@"PXLog - finishCheckoutWithPayment Called");
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -217,9 +219,10 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 }
 
 -(void (^)(void))changePaymentMethodTapped {
+    NSLog(@"PXLog - changePaymentMethodTapped outside Called");
     return ^ {
         NSLog(@"PXLog - changePaymentMethodTapped Called");
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     };
 }
 
