@@ -71,6 +71,7 @@ class PXResultViewController: PXComponentContainerViewController {
         self.headerView = self.buildHeaderView()
         if let headerView = self.headerView {
             headerView.pxShouldAnimated = false
+            headerView.accessibilityIdentifier = "result_header_view"
             contentView.addSubview(headerView)
             PXLayout.pinTop(view: headerView, to: contentView).isActive = true
             PXLayout.matchWidth(ofView: headerView).isActive = true
