@@ -14,6 +14,7 @@ class AddCardFlowModel: NSObject, PXFlowModel {
     var cardToken: PXCardToken?
     var selectedPaymentMethod: PXPaymentMethod?
     var tokenizedCard: PXToken?
+    var lastStepFailed = false
 
     enum Steps {
         case start
@@ -27,6 +28,10 @@ class AddCardFlowModel: NSObject, PXFlowModel {
     private var currentStep = Steps.start
     
     func nextStep() -> AddCardFlowModel.Steps {
+        if lastStepFailed {
+            lastStepFailed = false
+            return currentStep
+        }
         switch currentStep {
         case .start:
             currentStep = .getPaymentMethods

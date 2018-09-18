@@ -26,7 +26,12 @@ class AssociateCardService: MercadoPagoService {
         self.request(uri: uri, params: "access_token=\(accessToken)", body: jsonString, method: "POST", success: { (data) in
             let jsonResult = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let jsonResult = jsonResult as? [String : Any] {
-                success(jsonResult)
+                do {
+                    let apiException = try PXApiException.fromJSON(data: data)
+                    failure(PXError(domain: "mercadopago.sdk.associateCard", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: jsonResult, apiException: apiException))
+                } catch {
+                    success(jsonResult)
+                }
             }
         }) { (error) in
             failure(error)

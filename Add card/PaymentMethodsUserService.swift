@@ -24,7 +24,9 @@ class PaymentMethodsUserService: MercadoPagoService {
                 let paymentMethods = try JSONDecoder().decode([PXPaymentMethod].self, from: data)
                 success(paymentMethods)
             }catch{
-                success([])
+                let apiException = try! PXApiException.fromJSON(data: data)
+                let dict = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
+                failure(PXError(domain: "mercadopago.sdk.getPaymentMethods", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: dict ?? [:], apiException: apiException))
             }
         }) { (error) in
             failure(PXError(domain: "mercadopago.sdk.PaymentMethodsUserService.getPaymentMethods", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
