@@ -22,7 +22,7 @@ class PXUIImageView: UIImageView {
     }
 
     private func loadImage(image: UIImage?) {
-        self.contentMode = .scaleAspectFill
+        self.contentMode = .scaleAspectFit
         if let pxImage = image as? PXUIImage {
             let placeholder = buildPlaceholderView(image: pxImage)
             let fallback = buildFallbackView(image: pxImage)
