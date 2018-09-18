@@ -186,14 +186,14 @@ extension ResourceManager {
         if let statusDetail = statusDetail {
             //Payment Result Logic
             let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), payerEmail: nil, paymentId: nil, statementDescription: nil)
-            if paymentResult.isAccepted() {
+            if paymentResult.isApproved() || paymentResult.isInProcess() || paymentResult.isWaitingForPayment() {
                 return ThemeManager.shared.successColor()
+            }
+            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() {
+                return ThemeManager.shared.warningColor()
             }
             if paymentResult.isError() {
                 return ThemeManager.shared.rejectedColor()
-            }
-            if paymentResult.isWarning() {
-                return ThemeManager.shared.warningColor()
             }
         } else {
             if status == PXBusinessResultStatus.APPROVED.getDescription() {
@@ -217,7 +217,7 @@ extension ResourceManager {
             if paymentResult.isAccepted() {
                 if paymentResult.isApproved() {
                     return getBadgeImage(name: "ok_badge", clearBackground: clearBackground)
-                } else if paymentResult.isReviewManual() {
+                } else if paymentResult.isReviewManual() || paymentResult.isContingency() {
                     return getBadgeImage(name: "orange_pending_badge", clearBackground: clearBackground)
                 } else {
                     return getBadgeImage(name: "pending_badge", clearBackground: clearBackground)

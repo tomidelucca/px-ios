@@ -29,12 +29,6 @@ internal class PXAnimatedButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    enum FinishStyle: Int {
-        case warning
-        case success
-        case error
-    }
-
     enum Status {
         case normal
         case loading
@@ -53,7 +47,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         status = .loading
     }
 
-    func finishAnimatingButton(style: FinishStyle, color: UIColor, image: UIImage?) {
+    func finishAnimatingButton(color: UIColor, image: UIImage?) {
         status = .expanding
 
         let newFrame = CGRect(x: self.frame.midX - self.frame.height / 2, y: self.frame.midY - self.frame.height / 2, width: self.frame.height, height: self.frame.height)
@@ -68,7 +62,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                 })
 
                 transitionAnimator.addCompletion({ (_) in
-                    self.explosion(color: color, style: style, newFrame: newFrame, image: image)
+                    self.explosion(color: color, newFrame: newFrame, image: image)
                 })
 
                 transitionAnimator.startAnimation()
@@ -78,13 +72,13 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                     self.frame = newFrame
                     self.layer.cornerRadius = self.frame.height / 2
                 }, completion: { _ in
-                    self.explosion(color: color, style: style, newFrame: newFrame, image: image)
+                    self.explosion(color: color, newFrame: newFrame, image: image)
                 })
             }
         })
     }
 
-    private func explosion(color: UIColor, style: FinishStyle, newFrame: CGRect, image: UIImage?) {
+    private func explosion(color: UIColor, newFrame: CGRect, image: UIImage?) {
         UIView.animate(withDuration: 0.3, animations: {
             self.progressView?.alpha = 0
             self.backgroundColor = color
@@ -101,11 +95,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
             if #available(iOS 10.0, *) {
                 let notification = UINotificationFeedbackGenerator()
-                if style == .success {
-                    notification.notificationOccurred(.success)
-                } else {
-                    notification.notificationOccurred(.error)
-                }
+                notification.notificationOccurred(.success)
             }
 
             UIView.animate(withDuration: 0.6, animations: {
@@ -196,7 +186,7 @@ extension PXAnimatedButton {
         if let notificationObject = sender.object as? PXAnimatedButtonNotificationObject {
             let image = ResourceManager.shared.getBadgeImageWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail, clearBackground: true)
             let color = ResourceManager.shared.getResultColorWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail)
-            finishAnimatingButton(style: .success, color: color, image: image)
+            finishAnimatingButton(color: color, image: image)
         }
     }
 }
