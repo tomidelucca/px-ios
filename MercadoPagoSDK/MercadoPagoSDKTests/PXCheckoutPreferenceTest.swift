@@ -92,10 +92,10 @@ class PXCheckoutPreferenceTest: XCTestCase {
         XCTAssertFalse(preference.isExpired())
         var date = Date(timeIntervalSinceNow: TimeInterval(200.0))
         preference.setExpirationDate(date)
-        XCTAssert(preference.isExpired())
+        XCTAssertFalse(preference.isExpired())
         date = Date(timeIntervalSinceReferenceDate: TimeInterval(200.0))
         preference.setExpirationDate(date)
-        XCTAssertFalse(preference.isExpired())
+        XCTAssert(preference.isExpired())
     }
 
     func testIsActive() {
