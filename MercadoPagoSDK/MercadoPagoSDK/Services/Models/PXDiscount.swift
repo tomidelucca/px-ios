@@ -119,3 +119,12 @@ open class PXDiscount: NSObject, Codable {
         return try JSONDecoder().decode(PXDiscount.self, from: data)
     }
 }
+
+// MARK: Getters
+extension PXDiscount {
+    /// :nodoc:
+    @objc
+    public func getId() -> String? {
+        return id
+    }
+}

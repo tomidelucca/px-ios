@@ -16,7 +16,7 @@ internal final class PXPaymentFlowModel: NSObject {
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
     var paymentResult: PaymentResult?
-    var instructionsInfo: InstructionsInfo?
+    var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
 
     init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
@@ -55,7 +55,7 @@ internal final class PXPaymentFlowModel: NSObject {
             return false
         }
 
-        if hasPluginPaymentScreen(plugin: paymentPlugin) {
+        if hasPluginPaymentScreen() {
             return false
         }
 
@@ -89,7 +89,7 @@ internal final class PXPaymentFlowModel: NSObject {
         if !needToCreatePayment() {
             return false
         }
-       return hasPluginPaymentScreen(plugin: paymentPlugin)
+       return hasPluginPaymentScreen()
     }
 
     func isOfflinePayment() -> Bool {
@@ -114,8 +114,8 @@ internal final class PXPaymentFlowModel: NSObject {
 }
 
 internal extension PXPaymentFlowModel {
-    func hasPluginPaymentScreen(plugin: PXPaymentProcessor?) -> Bool {
-        guard let paymentPlugin = plugin else {
+    func hasPluginPaymentScreen() -> Bool {
+        guard let paymentPlugin = paymentPlugin else {
             return false
         }
         assignToCheckoutStore()

@@ -10,7 +10,7 @@ import Foundation
 /// :nodoc:
 open class PXAmountInfo: NSObject, Codable {
 
-    open var amount: Double?
+    open var amount: Double = 0
     open var currency: PXCurrency?
 
     open func toJSONString() throws -> String? {

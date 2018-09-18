@@ -500,7 +500,7 @@ extension PXPaymentResultConfiguration {
     }
 
     @available(*, deprecated)
-    open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
+    open func getHeaderRejectedIcon(_ paymentMethod: PXPaymentMethod?) -> UIImage? {
         if let urlImage = self.rejectedURLImage {
             if let image =  ViewUtils.loadImageFromUrl(urlImage) {
                 return image
@@ -513,7 +513,7 @@ extension PXPaymentResultConfiguration {
     }
 
     @available(*, deprecated)
-    open func getHeaderImageFor(_ paymentMethod: PaymentMethod?) -> UIImage? {
+    open func getHeaderImageFor(_ paymentMethod: PXPaymentMethod?) -> UIImage? {
         guard let paymentMethod = paymentMethod else {
             return ResourceManager.shared.getImage(pmDefaultIconName)
         }

@@ -35,7 +35,6 @@ open class PXGenericPayment: NSObject {
      */
     open let statusDetail: String
 
-
     // MARK: Init.
     /**
      - parameter status: Status of payment.

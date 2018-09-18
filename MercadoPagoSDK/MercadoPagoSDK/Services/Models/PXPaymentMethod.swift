@@ -12,19 +12,21 @@ open class PXPaymentMethod: NSObject, Codable {
     open var additionalInfoNeeded: [String]?
     open var id: String!
     open var name: String?
-    open var paymentTypeId: String?
+    open var paymentTypeId: String = ""
     open var status: String?
     open var secureThumbnail: String?
     open var thumbnail: String?
     open var deferredCapture: String?
-    open var settings: [PXSetting]?
+    open var settings: [PXSetting] = []
     open var minAllowedAmount: Double?
     open var maxAllowedAmount: Double?
     open var accreditationTime: Int?
     open var merchantAccountId: String?
     open var financialInstitutions: [PXFinancialInstitution]?
+    open var externalPaymentPluginImageData: NSData?
+    open var paymentMethodDescription: String?
 
-    public init(additionalInfoNeeded: [String]?, id: String, name: String?, paymentTypeId: String?, status: String?, secureThumbnail: String?, thumbnail: String?, deferredCapture: String?, settings: [PXSetting]?, minAllowedAmount: Double?, maxAllowedAmount: Double?, accreditationTime: Int?, merchantAccountId: String?, financialInstitutions: [PXFinancialInstitution]?) {
+    public init(additionalInfoNeeded: [String]?, id: String, name: String?, paymentTypeId: String, status: String?, secureThumbnail: String?, thumbnail: String?, deferredCapture: String?, settings: [PXSetting], minAllowedAmount: Double?, maxAllowedAmount: Double?, accreditationTime: Int?, merchantAccountId: String?, financialInstitutions: [PXFinancialInstitution]?, description: String?) {
         self.additionalInfoNeeded = additionalInfoNeeded
         self.id = id
         self.name = name
@@ -39,6 +41,7 @@ open class PXPaymentMethod: NSObject, Codable {
         self.accreditationTime = accreditationTime
         self.merchantAccountId = merchantAccountId
         self.financialInstitutions = financialInstitutions
+        self.paymentMethodDescription = description
     }
 
     public enum PXPaymentMethodKeys: String, CodingKey {
@@ -56,6 +59,7 @@ open class PXPaymentMethod: NSObject, Codable {
         case accreditationTime = "accreditation_time"
         case merchantAccountId = "merchant_account_id"
         case financialInstitutions = "financial_institutions"
+        case paymentMethodDescription = "description"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -63,19 +67,20 @@ open class PXPaymentMethod: NSObject, Codable {
         let additionalInfoNeeded: [String]? = try container.decodeIfPresent([String].self, forKey: .additionalInfoNeeded)
         let id: String = try container.decode(String.self, forKey: .id)
         let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
-        let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
+        let paymentTypeId: String = try container.decodeIfPresent(String.self, forKey: .paymentTypeId) ?? ""
         let status: String? = try container.decodeIfPresent(String.self, forKey: .status)
         let secureThumbnail: String? = try container.decodeIfPresent(String.self, forKey: .secureThumbnail)
         let thumbnail: String? = try container.decodeIfPresent(String.self, forKey: .thumbnail)
         let deferredCapture: String? = try container.decodeIfPresent(String.self, forKey: .deferredCapture)
-        let settings: [PXSetting]? = try container.decodeIfPresent([PXSetting].self, forKey: .settings)
+        let settings: [PXSetting] = try container.decodeIfPresent([PXSetting].self, forKey: .settings) ?? []
         let minAllowedAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .minAllowedAmount)
         let maxAllowedAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .maxAllowedAmount)
         let accreditationTime: Int? = try container.decodeIfPresent(Int.self, forKey: .accreditationTime)
         let merchantAccountId: String? = try container.decodeIfPresent(String.self, forKey: .merchantAccountId)
         let financialInstitutions: [PXFinancialInstitution]? = try container.decodeIfPresent([PXFinancialInstitution].self, forKey: .financialInstitutions)
+        let description: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodDescription)
 
-        self.init(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: settings, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions)
+        self.init(additionalInfoNeeded: additionalInfoNeeded, id: id, name: name, paymentTypeId: paymentTypeId, status: status, secureThumbnail: secureThumbnail, thumbnail: thumbnail, deferredCapture: deferredCapture, settings: settings, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, accreditationTime: accreditationTime, merchantAccountId: merchantAccountId, financialInstitutions: financialInstitutions, description: description)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -114,20 +119,13 @@ open class PXPaymentMethod: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXPaymentMethod] {
         return try JSONDecoder().decode([PXPaymentMethod].self, from: data)
     }
+}
 
-    func isAdditionalInfoNeeded(_ param: String!) -> Bool {
-        if additionalInfoNeeded != nil && additionalInfoNeeded!.count > 0 {
-            for info in additionalInfoNeeded! {
-                if info == param {
-                    return true
-                }
-            }
-        }
-        return false
+// MARK: Getters
+extension PXPaymentMethod {
+    /// :nodoc:
+    @objc
+    public func getId() -> String? {
+        return id
     }
-
-    open var isIssuerRequired: Bool {
-        return isAdditionalInfoNeeded("issuer_id")
-    }
-
 }

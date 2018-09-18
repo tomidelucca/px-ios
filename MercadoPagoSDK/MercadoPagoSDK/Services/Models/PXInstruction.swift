@@ -9,18 +9,18 @@
 import Foundation
 /// :nodoc:
 open class PXInstruction: NSObject, Codable {
-    open var title: String?
+    open var title: String = ""
     open var subtitle: String?
     open var accreditationMessage: String?
-    open var accreditationComments: [String]?
+    open var accreditationComments: [String] = []
     open var actions: [PXInstructionAction]?
     open var type: String?
     open var references: [PXInstructionReference]?
     open var secondaryInfo: [String]?
     open var tertiaryInfo: [String]?
-    open var info: [String]?
+    open var info: [String] = []
 
-    public init(title: String?, subtitle: String?, accreditationMessage: String?, accreditationComments: [String]?, actions: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]?) {
+    public init(title: String, subtitle: String?, accreditationMessage: String?, accreditationComments: [String], actions: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]) {
         self.title = title
         self.subtitle = subtitle
         self.accreditationMessage = accreditationMessage
@@ -48,16 +48,16 @@ open class PXInstruction: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionKeys.self)
-        let title: String? = try container.decodeIfPresent(String.self, forKey: .title)
+        let title: String = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
         let subtitle: String? = try container.decodeIfPresent(String.self, forKey: .subtitle)
         let accreditationMessage: String? = try container.decodeIfPresent(String.self, forKey: .accreditationMessage)
-        let accreditationComments: [String]? = try container.decodeIfPresent([String].self, forKey: .accreditationComments)
+        let accreditationComments: [String] = try container.decodeIfPresent([String].self, forKey: .accreditationComments) ?? []
         let action: [PXInstructionAction]? = try container.decodeIfPresent([PXInstructionAction].self, forKey: .actions)
         let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
         let references: [PXInstructionReference]? = try container.decodeIfPresent([PXInstructionReference].self, forKey: .references)
         let secondaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .secondaryInfo)
         let tertiaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .tertiaryInfo)
-        let info: [String]? = try container.decodeIfPresent([String].self, forKey: .info)
+        let info: [String] = try container.decodeIfPresent([String].self, forKey: .info) ?? []
 
         self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, accreditationComments: accreditationComments, actions: action, type: type, references: references, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
     }

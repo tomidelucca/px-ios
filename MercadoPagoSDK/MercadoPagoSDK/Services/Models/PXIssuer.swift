@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 open class PXIssuer: NSObject, Codable {
-    open var id: String!
+    open var id: String = ""
     open var name: String?
 
     public init(id: String, name: String?) {
@@ -55,5 +55,13 @@ open class PXIssuer: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXIssuer] {
         return try JSONDecoder().decode([PXIssuer].self, from: data)
     }
+}
 
+// MARK: Getters
+extension PXIssuer {
+    /// :nodoc:
+    @objc
+    public func getId() -> String? {
+        return id
+    }
 }

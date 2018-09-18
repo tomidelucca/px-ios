@@ -10,14 +10,19 @@ import Foundation
 /// :nodoc:
 open class PXPaymentPreference: NSObject, Codable {
 
-    open var maxAcceptedInstallments: Int?
-    open var defaultInstallments: Int?
-    open var excludedPaymentMethodIds: [String]?
-    open var excludedPaymentTypeIds: [String]?
+    open var maxAcceptedInstallments: Int = 0
+    open var defaultInstallments: Int = 0
+    open var excludedPaymentMethodIds: [String] = []
+    open var excludedPaymentTypeIds: [String] = []
     open var defaultPaymentMethodId: String?
     open var defaultPaymentTypeId: String?
+    open var cardId: String?
 
-    public init(maxAcceptedInstallments: Int?, defaultInstallments: Int?, excludedPaymentMethodIds: [String]?, excludedPaymentTypeIds: [String]?, defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
+    override public init() {
+        
+    }
+    
+    public init(maxAcceptedInstallments: Int, defaultInstallments: Int, excludedPaymentMethodIds: [String], excludedPaymentTypeIds: [String], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
         self.maxAcceptedInstallments = maxAcceptedInstallments
         self.defaultInstallments = defaultInstallments
         self.excludedPaymentMethodIds = excludedPaymentMethodIds
@@ -26,23 +31,19 @@ open class PXPaymentPreference: NSObject, Codable {
         self.defaultPaymentTypeId = defaultPaymentTypeId
     }
 
-    init(maxAcceptedInstallments: Int?, defaultInstallments: Int?, excludedPaymentMethods: [PXPaymentMethod]?, excludedPaymentTypes: [PXPaymentType]?, defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
+    init(maxAcceptedInstallments: Int, defaultInstallments: Int, excludedPaymentMethods: [PXPaymentMethod], excludedPaymentTypes: [PXPaymentType], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
 
         var excludedPaymentTypeIds: [String] = []
-        if let excludedPaymentTypes = excludedPaymentTypes {
-            for paymentType in excludedPaymentTypes {
-                if !String.isNullOrEmpty(paymentType.id) {
-                    excludedPaymentTypeIds.append(paymentType.id)
-                }
+        for paymentType in excludedPaymentTypes {
+            if !String.isNullOrEmpty(paymentType.id) {
+                excludedPaymentTypeIds.append(paymentType.id)
             }
         }
 
         var excludedPaymentMethodIds: [String] = []
-        if let excludedPaymentMethods = excludedPaymentMethods {
-            for paymentMethod in excludedPaymentMethods {
-                if !String.isNullOrEmpty(paymentMethod.id) {
-                    excludedPaymentMethodIds.append(paymentMethod.id)
-                }
+        for paymentMethod in excludedPaymentMethods {
+            if !String.isNullOrEmpty(paymentMethod.id) {
+                excludedPaymentMethodIds.append(paymentMethod.id)
             }
         }
 
@@ -65,10 +66,10 @@ open class PXPaymentPreference: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentPreferenceKeys.self)
-        let defaultInstallments: Int? = try container.decodeIfPresent(Int.self, forKey: .defaultInstallments)
-        let maxAcceptedInstallments: Int? = try container.decodeIfPresent(Int.self, forKey: .maxAcceptedInstallments)
-        let excludedPaymentMethods: [PXPaymentMethod]? = try container.decodeIfPresent([PXPaymentMethod].self, forKey: .excludedPaymentMethodIds)
-        let excludedPaymentTypes: [PXPaymentType]? = try container.decodeIfPresent([PXPaymentType].self, forKey: .excludedPaymentTypeIds)
+        let defaultInstallments: Int = try container.decodeIfPresent(Int.self, forKey: .defaultInstallments) ?? 0
+        let maxAcceptedInstallments: Int = try container.decodeIfPresent(Int.self, forKey: .maxAcceptedInstallments) ?? 0
+        let excludedPaymentMethods: [PXPaymentMethod] = try container.decodeIfPresent([PXPaymentMethod].self, forKey: .excludedPaymentMethodIds) ?? []
+        let excludedPaymentTypes: [PXPaymentType] = try container.decodeIfPresent([PXPaymentType].self, forKey: .excludedPaymentTypeIds) ?? []
         let defaultPaymentMethodId: String? = try container.decodeIfPresent(String.self, forKey: .defaultPaymentMethodId)
         let defaultPaymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .defaultPaymentTypeId)
 

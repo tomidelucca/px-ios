@@ -8,19 +8,19 @@
 
 import Foundation
 extension OneTapFlow {
-    func createCardToken(cardInformation: CardInformation? = nil, securityCode: String? = nil) {
-        guard let cardInfo = model.paymentOptionSelected as? CardInformation else {
+    func createCardToken(cardInformation: PXCardInformation? = nil, securityCode: String? = nil) {
+        guard let cardInfo = model.paymentOptionSelected as? PXCardInformation else {
             return
         }
         if self.model.mpESCManager.hasESCEnable() {
-            var savedESCCardToken: SavedESCCardToken
+            var savedESCCardToken: PXSavedESCCardToken
 
             let esc = self.model.mpESCManager.getESC(cardId: cardInfo.getCardId())
 
             if !String.isNullOrEmpty(esc) {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: advancedConfig.escEnabled)
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: advancedConfig.escEnabled)
             } else {
-                savedESCCardToken = SavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: advancedConfig.escEnabled)
+                savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: advancedConfig.escEnabled)
             }
             createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 
@@ -32,18 +32,18 @@ extension OneTapFlow {
         }
     }
 
-    func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
+    func createSavedCardToken(cardInformation: PXCardInformation, securityCode: String) {
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
 
-        let cardInformation = model.paymentOptionSelected as! CardInformation
-        let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
+        let cardInformation = model.paymentOptionSelected as! PXCardInformation
+        let saveCardToken = PXSavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
         self.model.mercadoPagoServicesAdapter.createToken(savedCardToken: saveCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
-                token.lastFourDigits = cardInformation.getCardLastForDigits()
+                token.lastFourDigits = cardInformation.getCardLastForDigits() ?? ""
             }
             self?.model.updateCheckoutModel(token: token)
             self?.executeNextStep()
@@ -64,7 +64,7 @@ extension OneTapFlow {
         })
     }
 
-    func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
+    func createSavedESCCardToken(savedESCCardToken: PXSavedESCCardToken) {
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
@@ -72,7 +72,7 @@ extension OneTapFlow {
         self.model.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
-                let cardInformation = self?.model.paymentOptionSelected as? CardInformation
+                let cardInformation = self?.model.paymentOptionSelected as? PXCardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
             self?.model.updateCheckoutModel(token: token)

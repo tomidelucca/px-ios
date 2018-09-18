@@ -4,6 +4,9 @@ module CIHelper
     BUILD_DIR = ENV['CIRCLE_WORKING_DIRECTORY'] ? ENV['CIRCLE_WORKING_DIRECTORY'].gsub(/\~/, "#{ENV['HOME']}") : "#{ENV['HOME']}/#{ENV['CIRCLE_PROJECT_REPONAME']}"
     REPO_SLUG = "#{ENV['CIRCLE_PROJECT_USERNAME']}/#{ENV['CIRCLE_PROJECT_REPONAME']}"
     CHANGED_FILES_PATTERS_WHITELIST = ['.pbxproj', 'Podfile.lock']
+
+    POD_SPECS_SOURCES = ENV['POD_SPECS_SOURCES'] 
+    POD_SPECS_REPO_TO_PUBLISH = ENV['POD_SPECS_REPO_TO_PUBLISH']
     @@pr_info = nil # PR info from GitHub API: https://developer.github.com/v3/pulls/#get-a-single-pull-request
 
     # Run a given command from the ci build directory
@@ -86,6 +89,10 @@ module CIHelper
         CIHelper::get_base_branch =~ /^release.*$/
     end
 
+    def self.is_development_branch?
+        CIHelper::get_base_branch =~ /^develop$/
+    end
+
     # Checks if untracked changes are present in the current HEAD
     def self.has_untracked_changes?
         whitelist = CHANGED_FILES_PATTERS_WHITELIST.join(' -e ')
@@ -106,8 +113,8 @@ module CIHelper
     # Checks if can deploy library as release
     def self.can_deploy_library? (version)
         errors = ''
-        if not CIHelper::is_release_branch?
-            errors << "[!] Deployment runs only 'release' branch\n"
+        if not (CIHelper::is_release_branch? || CIHelper::is_development_branch?)
+            errors << "[!] Deployment runs only 'release' or 'develop' branch\n"
         end
 
         # This check has mixed behaviors. We definitely should remove it from here.
@@ -122,14 +129,24 @@ module CIHelper
             errors <<  ">>> Untracked changes: " << untracked_changes
         end
 
-        if CIHelper::tag_already_exists(version)
-            errors << "[!] A tag for version #{version} already exists. Please change the version and try again\n"
-        end
-
         if errors.length>0
             $stderr.puts errors
             return false
         end
         return true
+    end
+
+    def self.push_pod(pod_name)
+      if not `pod repo list`.strip.split("\n").include?("MLPods")
+          unless system("pod repo add MLPods #{CIHelper::POD_SPECS_REPO_TO_PUBLISH}")
+              raise 'Private deploy has failed. Check the above log'
+          end
+      end
+
+      publish_command = "pod repo push MLPods #{CIHelper::BUILD_DIR}/#{pod_name}.podspec --allow-warnings --sources='#{CIHelper::POD_SPECS_SOURCES}'"
+
+      unless system(publish_command)
+          raise 'Private deploy has failed. Check the above log'
+      end
     end
 end

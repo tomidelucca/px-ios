@@ -11,11 +11,11 @@ import Foundation
 open class PXIdentificationType: NSObject, Codable {
     open var id: String!
     open var name: String?
-    open var minLength: Int?
-    open var maxLength: Int?
+    open var minLength: Int = 0
+    open var maxLength: Int = 0
     open var type: String?
 
-    public init(id: String, name: String?, minLength: Int?, maxLength: Int?, type: String?) {
+    public init(id: String, name: String?, minLength: Int, maxLength: Int, type: String?) {
         self.id = id
         self.name = name
         self.minLength = minLength
@@ -33,8 +33,8 @@ open class PXIdentificationType: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXIdentificationTypeKeys.self)
-        let minLength: Int? = try container.decodeIfPresent(Int.self, forKey: .minLength)
-        let maxLength: Int? = try container.decodeIfPresent(Int.self, forKey: .maxLength)
+        let minLength: Int = try container.decodeIfPresent(Int.self, forKey: .minLength) ?? 0
+        let maxLength: Int = try container.decodeIfPresent(Int.self, forKey: .maxLength) ?? 0
         let id: String = try container.decode(String.self, forKey: .id)
         let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
         let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
