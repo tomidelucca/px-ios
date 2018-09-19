@@ -348,17 +348,26 @@ import Foundation
     open func isCardPaymentType() -> Bool {
         return self.paymentTypeId == PXPaymentTypes.CREDIT_CARD.rawValue || self.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue || paymentTypeId == PXPaymentTypes.PREPAID_CARD.rawValue
     }
+}
 
-    
-    //MARK: PXResult
-    public func getPaymentId() -> String? {
+extension PXPayment {
+    //MARK: Getters that conforms PXResult protocol
+    /**
+     * Payment Id getter (String)
+     */
+    @objc public func getPaymentId() -> String? {
         return String(describing: id)
     }
-    public func getStatus() -> String {
+    /**
+     * Status getter
+     */
+    @objc public func getStatus() -> String {
         return status
     }
-    
-    public func getStatusDetail() -> String {
+    /**
+     * Status detail getter
+     */
+    @objc public func getStatusDetail() -> String {
         return statusDetail
     }
 }

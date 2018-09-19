@@ -70,9 +70,4 @@ open class PXGenericPayment: NSObject, PXResult {
         self.paymentId = receiptId
     }
 }
-@objc
-public protocol PXResult {
-    func getPaymentId() -> String?
-    func getStatus() -> String
-    func getStatusDetail() -> String
-}
+

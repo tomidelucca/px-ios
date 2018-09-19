@@ -209,7 +209,6 @@ extension MercadoPagoCheckout {
     }
 
     internal func finish() {
-        print("PXLog - holala")
         viewModel.pxNavigationHandler.removeRootLoading()
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by state machine next)
