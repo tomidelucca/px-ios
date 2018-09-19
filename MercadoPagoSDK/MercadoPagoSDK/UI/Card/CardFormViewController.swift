@@ -432,8 +432,8 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
             return true
         }
 
-        //Dont allow empty strings
-        if string == " " {
+        //Dont allow empty strings and unwanted forward slash
+        if string == " " || string == "/" {
             return false
         }
 
