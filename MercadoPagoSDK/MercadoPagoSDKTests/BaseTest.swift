@@ -19,13 +19,10 @@ class BaseTest: XCTestCase {
     override func setUp() {
         super.setUp()
         SiteManager.shared.setSite(siteId: "MLA")
-//        MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
-//        MercadoPagoTestContext.sharedInstance.testEnvironment = self
     }
 
     override func tearDown() {
         super.tearDown()
-//        MercadoPagoCheckoutViewModel.clearEnviroment()
     }
 
 }
