@@ -76,6 +76,10 @@ internal class PaymentResult {
     func isWaitingForPayment() -> Bool {
         return self.statusDetail == PXPendingStatusDetail.WAITING_PAYMENT.rawValue
     }
+
+    func isContingency() -> Bool {
+        return self.statusDetail == PXPendingStatusDetail.CONTINGENCY.rawValue
+    }
 }
 
 // MARK: Congrats logic

@@ -36,17 +36,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func primaryResultColor() -> UIColor {
-
-        switch self.businessResult.getStatus() {
-        case .APPROVED:
-            return ThemeManager.shared.successColor()
-        case .REJECTED:
-            return ThemeManager.shared.rejectedColor()
-        case .PENDING:
-            return ThemeManager.shared.warningColor()
-        case .IN_PROGRESS:
-            return ThemeManager.shared.warningColor()
-        }
+        return ResourceManager.shared.getResultColorWith(status: self.businessResult.getStatus().getDescription())
     }
 
     func setCallback(callback: @escaping (PaymentResult.CongratsState) -> Void) {
@@ -69,17 +59,9 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func getBadgeImage() -> UIImage? {
-        switch self.businessResult.getStatus() {
-        case .APPROVED:
-            return ResourceManager.shared.getImage("ok_badge")
-        case .REJECTED:
-            return ResourceManager.shared.getImage("error_badge")
-        case .PENDING:
-            return ResourceManager.shared.getImage("orange_pending_badge")
-        case .IN_PROGRESS:
-            return ResourceManager.shared.getImage("orange_pending_badge")
-        }
+        return ResourceManager.shared.getBadgeImageWith(status: self.businessResult.getStatus().getDescription())
     }
+
     func buildHeaderComponent() -> PXHeaderComponent {
         let headerImage = getHeaderDefaultIcon()
         let headerProps = PXHeaderProps(labelText: businessResult.getSubTitle()?.toAttributedString(), title: businessResult.getTitle().toAttributedString(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage(), imageURL: businessResult.getImageUrl())
