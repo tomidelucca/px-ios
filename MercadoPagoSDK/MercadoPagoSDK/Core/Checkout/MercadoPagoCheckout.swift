@@ -226,9 +226,7 @@ extension MercadoPagoCheckout {
 
     /// :nodoc:
     @objc func closeCheckout() {
-        print("PXLog - holala 2")
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
-
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by closeAction)
         if viewModel.getGenericPayment() != nil {
