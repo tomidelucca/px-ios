@@ -60,6 +60,7 @@ open class PXIssuer: NSObject, Codable {
 // MARK: Getters
 extension PXIssuer {
     /// :nodoc:
+    @objc
     public func getId() -> String? {
         return id
     }

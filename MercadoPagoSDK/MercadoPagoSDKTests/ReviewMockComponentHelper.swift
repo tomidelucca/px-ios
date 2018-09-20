@@ -7,20 +7,20 @@
 //
 
 import Foundation
+@testable import MercadoPagoSDKV4
 
 public class ReviewMockComponentHelper: NSObject {
 
-    static func buildReviewViewModel(checkoutPreference: CheckoutPreference, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) -> PXReviewViewModel {
-        let paymentData = MockBuilder.buildPaymentData()
+    static func buildReviewViewModel(checkoutPreference: PXCheckoutPreference, reviewScreenPreference: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration()) -> PXReviewViewModel {
         let paymentOptionSelected = MockBuilder.buildPaymentOptionSelected("id")
-        let reviewViewModel = PXReviewViewModel(checkoutPreference: checkoutPreference, paymentOptionSelected: paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
+        let amountHelper = PXAmountHelper(preference: checkoutPreference, paymentData: MockBuilder.buildPaymentData(), discount: nil, campaign: nil, chargeRules: [], consumedDiscount: false)
+        let reviewViewModel = PXReviewViewModel(amountHelper: amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenPreference, userLogged: true)
         return reviewViewModel
     }
 
-    static func buildResultViewModelWithPreference(items: [Item], reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) -> PXReviewViewModel {
+    static func buildResultViewModelWithPreference(items: [PXItem], reviewScreenPreference: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration()) -> PXReviewViewModel {
 
-        let payer = MockBuilder.buildPayer("payer")
-        let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: nil)
+        let preference = PXCheckoutPreference(siteId: "MLA", payerEmail: "sarasa@mercadolibre.com", items: items)
 
         let reviewViewModel = ReviewMockComponentHelper.buildReviewViewModel(checkoutPreference: preference, reviewScreenPreference: reviewScreenPreference)
         return reviewViewModel

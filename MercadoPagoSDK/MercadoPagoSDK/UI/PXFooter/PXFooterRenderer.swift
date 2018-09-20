@@ -34,7 +34,7 @@ final class PXFooterRenderer: NSObject {
 
             let linkButton = self.buildLinkButton(with: linkAction, color: footer.props.primaryColor)
 
-//            fooView.linkButton = linkButton
+            fooView.linkButton = linkButton
             fooView.addSubview(linkButton)
             if topView != fooView {
                PXLayout.put(view: linkButton, onBottomOf: topView, withMargin: PXLayout.S_MARGIN).isActive = true

@@ -32,7 +32,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
-    internal var changePaymentMethodCallback: (() -> Void)? = nil
+    internal var changePaymentMethodCallback: (() -> Void)?
 
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {

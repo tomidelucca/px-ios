@@ -7,12 +7,14 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class PaymentTypeTest: BaseTest {
 
     func testInit() {
-        let paymentType = PaymentType(paymentTypeId: PaymentTypeId.CREDIT_CARD)
-        XCTAssertEqual(paymentType.paymentTypeId, PaymentTypeId.CREDIT_CARD)
+        let paymentType = PXPaymentType()
+        paymentType.id = PXPaymentTypes.CREDIT_CARD.rawValue
+        XCTAssertEqual(paymentType.id, PXPaymentTypes.CREDIT_CARD.rawValue)
 
     }
 

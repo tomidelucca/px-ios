@@ -7,12 +7,13 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class SecurityCodeViewModelTest: BaseTest {
 
     var securityCodeViewModel: SecurityCodeViewModel!
-    var paymentMethod: PaymentMethod!
-    var cardInfo: Token!
+    var paymentMethod: PXPaymentMethod!
+    var cardInfo: PXToken!
 
     override func setUp() {
         super.setUp()

@@ -10,7 +10,6 @@
 import UIKit
 import MercadoPagoSDKV4
 
-
 // Check full documentation: http://mercadopago.github.io/px-ios/v4/
 class ViewController: UIViewController {
 

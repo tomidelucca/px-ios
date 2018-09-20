@@ -123,6 +123,7 @@ open class PXDiscount: NSObject, Codable {
 // MARK: Getters
 extension PXDiscount {
     /// :nodoc:
+    @objc
     public func getId() -> String? {
         return id
     }

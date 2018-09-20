@@ -60,7 +60,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
         let newFrame = CGRect(x: self.frame.midX - self.frame.height / 2, y: self.frame.midY - self.frame.height / 2, width: self.frame.height, height: self.frame.height)
 
-        progressView?.doComplete(completion: { success in
+        progressView?.doComplete(completion: { _ in
 
             if #available(iOS 10.0, *) {
                 let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: {

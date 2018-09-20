@@ -7,14 +7,15 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class PaymentDataTest: BaseTest {
 
     func testClearCollectData() {
         let paymentData = MockBuilder.buildPaymentData()
-        paymentData.discount = MockBuilder.buildDiscount()
+        paymentData.setDiscount(MockBuilder.buildDiscount(), withCampaign: MockBuilder.buildCampaign())
         paymentData.clearCollectedData()
-        XCTAssertNotNil(paymentData.discount)
+        XCTAssertNotNil(paymentData.discount!.id)
         XCTAssertNotNil(paymentData.payer)
         XCTAssertNil(paymentData.paymentMethod)
         XCTAssertNil(paymentData.issuer)

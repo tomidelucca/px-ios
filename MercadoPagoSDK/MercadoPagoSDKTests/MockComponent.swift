@@ -7,17 +7,10 @@
 //
 
 import Foundation
-@objc public class TestComponent: NSObject, PXCustomComponentizable {
+@testable import MercadoPagoSDKV4
+@objc public class TestComponent: NSObject {
 
-    static public func getPreference() -> PaymentResultScreenPreference {
-        let top = TestComponent()
-        let bottom = TestComponent()
-        let preference = PaymentResultScreenPreference()
-        preference.setApprovedTopCustomComponent(top)
-        return preference
-    }
-
-    public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView {
+    public func render() -> UIView {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 100))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .red

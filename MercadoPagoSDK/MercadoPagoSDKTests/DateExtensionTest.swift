@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class DateExtensionTest: BaseTest {
 
@@ -25,7 +26,7 @@ class DateExtensionTest: BaseTest {
         let timeInMiliSeconds = date.getCurrentMillis()
 
         let dateFromSeconds = Date(timeIntervalSince1970: Double(timeInMiliSeconds) / 1000)
-        let dateFromMiliSeconds = Date.from(millis: timeInMiliSeconds)
+        let dateFromMiliSeconds = date.from(millis: timeInMiliSeconds)
 
         XCTAssertEqual(dateFromSeconds.timeIntervalSince1970, dateFromMiliSeconds.timeIntervalSince1970)
     }

@@ -79,7 +79,7 @@ internal class BatchStrategy: TrackingStrategy { // V2
         let service = MercadoPagoService(baseURL: PXTrackingURLConfigs.TRACKING_URL)
         service.request(uri: "", params: params, body: jsonData, method: .post, headers: header, success: { (_) in
 
-        }, failure: {(error) -> Void in
+        }, failure: {(_) -> Void in
             TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
         })
     }
@@ -125,7 +125,7 @@ internal class ForceTrackStrategy: TrackingStrategy { // V2
         let service = MercadoPagoService(baseURL: PXTrackingURLConfigs.TRACKING_URL)
         service.request(uri: "", params: params, body: jsonData, method: .post, headers: header, success: { (_) in
 
-        }, failure: {(error) -> Void in
+        }, failure: {(_) -> Void in
             TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
         })
     }

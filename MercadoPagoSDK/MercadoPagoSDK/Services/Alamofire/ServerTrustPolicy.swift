@@ -112,6 +112,7 @@ internal extension URLSession {
 /// - disableEvaluation:        Disables all evaluation which in turn will always consider any server trust as valid.
 ///
 /// - customEvaluation:         Uses the associated closure to evaluate the validity of the server trust.
+
 internal enum ServerTrustPolicy {
     case performDefaultEvaluation(validateHost: Bool)
     case performRevokedEvaluation(validateHost: Bool, revocationFlags: CFOptionFlags)
@@ -127,6 +128,7 @@ internal enum ServerTrustPolicy {
     /// - parameter bundle: The bundle to search for all `.cer` files.
     ///
     /// - returns: All certificates within the given bundle.
+
     internal static func certificates(in bundle: Bundle = Bundle.main) -> [SecCertificate] {
         var certificates: [SecCertificate] = []
 
@@ -151,6 +153,7 @@ internal enum ServerTrustPolicy {
     /// - parameter bundle: The bundle to search for all `*.cer` files.
     ///
     /// - returns: All public keys within the given bundle.
+
     internal static func publicKeys(in bundle: Bundle = Bundle.main) -> [SecKey] {
         var publicKeys: [SecKey] = []
 
@@ -171,7 +174,9 @@ internal enum ServerTrustPolicy {
     /// - parameter host:        The host of the challenge protection space.
     ///
     /// - returns: Whether the server trust is valid.
+
     internal func evaluate(_ serverTrust: SecTrust, forHost host: String) -> Bool {
+
         var serverTrustIsValid = false
 
         switch self {

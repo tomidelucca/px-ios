@@ -10,7 +10,7 @@ extension PXCheckoutPreference {
     internal func isExpired() -> Bool {
         let date = Date()
         if let expirationDateTo = expirationDateTo {
-            return expirationDateTo > date
+            return expirationDateTo < date
         }
         return false
     }
@@ -149,6 +149,7 @@ extension PXCheckoutPreference {
      Non compatible with PaymentProcessor or off payments methods.
      - parameter isBinaryMode: Binary mode Bool value.
      */
+    @discardableResult
     open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self
