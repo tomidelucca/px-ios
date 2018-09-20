@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXPaymentMethod: NSObject, Codable {
     open var additionalInfoNeeded: [String]?
     open var id: String!
@@ -118,5 +119,14 @@ open class PXPaymentMethod: NSObject, Codable {
 
     open class func fromJSON(data: Data) throws -> [PXPaymentMethod] {
         return try JSONDecoder().decode([PXPaymentMethod].self, from: data)
+    }
+}
+
+// MARK: Getters
+extension PXPaymentMethod {
+    /// :nodoc:
+    @objc
+    public func getId() -> String? {
+        return id
     }
 }

@@ -36,7 +36,7 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
         if self.model.needToShowLoading() {
             self.executeNextStep()
         } else {
-            PXAnimatedButton.animateButtonWith(paymentResult: paymentResult)
+            PXAnimatedButton.animateButtonWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
         }
     }
 
@@ -45,7 +45,7 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
         if self.model.needToShowLoading() {
             self.executeNextStep()
         } else {
-            PXAnimatedButton.animateButtonWith(businessResult: businessResult)
+            PXAnimatedButton.animateButtonWith(status: businessResult.getStatus().getDescription())
         }
     }
 }

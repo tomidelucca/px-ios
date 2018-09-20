@@ -42,22 +42,7 @@ internal extension PXResultViewModel {
         if !preference.showBadgeImage {
             return nil
         }
-        if paymentResult.isAccepted() {
-            if self.paymentResult.isApproved() {
-                return preference.getApprovedBadgeImage()
-            } else if self.paymentResult.isReviewManual() {
-                return ResourceManager.shared.getImage("orange_pending_badge")
-            } else {
-                return ResourceManager.shared.getImage("pending_badge")
-            }
-        }
-        if paymentResult.isWarning() {
-            return ResourceManager.shared.getImage("need_action_badge")
-        }
-        if paymentResult.isError() {
-            return ResourceManager.shared.getImage("error_badge")
-        }
-        return nil
+        return ResourceManager.shared.getBadgeImageWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
     }
 
     func labelTextHeader() -> NSAttributedString? {

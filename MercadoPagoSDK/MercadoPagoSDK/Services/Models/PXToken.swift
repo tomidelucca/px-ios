@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXToken: NSObject, Codable {
     open var id: String!
     open var publicKey: String?
@@ -125,5 +126,14 @@ open class PXToken: NSObject, Codable {
 
     open class func fromJSON(data: Data) throws -> PXToken {
         return try JSONDecoder().decode(PXToken.self, from: data)
+    }
+}
+
+// MARK: Getters
+extension PXToken {
+    /// :nodoc:
+    @objc
+    public func getId() -> String? {
+        return id
     }
 }

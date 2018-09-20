@@ -32,7 +32,7 @@ internal class PXNavigationHandler: NSObject {
             } else {
                 navigationController.popToRootViewController(animated: true)
             }
-            self.navigationController.setNavigationBarHidden(false, animated: false)
+            navigationController.setNavigationBarHidden(false, animated: false)
         }
     }
 
@@ -164,7 +164,6 @@ extension PXNavigationHandler: UINavigationControllerDelegate {
             if (viewController is PXPaymentProcessor) || (viewController is PXPaymentMethodConfigProtocol) {
                 return
             }
-            ThemeManager.shared.applyAppNavBarStyle(navigationController: navigationController)
             PXCheckoutStore.sharedInstance.clean()
         }
     }
