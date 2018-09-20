@@ -252,12 +252,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if string.count == 0 {
-            textField.text = textField.text!.trimmingCharacters(
-                in: CharacterSet.whitespacesAndNewlines
-            )
-        }
-
         let value: Bool = validateInput(textField, shouldChangeCharactersInRange: range, replacementString: string)
         updateLabelsFontColors()
         return value
@@ -399,6 +393,10 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         switch editingLabel! {
         case cardNumberLabel! :
+            if !string.isNumber {
+                return false
+            }
+
             if string.count == 0 {
                 return true
             }
@@ -416,9 +414,16 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         case nameLabel! : return validInputName(textField.text! + string)
 
-        case expirationDateLabel! : return validInputDate(textField, shouldChangeCharactersInRange: range, replacementString: string)
-
-        case cvvLabel! : return self.viewModel.isValidInputCVV(textField.text! + string)
+        case expirationDateLabel! :
+            if !string.isNumber {
+                return false
+            }
+            return validInputDate(textField, shouldChangeCharactersInRange: range, replacementString: string)
+        case cvvLabel! :
+            if !string.isNumber {
+                return false
+            }
+            return self.viewModel.isValidInputCVV(textField.text! + string)
         default : return false
         }
     }

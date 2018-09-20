@@ -82,4 +82,8 @@ internal extension String {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         return dateFormatter.date(from: dateString)
     }
+
+    var isNumber: Bool {
+        return rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+    }
 }

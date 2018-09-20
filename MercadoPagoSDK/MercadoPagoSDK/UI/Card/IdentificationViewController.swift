@@ -83,11 +83,10 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
-        if string.count < 1 {
-            return true
-        }
         guard let identificationType = identificationType else {
+            return false
+        }
+        if identificationType.isNumberType(), !string.isNumber {
             return false
         }
         if textField.text?.count == identificationType.maxLength {

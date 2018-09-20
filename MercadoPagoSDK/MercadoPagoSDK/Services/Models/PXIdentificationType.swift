@@ -51,6 +51,10 @@ open class PXIdentificationType: NSObject, Codable {
         try container.encodeIfPresent(self.type, forKey: .type)
     }
 
+    internal func isNumberType() -> Bool {
+        return self.type == "number"
+    }
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
