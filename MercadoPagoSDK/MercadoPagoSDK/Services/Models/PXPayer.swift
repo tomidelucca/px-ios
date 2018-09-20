@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXPayer: NSObject, Codable {
 
     open var id: String?
