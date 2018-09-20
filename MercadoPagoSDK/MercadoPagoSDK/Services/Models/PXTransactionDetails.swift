@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXTransactionDetails: NSObject, Codable {
     open var externalResourceUrl: String?
     open var financialInstitution: String?

@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXToken: NSObject, Codable {
     open var id: String!
     open var publicKey: String?
