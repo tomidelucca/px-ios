@@ -62,9 +62,9 @@
 		23EDA1352147DFC90085CA7A /* ExampleSwift */ = {
 			isa = PBXGroup;
 			children = (
+				23EDA1482147DFEA0085CA7A /* Storyboards */,
 				23EDA14A2147E0050085CA7A /* Controllers */,
 				23EDA1492147DFF30085CA7A /* Resources */,
-				23EDA1482147DFEA0085CA7A /* Storyboards */,
 			);
 			path = ExampleSwift;
 			sourceTree = "<group>";

@@ -11,7 +11,7 @@ import Foundation
 /**
  This is our Payment object. When we make the payment, we return this object in the checkout exit. More details in: `PXLifeCycleProtocol` finishCheckout method.
  */
-@objcMembers open class PXPayment: NSObject, Codable {
+@objcMembers open class PXPayment: NSObject, Codable, PXResult {
     /**
      * binaryMode
      */
@@ -149,6 +149,7 @@ import Foundation
      */
     open var tokenId: String?
 
+    
     /// :nodoc:
     internal init(id: Int64, status: String) {
         self.id = id
@@ -347,7 +348,28 @@ import Foundation
     open func isCardPaymentType() -> Bool {
         return self.paymentTypeId == PXPaymentTypes.CREDIT_CARD.rawValue || self.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue || paymentTypeId == PXPaymentTypes.PREPAID_CARD.rawValue
     }
+}
 
+extension PXPayment {
+    //MARK: Getters that conforms PXResult protocol
+    /**
+     * Payment Id getter (String)
+     */
+    @objc public func getPaymentId() -> String? {
+        return String(describing: id)
+    }
+    /**
+     * Status getter
+     */
+    @objc public func getStatus() -> String {
+        return status
+    }
+    /**
+     * Status detail getter
+     */
+    @objc public func getStatusDetail() -> String {
+        return statusDetail
+    }
 }
 
 /// :nodoc:

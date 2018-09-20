@@ -75,8 +75,10 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
     func finishFlow() {
         if let paymentResult = model.paymentResult {
             self.resultHandler?.finishPaymentFlow(paymentResult: (paymentResult), instructionsInfo: model.instructionsInfo)
+            return
         } else if let businessResult = model.businessResult {
             self.resultHandler?.finishPaymentFlow(businessResult: businessResult)
+            return
         }
     }
 

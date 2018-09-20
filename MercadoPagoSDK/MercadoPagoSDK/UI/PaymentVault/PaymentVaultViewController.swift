@@ -141,6 +141,15 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         }
         renderFloatingBottomView()
         hideLoading()
+
+        // This is a temporary fix until new PaymentVaultViewController screen.
+        let deltaYOffset: CGFloat = 0.5
+        collectionSearch.setContentOffset(CGPoint(x: 0, y: collectionSearch.contentOffset.y + deltaYOffset), animated: false)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        title = ""
     }
 
     func getCollectionViewPinBottomContraint() -> NSLayoutConstraint? {

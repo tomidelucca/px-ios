@@ -179,3 +179,74 @@ extension ResourceManager {
 
     }
 }
+
+// MARK: Payment Result Resources
+extension ResourceManager {
+    func getResultColorWith(status: String, statusDetail: String? = nil) -> UIColor {
+        if let statusDetail = statusDetail {
+            //Payment Result Logic
+            let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), payerEmail: nil, paymentId: nil, statementDescription: nil)
+            if paymentResult.isApproved() || paymentResult.isInProcess() || paymentResult.isWaitingForPayment() {
+                return ThemeManager.shared.successColor()
+            }
+            if paymentResult.isContingency() || paymentResult.isReviewManual() || paymentResult.isWarning() {
+                return ThemeManager.shared.warningColor()
+            }
+            if paymentResult.isError() {
+                return ThemeManager.shared.rejectedColor()
+            }
+        } else {
+            if status == PXBusinessResultStatus.APPROVED.getDescription() {
+                return ThemeManager.shared.successColor()
+            } else if status == PXBusinessResultStatus.REJECTED.getDescription() {
+                return ThemeManager.shared.rejectedColor()
+            } else if status == PXBusinessResultStatus.PENDING.getDescription() {
+                return ThemeManager.shared.warningColor()
+            } else if status == PXBusinessResultStatus.IN_PROGRESS.getDescription() {
+                return ThemeManager.shared.warningColor()
+            }
+        }
+        return .pxWhite
+    }
+
+    func getBadgeImageWith(status: String, statusDetail: String? = nil, clearBackground: Bool = false) -> UIImage? {
+
+        if let statusDetail = statusDetail {
+            //Payment Result Logic
+            let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), payerEmail: nil, paymentId: nil, statementDescription: nil)
+            if paymentResult.isAccepted() {
+                if paymentResult.isApproved() {
+                    return getBadgeImage(name: "ok_badge", clearBackground: clearBackground)
+                } else if paymentResult.isReviewManual() || paymentResult.isContingency() {
+                    return getBadgeImage(name: "orange_pending_badge", clearBackground: clearBackground)
+                } else {
+                    return getBadgeImage(name: "pending_badge", clearBackground: clearBackground)
+                }
+            }
+            if paymentResult.isWarning() {
+                return getBadgeImage(name: "need_action_badge", clearBackground: clearBackground)
+            }
+            if paymentResult.isError() {
+                return getBadgeImage(name: "error_badge", clearBackground: clearBackground)
+            }
+        } else {
+            //Business Result Logic
+            if status == PXBusinessResultStatus.APPROVED.getDescription() {
+                return getBadgeImage(name: "ok_badge", clearBackground: clearBackground)
+            } else if status == PXBusinessResultStatus.REJECTED.getDescription() {
+                return getBadgeImage(name: "error_badge", clearBackground: clearBackground)
+            } else if status == PXBusinessResultStatus.PENDING.getDescription() {
+                return getBadgeImage(name: "orange_pending_badge", clearBackground: clearBackground)
+            } else if status == PXBusinessResultStatus.IN_PROGRESS.getDescription() {
+                return getBadgeImage(name: "orange_pending_badge", clearBackground: clearBackground)
+            }
+        }
+        return nil
+    }
+
+    private func getBadgeImage(name: String, clearBackground: Bool) -> UIImage? {
+        var imageName = clearBackground ? "clear_" : ""
+        imageName += name
+        return getImage(imageName)
+    }
+}

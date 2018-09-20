@@ -686,6 +686,14 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func isPreferenceLoaded() -> Bool {
         return !String.isNullOrEmpty(self.checkoutPreference.id)
     }
+    
+    func getResult() -> PXResult? {
+        if let ourPayment = payment {
+            return ourPayment
+        }else {
+            return getGenericPayment()
+        }
+    }
 
     func getGenericPayment() -> PXGenericPayment? {
         if let paymentResponse = paymentResult {

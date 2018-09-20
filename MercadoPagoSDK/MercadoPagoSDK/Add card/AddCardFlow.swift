@@ -15,10 +15,14 @@ public class AddCardFlow: NSObject, PXFlow {
     private let model = AddCardFlowModel()
     private let navigationHandler: PXNavigationHandler
     
-    public init(accessToken: String, navigationController: UINavigationController) {
+    public init(accessToken: String, locale: String, navigationController: UINavigationController) {
         self.accessToken = accessToken
         self.navigationHandler = PXNavigationHandler(navigationController: navigationController)
         super.init()
+        Localizator.sharedInstance.setLanguage(string: locale)
+        ThemeManager.shared.setTheme(theme: AddCardTheme())
+        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+        NotificationCenter.default.addObserver(self, selector: #selector(goBack), name: Notification.Name.attemptToClose, object: nil)
     }
     
     public func start() {
@@ -46,15 +50,12 @@ public class AddCardFlow: NSObject, PXFlow {
     }
     
     func cancelFlow(){
-        
     }
     
     func finishFlow(){
-        
     }
     
     func exitCheckout(){
-        
     }
     
     //MARK: steps
@@ -120,6 +121,12 @@ public class AddCardFlow: NSObject, PXFlow {
     
     private func finish() {
         self.navigationHandler.goToRootViewController()
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
+    }
+    
+    @objc private func goBack() {
+        self.navigationHandler.popViewController(animated: true)
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
     }
 
 }
