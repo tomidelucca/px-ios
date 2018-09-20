@@ -50,7 +50,6 @@ internal extension String {
     }
 
     func trimSpaces() -> String {
-
         var stringTrimmed = self.replacingOccurrences(of: " ", with: "")
         stringTrimmed = stringTrimmed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return stringTrimmed
