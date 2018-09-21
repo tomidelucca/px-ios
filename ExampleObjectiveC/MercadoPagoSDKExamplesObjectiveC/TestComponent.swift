@@ -45,6 +45,39 @@ extension TestComponent {
         let top = TestComponent()
         let bottom = TestComponent()
         let config = PXReviewConfirmConfiguration(itemsEnabled: true, topView: top.getView(), bottomView: bottom.getView())
+        let vc = ReviewViewControllerHookTest()
+        config.setReviewVC(viewController: vc)
         return config
+    }
+}
+
+class ReviewViewControllerHookTest: UIViewController, PXPreReviewScreen {
+
+    var navigationHandler: PXHookNavigationHandler!
+
+    func configViewController() -> UIViewController {
+        self.view = UIView()
+        self.view.backgroundColor = .white
+
+        let frame = CGRect(x: 100, y: 100, width: 200, height: 66)
+        let button = UIButton(frame: frame)
+        button.backgroundColor = .blue
+        button.setTitle("Next", for: .normal)
+        button.addTarget(navigationHandler, action: #selector(navigationHandler.next), for: .touchUpInside)
+
+        view.addSubview(button)
+
+        NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
+
+        NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
+        return self
+    }
+
+    func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool {
+        return false
+    }
+
+    func navigationHandlerForHook(navigationHandler: PXHookNavigationHandler) {
+        self.navigationHandler = navigationHandler
     }
 }

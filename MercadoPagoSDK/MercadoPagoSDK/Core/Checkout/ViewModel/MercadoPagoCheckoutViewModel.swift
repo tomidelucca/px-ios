@@ -26,19 +26,15 @@ internal enum CheckoutStep: String {
     case SCREEN_PAYER_COST
     case SCREEN_REVIEW_AND_CONFIRM
     case SERVICE_POST_PAYMENT
-
     case SCREEN_PAYMENT_RESULT
     case SCREEN_ERROR
-    case SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
     case SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
-    case SCREEN_HOOK_BEFORE_PAYMENT
-    case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
     case FLOW_ONE_TAP
 }
 
 internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
-    var hookService: HookService = HookService()
+    var hookService: PXDynamicScreens = PXDynamicScreens()
 
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
 
@@ -408,21 +404,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SCREEN_PAYMENT_METHOD_SELECTION
         }
 
-        if shouldShowHook(hookStep: .BEFORE_PAYMENT_METHOD_CONFIG) {
-            return .SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG
-        }
-
-        if needToShowPaymentMethodConfigPlugin() {
-            willShowPaymentMethodConfigPlugin()
-            return .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
-        }
-
-        if shouldShowHook(hookStep: .AFTER_PAYMENT_METHOD_CONFIG) {
+        if shouldShowPreReviewScreen() {
             return .SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG
-        }
-
-        if shouldShowHook(hookStep: .BEFORE_PAYMENT) {
-            return .SCREEN_HOOK_BEFORE_PAYMENT
         }
 
         if needToCreatePayment() {
@@ -517,6 +500,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.rootPaymentMethodOptions = paymentMethodSearch.paymentMethodSearchItem
         self.paymentMethodOptions = self.rootPaymentMethodOptions
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
+        self.customPaymentOptions = []
 
         for pxCustomOptionSearchItem in search.customOptionSearchItems {
             // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
@@ -686,11 +670,11 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func isPreferenceLoaded() -> Bool {
         return !String.isNullOrEmpty(self.checkoutPreference.id)
     }
-    
+
     func getResult() -> PXResult? {
         if let ourPayment = payment {
             return ourPayment
-        }else {
+        } else {
             return getGenericPayment()
         }
     }
@@ -720,7 +704,6 @@ extension MercadoPagoCheckoutViewModel {
 
     func resetInFormationOnNewPaymentMethodOptionSelected() {
         resetInformation()
-        hookService.resetHooksToShow()
     }
 
     func resetInformation() {
@@ -757,7 +740,6 @@ extension MercadoPagoCheckoutViewModel {
     func prepareForClone() {
         self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.cleanPaymentResult()
-        self.wentBackFrom(hook: .BEFORE_PAYMENT)
     }
 
     func prepareForNewSelection() {
@@ -766,7 +748,6 @@ extension MercadoPagoCheckoutViewModel {
         self.resetInformation()
         self.resetGroupSelection()
         self.rootVC = true
-        hookService.resetHooksToShow()
     }
 
     func prepareForInvalidPaymentWithESC() {

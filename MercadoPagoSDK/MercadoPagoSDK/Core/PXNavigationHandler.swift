@@ -155,19 +155,3 @@ internal extension PXNavigationHandler {
         return PXNavigationHandler.init(navigationController: UINavigationController())
     }
 }
-
-/** :nodoc: */
-extension PXNavigationHandler: UINavigationControllerDelegate {
-    func suscribeToNavigationFlow() {
-        navigationController.delegate = self
-    }
-
-    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        if !(viewController is MercadoPagoUIViewController) {
-            if (viewController is PXPaymentProcessor) || (viewController is PXPaymentMethodConfigProtocol) {
-                return
-            }
-            PXCheckoutStore.sharedInstance.clean()
-        }
-    }
-}

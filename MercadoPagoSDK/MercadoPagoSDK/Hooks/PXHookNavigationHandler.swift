@@ -9,22 +9,15 @@
 import Foundation
 
 @objcMembers
-internal class PXHookNavigationHandler: NSObject {
+public class PXHookNavigationHandler: NSObject {
 
     private var checkout: MercadoPagoCheckout?
-    private var targetHook: PXHookStep?
 
-    public init(withCheckout: MercadoPagoCheckout, targetHook: PXHookStep) {
+    internal init(withCheckout: MercadoPagoCheckout) {
         self.checkout = withCheckout
-        self.targetHook = targetHook
     }
 
-    open func next() {
-        if let targetHook = targetHook, targetHook == .BEFORE_PAYMENT_METHOD_CONFIG {
-            if let paymentOptionSelected = self.checkout?.viewModel.paymentOptionSelected {
-                self.checkout?.viewModel.updateCheckoutModelAfterBeforeConfigHook(paymentOptionSelected: paymentOptionSelected)
-            }
-        }
+    @objc open func next() {
         checkout?.executeNextStep()
     }
 

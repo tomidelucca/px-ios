@@ -22,6 +22,8 @@ import Foundation
     // For only 1 PM Scenario. (Internal)
     private var changePaymentMethodsEnabled: Bool = true
 
+    private var reviewHookViewController: PXPreReviewScreen?
+
     /// :nodoc:
     override init() {}
 
@@ -41,6 +43,19 @@ import Foundation
     internal let summaryTitles: [SummaryType: String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
                                                 SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envío".localized]
     internal var details: [SummaryType: SummaryDetail] = [SummaryType: SummaryDetail]()
+}
+
+/** :nodoc: */
+// ReviewScreenHook
+// MARK: To deprecate post v4. SP integration.
+public extension PXReviewConfirmConfiguration {
+    public func setReviewVC(viewController: PXPreReviewScreen) {
+        reviewHookViewController = viewController
+    }
+
+    internal func getReviewHookVC() -> PXPreReviewScreen? {
+        return reviewHookViewController
+    }
 }
 
 // MARK: - Internal Getters.

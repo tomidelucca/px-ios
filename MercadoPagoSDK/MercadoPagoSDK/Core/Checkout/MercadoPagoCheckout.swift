@@ -53,6 +53,11 @@ open class MercadoPagoCheckout: NSObject {
             } else if let defaultColor = builder.defaultUIColor {
                 ThemeManager.shared.setDefaultColor(color: defaultColor)
             }
+            if let reviewHookViewController = advancedConfig.reviewConfirmConfiguration.getReviewHookVC() {
+                let hookService = PXDynamicScreens()
+                hookService.setPreReviewScreen(screen: reviewHookViewController)
+                viewModel.hookService = hookService
+            }
         }
 
         if let paymentConfiguration = builder.paymentConfig {
@@ -99,7 +104,7 @@ extension MercadoPagoCheckout {
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
-        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
+
         if initMode == .lazy {
             if viewModel.initFlow?.getStatus() == .finished {
                 executeNextStep()
@@ -195,20 +200,17 @@ extension MercadoPagoCheckout {
             self.finish()
         case .SCREEN_ERROR:
             self.showErrorScreen()
-        case .SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG:
-            self.showHookScreen(hookStep: .BEFORE_PAYMENT_METHOD_CONFIG)
         case .SCREEN_HOOK_AFTER_PAYMENT_METHOD_CONFIG:
-            self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
-        case .SCREEN_HOOK_BEFORE_PAYMENT:
-            self.showHookScreen(hookStep: .BEFORE_PAYMENT)
-        case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
-            self.showPaymentMethodPluginConfigScreen()
+            self.showPreReviewScreen()
         case .FLOW_ONE_TAP:
             self.startOneTapFlow()
         }
     }
 
     internal func finish() {
+        // Clean checkout store
+        PXCheckoutStore.sharedInstance.clean()
+
         viewModel.pxNavigationHandler.removeRootLoading()
         ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
         // LifecycleProtocol.finishCheckout - defined
@@ -227,10 +229,13 @@ extension MercadoPagoCheckout {
 
     /// :nodoc:
     @objc func closeCheckout() {
+        // Clean checkout store
+        PXCheckoutStore.sharedInstance.clean()
+
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
-      
+
         ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
-      
+
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by closeAction)
         if viewModel.getGenericPayment() != nil {

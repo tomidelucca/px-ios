@@ -8,35 +8,10 @@
 import Foundation
 
 internal extension MercadoPagoCheckoutViewModel {
-    func shouldShowHook(hookStep: PXHookStep) -> Bool {
 
-        guard let hookSelected = hookService.getHookForStep(hookStep: hookStep) else {
-            return false
-        }
+    func shouldShowPreReviewScreen() -> Bool {
 
-        populateCheckoutStore()
-
-        if let shouldSkip = hookSelected.shouldSkipHook?(hookStore: PXCheckoutStore.sharedInstance), shouldSkip {
-            self.continueFrom(hook: hookSelected.hookForStep())
-            return false
-        }
-
-        switch hookStep {
-        case .BEFORE_PAYMENT_METHOD_CONFIG:
-            return shouldShowHook1()
-        case .AFTER_PAYMENT_METHOD_CONFIG:
-            return shouldShowHook2()
-        case .BEFORE_PAYMENT:
-            return shouldShowHook3()
-        }
-    }
-
-    func shouldShowHook1() -> Bool {
-        return paymentOptionSelected != nil
-    }
-
-    func shouldShowHook2() -> Bool {
-        guard let pm = self.paymentData.getPaymentMethod() else {
+        guard let pm = self.paymentData.getPaymentMethod(), !wasPreReviewScreenShowned() else {
             return false
         }
 
@@ -54,20 +29,9 @@ internal extension MercadoPagoCheckoutViewModel {
         return true
     }
 
-    func shouldShowHook3() -> Bool {
-        return readyToPay
-    }
-
-    func wentBackFrom(hook: PXHookStep) {
-        hookService.addHookToHooksToShow(hookStep: hook)
-    }
-
-    func continueFrom(hook: PXHookStep) {
-        hookService.removeHookFromHooksToShow(hookStep: hook)
-    }
-
-    func updateCheckoutModelAfterBeforeConfigHook(paymentOptionSelected: PaymentMethodOption) {
-        resetInformation()
-        resetPaymentOptionSelectedWith(newPaymentOptionSelected: paymentOptionSelected)
+    func wasPreReviewScreenShowned() -> Bool {
+        let vcs = self.pxNavigationHandler.navigationController.viewControllers
+        let preReviewScreens = self.pxNavigationHandler.navigationController.viewControllers.filter {$0 as? PXPreReviewScreen != nil}
+        return !preReviewScreens.isEmpty
     }
 }

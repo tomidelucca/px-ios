@@ -8,49 +8,17 @@
 
 import Foundation
 
-final class HookService {
-    private var hooks: [PXHookComponent] = [PXHookComponent]()
-    private var hooksToShow: [PXHookComponent] = [PXHookComponent]()
+final internal class PXDynamicScreens {
+
+    var preReviewScreen: PXPreReviewScreen?
 }
 
-extension HookService {
-    func addHookToFlow(hook: PXHookComponent) -> Bool {
-        let matchedHooksForStep = self.hooksToShow.filter { targetHook in
-            targetHook.hookForStep() == hook.hookForStep()}
-        if matchedHooksForStep.isEmpty {
-            self.hooks.append(hook)
-            self.hooksToShow.append(hook)
-        }
-        return matchedHooksForStep.isEmpty
+extension PXDynamicScreens {
+    func setPreReviewScreen(screen: PXPreReviewScreen) {
+        self.preReviewScreen = screen
     }
 
-    func getHookForStep(hookStep: PXHookStep) -> PXHookComponent? {
-        let matchedHooksForStep = self.hooksToShow.filter { targetHook in
-            targetHook.hookForStep() == hookStep}
-        return matchedHooksForStep.first
-    }
-
-    func removeHookFromHooksToShow(hookStep: PXHookStep) {
-        let noMatchedHooksForStep = self.hooksToShow.filter { targetHook in
-            targetHook.hookForStep() != hookStep}
-        hooksToShow = noMatchedHooksForStep
-    }
-
-    func addHookToHooksToShow(hookStep: PXHookStep) {
-        let matchedHooksForStep = self.hooks.filter { targetHook in
-            targetHook.hookForStep() == hookStep}
-
-        for hook in matchedHooksForStep {
-            hooksToShow.append(hook)
-        }
-    }
-
-    func resetHooksToShow() {
-        hooksToShow = hooks
-    }
-
-    func removeHooks() {
-        hooks = []
-        hooksToShow = []
+    func getPreReviewScreen() -> PXPreReviewScreen? {
+        return preReviewScreen
     }
 }
