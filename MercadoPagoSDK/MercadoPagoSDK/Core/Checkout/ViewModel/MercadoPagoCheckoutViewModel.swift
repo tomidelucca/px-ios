@@ -517,7 +517,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.rootPaymentMethodOptions = paymentMethodSearch.paymentMethodSearchItem
         self.paymentMethodOptions = self.rootPaymentMethodOptions
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
-
+        customPaymentOptions?.removeAll()
         for pxCustomOptionSearchItem in search.customOptionSearchItems {
             // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
             if pxCustomOptionSearchItem.paymentMethodId != PXPaymentTypes.ACCOUNT_MONEY.rawValue {
