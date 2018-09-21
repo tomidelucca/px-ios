@@ -96,6 +96,7 @@ extension PXBankDealDetailsViewController {
         legalsTextView.textColor = ThemeManager.shared.labelTintColor()
         legalsTextView.backgroundColor = .clear
         legalsTextView.isScrollEnabled = false
+        legalsTextView.isEditable = false
         return legalsTextView
     }
 }

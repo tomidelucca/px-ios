@@ -83,11 +83,10 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
-        if string.count < 1 {
-            return true
-        }
         guard let identificationType = identificationType else {
+            return false
+        }
+        if identificationType.isNumberType(), !string.isNumber {
             return false
         }
         if textField.text?.count == identificationType.maxLength {
@@ -244,12 +243,9 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
             let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(IdentificationViewController.rightArrowKeyTapped))
             let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(IdentificationViewController.leftArrowKeyTapped))
 
-            buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-            buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-
             let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-            toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+            toolbar.items = [buttonPrev, flexibleSpace, buttonNext]
 
             numberTextField.delegate = self
             self.toolbar = toolbar
