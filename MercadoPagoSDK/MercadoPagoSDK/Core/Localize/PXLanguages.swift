@@ -44,6 +44,10 @@ public enum PXLanguages: String {
      */
     case PORTUGUESE =  "pt"
     /**
+     PORTUGUESE Brazil pt
+     */
+    case PORTUGUESE_BRAZIL =  "pt-BR"
+    /**
      ENGLISH
      */
     case ENGLISH = "en"
