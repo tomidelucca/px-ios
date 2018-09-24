@@ -22,6 +22,7 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         case openCardForm
         case createToken
         case associateTokenWithUser
+        case showCongrats
         case finish
     }
     
@@ -42,6 +43,8 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         case .createToken:
             currentStep = .associateTokenWithUser
         case .associateTokenWithUser:
+            currentStep = .showCongrats
+        case .showCongrats:
             currentStep = .finish
         default:
             break

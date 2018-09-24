@@ -40,7 +40,7 @@ class ViewController: UIViewController {
         guard let navController = self.navigationController else {
             return
         }
-        addCardFrow = AddCardFlow(accessToken: "APP_USR-1945000207238192-091813-19ca22bc25891fd7fa33360eb744121b-307951795", navigationController: navController)
+        addCardFrow = AddCardFlow(accessToken: "APP_USR-1945000207238192-091813-19ca22bc25891fd7fa33360eb744121b-307951795", locale: "es", navigationController: navController)
         addCardFrow?.start()
     }
     
@@ -60,17 +60,17 @@ class ViewController: UIViewController {
 
 // MARK: Optional Lifecycle protocol implementation example.
 extension ViewController: PXLifeCycleProtocol {
+    func finishCheckout() -> ((PXResult?) -> Void)? {
+        print("px - finishCheckout outsite")
+        return { (pxResult) in
+            print("px - finishCheckout inside")
+        }
+    }
+    
     func cancelCheckout() -> (() -> Void)? {
         print("px - cancelCheckout outsite")
         return { () in
             print("px - cancelCheckout inside")
-        }
-    }
-
-    func finishCheckout(payment: PXPayment?) -> (() -> Void)? {
-        print("px - finishCheckout outsite")
-        return { () in
-            print("px - finishCheckout inside")
         }
     }
 

@@ -10,7 +10,7 @@ import UIKit
 
 class AssociateCardService: MercadoPagoService {
 
-    let uri = "/px_mobile_api/cards"
+    let uri = "/beta/px_mobile_api/cards"
     let accessToken: String
     
     init(accessToken: String) {
@@ -18,7 +18,7 @@ class AssociateCardService: MercadoPagoService {
         super.init(baseURL: PXServicesURLConfigs.MP_API_BASE_URL)
     }
     
-    func associateCardToUser(paymentMethod: PXPaymentMethod, cardToken: PXToken, success: @escaping ([String : Any]) -> (), failure: @escaping (Error) -> ()){
+    func associateCardToUser(paymentMethod: PXPaymentMethod, cardToken: PXToken, success: @escaping ([String : Any]) -> (), failure: @escaping (PXError) -> ()){
         let paymentMethodDict : [String : String] = ["id" : paymentMethod.id]
         let body : [String : Any] = ["card_token_id": cardToken.id, "payment_method": paymentMethodDict]
         let data = NSKeyedArchiver.archivedData(withRootObject: body)
@@ -34,7 +34,7 @@ class AssociateCardService: MercadoPagoService {
                 }
             }
         }) { (error) in
-            failure(error)
+            failure(PXError(domain: "mercadopago.sdk.associateCard", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         }
     }
     

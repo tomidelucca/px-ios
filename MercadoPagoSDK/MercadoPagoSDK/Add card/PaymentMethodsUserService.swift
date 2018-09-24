@@ -18,7 +18,7 @@ class PaymentMethodsUserService: MercadoPagoService {
         super.init(baseURL: PXServicesURLConfigs.MP_API_BASE_URL)
     }
     
-    func getPaymentMethods(success: @escaping ([PXPaymentMethod]) -> (), failure: @escaping (Error) -> ()) {
+    func getPaymentMethods(success: @escaping ([PXPaymentMethod]) -> (), failure: @escaping (PXError) -> ()) {
         self.request(uri: uri, params: "access_token=\(accessToken)", body: nil, method: "GET", success: { (data) in
             do{
                 let paymentMethods = try JSONDecoder().decode([PXPaymentMethod].self, from: data)

@@ -42,6 +42,8 @@ public class AddCardFlow: NSObject, PXFlow {
             self.createCardToken()
         case .associateTokenWithUser:
             self.associateTokenWithUser()
+        case .showCongrats:
+            self.showCongrats()
         case .finish:
             self.finish()
         default:
@@ -69,8 +71,14 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.executeNextStep()
         }) { [weak self] (error) in
             self?.model.lastStepFailed = true
-            let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PAYMENT_METHODS.rawValue)
-            self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: nil, errorCallback: nil)
+            if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PAYMENT_METHODS.rawValue)
+                self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
+                    self?.finish()
+                }, errorCallback: nil)
+            } else {
+                self?.showErrorScreen()
+            }
         }
     }
     
@@ -98,8 +106,14 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.executeNextStep()
             }, failure: {[weak self] (error) in
                 self?.model.lastStepFailed = true
-                let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-                self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: nil, errorCallback: nil)
+                if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                    let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
+                    self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
+                        self?.finish()
+                    }, errorCallback: nil)
+                } else {
+                    self?.showErrorScreen()
+                }
         })
     }
     
@@ -114,14 +128,44 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.executeNextStep()
         }) { [weak self] (error) in
             self?.model.lastStepFailed = true
-            let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.ASSOCIATE_TOKEN.rawValue)
-            self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: nil, errorCallback: nil)
+            if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.ASSOCIATE_TOKEN.rawValue)
+                self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
+                    self?.finish()
+                }, errorCallback: nil)
+            } else {
+                self?.showErrorScreen()
+            }
         }
+    }
+    
+    private func showCongrats() {
+        let viewModel = PXResultAddCardSuccessViewModel(buttonCallback: {
+            
+        }, linkCallback: {
+            
+        })
+        let congratsVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
+            
+        }
+        self.navigationHandler.pushViewController(targetVC: congratsVc, animated: true)
     }
     
     private func finish() {
         self.navigationHandler.goToRootViewController()
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
+    }
+    
+    private func showErrorScreen() {
+        let viewModel = PXResultAddCardFailedViewModel(buttonCallback: {
+            
+        }, linkCallback: {
+            
+        })
+        let failVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
+            
+        }
+        self.navigationHandler.pushViewController(targetVC: failVc, animated: true)
     }
     
     @objc private func goBack() {
