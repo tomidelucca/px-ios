@@ -73,7 +73,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 
     [PXTracker setListener:self];
 
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
@@ -220,6 +220,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 
 
 -(void (^)(void))changePaymentMethodTapped {
+    return nil;
     NSLog(@"PXLog - changePaymentMethodTapped outside Called");
     return ^ {
         NSLog(@"PXLog - changePaymentMethodTapped Called");
