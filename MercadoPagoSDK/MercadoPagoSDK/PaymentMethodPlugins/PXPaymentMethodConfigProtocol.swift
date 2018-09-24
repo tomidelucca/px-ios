@@ -11,7 +11,7 @@ import Foundation
 /**
  Implement this Protocol to show and optional screen `UIViewController` in your custom payment method flow. (Configure custom payment method step). We push this screen after you choose the means of payment.
  */
-@objc public protocol PXPaymentMethodConfigProtocol {
+@objc public protocol PXPaymentMethodConfigProtocol: PXScreen {
     /**
      Define your custom config screen ViewController.
      */

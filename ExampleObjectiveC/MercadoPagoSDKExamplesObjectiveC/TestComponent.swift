@@ -30,6 +30,7 @@ import MercadoPagoSDKV4
 
         return view
     }
+
 }
 
 // MARK: Mock configurations (Ex-preferences).
@@ -45,7 +46,7 @@ extension TestComponent {
         let top = TestComponent()
         let bottom = TestComponent()
         let config = PXReviewConfirmConfiguration(itemsEnabled: true, topView: top.getView(), bottomView: bottom.getView())
-        let vc = ReviewViewControllerHookTest()
+        let vc = ReviewViewControllerHookTest(navigationHandler: nil)
         config.setReviewVC(viewController: vc)
         return config
     }
@@ -55,7 +56,8 @@ class ReviewViewControllerHookTest: UIViewController, PXPreReviewScreen {
 
     var navigationHandler: PXHookNavigationHandler!
 
-    func configViewController() -> UIViewController {
+     init(navigationHandler: PXHookNavigationHandler?) {
+        super.init(nibName: nil, bundle: nil)
         self.view = UIView()
         self.view.backgroundColor = .white
 
@@ -63,14 +65,21 @@ class ReviewViewControllerHookTest: UIViewController, PXPreReviewScreen {
         let button = UIButton(frame: frame)
         button.backgroundColor = .blue
         button.setTitle("Next", for: .normal)
-        button.addTarget(navigationHandler, action: #selector(navigationHandler.next), for: .touchUpInside)
+        button.addTarget(navigationHandler, action: #selector(navigationHandler!.next), for: .touchUpInside)
 
         view.addSubview(button)
 
         NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
 
         NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
-        return self
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configViewController() -> UIViewController {
+        return ReviewViewControllerHookTest(navigationHandler: navigationHandler)
     }
 
     func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool {

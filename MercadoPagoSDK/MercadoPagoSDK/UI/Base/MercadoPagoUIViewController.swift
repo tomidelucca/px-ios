@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
+internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, PXScreen {
 
     private static let MLNavigationBarBackgroundViewTag = 569242
 

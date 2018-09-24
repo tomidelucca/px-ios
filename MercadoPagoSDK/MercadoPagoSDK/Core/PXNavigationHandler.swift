@@ -144,7 +144,7 @@ internal class PXNavigationHandler: NSObject {
         let  pxResultViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of: PXResultViewController.self)}
         if let lastResultViewController = pxResultViewControllers.last {
             let index = self.navigationController.viewControllers.index(of: lastResultViewController)
-            let  validViewControllers = self.navigationController.viewControllers.filter {!$0.isKind(of: MercadoPagoUIViewController.self) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
+            let  validViewControllers = self.navigationController.viewControllers.filter {$0 as? PXScreen == nil || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
             self.navigationController.viewControllers = validViewControllers
         }
     }

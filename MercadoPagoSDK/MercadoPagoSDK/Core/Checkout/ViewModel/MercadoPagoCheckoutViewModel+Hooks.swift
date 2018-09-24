@@ -11,7 +11,7 @@ internal extension MercadoPagoCheckoutViewModel {
 
     func shouldShowPreReviewScreen() -> Bool {
 
-        guard let pm = self.paymentData.getPaymentMethod(), !wasPreReviewScreenShowned() else {
+        guard let pm = self.paymentData.getPaymentMethod(), !wasPreReviewScreenShowned(), !readyToPay else {
             return false
         }
 
@@ -30,8 +30,8 @@ internal extension MercadoPagoCheckoutViewModel {
     }
 
     func wasPreReviewScreenShowned() -> Bool {
-        let vcs = self.pxNavigationHandler.navigationController.viewControllers
+        let reviewScreens = self.pxNavigationHandler.navigationController.viewControllers.filter {$0.isKind(of: PXReviewViewController.self)}
         let preReviewScreens = self.pxNavigationHandler.navigationController.viewControllers.filter {$0 as? PXPreReviewScreen != nil}
-        return !preReviewScreens.isEmpty
+        return preReviewScreens.count != reviewScreens.count
     }
 }
