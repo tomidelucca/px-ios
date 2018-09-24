@@ -9,7 +9,31 @@
 import UIKit
 import MercadoPagoSDKV4
 
-@objc public class TestComponent: NSObject {
+@objc public class TestComponent: NSObject, PXBusinessResultHandler {
+    public func topCustomView(store: PXCheckoutStore) -> UIView? {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        if store.getPaymentData().getPaymentMethod()?.id == "account_money" {
+            view.backgroundColor = .yellow
+        } else {
+            view.backgroundColor = .red
+        }
+        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100).isActive = true
+        return view
+    }
+
+    public func bottomCustomView(store: PXCheckoutStore) -> UIView? {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        if store.getPaymentData().getPaymentMethod()?.id == "account_money" {
+            view.backgroundColor = .blue
+        } else {
+            view.backgroundColor = .green
+        }
+        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100).isActive = true
+        return view
+    }
+
     public func getView() -> UIView {
         let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
         let view = UIView(frame: frame)
@@ -29,6 +53,12 @@ import MercadoPagoSDKV4
         NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
 
         return view
+    }
+
+    public func getBusinessResult() -> PXBusinessResult {
+        let businessResult = PXBusinessResult(receiptId: "1879867544", status: .APPROVED, title: "¡Listo! Ya re pagaste en YPF", subtitle: nil, icon: UIImage.init(named: "ypf"), mainAction: nil, secondaryAction: nil, helpMessage: nil, showPaymentMethod: true, statementDescription: nil, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png", businessResultHandler: self, paymentStatus: "", paymentStatusDetail: "")
+    
+        return businessResult
     }
 
 }

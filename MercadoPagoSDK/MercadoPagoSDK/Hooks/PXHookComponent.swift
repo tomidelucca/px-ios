@@ -28,3 +28,8 @@ import Foundation
     @objc optional func didReceive(hookStore: PXCheckoutStore)
     @objc optional func navigationHandlerForHook(navigationHandler: PXHookNavigationHandler)
 }
+
+@objc public protocol PXCustomViewsHandler {
+    @objc func topCustomView(store: PXCheckoutStore) -> UIView?
+    @objc func bottomCustomView(store: PXCheckoutStore) -> UIView?
+}

@@ -59,6 +59,7 @@ import UIKit
     private let imageUrl: String?
     private let topCustomView: UIView?
     private let bottomCustomView: UIView?
+    private let customViewsHandler: PXCustomViewsHandler?
     private var receiptId: String?
     let paymentStatus: String
     let paymentStatusDetail: String
@@ -96,6 +97,27 @@ import UIKit
         self.imageUrl = imageUrl
         self.topCustomView = topCustomView
         self.bottomCustomView = bottomCustomView
+        self.customViewsHandler = nil
+        self.paymentStatus = paymentStatus
+        self.paymentStatusDetail = paymentStatusDetail
+        super.init()
+    }
+
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXAction? = nil, secondaryAction: PXAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, customViewsHandler: PXCustomViewsHandler, paymentStatus: String, paymentStatusDetail: String) {
+        self.receiptId = receiptId
+        self.status = status
+        self.title = title
+        self.subtitle = subtitle
+        self.icon = icon
+        self.mainAction = mainAction
+        self.secondaryAction = secondaryAction
+        self.helpMessage = helpMessage
+        self.showPaymentMethod = showPaymentMethod
+        self.statementDescription = statementDescription
+        self.imageUrl = imageUrl
+        self.topCustomView = nil
+        self.bottomCustomView = nil
+        self.customViewsHandler = customViewsHandler
         self.paymentStatus = paymentStatus
         self.paymentStatusDetail = paymentStatusDetail
         super.init()
@@ -115,9 +137,15 @@ internal extension PXBusinessResult {
         return self.statementDescription
     }
     func getTopCustomView() -> UIView? {
+        if let customViewsHandler = self.customViewsHandler {
+            return customViewsHandler.topCustomView(store: PXCheckoutStore.sharedInstance)
+        }
         return self.topCustomView
     }
     func getBottomCustomView() -> UIView? {
+        if let customViewsHandler = self.customViewsHandler {
+            return customViewsHandler.bottomCustomView(store: PXCheckoutStore.sharedInstance)
+        }
         return self.bottomCustomView
     }
     func getImageUrl() -> String? {

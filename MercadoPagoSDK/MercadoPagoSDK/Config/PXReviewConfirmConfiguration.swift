@@ -18,6 +18,7 @@ import Foundation
     private var itemsEnabled: Bool = true
     private var topCustomView: UIView?
     private var bottomCustomView: UIView?
+    private var customViewsHandler: PXCustomViewsHandler?
 
     // For only 1 PM Scenario. (Internal)
     private var changePaymentMethodsEnabled: Bool = true
@@ -37,6 +38,11 @@ import Foundation
         self.itemsEnabled = itemsEnabled
         self.topCustomView = topView
         self.bottomCustomView = bottomView
+    }
+
+    public init(itemsEnabled: Bool, customViewsHandler: PXCustomViewsHandler? = nil) {
+        self.itemsEnabled = itemsEnabled
+        self.customViewsHandler = customViewsHandler
     }
 
     // MARK: To deprecate post v4. SP integration.
@@ -65,10 +71,16 @@ extension PXReviewConfirmConfiguration {
     }
 
     internal func getTopCustomView() -> UIView? {
+        if let customViewsHandler = customViewsHandler {
+            return customViewsHandler.topCustomView(store: PXCheckoutStore.sharedInstance)
+        }
         return self.topCustomView
     }
 
     internal func getBottomCustomView() -> UIView? {
+        if let customViewsHandler = customViewsHandler {
+            return customViewsHandler.bottomCustomView(store: PXCheckoutStore.sharedInstance)
+        }
         return self.bottomCustomView
     }
 }

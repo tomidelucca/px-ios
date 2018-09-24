@@ -30,8 +30,6 @@ internal extension MercadoPagoCheckoutViewModel {
     }
 
     func wasPreReviewScreenShowned() -> Bool {
-        let reviewScreens = self.pxNavigationHandler.navigationController.viewControllers.filter {$0.isKind(of: PXReviewViewController.self)}
-        let preReviewScreens = self.pxNavigationHandler.navigationController.viewControllers.filter {$0 as? PXPreReviewScreen != nil}
-        return preReviewScreens.count != reviewScreens.count
+        return self.pxNavigationHandler.navigationController.viewControllers.last as? PXPreReviewScreen != nil
     }
 }
