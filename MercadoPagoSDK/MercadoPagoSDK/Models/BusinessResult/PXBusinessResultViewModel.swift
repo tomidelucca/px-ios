@@ -61,10 +61,17 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     func getBadgeImage() -> UIImage? {
         return ResourceManager.shared.getBadgeImageWith(status: self.businessResult.getStatus().getDescription())
     }
+    
+    func getAttributedTitle() -> NSAttributedString {
+        let title = businessResult.getTitle()
+        let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]
+        let attributedString = NSAttributedString(string: title, attributes: attributes)
+        return attributedString
+    }
 
     func buildHeaderComponent() -> PXHeaderComponent {
         let headerImage = getHeaderDefaultIcon()
-        let headerProps = PXHeaderProps(labelText: businessResult.getSubTitle()?.toAttributedString(), title: businessResult.getTitle().toAttributedString(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage(), imageURL: businessResult.getImageUrl())
+        let headerProps = PXHeaderProps(labelText: businessResult.getSubTitle()?.toAttributedString(), title: getAttributedTitle(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage(), imageURL: businessResult.getImageUrl())
         return PXHeaderComponent(props: headerProps)
     }
 
