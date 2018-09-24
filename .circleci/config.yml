@@ -15,7 +15,6 @@ deploy-workflow: &deployWorkflow
     branches:
       only:
         - develop
-        - /release\/.*$/
 
 # Define the jobs we will be using
 version: 2

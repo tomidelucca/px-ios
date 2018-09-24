@@ -26,10 +26,17 @@ internal class PXNavigationHandler: NSObject {
     }
 
     func goToRootViewController() {
-        if let rootViewController = viewControllerBase {
-            self.navigationController.popToViewController(rootViewController, animated: true)
-            self.navigationController.setNavigationBarHidden(false, animated: false)
+        guard let rootViewController = viewControllerBase else {
+            navigationController.popToRootViewController(animated: true)
+            navigationController.setNavigationBarHidden(false, animated: false)
+            return
         }
+        if navigationController.viewControllers.contains(rootViewController) {
+            navigationController.popToViewController(rootViewController, animated: true)
+        } else {
+            navigationController.popToRootViewController(animated: true)
+        }
+        navigationController.setNavigationBarHidden(false, animated: false)
     }
 
     func presentLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {

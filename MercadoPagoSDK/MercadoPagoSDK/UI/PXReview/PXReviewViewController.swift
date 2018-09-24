@@ -421,18 +421,11 @@ extension PXReviewViewController {
         guard let loadingButton = loadingButton else {
             return
         }
-        PXNotificationManager.SuscribeTo.animateButtonForSuccess(loadingButton, selector: #selector(loadingButton.animateFinishSuccess))
-        PXNotificationManager.SuscribeTo.animateButtonForError(loadingButton, selector: #selector(loadingButton.animateFinishError))
-        PXNotificationManager.SuscribeTo.animateButtonForWarning(loadingButton, selector: #selector(loadingButton.animateFinishWarning))
+        PXNotificationManager.SuscribeTo.animateButton(loadingButton, selector: #selector(loadingButton.animateFinish))
     }
 
     func unsubscribeFromNotifications() {
-        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingButtonComponent)
-
-        PXNotificationManager.UnsuscribeTo.animateButtonForSuccess(loadingFloatingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForError(loadingFloatingButtonComponent)
-        PXNotificationManager.UnsuscribeTo.animateButtonForWarning(loadingFloatingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateButton(loadingFloatingButtonComponent)
     }
 }

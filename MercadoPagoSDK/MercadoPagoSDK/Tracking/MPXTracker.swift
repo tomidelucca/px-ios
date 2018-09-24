@@ -81,7 +81,7 @@ internal extension MPXTracker {
 internal extension MPXTracker {
     internal func trackScreen(screenId: String, screenName: String, properties: [String: String] = [:]) {
         if let trackListenerInterfase = trackListener {
-            trackListenerInterfase.trackScreen(screenName: screenName, extraParams: properties)
+            trackListenerInterfase.trackScreen(screenName: screenId, extraParams: properties)
         }
         if !isEnabled() {
             return

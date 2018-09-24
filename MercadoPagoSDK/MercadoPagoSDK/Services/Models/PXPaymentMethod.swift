@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXPaymentMethod: NSObject, Codable {
     open var additionalInfoNeeded: [String]?
     open var id: String!

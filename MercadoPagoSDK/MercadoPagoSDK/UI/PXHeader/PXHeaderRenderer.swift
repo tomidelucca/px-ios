@@ -109,17 +109,12 @@ internal final class PXHeaderRenderer: NSObject {
 
     func buildMessageLabel(with text: NSAttributedString) -> UILabel {
         let messageLabel = UILabel()
-        let font = Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)
         messageLabel.textAlignment = .center
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.attributedText = text
         messageLabel.textColor = .white
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
-        messageLabel.font = font
-        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        let height = UILabel.requiredHeight(forAttributedText: text, withFont: font, inWidth: screenWidth)
-        PXLayout.setHeight(owner: messageLabel, height: height).isActive = true
         return messageLabel
     }
 }

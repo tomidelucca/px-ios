@@ -73,7 +73,7 @@
 
     [PXTracker setListener:self];
 
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
@@ -201,25 +201,30 @@
 }
 
 -(void (^ _Nullable)(void))cancelCheckout {
-    // return nil;
+    //return nil;
+    NSLog(@"PXLog - cancelCheckout outside Called");
     return ^ {
         NSLog(@"PXLog - cancelCheckout Called");
         [self.navigationController popViewControllerAnimated:YES];
     };
 }
 
--(void (^)(void))finishCheckoutWithPayment:(PXGenericPayment *)payment {
-    return nil;
-    return ^ {
+-( void (^)(PXGenericPayment*)) finishCheckout {
+    //return nil;x
+    NSLog(@"PXLog - finishCheckoutWithPayment outside Called ");
+    return ^ (PXGenericPayment* payment) {
         NSLog(@"PXLog - finishCheckoutWithPayment Called");
         [self.navigationController popToRootViewControllerAnimated:YES];
     };
 }
 
+
 -(void (^)(void))changePaymentMethodTapped {
+    return nil;
+    NSLog(@"PXLog - changePaymentMethodTapped outside Called");
     return ^ {
         NSLog(@"PXLog - changePaymentMethodTapped Called");
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     };
 }
 

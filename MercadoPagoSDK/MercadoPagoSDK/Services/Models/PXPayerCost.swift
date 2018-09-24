@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXPayerCost: NSObject, Codable {
 
     open var installmentRate: Double = 0

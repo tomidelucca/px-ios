@@ -9,23 +9,7 @@
 import Foundation
 
 extension PXAnimatedButton {
-    static func animateButtonWith(paymentResult: PaymentResult) {
-        if paymentResult.isAccepted() {
-            PXNotificationManager.Post.animateButtonForSuccess()
-        } else if paymentResult.isError() {
-            PXNotificationManager.Post.animateButtonForError()
-        } else if paymentResult.isWarning() {
-            PXNotificationManager.Post.animateButtonForWarning()
-        }
-    }
-
-    static func animateButtonWith(businessResult: PXBusinessResult) {
-        if businessResult.isAccepted() {
-            PXNotificationManager.Post.animateButtonForSuccess()
-        } else if businessResult.isError() {
-            PXNotificationManager.Post.animateButtonForError()
-        } else if businessResult.isWarning() {
-            PXNotificationManager.Post.animateButtonForWarning()
-        }
+    static func animateButtonWith(status: String, statusDetail: String? = nil) {
+        PXNotificationManager.Post.animateButton(with: PXAnimatedButtonNotificationObject(status: status, statusDetail: statusDetail))
     }
 }

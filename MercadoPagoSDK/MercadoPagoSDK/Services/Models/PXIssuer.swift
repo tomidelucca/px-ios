@@ -8,6 +8,7 @@
 
 import Foundation
 /// :nodoc:
+@objcMembers
 open class PXIssuer: NSObject, Codable {
     open var id: String = ""
     open var name: String?
