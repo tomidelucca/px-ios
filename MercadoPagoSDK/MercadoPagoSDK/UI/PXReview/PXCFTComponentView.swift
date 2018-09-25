@@ -28,7 +28,7 @@ final class PXCFTComponentView: PXComponentView {
             cftLabel.numberOfLines = 1
             cftLabel.attributedText = NSAttributedString(string: "CFT \(cftValue)", attributes: [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.M_FONT)])
             cftLabel.textColor = titleColor
-
+            cftLabel.accessibilityIdentifier = "CFT_label"
             self.addSubview(cftLabel)
 
             PXLayout.pinTop(view: cftLabel, to: self).isActive = true
