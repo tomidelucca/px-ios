@@ -47,7 +47,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, negativeChargeRules: self.negativeChargeRules, consumedDiscount: consumedDiscount)
         }
     }
     var checkoutPreference: PXCheckoutPreference!
@@ -103,6 +103,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Discount and charges
     var chargeRules: [PXPaymentTypeChargeRule]?
+    var negativeChargeRules: [PXPaymentTypeChargeRule]?
     var campaigns: [PXCampaign]?
 
     // Init Flow

@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal typealias PXPaymentConfigurationType = (discountConfiguration: PXDiscountConfiguration?, chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXPaymentProcessor, paymentMethodPlugins: [PXPaymentMethodPlugin])
+internal typealias PXPaymentConfigurationType = (discountConfiguration: PXDiscountConfiguration?, chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXPaymentProcessor, paymentMethodPlugins: [PXPaymentMethodPlugin], negaticeChargeRules: [PXPaymentTypeChargeRule]?)
 
 /**
  Any configuration related to the Payment. You can set you own `PXPaymentProcessor`. Configuration of discounts, charges and custom Payment Method Plugin.
@@ -18,6 +18,7 @@ open class PXPaymentConfiguration: NSObject {
     private let paymentPlugin: PXPaymentProcessor
     private var discountConfiguration: PXDiscountConfiguration?
     private var chargeRules: [PXPaymentTypeChargeRule] = [PXPaymentTypeChargeRule]()
+    private var negativeChargeRules: [PXPaymentTypeChargeRule] = [PXPaymentTypeChargeRule]()
     private var paymentMethodPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
 
     // MARK: Init.
@@ -50,6 +51,11 @@ extension PXPaymentConfiguration {
         return self
     }
 
+    open func addNegativeChargeRules(charges: [PXPaymentTypeChargeRule]) -> PXPaymentConfiguration {
+        self.negativeChargeRules.append(contentsOf: charges)
+        return self
+    }
+
     /**
      `PXDiscountConfiguration` is an object that represents the discount to be applied or error information to present to the user. It's mandatory to handle your discounts by hand if you set a payment processor.
      - parameter config: Your custom discount configuration
@@ -63,6 +69,6 @@ extension PXPaymentConfiguration {
 // MARK: - Internals
 extension PXPaymentConfiguration {
     internal func getPaymentConfiguration() -> PXPaymentConfigurationType {
-        return (discountConfiguration, chargeRules, paymentPlugin, paymentMethodPlugins)
+        return (discountConfiguration, chargeRules, paymentPlugin, paymentMethodPlugins, negativeChargeRules)
     }
 }

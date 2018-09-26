@@ -15,6 +15,7 @@ import Foundation
     // V4 final.
     private var topCustomView: UIView?
     private var bottomCustomView: UIView?
+    private var customViewsHandler: PXCustomViewsHandler?
 
     /// :nodoc:
     override init() {}
@@ -28,6 +29,10 @@ import Foundation
     public init(topView: UIView?  = nil, bottomView: UIView? = nil) {
         self.topCustomView = topView
         self.bottomCustomView = bottomView
+    }
+
+    public init(customViewsHandler: PXCustomViewsHandler? = nil) {
+        self.customViewsHandler = customViewsHandler
     }
 
     // To deprecate post v4. SP integration.
@@ -117,10 +122,16 @@ import Foundation
 // MARK: - Internal Getters.
 extension PXPaymentResultConfiguration {
     internal func getTopCustomView() -> UIView? {
+        if let customViewsHandler = customViewsHandler {
+            return customViewsHandler.topCustomView(store: PXCheckoutStore.sharedInstance)
+        }
         return topCustomView
     }
 
     internal func getBottomCustomView() -> UIView? {
+        if let customViewsHandler = customViewsHandler {
+            return customViewsHandler.bottomCustomView(store: PXCheckoutStore.sharedInstance)
+        }
         return bottomCustomView
     }
 }

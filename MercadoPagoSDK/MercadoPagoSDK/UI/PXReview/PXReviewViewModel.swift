@@ -138,9 +138,10 @@ extension PXReviewViewModel {
 
         var summary: Summary
         let charge = self.amountHelper.chargeRuleAmount
+        let negativeCharge = self.amountHelper.negativeChargeRuleAmount
 
         // TODO: Check Double type precision.
-        if abs(amount - (self.reviewScreenPreference.getSummaryTotalAmount() + charge)) <= PXReviewViewModel.ERROR_DELTA {
+        if abs(amount - (self.reviewScreenPreference.getSummaryTotalAmount() + charge - negativeCharge)) <= PXReviewViewModel.ERROR_DELTA {
             summary = Summary(details: self.reviewScreenPreference.details)
             if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 summary.addAmountDetail(detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount), type: SummaryType.PRODUCT)
@@ -159,6 +160,14 @@ extension PXReviewViewModel {
                 let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
                 let chargesSummaryDetail = SummaryDetail(title: chargesTitle, detail: chargesAmountDetail)
                 summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
+            }
+        }
+
+        if negativeCharge > PXReviewViewModel.ERROR_DELTA {
+            if let negativeChargesTitle = self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT] {
+                let negativeChargesAmountDetail = SummaryItemDetail(name: "", amount: negativeCharge)
+                let negativeChargesSummaryDetail = SummaryDetail(title: negativeChargesTitle, detail: negativeChargesAmountDetail)
+                summary.addSummaryDetail(summaryDetail: negativeChargesSummaryDetail, type: SummaryType.DISCOUNT)
             }
         }
 

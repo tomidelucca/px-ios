@@ -19,6 +19,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.paymentPlugin = self.paymentPlugin
         initFlowProperties.paymentMethodSearchResult = self.search
         initFlowProperties.chargeRules = self.chargeRules
+        initFlowProperties.negativeChargeRules = self.negativeChargeRules
         initFlowProperties.campaigns = self.campaigns
         initFlowProperties.consumedDiscount = self.consumedDiscount
         initFlowProperties.discount = self.paymentData.discount

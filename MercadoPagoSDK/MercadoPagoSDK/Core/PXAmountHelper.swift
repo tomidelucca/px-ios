@@ -15,6 +15,7 @@ internal struct PXAmountHelper {
     internal let discount: PXDiscount?
     internal let campaign: PXCampaign?
     internal let chargeRules: [PXPaymentTypeChargeRule]?
+    internal let negativeChargeRules: [PXPaymentTypeChargeRule]?
     internal let consumedDiscount: Bool
 
     var preferenceAmount: Double {
@@ -25,7 +26,7 @@ internal struct PXAmountHelper {
 
     var preferenceAmountWithCharges: Double {
         get {
-            return preferenceAmount + chargeRuleAmount
+            return preferenceAmount + chargeRuleAmount - negativeChargeRuleAmount
         }
     }
 
@@ -35,9 +36,9 @@ internal struct PXAmountHelper {
                 return payerCost.totalAmount
             }
             if let couponAmount = discount?.couponAmount {
-                return preferenceAmount - couponAmount + chargeRuleAmount
+                return preferenceAmount - couponAmount + chargeRuleAmount - negativeChargeRuleAmount
             } else {
-                return preferenceAmount + chargeRuleAmount
+                return preferenceAmount + chargeRuleAmount - negativeChargeRuleAmount
             }
         }
     }
@@ -63,6 +64,20 @@ internal struct PXAmountHelper {
     internal var chargeRuleAmount: Double {
         get {
             guard let rules = chargeRules else {
+                return 0
+            }
+            for rule in rules {
+                if rule.paymentMethdodId == paymentData.paymentMethod?.paymentTypeId {
+                    return rule.amountCharge
+                }
+            }
+            return 0
+        }
+    }
+
+    internal var negativeChargeRuleAmount: Double {
+        get {
+            guard let rules = negativeChargeRules else {
                 return 0
             }
             for rule in rules {
