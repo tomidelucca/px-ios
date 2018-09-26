@@ -114,7 +114,8 @@
 
 // ReviewConfirm
 -(PXReviewConfirmConfiguration *)getReviewScreenConfiguration {
-    PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
+    TestComponent* test = [[TestComponent alloc] init];
+    PXReviewConfirmConfiguration *config = test.getReviewConfirmConfiguration;
     return config;
 }
 

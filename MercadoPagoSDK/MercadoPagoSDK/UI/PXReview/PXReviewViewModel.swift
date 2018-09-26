@@ -410,7 +410,6 @@ extension PXReviewViewModel {
         let componentView = UIView()
         componentView.translatesAutoresizingMaskIntoConstraints = false
         customView.translatesAutoresizingMaskIntoConstraints = false
-        PXLayout.setHeight(owner: customView, height: customView.frame.height).isActive = true
         componentView.addSubview(customView)
         PXLayout.centerHorizontally(view: customView).isActive = true
         PXLayout.pinTop(view: customView).isActive = true

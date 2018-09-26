@@ -146,6 +146,7 @@ extension PXReviewViewController {
         if let topCustomView = getTopCustomView() {
             topCustomView.addSeparatorLineToBottom(height: 1)
             topCustomView.clipsToBounds = true
+            topCustomView.layoutIfNeeded()
             contentView.addSubviewToBottom(topCustomView)
             PXLayout.matchWidth(ofView: topCustomView).isActive = true
             PXLayout.centerHorizontally(view: topCustomView).isActive = true
@@ -163,6 +164,7 @@ extension PXReviewViewController {
         if let bottomCustomView = getBottomCustomView() {
             bottomCustomView.addSeparatorLineToBottom(height: 1)
             bottomCustomView.clipsToBounds = true
+            bottomCustomView.layoutIfNeeded()
             contentView.addSubviewToBottom(bottomCustomView)
             PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
             PXLayout.centerHorizontally(view: bottomCustomView).isActive = true

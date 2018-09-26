@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoSDKV4
 
-@objc public class TestComponent: NSObject, PXBusinessResultHandler {
+@objc public class TestComponent: NSObject, PXCustomViewsHandler {
     public func topCustomView(store: PXCheckoutStore) -> UIView? {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -18,7 +18,7 @@ import MercadoPagoSDKV4
         } else {
             view.backgroundColor = .red
         }
-        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100).isActive = true
+        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 123).isActive = true
         return view
     }
 
@@ -30,7 +30,7 @@ import MercadoPagoSDKV4
         } else {
             view.backgroundColor = .green
         }
-        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100).isActive = true
+        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 212).isActive = true
         return view
     }
 
@@ -56,7 +56,7 @@ import MercadoPagoSDKV4
     }
 
     public func getBusinessResult() -> PXBusinessResult {
-        let businessResult = PXBusinessResult(receiptId: "1879867544", status: .APPROVED, title: "¡Listo! Ya re pagaste en YPF", subtitle: nil, icon: UIImage.init(named: "ypf"), mainAction: nil, secondaryAction: nil, helpMessage: nil, showPaymentMethod: true, statementDescription: nil, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png", businessResultHandler: self, paymentStatus: "", paymentStatusDetail: "")
+        let businessResult = PXBusinessResult(receiptId: "1879867544", status: .APPROVED, title: "¡Listo! Ya re pagaste en YPF", subtitle: nil, icon: UIImage.init(named: "ypf"), mainAction: nil, secondaryAction: nil, helpMessage: nil, showPaymentMethod: true, statementDescription: nil, imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/YPF.svg/2000px-YPF.svg.png", customViewsHandler: self, paymentStatus: "", paymentStatusDetail: "")
     
         return businessResult
     }
@@ -72,10 +72,8 @@ extension TestComponent {
         return paymentConfig
     }
 
-    static public func getReviewConfirmConfiguration() -> PXReviewConfirmConfiguration {
-        let top = TestComponent()
-        let bottom = TestComponent()
-        let config = PXReviewConfirmConfiguration(itemsEnabled: true, topView: top.getView(), bottomView: bottom.getView())
+    public func getReviewConfirmConfiguration() -> PXReviewConfirmConfiguration {
+        let config = PXReviewConfirmConfiguration(itemsEnabled: true, customViewsHandler: self)
         let vc = ReviewViewControllerHookTest(navigationHandler: nil)
         config.setReviewVC(viewController: vc)
         return config
