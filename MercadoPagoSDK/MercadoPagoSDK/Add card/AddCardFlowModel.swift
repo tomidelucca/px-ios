@@ -52,4 +52,8 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         return currentStep
     }
     
+    func reset() {
+        self.currentStep = .openCardForm
+    }
+    
 }

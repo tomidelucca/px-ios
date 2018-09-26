@@ -10,7 +10,7 @@ import UIKit
 
 class AssociateCardService: MercadoPagoService {
 
-    let uri = "/beta/px_mobile_api/cards"
+    let uri = "/beta/px_mobile_api/card-association"
     let accessToken: String
     
     init(accessToken: String) {
@@ -20,9 +20,12 @@ class AssociateCardService: MercadoPagoService {
     
     func associateCardToUser(paymentMethod: PXPaymentMethod, cardToken: PXToken, success: @escaping ([String : Any]) -> (), failure: @escaping (PXError) -> ()){
         let paymentMethodDict : [String : String] = ["id" : paymentMethod.id]
-        let body : [String : Any] = ["card_token_id": cardToken.id, "payment_method": paymentMethodDict]
-        let data = NSKeyedArchiver.archivedData(withRootObject: body)
-        let jsonString = String(data: data, encoding: .utf8)
+        let body : [String : Any] = ["card_token_id": /*cardToken.id*/"a4268342058af977c1c51b745480b7ef", "payment_method": paymentMethodDict]
+//        let jsonString = JSONHandler.jsonCoding(body)
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: body, options: [])
+        let jsonString = String(data: jsonData!, encoding: .utf8)
+        
         self.request(uri: uri, params: "access_token=\(accessToken)", body: jsonString, method: "POST", success: { (data) in
             let jsonResult = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let jsonResult = jsonResult as? [String : Any] {

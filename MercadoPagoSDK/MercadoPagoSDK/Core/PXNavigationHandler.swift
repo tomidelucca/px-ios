@@ -110,13 +110,14 @@ internal class PXNavigationHandler: NSObject {
         self.cleanCompletedCheckoutsFromNavigationStack()
         self.dismissLoading()
     }
-
-    internal func pushViewController(targetVC: UIViewController,
-                                     animated: Bool) {
-
+    
+    func pushViewController(cleanCompletedCheckouts : Bool = true,targetVC: UIViewController,
+                            animated: Bool){
         targetVC.hidesBottomBarWhenPushed = true
         self.navigationController.pushViewController(targetVC, animated: animated)
-        self.cleanCompletedCheckoutsFromNavigationStack()
+        if cleanCompletedCheckouts {
+            self.cleanCompletedCheckoutsFromNavigationStack()
+        }
         self.dismissLoading()
     }
 

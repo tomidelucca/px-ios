@@ -70,8 +70,8 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.model.paymentMethods = paymentMethods
             self?.executeNextStep()
         }) { [weak self] (error) in
-            self?.model.lastStepFailed = true
             if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                self?.model.lastStepFailed = true
                 let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PAYMENT_METHODS.rawValue)
                 self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
                     self?.finish()
@@ -92,7 +92,7 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.model.selectedPaymentMethod = paymentMethods.first
             self?.executeNextStep()
         })
-        self.navigationHandler.pushViewController(targetVC: cardFormViewController, animated: true)
+        self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormViewController, animated: true)
     }
     
     private func createCardToken() {
@@ -105,8 +105,8 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.model.tokenizedCard = token
             self?.executeNextStep()
             }, failure: {[weak self] (error) in
-                self?.model.lastStepFailed = true
                 if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                    self?.model.lastStepFailed = true
                     let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
                     self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
                         self?.finish()
@@ -125,10 +125,14 @@ public class AddCardFlow: NSObject, PXFlow {
         associateCardService.associateCardToUser(paymentMethod: selectedPaymentMethod, cardToken: token, success: { [weak self] (json) in
             print(json)
             self?.navigationHandler.dismissLoading()
+            if let esc = token.esc {
+                let escManager = MercadoPagoESCImplementation(enabled: false)
+                _ = escManager.saveESC(cardId: token.cardId, esc: esc)
+            }
             self?.executeNextStep()
         }) { [weak self] (error) in
-            self?.model.lastStepFailed = true
             if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                self?.model.lastStepFailed = true
                 let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.ASSOCIATE_TOKEN.rawValue)
                 self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
                     self?.finish()
@@ -140,15 +144,15 @@ public class AddCardFlow: NSObject, PXFlow {
     }
     
     private func showCongrats() {
-        let viewModel = PXResultAddCardSuccessViewModel(buttonCallback: {
-            
-        }, linkCallback: {
-            
+        let viewModel = PXResultAddCardSuccessViewModel(buttonCallback: { [weak self] in
+            self?.reset()
+        }, linkCallback: { [weak self] in
+            self?.popToRoot()
         })
         let congratsVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
-            
+            print("")
         }
-        self.navigationHandler.pushViewController(targetVC: congratsVc, animated: true)
+        self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: congratsVc, animated: true)
     }
     
     private func finish() {
@@ -157,19 +161,30 @@ public class AddCardFlow: NSObject, PXFlow {
     }
     
     private func showErrorScreen() {
-        let viewModel = PXResultAddCardFailedViewModel(buttonCallback: {
-            
-        }, linkCallback: {
-            
+        let viewModel = PXResultAddCardFailedViewModel(buttonCallback: { [weak self] in
+            self?.reset()
+            }, linkCallback: { [weak self] in
+                self?.popToRoot()
         })
         let failVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
-            
+            print("")
         }
-        self.navigationHandler.pushViewController(targetVC: failVc, animated: true)
+        self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: failVc, animated: true)
+    }
+    
+    private func reset() {
+        NotificationCenter.default.post(name: .cardFormReset, object: nil)
+        self.navigationHandler.popViewController()
+        self.model.reset()
     }
     
     @objc private func goBack() {
         self.navigationHandler.popViewController(animated: true)
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
+    }
+    
+    @objc private func popToRoot() {
+        self.navigationHandler.goToRootViewController()
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
     }
 

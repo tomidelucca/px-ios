@@ -169,6 +169,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     override open func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reset), name: .cardFormReset, object: nil)
         self.getPromos()
         textBox.borderInactiveColor = ThemeManager.shared.secondaryColor()
         textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
@@ -583,6 +584,19 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         }
         self.updateLabelsFontColors()
     }
+    
+    @objc func reset() {
+        if (self.viewModel.getGuessedPM()?.secCodeInBack())! {
+            UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 0, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
+            })
+        }
+        self.cardNumberLabel?.text = ""
+        self.expirationDateLabel?.text = ""
+        self.cvvLabel?.text = ""
+        self.nameLabel?.text = ""
+        self.clearCardSkin()
+        self.prepareNumberLabelForEdit()
+    }
 
     @objc func rightArrowKeyTapped() {
         switch editingLabel! {
@@ -880,4 +894,9 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     internal func validateExpirationDate() -> Bool {
         return self.viewModel.validateExpirationDate(self.cardNumberLabel!, expirationDateLabel: self.expirationDateLabel!, cvvLabel: self.cvvLabel!, cardholderNameLabel: self.nameLabel!)
     }
+    
+}
+
+extension NSNotification.Name {
+    static let cardFormReset = Notification.Name(rawValue: "PXCardFormReset")
 }
