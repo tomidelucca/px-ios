@@ -12,7 +12,7 @@ internal class Localizator {
     static let sharedInstance = Localizator()
     private var language: String = NSLocale.preferredLanguages[0]
 
-    private lazy var localizableDictionary: NSDictionary! = {
+    private func localizableDictionary() -> NSDictionary? {
         let languageBundle = Bundle(path: getLocalizedPath())
         let languageID = getParentLanguageID()
 
@@ -20,9 +20,9 @@ internal class Localizator {
             return NSDictionary(contentsOfFile: path)
         }
         return NSDictionary()
-    }()
+    }
 
-    private lazy var parentLocalizableDictionary: NSDictionary! = {
+    private func parentLocalizableDictionary() -> NSDictionary? {
         let languageBundle = Bundle(path: getParentLocalizedPath())
         let languageID = getParentLanguageID()
 
@@ -32,7 +32,7 @@ internal class Localizator {
             return NSDictionary(contentsOfFile: path)
         }
         fatalError("Localizable file NOT found")
-    }()
+    }
 
 }
 
@@ -88,9 +88,9 @@ extension Localizator {
     }
 
     func localize(string: String) -> String {
-        guard let localizedStringDictionary = localizableDictionary.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
+        guard let localizedStringDictionary = localizableDictionary()?.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
 
-            let parentLocalizableDictionary = self.parentLocalizableDictionary.value(forKey: string) as? NSDictionary
+            let parentLocalizableDictionary = self.parentLocalizableDictionary()?.value(forKey: string) as? NSDictionary
             if let parentLocalizedString = parentLocalizableDictionary?.value(forKey: "value") as? String {
                 return parentLocalizedString
             }
