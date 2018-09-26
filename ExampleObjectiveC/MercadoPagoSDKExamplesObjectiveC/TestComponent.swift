@@ -11,46 +11,49 @@ import MercadoPagoSDKV4
 
 @objc public class TestComponent: NSObject, PXCustomViewsHandler {
     public func topCustomView(store: PXCheckoutStore) -> UIView? {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        if store.getPaymentData().getPaymentMethod()?.id == "account_money" {
-            view.backgroundColor = .yellow
-        } else {
-            view.backgroundColor = .red
+        if let paymentMethodName = store.getPaymentData().getPaymentMethod()?.name {
+            if store.getPaymentData().getPaymentMethod()?.id == "account_money" {
+                return getView(backgroundColor: .yellow, text: "CUSTOM - PM: " + paymentMethodName)
+            } else {
+                return getView(backgroundColor: .red, text: "CUSTOM - PM: " + paymentMethodName)
+            }
         }
-        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 123).isActive = true
-        return view
+        return nil
     }
 
     public func bottomCustomView(store: PXCheckoutStore) -> UIView? {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        if store.getPaymentData().getPaymentMethod()?.id == "account_money" {
-            view.backgroundColor = .blue
-        } else {
-            view.backgroundColor = .green
+        if let paymentMethodName = store.getPaymentData().getPaymentMethod()?.name {
+            if store.getPaymentData().getPaymentMethod()?.id == "account_money" {
+                return getView(backgroundColor: .blue, text: "CUSTOM - PM: " + paymentMethodName)
+            } else {
+                return getView(backgroundColor: .green, text: "CUSTOM - PM: " + paymentMethodName)
+            }
         }
-        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 212).isActive = true
-        return view
+        return nil
     }
 
-    public func getView() -> UIView {
-        let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
-        let view = UIView(frame: frame)
+    public func getView(backgroundColor: UIColor = UIColor.white, text: String = "Custom Component") -> UIView {
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        let label = UILabel(frame: frame)
+        view.backgroundColor = backgroundColor
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Custom Component"
+        label.text = text
         label.font = label.font.withSize(20)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         label.textColor = .black
         view.addSubview(label)
 
-        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
+        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 120).isActive = true
 
-        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
+        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.width, multiplier: 1, constant: 0).isActive = true
+
+        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.width, multiplier: 1, constant: 0).isActive = true
+
+        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0).isActive = true
+
+        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0).isActive = true
 
         return view
     }
