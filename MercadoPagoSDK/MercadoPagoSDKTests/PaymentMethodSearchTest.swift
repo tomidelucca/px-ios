@@ -7,14 +7,13 @@
 //
 
 import XCTest
-
+@testable import MercadoPagoSDKV4
 class PaymentMethodSearchTest: BaseTest {
 
     func testPaymentOptionsCount() {
-        let customOption = MockBuilder.buildCustomerPaymentMethod("id", paymentMethodId: "paymentMethodId")
-        let anotherCustomOption = MockBuilder.buildCustomerPaymentMethod("anotherId", paymentMethodId: "paymentMethodId")
+        let customerMethod = PXCustomOptionSearchItem(id: "String", description: nil, paymentMethodId: nil, paymentTypeId: nil)
 
-        let customOptions = [customOption, anotherCustomOption]
+        let customOptions = [customerMethod]
 
         let paymentOption = MockBuilder.buildPaymentMethodSearchItem("id")
         let anotherPaymentOption = MockBuilder.buildPaymentMethodSearchItem("anotherId")
@@ -22,23 +21,19 @@ class PaymentMethodSearchTest: BaseTest {
 
         let paymentOptions = [paymentOption, anotherPaymentOption, anotherMorePaymentOption]
 
-        let paymentMethodSearch = PaymentMethodSearch()
-        paymentMethodSearch.groups = paymentOptions
-        paymentMethodSearch.customerPaymentMethods = customOptions
+        let paymentMethodSearch = PXPaymentMethodSearch(paymentMethodSearchItem: paymentOptions, customOptionSearchItems: customOptions, paymentMethods: [], cards: nil, defaultOption: nil, oneTap: nil)
 
-        XCTAssertEqual(paymentMethodSearch.getPaymentOptionsCount(), 5)
+        XCTAssertEqual(paymentMethodSearch.getPaymentOptionsCount(), 4)
 
     }
 
     func testOnlyCustomOptions() {
-        let customOption = MockBuilder.buildCustomerPaymentMethod("id", paymentMethodId: "paymentMethodId")
-        let anotherCustomOption = MockBuilder.buildCustomerPaymentMethod("anotherId", paymentMethodId: "paymentMethodId")
+        let customerMethod = PXCustomOptionSearchItem(id: "String", description: nil, paymentMethodId: nil, paymentTypeId: nil)
 
-        let customOptions = [customOption, anotherCustomOption]
-        let paymentMethodSearch = PaymentMethodSearch()
-        paymentMethodSearch.customerPaymentMethods = customOptions
+        let customOptions = [customerMethod]
+        let paymentMethodSearch = PXPaymentMethodSearch(paymentMethodSearchItem: [], customOptionSearchItems: customOptions, paymentMethods: [], cards: nil, defaultOption: nil, oneTap: nil)
 
-        XCTAssertEqual(paymentMethodSearch.getPaymentOptionsCount(), 2)
+        XCTAssertEqual(paymentMethodSearch.getPaymentOptionsCount(), 1)
 
     }
 
@@ -50,8 +45,7 @@ class PaymentMethodSearchTest: BaseTest {
 
         let paymentOptions = [paymentOption, anotherPaymentOption, anotherMorePaymentOption]
 
-        let paymentMethodSearch = PaymentMethodSearch()
-        paymentMethodSearch.groups = paymentOptions
+        let paymentMethodSearch = PXPaymentMethodSearch(paymentMethodSearchItem: paymentOptions, customOptionSearchItems: [], paymentMethods: [], cards: nil, defaultOption: nil, oneTap: nil)
 
         XCTAssertEqual(paymentMethodSearch.getPaymentOptionsCount(), 3)
 

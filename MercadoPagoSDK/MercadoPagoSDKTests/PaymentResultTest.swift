@@ -7,20 +7,18 @@
 //
 
 import XCTest
-@testable import MercadoPagoSDK
+@testable import MercadoPagoSDKV4
+
 class PaymentResultTest: BaseTest {
     override func setUp() {
         super.setUp()
     }
 
     func testPayerEmailObtainedFromPaymentData() {
-        let payment = Payment()
-        payment.paymentId = "1"
-        payment.status = "approved"
+        let payment = PXPayment(id: 1, status: "approved")
         payment.statusDetail = "accredited"
-        let payer = Payer()
-        payer.email = "unemail@gmail.com"
-        let paymentData = PaymentData()
+        let payer = PXPayer(email: "unemail@gmail.com")
+        let paymentData = PXPaymentData()
         paymentData.payer = payer
         let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
         XCTAssertEqual(paymentResult.payerEmail, "unemail@gmail.com")

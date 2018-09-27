@@ -66,6 +66,7 @@ extension MercadoPagoCheckoutBuilder {
      Private key provides save card capabilities and account money balance. (User logged)
      - parameter privateKey: The user private key
      */
+    @discardableResult
     open func setPrivateKey(key: String) -> MercadoPagoCheckoutBuilder {
         self.privateKey = key
         return self
@@ -76,6 +77,7 @@ extension MercadoPagoCheckoutBuilder {
      You can enable/disable several functionality.
      - parameter config: `PXAdvancedConfiguration` object.
      */
+    @discardableResult
     open func setAdvancedConfiguration(config: PXAdvancedConfiguration) -> MercadoPagoCheckoutBuilder {
         self.advancedConfig = config
         return self
@@ -85,6 +87,7 @@ extension MercadoPagoCheckoutBuilder {
      You can set one color (your primary color) and we will take care of the rest. Delivering the best Checkout experience based on your color. If you need more customization explore `PXTheme` inside `PXAdvancedConfiguration`.
      - parameter checkoutColor: Your primary color.
      */
+    @discardableResult
     open func setColor(checkoutColor: UIColor) -> MercadoPagoCheckoutBuilder {
         self.defaultUIColor = checkoutColor
         return self
@@ -94,6 +97,7 @@ extension MercadoPagoCheckoutBuilder {
      You can set the Language locale string. (`es` is the default value). For more values explore our `PXLanguages` public enum.
      - parameter _string: Your locale string Language.
      */
+    @discardableResult
     open func setLanguage(_ string: String) -> MercadoPagoCheckoutBuilder {
         Localizator.sharedInstance.setLanguage(string: string)
         return self

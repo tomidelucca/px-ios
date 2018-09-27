@@ -6,6 +6,7 @@
 //
 
 import Foundation
+/// :nodoc:
 extension PXCardToken: PXCardInformationForm {
     func getCardLastForDigits() -> String? {
         let index = cardNumber?.count
@@ -23,6 +24,7 @@ extension PXCardToken: PXCardInformationForm {
         return false
     }
 }
+/// :nodoc:
 extension PXCardToken {
     func normalizeCardNumber(_ number: String?) -> String? {
         if number == nil {

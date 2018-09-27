@@ -8,6 +8,8 @@
 
 import Foundation
 import XCTest
+@testable import MercadoPagoSDKV4
+import MLUI
 
 class PXFooterComponentTest: BaseTest {
 
@@ -34,7 +36,7 @@ class PXFooterComponentTest: BaseTest {
 
         // Then:
         XCTAssertNil(footerView.principalButton)
-        XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
+        XCTAssertEqual(footerView.linkButton!.buttonTitle, PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta)
     }
 
     // MARK: REJECTED - CARD
@@ -46,19 +48,19 @@ class PXFooterComponentTest: BaseTest {
         let footerView = ResultMockComponentHelper.buildFooterView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(footerView.principalButton?.buttonTitle, PXFooterResultConstants.ERROR_BUTTON_TEXT.localized)
+        XCTAssertEqual(footerView.principalButton?.titleLabel?.text, PXFooterResultConstants.ERROR_BUTTON_TEXT.localized)
         XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.ERROR_LINK_TEXT.localized)
     }
 
     func testFooterView_rejectedC4AuthCardPayment_render() {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: RejectedStatusDetail.CALL_FOR_AUTH)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue)
 
         // When:
         let footerView = ResultMockComponentHelper.buildFooterView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(footerView.principalButton?.buttonTitle, PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized)
+        XCTAssertEqual(footerView.principalButton?.titleLabel?.text, PXFooterResultConstants.C4AUTH_BUTTON_TEXT.localized)
         XCTAssertEqual(footerView.linkButton?.buttonTitle, PXFooterResultConstants.C4AUTH_LINK_TEXT.localized)
     }
 

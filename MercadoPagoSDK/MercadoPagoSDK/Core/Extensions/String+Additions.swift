@@ -50,7 +50,6 @@ internal extension String {
     }
 
     func trimSpaces() -> String {
-
         var stringTrimmed = self.replacingOccurrences(of: " ", with: "")
         stringTrimmed = stringTrimmed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return stringTrimmed
@@ -81,5 +80,9 @@ internal extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         return dateFormatter.date(from: dateString)
+    }
+
+    var isNumber: Bool {
+        return rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
     }
 }

@@ -39,7 +39,7 @@ internal extension PXPaymentFlow {
         }
 
         let mpPayment = MPPayment(preferenceId: checkoutPreference.id, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
-        guard let paymentBody = (try? mpPayment.toJSONString()) as? String else {
+        guard let paymentBody = (try? mpPayment.toJSON()) else {
             fatalError("Cannot make payment json body")
         }
 

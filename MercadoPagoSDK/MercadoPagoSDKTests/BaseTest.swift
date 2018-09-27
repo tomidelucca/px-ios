@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class BaseTest: XCTestCase {
 
@@ -17,37 +18,11 @@ class BaseTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
-        MercadoPagoTestContext.sharedInstance.testEnvironment = self
+        SiteManager.shared.setSite(siteId: "MLA")
     }
 
     override func tearDown() {
         super.tearDown()
-        MercadoPagoCheckoutViewModel.clearEnviroment()
     }
-
-    func simulateViewDidLoadFor(viewController: UIViewController) -> UIViewController {
-        let nav = UINavigationController(rootViewController: viewController)
-        _ = viewController.view
-        viewController.viewWillAppear(false)
-        viewController.viewDidAppear(false)
-
-        waitForExpectations(timeout: BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
-
-        return viewController
-    }
-
-}
-
-extension UINavigationController {
-
-    /*func pushViewController(viewController: UIViewController,
-                            animated: Bool, completion: @escaping (@escaping Void) -> Void) {
-        
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        pushViewController(viewController, animated: animated)
-        CATransaction.commit()
-    }*/
 
 }

@@ -7,19 +7,20 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class SavedCardTokenTest: BaseTest {
 
     let card = MockBuilder.buildCard()
     func testInit() {
-        let savedCardToken = SavedCardToken(cardId: "cardId", securityCode: "123")
+        let savedCardToken = PXSavedCardToken(cardId: "cardId", securityCode: "123")
         XCTAssertEqual(savedCardToken.cardId, "cardId")
         XCTAssertEqual(savedCardToken.securityCode, "123")
     }
 
     func testInitWithCard() {
-        let savedCard = SavedCardToken(card: MockBuilder.buildCard(), securityCode: "123", securityCodeRequired: true)
-        XCTAssertEqual(savedCard.cardId, card.idCard)
+        let savedCard = PXSavedCardToken(card: card, securityCode: "123", securityCodeRequired: true)
+        XCTAssertEqual(savedCard.cardId, card.id)
         XCTAssertEqual(savedCard.securityCode, "123")
         XCTAssertTrue(savedCard.securityCodeRequired)
     }

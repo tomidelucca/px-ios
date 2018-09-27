@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class NextStepHelperTest: BaseTest {
 
@@ -22,7 +23,8 @@ class NextStepHelperTest: BaseTest {
 
     func testShowConfirm() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
+        let mpCheckoutViewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, publicKey: "", privateKey: "")
+
         XCTAssertFalse(mpCheckoutViewModel.showConfirm())
 
         mpCheckoutViewModel.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("account_money")
@@ -37,9 +39,8 @@ class NextStepHelperTest: BaseTest {
 
     func testSetPaymentOptionSelected() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckoutViewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil)
+        let mpCheckoutViewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, publicKey: "", privateKey: "")
 
-        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckoutViewModel: mpCheckoutViewModel)
 
         // Account_money

@@ -8,6 +8,8 @@
 
 import XCTest
 
+@testable import MercadoPagoSDKV4
+
 class UtilsTest: BaseTest {
 
     override func setUp() {
@@ -170,9 +172,6 @@ class UtilsTest: BaseTest {
         let pagofacil = MockBuilder.buildPaymentMethod("pagofacil", name: "pagofacil", paymentTypeId: "pagofacil")
         let mlaPaymentMethods = [visaPM, redlink, rapipago, pagofacil]
 
-        ////let invalidOutput = Utils.findPaymentMethod(mlaPaymentMethods, paymentMethodId: "fruta")
-        //XCTAssertNil(invalidOutput)
-
         let visaOutput = Utils.findPaymentMethod(mlaPaymentMethods, paymentMethodId: "visa")
         XCTAssertEqual(visaPM, visaOutput)
 
@@ -212,13 +211,6 @@ class UtilsTest: BaseTest {
         let debvisaOutput = Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "debvisa")
         XCTAssertEqual(debvisa, debvisaOutput)
         XCTAssertEqual("debit_card", debvisa.paymentTypeId)
-
-        //XCTAssertThrowsError(Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "thisisnotavalidinput"), x"", file: (Error) -> Void)
-
-        //XCTAssertNil(invalidOutput)
-
-       // let emptyOutput = Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "")
-       // XCTAssertNil(emptyOutput)
     }
 
     /**
@@ -262,6 +254,7 @@ class UtilsTest: BaseTest {
      *
      **/
     func testGetCentsFormatted() {
+        SiteManager.shared.setSite(siteId: "MLA")
         var centsFormatted = Utils.getCentsFormatted("100.2", decimalSeparator: ".")
         XCTAssertEqual("20", centsFormatted)
 
@@ -309,7 +302,6 @@ class UtilsTest: BaseTest {
      *
      **/
     func testFindPaymentMethodSearchItemInGroups() {
-        let paymentMethodSearch = PaymentMethodSearch()
 
         let paymentMethodSearchitemRoot = MockBuilder.buildPaymentMethodSearchItem("id1")
         let paymentMethodSearchitemRootFirst = MockBuilder.buildPaymentMethodSearchItem("id1_1")
@@ -323,26 +315,23 @@ class UtilsTest: BaseTest {
 
         paymentMethodSearchitemSecondRoot.children = [paymentMethodSearchitemSecondRootFirst, paymentMethodSearchitemecondRootSecond]
 
-        paymentMethodSearch.groups = [paymentMethodSearchitemRoot, paymentMethodSearchitemSecondRoot]
+        var paymentMethodSearch = PXPaymentMethodSearch(paymentMethodSearchItem: [paymentMethodSearchitemRoot, paymentMethodSearchitemSecondRoot], customOptionSearchItems: [], paymentMethods: [], cards: [], defaultOption: nil, oneTap: nil)
+        paymentMethodSearch.paymentMethodSearchItem = [paymentMethodSearchitemRoot, paymentMethodSearchitemSecondRoot]
 
         let rootFirst = Utils.findPaymentMethodSearchItemInGroups(paymentMethodSearch, paymentMethodId: "id1_1", paymentTypeId: nil)
 
         XCTAssertNotNil(rootFirst)
-        XCTAssertEqual(paymentMethodSearchitemRootFirst.idPaymentMethodSearchItem, rootFirst!.idPaymentMethodSearchItem)
+        XCTAssertEqual(paymentMethodSearchitemRootFirst.id, rootFirst?.id)
 
         let secondRoot = Utils.findPaymentMethodSearchItemInGroups(paymentMethodSearch, paymentMethodId: "id2", paymentTypeId: nil)
         XCTAssertNotNil(secondRoot)
-        XCTAssertEqual(paymentMethodSearchitemSecondRoot.idPaymentMethodSearchItem, secondRoot!.idPaymentMethodSearchItem)
+        XCTAssertEqual(paymentMethodSearchitemSecondRoot.id, secondRoot?.id)
 
-        let invalidData = Utils.findPaymentMethodSearchItemInGroups(PaymentMethodSearch(), paymentMethodId: "id2", paymentTypeId: nil)
+        paymentMethodSearch = PXPaymentMethodSearch(paymentMethodSearchItem: [], customOptionSearchItems: [], paymentMethods: [], cards: [], defaultOption: nil, oneTap: nil)
+
+        let invalidData = Utils.findPaymentMethodSearchItemInGroups(paymentMethodSearch, paymentMethodId: "id2", paymentTypeId: nil)
         XCTAssertNil(invalidData)
 
-    }
-
-    func testGetAttributedAmount() {
-
-        let arsCurrency = CurrenciesUtil.getCurrencyFor("ARS")
-        let attributedAmount = Utils.getAttributedAmount(1.00, currency: arsCurrency!)
     }
 
     func testAppendTwoJSONS() {

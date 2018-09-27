@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class PXItemComponentTest: BaseTest {
 
@@ -22,7 +23,7 @@ class PXItemComponentTest: BaseTest {
 
         // Then
         XCTAssertEqual(itemViews.count, 1)
-        XCTAssertEqual(itemViews[0].itemTitle?.text, item.itemDescription)
+        XCTAssertEqual(itemViews[0].itemTitle?.text, item._description)
         XCTAssertNil(itemViews[0].itemDescription)
         XCTAssertNil(itemViews[0].itemQuantity)
         XCTAssertNil(itemViews[0].itemAmount)
@@ -39,7 +40,7 @@ class PXItemComponentTest: BaseTest {
 
         // Then
         XCTAssertEqual(itemViews.count, 1)
-        XCTAssertEqual(itemViews[0].itemTitle?.text, item.itemDescription)
+        XCTAssertEqual(itemViews[0].itemTitle?.text, item._description)
         XCTAssertNil(itemViews[0].itemDescription)
         XCTAssertNotNil(itemViews[0].itemQuantity)
         XCTAssertNotNil(itemViews[0].itemAmount)
@@ -73,8 +74,7 @@ class PXItemComponentTest: BaseTest {
     func testItemView_oneItemWithItemsDisable_render() {
         // Given
         let item = MockBuilder.buildItem("id", quantity: 2, unitPrice: 1, description: "description")
-        let reviewScreenPreference = ReviewScreenPreference()
-        reviewScreenPreference.disableItems()
+        let reviewScreenPreference = PXReviewConfirmConfiguration(itemsEnabled: false)
         let reviewViewModel = ReviewMockComponentHelper.buildResultViewModelWithPreference(items: [item], reviewScreenPreference: reviewScreenPreference)
 
         // When
@@ -97,13 +97,13 @@ class PXItemComponentTest: BaseTest {
         // Then
         XCTAssertEqual(itemViews.count, 2)
         XCTAssertEqual(itemViews[0].itemTitle?.text, "item title")
-        XCTAssertEqual(itemViews[0].itemDescription?.text, item.itemDescription)
+        XCTAssertEqual(itemViews[0].itemDescription?.text, item._description)
         XCTAssertNil(itemViews[0].itemQuantity)
         XCTAssertNotNil(itemViews[0].itemAmount)
         XCTAssertNotNil(itemViews[0].itemImage)
 
         XCTAssertEqual(itemViews[0].itemTitle?.text, "item title")
-        XCTAssertEqual(itemViews[1].itemDescription?.text, item.itemDescription)
+        XCTAssertEqual(itemViews[1].itemDescription?.text, item._description)
         XCTAssertNil(itemViews[1].itemQuantity)
         XCTAssertNotNil(itemViews[1].itemAmount)
         XCTAssertNotNil(itemViews[1].itemImage)
@@ -121,13 +121,13 @@ class PXItemComponentTest: BaseTest {
         // Then
         XCTAssertEqual(itemViews.count, 2)
         XCTAssertEqual(itemViews[0].itemTitle?.text, "item title")
-        XCTAssertEqual(itemViews[0].itemDescription?.text, item.itemDescription)
+        XCTAssertEqual(itemViews[0].itemDescription?.text, item._description)
         XCTAssertNotNil(itemViews[0].itemQuantity)
         XCTAssertNotNil(itemViews[0].itemAmount)
         XCTAssertNotNil(itemViews[0].itemImage)
 
         XCTAssertEqual(itemViews[0].itemTitle?.text, "item title")
-        XCTAssertEqual(itemViews[1].itemDescription?.text, item.itemDescription)
+        XCTAssertEqual(itemViews[1].itemDescription?.text, item._description)
         XCTAssertNil(itemViews[1].itemQuantity)
         XCTAssertNotNil(itemViews[1].itemAmount)
         XCTAssertNotNil(itemViews[1].itemImage)
@@ -145,7 +145,7 @@ class PXItemComponentTest: BaseTest {
         // Then
         XCTAssertEqual(itemViews.count, 2)
         XCTAssertEqual(itemViews[0].itemTitle?.text, "item title")
-        XCTAssertEqual(itemViews[0].itemDescription?.text, item.itemDescription)
+        XCTAssertEqual(itemViews[0].itemDescription?.text, item._description)
         XCTAssertNotNil(itemViews[0].itemAmount)
         XCTAssertNotNil(itemViews[0].itemImage)
 

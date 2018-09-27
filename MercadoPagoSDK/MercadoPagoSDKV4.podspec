@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.0.6"
+  s.version          = "4.0.7"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -25,6 +25,11 @@ Pod::Spec.new do |s|
       'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE',
       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D MPESC_ENABLE'
     }
+  end
+
+  s.test_spec do |test_spec|
+    test_spec.source_files = 'MercadoPagoSDK/MercadoPagoSDKTests/*'
+    test_spec.frameworks = 'XCTest'
   end
 
 end

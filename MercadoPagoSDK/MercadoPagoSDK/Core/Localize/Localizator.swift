@@ -12,25 +12,27 @@ internal class Localizator {
     static let sharedInstance = Localizator()
     private var language: String = NSLocale.preferredLanguages[0]
 
-    private lazy var localizableDictionary: NSDictionary! = {
+    private func localizableDictionary() -> NSDictionary? {
         let languageBundle = Bundle(path: getLocalizedPath())
         let languageID = getParentLanguageID()
 
         if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
             return NSDictionary(contentsOfFile: path)
         }
-        fatalError("Localizable file NOT found")
-    }()
+        return NSDictionary()
+    }
 
-    private lazy var parentLocalizableDictionary: NSDictionary! = {
+    private func parentLocalizableDictionary() -> NSDictionary? {
         let languageBundle = Bundle(path: getParentLocalizedPath())
         let languageID = getParentLanguageID()
 
         if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
             return NSDictionary(contentsOfFile: path)
+        } else if let path = languageBundle?.path(forResource: "Localizable_es", ofType: "plist") {
+            return NSDictionary(contentsOfFile: path)
         }
         fatalError("Localizable file NOT found")
-    }()
+    }
 
 }
 
@@ -41,12 +43,7 @@ internal extension Localizator {
     }
 
     func setLanguage(string: String) {
-        let enumLanguage = PXLanguages(rawValue: string)
-        guard let languange = enumLanguage else {
-            self.language = PXLanguages.SPANISH.rawValue
-            return
-        }
-        self.language = languange.rawValue
+        self.language = string
     }
 
     func getLanguage() -> String {
@@ -61,18 +58,18 @@ extension Localizator {
         let bundle = ResourceManager.shared.getBundle() ?? Bundle.main
 
         let currentLanguage = getLanguage()
-        let currentLanguageSeparated = currentLanguage.components(separatedBy: "-")[0]
+        let currentLanguageSeparated = currentLanguage.components(separatedBy: "-").first
         if bundle.path(forResource: currentLanguage, ofType: "lproj") != nil {
             return currentLanguage
-        } else if (bundle.path(forResource: currentLanguageSeparated, ofType: "lproj") != nil) {
-            return currentLanguageSeparated
+        } else if let language = currentLanguageSeparated, bundle.path(forResource: language, ofType: "lproj") != nil {
+            return language
         } else {
             return "es"
         }
     }
 
     private func getParentLanguageID() -> String {
-        return getLanguage().components(separatedBy: "-")[0]
+        return getLanguage().components(separatedBy: "-").first ?? "es"
     }
 
     func getLocalizedPath() -> String {
@@ -84,13 +81,16 @@ extension Localizator {
     private func getParentLocalizedPath() -> String {
         let bundle = ResourceManager.shared.getBundle() ?? Bundle.main
         let pathID = getParentLanguageID()
-        return bundle.path(forResource: pathID, ofType: "lproj")!
+        if let parentPath = bundle.path(forResource: pathID, ofType: "lproj") {
+            return parentPath
+        }
+        return bundle.path(forResource: "es", ofType: "lproj")!
     }
 
     func localize(string: String) -> String {
-        guard let localizedStringDictionary = localizableDictionary.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
+        guard let localizedStringDictionary = localizableDictionary()?.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
 
-            let parentLocalizableDictionary = self.parentLocalizableDictionary.value(forKey: string) as? NSDictionary
+            let parentLocalizableDictionary = self.parentLocalizableDictionary()?.value(forKey: string) as? NSDictionary
             if let parentLocalizedString = parentLocalizableDictionary?.value(forKey: "value") as? String {
                 return parentLocalizedString
             }

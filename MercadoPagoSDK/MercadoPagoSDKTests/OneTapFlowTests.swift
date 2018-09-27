@@ -9,6 +9,7 @@
 import Foundation
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class OneTapFlowTests: BaseTest {
 
@@ -17,33 +18,25 @@ class OneTapFlowTests: BaseTest {
     func testMercadoPagoCheckout_oneTapCanAutoSelect() {
 
         // Set access_token
-        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mockPaymentMethodPlugin1 = MockBuilder.buildPaymentMethodPlugin(id: "account_money", name: "account_money 1", configPaymentMethodPlugin: nil)
-        let accountMoneyPaymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
-        let paymentDataAccountMoney = MockBuilder.buildPaymentData(paymentMethod: accountMoneyPaymentMethod)
+        let mercadoPagoBuilder = MercadoPagoCheckoutBuilder(publicKey: "public_key", checkoutPreference: MockBuilder.buildCheckoutPreference(), paymentConfiguration: MockBuilder.buildPXPaymentConfiguration())
 
-        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        mercadoPagoBuilder.setPrivateKey(key: "acess_token")
 
-        mpCheckout.setPaymentMethodPlugins(plugins: [mockPaymentMethodPlugin1])
+        let mpCheckout = MercadoPagoCheckout(builder: mercadoPagoBuilder)
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsWithOneTapInViewModel(mpCheckout: mpCheckout)
 
         // 4. Flow one tap
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.FLOW_ONE_TAP, step)
-
-        // 4. Payment plugin
-        mpCheckout.viewModel.updateCheckoutModel(paymentData: paymentDataAccountMoney)
-        step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.SCREEN_PAYMENT_PLUGIN_PAYMENT, step)
 
         // 6. Simular Pago realizado y se muestra congrats
         let paymentMock = MockBuilder.buildPayment("account_money")
@@ -64,22 +57,21 @@ class OneTapFlowTests: BaseTest {
     func testMercadoPagoCheckout_oneTapCanNOTAutoSelect() {
 
         // Set access_token
-        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
-
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mockPaymentMethodPlugin1 = MockBuilder.buildPaymentMethodPlugin(id: "account_money_not", name: "account_money 1", configPaymentMethodPlugin: nil)
-        let accountMoneyPaymentMethod = MockBuilder.buildPaymentMethod("account_money", paymentTypeId: "account_money")
+        let accountMoneyPaymentMethod = MockBuilder.buildPaymentMethod("account_money2", paymentTypeId: "account_money")
         let paymentDataAccountMoney = MockBuilder.buildPaymentData(paymentMethod: accountMoneyPaymentMethod)
 
-        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        let mercadoPagoBuilder = MercadoPagoCheckoutBuilder(publicKey: "public_key", checkoutPreference: MockBuilder.buildCheckoutPreference(), paymentConfiguration: MockBuilder.buildPXPaymentConfiguration(paymentPluginId: "sarasa"))
 
-        mpCheckout.setPaymentMethodPlugins(plugins: [mockPaymentMethodPlugin1])
+        mercadoPagoBuilder.setPrivateKey(key: "acess_token")
+
+        let mpCheckout = MercadoPagoCheckout(builder: mercadoPagoBuilder)
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 0. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsWithOneTapInViewModel(mpCheckout: mpCheckout)
 
