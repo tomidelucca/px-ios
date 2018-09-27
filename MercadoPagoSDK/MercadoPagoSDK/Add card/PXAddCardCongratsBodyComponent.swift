@@ -31,7 +31,7 @@ class PXAddCardCongratsBodyView: UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.centerVertically(view: self.textLabel).isActive = true
         PXLayout.centerHorizontally(view: self.textLabel).isActive = true
-        PXLayout.setHeight(owner: self, height: (PXLayout.getScreenHeight() - 64 - UIApplication.shared.statusBarFrame.height) * 0.325).isActive = true
+        PXLayout.setHeight(owner: self, height:  PXLayout.getScreenWidth(applyingMarginFactor: 32.5)).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

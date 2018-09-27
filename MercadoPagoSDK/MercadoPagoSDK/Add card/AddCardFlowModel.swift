@@ -11,6 +11,7 @@ import UIKit
 class AddCardFlowModel: NSObject, PXFlowModel {
     
     var paymentMethods: [PXPaymentMethod]?
+    var identificationTypes: [PXIdentificationType]?
     var cardToken: PXCardToken?
     var selectedPaymentMethod: PXPaymentMethod?
     var tokenizedCard: PXToken?
@@ -19,7 +20,9 @@ class AddCardFlowModel: NSObject, PXFlowModel {
     enum Steps {
         case start
         case getPaymentMethods
+        case getIdentificationTypes
         case openCardForm
+        case openIdentificationTypes
         case createToken
         case associateTokenWithUser
         case showCongrats
@@ -37,9 +40,21 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         case .start:
             currentStep = .getPaymentMethods
         case .getPaymentMethods:
+            currentStep = .getIdentificationTypes
+        case .getIdentificationTypes:
             currentStep = .openCardForm
         case .openCardForm:
-            currentStep = .createToken
+            if let selectedPaymentMethod = self.selectedPaymentMethod, let identificationTypes = self.identificationTypes, !identificationTypes.isEmpty, selectedPaymentMethod.isIdentificationTypeRequired || selectedPaymentMethod.isIdentificationRequired{
+                currentStep = .openIdentificationTypes
+            } else {
+                currentStep = .createToken
+            }
+        case .openIdentificationTypes:
+            if let idType = self.cardToken?.cardholder?.identification?.type, !idType.isEmpty {
+                currentStep = .createToken
+            } else {
+                currentStep = .openIdentificationTypes
+            }
         case .createToken:
             currentStep = .associateTokenWithUser
         case .associateTokenWithUser:
@@ -54,6 +69,9 @@ class AddCardFlowModel: NSObject, PXFlowModel {
     
     func reset() {
         self.currentStep = .openCardForm
+        self.cardToken = nil
+        self.selectedPaymentMethod = nil
+        self.tokenizedCard = nil
     }
     
 }

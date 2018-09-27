@@ -8,13 +8,21 @@
 
 import UIKit
 
+@objc public protocol AddCardFlowDelegate {
+    func addCardFlowSucceded()
+}
+
 @objcMembers
 public class AddCardFlow: NSObject, PXFlow {
+    
+    public var delegate: AddCardFlowDelegate?
     
     private let accessToken: String
     private let model = AddCardFlowModel()
     private let navigationHandler: PXNavigationHandler
     
+    private lazy var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", privateKey: self.accessToken)
+
     public init(accessToken: String, locale: String, navigationController: UINavigationController) {
         self.accessToken = accessToken
         self.navigationHandler = PXNavigationHandler(navigationController: navigationController)
@@ -36,8 +44,12 @@ public class AddCardFlow: NSObject, PXFlow {
         switch self.model.nextStep() {
         case .getPaymentMethods:
             self.getPaymentMethods()
+        case .getIdentificationTypes:
+            self.getIdentificationTypes()
         case .openCardForm:
             self.openCardForm()
+        case .openIdentificationTypes:
+            self.openIdentificationTypesScreen()
         case .createToken:
             self.createCardToken()
         case .associateTokenWithUser:
@@ -66,7 +78,6 @@ public class AddCardFlow: NSObject, PXFlow {
         self.navigationHandler.presentLoading()
         let service = PaymentMethodsUserService(accessToken: self.accessToken)
         service.getPaymentMethods(success: { [weak self] (paymentMethods) in
-            self?.navigationHandler.dismissLoading()
             self?.model.paymentMethods = paymentMethods
             self?.executeNextStep()
         }) { [weak self] (error) in
@@ -82,6 +93,30 @@ public class AddCardFlow: NSObject, PXFlow {
         }
     }
     
+    private func getIdentificationTypes() {
+        self.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] identificationTypes in
+            self?.navigationHandler.dismissLoading()
+            self?.model.identificationTypes = identificationTypes
+            self?.executeNextStep()
+        }, failure: { [weak self] error in
+            if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                self?.model.lastStepFailed = true
+                let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue)
+                self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
+                    self?.finish()
+                }, errorCallback: nil)
+            } else {
+                if let status = error.userInfo["status"] as? Int, status == 404 {
+                    self?.navigationHandler.dismissLoading()
+                    self?.model.identificationTypes = []
+                    self?.executeNextStep()
+                } else {
+                    self?.showErrorScreen()
+                }
+            }
+        })
+    }
+    
     private func openCardForm() {
         guard let paymentMethods = self.model.paymentMethods else {
             return
@@ -95,13 +130,25 @@ public class AddCardFlow: NSObject, PXFlow {
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormViewController, animated: true)
     }
     
+    private func openIdentificationTypesScreen() {
+        guard let identificationTypes = self.model.identificationTypes else {
+            return
+        }
+        let identificationViewController = IdentificationViewController(identificationTypes: identificationTypes, callback: { [weak self] (identification) in
+            self?.model.cardToken?.cardholder?.identification = identification
+            self?.executeNextStep()
+        }) { [weak self] in
+            self?.showErrorScreen()
+        }
+        self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: identificationViewController, animated: true)
+    }
+    
     private func createCardToken() {
         guard let cardToken = self.model.cardToken else {
             return
         }
         self.navigationHandler.presentLoading()
-        let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", privateKey: self.accessToken)
-        mercadoPagoServicesAdapter.createToken(cardToken: cardToken, callback: { [weak self] (token) in
+        self.mercadoPagoServicesAdapter.createToken(cardToken: cardToken, callback: { [weak self] (token) in
             self?.model.tokenizedCard = token
             self?.executeNextStep()
             }, failure: {[weak self] (error) in
@@ -145,12 +192,13 @@ public class AddCardFlow: NSObject, PXFlow {
     
     private func showCongrats() {
         let viewModel = PXResultAddCardSuccessViewModel(buttonCallback: { [weak self] in
+            self?.delegate?.addCardFlowSucceded()
             self?.reset()
         }, linkCallback: { [weak self] in
+            self?.delegate?.addCardFlowSucceded()
             self?.popToRoot()
         })
         let congratsVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
-            print("")
         }
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: congratsVc, animated: true)
     }
@@ -167,14 +215,16 @@ public class AddCardFlow: NSObject, PXFlow {
                 self?.popToRoot()
         })
         let failVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
-            print("")
         }
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: failVc, animated: true)
     }
     
     private func reset() {
         NotificationCenter.default.post(name: .cardFormReset, object: nil)
-        self.navigationHandler.popViewController()
+        if let cardForm = self.navigationHandler.navigationController.viewControllers.filter({$0 is CardFormViewController}).first {
+            self.navigationHandler.navigationController.popToViewController(cardForm, animated: true)
+        }
+        self.navigationHandler.navigationController.setNavigationBarHidden(false, animated: true)
         self.model.reset()
     }
     
