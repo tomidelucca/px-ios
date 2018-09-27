@@ -46,14 +46,14 @@ class PXResultAddCardFailedViewModel: PXResultViewModelInterface, PXResultAddCar
     }
     
     func buildHeaderComponent() -> PXHeaderComponent {
-        let props = PXHeaderProps(labelText: NSAttributedString(string: "Algo salió mal..."), title: NSAttributedString(string: "No pudimos cargar los datos de tu tarjeta"), backgroundColor: ThemeManager.shared.warningColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "need_action_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil))
+        let props = PXHeaderProps(labelText: NSAttributedString(string: "Algo salió mal...".localized), title: NSAttributedString(string: "No pudimos cargar los datos de tu tarjeta".localized), backgroundColor: ThemeManager.shared.warningColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "need_action_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil))
         let header = PXHeaderComponent(props: props)
         return header
     }
     
     func buildFooterComponent() -> PXFooterComponent {
-        let buttonAction = PXAction(label: "Intentar de nuevo", action: self.buttonCallback)
-        let linkAction = PXAction(label: "Ir al inicio", action: self.linkCallback)
+        let buttonAction = PXAction(label: "Intentar de nuevo".localized, action: self.buttonCallback)
+        let linkAction = PXAction(label: "Ir al inicio".localized, action: self.linkCallback)
         let props = PXFooterProps(buttonAction: buttonAction, linkAction: linkAction, primaryColor: UIColor.ml_meli_blue(), animationDelegate: nil)
         let footer = PXFooterComponent(props: props)
         return footer

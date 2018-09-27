@@ -52,14 +52,14 @@ class PXResultAddCardSuccessViewModel: PXResultViewModelInterface, PXResultAddCa
     }
     
     func buildHeaderComponent() -> PXHeaderComponent {
-        let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "¡Listo! Tu tarjeta quedó guardada"), backgroundColor: ThemeManager.shared.successColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "ok_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil))
+        let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "¡Listo! Tu tarjeta quedó guardada".localized), backgroundColor: ThemeManager.shared.successColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "ok_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil))
         let header = PXHeaderComponent(props: props)
         return header
     }
     
     func buildFooterComponent() -> PXFooterComponent {
-        let buttonAction = PXAction(label: "Cargar otra tarjeta", action: self.buttonCallback)
-        let linkAction = PXAction(label: "Ir al inicio", action: self.linkCallback)
+        let buttonAction = PXAction(label: "Cargar otra tarjeta".localized, action: self.buttonCallback)
+        let linkAction = PXAction(label: "Ir al inicio".localized, action: self.linkCallback)
         let props = PXFooterProps(buttonAction: buttonAction, linkAction: linkAction, primaryColor: UIColor.ml_meli_blue(), animationDelegate: nil)
         let footer = PXFooterComponent(props: props)
         return footer
