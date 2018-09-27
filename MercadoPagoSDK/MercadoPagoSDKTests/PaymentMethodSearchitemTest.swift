@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class PaymentMethodSearchitemTest: BaseTest {
 
@@ -20,25 +21,15 @@ class PaymentMethodSearchitemTest: BaseTest {
 
     }
 
-    func testIsBitcoin() {
-        let bitcoinPm = MockBuilder.buildPaymentMethodSearchItem("bitcoin")
-
-        XCTAssertTrue(bitcoinPm.isBitcoin())
-
-        let onlinePaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("credit_card")
-        XCTAssertFalse(onlinePaymentMethodSearchItem.isBitcoin())
-
-    }
-
     func testIsPaymentMethod() {
-        let oxxoPm = MockBuilder.buildPaymentMethodSearchItem("oxxo", type: PaymentMethodSearchItemType.PAYMENT_METHOD)
+        let oxxoPm = MockBuilder.buildPaymentMethodSearchItem("oxxo", type: PXPaymentMethodSearchItemType.PAYMENT_METHOD)
 
         XCTAssertTrue(oxxoPm.isPaymentMethod())
 
-        let onlinePaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("visa", type: PaymentMethodSearchItemType.PAYMENT_METHOD)
+        let onlinePaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("visa", type: PXPaymentMethodSearchItemType.PAYMENT_METHOD)
         XCTAssertTrue(onlinePaymentMethodSearchItem.isPaymentMethod())
 
-        let onlinePaymentType = MockBuilder.buildPaymentMethodSearchItem("debit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let onlinePaymentType = MockBuilder.buildPaymentMethodSearchItem("debit_card", type: PXPaymentMethodSearchItemType.PAYMENT_TYPE)
         XCTAssertFalse(onlinePaymentType.isPaymentMethod())
 
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class PXReceiptComponentTest: BaseTest {
 
@@ -64,7 +65,7 @@ class PXReceiptComponentTest: BaseTest {
 
     func testReceiptView_rejectedC4AuthCardPayment_render() {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: RejectedStatusDetail.CALL_FOR_AUTH)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue)
 
         // When:
         let receiptView = ResultMockComponentHelper.buildReceiptView(resultViewModel: resultViewModel)

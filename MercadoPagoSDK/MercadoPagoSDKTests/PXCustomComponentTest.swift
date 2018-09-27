@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class PXCustomComponentTest: BaseTest {
 

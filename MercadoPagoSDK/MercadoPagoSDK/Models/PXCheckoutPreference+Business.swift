@@ -149,6 +149,7 @@ extension PXCheckoutPreference {
      Non compatible with PaymentProcessor or off payments methods.
      - parameter isBinaryMode: Binary mode Bool value.
      */
+    @discardableResult
     open func setBinaryMode(isBinaryMode: Bool) -> PXCheckoutPreference {
         self.binaryModeEnabled = isBinaryMode
         return self

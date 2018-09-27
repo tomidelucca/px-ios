@@ -22,7 +22,7 @@ class PXResultViewController: PXComponentContainerViewController {
     var bodyView: UIView?
     var footerView: UIView?
 
-    internal var changePaymentMethodCallback: (() -> Void)? = nil
+    internal var changePaymentMethodCallback: (() -> Void)?
 
     init(viewModel: PXResultViewModelInterface, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
@@ -71,6 +71,7 @@ class PXResultViewController: PXComponentContainerViewController {
         self.headerView = self.buildHeaderView()
         if let headerView = self.headerView {
             headerView.pxShouldAnimated = false
+            headerView.accessibilityIdentifier = "result_header_view"
             contentView.addSubview(headerView)
             PXLayout.pinTop(view: headerView, to: contentView).isActive = true
             PXLayout.matchWidth(ofView: headerView).isActive = true

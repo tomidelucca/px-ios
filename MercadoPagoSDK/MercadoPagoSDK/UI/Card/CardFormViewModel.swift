@@ -262,7 +262,7 @@ internal class CardFormViewModel {
         if Array.isNullOrEmpty(paymentMethods) {
             return defaultMessage
         }
-        if let paymentMethodName = paymentMethods[0].name {
+        if let paymentMethodName = paymentMethods[0].name, !String.isNullOrEmpty(paymentMethodName) {
             return "Solo puedes pagar con ".localized + paymentMethodName
         } else {
             return defaultMessage

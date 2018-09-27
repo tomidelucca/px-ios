@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import MercadoPagoSDK
+@testable import MercadoPagoSDKV4
 
 class PXReviewViewModelTest: BaseTest {
 
@@ -15,82 +15,67 @@ class PXReviewViewModelTest: BaseTest {
     var instanceWithCoupon: PXReviewViewModel?
     var instanceWithCustomSummaryRow: PXReviewViewModel?
 
-    var paymentData: PaymentData = PaymentData()
+    var paymentData: PXPaymentData = PXPaymentData()
 
     let mockPaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("paymentMethodId")
 
     override func setUp() {
 
-        let checkoutPref = CheckoutPreference()
+        let amountHelper = MockBuilder.buildAmountHelper()
+        paymentData = amountHelper.paymentData
 
-        checkoutPref.items = [Item(itemId: "12", title: "test", quantity: 1, unitPrice: 1000.0, description: "dummy", currencyId: "ARG")]
+        self.instance = PXReviewViewModel(amountHelper: amountHelper, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration(), userLogged: true)
 
-        self.instance = PXReviewViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
+        amountHelper.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        amountHelper.paymentData.payerCost = MockBuilder.buildInstallment().payerCosts[1]
+        amountHelper.paymentData.payerCost?.installments = 3
+        amountHelper.paymentData.setDiscount(MockBuilder.buildDiscount(), withCampaign: MockBuilder.buildCampaign())
+        amountHelper.paymentData.payer = MockBuilder.buildPayer()
 
-        paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
-        paymentData.payerCost = MockBuilder.buildInstallment().payerCosts[1]
-        paymentData.payerCost?.installments = 3
-        paymentData.discount = MockBuilder.buildDiscount()
-        paymentData.payer = MockBuilder.buildPayer("id")
+        self.instanceWithCoupon = PXReviewViewModel(amountHelper: amountHelper, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration(), userLogged: true)
 
-        self.instanceWithCoupon = PXReviewViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
-
-        let reviewScreenPreference = ReviewScreenPreference()
-
-        self.instanceWithCustomSummaryRow = PXReviewViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewScreenPreference: reviewScreenPreference)
-    }
-
-    func testIsLogged() {
-        MercadoPagoContext.setPayerAccessToken("")
-        XCTAssertFalse(self.instance!.isUserLogged())
-
-        MercadoPagoContext.setPayerAccessToken("sarasa")
-        XCTAssertTrue(self.instance!.isUserLogged())
+        self.instanceWithCustomSummaryRow = PXReviewViewModel(amountHelper: amountHelper, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration(), userLogged: true)
     }
 
     func testIsPaymentMethodSelectedCard() {
 
-    XCTAssertFalse(self.instance!.isPaymentMethodSelectedCard())
-
-        self.instance!.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("rapipago", name: "rapipago", paymentTypeId: PaymentTypeId.TICKET.rawValue)
+        self.instance!.amountHelper.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("rapipago", name: "rapipago", paymentTypeId: PXPaymentTypes.TICKET.rawValue)
         XCTAssertFalse(self.instance!.isPaymentMethodSelectedCard())
 
-        self.instance!.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "visa", paymentTypeId: PaymentTypeId.CREDIT_CARD.rawValue)
+        self.instance!.amountHelper.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "visa", paymentTypeId: PXPaymentTypes.CREDIT_CARD.rawValue)
         XCTAssertTrue(self.instance!.isPaymentMethodSelectedCard())
 
-        self.instance!.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("debmaster", name: "master", paymentTypeId: PaymentTypeId.DEBIT_CARD.rawValue)
+        self.instance!.amountHelper.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("debmaster", name: "master", paymentTypeId: PXPaymentTypes.DEBIT_CARD.rawValue)
         XCTAssertTrue(self.instance!.isPaymentMethodSelectedCard())
     }
 
     func testIsPaymentMethodSelected() {
 
-        self.instance!.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("rapipago", name: "rapipago", paymentTypeId: PaymentTypeId.TICKET.rawValue)
+        self.instance!.amountHelper.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("rapipago", name: "rapipago", paymentTypeId: PXPaymentTypes.TICKET.rawValue)
 
         XCTAssertTrue(self.instance!.isPaymentMethodSelected())
 
-        self.instance!.paymentData.paymentMethod = nil
+        self.instance!.amountHelper.paymentData.paymentMethod = nil
 
         XCTAssertFalse(self.instance!.isPaymentMethodSelected())
 
     }
 
     func testGetTotalAmount() {
-        let paymentMethodCreditCard = MockBuilder.buildPaymentMethod("master", name: "master", paymentTypeId: PaymentTypeId.CREDIT_CARD.rawValue)
-        self.instance!.paymentData.paymentMethod = paymentMethodCreditCard
-        self.instance!.paymentData.payerCost = MockBuilder.buildPayerCost()
-        self.instance!.paymentData.payerCost!.totalAmount = 10
+        let paymentMethodCreditCard = MockBuilder.buildPaymentMethod("master", name: "master", paymentTypeId: PXPaymentTypes.CREDIT_CARD.rawValue)
+        self.instance!.amountHelper.paymentData.paymentMethod = paymentMethodCreditCard
+        self.instance!.amountHelper.paymentData.payerCost = MockBuilder.buildPayerCost()
+        self.instance!.amountHelper.paymentData.payerCost!.totalAmount = 10
         var totalAmount = self.instance!.getTotalAmount()
-        XCTAssertEqual(totalAmount, self.instance!.paymentData.payerCost!.totalAmount)
+        XCTAssertEqual(totalAmount, self.instance!.amountHelper.paymentData.payerCost!.totalAmount)
 
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        self.instance!.preference = checkoutPreference
-        self.instance!.paymentData.payerCost = nil
+        self.instance!.amountHelper.paymentData.payerCost = nil
         totalAmount = self.instance!.getTotalAmount()
-        XCTAssertEqual(totalAmount, checkoutPreference.getAmount())
+        XCTAssertEqual(totalAmount, instance?.amountHelper.amountToPay)
 
         //Amount with discount
-        self.instanceWithCoupon?.paymentData.payerCost = nil
-        XCTAssertEqual(self.instanceWithCoupon?.getTotalAmount(), paymentData.discount?.newAmount())
+        self.instanceWithCoupon?.amountHelper.paymentData.payerCost = nil
+        XCTAssertEqual(self.instanceWithCoupon?.getTotalAmount(), instanceWithCoupon?.amountHelper.amountToPay)
     }
 
     func testShouldDisplayNoRate() {
@@ -101,39 +86,39 @@ class PXReviewViewModelTest: BaseTest {
         // PayerCost with installmentRate
         let payerCost = MockBuilder.buildPayerCost()
         payerCost.installmentRate = 10.0
-        self.instance!.paymentData.payerCost = payerCost
+        self.instance!.amountHelper.paymentData.payerCost = payerCost
         XCTAssertFalse(self.instance!.shouldDisplayNoRate())
 
         // PayerCost with no installmentRate but one installment
         let payerCostOneInstallment = MockBuilder.buildPayerCost()
         payerCostOneInstallment.installmentRate = 0.0
         payerCostOneInstallment.installments = 1
-        self.instance!.paymentData.payerCost = payerCostOneInstallment
+        self.instance!.amountHelper.paymentData.payerCost = payerCostOneInstallment
         XCTAssertFalse(self.instance!.shouldDisplayNoRate())
 
         // PayerCost with no installmentRate and few installments
         let payerCostWithNoRate = MockBuilder.buildPayerCost()
         payerCostWithNoRate.installmentRate = 0.0
         payerCostWithNoRate.installments = 6
-        self.instance!.paymentData.payerCost = payerCostWithNoRate
+        self.instance!.amountHelper.paymentData.payerCost = payerCostWithNoRate
         XCTAssertTrue(self.instance!.shouldDisplayNoRate())
     }
 
     func testCleanPaymentData() {
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!.paymentMethodId, "visa")
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.payerCost!.installments, 3)
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.payer!.email, "thisisanem@il.com")
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!.discountId, 123)
+        XCTAssertEqual(self.instanceWithCoupon!.amountHelper.paymentData.paymentMethod!.id, "visa")
+        XCTAssertEqual(self.instanceWithCoupon!.amountHelper.paymentData.payerCost!.installments, 3)
+        XCTAssertEqual(self.instanceWithCoupon!.amountHelper.paymentData.payer!.email, "thisisanem@il.com")
+        XCTAssertEqual(self.instanceWithCoupon!.amountHelper.paymentData.discount!.id, "123")
         let newPaymentData = self.instanceWithCoupon!.getClearPaymentData()
 
         XCTAssertNil(newPaymentData.paymentMethod)
         XCTAssertNil(newPaymentData.payerCost)
         XCTAssertEqual(newPaymentData.payer?.email, "thisisanem@il.com")
-        XCTAssertEqual(newPaymentData.discount!.discountId, 123)
+        XCTAssertEqual(newPaymentData.discount!.id, "123")
     }
 
     func getInvalidSummary() -> Summary {
-        let preference = ReviewScreenPreference()
+        let preference = PXReviewConfirmConfiguration()
         preference.addSummaryProductDetail(amount: 1000)
         preference.addSummaryProductDetail(amount: 20)
         preference.addSummaryTaxesDetail(amount: 190)
@@ -142,7 +127,7 @@ class PXReviewViewModelTest: BaseTest {
     }
 
     func getValidSummary() -> Summary {
-        let preference = ReviewScreenPreference()
+        let preference = PXReviewConfirmConfiguration()
         preference.addSummaryProductDetail(amount: 500)
         preference.addSummaryProductDetail(amount: 200)
         preference.addSummaryTaxesDetail(amount: 200)
@@ -151,7 +136,7 @@ class PXReviewViewModelTest: BaseTest {
     }
 
     func getValidSummaryWithoutProductDetail() -> Summary {
-        let preference = ReviewScreenPreference()
+        let preference = PXReviewConfirmConfiguration()
         preference.addSummaryTaxesDetail(amount: 900)
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
@@ -163,12 +148,12 @@ class PXReviewViewModelTest: BaseTest {
 extension PXReviewViewModelTest {
 
     func testShouldShowTermsAndConditions() {
-        MercadoPagoContext.setPayerAccessToken("")
+        instance?.userLogged = false
         XCTAssertTrue(self.instance!.shouldShowTermsAndCondition())
     }
 
     func testShouldHideTermsAndConditions() {
-        MercadoPagoContext.setPayerAccessToken("123")
+        instance?.userLogged = true
         XCTAssertFalse(self.instance!.shouldShowTermsAndCondition())
     }
 }

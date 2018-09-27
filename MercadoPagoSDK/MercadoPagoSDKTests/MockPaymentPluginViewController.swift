@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+@testable import MercadoPagoSDKV4
+
 open class MockPaymentPluginViewController: UIViewController {
 
     init() {
@@ -21,7 +23,14 @@ open class MockPaymentPluginViewController: UIViewController {
 }
 
 // MARK: - Plugin implementation delegates.
-extension MockPaymentPluginViewController: PXPaymentPluginComponent {
+extension MockPaymentPluginViewController: PXPaymentProcessor {
+    public func paymentProcessorViewController() -> UIViewController? {
+        return nil
+    }
+
+    public func support() -> Bool {
+        return true
+    }
 
     public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
         return self.view

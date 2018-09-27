@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 
+@testable import MercadoPagoSDKV4
+
 class PXHookDataTest: BaseTest {
 
     func test_addData() {

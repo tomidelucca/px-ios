@@ -131,7 +131,7 @@ extension PXPaymentMethod: Cellable {
 
     internal func secCodeLenght(_ bin: String? = nil) -> Int {
         if let bin = bin {
-            var binSettings: [PXSetting]? = nil
+            var binSettings: [PXSetting]?
             binSettings = PXSetting.getSettingByBin(self.settings, bin: bin)
             if let firstSetting = binSettings?.first {
                 return firstSetting.securityCode?.length ?? 3
@@ -225,7 +225,7 @@ extension PXPaymentMethod: Cellable {
     // COLORS
     // First Color
     internal func getColor(bin: String?) -> UIColor {
-        var settings: [PXSetting]? = nil
+        var settings: [PXSetting]?
 
         if let bin = bin {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
@@ -235,7 +235,7 @@ extension PXPaymentMethod: Cellable {
     }
     // Font Color
     internal func getFontColor(bin: String?) -> UIColor {
-        var settings: [PXSetting]? = nil
+        var settings: [PXSetting]?
 
         if let bin = bin {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
@@ -245,7 +245,7 @@ extension PXPaymentMethod: Cellable {
     }
     // Edit Font Color
     internal func getEditingFontColor(bin: String?) -> UIColor {
-        var settings: [PXSetting]? = nil
+        var settings: [PXSetting]?
 
         if let bin = bin {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
@@ -257,7 +257,7 @@ extension PXPaymentMethod: Cellable {
     // MASKS
     // Label Mask
     internal func getLabelMask(bin: String?) -> String {
-        var settings: [PXSetting]? = nil
+        var settings: [PXSetting]?
 
         if let bin = bin {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)
@@ -266,7 +266,7 @@ extension PXPaymentMethod: Cellable {
     }
     // Edit Text Mask
     internal func getEditTextMask(bin: String?) -> String {
-        var settings: [PXSetting]? = nil
+        var settings: [PXSetting]?
 
         if let bin = bin {
             settings = PXSetting.getSettingByBin(self.settings, bin: bin)

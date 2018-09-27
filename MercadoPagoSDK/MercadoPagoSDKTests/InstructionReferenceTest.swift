@@ -7,13 +7,12 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class InstructionReferenceTest: BaseTest {
 
     func testGetFullReferenceValue() {
-        let instructionReference = InstructionReference()
-        instructionReference.separator = ""
-        instructionReference.value = ["1", "2", "3"]
+        let instructionReference = PXInstructionReference(label: nil, fieldValue: ["1", "2", "3"], separator: "", comment: nil)
         var result = instructionReference.getFullReferenceValue()
         XCTAssertEqual(result, "123")
 

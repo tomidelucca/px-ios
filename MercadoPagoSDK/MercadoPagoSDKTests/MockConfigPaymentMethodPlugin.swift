@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+@testable import MercadoPagoSDKV4
+
 open class MockConfigPaymentMethodPlugin: UIViewController {
 
     var shouldSkip = false
@@ -24,13 +26,16 @@ open class MockConfigPaymentMethodPlugin: UIViewController {
 }
 
 // MARK: - Plugin implementation delegates.
-extension MockConfigPaymentMethodPlugin: PXConfigPluginComponent {
+extension MockConfigPaymentMethodPlugin: PXPaymentMethodConfigProtocol {
+    public func configViewController() -> UIViewController? {
+        return nil
+    }
 
     public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
         return self.view
     }
 
-    public func shouldSkip(pluginStore: PXCheckoutStore) -> Bool {
+    public func shouldSkip(store pluginStore: PXCheckoutStore) -> Bool {
         return shouldSkip
     }
 }

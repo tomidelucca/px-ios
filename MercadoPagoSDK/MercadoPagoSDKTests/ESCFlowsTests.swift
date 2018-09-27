@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class ESCFlowsTests: BaseTest {
 
@@ -14,14 +15,13 @@ class ESCFlowsTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
-        mpCheckout.viewModel.mpESCManager = MercadoPagoESCImplementationTest()
+        let mercadoPagoBuilder = MercadoPagoCheckoutBuilder(publicKey: "public_key", checkoutPreference: MockBuilder.buildCheckoutPreference(), paymentConfiguration: MockBuilder.buildPXPaymentConfiguration())
 
-        let flowPreference = FlowPreference()
-        flowPreference.enableESC()
+        mercadoPagoBuilder.setPrivateKey(key: "acess_token")
 
-        MercadoPagoCheckout.setFlowPreference(flowPreference)
+        mpCheckout = MercadoPagoCheckout(builder: mercadoPagoBuilder)
+
+        mpCheckout.viewModel.mpESCManager = MercadoPagoESCImplementationTest(escEnable: true)
     }
 
     func testEntireFlowWithCustomerCardWithESCNoError() {
@@ -31,12 +31,13 @@ class ESCFlowsTests: BaseTest {
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
         // Simular api call a grupos
         let customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PXPaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
@@ -104,12 +105,13 @@ class ESCFlowsTests: BaseTest {
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
         // Simular api call a grupos
         let customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PXPaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
@@ -177,12 +179,13 @@ class ESCFlowsTests: BaseTest {
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
         // Simular api call a grupos
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PXPaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
@@ -257,12 +260,13 @@ class ESCFlowsTests: BaseTest {
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
         // Simular api call a grupos
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PXPaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
@@ -356,12 +360,13 @@ class ESCFlowsTests: BaseTest {
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
         // Simular api call a grupos
         var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PXPaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
@@ -444,20 +449,21 @@ class ESCFlowsTests: BaseTest {
 
     func testEntireFlowWithCustomerCardWithESCNoErrorFlowPreferenceDisable() {
 
-        let flowPreference = MockBuilder.buildFlowPreferenceWithoutESC()
-        MercadoPagoCheckout.setFlowPreference(flowPreference)
+        mpCheckout.viewModel.mpESCManager = MercadoPagoESCImplementationTest(escEnable: false)
 
+        // NO ESC
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Start
         var step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.START, step)
+        mpCheckout.viewModel.initFlow?.finishFlow()
 
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
 
         // Simular api call a grupos
-        var customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        let customerCardOption = MockBuilder.buildCustomerPaymentMethodWithESC(paymentMethodId: "visa")
+        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PXPaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
         let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups: [creditCardOption], paymentMethods: [paymentMethodVisa], customOptions: [customerCardOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
@@ -520,8 +526,18 @@ class ESCFlowsTests: BaseTest {
 }
 open class MercadoPagoESCImplementationTest: NSObject, MercadoPagoESC {
 
+    var escEnable: Bool = true
+
+    init(escEnable: Bool) {
+        self.escEnable = escEnable
+    }
+
+    public func getSavedCardIds() -> [String] {
+        return []
+    }
+
     public func hasESCEnable() -> Bool {
-        return MercadoPagoCheckoutViewModel.flowPreference.isESCEnable()
+        return escEnable
     }
 
     public func getESC(cardId: String) -> String? {
