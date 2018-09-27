@@ -784,6 +784,8 @@ extension MercadoPagoCheckoutViewModel {
             self.paymentFlow = paymentFlow
             return paymentFlow
         }
+        paymentFlow.model.paymentData = paymentData
+        paymentFlow.model.checkoutPreference = checkoutPreference
         return paymentFlow
     }
 }
