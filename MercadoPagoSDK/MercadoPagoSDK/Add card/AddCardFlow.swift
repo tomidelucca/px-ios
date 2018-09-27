@@ -152,7 +152,8 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.model.tokenizedCard = token
             self?.executeNextStep()
             }, failure: {[weak self] (error) in
-                if error.code == ErrorTypes.NO_INTERNET_ERROR {
+                let reachabilityManager = MPXReach()
+                if reachabilityManager.connectionStatus().description == ReachabilityStatus.offline.description {
                     self?.model.lastStepFailed = true
                     let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
                     self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
