@@ -17,7 +17,7 @@ class AddCardFlowModel: NSObject, PXFlowModel {
     var tokenizedCard: PXToken?
     var lastStepFailed = false
 
-    enum Steps {
+    enum Steps : Int {
         case start
         case getPaymentMethods
         case getIdentificationTypes
@@ -68,7 +68,9 @@ class AddCardFlowModel: NSObject, PXFlowModel {
     }
     
     func reset() {
-        self.currentStep = .openCardForm
+        if self.currentStep.rawValue > AddCardFlowModel.Steps.openCardForm.rawValue {
+            self.currentStep = .openCardForm
+        }
         self.cardToken = nil
         self.selectedPaymentMethod = nil
         self.tokenizedCard = nil

@@ -81,8 +81,8 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.model.paymentMethods = paymentMethods
             self?.executeNextStep()
         }) { [weak self] (error) in
+            self?.model.lastStepFailed = true
             if error.code == ErrorTypes.NO_INTERNET_ERROR {
-                self?.model.lastStepFailed = true
                 let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_PAYMENT_METHODS.rawValue)
                 self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
                     self?.finish()
@@ -99,8 +99,8 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.model.identificationTypes = identificationTypes
             self?.executeNextStep()
         }, failure: { [weak self] error in
+            self?.model.lastStepFailed = true
             if error.code == ErrorTypes.NO_INTERNET_ERROR {
-                self?.model.lastStepFailed = true
                 let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_IDENTIFICATION_TYPES.rawValue)
                 self?.navigationHandler.showErrorScreen(error: sdkError, callbackCancel: {
                     self?.finish()
@@ -194,10 +194,7 @@ public class AddCardFlow: NSObject, PXFlow {
     private func showCongrats() {
         let viewModel = PXResultAddCardSuccessViewModel(buttonCallback: { [weak self] in
             self?.delegate?.addCardFlowSucceded()
-            self?.reset()
-        }, linkCallback: { [weak self] in
-            self?.delegate?.addCardFlowSucceded()
-            self?.popToRoot()
+            self?.popToRoot(animated: true)
         })
         let congratsVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
         }
@@ -213,7 +210,7 @@ public class AddCardFlow: NSObject, PXFlow {
         let viewModel = PXResultAddCardFailedViewModel(buttonCallback: { [weak self] in
             self?.reset()
             }, linkCallback: { [weak self] in
-                self?.popToRoot()
+                self?.popToRoot(animated: true)
         })
         let failVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
         }
@@ -224,9 +221,13 @@ public class AddCardFlow: NSObject, PXFlow {
         NotificationCenter.default.post(name: .cardFormReset, object: nil)
         if let cardForm = self.navigationHandler.navigationController.viewControllers.filter({$0 is CardFormViewController}).first {
             self.navigationHandler.navigationController.popToViewController(cardForm, animated: true)
+            self.model.reset()
+        } else {
+            self.popToRoot(animated: false)
+            self.model.reset()
+            self.executeNextStep()
         }
         self.navigationHandler.navigationController.setNavigationBarHidden(false, animated: true)
-        self.model.reset()
     }
     
     @objc private func goBack() {
@@ -234,8 +235,8 @@ public class AddCardFlow: NSObject, PXFlow {
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
     }
     
-    @objc private func popToRoot() {
-        self.navigationHandler.goToRootViewController()
+    @objc private func popToRoot(animated: Bool) {
+        self.navigationHandler.goToRootViewController(animated: animated)
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
     }
 
