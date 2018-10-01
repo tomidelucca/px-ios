@@ -85,27 +85,27 @@ extension PXPayer {
     open func getEmail() -> String {
         return email
     }
-    
+
     @objc
     open func getId() -> String? {
         return id
     }
-    
+
     @objc
     open func getIdentification() -> PXIdentification? {
         return identification
     }
-    
+
     @objc
     open func getEntityType() -> String? {
         return entityType
     }
-    
+
     @objc
     open func getFirstName() -> String? {
         return firstName
     }
-    
+
     @objc
     open func getLastName() -> String? {
         return lastName

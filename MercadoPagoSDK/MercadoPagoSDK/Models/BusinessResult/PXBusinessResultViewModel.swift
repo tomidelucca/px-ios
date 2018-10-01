@@ -91,8 +91,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildBodyComponent() -> PXComponentizable? {
-        var pmComponent: PXComponentizable? = nil
-        var helpComponent: PXComponentizable? = nil
+        var pmComponent: PXComponentizable?
+        var helpComponent: PXComponentizable?
 
         if self.businessResult.mustShowPaymentMethod() {
             pmComponent =  getPaymentMethodComponent()
@@ -121,7 +121,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = SiteManager.shared.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.amountHelper.amountToPay, forCurrency: currency)
-        var subtitle: NSMutableAttributedString?  = nil
+        var subtitle: NSMutableAttributedString?
         if let payerCost = self.paymentData.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
@@ -152,7 +152,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
         let issuer = self.paymentData.getIssuer()
         let paymentMethodIssuerName = issuer?.name ?? ""
-        var descriptionDetail: NSAttributedString? = nil
+        var descriptionDetail: NSAttributedString?
 
         if pm.isCard {
             if let lastFourDigits = (self.paymentData.token?.lastFourDigits) {
@@ -165,7 +165,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             pmDescription = paymentMethodName
         }
 
-        var disclaimerText: String? = nil
+        var disclaimerText: String?
         if let statementDescription = self.businessResult.getStatementDescription() {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }

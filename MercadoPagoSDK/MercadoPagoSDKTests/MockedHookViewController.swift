@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+@testable import MercadoPagoSDKV4
 
 open class MockedHookViewController: UIViewController {
 

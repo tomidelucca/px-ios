@@ -29,18 +29,19 @@ internal class RealTimeStrategy: TrackingStrategy { // V1
         }
         jsonBody["events"] = arrayEvents
 
-        let body = JSONHandler.jsonCoding(jsonBody)
         let params = "public_key=\(MPXTracker.sharedInstance.public_key)"
         let header: [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
 
-        TrackingServices.request(url: PXTrackingURLConfigs.TRACKING_URL, params: params, body: body, method: "POST", headers: header, success: { (result) -> Void in
-        }) { (error) -> Void in
-        }
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: jsonBody)
+
+        let service = MercadoPagoService(baseURL: PXTrackingURLConfigs.TRACKING_URL)
+        service.request(uri: "", params: params, body: jsonData, method: .post, headers: header, success: { (_) in
+
+        }, failure: nil)
     }
 }
 
 internal class BatchStrategy: TrackingStrategy { // V2
-
     internal func trackScreen(screenTrack: MPTScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
         attemptSendTrackInfo()
@@ -70,20 +71,22 @@ internal class BatchStrategy: TrackingStrategy { // V2
             arrayEvents.append(elementToTrack.toJSON())
         }
         jsonBody["events"] = arrayEvents
-        let body = JSONHandler.jsonCoding(jsonBody)
         let params = "public_key=\(MPXTracker.sharedInstance.public_key)"
         let header: [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
 
-        TrackingServices.request(url: PXTrackingURLConfigs.TRACKING_URL, params: params, body: body, method: "POST", headers: header, success: { (result) -> Void in
-        }) { (error) -> Void in
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: jsonBody)
+
+        let service = MercadoPagoService(baseURL: PXTrackingURLConfigs.TRACKING_URL)
+        service.request(uri: "", params: params, body: jsonData, method: .post, headers: header, success: { (_) in
+
+        }, failure: {(_) -> Void in
             TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
-        }
+        })
     }
 
 }
 
 internal class ForceTrackStrategy: TrackingStrategy { // V2
-
     internal func trackScreen(screenTrack: MPTScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
         attemptSendTrackInfo(force: true)
@@ -114,14 +117,17 @@ internal class ForceTrackStrategy: TrackingStrategy { // V2
             arrayEvents.append(elementToTrack.toJSON())
         }
         jsonBody["events"] = arrayEvents
-        let body = JSONHandler.jsonCoding(jsonBody)
         let params = "public_key=\(MPXTracker.sharedInstance.public_key)"
         let header: [String: String] = [PXTrackingURLConfigs.headerEventTracking: PXTrackingSettings.eventsTrackingVersion]
 
-        TrackingServices.request(url: PXTrackingURLConfigs.TRACKING_URL, params: params, body: body, method: "POST", headers: header, success: { (result) -> Void in
-        }) { (error) -> Void in
+        let jsonData: Data? = try? JSONSerialization.data(withJSONObject: jsonBody)
+
+        let service = MercadoPagoService(baseURL: PXTrackingURLConfigs.TRACKING_URL)
+        service.request(uri: "", params: params, body: jsonData, method: .post, headers: header, success: { (_) in
+
+        }, failure: {(_) -> Void in
             TrackStorageManager.persist(screenTrackInfoArray: trackList) // Vuelve a guardar los tracks que no se pudieron trackear
-        }
+        })
     }
 
 }

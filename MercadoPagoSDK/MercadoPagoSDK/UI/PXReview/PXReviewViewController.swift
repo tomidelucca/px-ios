@@ -32,7 +32,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
-    internal var changePaymentMethodCallback: (() -> Void)? = nil
+    internal var changePaymentMethodCallback: (() -> Void)?
 
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
@@ -238,6 +238,8 @@ extension PXReviewViewController {
             if let reviewViewModel = self?.viewModel {
                 self?.viewModel.trackChangePaymentMethodEvent()
                 if let callBackAction = self?.changePaymentMethodCallback {
+                    PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
+                    PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
                     callBackAction()
                 } else {
                     self?.callbackPaymentData(reviewViewModel.getClearPaymentData())

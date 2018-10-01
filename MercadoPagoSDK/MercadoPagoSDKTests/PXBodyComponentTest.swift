@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 
+@testable import MercadoPagoSDKV4
+
 class PXBodyComponentTest: BaseTest {
 
     // MARK: APPROVED - CARD
@@ -22,7 +24,7 @@ class PXBodyComponentTest: BaseTest {
 
         // Then:
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
-        XCTAssertEqual(paymentMethodView.titleLabel?.text, "$ 1.000")
+        XCTAssertEqual(paymentMethodView.titleLabel?.text, "$ 10")
         XCTAssertEqual(paymentMethodView.subtitleLabel?.text, nil)
         XCTAssertEqual(paymentMethodView.descriptionTitleLabel?.text?.localized, "visa " + "terminada en ".localized + "1234")
         XCTAssertEqual(paymentMethodView.descriptionDetailLabel?.text, "name")
@@ -40,7 +42,7 @@ class PXBodyComponentTest: BaseTest {
 
         // Then:
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
-        XCTAssertEqual(paymentMethodView.titleLabel?.text, "$ 1.000")
+        XCTAssertEqual(paymentMethodView.titleLabel?.text, "$ 10")
         XCTAssertNil(paymentMethodView.subtitleLabel?.text)
         XCTAssertEqual(paymentMethodView.descriptionTitleLabel?.text, "account_money")
         XCTAssertNil(paymentMethodView.descriptionDetailLabel?.text)
@@ -61,7 +63,7 @@ class PXBodyComponentTest: BaseTest {
 
     func testBodyView_rejectedC4AuthCardPayment_render() throws {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: RejectedStatusDetail.CALL_FOR_AUTH)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue)
 
         // When:
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
@@ -82,7 +84,7 @@ class PXBodyComponentTest: BaseTest {
 
     func testBodyView_rejectedInsufficientAmountCardPayment_render() throws {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: RejectedStatusDetail.INSUFFICIENT_AMOUNT)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue)
 
         // When:
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
@@ -101,7 +103,7 @@ class PXBodyComponentTest: BaseTest {
 
     func testBodyView_rejectedDuplicatedPaymentCardPayment_render() throws {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: RejectedStatusDetail.DUPLICATED_PAYMENT)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: PXRejectedStatusDetail.DUPLICATED_PAYMENT.rawValue)
 
         // When:
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
@@ -119,7 +121,7 @@ class PXBodyComponentTest: BaseTest {
 
     func testBodyView_rejectedCardDisableCardPayment_render() throws {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: RejectedStatusDetail.CARD_DISABLE)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: PXRejectedStatusDetail.CARD_DISABLE.rawValue)
 
         // When:
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
@@ -150,7 +152,7 @@ class PXBodyComponentTest: BaseTest {
 
     func testBodyView_pendingContingencyCardPayment_render() throws {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "pending", statusDetail: PendingStatusDetail.CONTINGENCY)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "pending", statusDetail: PXPendingStatusDetail.CONTINGENCY.rawValue)
 
         // When:
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
@@ -169,7 +171,7 @@ class PXBodyComponentTest: BaseTest {
 
     func testBodyView_pendingReviewManualCardPayment_render() throws {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "pending", statusDetail: PendingStatusDetail.REVIEW_MANUAL)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "pending", statusDetail: PXPendingStatusDetail.REVIEW_MANUAL.rawValue)
 
         // When:
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
@@ -243,7 +245,7 @@ class PXBodyComponentTest: BaseTest {
         XCTAssertNotNil(accreditationTimeView.accreditationMessageLabel)
         let text = "Assim que você pagar, será aprovado automaticamente entre 1 e 2 dias úteis, mas considere: Em caso de feriados, será identificado até às 18h do segundo dia útil subsequente ao feriado."
         let clockImage = NSTextAttachment()
-        clockImage.image = MercadoPago.getImage("iconTime")
+        clockImage.image = ResourceManager.shared.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
         let labelAttributedString = NSMutableAttributedString(string: String(describing: " "+text))
         labelAttributedString.insert(clockAttributedString, at: 0)
@@ -334,7 +336,7 @@ class PXBodyComponentTest: BaseTest {
         XCTAssertNotNil(accreditationTimeView.accreditationMessageLabel)
         let text = "Assim que você pagar, será aprovado automaticamente entre 1 e 2 dias úteis, mas considere: Em caso de feriados, será identificado até às 18h do segundo dia útil subsequente ao feriado."
         let clockImage = NSTextAttachment()
-        clockImage.image = MercadoPago.getImage("iconTime")
+        clockImage.image = ResourceManager.shared.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
         let labelAttributedString = NSMutableAttributedString(string: String(describing: " "+text))
         labelAttributedString.insert(clockAttributedString, at: 0)

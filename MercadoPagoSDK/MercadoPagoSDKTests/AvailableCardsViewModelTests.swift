@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class AvailableCardsViewModelTests: BaseTest {
 
@@ -14,7 +15,7 @@ class AvailableCardsViewModelTests: BaseTest {
         var paymentMethodsCount: CGFloat = 3.0
         let headerHeight: CGFloat = 105.0
         let paymentMethodsHeight: CGFloat = 40.0
-        let viewModel = AvailableCardsViewModel(paymentMethods: [PaymentMethod]())
+        let viewModel = AvailableCardsViewModel(paymentMethods: [PXPaymentMethod]())
 
         var expectedTotalHeight = headerHeight + paymentMethodsHeight * paymentMethodsCount
         XCTAssertEqual(viewModel.getAvailableCardsViewTotalHeight(headerHeight: headerHeight, paymentMethodsHeight: paymentMethodsHeight, paymentMethodsCount: paymentMethodsCount), expectedTotalHeight)

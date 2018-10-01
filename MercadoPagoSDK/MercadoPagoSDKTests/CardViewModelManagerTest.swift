@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import MercadoPagoSDKV4
 
 class CardViewModelManagerTest: BaseTest {
 
@@ -14,9 +15,7 @@ class CardViewModelManagerTest: BaseTest {
 
     override func setUp() {
         super.setUp()
-        // Retomar valor default
-        CardFormViewController.showBankDeals = true
-        self.cardFormManager = CardFormViewModel(paymentMethods: [], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+        self.cardFormManager = CardFormViewModel(paymentMethods: [], mercadoPagoServicesAdapter: MockBuilder.buildMercadoPagoServicesAdapter(), bankDealsEnabled: true)
     }
 
     override func tearDown() {
@@ -35,8 +34,7 @@ class CardViewModelManagerTest: BaseTest {
 
     func testCvvLengthCustomerCardLength () {
         let customerCard = MockBuilder.buildCard()
-        let securityCode = SecurityCode()
-        securityCode.length = 4
+        let securityCode = PXSecurityCode(cardLocation: "back", mode: "mode", length: 4)
         customerCard.securityCode = securityCode
 
         self.cardFormManager?.customerCard = customerCard
@@ -46,10 +44,7 @@ class CardViewModelManagerTest: BaseTest {
 
     func testCvvLengthPaymentMethodSettingLength() {
         let paymentMethod = MockBuilder.buildPaymentMethod("amex")
-        let setting = Setting()
-        setting.securityCode = SecurityCode()
-        setting.securityCode.length = 4
-        setting.securityCode.cardLocation = "front"
+        let setting = PXSetting(bin: nil, cardNumber: nil, securityCode: PXSecurityCode(cardLocation: "front", mode: "mode", length: 4))
         paymentMethod.settings = [setting]
         self.cardFormManager?.guessedPMS = [paymentMethod]
 
@@ -124,7 +119,7 @@ class CardViewModelManagerTest: BaseTest {
 
     func testShowBankDeals_promosLoadedHidePromosByUser() {
         self.cardFormManager!.promos = [MockBuilder.buildPXBankDeal()]
-        CardFormViewController.showBankDeals = false
+        cardFormManager?.bankDealsEnabled = false
         let result = self.cardFormManager!.showBankDeals()
         XCTAssertFalse(result)
     }
@@ -183,7 +178,7 @@ class CardViewModelManagerTest: BaseTest {
         self.cardFormManager?.customerCard = customerCard
         self.cardFormManager!.buildSavedCardToken("cvv")
 
-        let savedCardToken = self.cardFormManager!.cardToken as! SavedCardToken
+        let savedCardToken = self.cardFormManager!.cardToken as! PXSavedCardToken
         let savedCardtokenCardId = savedCardToken.cardId
         XCTAssertEqual(savedCardtokenCardId, customerCard.getCardId())
         XCTAssertEqual(savedCardToken.securityCode, "cvv")
@@ -204,14 +199,14 @@ class CardViewModelManagerTest: BaseTest {
         let amex = MockBuilder.buildPaymentMethod("amex", paymentTypeId: "credit_card")
         let visa = MockBuilder.buildPaymentMethod("visa", paymentTypeId: "credit_card")
         let master = MockBuilder.buildPaymentMethod("master")
-        let cardViewModel = CardFormViewModel(paymentMethods: [amex, visa, master], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+        let cardViewModel = CardFormViewModel(paymentMethods: [amex, visa, master], mercadoPagoServicesAdapter: MockBuilder.buildMercadoPagoServicesAdapter(), bankDealsEnabled: true)
         XCTAssertEqual(cardViewModel.getPaymentMethodTypeId(), "credit_card")
     }
 
     func testCardTypeDebit() {
         let debVisa = MockBuilder.buildPaymentMethod("debvisa", paymentTypeId: "debit_card")
         let debMaster = MockBuilder.buildPaymentMethod("debmaster", paymentTypeId: "debit_card")
-        let cardViewModel = CardFormViewModel(paymentMethods: [debVisa, debMaster], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+        let cardViewModel = CardFormViewModel(paymentMethods: [debVisa, debMaster], mercadoPagoServicesAdapter: MockBuilder.buildMercadoPagoServicesAdapter(), bankDealsEnabled: true)
         XCTAssertEqual(cardViewModel.getPaymentMethodTypeId(), "debit_card")
 
     }
@@ -219,7 +214,7 @@ class CardViewModelManagerTest: BaseTest {
     func testNoCardType() {
         let debVisa = MockBuilder.buildPaymentMethod("amex", paymentTypeId: "credit_card")
         let debMaster = MockBuilder.buildPaymentMethod("debmaster", paymentTypeId: "debit_card")
-        let cardViewModel = CardFormViewModel(paymentMethods: [debVisa, debMaster], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter())
+        let cardViewModel = CardFormViewModel(paymentMethods: [debVisa, debMaster], mercadoPagoServicesAdapter: MockBuilder.buildMercadoPagoServicesAdapter(), bankDealsEnabled: true)
         XCTAssertNil(cardViewModel.getPaymentMethodTypeId())
     }
 
@@ -241,7 +236,7 @@ class CardViewModelManagerTest: BaseTest {
         XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), message + "Visa")
         paymentMethods[0].name = ""
         XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
-        let emptyPaymentMethods = [PaymentMethod]()
+        let emptyPaymentMethods = [PXPaymentMethod]()
         cardFormManager?.paymentMethods = emptyPaymentMethods
          XCTAssertEqual(cardFormManager!.getOnlyOneCardAvailableMessage(), defaultMessage)
     }

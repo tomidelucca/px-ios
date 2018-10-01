@@ -160,13 +160,13 @@ extension InitFlowModel {
             return .SERVICE_PAYMENT_METHOD_PLUGIN_INIT
         }
 
-        if needSearch() {
-            return .SERVICE_GET_PAYMENT_METHODS
-        }
-
         if needToSearchDirectDiscount() {
             directDiscountSearchStatus = true
             return .SERVICE_GET_DIRECT_DISCOUNT
+        }
+
+        if needSearch() {
+            return .SERVICE_GET_PAYMENT_METHODS
         }
 
         return .FINISH

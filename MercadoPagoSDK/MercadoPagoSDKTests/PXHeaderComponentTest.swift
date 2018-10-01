@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 
+@testable import MercadoPagoSDKV4
+
 class PXHeaderComponentTest: BaseTest {
 
     // MARK: APPROVED - CARD
@@ -20,8 +22,8 @@ class PXHeaderComponentTest: BaseTest {
         let headerView = ResultMockComponentHelper.buildHeaderView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("default_item_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("ok_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized)
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.successColor())
@@ -35,8 +37,8 @@ class PXHeaderComponentTest: BaseTest {
         let headerView = ResultMockComponentHelper.buildHeaderView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("default_item_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("ok_badge"))
         XCTAssertEqual(headerView.statusLabel?.text, ResultMockComponentHelper.approvedLabelDummy)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, ResultMockComponentHelper.approvedTitleDummy)
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.successColor())
@@ -51,8 +53,8 @@ class PXHeaderComponentTest: BaseTest {
         let headerView = ResultMockComponentHelper.buildHeaderView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("default_item_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("ok_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized)
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.successColor())
@@ -68,8 +70,8 @@ class PXHeaderComponentTest: BaseTest {
 
         // Then:
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.rejectedColor())
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("error_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("card_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("error_badge"))
         XCTAssertEqual(headerView.statusLabel?.attributedText?.string, PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized)
     }
 
@@ -82,23 +84,23 @@ class PXHeaderComponentTest: BaseTest {
 
         // Then:
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.rejectedColor())
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("error_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("card_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("error_badge"))
         XCTAssertEqual(headerView.statusLabel?.attributedText?.string, PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, ResultMockComponentHelper.rejectedTitleDummy)
     }
 
     func testHeaderView_rejectedC4AuthCardPayment_render() {
         // Given:
-        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: RejectedStatusDetail.CALL_FOR_AUTH)
+        let resultViewModel = ResultMockComponentHelper.buildResultViewModel(status: "rejected", statusDetail: PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue)
 
         // When:
         let headerView = ResultMockComponentHelper.buildHeaderView(resultViewModel: resultViewModel)
 
         // Then:
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.warningColor())
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("need_action_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("card_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("need_action_badge"))
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, resultViewModel.getTitleForCallForAuth(resultViewModel.paymentResult.paymentData!.paymentMethod!).string)
     }
 
@@ -112,8 +114,8 @@ class PXHeaderComponentTest: BaseTest {
 
         // Then:
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.successColor())
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("pending_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("card_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("pending_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized.localized)
     }
@@ -127,8 +129,8 @@ class PXHeaderComponentTest: BaseTest {
 
         // Then:
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.successColor())
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("pending_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("card_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("pending_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized.localized)
     }
@@ -142,8 +144,8 @@ class PXHeaderComponentTest: BaseTest {
         let headerView = ResultMockComponentHelper.buildHeaderView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
-        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("pending_badge"))
+        XCTAssertEqual(headerView.circleImage?.image, ResourceManager.shared.getImage("card_icon"))
+        XCTAssertEqual(headerView.badgeImage?.image, ResourceManager.shared.getImage("pending_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, resultViewModel.titleForInstructions().string)
         XCTAssertEqual(headerView.backgroundColor, ThemeManager.shared.successColor())
