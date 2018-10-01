@@ -1,4 +1,4 @@
-![Screenshot iOS](https://i.imgur.com/7nDmBpl.jpg)
+![Screenshot iOS](https://i.imgur.com/Ylr1Ck6.jpg)
 <p align="center">
     <a href="https://travis-ci.org/mercadopago/px-ios">
       <img src="https://img.shields.io/travis/mercadopago/px-ios.svg">
