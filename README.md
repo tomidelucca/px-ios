@@ -5,7 +5,7 @@
     </a>
     <img src="https://img.shields.io/badge/Swift-4.1-orange.svg" />
     <a href="https://cocoapods.org/pods/MercadoPagoSDK">
-        <img src="https://img.shields.io/cocoapods/v/px-ios.svg" alt="CocoaPods" />
+        <img src="https://img.shields.io/cocoapods/v/MercadoPagoSDK.svg" alt="CocoaPods" />
     </a>
     <a href="https://cocoapods.org/pods/MercadoPagoSDK">
         <img src="https://img.shields.io/cocoapods/dt/MercadoPagoSDK.svg?style=flat" alt="CocoaPods downloads" />
