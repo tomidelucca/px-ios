@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Default'
 
   s.subspec 'Default' do |default|
-    default.resources = ['MercadoPagoSDK/*.xcassets','MercadoPagoSDK/*/*.xcassets', 'MercadoPagoSDK/*.ttf', 'MercadoPagoSDK/**/**.{xib,strings}', 'MercadoPagoSDK/Translations/**/**.{plist,strings}', 'MercadoPagoSDK/Plist/*.plist', 'MercadoPagoSDK/*.lproj']
-    default.source_files = ['MercadoPagoSDK/**/**/**.{h,m,swift}']
+    default.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets','MercadoPagoSDK/MercadoPagoSDK/*/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf', 'MercadoPagoSDK/MercadoPagoSDK/**/**.{xib,strings}', 'MercadoPagoSDK/MercadoPagoSDK/Translations/**/**.{plist,strings}', 'MercadoPagoSDK/MercadoPagoSDK/Plist/*.plist', 'MercadoPagoSDK/MercadoPagoSDK/*.lproj']
+    default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     s.dependency 'MLUI', '~> 5.0'
   end
 
