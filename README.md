@@ -4,11 +4,11 @@
       <img src="https://img.shields.io/travis/mercadopago/px-ios.svg">
     </a>
     <img src="https://img.shields.io/badge/Swift-4.1-orange.svg" />
-    <a href="https://cocoapods.org/pods/MercadoPagoSDKV4">
+    <a href="https://cocoapods.org/pods/MercadoPagoSDK">
         <img src="https://img.shields.io/cocoapods/v/px-ios.svg" alt="CocoaPods" />
     </a>
-    <a href="https://cocoapods.org/pods/MercadoPagoSDKV4">
-        <img src="https://img.shields.io/cocoapods/dt/MercadoPagoSDKV4.svg?style=flat" alt="CocoaPods downloads" />
+    <a href="https://cocoapods.org/pods/MercadoPagoSDK">
+        <img src="https://img.shields.io/cocoapods/dt/MercadoPagoSDK.svg?style=flat" alt="CocoaPods downloads" />
     </a>
    
 </p>
@@ -20,7 +20,7 @@
 Edit your `Podfile` and specify the dependency:
 
 ```ruby
-pod 'MercadoPagoSDKV4', '~> 4.0'
+pod 'MercadoPagoSDK', '~> 4.0'
 ```
 
 ## 🌟 Features
@@ -36,11 +36,11 @@ pod 'MercadoPagoSDKV4', '~> 4.0'
 - [x] Support to create your own custom Payment Method
 
 ## 🐒 How to use
-Only **3** steps needed to create a basic checkout using `MercadopagoSDKV4`:
+Only **3** steps needed to create a basic checkout using `MercadopagoSDK`:
 
 ### 1 - Import into project
 ```swift
-import MercadoPagoSDKV4
+import MercadoPagoSDK
 ```
 
 ### 2 - Set your  `PublicKey`  and  `PreferenceId` 
