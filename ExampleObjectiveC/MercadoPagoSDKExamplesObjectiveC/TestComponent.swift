@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoSDKV4
+import MercadoPagoSDK
 
 @objc public class TestComponent: NSObject {
     public func getView() -> UIView {

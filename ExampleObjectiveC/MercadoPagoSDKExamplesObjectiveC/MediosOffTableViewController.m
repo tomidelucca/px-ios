@@ -7,7 +7,7 @@
 //
 
 #import "MediosOffTableViewController.h"
-@import MercadoPagoSDKV4;
+@import MercadoPagoSDK;
 
 
 @implementation MediosOffTableViewController

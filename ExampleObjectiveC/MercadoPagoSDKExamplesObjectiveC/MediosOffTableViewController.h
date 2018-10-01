@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@import MercadoPagoSDKV4;
+@import MercadoPagoSDK;
 
 @interface MediosOffTableViewController : UITableViewController
     

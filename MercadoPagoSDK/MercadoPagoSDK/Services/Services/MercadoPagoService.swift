@@ -57,7 +57,7 @@ internal class MercadoPagoService: NSObject {
         }
 
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        MercadoPagoSDKV4.request(request).responseData { response in
+        MercadoPagoSDK.request(request).responseData { response in
 
             MercadoPagoService.debugPrint(response: response)
             UIApplication.shared.isNetworkActivityIndicatorVisible = false

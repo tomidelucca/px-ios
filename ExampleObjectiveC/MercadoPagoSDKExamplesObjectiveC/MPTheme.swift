@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import MercadoPagoSDKV4
+import MercadoPagoSDK
 
 @objc final class MPTheme: NSObject, PXTheme {
 

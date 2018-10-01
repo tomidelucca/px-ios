@@ -10,7 +10,7 @@
 #import "SimpleVaultFormViewController.h"
 
 
-@import MercadoPagoSDKV4;
+@import MercadoPagoSDK;
 
 @interface SimpleVaultViewController ()
 
