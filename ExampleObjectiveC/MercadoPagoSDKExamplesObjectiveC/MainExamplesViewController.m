@@ -104,14 +104,7 @@
 
 
     // [self.mpCheckout setDiscount:discount withCampaign:campaign];
-    
-    NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
-    PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"payment_method_plugin" amountCharge:10.5];
-    PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
-    [chargesArray addObject:chargeCredit];
-    [chargesArray addObject:chargeDebit];
 
-    //[mpCheckout setChargeRulesWithChargeRules:chargesArray];
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
@@ -126,7 +119,7 @@
 
     // [self.mpCheckout discountNotAvailable];
 
-    [self.checkoutBuilder setLanguage:@"es"];
+    [self.checkoutBuilder setLanguage:@"pt"];
   
     MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
@@ -154,6 +147,7 @@
     self.paymentConfig = [[PXPaymentConfiguration alloc] initWithPaymentProcessor:paymentProcessorPlugin];
     [self addPaymentMethodPluginToPaymentConfig];
     [self addDiscount];
+    [self addCharges];
     return self.paymentConfig;
 }
 
@@ -171,6 +165,15 @@
     PXCampaign* campaign = [[PXCampaign alloc] initWithId:30959 code:@"sad" name:@"Campaña" maxCouponAmount:7];
     PXDiscountConfiguration * configDiscount = [[PXDiscountConfiguration alloc] initWithDiscount:discount campaign:campaign];
     [self.paymentConfig setDiscountConfigurationWithConfig:configDiscount];
+}
+
+-(void)addCharges {
+    NSMutableArray* chargesArray = [[NSMutableArray alloc] init];
+    PXPaymentTypeChargeRule* chargeCredit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"payment_method_plugin" amountCharge:10.5];
+    PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
+    [chargesArray addObject:chargeCredit];
+    [chargesArray addObject:chargeDebit];
+    [self.paymentConfig addChargeRulesWithCharges:chargesArray];
 }
 
 -(void)setVoidCallback {}

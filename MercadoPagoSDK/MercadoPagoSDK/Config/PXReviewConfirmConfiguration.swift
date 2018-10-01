@@ -38,8 +38,17 @@ import Foundation
     }
 
     // MARK: To deprecate post v4. SP integration.
-    internal let summaryTitles: [SummaryType: String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
-                                                SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envío".localized]
+    internal var summaryTitles: [SummaryType: String] {
+        get {
+            return [SummaryType.PRODUCT: "Producto".localized,
+                    SummaryType.ARREARS: "Mora".localized,
+                    SummaryType.CHARGE: "Cargos".localized,
+                    SummaryType.DISCOUNT: "Descuentos".localized,
+                    SummaryType.TAXES: "Impuestos".localized,
+                    SummaryType.SHIPPING: "Envío".localized]
+        }
+    }
+    
     internal var details: [SummaryType: SummaryDetail] = [SummaryType: SummaryDetail]()
 }
 
