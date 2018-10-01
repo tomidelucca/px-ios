@@ -236,6 +236,8 @@ extension PXReviewViewController {
             if let reviewViewModel = self?.viewModel {
                 self?.viewModel.trackChangePaymentMethodEvent()
                 if let callBackAction = self?.changePaymentMethodCallback {
+                    PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
+                    PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
                     callBackAction()
                 } else {
                     self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
