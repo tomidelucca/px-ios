@@ -22,6 +22,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     var contentView = PXComponentView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
+    var scrollViewPinBottomConstraint: NSLayoutConstraint!
     private var topContentConstraint: NSLayoutConstraint?
 
     init() {
@@ -51,7 +52,9 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
         let bottomDeltaMargin: CGFloat = PXLayout.getSafeAreaBottomInset()
 
-        PXLayout.pinBottom(view: scrollView, to: view, withMargin: -bottomDeltaMargin).isActive = true
+        scrollViewPinBottomConstraint = PXLayout.pinBottom(view: scrollView, to: view, withMargin: -bottomDeltaMargin)
+        scrollViewPinBottomConstraint.isActive = true
+
         scrollView.bounces = false
     }
 

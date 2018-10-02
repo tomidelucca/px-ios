@@ -185,7 +185,8 @@ extension PXReviewViewController {
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
+        PXLayout.setHeight(owner: footerView, height: viewModel.getFloatingConfirmViewHeight()+1).isActive = true
+        footerView.layoutIfNeeded()
 
         // Add floating button
         floatingButtonView = getFloatingButtonView()
@@ -194,6 +195,7 @@ extension PXReviewViewController {
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
         PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+        floatingButtonView.layoutIfNeeded()
 
         contentView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         scrollView.backgroundColor = ThemeManager.shared.detailedBackgroundColor()
@@ -204,6 +206,7 @@ extension PXReviewViewController {
         self.view.layoutIfNeeded()
         PXLayout.pinFirstSubviewToTop(view: self.contentView)?.isActive = true
         PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
+        self.scrollViewPinBottomConstraint.constant = 0
 
         super.refreshContentViewSize()
         self.checkFloatingButtonVisibility()
@@ -292,7 +295,7 @@ extension PXReviewViewController {
             }
             self.confirmPayment()
         }
-        let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self)
+        let footerProps = PXFooterProps(buttonAction: payAction, animationDelegate: self, pinLastSubviewToBottom: false)
         let footerComponent = PXFooterComponent(props: footerProps)
         let footerView =  PXFooterRenderer().render(footerComponent)
         loadingButtonComponent = footerView.principalButton

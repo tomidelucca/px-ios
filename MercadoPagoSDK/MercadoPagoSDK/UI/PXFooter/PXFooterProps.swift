@@ -13,10 +13,12 @@ final class PXFooterProps: NSObject {
     var linkAction: PXAction?
     var primaryColor: UIColor?
     var animationDelegate: PXAnimatedButtonDelegate?
-    init(buttonAction: PXAction? = nil, linkAction: PXAction? = nil, primaryColor: UIColor? = ThemeManager.shared.getAccentColor(), animationDelegate: PXAnimatedButtonDelegate? = nil) {
+    var pinLastSubviewToBottom: Bool
+    init(buttonAction: PXAction? = nil, linkAction: PXAction? = nil, primaryColor: UIColor? = ThemeManager.shared.getAccentColor(), animationDelegate: PXAnimatedButtonDelegate? = nil, pinLastSubviewToBottom: Bool = true) {
         self.buttonAction = buttonAction
         self.linkAction = linkAction
         self.primaryColor = primaryColor
         self.animationDelegate = animationDelegate
+        self.pinLastSubviewToBottom = pinLastSubviewToBottom
     }
 }
