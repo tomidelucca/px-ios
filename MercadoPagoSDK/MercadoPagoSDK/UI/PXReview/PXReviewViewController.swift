@@ -31,6 +31,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     weak var loadingFloatingButtonComponent: PXAnimatedButton?
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
+    fileprivate let SHADOW_DELTA: CGFloat = 1
 
     internal var changePaymentMethodCallback: (() -> Void)?
 
@@ -185,7 +186,7 @@ extension PXReviewViewController {
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
+        PXLayout.setHeight(owner: footerView, height: viewModel.getFloatingConfirmViewHeight() + SHADOW_DELTA).isActive = true
         footerView.layoutIfNeeded()
 
         // Add floating button
