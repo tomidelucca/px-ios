@@ -109,6 +109,7 @@ public class AddCardFlow: NSObject, PXFlow {
                 if let status = error.userInfo["status"] as? Int, status == 404 {
                     self?.navigationHandler.dismissLoading()
                     self?.model.identificationTypes = []
+                    self?.model.lastStepFailed = false
                     self?.executeNextStep()
                 } else {
                     self?.showErrorScreen()
