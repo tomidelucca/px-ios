@@ -185,7 +185,7 @@ extension PXReviewViewController {
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: viewModel.getFloatingConfirmViewHeight()+1).isActive = true
+        PXLayout.setHeight(owner: footerView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
         footerView.layoutIfNeeded()
 
         // Add floating button

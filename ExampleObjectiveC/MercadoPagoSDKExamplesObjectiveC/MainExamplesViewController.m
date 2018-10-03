@@ -119,7 +119,7 @@
 
     // [self.mpCheckout discountNotAvailable];
 
-    [self.checkoutBuilder setLanguage:@"pt"];
+    [self.checkoutBuilder setLanguage:@"es"];
   
     MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithBuilder:self.checkoutBuilder];
 
