@@ -21,9 +21,6 @@ Pod::Spec.new do |s|
     esc.dependency 'MercadoPagoSDKV4/Default'
     esc.dependency 'MLESCManager'
     esc.pod_target_xcconfig = {
-      'OTHER_SWIFT_FLAGS[config=Debug]' => '-D MPESC_ENABLE',
-      'OTHER_SWIFT_FLAGS[config=Release]' => '-D MPESC_ENABLE',
-      'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D PX_PRIVATE_POD',
       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D PX_PRIVATE_POD',
       'OTHER_SWIFT_FLAGS[config=Release]' => '-D PX_PRIVATE_POD',
       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D PX_PRIVATE_POD'
