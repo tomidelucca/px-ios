@@ -1,5 +1,5 @@
 //
-//  PXResultAddCardFailedViewModel.swift
+//  PXResultAddCardSuccessViewModel.swift
 //  MercadoPagoSDKV4
 //
 //  Created by Diego Flores Domenech on 24/9/18.
@@ -7,14 +7,12 @@
 
 import UIKit
 
-class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
+final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
     
     let buttonCallback: () -> ()
-    let linkCallback: () -> ()
     
-    init(buttonCallback: @escaping () -> (), linkCallback: @escaping () -> ()) {
+    init(buttonCallback: @escaping () -> ()) {
         self.buttonCallback = buttonCallback
-        self.linkCallback = linkCallback
     }
     
     func getPaymentData() -> PXPaymentData {
@@ -22,7 +20,7 @@ class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
     }
     
     func primaryResultColor() -> UIColor {
-        return ThemeManager.shared.warningColor()
+        return ThemeManager.shared.successColor()
     }
     
     func setCallback(callback: @escaping (PaymentResult.CongratsState) -> Void) {
@@ -46,15 +44,14 @@ class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
     }
     
     func buildHeaderComponent() -> PXHeaderComponent {
-        let props = PXHeaderProps(labelText: NSAttributedString(string: "add_card_failed_label_text".localized_beta), title: NSAttributedString(string: "add_card_failed_title".localized_beta, attributes: [NSAttributedStringKey.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.warningColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "need_action_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil))
+        let props = PXHeaderProps(labelText: nil, title: NSAttributedString(string: "add_card_congrats_title".localized_beta, attributes: [NSAttributedStringKey.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.successColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "ok_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil))
         let header = PXHeaderComponent(props: props)
         return header
     }
     
     func buildFooterComponent() -> PXFooterComponent {
-        let buttonAction = PXAction(label: "add_card_try_again".localized_beta, action: self.buttonCallback)
-        let linkAction = PXAction(label: "add_card_go_to_my_cards".localized_beta, action: self.linkCallback)
-        let props = PXFooterProps(buttonAction: buttonAction, linkAction: linkAction, primaryColor: UIColor.ml_meli_blue(), animationDelegate: nil)
+        let buttonAction = PXAction(label: "add_card_go_to_my_cards".localized_beta, action: self.buttonCallback)
+        let props = PXFooterProps(buttonAction: buttonAction, linkAction: nil, primaryColor: UIColor.ml_meli_blue(), animationDelegate: nil)
         let footer = PXFooterComponent(props: props)
         return footer
     }
@@ -78,6 +75,5 @@ class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
     func trackInfo() {
         
     }
-    
 
 }

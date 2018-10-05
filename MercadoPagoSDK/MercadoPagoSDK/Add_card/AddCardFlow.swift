@@ -8,14 +8,15 @@
 
 import UIKit
 
-@objc public protocol AddCardFlowDelegate {
-    func addCardFlowSucceded()
+@objc public protocol AddCardFlowProtocol {
+    func addCardFlowSucceded(result: [String : Any])
+    func addCardFlowFailed(shouldRestart: Bool)
 }
 
 @objcMembers
 public class AddCardFlow: NSObject, PXFlow {
     
-    public var delegate: AddCardFlowDelegate?
+    public var delegate: AddCardFlowProtocol?
     
     private let accessToken: String
     private let model = AddCardFlowModel()
@@ -28,13 +29,17 @@ public class AddCardFlow: NSObject, PXFlow {
         self.navigationHandler = PXNavigationHandler(navigationController: navigationController)
         super.init()
         Localizator.sharedInstance.setLanguage(string: locale)
-        ThemeManager.shared.setTheme(theme: AddCardTheme())
+//        ThemeManager.shared.setTheme(theme: AddCardTheme())
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
-        NotificationCenter.default.addObserver(self, selector: #selector(goBack), name: Notification.Name.attemptToClose, object: nil)
+        PXNotificationManager.SuscribeTo.attemptToClose(self, selector: #selector(goBack))
     }
     
     public func start() {
         self.executeNextStep()
+    }
+    
+    public func setTheme(theme: PXTheme) {
+        ThemeManager.shared.setTheme(theme: theme)
     }
     
     func executeNextStep(){
@@ -174,6 +179,7 @@ public class AddCardFlow: NSObject, PXFlow {
         associateCardService.associateCardToUser(paymentMethod: selectedPaymentMethod, cardToken: token, success: { [weak self] (json) in
             print(json)
             self?.navigationHandler.dismissLoading()
+            self?.model.associateCardResult = json
             if let esc = token.esc {
                 let escManager = MercadoPagoESCImplementation(enabled: false)
                 _ = escManager.saveESC(cardId: token.cardId, esc: esc)
@@ -194,8 +200,7 @@ public class AddCardFlow: NSObject, PXFlow {
     
     private func showCongrats() {
         let viewModel = PXResultAddCardSuccessViewModel(buttonCallback: { [weak self] in
-            self?.delegate?.addCardFlowSucceded()
-            self?.popToRoot(animated: true)
+            self?.executeNextStep()
         })
         let congratsVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
         }
@@ -203,7 +208,11 @@ public class AddCardFlow: NSObject, PXFlow {
     }
     
     private func finish() {
-        self.navigationHandler.goToRootViewController()
+        if let associateCardResult = self.model.associateCardResult {
+            self.delegate?.addCardFlowSucceded(result: associateCardResult)
+        } else {
+            self.delegate?.addCardFlowFailed(shouldRestart: false)
+        }
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
     }
     
@@ -211,7 +220,7 @@ public class AddCardFlow: NSObject, PXFlow {
         let viewModel = PXResultAddCardFailedViewModel(buttonCallback: { [weak self] in
             self?.reset()
             }, linkCallback: { [weak self] in
-                self?.popToRoot(animated: true)
+                self?.finish()
         })
         let failVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
         }
@@ -219,25 +228,19 @@ public class AddCardFlow: NSObject, PXFlow {
     }
     
     private func reset() {
-        NotificationCenter.default.post(name: .cardFormReset, object: nil)
+        PXNotificationManager.Post.cardFormReset()
         if let cardForm = self.navigationHandler.navigationController.viewControllers.filter({$0 is CardFormViewController}).first {
             self.navigationHandler.navigationController.popToViewController(cardForm, animated: true)
             self.model.reset()
         } else {
-            self.popToRoot(animated: false)
-            self.model.reset()
-            self.executeNextStep()
+            self.delegate?.addCardFlowFailed(shouldRestart: true)
+            ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
         }
         self.navigationHandler.navigationController.setNavigationBarHidden(false, animated: true)
     }
     
     @objc private func goBack() {
         self.navigationHandler.popViewController(animated: true)
-        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
-    }
-    
-    @objc private func popToRoot(animated: Bool) {
-        self.navigationHandler.goToRootViewController(animated: animated)
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
     }
 

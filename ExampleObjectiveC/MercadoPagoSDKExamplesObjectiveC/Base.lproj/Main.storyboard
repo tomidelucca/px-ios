@@ -175,33 +175,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="107" id="bAA-CK-gDG">
-                                        <rect key="frame" x="0.0" y="407" width="375" height="107"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bAA-CK-gDG" id="vd2-72-L3D">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="106.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alta de tarjeta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAL-q8-P6u">
-                                                    <rect key="frame" x="134.5" y="43.5" width="107" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fb-dA-TnB">
-                                                    <rect key="frame" x="8" y="8" width="359" height="89"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <connections>
-                                                        <action selector="startAddCardFlow:" destination="Rgx-dD-8Cm" eventType="touchUpInside" id="7Yk-08-Yuk"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="oAL-q8-P6u" firstAttribute="centerX" secondItem="vd2-72-L3D" secondAttribute="centerX" id="Siq-KW-LTJ"/>
-                                                <constraint firstItem="oAL-q8-P6u" firstAttribute="centerY" secondItem="vd2-72-L3D" secondAttribute="centerY" id="aCh-aO-jXA"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

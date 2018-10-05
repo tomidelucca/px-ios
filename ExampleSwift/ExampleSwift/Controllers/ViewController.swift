@@ -18,9 +18,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //runMercadoPagoCheckout()
-        runAddCard()
-        //runMercadoPagoCheckoutWithLifecycle()
+//        runMercadoPagoCheckout()
+        runMercadoPagoCheckoutWithLifecycle()
     }
 
     private func runMercadoPagoCheckout() {
@@ -34,14 +33,6 @@ class ViewController: UIViewController {
         if let myNavigationController = navigationController {
             checkout?.start(navigationController: myNavigationController)
         }
-    }
-    
-    private func runAddCard() {
-        guard let navController = self.navigationController else {
-            return
-        }
-        addCardFrow = AddCardFlow(accessToken: "APP_USR-1945000207238192-091813-19ca22bc25891fd7fa33360eb744121b-307951795", locale: "es", navigationController: navController)
-        addCardFrow?.start()
     }
     
     private func runMercadoPagoCheckoutWithLifecycle() {

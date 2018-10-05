@@ -15,6 +15,7 @@ class AddCardFlowModel: NSObject, PXFlowModel {
     var cardToken: PXCardToken?
     var selectedPaymentMethod: PXPaymentMethod?
     var tokenizedCard: PXToken?
+    var associateCardResult: [String : Any]?
     var lastStepFailed = false
 
     enum Steps : Int {
