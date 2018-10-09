@@ -13,7 +13,7 @@ class ThemeManager {
 
     static let shared = ThemeManager()
 
-    fileprivate var currentTheme: PXTheme = PXDefaultTheme(withPrimaryColor: #colorLiteral(red: 0.57, green: 0.05, blue: 0.30, alpha: 1.0)) {
+    fileprivate var currentTheme: PXTheme = PXDefaultTheme(withPrimaryColor: #colorLiteral(red: 0.2196078431, green: 0.5411764706, blue: 0.8156862745, alpha: 1)) {
         didSet {
             initialize()
         }

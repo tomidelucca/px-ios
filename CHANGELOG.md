@@ -1,23 +1,24 @@
-# v4.0.4
+# v4.0.12
 
-Readme: https://github.com/mercadopago/px-ios/blob/release/v4/README.md
-Documentation reference: http://mercadopago.github.io/px-ios/v4/
+🚀Public RC - 4.0.12 🚀
+MercadoPagoSDK - Public Version
 
-- Fixes
+- Changes for scalable private and public pod.
+- Translations Improvement
 
-# v4.0.0.beta.38
+Readme
+https://github.com/mercadopago/px-ios/blob/4.0.12/README.md
 
-Automatic release test. 
+Documentation reference
+http://mercadopago.github.io/px-ios/v4/
 
-# v4.0.0.beta.37
+# v4.0.11
 
-Portability MP fixes:
+🚀Public RC - 4.0.11 🚀
+MercadoPagoSDK - Public Version
 
-- ReviewConfirm scrollView background
-- Status bar fixes
-- TermsConditions fixes
+Readme
+https://github.com/mercadopago/px-ios/blob/4.0.11/README.md
 
-******************************************
-
-MLUI 5.0
-kMLNavigationBarBackgroundViewTag fixes
+Documentation reference
+http://mercadopago.github.io/px-ios/v4/

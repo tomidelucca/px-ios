@@ -56,28 +56,20 @@ class ViewController: UIViewController {
 // MARK: Optional Lifecycle protocol implementation example.
 extension ViewController: PXLifeCycleProtocol {
     func finishCheckout() -> ((PXResult?) -> Void)? {
-        print("px - finishCheckout outsite")
         return nil
     }
     
     func cancelCheckout() -> (() -> Void)? {
-        print("px - cancelCheckout outsite")
-        return { () in
-            print("px - cancelCheckout inside")
-        }
+        return nil
     }
 
     func finishCheckout(payment: PXPayment?) -> (() -> Void)? {
-        print("px - finishCheckout outsite")
-        return { () in
-            print("px - finishCheckout inside")
-        }
+       return nil
     }
 
     func changePaymentMethodTapped() -> (() -> Void)? {
-        print("px - changePaymentMethodTapped outsite")
-        return { () in
-            print("px - changePaymentMethodTapped inside")
+        return { [weak self] () in
+            self?.navigationController?.popToRootViewController(animated: true)
         }
     }
 }

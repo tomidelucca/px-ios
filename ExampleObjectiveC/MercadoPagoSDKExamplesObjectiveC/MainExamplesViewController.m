@@ -8,9 +8,6 @@
 
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
-//#import "FirstHookViewController.h"
-//#import "SecondHookViewController.h"
-//#import "ThirdHookViewController.h"
 
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
@@ -29,6 +26,8 @@
 
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.opaque = YES;
+
+
 
     self.pref = nil;
 
@@ -118,9 +117,6 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 
     //[self setPaymentPlugin];
 
-    // Setear Callback Cancel
-    // [self setVoidCallback];
-
     // [self.mpCheckout discountNotAvailable];
 
     [self.checkoutBuilder setLanguage:@"es"];
@@ -180,8 +176,6 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     [self.paymentConfig addChargeRulesWithCharges:chargesArray];
 }
 
--(void)setVoidCallback {}
-
 -(void)setCheckoutPref_CreditCardNotExcluded {
     PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:90.0];
     PXItem *item2 = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
@@ -208,31 +202,17 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 }
 
 -(void (^ _Nullable)(void))cancelCheckout {
-    //return nil;
-    NSLog(@"PXLog - cancelCheckout outside Called");
     return ^ {
-        NSLog(@"PXLog - cancelCheckout Called");
         [self.navigationController popViewControllerAnimated:YES];
     };
 }
 
--( void (^)(PXGenericPayment*)) finishCheckout {
-    //return nil;x
-    NSLog(@"PXLog - finishCheckoutWithPayment outside Called ");
-    return ^ (PXGenericPayment* payment) {
-        NSLog(@"PXLog - finishCheckoutWithPayment Called");
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    };
+- (void (^)(id<PXResult> _Nullable))finishCheckout {
+    return nil;
 }
-
 
 -(void (^)(void))changePaymentMethodTapped {
     return nil;
-    NSLog(@"PXLog - changePaymentMethodTapped outside Called");
-    return ^ {
-        NSLog(@"PXLog - changePaymentMethodTapped Called");
-        [self.navigationController popViewControllerAnimated:YES];
-    };
 }
 
 - (void)trackEventWithScreenName:(NSString * _Nullable)screenName action:(NSString * _Null_unspecified)action result:(NSString * _Nullable)result extraParams:(NSDictionary<NSString *,id> * _Nullable)extraParams {
