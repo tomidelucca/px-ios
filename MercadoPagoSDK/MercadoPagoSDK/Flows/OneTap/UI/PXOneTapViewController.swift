@@ -8,6 +8,86 @@
 
 import UIKit
 
+typealias OneTapSummaryData = (title: String, value: String, highlightedColor: UIColor, isTotal: Bool)
+
+class PXOneTapHeaderViewModel {
+    let data: [OneTapSummaryData]
+
+    init(data: [OneTapSummaryData]) {
+        self.data = data
+    }
+}
+
+class PXOneTapHeaderView: PXComponentView {
+    var model: PXOneTapHeaderViewModel? {
+        didSet {
+            render()
+        }
+    }
+
+    func render() {
+        guard let model = model else {return}
+        self.removeAllSubviews()
+        self.layer.borderWidth = 2
+
+
+        PXLayout.setHeight(owner: self, height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
+
+        for dat in model.data {
+            let margin: CGFloat = dat.isTotal ? PXLayout.S_MARGIN : PXLayout.XXS_MARGIN
+            let rowView = getSummaryRow(with: dat)
+
+            if dat.isTotal {
+                let separatorView = UIView()
+                separatorView.backgroundColor = .red
+                separatorView.translatesAutoresizingMaskIntoConstraints = false
+                self.addSubviewToBottom(separatorView, withMargin: margin)
+                PXLayout.setHeight(owner: separatorView, height: 1).isActive = true
+                PXLayout.pinLeft(view: separatorView, withMargin: PXLayout.M_MARGIN).isActive = true
+                PXLayout.pinRight(view: separatorView, withMargin: PXLayout.M_MARGIN).isActive = true
+            }
+
+            self.addSubviewToBottom(rowView, withMargin: margin)
+            PXLayout.centerHorizontally(view: rowView).isActive = true
+            PXLayout.pinLeft(view: rowView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: rowView, withMargin: PXLayout.M_MARGIN).isActive = true
+        }
+    }
+
+    func getSummaryRow(with data: OneTapSummaryData) -> UIView {
+        let rowHeight: CGFloat = data.isTotal ? 20 : 16
+        let titleFont = data.isTotal ? Utils.getFont(size: PXLayout.S_FONT) : Utils.getFont(size: PXLayout.XXS_FONT)
+        let valueFont = data.isTotal ? Utils.getSemiBoldFont(size: PXLayout.S_FONT) : Utils.getFont(size: PXLayout.XXS_FONT)
+
+        let rowView = UIView()
+        rowView.translatesAutoresizingMaskIntoConstraints = false
+
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = data.title
+        titleLabel.textAlignment = .left
+        titleLabel.font = titleFont
+        titleLabel.textColor = data.highlightedColor
+        rowView.addSubview(titleLabel)
+        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.centerVertically(view: titleLabel).isActive = true
+
+        let valueLabel = UILabel()
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        valueLabel.text = data.value
+        valueLabel.textAlignment = .right
+        valueLabel.font = valueFont
+        valueLabel.textColor = data.highlightedColor
+        rowView.addSubview(valueLabel)
+        PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.centerVertically(view: valueLabel).isActive = true
+
+        PXLayout.setHeight(owner: rowView, height: rowHeight).isActive = true
+
+        return rowView
+    }
+}
+
 final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Tracking
     override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
@@ -106,6 +186,13 @@ extension PXOneTapViewController {
 
     private func renderViews() {
         contentView.prepareForRender()
+
+        let view = PXOneTapHeaderView()
+        view.model = PXOneTapHeaderViewModel(data: [OneTapSummaryData("Compra", "$ 1.000", UIColor.blue, false), OneTapSummaryData("Descuento", "- $ 80", UIColor.red, false), OneTapSummaryData("Total", "$ 920", UIColor.black, true)])
+        contentView.addSubviewToBottom(view)
+        PXLayout.centerHorizontally(view: view).isActive = true
+        PXLayout.matchWidth(ofView: view).isActive = true
+
 
         // Add item-price view.
         if let itemView = getItemComponentView() {
