@@ -8,7 +8,12 @@
 //
 
 import UIKit
-import MercadoPagoSDKV4
+
+#if PX_PRIVATE_POD
+    import MercadoPagoSDKV4
+#else
+    import MercadoPagoSDK
+#endif
 
 // Check full documentation: http://mercadopago.github.io/px-ios/v4/
 class ViewController: UIViewController {
@@ -50,6 +55,11 @@ class ViewController: UIViewController {
 
 // MARK: Optional Lifecycle protocol implementation example.
 extension ViewController: PXLifeCycleProtocol {
+    func finishCheckout() -> ((PXResult?) -> Void)? {
+        print("px - finishCheckout outsite")
+        return nil
+    }
+    
     func cancelCheckout() -> (() -> Void)? {
         print("px - cancelCheckout outsite")
         return { () in

@@ -57,20 +57,34 @@ internal class MercadoPagoService: NSObject {
         }
 
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        MercadoPagoSDKV4.request(request).responseData { response in
 
-            MercadoPagoService.debugPrint(response: response)
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-
-            if let data = response.result.value, response.error == nil {
-                success(data)
-            } else if let error = response.error as NSError? {
-                failure?(error)
-            } else {
-                let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-                failure?(error)
+        #if PX_PRIVATE_POD
+            MercadoPagoSDKV4.request(request).responseData { response in
+                MercadoPagoService.debugPrint(response: response)
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                if let data = response.result.value, response.error == nil {
+                    success(data)
+                } else if let error = response.error as NSError? {
+                    failure?(error)
+                } else {
+                    let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                    failure?(error)
+                }
             }
-        }
+        #else
+            MercadoPagoSDK.request(request).responseData { response in
+                MercadoPagoService.debugPrint(response: response)
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                if let data = response.result.value, response.error == nil {
+                    success(data)
+                } else if let error = response.error as NSError? {
+                    failure?(error)
+                } else {
+                    let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                    failure?(error)
+                }
+            }
+        #endif
     }
 }
 

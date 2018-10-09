@@ -7,7 +7,12 @@
 //
 
 import Foundation
-import MercadoPagoSDKV4
+
+#if PX_PRIVATE_POD
+    import MercadoPagoSDKV4
+#else
+    import MercadoPagoSDK
+#endif
 
 @objc final class MeliTheme: NSObject, PXTheme {
 

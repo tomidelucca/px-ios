@@ -17,7 +17,11 @@
 #import "PaymentPluginViewController.h"
 #import "MLMyMPPXTrackListener.h"
 
-@import MercadoPagoSDKV4;
+#ifdef PX_PRIVATE_POD
+    @import MercadoPagoSDKV4;
+#else
+    @import MercadoPagoSDK;
+#endif
 
 @implementation MainExamplesViewController
 

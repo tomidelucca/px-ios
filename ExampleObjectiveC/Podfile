@@ -9,11 +9,10 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
   # Pods for MercadoPagoSDKExamplesObjectiveC
   # UI Meli Lib
     pod 'MLUI', '~> 5.0'
-    pod 'MercadoPagoSDKV4', :path => '../', :testspecs => ['Tests']
+    pod 'MercadoPagoSDK', :path => '../'
 
-  target 'MercadoPagoSDKExamplesObjectiveCTests' do
-    inherit! :search_paths
+  #target 'MercadoPagoSDKExamplesObjectiveCTests' do
+   # inherit! :search_paths
     # Pods for testing
-  end
-
+  #end
 end
