@@ -120,7 +120,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
 
-    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil, bankDealsEnabled: Bool) {
+    public init(paymentSettings: PXPaymentPreference?, token: PXToken? = nil, cardInformation: PXCardInformation? = nil, paymentMethods: [PXPaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter?, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil, bankDealsEnabled: Bool) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, bankDealsEnabled: bankDealsEnabled)
         self.callbackCancel = callbackCancel
@@ -169,6 +169,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     override open func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        PXNotificationManager.SuscribeTo.cardFormReset(self, selector: #selector(reset))
         self.getPromos()
         textBox.borderInactiveColor = ThemeManager.shared.secondaryColor()
         textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
@@ -223,14 +224,16 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     private func getPromos() {
-        self.viewModel.mercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
-            self.viewModel.promos = bankDeals
-            self.updateCardSkin()
-        }, failure: { _ in
-            // Si no se pudieron obtener promociones se ignora tal caso
-            self.viewModel.bankDealsEnabled = false
-            self.updateCardSkin()
-        })
+        if let mercadoPagoServicesAdapter = self.viewModel.mercadoPagoServicesAdapter {
+            mercadoPagoServicesAdapter.getBankDeals(callback: { (bankDeals) in
+                self.viewModel.promos = bankDeals
+                self.updateCardSkin()
+            }, failure: { _ in
+                // Si no se pudieron obtener promociones se ignora tal caso
+                self.viewModel.bankDealsEnabled = false
+                self.updateCardSkin()
+            })
+        }
     }
 
     func getCardWidth() -> CGFloat {
@@ -585,6 +588,19 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         }
         self.updateLabelsFontColors()
     }
+    
+    @objc func reset() {
+        if (self.viewModel.getGuessedPM()?.secCodeInBack())! {
+            UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 0, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
+            })
+        }
+        self.cardNumberLabel?.clearText()
+        self.expirationDateLabel?.clearText()
+        self.cvvLabel?.clearText()
+        self.nameLabel?.clearText()
+        self.clearCardSkin()
+        self.prepareNumberLabelForEdit()
+    }
 
     @objc func rightArrowKeyTapped() {
         switch editingLabel! {
@@ -882,4 +898,5 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     internal func validateExpirationDate() -> Bool {
         return self.viewModel.validateExpirationDate(self.cardNumberLabel!, expirationDateLabel: self.expirationDateLabel!, cvvLabel: self.cvvLabel!, cardholderNameLabel: self.nameLabel!)
     }
+    
 }

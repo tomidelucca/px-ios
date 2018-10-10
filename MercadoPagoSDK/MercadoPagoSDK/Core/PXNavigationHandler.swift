@@ -25,16 +25,16 @@ internal class PXNavigationHandler: NSObject {
         }
     }
 
-    func goToRootViewController() {
+    func goToRootViewController(animated: Bool = true) {
         guard let rootViewController = viewControllerBase else {
-            navigationController.popToRootViewController(animated: true)
+            navigationController.popToRootViewController(animated: animated)
             navigationController.setNavigationBarHidden(false, animated: false)
             return
         }
         if navigationController.viewControllers.contains(rootViewController) {
-            navigationController.popToViewController(rootViewController, animated: true)
+            navigationController.popToViewController(rootViewController, animated: animated)
         } else {
-            navigationController.popToRootViewController(animated: true)
+            navigationController.popToRootViewController(animated: animated)
         }
         navigationController.setNavigationBarHidden(false, animated: false)
     }
@@ -110,13 +110,14 @@ internal class PXNavigationHandler: NSObject {
         self.cleanCompletedCheckoutsFromNavigationStack()
         self.dismissLoading()
     }
-
-    internal func pushViewController(targetVC: UIViewController,
-                                     animated: Bool) {
-
+    
+    func pushViewController(cleanCompletedCheckouts : Bool = true,targetVC: UIViewController,
+                            animated: Bool){
         targetVC.hidesBottomBarWhenPushed = true
         self.navigationController.pushViewController(targetVC, animated: animated)
-        self.cleanCompletedCheckoutsFromNavigationStack()
+        if cleanCompletedCheckouts {
+            self.cleanCompletedCheckoutsFromNavigationStack()
+        }
         self.dismissLoading()
     }
 

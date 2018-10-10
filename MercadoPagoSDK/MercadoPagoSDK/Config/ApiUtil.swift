@@ -39,5 +39,6 @@ internal class ApiUtil {
         case GET_IDENTIFICATION_TYPES
         case GET_BANK_DEALS
         case GET_INSTRUCTIONS
+        case ASSOCIATE_TOKEN
     }
 }
