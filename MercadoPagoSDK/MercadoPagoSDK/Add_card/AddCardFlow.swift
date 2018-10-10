@@ -29,7 +29,6 @@ public class AddCardFlow: NSObject, PXFlow {
         self.navigationHandler = PXNavigationHandler(navigationController: navigationController)
         super.init()
         Localizator.sharedInstance.setLanguage(string: locale)
-//        ThemeManager.shared.setTheme(theme: AddCardTheme())
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
         PXNotificationManager.SuscribeTo.attemptToClose(self, selector: #selector(goBack))
     }
