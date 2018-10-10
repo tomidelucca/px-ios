@@ -8,7 +8,12 @@
 //
 
 import UIKit
-import MercadoPagoSDK
+
+#if PX_PRIVATE_POD
+    import MercadoPagoSDKV4
+#else
+    import MercadoPagoSDK
+#endif
 
 // Check full documentation: http://mercadopago.github.io/px-ios/v4/
 class ViewController: UIViewController {
@@ -33,7 +38,7 @@ class ViewController: UIViewController {
             checkout?.start(navigationController: myNavigationController)
         }
     }
-    
+
     private func runMercadoPagoCheckoutWithLifecycle() {
         // 1) Create Builder with your publicKey and preferenceId.
         let builder = MercadoPagoCheckoutBuilder.init(publicKey: "TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd", preferenceId: "243966003-0812580b-6082-4104-9bce-1a4c48a5bc44").setLanguage("es")
@@ -53,7 +58,7 @@ extension ViewController: PXLifeCycleProtocol {
     func finishCheckout() -> ((PXResult?) -> Void)? {
         return nil
     }
-    
+
     func cancelCheckout() -> (() -> Void)? {
         return nil
     }

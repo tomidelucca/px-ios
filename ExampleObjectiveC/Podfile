@@ -8,7 +8,7 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
 
   # Pods for MercadoPagoSDKExamplesObjectiveC
   # UI Meli Lib
-   # pod 'MLUI', '~> 5.0'
+    pod 'MLUI', '~> 5.0'
     pod 'MercadoPagoSDK', :path => '../'
 
   #target 'MercadoPagoSDKExamplesObjectiveCTests' do

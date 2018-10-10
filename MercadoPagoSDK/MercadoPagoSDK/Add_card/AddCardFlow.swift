@@ -9,19 +9,19 @@
 import UIKit
 
 @objc public protocol AddCardFlowProtocol {
-    func addCardFlowSucceded(result: [String : Any])
+    func addCardFlowSucceded(result: [String: Any])
     func addCardFlowFailed(shouldRestart: Bool)
 }
 
 @objcMembers
 public class AddCardFlow: NSObject, PXFlow {
-    
+
     public var delegate: AddCardFlowProtocol?
-    
+
     private let accessToken: String
     private let model = AddCardFlowModel()
     private let navigationHandler: PXNavigationHandler
-    
+
     private lazy var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: "APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d", privateKey: self.accessToken)
 
     public init(accessToken: String, locale: String, navigationController: UINavigationController) {
@@ -32,16 +32,16 @@ public class AddCardFlow: NSObject, PXFlow {
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
         PXNotificationManager.SuscribeTo.attemptToClose(self, selector: #selector(goBack))
     }
-    
+
     public func start() {
         self.executeNextStep()
     }
-    
+
     public func setTheme(theme: PXTheme) {
         ThemeManager.shared.setTheme(theme: theme)
     }
-    
-    func executeNextStep(){
+
+    func executeNextStep() {
         if self.model.lastStepFailed {
             self.navigationHandler.presentLoading()
         }
@@ -66,18 +66,18 @@ public class AddCardFlow: NSObject, PXFlow {
             break
         }
     }
-    
-    func cancelFlow(){
+
+    func cancelFlow() {
     }
-    
-    func finishFlow(){
+
+    func finishFlow() {
     }
-    
-    func exitCheckout(){
+
+    func exitCheckout() {
     }
-    
-    //MARK: steps
-    
+
+    // MARK: steps
+
     private func getPaymentMethods() {
         self.navigationHandler.presentLoading()
         let service = PaymentMethodsUserService(accessToken: self.accessToken)
@@ -96,7 +96,7 @@ public class AddCardFlow: NSObject, PXFlow {
             }
         }
     }
-    
+
     private func getIdentificationTypes() {
         self.mercadoPagoServicesAdapter.getIdentificationTypes(callback: { [weak self] identificationTypes in
             self?.navigationHandler.dismissLoading()
@@ -121,7 +121,7 @@ public class AddCardFlow: NSObject, PXFlow {
             }
         })
     }
-    
+
     private func openCardForm() {
         guard let paymentMethods = self.model.paymentMethods else {
             return
@@ -134,7 +134,7 @@ public class AddCardFlow: NSObject, PXFlow {
         })
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: cardFormViewController, animated: true)
     }
-    
+
     private func openIdentificationTypesScreen() {
         guard let identificationTypes = self.model.identificationTypes else {
             return
@@ -147,7 +147,7 @@ public class AddCardFlow: NSObject, PXFlow {
         }
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: identificationViewController, animated: true)
     }
-    
+
     private func createCardToken() {
         guard let cardToken = self.model.cardToken else {
             return
@@ -169,7 +169,7 @@ public class AddCardFlow: NSObject, PXFlow {
                 }
         })
     }
-    
+
     private func associateTokenWithUser() {
         guard let selectedPaymentMethod = self.model.selectedPaymentMethod, let token = self.model.tokenizedCard else {
             return
@@ -196,16 +196,16 @@ public class AddCardFlow: NSObject, PXFlow {
             }
         }
     }
-    
+
     private func showCongrats() {
         let viewModel = PXResultAddCardSuccessViewModel(buttonCallback: { [weak self] in
             self?.executeNextStep()
         })
-        let congratsVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
+        let congratsVc = PXResultViewController(viewModel: viewModel) { (_) in
         }
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: congratsVc, animated: true)
     }
-    
+
     private func finish() {
         if let associateCardResult = self.model.associateCardResult {
             self.delegate?.addCardFlowSucceded(result: associateCardResult)
@@ -214,18 +214,18 @@ public class AddCardFlow: NSObject, PXFlow {
         }
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)
     }
-    
+
     private func showErrorScreen() {
         let viewModel = PXResultAddCardFailedViewModel(buttonCallback: { [weak self] in
             self?.reset()
             }, linkCallback: { [weak self] in
                 self?.finish()
         })
-        let failVc = PXResultViewController(viewModel: viewModel) { (congratsState) in
+        let failVc = PXResultViewController(viewModel: viewModel) { (_) in
         }
         self.navigationHandler.pushViewController(cleanCompletedCheckouts: false, targetVC: failVc, animated: true)
     }
-    
+
     private func reset() {
         PXNotificationManager.Post.cardFormReset()
         if let cardForm = self.navigationHandler.navigationController.viewControllers.filter({$0 is CardFormViewController}).first {
@@ -237,7 +237,7 @@ public class AddCardFlow: NSObject, PXFlow {
         }
         self.navigationHandler.navigationController.setNavigationBarHidden(false, animated: true)
     }
-    
+
     @objc private func goBack() {
         self.navigationHandler.popViewController(animated: true)
         ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationHandler.navigationController)

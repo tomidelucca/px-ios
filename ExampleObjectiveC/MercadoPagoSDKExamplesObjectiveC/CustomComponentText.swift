@@ -7,7 +7,12 @@
 //
 
 import UIKit
-import MercadoPagoSDKV4
+
+#if PX_PRIVATE_POD
+    import MercadoPagoSDKV4
+#else
+    import MercadoPagoSDK
+#endif
 
 @objc class CustomComponentText: NSObject {
     let HEIGHT: CGFloat = 80.0

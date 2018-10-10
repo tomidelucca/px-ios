@@ -124,7 +124,6 @@
 				23EDA1302147DFC90085CA7A /* Frameworks */,
 				23EDA1312147DFC90085CA7A /* Resources */,
 				506EE458167F828B8A4DE80F /* [CP] Embed Pods Frameworks */,
-				192D33A9305B0B63A98E8380 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -183,21 +182,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		192D33A9305B0B63A98E8380 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		506EE458167F828B8A4DE80F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
