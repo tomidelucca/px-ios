@@ -36,11 +36,11 @@ internal class CardFormViewModel {
     let animationDuration: Double = 0.6
 
     var promos: [PXBankDeal]?
-    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
+    let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter?
 
     internal var bankDealsEnabled: Bool = true
 
-    init(paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: PXCardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, bankDealsEnabled: Bool) {
+    init(paymentMethods: [PXPaymentMethod], guessedPaymentMethods: [PXPaymentMethod]? = nil, customerCard: PXCardInformation? = nil, token: PXToken? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter?, bankDealsEnabled: Bool) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter

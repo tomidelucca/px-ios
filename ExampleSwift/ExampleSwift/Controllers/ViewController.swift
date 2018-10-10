@@ -58,18 +58,14 @@ extension ViewController: PXLifeCycleProtocol {
     func finishCheckout() -> ((PXResult?) -> Void)? {
         return nil
     }
-    
+
     func cancelCheckout() -> (() -> Void)? {
         return nil
     }
 
-    func finishCheckout(payment: PXPayment?) -> (() -> Void)? {
-       return nil
-    }
-
     func changePaymentMethodTapped() -> (() -> Void)? {
-        return { [weak self] () in
-            self?.navigationController?.popToRootViewController(animated: true)
+        return { () in
+            print("px - changePaymentMethodTapped")
         }
     }
 }

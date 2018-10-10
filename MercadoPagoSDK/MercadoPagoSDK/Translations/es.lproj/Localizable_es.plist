@@ -340,5 +340,40 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Algo salió mal</string>
 	</dict>
+	<key>add_card_congrats_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>¡Listo! Tu tarjeta quedó guardada. Podés usarla cuando quieras.</string>
+	</dict>
+	<key>add_card_go_to_my_cards</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Ir a Mis tarjetas</string>
+	</dict>
+	<key>add_card_failed_label_text</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Algo salió mal…</string>
+	</dict>
+	<key>add_card_failed_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>No pudimos cargar los datos de tu tarjeta</string>
+	</dict>
+	<key>add_card_try_again</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Intentar de nuevo</string>
+	</dict>
 </dict>
 </plist>
