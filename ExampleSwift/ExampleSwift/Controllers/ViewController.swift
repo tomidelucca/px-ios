@@ -14,11 +14,10 @@ import MercadoPagoSDK
 class ViewController: UIViewController {
 
     private var checkout: MercadoPagoCheckout?
-    private var addCardFrow: AddCardFlow?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        runMercadoPagoCheckout()
+        // runMercadoPagoCheckout()
         runMercadoPagoCheckoutWithLifecycle()
     }
 
@@ -52,23 +51,16 @@ class ViewController: UIViewController {
 // MARK: Optional Lifecycle protocol implementation example.
 extension ViewController: PXLifeCycleProtocol {
     func finishCheckout() -> ((PXResult?) -> Void)? {
-        print("px - finishCheckout outsite")
-        return { (pxResult) in
-            print("px - finishCheckout inside")
-        }
+        return nil
     }
     
     func cancelCheckout() -> (() -> Void)? {
-        print("px - cancelCheckout outsite")
-        return { () in
-            print("px - cancelCheckout inside")
-        }
+        return nil
     }
 
     func changePaymentMethodTapped() -> (() -> Void)? {
-        print("px - changePaymentMethodTapped outsite")
         return { () in
-            print("px - changePaymentMethodTapped inside")
+            print("px - changePaymentMethodTapped")
         }
     }
 }
