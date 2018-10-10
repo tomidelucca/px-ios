@@ -33,7 +33,6 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
     @IBOutlet weak var collectionSearch: UICollectionView!
 
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_VAULT }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_VAULT }
 
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
 
@@ -72,11 +71,8 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
     override func trackInfo() {
         let paymentMethodsOptions = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS) ?? ""
         let properties: [String: String] = [TrackingUtil.METADATA_OPTIONS: paymentMethodsOptions]
-        var finalId = screenId
-        if let groupName = groupName {
-            finalId = screenId + "/" + groupName
-        }
-        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName, properties: properties)
+
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
     }
 
     required  public init(coder aDecoder: NSCoder) {

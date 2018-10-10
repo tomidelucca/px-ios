@@ -10,10 +10,9 @@ import UIKit
 
 class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
-    var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT_BUSINESS }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: [String: String]())
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: [String: String]())
     }
 
     let businessResult: PXBusinessResult

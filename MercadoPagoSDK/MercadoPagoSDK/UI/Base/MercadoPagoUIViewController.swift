@@ -30,7 +30,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     var hideNavBarCallback: (() -> Void)?
 
     open var screenName: String { return TrackingUtil.NO_NAME_SCREEN }
-    open var screenId: String { return TrackingUtil.NO_SCREEN_ID }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +38,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
 
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
+        if screenName != TrackingUtil.NO_NAME_SCREEN && !tracked {
             tracked = true
             trackInfo()
         }
@@ -88,7 +87,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
     internal func loadMPStyles() {

@@ -50,7 +50,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     var viewModel: CardFormViewModel!
 
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM }
 
     init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
@@ -60,31 +59,27 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     override func trackInfo() {
-        var finalId = screenId
-        if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId += "/" + cardType
-        }
-        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
+        //MPXTracker.sharedInstance.trackScreen(screenName: screenName)
         self.trackStatus()
     }
 
     func trackStatus() {
-        var finalId = screenId
+        var finalId = screenName
 
         if let cardType = self.viewModel.getPaymentMethodTypeId() {
             finalId += "/" + cardType
         }
 
         if editingLabel === cardNumberLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_NUMBER, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_NUMBER)
         } else if editingLabel === nameLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_HOLDER_NAME, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_HOLDER_NAME)
         } else if editingLabel === expirationDateLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_EXPIRATION_DATE, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_EXPIRATION_DATE)
         } else if editingLabel === cvvLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_SECURITY_CODE, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_SECURITY_CODE)
         } else if editingLabel == nil {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
+            MPXTracker.sharedInstance.trackScreen(screenName: finalId)
         }
     }
 

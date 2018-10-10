@@ -11,7 +11,6 @@ import UIKit
 class PXResultViewController: PXComponentContainerViewController {
 
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT }
 
     let viewModel: PXResultViewModelInterface
     var headerView: PXHeaderView?

@@ -32,15 +32,29 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
 
+    var paymentData: PXPaymentData
+
     //@IBOutlet var typePicker: UIPickerView! = UIPickerView()
 
-    override open var screenName: String { return "IDENTIFICATION_NUMBER" }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
 
-    public init(identificationTypes: [PXIdentificationType], callback : @escaping (( _ identification: PXIdentification) -> Void), errorExitCallback: (() -> Void)?) {
+    public init(identificationTypes: [PXIdentificationType], paymentData: PXPaymentData, callback : @escaping (( _ identification: PXIdentification) -> Void), errorExitCallback: (() -> Void)?) {
+        self.paymentData = paymentData
         super.init(nibName: "IdentificationViewController", bundle: ResourceManager.shared.getBundle())
         self.callback = callback
         self.identificationTypes = identificationTypes
         self.errorExitCallback = errorExitCallback
+    }
+
+    override func trackInfo() {
+        var screenPath = screenName
+
+        if let cardType = paymentData.paymentMethod?.paymentTypeId {
+            screenPath += "/" + cardType
+        }
+        screenPath = "\(screenPath)\(TrackingUtil.CARD_IDENTIFICATION)"
+
+         MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 
     override func loadMPStyles() {

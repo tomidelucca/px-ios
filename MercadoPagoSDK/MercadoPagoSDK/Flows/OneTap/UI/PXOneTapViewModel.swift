@@ -12,10 +12,9 @@ final class PXOneTapViewModel: PXReviewViewModel {
 
     // Tracking overrides.
     override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
-    override var screenId: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
 
     override func trackConfirmActionEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: "screenId", screenName: screenName)
     }
 
     override func trackInfo() {
@@ -28,7 +27,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
             properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: properties)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
     }
 }
 
@@ -38,10 +37,10 @@ extension PXOneTapViewModel {
         var properties: [String: String] = [String: String]()
         properties[TrackingUtil.Metadata.HAS_DISCOUNT] = hasDiscount().description
         properties[TrackingUtil.Metadata.INSTALLMENTS] = amountHelper.paymentData.getNumberOfInstallments().stringValue
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_SUMMARY_DETAIL, screenId: screenId, screenName: screenName, properties: properties)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_SUMMARY_DETAIL, screenId: "screenId", screenName: screenName, properties: properties)
     }
 
     func trackTapBackEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_BACK, screenId: screenId, screenName: screenName)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_BACK, screenId: "screenId", screenName: screenName)
     }
 }

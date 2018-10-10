@@ -24,7 +24,6 @@ internal class ErrorViewController: MercadoPagoUIViewController {
     var callback: (() -> Void)?
 
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_ERROR }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_ERROR }
 
     open static var defaultErrorCancel: (() -> Void)?
 
@@ -68,7 +67,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
             metadata["error_message"] = error.message
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: metadata)
     }
 
     override open func viewDidLoad() {

@@ -11,7 +11,6 @@ import UIKit
 class PXReviewViewModel: NSObject {
 
     var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
-    var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
@@ -40,11 +39,11 @@ class PXReviewViewModel: NSObject {
             properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
         }
 
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName, properties: properties)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: "", screenName: screenName, properties: properties)
     }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
     func trackChangePaymentMethodEvent() {
@@ -223,7 +222,7 @@ extension PXReviewViewModel {
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = pm.paymentMethodDescription?.toAttributedString()
-        var accreditationTime: NSAttributedString? = nil
+        var accreditationTime: NSAttributedString?
         var action = withAction
         let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         let lightLabelColor = ThemeManager.shared.labelTintColor()

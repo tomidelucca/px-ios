@@ -11,7 +11,6 @@ import UIKit
 final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Tracking
     override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
-    override var screenId: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
 
     // MARK: Definitions
     lazy var itemViews = [UIView]()

@@ -10,7 +10,6 @@ import UIKit
 
 internal class PXResultViewModel: PXResultViewModelInterface {
     var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
-    var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT }
 
     var paymentResult: PaymentResult
     var instructionsInfo: PXInstructions?
@@ -39,14 +38,19 @@ internal class PXResultViewModel: PXResultViewModelInterface {
             metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.id
         }
 
-        let finalId = "\(screenId)/\(self.getPaymentStatus())"
-
-        var name = screenName
-        if self.isCallForAuth() {
-            name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
+        let paymentStatus = self.getPaymentStatus()
+        var status = ""
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            status = "success"
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            status = "further_action_needed"
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            status = "error"
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: name, properties: metadata)
+        let name = "\(screenName)/\(status)"
+
+        MPXTracker.sharedInstance.trackScreen(screenName: name, properties: metadata)
     }
 
     func getPaymentData() -> PXPaymentData {
