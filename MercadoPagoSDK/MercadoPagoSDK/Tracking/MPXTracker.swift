@@ -79,8 +79,12 @@ internal extension MPXTracker {
 // MARK: Public interfase.
 internal extension MPXTracker {
     internal func trackScreen(screenName: String, properties: [String: String] = [:]) {
+        var screenPath = screenName
+        if !screenName.startsWith("/wallet_error") {
+            screenPath = "/px_checkout\(screenPath)"
+        }
         if let trackListenerInterfase = trackListener {
-            trackListenerInterfase.trackScreen(screenName: "/px_checkout" + screenName, extraParams: properties)
+            trackListenerInterfase.trackScreen(screenName: screenPath, extraParams: properties)
         }
     }
 

@@ -72,7 +72,15 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         let paymentMethodsOptions = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS) ?? ""
         let properties: [String: String] = [TrackingUtil.METADATA_OPTIONS: paymentMethodsOptions]
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
+        var screenPath = screenName
+
+        if let groupName = groupName {
+            if groupName == PXPaymentTypes.BANK_TRANSFER.rawValue || groupName == PXPaymentTypes.TICKET.rawValue {
+                screenPath = "\(screenPath)/cash"
+            }
+        }
+
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: properties)
     }
 
     required  public init(coder aDecoder: NSCoder) {

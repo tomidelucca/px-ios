@@ -93,7 +93,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
 
     // Disable bank deals
-    [advancedConfig setBankDealsEnabled:NO];
+    //[advancedConfig setBankDealsEnabled:NO];
 
     // Set advanced comnfig
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];

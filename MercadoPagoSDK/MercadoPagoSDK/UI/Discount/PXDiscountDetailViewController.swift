@@ -10,7 +10,7 @@ import UIKit
 
 final class PXDiscountDetailViewController: MercadoPagoUIViewController {
 
-    override open var screenName: String { return "DISCOUNT_SUMMARY" }
+    override var screenName: String { return TrackingUtil.SCREEN_NAME_DISCOUNT_DETAIL }
 
     private var amountHelper: PXAmountHelper
     private let fontSize: CGFloat = PXLayout.S_FONT
@@ -31,7 +31,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         if self.contentView.isEmpty() {
             renderViews()

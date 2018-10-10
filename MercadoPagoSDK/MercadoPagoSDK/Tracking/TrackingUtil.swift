@@ -18,6 +18,7 @@ internal class TrackingUtil: NSObject {
     static let SCREEN_NAME_CARD_FORM = "/add_payment_method"
     static let SCREEN_NAME_CARD_FORM_ISSUERS = "/payments/card_issuer"
     static let SCREEN_NAME_CARD_FORM_INSTALLMENTS = "/payments/installments"
+    static let SCREEN_NAME_DISCOUNT_DETAIL = "payments/select_method/applied_discount"
     static let SCREEN_NAME_ERROR = "/wallet_error"
 
     //Sufix
