@@ -11,10 +11,59 @@ import UIKit
 typealias OneTapSummaryData = (title: String, value: String, highlightedColor: UIColor, isTotal: Bool)
 
 class PXOneTapHeaderViewModel {
+    let icon: UIImage
+    let title: String
     let data: [OneTapSummaryData]
 
-    init(data: [OneTapSummaryData]) {
+    init(icon: UIImage, title: String, data: [OneTapSummaryData]) {
+        self.icon = icon
+        self.title = title
         self.data = data
+    }
+}
+
+class PXOneTapHeaderMerchantView: PXComponentView {
+    let image: UIImage
+    let title: String
+    let showHorizontally: Bool
+
+    init(image: UIImage, title: String, showHorizontally: Bool = false) {
+        self.image = image
+        self.title = title
+        self.showHorizontally = showHorizontally
+        super.init()
+        render()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func render() {
+        let imageView = PXUIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.enableFadeIn()
+        imageView.image = image
+        self.addSubview(imageView)
+        PXLayout.setHeight(owner: imageView, height: 20).isActive = true
+        PXLayout.setWidth(owner: imageView, width: 20).isActive = true
+
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = title
+        titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
+        titleLabel.textAlignment = .center
+        self.addSubview(titleLabel)
+
+        if showHorizontally {
+            PXLayout.put(view: imageView, leftOf: titleLabel, withMargin: PXLayout.L_MARGIN, relation: .equal).isActive = true
+        } else {
+            PXLayout.centerHorizontally(view: imageView).isActive = true
+            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.centerHorizontally(view: titleLabel).isActive = true
+            PXLayout.put(view: titleLabel, onBottomOf: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
+        }
     }
 }
 
@@ -28,10 +77,12 @@ class PXOneTapHeaderView: PXComponentView {
     func render() {
         guard let model = model else {return}
         self.removeAllSubviews()
-        self.layer.borderWidth = 2
-
 
         PXLayout.setHeight(owner: self, height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
+        PXLayout.setHeight(owner: self.getContentView(), height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
+
+        let summaryView = PXComponentView()
+        summaryView.pinContentViewToBottom()
 
         for dat in model.data {
             let margin: CGFloat = dat.isTotal ? PXLayout.S_MARGIN : PXLayout.XXS_MARGIN
@@ -39,19 +90,31 @@ class PXOneTapHeaderView: PXComponentView {
 
             if dat.isTotal {
                 let separatorView = UIView()
-                separatorView.backgroundColor = .red
+                separatorView.backgroundColor = ThemeManager.shared.greyColor()
                 separatorView.translatesAutoresizingMaskIntoConstraints = false
-                self.addSubviewToBottom(separatorView, withMargin: margin)
+                summaryView.addSubviewToBottom(separatorView, withMargin: margin)
                 PXLayout.setHeight(owner: separatorView, height: 1).isActive = true
                 PXLayout.pinLeft(view: separatorView, withMargin: PXLayout.M_MARGIN).isActive = true
                 PXLayout.pinRight(view: separatorView, withMargin: PXLayout.M_MARGIN).isActive = true
             }
 
-            self.addSubviewToBottom(rowView, withMargin: margin)
+            summaryView.addSubviewToBottom(rowView, withMargin: margin)
             PXLayout.centerHorizontally(view: rowView).isActive = true
             PXLayout.pinLeft(view: rowView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: rowView, withMargin: PXLayout.M_MARGIN).isActive = true
         }
+
+        self.addSubview(summaryView)
+        summaryView.pinLastSubviewToBottom(withMargin: PXLayout.S_MARGIN)?.isActive = true
+        PXLayout.matchWidth(ofView: summaryView).isActive = true
+        PXLayout.pinBottom(view: summaryView).isActive = true
+
+        let merchantView = PXOneTapHeaderMerchantView(image: model.icon, title: model.title, showHorizontally: false)
+        self.addSubview(merchantView)
+        PXLayout.pinTop(view: merchantView).isActive = true
+        PXLayout.put(view: merchantView, aboveOf: summaryView).isActive = true
+        PXLayout.centerHorizontally(view: merchantView).isActive = true
+        PXLayout.matchWidth(ofView: merchantView).isActive = true
     }
 
     func getSummaryRow(with data: OneTapSummaryData) -> UIView {
@@ -188,7 +251,15 @@ extension PXOneTapViewController {
         contentView.prepareForRender()
 
         let view = PXOneTapHeaderView()
-        view.model = PXOneTapHeaderViewModel(data: [OneTapSummaryData("Compra", "$ 1.000", UIColor.blue, false), OneTapSummaryData("Descuento", "- $ 80", UIColor.red, false), OneTapSummaryData("Total", "$ 920", UIColor.black, true)])
+        view.model = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Burger_King_Logo.svg/1200px-Burger_King_Logo.svg.png"), title: "Burger King", data: [
+            OneTapSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
+            OneTapSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
+            OneTapSummaryData("Sub total", "$ 800", UIColor.black, true),
+            OneTapSummaryData("Cargos", "$ 100", ThemeManager.shared.greyColor(), false),
+            OneTapSummaryData("Cargos 2", "$ 100", ThemeManager.shared.greyColor(), false),
+            OneTapSummaryData("Cargos 3", "$ 100", ThemeManager.shared.greyColor(), false),
+            OneTapSummaryData("Total", "$ 1100", UIColor.black, true)
+            ])
         contentView.addSubviewToBottom(view)
         PXLayout.centerHorizontally(view: view).isActive = true
         PXLayout.matchWidth(ofView: view).isActive = true
@@ -233,7 +304,7 @@ extension PXOneTapViewController {
 
         view.layoutIfNeeded()
         refreshContentViewSize()
-        _ = centerContentView(margin: -PXLayout.getStatusBarHeight())
+//        _ = centerContentView(margin: -PXLayout.getStatusBarHeight())
     }
 }
 
