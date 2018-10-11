@@ -39,30 +39,50 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private let IMAGE_SIZE: CGFloat = 55
+
     private func render() {
+        let containerView = UIView()
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.blue.cgColor
         let imageView = PXUIImageView()
+        imageView.layer.masksToBounds = false
+        imageView.layer.cornerRadius = IMAGE_SIZE/2
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.enableFadeIn()
         imageView.image = image
-        self.addSubview(imageView)
-        PXLayout.setHeight(owner: imageView, height: 20).isActive = true
-        PXLayout.setWidth(owner: imageView, width: 20).isActive = true
+        containerView.addSubview(imageView)
+        PXLayout.setHeight(owner: imageView, height: IMAGE_SIZE).isActive = true
+        PXLayout.setWidth(owner: imageView, width: IMAGE_SIZE).isActive = true
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
         titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
         titleLabel.textAlignment = .center
-        self.addSubview(titleLabel)
+        containerView.addSubview(titleLabel)
+        containerView.layer.borderWidth = 3
+        containerView.layer.borderColor = UIColor.purple.cgColor
+
+        self.addSubviewToBottom(containerView)
+        PXLayout.pinBottom(view: containerView).isActive = true
+        PXLayout.centerHorizontally(view: containerView).isActive = true
 
         if showHorizontally {
-            PXLayout.put(view: imageView, leftOf: titleLabel, withMargin: PXLayout.L_MARGIN, relation: .equal).isActive = true
+            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinLeft(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.put(view: imageView, leftOf: titleLabel, withMargin: PXLayout.XXS_MARGIN, relation: .equal).isActive = true
+            PXLayout.centerVertically(view: imageView, to: titleLabel).isActive = true
         } else {
             PXLayout.centerHorizontally(view: imageView).isActive = true
             PXLayout.pinTop(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.centerHorizontally(view: titleLabel).isActive = true
             PXLayout.put(view: titleLabel, onBottomOf: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.matchWidth(ofView: containerView).isActive = true
         }
     }
 }
@@ -78,11 +98,16 @@ class PXOneTapHeaderView: PXComponentView {
         guard let model = model else {return}
         self.removeAllSubviews()
 
+        self.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
+        self.layer.borderWidth = 1
+
         PXLayout.setHeight(owner: self, height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
         PXLayout.setHeight(owner: self.getContentView(), height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
 
         let summaryView = PXComponentView()
         summaryView.pinContentViewToBottom()
+        summaryView.layer.borderWidth = 1
+        summaryView.layer.borderColor = UIColor.green.cgColor
 
         for dat in model.data {
             let margin: CGFloat = dat.isTotal ? PXLayout.S_MARGIN : PXLayout.XXS_MARGIN
@@ -251,7 +276,7 @@ extension PXOneTapViewController {
         contentView.prepareForRender()
 
         let view = PXOneTapHeaderView()
-        view.model = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Burger_King_Logo.svg/1200px-Burger_King_Logo.svg.png"), title: "Burger King", data: [
+        view.model = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
             OneTapSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
             OneTapSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
             OneTapSummaryData("Sub total", "$ 800", UIColor.black, true),
