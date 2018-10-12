@@ -87,12 +87,14 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 // MARK: UI Methods.
 extension PXOneTapViewController {
     private func setupNavigationBar() {
+//        self.view.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
+        self.setBackground(color: ThemeManager.shared.highlightBackgroundColor())
         navBarTextColor = ThemeManager.shared.labelTintColor()
         loadMPStyles()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.whiteColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
-        navigationController?.navigationBar.backgroundColor =  UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        navigationController?.navigationBar.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     }
 
@@ -133,9 +135,9 @@ extension PXOneTapViewController {
     private func getHeaderView() -> UIView {
         let headerView = PXOneTapHeaderView()
         headerView.model = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
-            OneTapSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
-            OneTapSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
-            OneTapSummaryData("Total", "$ 1100", UIColor.black, true)
+            OneTapHeaderSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
+            OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
+            OneTapHeaderSummaryData("Total", "$ 1100", UIColor.black, true)
             ])
         return headerView
     }

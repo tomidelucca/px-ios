@@ -7,14 +7,14 @@
 
 import UIKit
 
-typealias OneTapSummaryData = (title: String, value: String, highlightedColor: UIColor, isTotal: Bool)
+typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, isTotal: Bool)
 
 class PXOneTapHeaderViewModel {
     let icon: UIImage
     let title: String
-    let data: [OneTapSummaryData]
+    let data: [OneTapHeaderSummaryData]
 
-    init(icon: UIImage, title: String, data: [OneTapSummaryData]) {
+    init(icon: UIImage, title: String, data: [OneTapHeaderSummaryData]) {
         self.icon = icon
         self.title = title
         self.data = data
@@ -74,7 +74,7 @@ class PXOneTapHeaderView: PXComponentView {
         PXLayout.matchWidth(ofView: merchantView).isActive = true
     }
 
-    func getSummaryRowView(with data: OneTapSummaryData) -> UIView {
+    func getSummaryRowView(with data: OneTapHeaderSummaryData) -> UIView {
         let rowHeight: CGFloat = data.isTotal ? 20 : 16
         let titleFont = data.isTotal ? Utils.getFont(size: PXLayout.S_FONT) : Utils.getFont(size: PXLayout.XXS_FONT)
         let valueFont = data.isTotal ? Utils.getSemiBoldFont(size: PXLayout.S_FONT) : Utils.getFont(size: PXLayout.XXS_FONT)
