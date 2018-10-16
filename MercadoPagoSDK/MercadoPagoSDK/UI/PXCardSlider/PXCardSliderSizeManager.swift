@@ -10,7 +10,7 @@ struct PXCardSliderSizeManager {
 
     static func getHeaderViewHeight(viewController: UIViewController) -> CGFloat {
         if UIDevice.isSmallDevice() {
-            return PXLayout.getAvailabelScreenHeight(in: viewController, applyingMarginFactor: 30)
+            return PXLayout.getAvailabelScreenHeight(in: viewController, applyingMarginFactor: 32)
         } else {
             return PXLayout.getAvailabelScreenHeight(in: viewController, applyingMarginFactor: 40)
         }
@@ -18,7 +18,7 @@ struct PXCardSliderSizeManager {
 
     static func getWhiteViewHeight(viewController: UIViewController) -> CGFloat {
         if UIDevice.isSmallDevice() {
-            return PXLayout.getAvailabelScreenHeight(in: viewController, applyingMarginFactor: 70)
+            return PXLayout.getAvailabelScreenHeight(in: viewController, applyingMarginFactor: 68)
         } else {
             return PXLayout.getAvailabelScreenHeight(in: viewController, applyingMarginFactor: 60)
         }
