@@ -220,7 +220,7 @@ extension PXPaymentData {
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
-        self.payer?.clearCollectedData() // No borrar el payer directo
+        //self.payer?.clearCollectedData() // No borrar el payer directo
         self.transactionDetails = nil
         // No borrar el descuento
     }

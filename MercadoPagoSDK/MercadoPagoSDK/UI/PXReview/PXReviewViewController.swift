@@ -116,6 +116,15 @@ extension PXReviewViewController {
         PXLayout.centerHorizontally(view: summaryView).isActive = true
         PXLayout.matchWidth(ofView: summaryView).isActive = true
 
+        // Payer info
+        if self.viewModel.shouldShowPayer() {
+            if let payerView = getPayerComponentView() {
+                contentView.addSubviewToBottom(payerView)
+                PXLayout.centerHorizontally(view: payerView).isActive = true
+                PXLayout.matchWidth(ofView: payerView).isActive = true
+            }
+        }
+
         // Add CFT view.
         if let cftView = getCFTComponentView() {
             contentView.addSubviewToBottom(cftView)
@@ -258,6 +267,23 @@ extension PXReviewViewController {
         let summaryComponent = viewModel.buildSummaryComponent(width: PXLayout.getScreenWidth())
         let summaryView = summaryComponent.render()
         return summaryView
+    }
+
+    fileprivate func getPayerComponentView() -> UIView? {
+
+        let action = PXAction(label: "review_change_payer_action".localized_beta, action: { [weak self] in
+            if let reviewViewModel = self?.viewModel {
+                reviewViewModel.payerInfo?.clearCollectedData()
+                PXNavigationHandler.getDefault().popViewController(animated: true)
+            }
+        })
+
+        if let payerComponent = viewModel.buildPayerComponent(action: action) {
+            let payerView = payerComponent.render()
+            return payerView
+        }
+
+        return nil
     }
 
     fileprivate func getTitleComponentView() -> UIView {
