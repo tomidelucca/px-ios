@@ -30,10 +30,10 @@ class PXOneTapHeaderView: PXComponentView {
 
     func render() {
         guard let model = model else {return}
-        self.removeAllSubviews()
+        removeAllSubviews()
 
-        self.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-        self.layer.borderWidth = 1
+        backgroundColor = ThemeManager.shared.highlightBackgroundColor()
+        // layer.borderWidth = 1 // Only For test.
 
         PXLayout.setHeight(owner: self, height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
         PXLayout.setHeight(owner: self.getContentView(), height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
