@@ -55,6 +55,10 @@ internal extension UILabel {
     func clearAttributedText() {
         self.attributedText = NSAttributedString(string: "")
     }
+
+    func clearText() {
+        self.text = ""
+    }
 }
 
 internal extension NSAttributedString {
