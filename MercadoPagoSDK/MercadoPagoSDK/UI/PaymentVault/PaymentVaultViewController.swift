@@ -32,8 +32,6 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    override open var screenName: String { return TrackingPaths.Screens.getPaymentVaultPath() }
-
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
 
     var merchantBaseUrl: String!
@@ -72,13 +70,13 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         let paymentMethodsOptions = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS) ?? ""
         let properties: [String: String] = [TrackingPaths.METADATA_OPTIONS: paymentMethodsOptions]
 
-        var screenPath = screenName
+        var screenPath = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
 
         if let groupName = groupName {
             if groupName == PXPaymentTypes.BANK_TRANSFER.rawValue || groupName == PXPaymentTypes.TICKET.rawValue || groupName == PXPaymentTypes.BOLBRADESCO.rawValue {
-                screenPath = "\(screenPath)/ticket"
+                screenPath = TrackingPaths.Screens.PaymentVault.getTicketPath()
             } else {
-                screenPath = "\(screenPath)/select_card_type"
+                screenPath = TrackingPaths.Screens.PaymentVault.getCardTypePath()
             }
         }
 

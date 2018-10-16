@@ -52,11 +52,6 @@ extension TrackingPaths {
         private static let from = "#from="
         private static let refer = "#refer="
 
-        // Payment Vault Path
-        static func getPaymentVaultPath() -> String {
-            return pxTrack + payments + selectMethod
-        }
-
          // Review and Confirm Path
         static func getReviewAndConfirmPath() -> String {
             return pxTrack + "/review/traditional"
@@ -180,5 +175,26 @@ extension TrackingPaths.Screens {
         static func getErrorPath() -> String {
             return result + error
         }
+    }
+}
+
+// MARK: Payment Result Screen Paths
+extension TrackingPaths.Screens {
+    internal struct PaymentVault {
+        private static let ticket = "/ticket"
+        private static let cardType = "/select_card_type"
+
+        static func getPaymentVaultPath() -> String {
+            return TrackingPaths.pxTrack + TrackingPaths.payments + TrackingPaths.selectMethod
+        }
+
+        static func getTicketPath() -> String {
+            return getPaymentVaultPath() + ticket
+        }
+
+        static func getCardTypePath() -> String {
+            return getPaymentVaultPath() + cardType
+        }
+
     }
 }
