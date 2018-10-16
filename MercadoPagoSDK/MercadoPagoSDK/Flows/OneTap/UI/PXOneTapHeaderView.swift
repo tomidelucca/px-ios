@@ -22,22 +22,21 @@ class PXOneTapHeaderViewModel {
 }
 
 class PXOneTapHeaderView: PXComponentView {
-    var model: PXOneTapHeaderViewModel? {
-        didSet {
-            render()
-        }
+    let model: PXOneTapHeaderViewModel
+
+    init(viewModel: PXOneTapHeaderViewModel) {
+        self.model = viewModel
+        super.init()
+        self.render()
     }
 
-    func render() {
-        guard let model = model else {return}
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func render() {
         removeAllSubviews()
-
         backgroundColor = ThemeManager.shared.highlightBackgroundColor()
-        // layer.borderWidth = 1 // Only For test.
-
-        PXLayout.setHeight(owner: self, height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
-        PXLayout.setHeight(owner: self.getContentView(), height: PXLayout.getScreenHeight(applyingMarginFactor: 40)).isActive = true
-
         let summaryView = PXComponentView()
         summaryView.pinContentViewToBottom()
 
@@ -66,12 +65,21 @@ class PXOneTapHeaderView: PXComponentView {
         PXLayout.matchWidth(ofView: summaryView).isActive = true
         PXLayout.pinBottom(view: summaryView).isActive = true
 
-        let merchantView = PXOneTapHeaderMerchantView(image: model.icon, title: model.title)
+        let showHorizontally = UIDevice.isSmallDevice() && model.data.count != 1 && !model.data[0].isTotal
+        let merchantView = PXOneTapHeaderMerchantView(image: model.icon, title: model.title, showHorizontally: showHorizontally)
         self.addSubview(merchantView)
-        PXLayout.pinTop(view: merchantView).isActive = true
-        PXLayout.put(view: merchantView, aboveOf: summaryView).isActive = true
-        PXLayout.centerHorizontally(view: merchantView).isActive = true
-        PXLayout.matchWidth(ofView: merchantView).isActive = true
+
+        if showHorizontally {
+            PXLayout.pinTop(view: merchantView, withMargin: -PXLayout.XXL_MARGIN).isActive = true
+            PXLayout.put(view: merchantView, aboveOf: summaryView, withMargin: -PXLayout.M_MARGIN).isActive = true
+            PXLayout.centerHorizontally(view: merchantView).isActive = true
+            PXLayout.matchWidth(ofView: merchantView).isActive = true
+        } else {
+            PXLayout.pinTop(view: merchantView).isActive = true
+            PXLayout.put(view: merchantView, aboveOf: summaryView).isActive = true
+            PXLayout.centerHorizontally(view: merchantView).isActive = true
+            PXLayout.matchWidth(ofView: merchantView).isActive = true
+        }
     }
 
     func getSummaryRowView(with data: OneTapHeaderSummaryData) -> UIView {

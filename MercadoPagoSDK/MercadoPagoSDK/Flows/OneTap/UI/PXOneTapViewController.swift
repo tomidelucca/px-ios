@@ -99,6 +99,7 @@ extension PXOneTapViewController {
     }
 
     private func setupUI() {
+        self.navigationController?.navigationBar.backgroundColor = .clear
         if contentView.getSubviews().isEmpty {
             renderViews()
             //super.prepareForAnimation(customAnimations: PXSpruce.PXDefaultAnimation.slideUpAnimation)
@@ -113,6 +114,7 @@ extension PXOneTapViewController {
         // Add header view.
         let headerView = getHeaderView()
         contentView.addSubviewToBottom(headerView)
+        PXLayout.setHeight(owner: headerView, height: PXCardSliderSizeManager.getHeaderViewHeight(viewController: self)).isActive = true
         PXLayout.centerHorizontally(view: headerView).isActive = true
         PXLayout.matchWidth(ofView: headerView).isActive = true
 
@@ -121,7 +123,7 @@ extension PXOneTapViewController {
         // TODO: Margin factor for white view is temporary. Only for test
         // Make solution like expandBody
         contentView.addSubviewToBottom(whiteView)
-        PXLayout.setHeight(owner: whiteView, height: PXLayout.getScreenHeight(applyingMarginFactor: 50)).isActive = true
+        PXLayout.setHeight(owner: whiteView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)).isActive = true
         PXLayout.centerHorizontally(view: whiteView).isActive = true
         PXLayout.pinLeft(view: whiteView, withMargin: 0).isActive = true
         PXLayout.pinRight(view: whiteView, withMargin: 0).isActive = true
@@ -172,12 +174,12 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView() -> UIView {
-        let headerView = PXOneTapHeaderView()
-        headerView.model = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
+        let viewModel = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
             OneTapHeaderSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
             OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
             OneTapHeaderSummaryData("Total", "$ 1100", UIColor.black, true)
             ])
+        let headerView = PXOneTapHeaderView(viewModel: viewModel)
         return headerView
     }
 

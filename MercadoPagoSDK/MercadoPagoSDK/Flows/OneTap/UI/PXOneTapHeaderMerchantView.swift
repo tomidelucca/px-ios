@@ -12,10 +12,10 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     let title: String
     let showHorizontally: Bool
 
-    init(image: UIImage, title: String, showHorizontally: Bool = false) {
+    init(image: UIImage, title: String, showHorizontally: Bool) {
         self.image = image
         self.title = title
-        self.showHorizontally = UIDevice.isSmallDevice()
+        self.showHorizontally = showHorizontally
         super.init()
         render()
     }
