@@ -25,7 +25,7 @@ import SystemConfiguration
 
 let reachabilityStatusChangedNotification = "ReachabilityStatusChangedNotification"
 
-enum ReachabilityType: CustomStringConvertible {
+internal enum ReachabilityType: CustomStringConvertible {
     case wwan
     case wiFi
     var description: String {
@@ -36,7 +36,7 @@ enum ReachabilityType: CustomStringConvertible {
     }
 }
 
-enum ReachabilityStatus: CustomStringConvertible {
+internal enum ReachabilityStatus: CustomStringConvertible {
     case offline
     case online(ReachabilityType)
     case unknown
@@ -49,7 +49,7 @@ enum ReachabilityStatus: CustomStringConvertible {
     }
 }
 
-internal class MPXReach {
+internal class PXReach {
     func connectionStatus() -> ReachabilityStatus {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)

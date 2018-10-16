@@ -49,8 +49,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     var navItem: UINavigationItem?
     var viewModel: CardFormViewModel!
 
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
-
     init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = cardFormManager
@@ -59,28 +57,28 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     override func trackInfo() {
-        //MPXTracker.sharedInstance.trackScreen(screenName: screenName)
         self.trackStatus()
     }
 
     func trackStatus() {
-        var finalId = screenName
 
-        if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId += "/" + cardType
+        guard let cardType = self.viewModel.getPaymentMethodTypeId() else {
+            return
         }
+
+        var screenPath = ""
 
         if editingLabel === cardNumberLabel {
-            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_NUMBER)
+            screenPath = TrackingPaths.Screens.CardForm.getCardNumberPath(paymentTypeId: cardType)
         } else if editingLabel === nameLabel {
-            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_HOLDER_NAME)
+            screenPath = TrackingPaths.Screens.CardForm.getCardNumberPath(paymentTypeId: cardType)
         } else if editingLabel === expirationDateLabel {
-            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_EXPIRATION_DATE)
+            screenPath = TrackingPaths.Screens.CardForm.getExpirationDatePath(paymentTypeId: cardType)
         } else if editingLabel === cvvLabel {
-            MPXTracker.sharedInstance.trackScreen(screenName: finalId + TrackingUtil.CARD_SECURITY_CODE)
-        } else if editingLabel == nil {
-            MPXTracker.sharedInstance.trackScreen(screenName: finalId)
+            screenPath = TrackingPaths.Screens.CardForm.getCvvPath(paymentTypeId: cardType)
         }
+
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 
     required public init?(coder aDecoder: NSCoder) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal struct MPXTrackingEnvironment {
+internal struct PXTrackingEnvironment {
     public static let production = "production"
     public static let staging = "staging"
 }
@@ -24,7 +24,7 @@ internal class MPXTracker: NSObject {
     private static let kTrackingEnabled = "tracking_enabled"
     private var trackListener: PXTrackerListener?
     private var flowService: FlowService = FlowService()
-    private lazy var currentEnvironment: String = MPXTrackingEnvironment.production
+    private lazy var currentEnvironment: String = PXTrackingEnvironment.production
 }
 
 // MARK: Getters/setters.
@@ -49,16 +49,6 @@ internal extension MPXTracker {
         return "/mobile/ios"
     }
 
-    internal func isEnabled() -> Bool {
-        guard let trackiSettings: [String: Any] = TrackingUtils.getSetting(identifier: MPXTracker.kTrackingSettings) else {
-            return false
-        }
-        guard let trackingEnabled = trackiSettings[MPXTracker.kTrackingEnabled] as? Bool else {
-            return false
-        }
-        return trackingEnabled
-    }
-
     internal func setTrack(listener: PXTrackerListener) {
         trackListener = listener
     }
@@ -79,12 +69,8 @@ internal extension MPXTracker {
 // MARK: Public interfase.
 internal extension MPXTracker {
     internal func trackScreen(screenName: String, properties: [String: String] = [:]) {
-        var screenPath = screenName
-        if !screenName.startsWith("/wallet_error") {
-            screenPath = "/px_checkout\(screenPath)"
-        }
         if let trackListenerInterfase = trackListener {
-            trackListenerInterfase.trackScreen(screenName: screenPath, extraParams: properties)
+            trackListenerInterfase.trackScreen(screenName: screenName, extraParams: properties)
         }
     }
 

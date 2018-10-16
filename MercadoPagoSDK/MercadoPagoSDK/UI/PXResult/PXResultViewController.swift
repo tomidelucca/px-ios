@@ -10,8 +10,6 @@ import UIKit
 
 class PXResultViewController: PXComponentContainerViewController {
 
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
-
     let viewModel: PXResultViewModelInterface
     var headerView: PXHeaderView?
     var receiptView: UIView?

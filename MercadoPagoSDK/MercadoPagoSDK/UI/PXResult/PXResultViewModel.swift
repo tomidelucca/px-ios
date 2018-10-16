@@ -9,7 +9,6 @@
 import UIKit
 
 internal class PXResultViewModel: PXResultViewModelInterface {
-    var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
 
     var paymentResult: PaymentResult
     var instructionsInfo: PXInstructions?
@@ -27,30 +26,29 @@ internal class PXResultViewModel: PXResultViewModelInterface {
     }
 
     func trackInfo() {
-        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
-                        TrackingUtil.METADATA_PAYMENT_STATUS: self.getPaymentStatus(),
-                        TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.getPaymentStatusDetail(),
-                        TrackingUtil.METADATA_PAYMENT_ID: self.getPaymentId() ?? ""]
+        var metadata = [TrackingPaths.METADATA_PAYMENT_IS_EXPRESS: TrackingPaths.IS_EXPRESS_DEFAULT_VALUE,
+                        TrackingPaths.METADATA_PAYMENT_STATUS: self.getPaymentStatus(),
+                        TrackingPaths.METADATA_PAYMENT_STATUS_DETAIL: self.getPaymentStatusDetail(),
+                        TrackingPaths.METADATA_PAYMENT_ID: self.getPaymentId() ?? ""]
         if let pm = self.getPaymentData().getPaymentMethod() {
-            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.id
+            metadata[TrackingPaths.METADATA_PAYMENT_METHOD_ID] = pm.id
         }
         if let issuer = self.getPaymentData().getIssuer() {
-            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.id
+            metadata[TrackingPaths.METADATA_ISSUER_ID] = issuer.id
         }
 
         let paymentStatus = self.getPaymentStatus()
-        var status = ""
+        var screenPath = ""
+
         if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            status = "success"
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
         } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            status = "further_action_needed"
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            status = "error"
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
 
-        let name = "\(screenName)/\(status)"
-
-        MPXTracker.sharedInstance.trackScreen(screenName: name, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: metadata)
     }
 
     func getPaymentData() -> PXPaymentData {

@@ -21,12 +21,12 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     var ccvLabelEmpty: Bool = true
     var toolbar: PXToolbar?
 
-    override open var screenName: String { return "sarasa" }
-
     override func trackInfo() {
-        let metadata: [String: String] = [TrackingUtil.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
+        let metadata: [String: String] = [TrackingPaths.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: metadata)
+        let screenPath = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId, referScreen: viewModel.reason.rawValue)
+
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: metadata)
     }
 
     @objc func keyboardWillShow(notification: Notification) {

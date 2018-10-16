@@ -10,7 +10,7 @@ import UIKit
 
 final class PXDiscountDetailViewController: MercadoPagoUIViewController {
 
-    override var screenName: String { return TrackingUtil.SCREEN_NAME_DISCOUNT_DETAIL }
+    override var screenName: String { return TrackingPaths.Screens.getDiscountDetailPath() }
 
     private var amountHelper: PXAmountHelper
     private let fontSize: CGFloat = PXLayout.S_FONT

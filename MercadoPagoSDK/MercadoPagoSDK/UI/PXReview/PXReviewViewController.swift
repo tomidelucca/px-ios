@@ -11,7 +11,7 @@ import UIKit
 class PXReviewViewController: PXComponentContainerViewController {
 
     // MARK: Tracking
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
+    override open var screenName: String { return TrackingPaths.Screens.getReviewAndConfirmPath() }
 
     var footerView: UIView!
     var floatingButtonView: UIView!

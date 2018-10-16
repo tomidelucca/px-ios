@@ -186,3 +186,20 @@ internal class PayerInfoViewModel {
         }
     }
 }
+
+// MARK: Tracking
+extension PayerInfoViewModel {
+    func trackStep(currentStep: PayerInfoFlowStep) {
+        var screenPath = ""
+        switch currentStep {
+        case .SCREEN_IDENTIFICATION:
+            screenPath = TrackingPaths.Screens.Boleto.getCpfPath()
+        case .SCREEN_NAME:
+            screenPath = TrackingPaths.Screens.Boleto.getNamePath()
+        case .SCREEN_LAST_NAME:
+            screenPath = TrackingPaths.Screens.Boleto.getLastNamePath()
+        default: break
+        }
+         MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
+    }
+}
