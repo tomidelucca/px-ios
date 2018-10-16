@@ -133,7 +133,7 @@ extension PXCardSlider {
     }
 
     private func setupPager(_ containerView: UIView) {
-        let pagerYMargin: CGFloat = PXLayout.S_MARGIN
+        let pagerYMargin: CGFloat = PXLayout.XS_MARGIN
         let pagerHeight: CGFloat = 25
         let disabledDotsColor: UIColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.1)
         pageControl.contentHorizontalAlignment = .center
