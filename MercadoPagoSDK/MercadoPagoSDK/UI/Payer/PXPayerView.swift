@@ -9,6 +9,7 @@
 import Foundation
 
 final class PXPayerView: PXBodyView {
+    var payerIcon: UIView?
     var identificationLabel: UILabel?
     var fullNameLabel: UILabel?
     var actionButton: PXSecondaryButton?

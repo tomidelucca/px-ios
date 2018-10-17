@@ -346,6 +346,38 @@ internal class Utils {
         return ""
     }
 
+    class func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+
+        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
+            if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
+                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false)
+                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false, completeEmptySpacesWith: " ")
+                return[customInitialMask, customMask]
+            }
+        }
+        return nil
+    }
+
+    class func getIdMask(IDtype: PXIdentificationType?) -> [TextMaskFormater] {
+        let site = SiteManager.shared.getSiteId()
+        let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
+        let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
+
+        if IDtype != nil {
+            if let masks = maskFinder(dictID: site + "_" + (IDtype?.id)!, forKey: "identification_mask") {
+                return masks
+            } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
+                return masks
+            } else {
+                return [defaultInitialMask, defaultMask]
+            }
+        } else {
+            return [defaultInitialMask, defaultMask]
+        }
+    }
+
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXPaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
         guard paymentMethodSearch.paymentMethodSearchItem != nil
             else {return nil}

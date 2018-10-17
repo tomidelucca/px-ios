@@ -286,11 +286,16 @@ extension PXReviewViewModel {
 
     func buildPayerComponent(action: PXAction) -> PXPayerComponent? {
         if let payerIdType = self.payerInfo?.identification?.type, let payerIdNumber = self.payerInfo?.identification?.number, let payerName = self.payerInfo?.firstName, let payerLastName = self.payerInfo?.lastName {
-            let identification = NSAttributedString(string: "\(payerIdType) \(payerIdNumber)")
-            let fulltName = NSAttributedString(string: "\(payerName) \(payerLastName)")
+            let mask = Utils.getIdMask(IDtype: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil))
 
-            let props = PXPayerProps(identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.highlightBackgroundColor(), labelColor: ThemeManager.shared.labelTintColor())
-            return PXPayerComponent(props: props)
+            if let numberMasked = mask[0].textMasked(payerIdNumber)?.description {
+                let identification = NSAttributedString(string: "\(payerIdType): \(numberMasked)")
+                let fulltName = NSAttributedString(string: "\(payerName) \(payerLastName)".uppercased())
+
+                let payerIcon = ResourceManager.shared.getImage("MPSDK_review_iconoPayer")
+                let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor())
+                return PXPayerComponent(props: props)
+            }
         }
 
         return nil

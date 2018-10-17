@@ -19,3 +19,12 @@ internal class PXPayerComponent: NSObject, PXComponentizable {
         return PXPayerComponentRenderer().render(component: self)
     }
 }
+
+// MARK: - Helper functions
+internal extension PXPayerComponent {
+    func getPayerIconComponent() -> PXPayerIconComponent {
+        let payerIconProps = PXPayerIconProps(payerIcon: self.props.payerIcon)
+        let payerIconComponent = PXPayerIconComponent(props: payerIconProps)
+        return payerIconComponent
+    }
+}

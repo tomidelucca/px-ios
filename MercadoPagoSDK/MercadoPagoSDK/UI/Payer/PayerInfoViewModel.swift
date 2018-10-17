@@ -41,7 +41,7 @@ internal class PayerInfoViewModel {
             fatalError("No valid identification types for PayerInfo View Controller")
         }
         self.identificationType = identificationTypes[0]
-        self.masks = getIdMask(IDtype: self.identificationType)
+        self.masks = Utils.getIdMask(IDtype: self.identificationType)
         self.currentMask = masks[0]
     }
 
@@ -152,37 +152,5 @@ internal class PayerInfoViewModel {
         self.payer.lastName = lastName
 
         return payer
-    }
-
-    private func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
-
-        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
-            if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
-                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false)
-                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false, completeEmptySpacesWith: " ")
-                return[customInitialMask, customMask]
-            }
-        }
-        return nil
-    }
-
-    private func getIdMask(IDtype: PXIdentificationType?) -> [TextMaskFormater] {
-        let site = SiteManager.shared.getSiteId()
-        let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
-        let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
-
-        if IDtype != nil {
-            if let masks = maskFinder(dictID: site + "_" + (IDtype?.id)!, forKey: "identification_mask") {
-                return masks
-            } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
-                return masks
-            } else {
-                return [defaultInitialMask, defaultMask]
-            }
-        } else {
-            return [defaultInitialMask, defaultMask]
-        }
     }
 }

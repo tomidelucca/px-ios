@@ -9,17 +9,21 @@
 import Foundation
 
 final class PXPayerProps: NSObject {
+    let payerIcon: UIImage?
     let identityfication: NSAttributedString
     let fulltName: NSAttributedString
     let action: PXAction
     let backgroundColor: UIColor
-    let labelColor: UIColor
+    let nameLabelColor: UIColor
+    let identificationLabelColor: UIColor
 
-    public init(identityfication: NSAttributedString, fulltName: NSAttributedString, action: PXAction, backgroundColor: UIColor, labelColor: UIColor) {
+    public init(payerIcon: UIImage?, identityfication: NSAttributedString, fulltName: NSAttributedString, action: PXAction, backgroundColor: UIColor, nameLabelColor: UIColor, identificationLabelColor: UIColor) {
+        self.payerIcon = payerIcon
         self.identityfication = identityfication
         self.fulltName = fulltName
         self.action = action
         self.backgroundColor = backgroundColor
-        self.labelColor = labelColor
+        self.nameLabelColor = nameLabelColor
+        self.identificationLabelColor = identificationLabelColor
     }
 }
