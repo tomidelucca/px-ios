@@ -10,11 +10,8 @@ import Foundation
 
 final class PXOneTapViewModel: PXReviewViewModel {
 
-    // Tracking overrides.
-    override var screenName: String { return TrackingPaths.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
-
     override func trackConfirmActionEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.ACTION_CHECKOUT_CONFIRMED, screenId: "screenId", screenName: screenName)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.ACTION_CHECKOUT_CONFIRMED, screenId: "screenId", screenName: TrackingPaths.Screens.getOneTapPath())
     }
 
     override func trackInfo() {
@@ -27,7 +24,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
             properties[TrackingPaths.METADATA_INSTALLMENTS] = installments.stringValue
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
+        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.getOneTapPath(), properties: properties)
     }
 }
 
@@ -37,10 +34,10 @@ extension PXOneTapViewModel {
         var properties: [String: String] = [String: String]()
         properties[TrackingPaths.Metadata.HAS_DISCOUNT] = hasDiscount().description
         properties[TrackingPaths.Metadata.INSTALLMENTS] = amountHelper.paymentData.getNumberOfInstallments().stringValue
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_SUMMARY_DETAIL, screenId: "screenId", screenName: screenName, properties: properties)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_SUMMARY_DETAIL, screenId: "screenId", screenName: TrackingPaths.Screens.getOneTapPath(), properties: properties)
     }
 
     func trackTapBackEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_BACK, screenId: "screenId", screenName: screenName)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_BACK, screenId: "screenId", screenName: TrackingPaths.Screens.getOneTapPath())
     }
 }

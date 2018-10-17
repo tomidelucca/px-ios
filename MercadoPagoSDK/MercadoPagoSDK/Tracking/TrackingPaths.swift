@@ -52,9 +52,14 @@ extension TrackingPaths {
         private static let from = "#from="
         private static let refer = "#refer="
 
-         // Review and Confirm Path
+        // Review and Confirm Path
         static func getReviewAndConfirmPath() -> String {
             return pxTrack + "/review/traditional"
+        }
+
+        // One Tap Path
+        static func getOneTapPath() -> String {
+            return pxTrack + "/review/one_tap"
         }
 
         // Bank Deaks Path
