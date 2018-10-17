@@ -187,7 +187,7 @@ extension PXOneTapViewController {
     private func getFooterView() -> UIView? {
         loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
         loadingButtonComponent?.animationDelegate = self
-        loadingButtonComponent?.layer.cornerRadius = 4
+        loadingButtonComponent?.layer.cornerRadius = 8
         loadingButtonComponent?.add(for: .touchUpInside, {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications()

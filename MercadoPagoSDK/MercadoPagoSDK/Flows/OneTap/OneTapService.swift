@@ -16,14 +16,20 @@ struct OneTapService {
         let amCardData = PXCardDataFactory().create(cardName: "Total en tu cuenta: $ 5.643", cardNumber: "", cardCode: "", cardExpiration: "")
         mockedViewModel.append(PXCardSliderViewModel(AccountMoneyCard(), amCardData))
 
-        let maestroData = PXCardDataFactory().create(cardName: "JUAN SANZONE", cardNumber: "************4356", cardCode: "", cardExpiration: "10/23")
+        let masterData = PXCardDataFactory().create(cardName: "JUAN SANZONE", cardNumber: "4356", cardCode: "", cardExpiration: "10/23")
+        mockedViewModel.append(PXCardSliderViewModel(Master(), masterData))
+
+        let visaData = PXCardDataFactory().create(cardName: "EDÉN TORRES", cardNumber: "7654", cardCode: "", cardExpiration: "01/21")
+        mockedViewModel.append(PXCardSliderViewModel(Visa(), visaData))
+
+        let amexData = PXCardDataFactory().create(cardName: "AUGUSTO C.", cardNumber: "6743", cardCode: "", cardExpiration: "08/25")
+        mockedViewModel.append(PXCardSliderViewModel(Amex(), amexData))
+
+        let maestroData = PXCardDataFactory().create(cardName: "DEMIAN TEJO", cardNumber: "4356", cardCode: "", cardExpiration: "10/23")
         mockedViewModel.append(PXCardSliderViewModel(Maestro(), maestroData))
 
-        let galiciaAmexData = PXCardDataFactory().create(cardName: "AUGUSTO C.", cardNumber: "************6743", cardCode: "", cardExpiration: "08/25")
+        let galiciaAmexData = PXCardDataFactory().create(cardName: "ESTEBAN QUITO", cardNumber: "6743", cardCode: "", cardExpiration: "08/25")
         mockedViewModel.append(PXCardSliderViewModel(GaliciaAmex(), galiciaAmexData))
-
-        let visaData = PXCardDataFactory().create(cardName: "EDÉN TORRES", cardNumber: "************7654", cardCode: "", cardExpiration: "01/21")
-        mockedViewModel.append(PXCardSliderViewModel(Visa(), visaData))
 
         mockedViewModel.append(PXCardSliderViewModel(EmptyCard(), nil))
         return mockedViewModel
