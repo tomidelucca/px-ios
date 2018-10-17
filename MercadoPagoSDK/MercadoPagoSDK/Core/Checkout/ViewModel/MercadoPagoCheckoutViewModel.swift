@@ -724,7 +724,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func resetInformation() {
-        self.paymentData.clearCollectedData()
+        self.cleanPaymentData()
         self.cardToken = nil
         self.entityTypes = nil
         self.financialInstitutions = nil
@@ -732,6 +732,15 @@ extension MercadoPagoCheckoutViewModel {
         cleanIssuerSearch()
         cleanIdentificationTypesSearch()
         resetPaymentMethodConfigPlugin()
+    }
+
+    func cleanPaymentData() {
+        let isPayerSet: Bool = self.checkoutPreference.payer.firstName != nil
+            && self.checkoutPreference.payer.lastName != nil
+            && self.checkoutPreference.payer.identification?.type != nil
+            && self.checkoutPreference.payer.identification?.number != nil
+
+        self.paymentData.clearCollectedData(clearPayer: !isPayerSet)
     }
 
     func cleanPayerCostSearch() {
