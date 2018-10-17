@@ -37,21 +37,6 @@ import UIKit
 }
 
 // Maestro
-@objc class Maestro: NSObject, CardUI {
-    var placeholderName = ""
-    var placeholderExpiration = ""
-    var bankImage: UIImage?
-    var cardPattern = [4, 4, 4, 4]
-    var cardFontColor: UIColor = .white
-    var cardLogoImage: UIImage? = ResourceManager.shared.getImage("debmaestro_light")
-    var cardBackgroundColor: UIColor = UIColor(red:0.23, green:0.31, blue:0.39, alpha:1.0)
-    var securityCodeLocation: Location = .back
-    var defaultUI = true
-    var securityCodePattern = 3
-    var fontType: String = "light"
-}
-
-// Maestro
 @objc class Master: NSObject, CardUI {
     var placeholderName = ""
     var placeholderExpiration = ""
@@ -75,6 +60,21 @@ import UIKit
     var cardFontColor: UIColor = .white
     var cardLogoImage: UIImage? = ResourceManager.shared.getImage("amex")
     var cardBackgroundColor: UIColor = UIColor(red: 238/255, green: 140/255, blue: 58/255, alpha: 1)
+    var securityCodeLocation: Location = .back
+    var defaultUI = true
+    var securityCodePattern = 3
+    var fontType: String = "light"
+}
+
+// Maestro
+@objc class Maestro: NSObject, CardUI {
+    var placeholderName = ""
+    var placeholderExpiration = ""
+    var bankImage: UIImage?
+    var cardPattern = [4, 4, 4, 4]
+    var cardFontColor: UIColor = .white
+    var cardLogoImage: UIImage? = ResourceManager.shared.getImage("debmaestro_light")
+    var cardBackgroundColor: UIColor = UIColor(red:0.23, green:0.31, blue:0.39, alpha:1.0)
     var securityCodeLocation: Location = .back
     var defaultUI = true
     var securityCodePattern = 3
