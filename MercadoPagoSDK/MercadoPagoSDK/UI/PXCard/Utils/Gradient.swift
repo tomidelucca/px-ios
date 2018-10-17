@@ -1,11 +1,10 @@
 import UIKit
 
-@objcMembers public class Gradient: NSObject {
-
+class Gradient: NSObject {
     var top: UIColor
     var bottom: UIColor
 
-    public init(top: UIColor, bottom: UIColor) {
+    init(top: UIColor, bottom: UIColor) {
         self.top = top
         self.bottom = bottom
     }
@@ -15,8 +14,7 @@ import UIKit
     }
 }
 
-extension Gradient {
-
+internal extension Gradient {
     func getGradient(_ frame: CGRect) -> UIColor? {
         let size = frame.size
         UIGraphicsBeginImageContextWithOptions(size, false, 0)

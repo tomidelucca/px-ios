@@ -38,10 +38,16 @@ extension PXCardSlider: FSPagerViewDataSource {
         if model.indices.contains(index) {
             let targetModel = model[index]
             if let cardData = targetModel.cardData, let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
-                cell.render(withCard: targetModel.cardUI, cardData: cardData)
+                if targetModel.cardUI is AccountMoneyCard {
+                    // AM card.
+                    cell.renderAccountMoneyCard(balanceText: cardData.name)
+                } else {
+                    // Other cards.
+                    cell.render(withCard: targetModel.cardUI, cardData: cardData)
+                }
                 return cell
             } else {
-                // Add card scenario. // TODO: Cell for add card
+                // Add new card scenario.
                 if let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
                     cell.renderEmptyCard()
                     return cell

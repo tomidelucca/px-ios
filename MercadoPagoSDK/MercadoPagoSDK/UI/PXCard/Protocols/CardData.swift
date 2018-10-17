@@ -1,6 +1,6 @@
 import Foundation
 
-@objc public protocol CardData {
+@objc internal protocol CardData {
     var name: String { get set }
     var number: String { get set }
     var expiration: String { get set }

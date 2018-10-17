@@ -6,34 +6,6 @@
 
 import UIKit
 
-@objc class EmptyCard: NSObject, CardUI {
-    var placeholderName = ""
-    var placeholderExpiration = ""
-    var bankImage: UIImage?
-    var cardPattern = [0]
-    var cardFontColor: UIColor = UIColor(red: 105/255, green: 105/255, blue: 105/255, alpha: 1)
-    var cardLogoImage: UIImage?
-    var cardBackgroundColor: UIColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-    var securityCodeLocation: Location = .back
-    var defaultUI = true
-    var securityCodePattern = 3
-    var fontType: String = "dark"
-}
-
-@objc class AccountMoney: NSObject, CardUI {
-    var placeholderName = ""
-    var placeholderExpiration = ""
-    var bankImage: UIImage?
-    var cardPattern = [0]
-    var cardFontColor: UIColor = UIColor(red: 105/255, green: 105/255, blue: 105/255, alpha: 1)
-    var cardLogoImage: UIImage?
-    var cardBackgroundColor: UIColor = UIColor(red:0.00, green:0.64, blue:0.85, alpha:1.0)
-    var securityCodeLocation: Location = .back
-    var defaultUI = true
-    var securityCodePattern = 3
-    var fontType: String = "light"
-}
-
 // American Express
 @objc class AmericanExpress: NSObject, CardUI {
     var placeholderName = ""

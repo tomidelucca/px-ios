@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIView {
+internal extension UIView {
 
     func loadFromNib() {
 
