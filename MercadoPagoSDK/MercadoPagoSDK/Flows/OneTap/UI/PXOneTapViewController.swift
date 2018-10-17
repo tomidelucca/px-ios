@@ -29,6 +29,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     var loadingButtonComponent: PXAnimatedButton?
     var installmentInfoRow: PXOneTapInstallmentInfoView?
+    var installmentsSelectorView: PXOneTapInstallmentsSelectorView?
 
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
@@ -302,19 +303,51 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 }
 
 // MARK: Installment Row Info delegate.
-extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol {
+extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapInstallmentsSelectorProtocol {
+
+    func payerCostSelected(_ payerCost: PXPayerCost?) {
+        self.installmentInfoRow?.toggleInstallments()
+        //TODO: Update payment data
+    }
+
     func hideInstallments() {
         slider.show()
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.loadingButtonComponent?.alpha = 1
+
+        self.installmentsSelectorView?.layoutIfNeeded()
+        self.installmentsSelectorView?.collapse {
+            self.installmentsSelectorView?.removeFromSuperview()
+            self.installmentsSelectorView?.layoutIfNeeded()
         }
+
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            self?.loadingButtonComponent?.alpha = 1
+        })
     }
 
     func showInstallments(installmentData: PXInstallment?) {
-        // TODO: Show tableView installments with installmentData
         slider.hide()
+
+        guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
+            return
+        }
+
+        let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData)
+        let installmentsSelectorView = PXOneTapInstallmentsSelectorView(viewModel: viewModel)
+        installmentsSelectorView.delegate = self
+        self.installmentsSelectorView = installmentsSelectorView
+
+        contentView.addSubview(installmentsSelectorView)
+        PXLayout.matchWidth(ofView: installmentsSelectorView).isActive = true
+        PXLayout.centerHorizontally(view: installmentsSelectorView).isActive = true
+        PXLayout.put(view: installmentsSelectorView, onBottomOf: installmentInfoRow).isActive = true
+        PXLayout.setHeight(owner: installmentsSelectorView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)-PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
+
+        installmentsSelectorView.layoutIfNeeded()
+        installmentsSelectorView.expand()
+
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.loadingButtonComponent?.alpha = 0
+            installmentsSelectorView.layoutIfNeeded()
         }
     }
 }

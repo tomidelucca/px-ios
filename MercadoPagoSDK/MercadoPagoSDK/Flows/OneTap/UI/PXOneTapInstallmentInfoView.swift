@@ -13,7 +13,7 @@ protocol PXOneTapInstallmentInfoViewProtocol: NSObjectProtocol {
 }
 
 final class PXOneTapInstallmentInfoView: PXComponentView {
-    private let defaultHeight: CGFloat = 55
+    static let DEFAULT_ROW_HEIGHT: CGFloat = 55
     private let leftLabel = UILabel()
     private let rightLabel = UILabel()
     private let titleLabel = UILabel()
@@ -60,7 +60,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         guard let model = model else {return}
         removeAllSubviews()
 
-        heightConstraint = PXLayout.setHeight(owner: self, height: defaultHeight)
+        heightConstraint = PXLayout.setHeight(owner: self, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT)
         heightConstraint?.isActive = true
 
         leftLabel.translatesAutoresizingMaskIntoConstraints = false
