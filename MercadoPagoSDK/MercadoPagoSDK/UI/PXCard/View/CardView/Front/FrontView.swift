@@ -29,12 +29,14 @@ class FrontView: CardView {
     }
 
     func setupAnimated(_ cardUI: CardUI) {
-        Animator.overlay(on: self,
-                         cardUI: cardUI,
-                         views: [bank, expirationDate, logo, name, number, securityCode],
-                         complete: {[weak self] in
-                            self?.setupUI(cardUI)
-        })
+        if !(cardUI is AccountMoneyCard) {
+            Animator.overlay(on: self,
+                             cardUI: cardUI,
+                             views: [bank, expirationDate, logo, name, number, securityCode],
+                             complete: {[weak self] in
+                                self?.setupUI(cardUI)
+            })
+        }
     }
 
     func showSecurityCode() {

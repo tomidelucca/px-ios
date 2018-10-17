@@ -8,12 +8,13 @@
 import Foundation
 
 struct OneTapService {
+
     // TODO: Input as DTO models. Output [PXCardSliderViewModel]
     static func getCardSliderViewModel() -> [PXCardSliderViewModel] {
         var mockedViewModel: [PXCardSliderViewModel] = []
 
-        let amCardData = PXCardDataFactory().create(cardName: "Dinero: $5.643", cardNumber: "", cardCode: "", cardExpiration: "")
-        mockedViewModel.append(PXCardSliderViewModel(AccountMoney(), amCardData))
+        let amCardData = PXCardDataFactory().create(cardName: "Total en tu cuenta: $ 5.643", cardNumber: "", cardCode: "", cardExpiration: "")
+        mockedViewModel.append(PXCardSliderViewModel(AccountMoneyCard(), amCardData))
 
         let maestroData = PXCardDataFactory().create(cardName: "JUAN SANZONE", cardNumber: "************4356", cardCode: "", cardExpiration: "10/23")
         mockedViewModel.append(PXCardSliderViewModel(Maestro(), maestroData))
@@ -33,7 +34,7 @@ struct OneTapService {
             return PXOneTapInstallmentInfoViewModel(leftText: "", rightText: "", installmentData: nil)
         } else {
             // TODO: Get real installments info for each PaymentMethod.
-            if cardSliderViewModel.cardUI is AccountMoney {
+            if cardSliderViewModel.cardUI is AccountMoneyCard {
                 return PXOneTapInstallmentInfoViewModel(leftText: "", rightText: "", installmentData: nil)
             } else {
                 let cftRandom = Double.random(in: 1 ... 100)

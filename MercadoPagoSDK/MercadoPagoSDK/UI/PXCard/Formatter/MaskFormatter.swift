@@ -1,7 +1,6 @@
 import UIKit
 
 class Mask {
-
     let pad: Character = "*"
     var pattern = [Int]()
     var placeholder = ""

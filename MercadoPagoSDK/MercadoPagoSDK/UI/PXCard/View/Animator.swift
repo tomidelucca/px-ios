@@ -2,7 +2,6 @@ import Foundation
 import UIKit
 
 class Animator {
-
     static let duration = 0.6
 
     class func overlay(on view: CardView,

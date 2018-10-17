@@ -1,10 +1,11 @@
 import Foundation
 import UIKit
 
-@objc public enum Location: Int {
+@objc internal enum Location: Int {
     case front, back, none
 }
-@objc public protocol CardUI {
+
+@objc internal protocol CardUI {
     var cardPattern: [Int] { get }
     var bankImage: UIImage? { get }
     var placeholderName: String { get }

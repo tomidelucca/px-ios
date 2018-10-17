@@ -1,13 +1,12 @@
 import UIKit
 
-@objcMembers public class CardHeaderController: UIViewController {
-
+class CardHeaderController: UIViewController {
     private var shouldAnimate: Bool = true
     let cardFont = "RobotoMono-Regular"
     var frontView = FrontView()
     var backView = BackView()
 
-    public var cardUI: CardUI {
+    var cardUI: CardUI {
         willSet(value) {
             if shouldAnimate {
                 frontView.setupAnimated(value)
@@ -18,7 +17,7 @@ import UIKit
         }
     }
 
-    public init(_ cardUI: CardUI, _ model: CardData) {
+    init(_ cardUI: CardUI, _ model: CardData) {
         self.cardUI = cardUI
         UIFont.registerFont(fontName: cardFont, fontExtension: "ttf")
         super.init(nibName: nil, bundle: nil)
@@ -26,11 +25,11 @@ import UIKit
         frontView.setup(cardUI, model, view.frame)
     }
 
-    public func show() {
+    func show() {
         transition(from: backView, to: frontView, .transitionFlipFromRight)
     }
 
-    public func showSecurityCode() {
+    func showSecurityCode() {
         guard cardUI.securityCodeLocation == .back else {
             addSubview(frontView)
             frontView.showSecurityCode()
@@ -39,7 +38,7 @@ import UIKit
         transition(from: frontView, to: backView, .transitionFlipFromLeft)
     }
 
-    public func animated(_ animated: Bool) {
+    func animated(_ animated: Bool) {
         shouldAnimate = animated
     }
 

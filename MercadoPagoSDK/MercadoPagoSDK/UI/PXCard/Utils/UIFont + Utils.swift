@@ -1,8 +1,7 @@
 import UIKit
 
-extension UIFont {
+internal extension UIFont {
     static func registerFont(fontName: String, fontExtension: String) {
-
         guard
             let bundlePath = Bundle.main.path(forResource: "Fonts", ofType: "bundle"),
             let bundle = Bundle(path: bundlePath),
