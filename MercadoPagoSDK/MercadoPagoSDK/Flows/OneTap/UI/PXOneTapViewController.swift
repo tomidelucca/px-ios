@@ -314,7 +314,9 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         slider.show()
 
         self.installmentsSelectorView?.layoutIfNeeded()
+        self.installmentInfoRow?.disableTap()
         self.installmentsSelectorView?.collapse {
+            self.installmentInfoRow?.enableTap()
             self.installmentsSelectorView?.removeFromSuperview()
             self.installmentsSelectorView?.layoutIfNeeded()
         }
@@ -331,6 +333,8 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             return
         }
 
+        self.installmentsSelectorView?.removeFromSuperview()
+        self.installmentsSelectorView?.layoutIfNeeded()
         let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData)
         let installmentsSelectorView = PXOneTapInstallmentsSelectorView(viewModel: viewModel)
         installmentsSelectorView.delegate = self
@@ -343,7 +347,10 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         PXLayout.setHeight(owner: installmentsSelectorView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)-PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
 
         installmentsSelectorView.layoutIfNeeded()
-        installmentsSelectorView.expand()
+        self.installmentInfoRow?.disableTap()
+        installmentsSelectorView.expand {
+            self.installmentInfoRow?.enableTap()
+        }
 
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.loadingButtonComponent?.alpha = 0

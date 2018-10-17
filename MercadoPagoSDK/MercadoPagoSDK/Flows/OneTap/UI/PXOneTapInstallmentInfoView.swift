@@ -23,6 +23,16 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
 
     weak var delegate: PXOneTapInstallmentInfoViewProtocol?
 
+    private var tapEnabled = true
+
+    func disableTap() {
+        tapEnabled = false
+    }
+
+    func enableTap() {
+        tapEnabled = true
+    }
+
     func updateViewModel(_ viewModel: PXOneTapInstallmentInfoViewModel, updateAnimation: UIView.AnimationOptions? = nil) {
         model = viewModel
         var animation: UIView.AnimationOptions = .transitionCrossDissolve
@@ -100,25 +110,27 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     }
 
     @objc func toggleInstallments() {
-        if let installMentData = model?.installmentData {
-            if arrowImage.tag != colapsedTag {
-                delegate?.hideInstallments()
-                UIView.animate(withDuration: 0.3) { [weak self] in
-                    self?.arrowImage.transform = CGAffineTransform.identity
-                    self?.rightLabel.alpha = 1
-                    self?.leftLabel.alpha = 1
-                    self?.titleLabel.alpha = 0
+        if tapEnabled {
+            if let installMentData = model?.installmentData {
+                if arrowImage.tag != colapsedTag {
+                    delegate?.hideInstallments()
+                    UIView.animate(withDuration: 0.3) { [weak self] in
+                        self?.arrowImage.transform = CGAffineTransform.identity
+                        self?.rightLabel.alpha = 1
+                        self?.leftLabel.alpha = 1
+                        self?.titleLabel.alpha = 0
+                    }
+                    arrowImage.tag = colapsedTag
+                } else {
+                    delegate?.showInstallments(installmentData: installMentData)
+                    UIView.animate(withDuration: 0.3) { [weak self] in
+                        self?.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+                        self?.rightLabel.alpha = 0
+                        self?.leftLabel.alpha = 0
+                        self?.titleLabel.alpha = 1
+                    }
+                    arrowImage.tag = 1
                 }
-                arrowImage.tag = colapsedTag
-            } else {
-                delegate?.showInstallments(installmentData: installMentData)
-                UIView.animate(withDuration: 0.3) { [weak self] in
-                    self?.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
-                    self?.rightLabel.alpha = 0
-                    self?.leftLabel.alpha = 0
-                    self?.titleLabel.alpha = 1
-                }
-                arrowImage.tag = 1
             }
         }
     }

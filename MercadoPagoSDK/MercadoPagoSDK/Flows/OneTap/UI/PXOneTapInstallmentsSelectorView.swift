@@ -150,13 +150,16 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         tableView.reloadData()
     }
 
-    func expand() {
+    func expand(completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        UIView.animate(withDuration: 0.3) { [weak self] in
+
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let strongSelf = self else {
                 return
             }
             strongSelf.tableViewHeightConstraint?.constant = strongSelf.frame.height
+        }) { (_) in
+            completion()
         }
     }
 
