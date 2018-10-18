@@ -57,6 +57,11 @@ extension TrackingPaths {
             return pxTrack + "/review/traditional"
         }
 
+        // Terms and condition review Path
+        static func getTermsAndCondiontionReviewPath() -> String {
+            return pxTrack + "/review/traditional/terms_and_conditions"
+        }
+
         // One Tap Path
         static func getOneTapPath() -> String {
             return pxTrack + "/review/one_tap"
@@ -67,8 +72,8 @@ extension TrackingPaths {
             return pxTrack + addPaymentMethod + "/promotions"
         }
 
-        // Terms and Conditions Path
-        static func getTermsAndConditionPath() -> String {
+        // Terms and Conditions deal Path
+        static func getTermsAndConditionBankDealsPath() -> String {
             return pxTrack + addPaymentMethod + "/promotions/terms_and_conditions"
         }
 
@@ -99,7 +104,7 @@ extension TrackingPaths {
 
         // Security Code Paths
         static func getSecurityCodePath(paymentTypeId: String) -> String {
-            return pxTrack + payments + selectMethod + "/" + paymentTypeId
+            return pxTrack + payments + selectMethod + "/" + paymentTypeId + "/cvv"
         }
     }
 }

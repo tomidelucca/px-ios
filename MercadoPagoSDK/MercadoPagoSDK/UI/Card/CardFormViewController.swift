@@ -71,7 +71,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         if editingLabel === cardNumberLabel {
             screenPath = TrackingPaths.Screens.CardForm.getCardNumberPath(paymentTypeId: cardType)
         } else if editingLabel === nameLabel {
-            screenPath = TrackingPaths.Screens.CardForm.getCardNumberPath(paymentTypeId: cardType)
+            screenPath = TrackingPaths.Screens.CardForm.getCardNamePath(paymentTypeId: cardType)
         } else if editingLabel === expirationDateLabel {
             screenPath = TrackingPaths.Screens.CardForm.getExpirationDatePath(paymentTypeId: cardType)
         } else if editingLabel === cvvLabel {

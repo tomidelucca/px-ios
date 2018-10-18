@@ -198,7 +198,8 @@ extension PayerInfoViewModel {
             screenPath = TrackingPaths.Screens.Boleto.getNamePath()
         case .SCREEN_LAST_NAME:
             screenPath = TrackingPaths.Screens.Boleto.getLastNamePath()
-        default: break
+        default:
+            return
         }
          MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }

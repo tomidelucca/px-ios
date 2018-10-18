@@ -14,9 +14,9 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
         let paymentStatus = businessResult.getStatus()
         var screenPath = ""
-        if paymentStatus == PXBusinessResultStatus.APPROVED || paymentStatus == PXBusinessResultStatus.PENDING {
+        if paymentStatus == PXBusinessResultStatus.APPROVED {
             screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXBusinessResultStatus.IN_PROGRESS {
+        } else if paymentStatus == PXBusinessResultStatus.IN_PROGRESS || paymentStatus == PXBusinessResultStatus.PENDING {
             screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
         } else if paymentStatus == PXBusinessResultStatus.REJECTED {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
