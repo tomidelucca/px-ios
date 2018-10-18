@@ -98,8 +98,8 @@ extension TrackingPaths {
         }
 
         // Security Code Paths
-        static func getSecurityCodePath(paymentTypeId: String, referScreen: String) -> String {
-            return pxTrack + payments + selectMethod + "/" + paymentTypeId + refer + referScreen
+        static func getSecurityCodePath(paymentTypeId: String) -> String {
+            return pxTrack + payments + selectMethod + "/" + paymentTypeId
         }
     }
 }
