@@ -13,7 +13,7 @@ protocol PXOneTapInstallmentInfoViewProtocol: NSObjectProtocol {
 }
 
 final class PXOneTapInstallmentInfoView: PXComponentView {
-    static let DEFAULT_ROW_HEIGHT: CGFloat = 55
+    static let DEFAULT_ROW_HEIGHT: CGFloat = 50
     private let leftLabel = UILabel()
     private let rightLabel = UILabel()
     private let titleLabel = UILabel()
