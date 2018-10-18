@@ -43,7 +43,7 @@ class PXPayerIconRenderer: NSObject {
     }
 }
 
-class PXPayerIconView: PXBodyView {
+class PXPayerIconView: UIView {
     var payerIcon: UIImageView?
     var payerIconBackground: UIView?
 }

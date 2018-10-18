@@ -293,7 +293,7 @@ extension PXReviewViewModel {
                 let fulltName = NSAttributedString(string: "\(payerName) \(payerLastName)".uppercased())
 
                 let payerIcon = ResourceManager.shared.getImage("MPSDK_review_iconoPayer")
-                let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor())
+                let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor(), separatorColor: ThemeManager.shared.lightTintColor())
                 return PXPayerComponent(props: props)
             }
         }

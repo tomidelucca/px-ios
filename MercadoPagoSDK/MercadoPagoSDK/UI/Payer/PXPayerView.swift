@@ -13,4 +13,5 @@ final class PXPayerView: PXBodyView {
     var identificationLabel: UILabel?
     var fullNameLabel: UILabel?
     var actionButton: PXSecondaryButton?
+    var separator: UIView?
 }

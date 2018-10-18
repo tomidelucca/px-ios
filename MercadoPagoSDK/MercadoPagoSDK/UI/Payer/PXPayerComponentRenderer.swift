@@ -28,6 +28,8 @@ class PXPayerComponentRenderer: NSObject {
         let payerIcon = component.getPayerIconComponent()
         payerView.payerIcon = payerIcon.render()
         payerView.payerIcon!.layer.cornerRadius = IMAGE_WIDTH/2
+        payerView.payerIcon!.layer.borderWidth = 2
+        payerView.payerIcon!.layer.borderColor = ThemeManager.shared.lightTintColor().cgColor
         payerView.addSubview(payerView.payerIcon!)
         PXLayout.centerHorizontally(view: payerView.payerIcon!).isActive = true
         PXLayout.setHeight(owner: payerView.payerIcon!, height: IMAGE_HEIGHT).isActive = true
@@ -69,12 +71,22 @@ class PXPayerComponentRenderer: NSObject {
         actionButton.add(for: .touchUpInside, component.props.action.action)
         payerView.actionButton = actionButton
         payerView.addSubview(actionButton)
-        payerView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.S_MARGIN)?.isActive = true
+        payerView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.M_MARGIN)?.isActive = true
         PXLayout.pinLeft(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
         PXLayout.pinRight(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
 
-        PXLayout.setHeight(owner: payerView, height: 250).isActive = true
-        payerView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
+        // Separator
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        separator.backgroundColor = component.props.separatorColor
+        payerView.separator = separator
+        payerView.addSubview(separator)
+        payerView.putOnBottomOfLastView(view: separator, withMargin: PXLayout.M_MARGIN)?.isActive = true
+        PXLayout.setHeight(owner: payerView.separator!, height: 1).isActive = true
+        PXLayout.pinLeft(view: separator, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+        PXLayout.pinRight(view: separator, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+
+        payerView.pinLastSubviewToBottom(withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
 
         return payerView
     }
