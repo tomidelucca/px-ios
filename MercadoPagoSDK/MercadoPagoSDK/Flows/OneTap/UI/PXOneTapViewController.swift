@@ -311,8 +311,6 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     }
 
     func hideInstallments() {
-        slider.show()
-
         self.installmentsSelectorView?.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
         self.installmentsSelectorView?.collapse {
@@ -320,14 +318,9 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             self.installmentsSelectorView?.removeFromSuperview()
             self.installmentsSelectorView?.layoutIfNeeded()
         }
-
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            self?.loadingButtonComponent?.alpha = 1
-        })
     }
 
     func showInstallments(installmentData: PXInstallment?) {
-        slider.hide()
 
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
@@ -348,13 +341,9 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 
         installmentsSelectorView.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
+        
         installmentsSelectorView.expand {
             self.installmentInfoRow?.enableTap()
-        }
-
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.loadingButtonComponent?.alpha = 0
-            installmentsSelectorView.layoutIfNeeded()
         }
     }
 }

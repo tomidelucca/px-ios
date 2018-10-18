@@ -7,7 +7,7 @@
 
 import UIKit
 
-typealias PXOneTapInstallmentsSelectorData = (title: NSAttributedString, value: NSAttributedString)
+typealias PXOneTapInstallmentsSelectorData = (title: NSAttributedString, value: NSAttributedString, isSelected: Bool)
 
 final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
 
@@ -15,7 +15,8 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
 
     func updateData(_ data: PXOneTapInstallmentsSelectorData) {
         self.data = data
-
+        self.selectionStyle = .none
+        
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.attributedText = data.title
@@ -31,6 +32,17 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
         contentView.addSubview(valueLabel)
         PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerVertically(view: valueLabel).isActive = true
+
+        if data.isSelected {
+            let selectedIndicatorView = UIView()
+            selectedIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+            selectedIndicatorView.backgroundColor = ThemeManager.shared.getAccentColor()
+            contentView.addSubview(selectedIndicatorView)
+            PXLayout.setWidth(owner: selectedIndicatorView, width: 4).isActive = true
+            PXLayout.pinTop(view: selectedIndicatorView).isActive = true
+            PXLayout.pinBottom(view: selectedIndicatorView).isActive = true
+            PXLayout.pinLeft(view: selectedIndicatorView, withMargin: 0).isActive = true
+        }
     }
 }
 
@@ -52,7 +64,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
     func cellForRowAt(_ indexPath: IndexPath) -> UITableViewCell {
         let cell = PXOneTapInstallmentsSelectorCell()
         if let payerCost = getPayerCostForRowAt(indexPath) {
-            let data = getDataFor(payerCost: payerCost)
+            let data = getDataFor(payerCost: payerCost, isSelected: indexPath.row == 1)
             cell.updateData(data)
             return cell
         }
@@ -63,7 +75,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
         return PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT
     }
 
-    func getDataFor(payerCost: PXPayerCost) -> PXOneTapInstallmentsSelectorData {
+    func getDataFor(payerCost: PXPayerCost, isSelected: Bool) -> PXOneTapInstallmentsSelectorData {
         let currency = SiteManager.shared.getCurrency()
         let showDescription = MercadoPagoCheckout.showPayerCostDescription()
 
@@ -101,7 +113,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
         installmentLabel.append(totalAmount)
         title = installmentLabel
 
-        return PXOneTapInstallmentsSelectorData(title, value)
+        return PXOneTapInstallmentsSelectorData(title, value, isSelected)
     }
 
     func getPayerCostForRowAt(_ indexPath: IndexPath) -> PXPayerCost? {
@@ -147,32 +159,49 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         tableView.separatorInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
         tableView.reloadData()
     }
 
     func expand(completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.tableViewHeightConstraint?.constant = strongSelf.frame.height
-        }) { (_) in
+        animateTableViewHeight(height: self.frame.height, completion: {
             completion()
-        }
+        })
     }
 
     func collapse(completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.tableViewHeightConstraint?.constant = 0
-            strongSelf.layoutIfNeeded()
-        }) { (_) in
+        animateTableViewHeight(height: 0, completion: {
             completion()
+        })
+    }
+
+    func animateTableViewHeight(height: CGFloat, completion: @escaping () -> ()) {
+        if #available(iOS 10.0, *) {
+            let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.tableViewHeightConstraint?.constant = height
+                strongSelf.layoutIfNeeded()
+            })
+
+            transitionAnimator.addCompletion({ (_) in
+                completion()
+            })
+
+            transitionAnimator.startAnimation()
+        } else {
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.tableViewHeightConstraint?.constant = height
+                strongSelf.layoutIfNeeded()
+            }) { (_) in
+                completion()
+            }
         }
     }
 
