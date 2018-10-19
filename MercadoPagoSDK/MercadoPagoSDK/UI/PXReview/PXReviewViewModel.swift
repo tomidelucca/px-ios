@@ -395,15 +395,15 @@ extension PXReviewViewModel {
 // MARK: Custom Views
 extension PXReviewViewModel {
     func buildTopDynamicCustomViews() -> [UIView]? {
-        if let reviewScreenDynamicViewsConfiguration = reviewScreenDynamicViewsConfiguration {
-            return reviewScreenDynamicViewsConfiguration.topCustomViews(store: PXCheckoutStore.sharedInstance)
+        if let reviewScreenDynamicViewsConfiguration = reviewScreenDynamicViewsConfiguration, let dynamicCustomViews = reviewScreenDynamicViewsConfiguration.topCustomViews(store: PXCheckoutStore.sharedInstance) {
+            return buildComponentViews(dynamicCustomViews)
         }
         return nil
     }
 
     func buildBottomDynamicCustomViews() -> [UIView]? {
-        if let reviewScreenDynamicViewsConfiguration = reviewScreenDynamicViewsConfiguration {
-            return reviewScreenDynamicViewsConfiguration.bottomCustomViews(store: PXCheckoutStore.sharedInstance)
+        if let reviewScreenDynamicViewsConfiguration = reviewScreenDynamicViewsConfiguration, let dynamicCustomViews = reviewScreenDynamicViewsConfiguration.bottomCustomViews(store: PXCheckoutStore.sharedInstance) {
+            return buildComponentViews(dynamicCustomViews)
         }
         return nil
     }
@@ -420,6 +420,15 @@ extension PXReviewViewModel {
             return buildComponentView(customView)
         }
         return nil
+    }
+
+    private func buildComponentViews(_ customViews: [UIView]) -> [UIView] {
+        var componentViews: [UIView] = []
+        for customView in customViews {
+            let componentView = buildComponentView(customView)
+            componentViews.append(componentView)
+        }
+        return componentViews
     }
 
     private func buildComponentView(_ customView: UIView) -> UIView {

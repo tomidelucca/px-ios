@@ -71,7 +71,7 @@ extension TestComponent: PXReviewConfirmDynamicViewsConfiguration {
     }
 
     public func bottomCustomViews(store: PXCheckoutStore) -> [UIView]? {
-        if let pmName = store.getPaymentData().getPaymentMethod()?.name, pmName == "Master" {
+        if let pmName = store.getPaymentData().getPaymentMethod()?.name, pmName == "Mastercard" {
             var views: [UIView] = []
             for i in 1...3 {
                 let view = getView(text: "\(pmName) - \(i)", color: .gray)
