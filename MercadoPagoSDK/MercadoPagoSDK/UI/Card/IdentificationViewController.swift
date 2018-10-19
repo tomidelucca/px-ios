@@ -302,20 +302,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         self.navigationController?.popViewController(animated: false)
     }
 
-    private func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
-
-        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
-            if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
-                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: true, leftToRight: false)
-                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: true, leftToRight: false, completeEmptySpacesWith: " ")
-                return[customInitialMask, customMask]
-            }
-        }
-        return nil
-    }
-
     private func drawMask(masks: [TextMaskFormater]) {
 
         let charactersCount = numberTextField.text?.count
