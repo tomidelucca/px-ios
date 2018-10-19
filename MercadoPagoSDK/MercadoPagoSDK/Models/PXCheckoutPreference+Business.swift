@@ -240,8 +240,12 @@ extension PXCheckoutPreference {
     }
 }
 
-// MARK: Internal.
+// MARK: Payer Setter and Getter
 extension PXCheckoutPreference {
+    public func setPayer(payer: PXPayer) {
+        self.payer = payer
+    }
+
     internal func getPayer() -> PXPayer {
         return payer
     }
