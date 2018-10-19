@@ -143,6 +143,17 @@ extension PXReviewViewController {
             itemView.addSeparatorLineToBottom(height: 1)
         }
 
+        // Top Dynamic Custom Views
+        if let topDynamicCustomViews = getTopDynamicCustomViews() {
+            for customView in topDynamicCustomViews {
+                customView.addSeparatorLineToBottom(height: 1)
+                customView.clipsToBounds = true
+                contentView.addSubviewToBottom(customView)
+                PXLayout.matchWidth(ofView: customView).isActive = true
+                PXLayout.centerHorizontally(view: customView).isActive = true
+            }
+        }
+
         // Top Custom View
         if let topCustomView = getTopCustomView() {
             topCustomView.addSeparatorLineToBottom(height: 1)
@@ -158,6 +169,17 @@ extension PXReviewViewController {
             contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
             PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+        }
+
+        // Bottom Dynamic Custom Views
+        if let bottomDynamicCustomViews = getBottomDynamicCustomViews() {
+            for customView in bottomDynamicCustomViews {
+                customView.addSeparatorLineToBottom(height: 1)
+                customView.clipsToBounds = true
+                contentView.addSubviewToBottom(customView)
+                PXLayout.matchWidth(ofView: customView).isActive = true
+                PXLayout.centerHorizontally(view: customView).isActive = true
+            }
         }
 
         // Bottom Custom View
@@ -308,6 +330,14 @@ extension PXReviewViewController {
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
         let termsAndConditionView = PXTermsAndConditionView()
         return termsAndConditionView
+    }
+
+    fileprivate func getTopDynamicCustomViews() -> [UIView]? {
+        return viewModel.buildTopDynamicCustomViews()
+    }
+
+    fileprivate func getBottomDynamicCustomViews() -> [UIView]? {
+        return viewModel.buildBottomDynamicCustomViews()
     }
 
     fileprivate func getTopCustomView() -> UIView? {
