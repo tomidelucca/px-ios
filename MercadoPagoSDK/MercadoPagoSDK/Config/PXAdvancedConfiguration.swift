@@ -43,8 +43,3 @@ open class PXAdvancedConfiguration: NSObject {
 
     open var reviewConfirmDynamicViewsConfiguration: PXReviewConfirmDynamicViewsConfiguration?
 }
-
-@objc public protocol PXReviewConfirmDynamicViewsConfiguration: NSObjectProtocol {
-    @objc func topCustomViews(store: PXCheckoutStore) -> [UIView]?
-    @objc func bottomCustomViews(store: PXCheckoutStore) -> [UIView]?
-}
