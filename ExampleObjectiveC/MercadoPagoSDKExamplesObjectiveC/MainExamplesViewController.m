@@ -138,10 +138,11 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
 }
 
 // ReviewConfirm Dynamic Views Configuration
--(PXReviewConfirmDynamicViewsConfiguration *)getReviewScreenDynamicViewsConfiguration {
-    PXReviewConfirmDynamicViewsConfiguration *config = [TestComponent getReviewConfirmDynamicViewsConfiguration];
+-(TestComponent *)getReviewScreenDynamicViewsConfiguration {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewsConfiguration];
     return config;
 }
+
 
 // PaymentResult
 -(PXPaymentResultConfiguration *)getPaymentResultConfiguration {

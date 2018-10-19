@@ -53,7 +53,7 @@ extension TestComponent: PXReviewConfirmDynamicViewsConfiguration {
         return config
     }
 
-    static public func getReviewConfirmDynamicViewsConfiguration() -> PXReviewConfirmDynamicViewsConfiguration {
+    static public func getReviewConfirmDynamicViewsConfiguration() -> TestComponent {
         let test = TestComponent()
         return test
     }
