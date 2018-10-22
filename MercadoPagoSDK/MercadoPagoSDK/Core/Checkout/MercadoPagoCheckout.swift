@@ -210,6 +210,7 @@ extension MercadoPagoCheckout {
     internal func finish() {
         viewModel.pxNavigationHandler.removeRootLoading()
         ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
+        PXCheckoutStore.sharedInstance.clean()
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by state machine next)
         let result = viewModel.getResult()
@@ -227,7 +228,7 @@ extension MercadoPagoCheckout {
     /// :nodoc:
     @objc func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
-
+        PXCheckoutStore.sharedInstance.clean()
         ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
 
         // LifecycleProtocol.finishCheckout - defined
