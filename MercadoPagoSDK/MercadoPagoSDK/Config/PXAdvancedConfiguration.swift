@@ -42,4 +42,6 @@ open class PXAdvancedConfiguration: NSObject {
     open var paymentResultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()
 
     open var reviewConfirmDynamicViewsConfiguration: PXReviewConfirmDynamicViewsConfiguration?
+
+    open var dynamicViewControllersConfiguration: [PXDynamicViewControllerProtocol] = []
 }

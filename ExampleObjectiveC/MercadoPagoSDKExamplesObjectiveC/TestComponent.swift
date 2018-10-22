@@ -82,3 +82,37 @@ extension TestComponent: PXReviewConfirmDynamicViewsConfiguration {
         return nil
     }
 }
+
+// MARK: Dynamic View Controller Protocol
+extension TestComponent: PXDynamicViewControllerProtocol {
+    static public func getReviewConfirmDynamicViewControllerConfiguration() -> TestComponent {
+        let test = TestComponent()
+        return test
+    }
+
+    public func viewController(store: PXCheckoutStore, theme: PXTheme) -> UIViewController? {
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .blue
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Dismiss View Controller", for: .normal)
+        button.add(for: .touchUpInside) {
+            viewController.dismiss(animated: true, completion: nil)
+        }
+        viewController.view.addSubview(button)
+
+        NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: viewController.view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
+
+        NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: viewController.view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
+
+        return viewController
+    }
+
+    public func position(store: PXCheckoutStore) -> PXDynamicViewControllerPosition {
+        return PXDynamicViewControllerPosition.DID_ENTER_REVIEW_AND_CONFIRM
+    }
+
+    public func navigationHandler(navigationHandler: PXPluginNavigationHandler) {
+        
+    }
+}
