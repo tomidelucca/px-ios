@@ -14,8 +14,6 @@ internal class AdditionalStepViewModel {
     var bundle: Bundle? = ResourceManager.shared.getBundle()
 
     var screenTitle: String
-
-    var screenId: String { return TrackingPaths.NO_SCREEN_ID }
     var screenName: String { return TrackingPaths.NO_NAME_SCREEN }
 
     var email: String?
@@ -68,10 +66,6 @@ internal class AdditionalStepViewModel {
 
     func getScreenName() -> String {
         return screenName
-    }
-
-    func getScreenId() -> String {
-        return screenId
     }
 
     func getTitle() -> String {
@@ -183,8 +177,7 @@ internal class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     override open var screenName: String { return TrackingPaths.Screens.getIssuersPath() }
 
     override func track() {
-        let metadata: [String: String] = [TrackingPaths.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].id, TrackingPaths.METADATA_PAYMENT_TYPE_ID: paymentMethods[0].id]
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
 }

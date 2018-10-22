@@ -34,10 +34,10 @@ extension PXOneTapViewModel {
         var properties: [String: String] = [String: String]()
         properties[TrackingPaths.Metadata.HAS_DISCOUNT] = hasDiscount().description
         properties[TrackingPaths.Metadata.INSTALLMENTS] = amountHelper.paymentData.getNumberOfInstallments().stringValue
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_SUMMARY_DETAIL, screenId: "screenId", screenName: TrackingPaths.Screens.getOneTapPath(), properties: properties)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_SUMMARY_DETAIL, screenId: TrackingPaths.Screens.getOneTapPath(), screenName: TrackingPaths.Screens.getOneTapPath(), properties: properties)
     }
 
     func trackTapBackEvent() {
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_BACK, screenId: "screenId", screenName: TrackingPaths.Screens.getOneTapPath())
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.Event.TAP_BACK, screenId: TrackingPaths.Screens.getOneTapPath(), screenName: TrackingPaths.Screens.getOneTapPath())
     }
 }

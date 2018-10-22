@@ -32,12 +32,12 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
 
-    var paymentData: PXPaymentData
+    var paymentMethod: PXPaymentMethod?
 
-    //@IBOutlet var typePicker: UIPickerView! = UIPickerView()
+    @IBOutlet var typePicker: UIPickerView! = UIPickerView()
 
-    public init(identificationTypes: [PXIdentificationType], paymentData: PXPaymentData, callback : @escaping (( _ identification: PXIdentification) -> Void), errorExitCallback: (() -> Void)?) {
-        self.paymentData = paymentData
+    public init(identificationTypes: [PXIdentificationType], paymentMethod: PXPaymentMethod?, callback : @escaping (( _ identification: PXIdentification) -> Void), errorExitCallback: (() -> Void)?) {
+        self.paymentMethod = paymentMethod
         super.init(nibName: "IdentificationViewController", bundle: ResourceManager.shared.getBundle())
         self.callback = callback
         self.identificationTypes = identificationTypes
@@ -45,9 +45,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     override func trackInfo() {
-        var screenPath = screenName
-
-        guard let cardType = paymentData.paymentMethod?.paymentTypeId else {
+        guard let cardType = paymentMethod?.paymentTypeId else {
             return
         }
 

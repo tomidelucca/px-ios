@@ -39,7 +39,6 @@ internal struct TrackingPaths {
     static let HAS_SHIPPING_DEFAULT_VALUE = "false"
     static let IS_EXPRESS_DEFAULT_VALUE = "false"
     static let NO_NAME_SCREEN = "NO NAME"
-    static let NO_SCREEN_ID = "/"
 
     // MARK: Action events
     static let ACTION_CHECKOUT_CONFIRMED = "/checkout_confirmed"
