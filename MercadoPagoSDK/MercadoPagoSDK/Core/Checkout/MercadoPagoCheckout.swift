@@ -99,7 +99,6 @@ extension MercadoPagoCheckout {
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
-        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         if initMode == .lazy {
             if viewModel.initFlow?.getStatus() == .finished {
                 executeNextStep()

@@ -25,6 +25,7 @@ extension MercadoPagoCheckout {
         paymentMethodConfigPluginComponent.navigationHandler?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
 
         if let configPluginVC = paymentMethodConfigPluginComponent.configViewController() {
+            viewModel.pxNavigationHandler.addDynamicView(viewController: configPluginVC)
             viewModel.pxNavigationHandler.pushViewController(targetVC: configPluginVC, animated: true)
         }
     }
