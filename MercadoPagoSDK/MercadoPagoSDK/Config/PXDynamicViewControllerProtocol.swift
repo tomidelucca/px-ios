@@ -12,7 +12,7 @@ import Foundation
 }
 
 @objc public protocol PXDynamicViewControllerProtocol: NSObjectProtocol {
-    @objc func viewController(store: PXCheckoutStore, theme: PXTheme) -> UIViewController?
+    @objc func viewController(store: PXCheckoutStore) -> UIViewController?
     @objc func position(store: PXCheckoutStore) -> PXDynamicViewControllerPosition
     @objc optional func navigationHandler(navigationHandler: PXPluginNavigationHandler)
 }

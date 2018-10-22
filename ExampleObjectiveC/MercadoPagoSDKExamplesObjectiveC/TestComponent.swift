@@ -90,7 +90,7 @@ extension TestComponent: PXDynamicViewControllerProtocol {
         return test
     }
 
-    public func viewController(store: PXCheckoutStore, theme: PXTheme) -> UIViewController? {
+    public func viewController(store: PXCheckoutStore) -> UIViewController? {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .blue
         let button = UIButton(type: .custom)

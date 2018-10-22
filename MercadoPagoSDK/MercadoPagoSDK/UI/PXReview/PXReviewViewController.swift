@@ -54,8 +54,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED, let dynamicViewController = self.viewModel.getDynamicViewController() {
-            self.present(dynamicViewController, animated: true) {
-                self.DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED = true
+            self.present(dynamicViewController, animated: true) { [weak self] in
+                self?.DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED = true
             }
         }
     }

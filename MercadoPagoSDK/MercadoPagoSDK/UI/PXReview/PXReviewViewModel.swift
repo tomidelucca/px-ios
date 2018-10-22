@@ -107,7 +107,7 @@ extension PXReviewViewModel {
             }
             return false
         }
-        return filteredViewControllers.first?.viewController(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme())
+        return filteredViewControllers.first?.viewController(store: PXCheckoutStore.sharedInstance)
     }
 }
 
