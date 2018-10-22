@@ -89,6 +89,10 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
 
+    // Add ReviewConfirm Dynamic views configuration to advanced config.
+    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfiguration]];
+
+
     // Add PaymentResult configuration to advanced config.
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
 
@@ -132,6 +136,13 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
     return config;
 }
+
+// ReviewConfirm Dynamic Views Configuration
+-(TestComponent *)getReviewScreenDynamicViewsConfiguration {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewsConfiguration];
+    return config;
+}
+
 
 // PaymentResult
 -(PXPaymentResultConfiguration *)getPaymentResultConfiguration {

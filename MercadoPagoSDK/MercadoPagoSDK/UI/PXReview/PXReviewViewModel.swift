@@ -19,13 +19,15 @@ class PXReviewViewModel: NSObject {
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
     var reviewScreenPreference: PXReviewConfirmConfiguration
+    var reviewScreenDynamicViewsConfiguration: PXReviewConfirmDynamicViewsConfiguration?
     var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenPreference = reviewConfirmConfig
+        self.reviewScreenPreference = advancedConfig.reviewConfirmConfiguration
+        self.reviewScreenDynamicViewsConfiguration = advancedConfig.reviewConfirmDynamicViewsConfiguration
         self.userLogged = userLogged
     }
 
@@ -392,6 +394,20 @@ extension PXReviewViewModel {
 
 // MARK: Custom Views
 extension PXReviewViewModel {
+    func buildTopDynamicCustomViews() -> [UIView]? {
+        if let reviewScreenDynamicViewsConfiguration = reviewScreenDynamicViewsConfiguration, let dynamicCustomViews = reviewScreenDynamicViewsConfiguration.topCustomViews(store: PXCheckoutStore.sharedInstance) {
+            return buildComponentViews(dynamicCustomViews)
+        }
+        return nil
+    }
+
+    func buildBottomDynamicCustomViews() -> [UIView]? {
+        if let reviewScreenDynamicViewsConfiguration = reviewScreenDynamicViewsConfiguration, let dynamicCustomViews = reviewScreenDynamicViewsConfiguration.bottomCustomViews(store: PXCheckoutStore.sharedInstance) {
+            return buildComponentViews(dynamicCustomViews)
+        }
+        return nil
+    }
+
     func buildTopCustomView() -> UIView? {
         if let customView = reviewScreenPreference.getTopCustomView() {
             return buildComponentView(customView)
@@ -404,6 +420,15 @@ extension PXReviewViewModel {
             return buildComponentView(customView)
         }
         return nil
+    }
+
+    private func buildComponentViews(_ customViews: [UIView]) -> [UIView] {
+        var componentViews: [UIView] = []
+        for customView in customViews {
+            let componentView = buildComponentView(customView)
+            componentViews.append(componentView)
+        }
+        return componentViews
     }
 
     private func buildComponentView(_ customView: UIView) -> UIView {
