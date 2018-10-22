@@ -34,6 +34,9 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
+    let cardSliderContentView = UIView()
+    var cardSliderHeightConstraint: NSLayoutConstraint?
+
     // MARK: Lifecycle/Publics
     init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
@@ -139,12 +142,15 @@ extension PXOneTapViewController {
         PXLayout.pinTop(view: installmentRow, withMargin: PXLayout.XXXS_MARGIN).isActive = true
 
         // Add card slider
-        let cardSliderContentView = UIView()
         whiteView.addSubview(cardSliderContentView)
+        cardSliderContentView.clipsToBounds = true
         PXLayout.centerHorizontally(view: cardSliderContentView).isActive = true
         PXLayout.pinLeft(view: cardSliderContentView).isActive = true
         PXLayout.pinRight(view: cardSliderContentView).isActive = true
-        PXLayout.put(view: cardSliderContentView, onBottomOf: installmentRow).isActive = true
+        let heightConstraint = PXLayout.put(view: cardSliderContentView, onBottomOf: installmentRow, withMargin: 0)
+        heightConstraint.isActive = true
+        cardSliderHeightConstraint = heightConstraint
+//        PXLayout.put(view: cardSliderContentView, onBottomOf: installmentRow).isActive = true
         PXLayout.setHeight(owner: cardSliderContentView, height: PXCardSliderSizeManager.getSliderSize().height).isActive = true
 
         // Add footer payment button.
@@ -175,11 +181,7 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView() -> UIView {
-        let viewModel = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
-            OneTapHeaderSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
-            OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
-            OneTapHeaderSummaryData("Total", "$ 1100", UIColor.black, true)
-            ])
+        let viewModel = self.viewModel.getHeaderViewModel()
         let headerView = PXOneTapHeaderView(viewModel: viewModel)
         return headerView
     }
@@ -313,11 +315,18 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     func hideInstallments() {
         self.installmentsSelectorView?.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
-        self.installmentsSelectorView?.collapse {
+
+        self.installmentsSelectorView?.collapse(sliderView: self.contentView, sliderHeightConstraint: cardSliderHeightConstraint) {
             self.installmentInfoRow?.enableTap()
             self.installmentsSelectorView?.removeFromSuperview()
             self.installmentsSelectorView?.layoutIfNeeded()
         }
+
+//        self.installmentsSelectorView?.collapse {
+//            self.installmentInfoRow?.enableTap()
+//            self.installmentsSelectorView?.removeFromSuperview()
+//            self.installmentsSelectorView?.layoutIfNeeded()
+//        }
     }
 
     func showInstallments(installmentData: PXInstallment?) {
@@ -341,10 +350,14 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 
         installmentsSelectorView.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
-        
-        installmentsSelectorView.expand {
+
+
+        installmentsSelectorView.expand(sliderView: self.contentView, sliderHeightConstraint: cardSliderHeightConstraint) {
             self.installmentInfoRow?.enableTap()
         }
+//        installmentsSelectorView.expand {
+//            self.installmentInfoRow?.enableTap()
+//        }
     }
 }
 

@@ -163,29 +163,36 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         tableView.reloadData()
     }
 
-    func expand(completion: @escaping () -> ()) {
+    func expand(sliderView: UIView, sliderHeightConstraint: NSLayoutConstraint?, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        animateTableViewHeight(height: self.frame.height, completion: {
+        animateTableViewHeight(tableViewHeight: self.frame.height, sliderView: sliderView, sliderHeightConstraint: sliderHeightConstraint, sliderHeight: self.frame.height) {
             completion()
-        })
+        }
     }
 
-    func collapse(completion: @escaping () -> ()) {
+    func collapse(sliderView: UIView, sliderHeightConstraint: NSLayoutConstraint?, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        animateTableViewHeight(height: 0, completion: {
+        animateTableViewHeight(tableViewHeight: 0, sliderView: sliderView, sliderHeightConstraint: sliderHeightConstraint, sliderHeight: 0) {
             completion()
-        })
+        }
     }
 
-    func animateTableViewHeight(height: CGFloat, completion: @escaping () -> ()) {
+    func animateTableViewHeight(tableViewHeight: CGFloat, sliderView: UIView, sliderHeightConstraint: NSLayoutConstraint?, sliderHeight: CGFloat, completion: @escaping () -> ()) {
+        sliderView.layoutIfNeeded()
         if #available(iOS 10.0, *) {
             let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: { [weak self] in
                 guard let strongSelf = self else {
                     return
                 }
-                strongSelf.tableViewHeightConstraint?.constant = height
+
+                strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
                 strongSelf.layoutIfNeeded()
             })
+
+            transitionAnimator.addAnimations {
+                sliderHeightConstraint?.constant = sliderHeight
+                sliderView.layoutIfNeeded()
+            }
 
             transitionAnimator.addCompletion({ (_) in
                 completion()
@@ -197,8 +204,11 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
                 guard let strongSelf = self else {
                     return
                 }
-                strongSelf.tableViewHeightConstraint?.constant = height
+                strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
                 strongSelf.layoutIfNeeded()
+
+                sliderHeightConstraint?.constant = sliderHeight
+                sliderView.layoutIfNeeded()
             }) { (_) in
                 completion()
             }
