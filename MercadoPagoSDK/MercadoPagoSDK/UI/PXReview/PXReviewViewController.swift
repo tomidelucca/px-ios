@@ -32,6 +32,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
     private let SHADOW_DELTA: CGFloat = 1
+    private var DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED: Bool = false
 
     internal var changePaymentMethodCallback: (() -> Void)?
 
@@ -48,6 +49,15 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED, let dynamicViewController = self.viewModel.getDynamicViewController() {
+            self.present(dynamicViewController, animated: true) { [weak self] in
+                self?.DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED = true
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
