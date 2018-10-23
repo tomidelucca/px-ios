@@ -311,6 +311,8 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 
     func payerCostSelected(_ payerCost: PXPayerCost?) {
         self.installmentInfoRow?.toggleInstallments()
+        PXFeedbackGenerator.heavyImpactFeedback()
+
         //TODO: Update payment data
     }
 
@@ -319,7 +321,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         self.installmentInfoRow?.disableTap()
 
         //Animations
-        loadingButtonComponent?.show(duration: 0.2)
+        loadingButtonComponent?.show(duration: 0.1)
 
         let animationDuration = 0.5
 
@@ -344,6 +346,8 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             return
         }
 
+        PXFeedbackGenerator.selectionFeedback()
+
         self.installmentsSelectorView?.removeFromSuperview()
         self.installmentsSelectorView?.layoutIfNeeded()
         let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData)
@@ -362,7 +366,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         self.installmentInfoRow?.disableTap()
 
         //Animations
-        loadingButtonComponent?.hide(duration: 0.2)
+        loadingButtonComponent?.hide(duration: 0.1)
 
         let animationDuration = 0.5
 
