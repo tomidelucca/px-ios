@@ -89,6 +89,14 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
 
+    // Add ReviewConfirm Dynamic views configuration to advanced config.
+    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
+
+    // Add ReviewConfirm Dynamic View Controller configuration to advanced config.
+    TestComponent *dynamicViewControllersConfigObject = [self getReviewScreenDynamicViewControllerConfigurationObject];
+    [advancedConfig setDynamicViewControllersConfiguration: [NSArray arrayWithObjects: dynamicViewControllersConfigObject, nil]];
+    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
+
     // Add PaymentResult configuration to advanced config.
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
 
@@ -132,6 +140,19 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
     return config;
 }
+
+// ReviewConfirm Dynamic Views Configuration Object
+-(TestComponent *)getReviewScreenDynamicViewsConfigurationObject {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewsConfiguration];
+    return config;
+}
+
+// ReviewConfirm Dynamic View Controller Configuration Object
+-(TestComponent *)getReviewScreenDynamicViewControllerConfigurationObject {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewControllerConfiguration];
+    return config;
+}
+
 
 // PaymentResult
 -(PXPaymentResultConfiguration *)getPaymentResultConfiguration {

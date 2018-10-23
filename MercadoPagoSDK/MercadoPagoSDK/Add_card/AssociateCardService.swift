@@ -10,7 +10,7 @@ import UIKit
 
 final class AssociateCardService: MercadoPagoService {
 
-    let uri = "/beta/px_mobile_api/card-association"
+    let uri = "/v1/px_mobile_api/card-association"
     let accessToken: String
 
     init(accessToken: String) {

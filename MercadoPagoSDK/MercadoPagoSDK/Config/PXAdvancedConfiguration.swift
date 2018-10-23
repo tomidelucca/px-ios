@@ -42,4 +42,13 @@ open class PXAdvancedConfiguration: NSObject {
      */
     open var paymentResultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()
 
+     /**
+     Add dynamic custom views on 'Review and Confirm screen'.
+     */
+    open var reviewConfirmDynamicViewsConfiguration: PXReviewConfirmDynamicViewsConfiguration?
+
+     /**
+     Add dynamic view controllers to flow.
+     */
+    open var dynamicViewControllersConfiguration: [PXDynamicViewControllerProtocol] = []
 }

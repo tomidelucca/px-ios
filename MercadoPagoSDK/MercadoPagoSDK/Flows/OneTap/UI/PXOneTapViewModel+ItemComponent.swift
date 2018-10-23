@@ -62,7 +62,7 @@ extension PXOneTapViewModel {
     }
 
     private func getCollectorIcon() -> UIImage? {
-        return reviewScreenPreference.getCollectorIcon()
+        return advancedConfiguration.reviewConfirmConfiguration.getCollectorIcon()
     }
 
     private func getIconTitle() -> String {
