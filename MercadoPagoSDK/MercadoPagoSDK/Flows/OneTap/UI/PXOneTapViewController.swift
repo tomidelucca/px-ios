@@ -146,9 +146,9 @@ extension PXOneTapViewController {
         PXLayout.centerHorizontally(view: cardSliderContentView).isActive = true
         PXLayout.pinLeft(view: cardSliderContentView).isActive = true
         PXLayout.pinRight(view: cardSliderContentView).isActive = true
-        let heightConstraint = PXLayout.put(view: cardSliderContentView, onBottomOf: installmentRow, withMargin: 0)
-        heightConstraint.isActive = true
-        cardSliderMarginConstraint = heightConstraint
+        let topMarginConstraint = PXLayout.put(view: cardSliderContentView, onBottomOf: installmentRow, withMargin: 0)
+        topMarginConstraint.isActive = true
+        cardSliderMarginConstraint = topMarginConstraint
         PXLayout.setHeight(owner: cardSliderContentView, height: PXCardSliderSizeManager.getSliderSize().height).isActive = true
 
         // Add footer payment button.
@@ -179,7 +179,11 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView() -> UIView {
-        let viewModel = self.viewModel.getHeaderViewModel()
+        let viewModel = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
+            OneTapHeaderSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
+            OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
+            OneTapHeaderSummaryData("Total", "$ 1100", UIColor.black, true)
+            ])
         let headerView = PXOneTapHeaderView(viewModel: viewModel)
         return headerView
     }
