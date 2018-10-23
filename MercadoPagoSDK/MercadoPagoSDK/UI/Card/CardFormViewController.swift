@@ -163,7 +163,9 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         PXNotificationManager.SuscribeTo.cardFormReset(self, selector: #selector(reset))
-        self.getPromos()
+        if viewModel.bankDealsEnabled {
+            self.getPromos()
+        }
         textBox.borderInactiveColor = ThemeManager.shared.secondaryColor()
         textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
         textBox.autocorrectionType = UITextAutocorrectionType.no
