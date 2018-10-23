@@ -34,7 +34,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
-    let cardSliderContentView = UIView()
     var cardSliderMarginConstraint: NSLayoutConstraint?
 
     // MARK: Lifecycle/Publics
@@ -142,6 +141,7 @@ extension PXOneTapViewController {
         PXLayout.pinTop(view: installmentRow, withMargin: PXLayout.XXXS_MARGIN).isActive = true
 
         // Add card slider
+        let cardSliderContentView = UIView()
         whiteView.addSubview(cardSliderContentView)
         PXLayout.centerHorizontally(view: cardSliderContentView).isActive = true
         PXLayout.pinLeft(view: cardSliderContentView).isActive = true
@@ -321,11 +321,14 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         //Animations
         loadingButtonComponent?.show(duration: 0.2)
 
-        var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
-        pxAnimator.addAnimation(animation: {
-            self.cardSliderMarginConstraint?.constant = 0
-            self.contentView.layoutIfNeeded()
-            self.cardSliderContentView.alpha = 1
+        let animationDuration = 0.5
+
+        slider.show(duration: animationDuration)
+
+        var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            self?.cardSliderMarginConstraint?.constant = 0
+            self?.contentView.layoutIfNeeded()
         })
 
         self.installmentsSelectorView?.collapse(animator: pxAnimator, completion: {
@@ -361,11 +364,14 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         //Animations
         loadingButtonComponent?.hide(duration: 0.2)
 
-        var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
-        pxAnimator.addAnimation(animation: {
-            self.cardSliderMarginConstraint?.constant = installmentsSelectorViewHeight
-            self.contentView.layoutIfNeeded()
-            self.cardSliderContentView.alpha = 0
+        let animationDuration = 0.5
+
+        slider.hide(duration: animationDuration)
+
+        var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            self?.cardSliderMarginConstraint?.constant = installmentsSelectorViewHeight
+            self?.contentView.layoutIfNeeded()
         })
 
         installmentsSelectorView.expand(animator: pxAnimator) {

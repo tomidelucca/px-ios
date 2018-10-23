@@ -181,14 +181,14 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     }
 
     func show(duration: Double = 0.5) {
-        UIView.animate(withDuration: duration) {
-            self.alpha = 1
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.alpha = 1
         }
     }
 
     func hide(duration: Double = 0.5) {
-        UIView.animate(withDuration: duration) {
-            self.alpha = 0
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.alpha = 0
         }
     }
 }

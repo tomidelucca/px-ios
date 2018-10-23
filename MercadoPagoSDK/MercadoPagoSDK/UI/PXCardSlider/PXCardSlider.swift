@@ -101,6 +101,19 @@ extension PXCardSlider {
     func update(_ newModel: [PXCardSliderViewModel]) {
         model = newModel
     }
+
+    func show(duration: Double = 0.5) {
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.pagerView.alpha = 1
+            self?.pageControl.alpha = 1
+        }
+    }
+    func hide(duration: Double = 0.5) {
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.pagerView.alpha = 0
+            self?.pageControl.alpha = 0
+        }
+    }
 }
 
 // MARK: Privates
