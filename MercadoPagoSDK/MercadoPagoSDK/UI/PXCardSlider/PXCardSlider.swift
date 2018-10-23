@@ -15,7 +15,7 @@ protocol PXCardSliderProtocol: NSObjectProtocol {
 
 final class PXCardSlider: NSObject {
     private var pagerView = FSPagerView(frame: .zero)
-    private var pageControl = FSPageControl(frame: .zero)
+    private var pageControl = ISPageControl(frame: .zero, numberOfPages: 0)
     private var model: [PXCardSliderViewModel] = [] {
         didSet {
             self.selectedIndex = 0
@@ -140,19 +140,16 @@ extension PXCardSlider {
     private func setupPager(_ containerView: UIView) {
         let pagerYMargin: CGFloat = PXLayout.XS_MARGIN
         let pagerHeight: CGFloat = 25
-        let disabledDotsColor: UIColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.1)
         pageControl.contentHorizontalAlignment = .center
         pageControl.numberOfPages = model.count
         pageControl.currentPage = 0
-        pageControl.setStrokeColor(.clear, for: .normal)
-        pageControl.setFillColor(disabledDotsColor, for: .normal)
-        pageControl.setStrokeColor(ThemeManager.shared.getAccentColor(), for: .selected)
-        pageControl.setFillColor(ThemeManager.shared.getAccentColor(), for: .selected)
+        pageControl.currentPageTintColor = ThemeManager.shared.getAccentColor()
         containerView.addSubview(pageControl)
         PXLayout.pinRight(view: pageControl).isActive = true
         PXLayout.pinLeft(view: pageControl).isActive = true
         PXLayout.centerHorizontally(view: pageControl).isActive = true
         PXLayout.pinBottom(view: pageControl, withMargin: -pagerYMargin).isActive = true
         PXLayout.setHeight(owner: pageControl, height: pagerHeight).isActive = true
+        pageControl.layoutIfNeeded()
     }
 }
