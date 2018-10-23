@@ -163,46 +163,34 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         tableView.reloadData()
     }
 
-    func expand(completion: @escaping () -> ()) {
+    func expand(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        animateTableViewHeight(height: self.frame.height, completion: {
-            completion()
-        })
+
+        animateTableViewHeight(tableViewHeight: self.frame.height, completion: completion)
+        animator.animate()
     }
 
-    func collapse(completion: @escaping () -> ()) {
+    func collapse(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        animateTableViewHeight(height: 0, completion: {
-            completion()
-        })
+
+        animateTableViewHeight(tableViewHeight: 0, completion: completion)
+        animator.animate()
     }
 
-    func animateTableViewHeight(height: CGFloat, completion: @escaping () -> ()) {
-        if #available(iOS 10.0, *) {
-            let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: { [weak self] in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.tableViewHeightConstraint?.constant = height
-                strongSelf.layoutIfNeeded()
-            })
+    func animateTableViewHeight(tableViewHeight: CGFloat, completion: @escaping () -> ()) {
+        self.superview?.layoutIfNeeded()
 
-            transitionAnimator.addCompletion({ (_) in
-                completion()
-            })
-
-            transitionAnimator.startAnimation()
-        } else {
-            UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.tableViewHeightConstraint?.constant = height
-                strongSelf.layoutIfNeeded()
-            }) { (_) in
-                completion()
+        var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
-        }
+            strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
+            strongSelf.layoutIfNeeded()
+        })
+
+        pxAnimator.addCompletion(completion: completion)
+        pxAnimator.animate()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {

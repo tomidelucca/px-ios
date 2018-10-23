@@ -34,6 +34,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
+    var cardSliderMarginConstraint: NSLayoutConstraint?
+
     // MARK: Lifecycle/Publics
     init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
@@ -144,7 +146,9 @@ extension PXOneTapViewController {
         PXLayout.centerHorizontally(view: cardSliderContentView).isActive = true
         PXLayout.pinLeft(view: cardSliderContentView).isActive = true
         PXLayout.pinRight(view: cardSliderContentView).isActive = true
-        PXLayout.put(view: cardSliderContentView, onBottomOf: installmentRow).isActive = true
+        let topMarginConstraint = PXLayout.put(view: cardSliderContentView, onBottomOf: installmentRow, withMargin: 0)
+        topMarginConstraint.isActive = true
+        cardSliderMarginConstraint = topMarginConstraint
         PXLayout.setHeight(owner: cardSliderContentView, height: PXCardSliderSizeManager.getSliderSize().height).isActive = true
 
         // Add footer payment button.
@@ -313,11 +317,25 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     func hideInstallments() {
         self.installmentsSelectorView?.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
-        self.installmentsSelectorView?.collapse {
+
+        //Animations
+        loadingButtonComponent?.show(duration: 0.2)
+
+        let animationDuration = 0.5
+
+        slider.show(duration: animationDuration)
+
+        var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            self?.cardSliderMarginConstraint?.constant = 0
+            self?.contentView.layoutIfNeeded()
+        })
+
+        self.installmentsSelectorView?.collapse(animator: pxAnimator, completion: {
             self.installmentInfoRow?.enableTap()
             self.installmentsSelectorView?.removeFromSuperview()
             self.installmentsSelectorView?.layoutIfNeeded()
-        }
+        })
     }
 
     func showInstallments(installmentData: PXInstallment?) {
@@ -337,12 +355,26 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         PXLayout.matchWidth(ofView: installmentsSelectorView).isActive = true
         PXLayout.centerHorizontally(view: installmentsSelectorView).isActive = true
         PXLayout.put(view: installmentsSelectorView, onBottomOf: installmentInfoRow).isActive = true
-        PXLayout.setHeight(owner: installmentsSelectorView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)-PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
+        let installmentsSelectorViewHeight = PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)-PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT
+        PXLayout.setHeight(owner: installmentsSelectorView, height: installmentsSelectorViewHeight).isActive = true
 
         installmentsSelectorView.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
-        
-        installmentsSelectorView.expand {
+
+        //Animations
+        loadingButtonComponent?.hide(duration: 0.2)
+
+        let animationDuration = 0.5
+
+        slider.hide(duration: animationDuration)
+
+        var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            self?.cardSliderMarginConstraint?.constant = installmentsSelectorViewHeight
+            self?.contentView.layoutIfNeeded()
+        })
+
+        installmentsSelectorView.expand(animator: pxAnimator) {
             self.installmentInfoRow?.enableTap()
         }
     }
