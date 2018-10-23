@@ -7,14 +7,14 @@
 //
 import UIKit
 
-open class ISPageControl: UIControl {
-    fileprivate let limit = 5
-    fileprivate var fullScaleIndex = [0, 1, 2]
-    fileprivate var dotLayers: [CALayer] = []
-    fileprivate var diameter: CGFloat { return radius * 2 }
-    fileprivate var centerIndex: Int { return fullScaleIndex[1] }
+class ISPageControl: UIControl {
+    private let limit = 5
+    private var fullScaleIndex = [0, 1, 2]
+    private var dotLayers: [CALayer] = []
+    private var diameter: CGFloat { return radius * 2 }
+    private var centerIndex: Int { return fullScaleIndex[1] }
 
-    open var currentPage = 0 {
+    var currentPage = 0 {
         didSet {
             guard numberOfPages > currentPage else {
                 return
@@ -23,68 +23,68 @@ open class ISPageControl: UIControl {
         }
     }
 
-    @IBInspectable open var inactiveTintColor: UIColor = UIColor.lightGray {
+    @IBInspectable var inactiveTintColor: UIColor = UIColor.lightGray {
         didSet {
             setNeedsLayout()
         }
     }
 
-    @IBInspectable open var currentPageTintColor: UIColor = #colorLiteral(red: 0, green: 0.6276981994, blue: 1, alpha: 1) {
+    @IBInspectable var currentPageTintColor: UIColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1) {
         didSet {
             setNeedsLayout()
         }
     }
 
-    @IBInspectable open var radius: CGFloat = 5 {
+    @IBInspectable var radius: CGFloat = 5 {
         didSet {
             updateDotLayersLayout()
         }
     }
 
-    @IBInspectable open var padding: CGFloat = 8 {
+    @IBInspectable var padding: CGFloat = 8 {
         didSet {
             updateDotLayersLayout()
         }
     }
 
-    @IBInspectable open var minScaleValue: CGFloat = 0.4 {
+    @IBInspectable var minScaleValue: CGFloat = 0.4 {
         didSet {
             setNeedsLayout()
         }
     }
 
-    @IBInspectable open var middleScaleValue: CGFloat = 0.7 {
+    @IBInspectable var middleScaleValue: CGFloat = 0.7 {
         didSet {
             setNeedsLayout()
         }
     }
 
-    @IBInspectable open var numberOfPages: Int = 0 {
+    @IBInspectable var numberOfPages: Int = 0 {
         didSet {
             setupDotLayers()
             isHidden = hideForSinglePage && numberOfPages <= 1
         }
     }
 
-    @IBInspectable open var hideForSinglePage: Bool = true {
+    @IBInspectable var hideForSinglePage: Bool = true {
         didSet {
             setNeedsLayout()
         }
     }
 
-    @IBInspectable open var inactiveTransparency: CGFloat = 0.4 {
+    @IBInspectable var inactiveTransparency: CGFloat = 0.4 {
         didSet {
             setNeedsLayout()
         }
     }
 
-    @IBInspectable open var borderWidth: CGFloat = 0 {
+    @IBInspectable var borderWidth: CGFloat = 0 {
         didSet {
             setNeedsLayout()
         }
     }
 
-    @IBInspectable open var borderColor: UIColor = UIColor.clear {
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
         didSet {
             setNeedsLayout()
         }
@@ -100,7 +100,7 @@ open class ISPageControl: UIControl {
         setupDotLayers()
     }
 
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return sizeThatFits(CGSize.zero)
     }
 
@@ -208,7 +208,6 @@ private extension ISPageControl {
             return
         }
 
-        // TODO: Refactoring
         let moreThanBefore = (fullScaleIndex.last ?? 0) < currentPage
         if moreThanBefore {
             fullScaleIndex[0] = currentPage - 2
