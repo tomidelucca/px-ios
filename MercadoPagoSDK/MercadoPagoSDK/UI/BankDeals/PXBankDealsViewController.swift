@@ -13,6 +13,8 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     fileprivate let MARGINS: CGFloat = PXLayout.S_MARGIN
     fileprivate let CELL_HEIGHT: CGFloat = 128
 
+    override open var screenName: String { return TrackingPaths.Screens.getBankDealsPath() }
+
     fileprivate var viewModel: PXBankDealsViewModel
 
     init(viewModel: PXBankDealsViewModel) {

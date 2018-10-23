@@ -10,8 +10,7 @@ import UIKit
 
 class PXReviewViewModel: NSObject {
 
-    var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
-    var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
+    var screenName: String { return TrackingPaths.Screens.getReviewAndConfirmPath() }
 
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
@@ -31,20 +30,20 @@ class PXReviewViewModel: NSObject {
 
     // MARK: Tracking logic
     func trackConfirmActionEvent() {
-        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.id ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmountWithCharges)]
+        var properties: [String: String] = [TrackingPaths.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.id ?? "", TrackingPaths.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingPaths.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmountWithCharges)]
 
         if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
-            properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
+            properties[TrackingPaths.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
         }
         if let installments = amountHelper.paymentData.payerCost?.installments {
-            properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
+            properties[TrackingPaths.METADATA_INSTALLMENTS] = installments.stringValue
         }
 
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName, properties: properties)
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingPaths.ACTION_CHECKOUT_CONFIRMED, screenId: "", screenName: screenName, properties: properties)
     }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
     func trackChangePaymentMethodEvent() {
@@ -233,7 +232,7 @@ extension PXReviewViewModel {
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = pm.paymentMethodDescription?.toAttributedString()
-        var accreditationTime: NSAttributedString? = nil
+        var accreditationTime: NSAttributedString?
         var action = withAction
         let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         let lightLabelColor = ThemeManager.shared.labelTintColor()

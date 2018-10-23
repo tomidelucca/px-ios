@@ -13,6 +13,7 @@ import Foundation
  */
 @objcMembers
 open class PXAdvancedConfiguration: NSObject {
+
     // MARK: Public accessors.
     /**
      Advanced UI color customization. Use this config to create your custom UI colors based on PXTheme protocol. Also you can use this protocol to customize your fonts.
@@ -41,7 +42,13 @@ open class PXAdvancedConfiguration: NSObject {
      */
     open var paymentResultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration()
 
+     /**
+     Add dynamic custom views on 'Review and Confirm screen'.
+     */
     open var reviewConfirmDynamicViewsConfiguration: PXReviewConfirmDynamicViewsConfiguration?
 
+     /**
+     Add dynamic view controllers to flow.
+     */
     open var dynamicViewControllersConfiguration: [PXDynamicViewControllerProtocol] = []
 }

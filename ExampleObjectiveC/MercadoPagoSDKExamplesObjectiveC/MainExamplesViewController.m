@@ -101,7 +101,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
 
     // Disable bank deals
-    [advancedConfig setBankDealsEnabled:NO];
+    //[advancedConfig setBankDealsEnabled:NO];
 
     // Set advanced comnfig
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
@@ -204,7 +204,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
     self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
-    [self.pref addExcludedPaymentType:@"ticket"];
+//    [self.pref addExcludedPaymentType:@"ticket"];
 }
 
 -(void)setCheckoutPref_WithId {

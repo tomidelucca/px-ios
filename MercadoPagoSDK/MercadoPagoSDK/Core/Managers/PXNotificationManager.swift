@@ -28,12 +28,12 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.addObserver(observer, selector: selector, name: .animateButton, object: nil)
         }
-        
+
         static func cardFormReset(_ observer: Any, selector: Selector) {
             let notificationCenter = NotificationCenter.default
             notificationCenter.addObserver(observer, selector: selector, name: .cardFormReset, object: nil)
         }
-        
+
     }
 }
 
@@ -65,7 +65,7 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.post(name: .animateButton, object: object)
         }
-        
+
         static func cardFormReset() {
             let notificationCenter = NotificationCenter.default
             notificationCenter.post(name: .cardFormReset, object: nil)

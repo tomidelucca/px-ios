@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Metadata/Params
-internal extension TrackingUtil {
+internal extension TrackingPaths {
     struct Metadata {
         static let INSTALLMENTS = "installments"
         static let HAS_DISCOUNT = "has_discount"
@@ -17,7 +17,7 @@ internal extension TrackingUtil {
 }
 
 // MARK: - Screens
-internal extension TrackingUtil {
+internal extension TrackingPaths {
     enum ScreenId {
         static let REVIEW_AND_CONFIRM_ONE_TAP = "/express"
         static let DISCOUNT_TERM_CONDITION = "/discount_terms_conditions"
@@ -25,7 +25,7 @@ internal extension TrackingUtil {
 }
 
 // MARK: - Events
-internal extension TrackingUtil {
+internal extension TrackingPaths {
     struct Event {
         static let TAP_SUMMARY_DETAIL = "/open_summary_detail"
         static let TAP_BACK = "/back_action"
