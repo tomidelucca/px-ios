@@ -46,7 +46,8 @@ class PXOneTapHeaderView: PXComponentView {
 
             if row.isTotal {
                 let separatorView = UIView()
-                separatorView.backgroundColor = ThemeManager.shared.greyColor()
+                separatorView.backgroundColor = ThemeManager.shared.boldLabelTintColor()
+                separatorView.alpha = 0.1
                 separatorView.translatesAutoresizingMaskIntoConstraints = false
                 summaryView.addSubviewToBottom(separatorView, withMargin: margin)
                 PXLayout.setHeight(owner: separatorView, height: 1).isActive = true

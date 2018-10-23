@@ -95,10 +95,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
             self.addSubview(iconImage)
 
-            if #available(iOS 10.0, *) {
-                let notification = UINotificationFeedbackGenerator()
-                notification.notificationOccurred(.success)
-            }
+            PXFeedbackGenerator.successNotificationFeedback()
 
             UIView.animate(withDuration: 0.6, animations: {
                 iconImage.alpha = 1

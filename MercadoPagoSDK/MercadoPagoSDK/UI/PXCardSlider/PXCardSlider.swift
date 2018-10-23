@@ -63,10 +63,7 @@ extension PXCardSlider: FSPagerViewDelegate {
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
         pageControl.currentPage = targetIndex
         if selectedIndex != targetIndex {
-            if #available(iOS 10.0, *) {
-                let generator = UIImpactFeedbackGenerator(style: .light)
-                generator.impactOccurred()
-            }
+            PXFeedbackGenerator.selectionFeedback()
             selectedIndex = targetIndex
             if model.indices.contains(targetIndex) {
                 let modelData = model[targetIndex]
