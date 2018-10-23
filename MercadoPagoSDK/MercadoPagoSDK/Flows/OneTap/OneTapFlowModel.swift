@@ -41,6 +41,12 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
     }
 
+    private var payerHelper: PXPayerHelper {
+        get {
+            return PXPayerHelper(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
+        }
+    }
+
     let mpESCManager: MercadoPagoESC
     let reviewScreenConfiguration: PXReviewConfirmConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
@@ -93,7 +99,7 @@ internal extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, payerInfo: self.paymentData.payer, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, payerHelper: self.payerHelper, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
     }
 }
 

@@ -26,6 +26,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     var callbackPaymentData: ((PXPaymentData) -> Void)
     var callbackConfirm: ((PXPaymentData) -> Void)
     var finishButtonAnimation: (() -> Void)
+    var changePayerInformation: (() -> Void)
 
     weak var loadingButtonComponent: PXAnimatedButton?
     weak var loadingFloatingButtonComponent: PXAnimatedButton?
@@ -36,11 +37,12 @@ class PXReviewViewController: PXComponentContainerViewController {
     internal var changePaymentMethodCallback: (() -> Void)?
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void), changePayerInformation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.finishButtonAnimation = finishButtonAnimation
+        self.changePayerInformation = changePayerInformation
         self.timeOutPayButton = timeOutPayButton
         self.shouldAnimatePayButton = shouldAnimatePayButton
         super.init()
@@ -61,6 +63,7 @@ class PXReviewViewController: PXComponentContainerViewController {
         view.isUserInteractionEnabled = true
         // Temporary fix for MP/Meli UX incompatibility
         UIApplication.shared.statusBarStyle = .default
+        self.setPayer()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,6 +86,14 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
+    }
+
+    func setPayer() {
+        if let payer = viewModel.payerHelper {
+            self.viewModel.amountHelper.paymentData.payer?.firstName = payer.firstName
+            self.viewModel.amountHelper.paymentData.payer?.lastName = payer.lastName
+            self.viewModel.amountHelper.paymentData.payer?.identification = PXIdentification(number: payer.identificationNumber, type: payer.identificationType)
+        }
     }
 }
 
@@ -272,9 +283,10 @@ extension PXReviewViewController {
     fileprivate func getPayerComponentView() -> UIView? {
 
         let action = PXAction(label: "review_change_payer_action".localized_beta, action: { [weak self] in
+            guard let strongSelf = self else { return }
             if let reviewViewModel = self?.viewModel {
-                reviewViewModel.payerInfo?.clearCollectedData()
-                PXNavigationHandler.getDefault().popViewController(animated: true)
+                reviewViewModel.amountHelper.paymentData.payer?.clearCollectedData()
+                strongSelf.changePayerInformation()
             }
         })
 

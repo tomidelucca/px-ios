@@ -144,6 +144,8 @@ extension MercadoPagoCheckout {
 
         }, finishButtonAnimation: {
             self.executeNextStep()
+        }, changePayerInformation: {
+            self.executeNextStep()
         })
 
         if let changePaymentMethodAction = viewModel.lifecycleProtocol?.changePaymentMethodTapped?() {

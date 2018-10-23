@@ -12,15 +12,18 @@ open class PXIdentification: NSObject, Codable {
 
     open var number: String? = "null"
     open var type: String? = "null"
+    open var name: String?
 
     public init(number: String?, type: String?) {
         self.type = type
         self.number = number
+        self.name = type
     }
 
     public init (identificationType: PXIdentificationType, identificationNumber: String) {
-        self.type = identificationType.name
+        self.type = identificationType.type
         self.number = identificationNumber
+        self.name = identificationType.name
     }
 
     open func toJSONString() throws -> String? {
@@ -41,5 +44,4 @@ open class PXIdentification: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXIdentification] {
         return try JSONDecoder().decode([PXIdentification].self, from: data)
     }
-
 }
