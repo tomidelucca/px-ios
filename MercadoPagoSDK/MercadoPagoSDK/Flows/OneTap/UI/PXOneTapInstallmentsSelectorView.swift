@@ -163,58 +163,34 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         tableView.reloadData()
     }
 
-    func expand(slider: UIView, sliderContainer: UIView, sliderMarginConstraint: NSLayoutConstraint?, completion: @escaping () -> ()) {
+    func expand(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        animateTableViewHeight(tableViewHeight: self.frame.height, slider: slider, sliderAlpha: 0, sliderContainer: sliderContainer, sliderMarginConstraint: sliderMarginConstraint, constraintNewValue: self.frame.height) {
-            completion()
-        }
+
+        animateTableViewHeight(tableViewHeight: self.frame.height, completion: completion)
+        animator.animate()
     }
 
-    func collapse(slider: UIView, sliderContainer: UIView, sliderMarginConstraint: NSLayoutConstraint?, completion: @escaping () -> ()) {
+    func collapse(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-        animateTableViewHeight(tableViewHeight: 0, slider: slider, sliderAlpha: 1, sliderContainer: sliderContainer, sliderMarginConstraint: sliderMarginConstraint, constraintNewValue: 0) {
-            completion()
-        }
+
+        animateTableViewHeight(tableViewHeight: 0, completion: completion)
+        animator.animate()
     }
 
-    func animateTableViewHeight(tableViewHeight: CGFloat, slider: UIView, sliderAlpha: CGFloat, sliderContainer: UIView, sliderMarginConstraint: NSLayoutConstraint?, constraintNewValue: CGFloat, completion: @escaping () -> ()) {
-        sliderContainer.layoutIfNeeded()
-        if #available(iOS 10.0, *) {
-            let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: { [weak self] in
-                guard let strongSelf = self else {
-                    return
-                }
+    func animateTableViewHeight(tableViewHeight: CGFloat, completion: @escaping () -> ()) {
+        self.superview?.layoutIfNeeded()
 
-                strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
-                strongSelf.layoutIfNeeded()
-            })
-
-            transitionAnimator.addAnimations {
-                sliderMarginConstraint?.constant = constraintNewValue
-                sliderContainer.layoutIfNeeded()
-                slider.alpha = sliderAlpha
+        var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
+            strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
+            strongSelf.layoutIfNeeded()
+        })
 
-            transitionAnimator.addCompletion({ (_) in
-                completion()
-            })
-
-            transitionAnimator.startAnimation()
-        } else {
-            UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
-                strongSelf.layoutIfNeeded()
-
-                sliderMarginConstraint?.constant = constraintNewValue
-                sliderContainer.layoutIfNeeded()
-                slider.alpha = sliderAlpha
-            }) { (_) in
-                completion()
-            }
-        }
+        pxAnimator.addCompletion(completion: completion)
+        pxAnimator.animate()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {

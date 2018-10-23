@@ -314,9 +314,17 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         self.installmentsSelectorView?.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
 
+        //Animations
         loadingButtonComponent?.show(duration: 0.2)
 
-        self.installmentsSelectorView?.collapse(slider: self.cardSliderContentView, sliderContainer: self.contentView, sliderMarginConstraint: cardSliderMarginConstraint, completion: {
+        var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: {
+            self.cardSliderMarginConstraint?.constant = 0
+            self.contentView.layoutIfNeeded()
+            self.cardSliderContentView.alpha = 1
+        })
+
+        self.installmentsSelectorView?.collapse(animator: pxAnimator, completion: {
             self.installmentInfoRow?.enableTap()
             self.installmentsSelectorView?.removeFromSuperview()
             self.installmentsSelectorView?.layoutIfNeeded()
@@ -340,14 +348,23 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         PXLayout.matchWidth(ofView: installmentsSelectorView).isActive = true
         PXLayout.centerHorizontally(view: installmentsSelectorView).isActive = true
         PXLayout.put(view: installmentsSelectorView, onBottomOf: installmentInfoRow).isActive = true
-        PXLayout.setHeight(owner: installmentsSelectorView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)-PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
-
-        loadingButtonComponent?.hide(duration: 0.2)
+        let installmentsSelectorViewHeight = PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)-PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT
+        PXLayout.setHeight(owner: installmentsSelectorView, height: installmentsSelectorViewHeight).isActive = true
 
         installmentsSelectorView.layoutIfNeeded()
         self.installmentInfoRow?.disableTap()
 
-        installmentsSelectorView.expand(slider: self.cardSliderContentView, sliderContainer: self.contentView, sliderMarginConstraint: cardSliderMarginConstraint) {
+        //Animations
+        loadingButtonComponent?.hide(duration: 0.2)
+
+        var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: {
+            self.cardSliderMarginConstraint?.constant = installmentsSelectorViewHeight
+            self.contentView.layoutIfNeeded()
+            self.cardSliderContentView.alpha = 0
+        })
+
+        installmentsSelectorView.expand(animator: pxAnimator) {
             self.installmentInfoRow?.enableTap()
         }
     }
