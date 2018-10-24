@@ -22,7 +22,6 @@ final internal class OneTapFlowModel: PXFlowModel {
     var paymentOptionSelected: PaymentMethodOption
     let search: PXPaymentMethodSearch
     var readyToPay: Bool = false
-    var payerCosts: [PXPayerCost]?
     var paymentResult: PaymentResult?
     var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
@@ -56,7 +55,8 @@ final internal class OneTapFlowModel: PXFlowModel {
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         self.mpESCManager = MercadoPagoESCImplementation(enabled: advancedConfiguration.escEnabled)
 
-        if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
+        // Payer cost pre selection.
+        if let payerCost = search.expressCho?.first?.oneTapCard?.selectedPayerCost {
             updateCheckoutModel(payerCost: payerCost)
         }
     }
