@@ -30,11 +30,11 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 internal class PaymentMethodSearchService: MercadoPagoService {
 
-    let merchantPublicKey: String!
+    let merchantPublicKey: String
     let payerAccessToken: String?
-    let processingMode: String!
+    let processingMode: String
 
-    init (baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil, processingMode: String) {
+    init(baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil, processingMode: String) {
         self.merchantPublicKey = merchantPublicKey
         self.payerAccessToken = payerAccessToken
         self.processingMode = processingMode
@@ -43,7 +43,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
     internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-
+        //TODO: Remove for PROD.
         self.baseURL = "http://private-175b69-onetapgroups.apiary-mock.com/new?"
 
         var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
