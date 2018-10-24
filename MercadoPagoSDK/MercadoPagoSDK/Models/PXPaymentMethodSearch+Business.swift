@@ -8,18 +8,32 @@
 import Foundation
 
 internal extension PXPaymentMethodSearch {
-
     func getPaymentOptionsCount() -> Int {
         let customOptionsCount = customOptionSearchItems.count
         let groupsOptionsCount = paymentMethodSearchItem.count
         return customOptionsCount + groupsOptionsCount
     }
+}
 
+// MARK: Express checkout.
+internal extension PXPaymentMethodSearch {
     func hasCheckoutDefaultOption() -> Bool {
-        return oneTap != nil
+        return expressCho != nil
     }
 
     func deleteCheckoutDefaultOption() {
         oneTap = nil
+        expressCho = nil
+    }
+
+    func getPaymentMethodInExpressCheckout(targetId: String) -> (found: Bool, expressNode: PXOneTapDto?) {
+        guard let expressResponse = expressCho else { return (false, nil) }
+        for expressNode in expressResponse {
+            if let expressCard = expressNode.oneTapCard, expressCard.cardId == targetId {
+
+                return (true, expressNode)
+            }
+        }
+        return (false, nil)
     }
 }
