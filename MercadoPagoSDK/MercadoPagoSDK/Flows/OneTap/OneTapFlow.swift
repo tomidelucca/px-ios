@@ -85,30 +85,38 @@ extension OneTapFlow {
     ///   - paymentMethodPlugins: payment Methods plugins that can be show
     /// - Returns: selected payment option if possible
     static func autoSelectOneTapOption(search: PXPaymentMethodSearch, customPaymentOptions: [CustomerPaymentMethod]?, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
-
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
             // Check if can autoselect plugin
             let paymentMethodPluginsFound = paymentMethodPlugins.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
-                return paymentMethodPlugin.getId() == search.oneTap?.paymentMethodId
+                return paymentMethodPlugin.getId() == search.expressCho?.first?.paymentMethodId
             }
             if let paymentMethodPlugin = paymentMethodPluginsFound.first {
                 selectedPaymentOption = paymentMethodPlugin
             } else {
-                // Check if can autoselect customer card
+
+                // POC - New way. Response dissociate of groups.
+                // selectedPaymentOption = search.expressCho?.first
+
+                 // Legacy check inside Groups response.
+                 // TODO: Check this with team.
+
+                 // Check if can autoselect customer card
                 guard let customerPaymentMethods = customPaymentOptions else {
                     return nil
                 }
-                let customOptionsFound = customerPaymentMethods.filter { return $0.getCardId() == search.oneTap?.oneTapCard?.cardId }
-                if let customerPaymentMethod = customOptionsFound.first, let customerPaymentOption = customerPaymentMethod as? PaymentMethodOption {
+
+                let customOptionsFound = customerPaymentMethods.filter { return search.getPaymentMethodInExpressCheckout(targetId: $0.getCardId()).found }
+
+                if let customerPaymentMethod = customOptionsFound.first {
                     // Check if one tap response has payer costs
-                    if let oneTap = search.oneTap, oneTap.oneTapCard?.selectedPayerCost != nil {
-                        // Check if card found has same paymentmethod as One tap response
-                        if oneTap.paymentMethodId == customerPaymentMethod.getPaymentMethodId() && oneTap.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
-                            selectedPaymentOption = customerPaymentOption
+                    if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, expressPaymentMethod.selectedPayerCost != nil, expressPaymentMethod.selectedPayerCost != nil {
+                        if expressNode.paymentMethodId == customerPaymentMethod.getPaymentMethodId() && expressNode.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
+                            selectedPaymentOption = customerPaymentMethod
                         }
                     }
-                }}
+                }
+            }
         }
         return selectedPaymentOption
     }
