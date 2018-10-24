@@ -15,14 +15,16 @@ open class PXPaymentMethodSearch: NSObject, Codable {
     open var cards: [PXCard]?
     open var defaultOption: PXPaymentMethodSearchItem?
     open var oneTap: PXOneTapItem?
+    open var expressCho: [PXOneTapDto]?
 
-    public init(paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?, oneTap: PXOneTapItem?) {
+    public init(paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?, oneTap: PXOneTapItem?, expressCho: [PXOneTapDto]?) {
         self.paymentMethodSearchItem = paymentMethodSearchItem
         self.customOptionSearchItems = customOptionSearchItems
         self.paymentMethods = paymentMethods
         self.cards = cards
         self.defaultOption = defaultOption
         self.oneTap = oneTap
+        self.expressCho = expressCho
     }
 
     public enum PXPaymentMethodSearchKeys: String, CodingKey {
@@ -32,6 +34,7 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         case cards
         case defaultOption = "default_option"
         case oneTap = "one_tap"
+        case expressCho = "express"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -42,8 +45,9 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         let cards: [PXCard]? = try container.decodeIfPresent([PXCard].self, forKey: .cards)
         let defaultOption: PXPaymentMethodSearchItem? = try container.decodeIfPresent(PXPaymentMethodSearchItem.self, forKey: .defaultOption)
         let oneTap: PXOneTapItem? = try container.decodeIfPresent(PXOneTapItem.self, forKey: .oneTap)
+        let expressCho: [PXOneTapDto]? = try container.decodeIfPresent([PXOneTapDto].self, forKey: .expressCho)
 
-        self.init(paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: cards, defaultOption: defaultOption, oneTap: oneTap)
+        self.init(paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: cards, defaultOption: defaultOption, oneTap: oneTap, expressCho: expressCho)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -54,6 +58,7 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         try container.encodeIfPresent(self.cards, forKey: .cards)
         try container.encodeIfPresent(self.defaultOption, forKey: .defaultOption)
         try container.encodeIfPresent(self.oneTap, forKey: .oneTap)
+        try container.encodeIfPresent(self.expressCho, forKey: .expressCho)
     }
 
     open func toJSONString() throws -> String? {
