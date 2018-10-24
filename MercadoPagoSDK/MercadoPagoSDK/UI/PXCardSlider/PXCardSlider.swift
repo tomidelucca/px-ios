@@ -11,6 +11,7 @@ internal typealias PXCardSliderViewModel = (cardUI: CardUI, cardData: CardData?)
 protocol PXCardSliderProtocol: NSObjectProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel)
     func addPaymentMethodCardDidTap()
+    func didScroll(offset: CGPoint)
 }
 
 final class PXCardSlider: NSObject {
@@ -60,6 +61,10 @@ extension PXCardSlider: FSPagerViewDataSource {
 
 // MARK: Delegate
 extension PXCardSlider: FSPagerViewDelegate {
+    func pagerViewDidScroll(_ pagerView: FSPagerView) {
+        delegate?.didScroll(offset: pagerView.literalScrollOffset)
+    }
+
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
         pageControl.currentPage = targetIndex
         if selectedIndex != targetIndex {
