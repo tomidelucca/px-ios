@@ -14,14 +14,11 @@ protocol PXOneTapInstallmentInfoViewProtocol: NSObjectProtocol {
 
 final class PXOneTapInstallmentInfoView: PXComponentView {
     static let DEFAULT_ROW_HEIGHT: CGFloat = 50
-    private let leftLabel = UILabel()
-    private let rightLabel = UILabel()
     private let titleLabel = UILabel()
     private let colapsedTag: Int = 2
     private var arrowImage: UIImageView = UIImageView()
     private var pagerView = FSPagerView(frame: .zero)
-    var model: PXOneTapInstallmentInfoViewModel?
-    var testModel: [PXOneTapInstallmentInfoViewModel]? {
+    var model: [PXOneTapInstallmentInfoViewModel]? {
         didSet {
             pagerView.reloadData()
         }
@@ -39,33 +36,6 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         tapEnabled = true
     }
 
-    func updateViewModel(_ viewModel: PXOneTapInstallmentInfoViewModel, updateAnimation: UIView.AnimationOptions? = nil) {
-        model = viewModel
-//        var animation: UIView.AnimationOptions = .transitionCrossDissolve
-//        if let customAnimation = updateAnimation {
-//            animation = customAnimation
-//        }
-//
-//        if viewModel.installmentData != nil {
-//            if arrowImage.alpha != 1 {
-//                UIView.animate(withDuration: 0.20) { [weak self] in
-//                    self?.arrowImage.alpha = 1
-//                }
-//            }
-//        } else {
-//            UIView.animate(withDuration: 0.20) { [weak self] in
-//                self?.arrowImage.alpha = 0
-//            }
-//        }
-//        
-//        UIView.transition(with: self.rightLabel, duration: 0.25, options: animation, animations: { [weak self] in
-//            self?.rightLabel.text = self?.model?.rightText
-//        }, completion: nil)
-//        UIView.transition(with: self.leftLabel, duration: 0.25, options: animation, animations: { [weak self] in
-//            self?.leftLabel.text = self?.model?.leftText
-//        }, completion: nil)
-    }
-
     func render() {
         removeAllSubviews()
         setupSlider()
@@ -80,7 +50,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         PXLayout.pinRight(view: arrowImage, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
         arrowImage.tag = colapsedTag
 
-//        setupTitleLabel()
+        setupTitleLabel()
 
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
     }
@@ -114,15 +84,13 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     }
 
     @objc func toggleInstallments() {
-        print("tapped")
         if tapEnabled {
-            if let installmentData = testModel?[getCurrentIndex()].installmentData {
+            if let installmentData = model?[getCurrentIndex()].installmentData {
                 if arrowImage.tag != colapsedTag {
                     delegate?.hideInstallments()
                     UIView.animate(withDuration: 0.3) { [weak self] in
                         self?.arrowImage.transform = CGAffineTransform.identity
-                        self?.rightLabel.alpha = 1
-                        self?.leftLabel.alpha = 1
+                        self?.pagerView.alpha = 1
                         self?.titleLabel.alpha = 0
                     }
                     arrowImage.tag = colapsedTag
@@ -130,8 +98,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
                     delegate?.showInstallments(installmentData: installmentData)
                     UIView.animate(withDuration: 0.3) { [weak self] in
                         self?.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
-                        self?.rightLabel.alpha = 0
-                        self?.leftLabel.alpha = 0
+                        self?.pagerView.alpha = 0
                         self?.titleLabel.alpha = 1
                     }
                     arrowImage.tag = 1
@@ -159,21 +126,21 @@ extension PXOneTapInstallmentInfoView {
 extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
 
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-        guard let testModel = testModel else {return 0}
-        return testModel.count
+        guard let model = model else {return 0}
+        return model.count
     }
 
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
 
-        guard let testModel = testModel else {return FSPagerViewCell()}
+        guard let model = model else {return FSPagerViewCell()}
 
-        let model = testModel[index]
+        let itemModel = model[index]
         cell.removeAllSubviews()
 
         let leftLabel = UILabel()
         leftLabel.translatesAutoresizingMaskIntoConstraints = false
-        leftLabel.text = model.leftText
+        leftLabel.text = itemModel.leftText
         leftLabel.textAlignment = .left
         leftLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
         leftLabel.textColor = ThemeManager.shared.boldLabelTintColor()
@@ -183,7 +150,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
 
         let rightLabel = UILabel()
         rightLabel.translatesAutoresizingMaskIntoConstraints = false
-        rightLabel.text = model.rightText
+        rightLabel.text = itemModel.rightText
         rightLabel.textAlignment = .left
         rightLabel.font = Utils.getLightFont(size: PXLayout.XS_FONT)
         rightLabel.textColor = ThemeManager.shared.greyColor()

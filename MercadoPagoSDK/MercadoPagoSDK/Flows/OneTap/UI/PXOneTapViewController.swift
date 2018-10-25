@@ -139,7 +139,6 @@ extension PXOneTapViewController {
         PXLayout.pinRight(view: installmentRow).isActive = true
         PXLayout.matchWidth(ofView: installmentRow).isActive = true
         PXLayout.pinTop(view: installmentRow, withMargin: PXLayout.XXXS_MARGIN).isActive = true
-        installmentInfoRow?.testModel = OneTapService.getInstallmentTestViewModel(amount: 7)
 
         // Add card slider
         let cardSliderContentView = UIView()
@@ -213,7 +212,7 @@ extension PXOneTapViewController {
 
     private func getInstallmentInfoView() -> UIView {
         installmentInfoRow = PXOneTapInstallmentInfoView()
-        installmentInfoRow?.model = PXOneTapInstallmentInfoViewModel(leftText: "", rightText: "", installmentData: nil)
+        installmentInfoRow?.model = OneTapService.getInstallmentTestViewModel(amount: OneTapService.getCardSliderViewModel().count)
         installmentInfoRow?.render()
         installmentInfoRow?.delegate = self
         if let targetView = installmentInfoRow {
