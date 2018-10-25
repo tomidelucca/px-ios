@@ -212,7 +212,7 @@ extension PXOneTapViewController {
 
     private func getInstallmentInfoView() -> UIView {
         installmentInfoRow = PXOneTapInstallmentInfoView()
-        installmentInfoRow?.model = PXOneTapInstallmentInfoViewModel(leftText: "", rightText: "", installmentData: nil)
+        installmentInfoRow?.model = OneTapService.getInstallmentsViewModel(amount: viewModel.getCardSliderViewModel().count)
         installmentInfoRow?.render()
         installmentInfoRow?.delegate = self
         if let targetView = installmentInfoRow {
@@ -297,12 +297,15 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             print("newCardDidSelected: \(String(describing: targetModel.cardData?.number))")
             loadingButtonComponent?.setEnabled()
         }
-        installmentInfoRow?.updateViewModel(OneTapService.getInstallmentViewModel(cardSliderViewModel: targetModel))
     }
 
     func addPaymentMethodCardDidTap() {
         // TODO: Go to grupos -> add new card
         shouldChangePaymentMethod()
+    }
+
+    func didScroll(offset: CGPoint) {
+        installmentInfoRow?.setSliderOffset(offset: offset)
     }
 }
 

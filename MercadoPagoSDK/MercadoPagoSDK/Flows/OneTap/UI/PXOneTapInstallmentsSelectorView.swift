@@ -145,6 +145,7 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
     }
 
     var tableViewHeightConstraint: NSLayoutConstraint?
+    let tableViewTopSeparator = UIView()
 
     func render() {
         removeAllSubviews()
@@ -160,30 +161,39 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
+
+        tableViewTopSeparator.translatesAutoresizingMaskIntoConstraints = false
+        tableViewTopSeparator.backgroundColor = tableView.separatorColor
+        PXLayout.setHeight(owner: tableViewTopSeparator, height: 0.5).isActive = true
+        PXLayout.setWidth(owner: tableViewTopSeparator, width: PXLayout.getScreenWidth()).isActive = true
+        tableView.tableHeaderView = tableViewTopSeparator
         tableView.reloadData()
     }
 
     func expand(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-
+        self.tableViewTopSeparator.alpha = 1
         animateTableViewHeight(tableViewHeight: self.frame.height, completion: completion)
         animator.animate()
     }
 
     func collapse(animator: PXAnimator, completion: @escaping () -> ()) {
         self.layoutIfNeeded()
-
-        animateTableViewHeight(tableViewHeight: 0, completion: completion)
+        animateTableViewHeight(tableViewHeight: 0, hideTopSeparator: true, completion: completion)
         animator.animate()
     }
 
-    func animateTableViewHeight(tableViewHeight: CGFloat, completion: @escaping () -> ()) {
+    func animateTableViewHeight(tableViewHeight: CGFloat, hideTopSeparator: Bool = false, completion: @escaping () -> ()) {
         self.superview?.layoutIfNeeded()
 
         var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
         pxAnimator.addAnimation(animation: { [weak self] in
             guard let strongSelf = self else {
                 return
+            }
+
+            if hideTopSeparator {
+                strongSelf.tableViewTopSeparator.alpha = 0
             }
             strongSelf.tableViewHeightConstraint?.constant = tableViewHeight
             strongSelf.layoutIfNeeded()

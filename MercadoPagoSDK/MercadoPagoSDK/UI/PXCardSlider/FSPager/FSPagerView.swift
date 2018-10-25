@@ -207,6 +207,10 @@ open class FSPagerView: UIView,UICollectionViewDataSource,UICollectionViewDelega
         let scrollOffset = Double(contentOffset/self.collectionViewLayout.itemSpacing)
         return fmod(CGFloat(scrollOffset), CGFloat(Double(self.numberOfItems)))
     }
+
+    open var literalScrollOffset: CGPoint {
+        return self.collectionView.contentOffset
+    }
     
     /// The underlying gesture recognizer for pan gestures.
     @objc
@@ -522,7 +526,16 @@ open class FSPagerView: UIView,UICollectionViewDataSource,UICollectionViewDelega
         let contentOffset = self.collectionViewLayout.contentOffset(for: indexPath)
         self.collectionView.setContentOffset(contentOffset, animated: animated)
     }
-    
+
+    /// Scrolls the pager view contents until the specified offset
+    ///
+    /// - Parameters:
+    ///   - offset: The desired offset
+    ///   - animated: Specify true to animate the scrolling behavior or false to adjust the pager view’s visible content immediately.
+    open func scrollToOffset(_ offset: CGPoint, animated: Bool) {
+        self.collectionView.setContentOffset(offset, animated: animated)
+    }
+
     /// Returns the index of the specified cell.
     ///
     /// - Parameter cell: The cell object whose index you want.
