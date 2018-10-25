@@ -9,6 +9,7 @@
 import Foundation
 
 final class PXOneTapViewModel: PXReviewViewModel {
+    var expressData: [PXOneTapDto]?
 
     // Tracking overrides.
     override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
@@ -43,5 +44,47 @@ extension PXOneTapViewModel {
 
     func trackTapBackEvent() {
         MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.Event.TAP_BACK, screenId: screenId, screenName: screenName)
+    }
+}
+
+extension PXOneTapViewModel {
+    func getCardSliderViewModel() -> [PXCardSliderViewModel] {
+        var sliderModel: [PXCardSliderViewModel] = []
+        guard let expressNode = expressData else { return sliderModel }
+
+        for targetNode in expressNode {
+            if let accountMoney = targetNode.accountMoney {
+                // TODO: Translation
+                let cardData = PXCardDataFactory().create(cardName: "Total en tu cuenta: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
+                sliderModel.append(PXCardSliderViewModel(AccountMoneyCard(), cardData))
+            } else if let targetCardData = targetNode.oneTapCard {
+
+                if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
+
+                    // TODO: Proper cardNumber ended.
+                    let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration)
+
+                    let templateCard = TemplateCard()
+                    if let cardPattern = targetCardData.cardUI?.cardPattern {
+                        templateCard.cardPattern = cardPattern
+                    }
+                    if let cardBackgroundColor = targetCardData.cardUI?.color {
+                        templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
+                    }
+
+                    if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
+                        templateCard.bankImage = ResourceManager.shared.getImage("issuer_\(String(issuerId))")
+                    }
+
+                    if let paymentMethodImage = ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId) {
+                        templateCard.cardLogoImage = paymentMethodImage
+                    }
+
+                    sliderModel.append((templateCard, cardData))
+                }
+            }
+        }
+        sliderModel.append(PXCardSliderViewModel(EmptyCard(), nil))
+        return sliderModel
     }
 }
