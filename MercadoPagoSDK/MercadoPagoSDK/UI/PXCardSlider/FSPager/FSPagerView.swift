@@ -509,12 +509,6 @@ open class FSPagerView: UIView,UICollectionViewDataSource,UICollectionViewDelega
     /// - Parameters:
     ///   - index: The index of the item to scroll into view.
     ///   - animated: Specify true to animate the scrolling behavior or false to adjust the pager view’s visible content immediately.
-    open func scrollToOffset(_ offset: CGPoint) {
-//        let contentOffset = self.collectionViewLayout.contentOffset(for: int ?? )
-        self.collectionView.setContentOffset(offset, animated: false)
-    }
-
-
     @objc(scrollToItemAtIndex:animated:)
     open func scrollToItem(at index: Int, animated: Bool) {
         guard index < self.numberOfItems else {
@@ -532,7 +526,16 @@ open class FSPagerView: UIView,UICollectionViewDataSource,UICollectionViewDelega
         let contentOffset = self.collectionViewLayout.contentOffset(for: indexPath)
         self.collectionView.setContentOffset(contentOffset, animated: animated)
     }
-    
+
+    /// Scrolls the pager view contents until the specified offset
+    ///
+    /// - Parameters:
+    ///   - offset: The desired offset
+    ///   - animated: Specify true to animate the scrolling behavior or false to adjust the pager view’s visible content immediately.
+    open func scrollToOffset(_ offset: CGPoint, animated: Bool) {
+        self.collectionView.setContentOffset(offset, animated: animated)
+    }
+
     /// Returns the index of the specified cell.
     ///
     /// - Parameter cell: The cell object whose index you want.

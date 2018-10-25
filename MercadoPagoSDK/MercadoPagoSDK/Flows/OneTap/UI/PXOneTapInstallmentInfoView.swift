@@ -51,7 +51,6 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         arrowImage.tag = colapsedTag
 
         setupTitleLabel()
-
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
     }
 
@@ -80,7 +79,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     }
 
     func setSliderOffset(offset: CGPoint) {
-        pagerView.scrollToOffset(offset)
+        pagerView.scrollToOffset(offset, animated: false)
     }
 
     @objc func toggleInstallments() {
