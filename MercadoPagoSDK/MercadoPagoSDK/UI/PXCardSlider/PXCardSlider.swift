@@ -141,7 +141,8 @@ extension PXCardSlider {
 
     private func setupPager(_ containerView: UIView) {
         let pagerYMargin: CGFloat = PXLayout.XS_MARGIN
-        let pagerHeight: CGFloat = 25
+        let pagerHeight: CGFloat = 10
+        pageControl.radius = 3
         pageControl.contentHorizontalAlignment = .center
         pageControl.numberOfPages = model.count
         pageControl.currentPage = 0
