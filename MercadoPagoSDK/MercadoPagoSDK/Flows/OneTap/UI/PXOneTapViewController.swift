@@ -224,7 +224,7 @@ extension PXOneTapViewController {
 
     private func addCardSlider(inContainerView: UIView) {
         slider.render(containerView: inContainerView, cardSliderProtocol: self)
-        slider.update(OneTapService.getCardSliderViewModel())
+        slider.update(viewModel.getCardSliderViewModel())
     }
 
     private func getDiscountDetailView() -> UIView? {
