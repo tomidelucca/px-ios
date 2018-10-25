@@ -212,7 +212,7 @@ extension PXOneTapViewController {
 
     private func getInstallmentInfoView() -> UIView {
         installmentInfoRow = PXOneTapInstallmentInfoView()
-        installmentInfoRow?.model = OneTapService.getInstallmentsViewModel(amount: OneTapService.getCardSliderViewModel().count)
+        installmentInfoRow?.model = OneTapService.getInstallmentsViewModel(amount: viewModel.getCardSliderViewModel().count)
         installmentInfoRow?.render()
         installmentInfoRow?.delegate = self
         if let targetView = installmentInfoRow {
@@ -224,7 +224,7 @@ extension PXOneTapViewController {
 
     private func addCardSlider(inContainerView: UIView) {
         slider.render(containerView: inContainerView, cardSliderProtocol: self)
-        slider.update(OneTapService.getCardSliderViewModel())
+        slider.update(viewModel.getCardSliderViewModel())
     }
 
     private func getDiscountDetailView() -> UIView? {
