@@ -44,7 +44,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         addSubview(arrowImage)
         arrowImage.contentMode = UIViewContentMode.scaleAspectFit
         arrowImage.image = ResourceManager.shared.getImage("oneTapDownArrow")
-        PXLayout.pinTop(view: arrowImage, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.centerVertically(view: arrowImage).isActive = true
         PXLayout.setWidth(owner: arrowImage, width: 14).isActive = true
         PXLayout.setHeight(owner: arrowImage, height: 14).isActive = true
         PXLayout.pinRight(view: arrowImage, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
@@ -61,11 +61,11 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     private func setupSlider() {
         addSubview(pagerView)
         pagerView.isUserInteractionEnabled = false
-        PXLayout.setHeight(owner: pagerView, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
+        PXLayout.pinTop(view: pagerView).isActive = true
+        PXLayout.pinBottom(view: pagerView).isActive = true
         PXLayout.pinLeft(view: pagerView).isActive = true
         PXLayout.pinRight(view: pagerView).isActive = true
         PXLayout.matchWidth(ofView: pagerView).isActive = true
-        PXLayout.pinTop(view: pagerView).isActive = true
         pagerView.dataSource = self
         pagerView.delegate = self
         pagerView.register(PXCardSliderPagerCell.getCell(), forCellWithReuseIdentifier: PXCardSliderPagerCell.identifier)
@@ -116,8 +116,11 @@ extension PXOneTapInstallmentInfoView {
         titleLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
         titleLabel.textColor = ThemeManager.shared.greyColor()
         addSubview(titleLabel)
-        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
-        PXLayout.pinTop(view: titleLabel, withMargin: PXLayout.S_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
+
+        PXLayout.matchHeight(ofView: titleLabel).isActive = true
+        PXLayout.centerVertically(view: titleLabel).isActive = true
+        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
     }
 }
 
@@ -137,26 +140,15 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         let itemModel = model[index]
         cell.removeAllSubviews()
 
-        let leftLabel = UILabel()
-        leftLabel.translatesAutoresizingMaskIntoConstraints = false
-        leftLabel.text = itemModel.leftText
-        leftLabel.textAlignment = .left
-        leftLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
-        leftLabel.textColor = ThemeManager.shared.boldLabelTintColor()
-        cell.addSubview(leftLabel)
-        PXLayout.pinLeft(view: leftLabel, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
-        PXLayout.pinTop(view: leftLabel, withMargin: PXLayout.S_MARGIN + 2).isActive = true
-
-        let rightLabel = UILabel()
-        rightLabel.translatesAutoresizingMaskIntoConstraints = false
-        rightLabel.text = itemModel.rightText
-        rightLabel.textAlignment = .left
-        rightLabel.font = Utils.getLightFont(size: PXLayout.XS_FONT)
-        rightLabel.textColor = ThemeManager.shared.greyColor()
-        cell.addSubview(rightLabel)
-        PXLayout.put(view: rightLabel, rightOf: leftLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
-        PXLayout.centerVertically(view: rightLabel, to: leftLabel, withMargin: 0).isActive = true
-
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = itemModel.text
+        label.textAlignment = .left
+        cell.addSubview(label)
+        PXLayout.pinLeft(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.pinRight(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.centerVertically(view: label).isActive = true
+        PXLayout.matchHeight(ofView: label).isActive = true
         return cell
     }
 }

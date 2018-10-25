@@ -8,19 +8,16 @@
 import Foundation
 
 final class PXOneTapInstallmentInfoViewModel {
-    var leftText: String
-    var rightText: String
+    var text: NSAttributedString
     var installmentData: PXInstallment?
 
-    init(leftText: String, rightText: String, installmentData: PXInstallment?) {
-        self.leftText = leftText
-        self.rightText = rightText
+    init(text: NSAttributedString, installmentData: PXInstallment?) {
+        self.text = text
         self.installmentData = installmentData
     }
 
-    func update(leftText: String, rightText: String, installmentData: PXInstallment?) {
-        self.leftText = leftText
-        self.rightText = rightText
+    func update(text: NSAttributedString, installmentData: PXInstallment?) {
+        self.text = text
         self.installmentData = installmentData
     }
 }
