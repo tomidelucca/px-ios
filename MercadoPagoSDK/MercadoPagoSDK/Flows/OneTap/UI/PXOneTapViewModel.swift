@@ -76,6 +76,8 @@ extension PXOneTapViewModel {
                         templateCard.bankImage = ResourceManager.shared.getImage("issuer_\(String(issuerId))")
                     }
 
+                    //ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId)
+                    //ResourceManager.shared.getImage("icoTc_" + targetNode.paymentMethodId.lowercased()
                     if let paymentMethodImage = ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId) {
                         templateCard.cardLogoImage = paymentMethodImage
                     }
