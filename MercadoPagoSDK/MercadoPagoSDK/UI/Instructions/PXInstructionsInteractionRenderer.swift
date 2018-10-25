@@ -27,11 +27,17 @@ class PXInstructionsInteractionRenderer: NSObject {
             lastView = instructionInteractionView.titleLabel
         }
 
-        if let referenceText = instructionInteraction.props.interaction?.getFullInteractionValue(), referenceText.isNotEmpty {
+        if let interactionContent = instructionInteraction.props.interaction?.content, interactionContent.isNotEmpty {
             let attributes = [NSAttributedStringKey.font: Utils.getFont(size: INTERACTION_LABEL_FONT_SIZE)]
-            let attributedString = NSAttributedString(string: referenceText, attributes: attributes)
-            instructionInteractionView.InteractionLabel = buildLabel(with: attributedString, in: instructionInteractionView, onBottomOf: lastView)
-            lastView = instructionInteractionView.InteractionLabel
+            let attributedString = NSAttributedString(string: interactionContent, attributes: attributes)
+            instructionInteractionView.interactionLabel = buildLabel(with: attributedString, in: instructionInteractionView, onBottomOf: lastView)
+            lastView = instructionInteractionView.interactionLabel
+        }
+
+        if let interactionAction = instructionInteraction.props.interaction?.action {
+            let interactionActionComponent = PXInstructionsActionsComponent(props: PXInstructionsActionsProps(instructionActions: [interactionAction]))
+            instructionInteractionView.inteactionAction = PXInstructionsActionsRenderer().render(interactionActionComponent)
+            lastView = instructionInteractionView.inteactionAction
         }
 
         if lastView != nil {
@@ -76,5 +82,6 @@ class PXInstructionsInteractionRenderer: NSObject {
 
 class PXInstructionsInteractionView: PXComponentView {
     public var titleLabel: UILabel?
-    public var InteractionLabel: UILabel?
+    public var interactionLabel: UILabel?
+    public var inteactionAction: UIView?
 }

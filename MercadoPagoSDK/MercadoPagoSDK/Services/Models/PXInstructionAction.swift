@@ -13,6 +13,7 @@ open class PXInstructionAction: NSObject, Codable {
     open var label: String?
     open var url: String?
     open var tag: String?
+    open var content: String?
 
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
