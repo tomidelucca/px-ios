@@ -17,7 +17,7 @@ class PXInstructionsInteractionRenderer: NSObject {
     func render(_ instructionInteraction: PXInstructionsInteractionComponent) -> PXInstructionsInteractionView {
         let instructionInteractionView = PXInstructionsInteractionView()
         instructionInteractionView.translatesAutoresizingMaskIntoConstraints = false
-        instructionInteractionView.backgroundColor = .pxLightGray
+        instructionInteractionView.backgroundColor = .white
         var lastView: UIView?
 
         if let title = instructionInteraction.props.interaction?.title {
@@ -91,6 +91,8 @@ class PXInstructionsInteractionRenderer: NSObject {
         } else {
             PXLayout.pinTop(view: actionView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
         }
+
+        PXLayout.pinBottom(view: actionView, withMargin: PXLayout.M_MARGIN).isActive = true
 
         return actionView
     }

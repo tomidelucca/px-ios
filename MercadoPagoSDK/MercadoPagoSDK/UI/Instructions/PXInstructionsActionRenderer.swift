@@ -17,7 +17,7 @@ class PXInstructionsActionRenderer: NSObject {
     func render(_ instructionsAction: PXInstructionsActionComponent) -> PXInstructionsActionView {
         let instructionsActionView = PXInstructionsActionView()
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsActionView.backgroundColor = .pxLightGray
+        instructionsActionView.backgroundColor = .clear
 
         guard let label = instructionsAction.props.instructionActionInfo?.label, instructionsAction.props.instructionActionInfo?.tag != nil else {
             return instructionsActionView

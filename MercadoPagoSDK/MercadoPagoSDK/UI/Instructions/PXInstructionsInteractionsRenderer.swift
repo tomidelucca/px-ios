@@ -15,7 +15,7 @@ class PXInstructionsInteractionsRenderer: NSObject {
     func render(_ instructionsInteractions: PXInstructionsInteractionsComponent) -> PXInstructionsInteractionsView {
         let instructionsInteractionsView = PXInstructionsInteractionsView()
         instructionsInteractionsView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsInteractionsView.backgroundColor = .pxLightGray
+        instructionsInteractionsView.backgroundColor = .white
         var lastView: UIView?
 
         if let title = instructionsInteractions.props.title, !title.isEmpty {
