@@ -83,10 +83,11 @@ extension PXCardSlider: FSPagerViewDelegate {
             if modelData.cardData == nil {
                 delegate?.addPaymentMethodCardDidTap()
             } else {
-                //TODO: Remove. This is only for tets flip capability.
+                // TODO: Remove. This is only for tets flip capability.
+                /*
                 if let cell = pagerView.cellForItem(at: index) as? PXCardSliderPagerCell {
                     cell.flipToBack()
-                }
+                } */
             }
         }
     }
