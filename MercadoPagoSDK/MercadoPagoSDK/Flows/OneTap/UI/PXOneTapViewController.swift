@@ -212,7 +212,7 @@ extension PXOneTapViewController {
 
     private func getInstallmentInfoView() -> UIView {
         installmentInfoRow = PXOneTapInstallmentInfoView()
-        installmentInfoRow?.model = OneTapService.getInstallmentsViewModel(amount: viewModel.getCardSliderViewModel().count)
+        installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
         installmentInfoRow?.render()
         installmentInfoRow?.delegate = self
         if let targetView = installmentInfoRow {
@@ -313,7 +313,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapInstallmentsSelectorProtocol {
 
     func payerCostSelected(_ payerCost: PXPayerCost?) {
-        self.installmentInfoRow?.toggleInstallments()
+        installmentInfoRow?.toggleInstallments()
         PXFeedbackGenerator.heavyImpactFeedback()
 
         //TODO: Update payment data
@@ -372,7 +372,6 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         loadingButtonComponent?.hide(duration: 0.1)
 
         let animationDuration = 0.5
-
         slider.hide(duration: animationDuration)
 
         var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
@@ -410,8 +409,6 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
     func progressButtonAnimationTimeOut() {
         loadingButtonComponent?.resetButton()
         loadingButtonComponent?.showErrorToast()
-// MARK: Uncomment for Shake button
-//        loadingButtonComponent?.shake()
     }
 }
 
