@@ -9,7 +9,7 @@ import Foundation
 
 class PXInstructionsInteractionRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
-    let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
+    let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     let INTERACTION_LABEL_FONT_SIZE: CGFloat = PXLayout.M_FONT
     let INTERACTION_LABEL_FONT_COLOR: UIColor = .pxBlack
@@ -35,8 +35,8 @@ class PXInstructionsInteractionRenderer: NSObject {
         }
 
         if let interactionAction = instructionInteraction.props.interaction?.action {
-            let interactionActionComponent = PXInstructionsActionsComponent(props: PXInstructionsActionsProps(instructionActions: [interactionAction]))
-            instructionInteractionView.inteactionAction = PXInstructionsActionsRenderer().render(interactionActionComponent)
+            let interactionActionComponent = PXInstructionsActionComponent(props: PXInstructionsActionProps(instructionActionInfo: interactionAction))
+            instructionInteractionView.inteactionAction = buildAction(component: interactionActionComponent, in: instructionInteractionView, onBottomOf: lastView)
             lastView = instructionInteractionView.inteactionAction
         }
 
@@ -71,12 +71,28 @@ class PXInstructionsInteractionRenderer: NSObject {
         PXLayout.centerHorizontally(view: label).isActive = true
 
         if let upperView = upperView {
-            PXLayout.put(view: label, onBottomOf: upperView, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.put(view: label, onBottomOf: upperView, withMargin: PXLayout.M_MARGIN).isActive = true
         } else {
             PXLayout.pinTop(view: label, withMargin: PXLayout.ZERO_MARGIN).isActive = true
         }
 
         return label
+    }
+
+    func buildAction(component: PXInstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
+        let actionView = PXInstructionsActionRenderer().render(component)
+        superView.addSubview(actionView)
+
+        PXLayout.matchWidth(ofView: actionView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: actionView).isActive = true
+
+        if let upperView = upperView {
+            PXLayout.put(view: actionView, onBottomOf: upperView, withMargin: PXLayout.M_MARGIN).isActive = true
+        } else {
+            PXLayout.pinTop(view: actionView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+        }
+
+        return actionView
     }
 }
 

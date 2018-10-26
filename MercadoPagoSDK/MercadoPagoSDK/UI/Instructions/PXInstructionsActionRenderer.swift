@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MLUI
 
 class PXInstructionsActionRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
@@ -70,6 +71,7 @@ class PXInstructionsActionRenderer: NSObject {
 
     func copyContent(_ content: String) {
         UIPasteboard.general.string = content
+        MLSnackbar.show(withTitle: "", type: MLSnackbarType.success(), duration: .short)
     }
 }
 

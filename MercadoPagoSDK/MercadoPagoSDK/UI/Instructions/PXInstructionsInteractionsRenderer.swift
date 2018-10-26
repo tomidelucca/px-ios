@@ -13,28 +13,28 @@ class PXInstructionsInteractionsRenderer: NSObject {
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
 
     func render(_ instructionsInteractions: PXInstructionsInteractionsComponent) -> PXInstructionsInteractionsView {
-        let instructionsReferencesView = PXInstructionsInteractionsView()
-        /*instructionsReferencesView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsReferencesView.backgroundColor = .pxLightGray
+        let instructionsInteractionsView = PXInstructionsInteractionsView()
+        instructionsInteractionsView.translatesAutoresizingMaskIntoConstraints = false
+        instructionsInteractionsView.backgroundColor = .pxLightGray
         var lastView: UIView?
 
         if let title = instructionsInteractions.props.title, !title.isEmpty {
             let attributes = [ NSAttributedStringKey.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: title, attributes: attributes)
-            instructionsReferencesView.titleLabel = buildTitleLabel(with: attributedString, in: instructionsReferencesView)
-            lastView = instructionsReferencesView.titleLabel
+            instructionsInteractionsView.titleLabel = buildTitleLabel(with: attributedString, in: instructionsInteractionsView)
+            lastView = instructionsInteractionsView.titleLabel
         }
 
-        for reference in instructionsInteractions.getReferenceComponents() {
-            let isFirstView = String.isNullOrEmpty(instructionsReferences.props.title) && instructionsReferencesView.titleLabel == nil
-            let referenceView = buildReferenceView(with: reference, in: instructionsReferencesView, onBottomOf: lastView, isFirstView: isFirstView)
-            instructionsReferencesView.referencesComponents = Array.safeAppend(instructionsReferencesView.referencesComponents, referenceView)
-            lastView = referenceView
+        for interaction in instructionsInteractions.getInteractionComponents() {
+            let isFirstView = String.isNullOrEmpty(instructionsInteractions.props.title) && instructionsInteractionsView.titleLabel == nil
+            let interactionView = buildInteractionView(with: interaction, in: instructionsInteractionsView, onBottomOf: lastView, isFirstView: isFirstView)
+            instructionsInteractionsView.interactionsComponents = Array.safeAppend(instructionsInteractionsView.interactionsComponents, interactionView)
+            lastView = interactionView
         }
 
-        instructionsReferencesView.pinLastSubviewToBottom()?.isActive = true*/
+        instructionsInteractionsView.pinLastSubviewToBottom()?.isActive = true
 
-        return instructionsReferencesView
+        return instructionsInteractionsView
     }
 
     func buildTitleLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
@@ -59,23 +59,23 @@ class PXInstructionsInteractionsRenderer: NSObject {
         return titleLabel
     }
 
-    func buildReferenceView(with reference: PXInstructionsReferenceComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+    func buildInteractionView(with reference: PXInstructionsInteractionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
 
-        let referenceView = reference.render()
-        superView.addSubview(referenceView)
-        PXLayout.matchWidth(ofView: referenceView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: referenceView).isActive = true
+        let interactionView = reference.render()
+        superView.addSubview(interactionView)
+        PXLayout.matchWidth(ofView: interactionView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: interactionView).isActive = true
         if let upperView = upperView {
-            PXLayout.put(view: referenceView, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.put(view: interactionView, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         } else {
-            PXLayout.pinTop(view: referenceView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: interactionView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
-        return referenceView
+        return interactionView
     }
 }
 
 class PXInstructionsInteractionsView: PXComponentView {
     public var titleLabel: UILabel?
-    public var referencesComponents: [UIView]?
+    public var interactionsComponents: [UIView]?
 }

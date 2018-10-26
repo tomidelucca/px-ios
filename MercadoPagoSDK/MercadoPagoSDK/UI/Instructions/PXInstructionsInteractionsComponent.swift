@@ -14,7 +14,7 @@ class PXInstructionsInteractionsComponent: NSObject, PXComponentizable {
         self.props = props
     }
 
-    public func getReferenceComponents() -> [PXInstructionsInteractionComponent] {
+    public func getInteractionComponents() -> [PXInstructionsInteractionComponent] {
         var interactionComponents: [PXInstructionsInteractionComponent] = []
         if let interactions = props.interactions, !interactions.isEmpty {
             for interaction in interactions {
