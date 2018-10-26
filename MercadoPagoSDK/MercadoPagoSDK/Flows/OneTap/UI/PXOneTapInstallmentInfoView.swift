@@ -68,7 +68,6 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         PXLayout.matchWidth(ofView: pagerView).isActive = true
         pagerView.dataSource = self
         pagerView.delegate = self
-        pagerView.register(PXCardSliderPagerCell.getCell(), forCellWithReuseIdentifier: PXCardSliderPagerCell.identifier)
         pagerView.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "cell")
         pagerView.isInfinite = false
         pagerView.automaticSlidingInterval = 0

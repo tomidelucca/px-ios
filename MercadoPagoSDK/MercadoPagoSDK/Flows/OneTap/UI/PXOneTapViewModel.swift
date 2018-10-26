@@ -56,7 +56,7 @@ extension PXOneTapViewModel {
             if let accountMoney = targetNode.accountMoney {
                 // TODO: Translation
                 let cardData = PXCardDataFactory().create(cardName: "Total en tu cuenta: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
-                sliderModel.append(PXCardSliderViewModel(AccountMoneyCard(), cardData))
+                sliderModel.append(PXCardSliderViewModel(AccountMoneyCard(), cardData, [PXPayerCost](), nil))
             } else if let targetCardData = targetNode.oneTapCard {
 
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
@@ -76,17 +76,69 @@ extension PXOneTapViewModel {
                         templateCard.bankImage = ResourceManager.shared.getImage("issuer_\(String(issuerId))")
                     }
 
-                    //ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId)
-                    //ResourceManager.shared.getImage("icoTc_" + targetNode.paymentMethodId.lowercased()
+                    // ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId)
+                    // ResourceManager.shared.getImage("icoTc_" + targetNode.paymentMethodId.lowercased()
                     if let paymentMethodImage = ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId) {
                         templateCard.cardLogoImage = paymentMethodImage
                     }
 
-                    sliderModel.append((templateCard, cardData))
+                    var payerCost: [PXPayerCost] = [PXPayerCost]()
+                    if let pCost = targetCardData.payerCosts {
+                        payerCost = pCost
+                    }
+
+                    sliderModel.append((templateCard, cardData, payerCost, targetCardData.selectedPayerCost))
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel(EmptyCard(), nil))
+        sliderModel.append(PXCardSliderViewModel(EmptyCard(), nil, [PXPayerCost](), nil))
         return sliderModel
+    }
+
+    func getInstallmentInfoViewModel() -> [PXOneTapInstallmentInfoViewModel] {
+        var model: [PXOneTapInstallmentInfoViewModel] = [PXOneTapInstallmentInfoViewModel]()
+        let sliderViewModel = getCardSliderViewModel()
+        for sliderNode in sliderViewModel {
+            let installment = PXInstallment(issuer: nil, payerCosts: sliderNode.payerCost, paymentMethodId: nil, paymentTypeId: nil)
+            let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment)
+            model.append(installmentInfoModel)
+        }
+        // TODO: Check [] empty array scenario
+        return model
+    }
+
+    private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?) -> NSMutableAttributedString {
+        let text: NSMutableAttributedString = NSMutableAttributedString(string: "")
+
+        if let payerCostData = payerCost {
+            // First attr
+            let currency = SiteManager.shared.getCurrency()
+            let firstAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+            let amountDisplayStr = Utils.getAmountFormated(amount: payerCostData.installmentAmount, forCurrency: currency).trimmingCharacters(in: .whitespaces)
+            let firstText = "\(payerCostData.installments)x \(amountDisplayStr)"
+            let firstAttributedString = NSAttributedString(string: firstText, attributes: firstAttributes)
+            text.append(firstAttributedString)
+
+            // Second attr
+            // TODO: Check with Android and Backend rule based on recommendedMessage or installmentRate.
+            // if let recommendedMessage = payerCostData.recommendedMessage {
+            if payerCostData.installmentRate == 0 {
+                let secondAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
+                // let secondText = " \(recommendedMessage)"
+                let secondText = " Sin interés".localized
+                let secondAttributedString = NSAttributedString(string: secondText, attributes: secondAttributes)
+                text.append(secondAttributedString)
+            }
+
+            // Third attr
+            if let cftDisplayStr = payerCostData.getCFTValue(), payerCostData.hasCFTValue() {
+                let thirdAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
+                let thirdText = " CFT: \(cftDisplayStr)"
+                let thirdAttributedString = NSAttributedString(string: thirdText, attributes: thirdAttributes)
+                text.append(thirdAttributedString)
+            }
+        }
+
+        return text
     }
 }

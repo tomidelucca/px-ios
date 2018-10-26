@@ -6,7 +6,7 @@
 
 import UIKit
 
-internal typealias PXCardSliderViewModel = (cardUI: CardUI, cardData: CardData?)
+internal typealias PXCardSliderViewModel = (cardUI: CardUI, cardData: CardData?, payerCost: [PXPayerCost], selectedPayerCost: PXPayerCost?)
 
 protocol PXCardSliderProtocol: NSObjectProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel)
