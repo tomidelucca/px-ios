@@ -104,9 +104,8 @@ extension PXOneTapViewController {
     private func setupUI() {
         self.navigationController?.navigationBar.backgroundColor = .clear
         if contentView.getSubviews().isEmpty {
+            viewModel.createCardSliderViewModel()
             renderViews()
-            //super.prepareForAnimation(customAnimations: PXSpruce.PXDefaultAnimation.slideUpAnimation)
-            //super.animateContentView(customAnimations: PXSpruce.PXDefaultAnimation.slideUpAnimation)
         }
     }
 
@@ -272,8 +271,6 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     func resetButton() {
         loadingButtonComponent?.resetButton()
         loadingButtonComponent?.showErrorToast()
-// MARK: Uncomment for Shake button
-//        loadingButtonComponent?.shake()
     }
 
     private func cancelPayment() {
@@ -344,7 +341,6 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     }
 
     func showInstallments(installmentData: PXInstallment?) {
-
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
         }
@@ -418,7 +414,6 @@ extension PXOneTapViewController {
         guard let loadingButton = loadingButtonComponent else {
             return
         }
-
         PXNotificationManager.SuscribeTo.animateButton(loadingButton, selector: #selector(loadingButton.animateFinish))
     }
 

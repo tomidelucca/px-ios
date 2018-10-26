@@ -10,6 +10,7 @@ import Foundation
 
 final class PXOneTapViewModel: PXReviewViewModel {
     var expressData: [PXOneTapDto]?
+    private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
 
     // Tracking overrides.
     override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
@@ -48,10 +49,9 @@ extension PXOneTapViewModel {
 }
 
 extension PXOneTapViewModel {
-    func getCardSliderViewModel() -> [PXCardSliderViewModel] {
+    func createCardSliderViewModel() {
         var sliderModel: [PXCardSliderViewModel] = []
-        guard let expressNode = expressData else { return sliderModel }
-
+        guard let expressNode = expressData else { return }
         for targetNode in expressNode {
             if let accountMoney = targetNode.accountMoney {
                 // TODO: Translation
@@ -92,7 +92,11 @@ extension PXOneTapViewModel {
             }
         }
         sliderModel.append(PXCardSliderViewModel(EmptyCard(), nil, [PXPayerCost](), nil))
-        return sliderModel
+        cardSliderViewModel = sliderModel
+    }
+
+    func getCardSliderViewModel() -> [PXCardSliderViewModel] {
+        return cardSliderViewModel
     }
 
     func getInstallmentInfoViewModel() -> [PXOneTapInstallmentInfoViewModel] {
