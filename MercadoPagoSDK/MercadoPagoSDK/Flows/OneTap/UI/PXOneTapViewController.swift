@@ -24,6 +24,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Callbacks
     var callbackPaymentData: ((PXPaymentData) -> Void)
     var callbackConfirm: ((PXPaymentData) -> Void)
+    var callbackChangePaymentData: ((PXPaymentData) -> Void)
     var callbackExit: (() -> Void)
     var finishButtonAnimation: (() -> Void)
 
@@ -37,11 +38,12 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var cardSliderMarginConstraint: NSLayoutConstraint?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackChangePaymentData: @escaping ((PXPaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
+        self.callbackChangePaymentData = callbackChangePaymentData
         self.finishButtonAnimation = finishButtonAnimation
         self.timeOutPayButton = timeOutPayButton
         self.shouldAnimatePayButton = shouldAnimatePayButton
@@ -104,9 +106,8 @@ extension PXOneTapViewController {
     private func setupUI() {
         self.navigationController?.navigationBar.backgroundColor = .clear
         if contentView.getSubviews().isEmpty {
+            viewModel.createCardSliderViewModel()
             renderViews()
-            //super.prepareForAnimation(customAnimations: PXSpruce.PXDefaultAnimation.slideUpAnimation)
-            //super.animateContentView(customAnimations: PXSpruce.PXDefaultAnimation.slideUpAnimation)
         }
     }
 
@@ -272,8 +273,6 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     func resetButton() {
         loadingButtonComponent?.resetButton()
         loadingButtonComponent?.showErrorToast()
-// MARK: Uncomment for Shake button
-//        loadingButtonComponent?.shake()
     }
 
     private func cancelPayment() {
@@ -290,12 +289,24 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 // MARK: CardSlider delegate.
 extension PXOneTapViewController: PXCardSliderProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
-        // Add payment method card. CardData nil
+        // Add card. - CardData nil
         if targetModel.cardData == nil {
             loadingButtonComponent?.setDisabled()
         } else {
-            print("newCardDidSelected: \(String(describing: targetModel.cardData?.number))")
-            loadingButtonComponent?.setEnabled()
+            // New payment method selected.
+            let newPaymentMethodId: String = targetModel.paymentMethodId
+            let newPayerCost: PXPayerCost? = targetModel.selectedPayerCost
+
+            if let newPaymentMethod = viewModel.getPaymentMethod(targetId: newPaymentMethodId) {
+                let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
+                currentPaymentData.payerCost = newPayerCost
+                currentPaymentData.paymentMethod = newPaymentMethod
+                callbackChangePaymentData(currentPaymentData)
+                print("newCardDidSelected: \(newPaymentMethodId)")
+                loadingButtonComponent?.setEnabled()
+            } else {
+                loadingButtonComponent?.setDisabled()
+            }
         }
     }
 
@@ -344,7 +355,6 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     }
 
     func showInstallments(installmentData: PXInstallment?) {
-
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
         }
@@ -418,7 +428,6 @@ extension PXOneTapViewController {
         guard let loadingButton = loadingButtonComponent else {
             return
         }
-
         PXNotificationManager.SuscribeTo.animateButton(loadingButton, selector: #selector(loadingButton.animateFinish))
     }
 

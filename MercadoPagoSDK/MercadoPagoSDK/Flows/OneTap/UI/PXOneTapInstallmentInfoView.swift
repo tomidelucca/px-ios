@@ -82,8 +82,8 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     }
 
     @objc func toggleInstallments() {
-        if tapEnabled {
-            if let installmentData = model?[getCurrentIndex()].installmentData {
+        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex) {
+            if let installmentData = currentModel[currentIndex].installmentData {
                 if arrowImage.tag != colapsedTag {
                     delegate?.hideInstallments()
                     UIView.animate(withDuration: 0.3) { [weak self] in
@@ -154,19 +154,24 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
 
 // MARK: Delegate
 extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
-
-    func getCurrentIndex() -> Int {
-        let scrollOffset = pagerView.scrollOffset
-        let floorOffset = floor(scrollOffset)
-        return Int(floorOffset)
+    func getCurrentIndex() -> Int? {
+        if let mModel = model, mModel.count > 0 {
+            let scrollOffset = pagerView.scrollOffset
+            let floorOffset = floor(scrollOffset)
+            return Int(floorOffset)
+        } else {
+            return nil
+        }
     }
 
     func pagerViewDidScroll(_ pagerView: FSPagerView) {
-        let newAlpha = 1 - (pagerView.scrollOffset - CGFloat(integerLiteral: getCurrentIndex()))
-        if newAlpha < 0.5 {
-            pagerView.alpha = 1 - newAlpha
-        } else {
-            pagerView.alpha = newAlpha
+        if let currentIndex = getCurrentIndex() {
+            let newAlpha = 1 - (pagerView.scrollOffset - CGFloat(integerLiteral: currentIndex))
+            if newAlpha < 0.5 {
+                pagerView.alpha = 1 - newAlpha
+            } else {
+                pagerView.alpha = newAlpha
+            }
         }
     }
 }
