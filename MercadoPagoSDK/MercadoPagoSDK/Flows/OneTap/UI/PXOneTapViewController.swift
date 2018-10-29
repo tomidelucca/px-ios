@@ -326,6 +326,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     func didScroll(offset: CGPoint) {
         installmentInfoRow?.setSliderOffset(offset: offset)
     }
+
+    func didEndDecelerating() {
+        installmentInfoRow?.didEndDecelerating()
+    }
 }
 
 // MARK: Installment Row Info delegate.
