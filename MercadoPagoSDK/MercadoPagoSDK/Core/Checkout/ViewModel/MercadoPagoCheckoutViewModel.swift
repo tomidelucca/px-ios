@@ -54,9 +54,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
         }
     }
-    private var payerHelper: PXPayerHelper {
+    private var payerHelper: PXPayerData {
         get {
-            return PXPayerHelper(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
+            return PXPayerData(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
         }
     }
 
@@ -730,7 +730,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func resetInformation() {
-        self.cleanPaymentData()
+        self.clearCollectedData()
         self.cardToken = nil
         self.entityTypes = nil
         self.financialInstitutions = nil
@@ -740,7 +740,7 @@ extension MercadoPagoCheckoutViewModel {
         resetPaymentMethodConfigPlugin()
     }
 
-    func cleanPaymentData() {
+    func clearCollectedData() {
         let isPayerSet: Bool = self.checkoutPreference.payer.firstName != nil
             && self.checkoutPreference.payer.lastName != nil
             && self.checkoutPreference.payer.identification?.type != nil

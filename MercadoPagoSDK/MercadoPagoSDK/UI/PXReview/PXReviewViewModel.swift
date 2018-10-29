@@ -18,15 +18,15 @@ class PXReviewViewModel: NSObject {
 
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
-    var payerHelper: PXPayerHelper?
+    var payerData: PXPayerData?
     var reviewScreenPreference: PXReviewConfirmConfiguration
     var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, payerHelper: PXPayerHelper?, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, payerHelper: PXPayerData?, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
-        self.payerHelper = payerHelper
+        self.payerData = payerHelper
         self.reviewScreenPreference = reviewConfirmConfig
         self.userLogged = userLogged
     }
@@ -67,7 +67,7 @@ extension PXReviewViewModel {
     }
 
     func shouldShowPayer() -> Bool {
-        return self.payerHelper?.firstName != nil
+        return self.payerData?.firstName != nil
     }
 
     func shouldShowTermsAndCondition() -> Bool {
@@ -285,8 +285,8 @@ extension PXReviewViewModel {
     }
 
     func buildPayerComponent(action: PXAction) -> PXPayerComponent? {
-        if let payerIdType = self.payerHelper?.identificationType, let payerIdNumber = self.payerHelper?.identificationNumber, let payerName = self.payerHelper?.firstName, let payerLastName = self.payerHelper?.lastName {
-            if let mask = Utils.getIdMask(IDtype: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
+        if let payerIdType = self.payerData?.identificationType, let payerIdNumber = self.payerData?.identificationNumber, let payerName = self.payerData?.firstName, let payerLastName = self.payerData?.lastName {
+            if let mask = Utils.getMaskId(typeId: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
 
                 if let numberMasked = mask.textMasked(payerIdNumber)?.description {
                     let identification = NSAttributedString(string: "\(payerIdType): \(numberMasked)")

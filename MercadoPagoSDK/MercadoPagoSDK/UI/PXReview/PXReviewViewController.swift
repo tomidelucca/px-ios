@@ -89,7 +89,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     }
 
     func setPayer() {
-        if let payer = viewModel.payerHelper {
+        if let payer = viewModel.payerData {
             self.viewModel.amountHelper.paymentData.payer?.firstName = payer.firstName
             self.viewModel.amountHelper.paymentData.payer?.lastName = payer.lastName
             self.viewModel.amountHelper.paymentData.payer?.identification = PXIdentification(number: payer.identificationNumber, type: payer.identificationType)

@@ -12,7 +12,7 @@ extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
 
-        viewModel.cleanPaymentData()
+        viewModel.clearCollectedData()
 
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 

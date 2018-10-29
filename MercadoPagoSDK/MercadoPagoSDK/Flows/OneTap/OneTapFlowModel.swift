@@ -41,9 +41,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
     }
 
-    private var payerHelper: PXPayerHelper {
+    private var payerHelper: PXPayerData {
         get {
-            return PXPayerHelper(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
+            return PXPayerData(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
         }
     }
 

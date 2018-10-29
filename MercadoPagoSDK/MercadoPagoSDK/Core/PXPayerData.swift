@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal struct PXPayerHelper {
+internal struct PXPayerData {
     internal let firstName: String?
     internal let lastName: String?
     internal let identificationType: String?
