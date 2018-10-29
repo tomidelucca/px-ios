@@ -10,6 +10,7 @@ import Foundation
 
 final class PXOneTapViewModel: PXReviewViewModel {
     var expressData: [PXOneTapDto]?
+    var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
 
     // Tracking overrides.
@@ -56,9 +57,8 @@ extension PXOneTapViewModel {
             if let accountMoney = targetNode.accountMoney {
                 // TODO: Translation
                 let cardData = PXCardDataFactory().create(cardName: "Total en tu cuenta: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
-                sliderModel.append(PXCardSliderViewModel(AccountMoneyCard(), cardData, [PXPayerCost](), nil))
+                sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
             } else if let targetCardData = targetNode.oneTapCard {
-
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
 
                     // TODO: Proper cardNumber ended.
@@ -72,11 +72,12 @@ extension PXOneTapViewModel {
                         templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
                     }
 
+                    /*
+                     Issuer image disabled in OneTap first iteration.
                     if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
                         templateCard.bankImage = ResourceManager.shared.getImage("issuer_\(String(issuerId))")
-                    }
+                    } */
 
-                    // ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId)
                     // ResourceManager.shared.getImage("icoTc_" + targetNode.paymentMethodId.lowercased()
                     if let paymentMethodImage = ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId) {
                         templateCard.cardLogoImage = paymentMethodImage
@@ -87,11 +88,11 @@ extension PXOneTapViewModel {
                         payerCost = pCost
                     }
 
-                    sliderModel.append((templateCard, cardData, payerCost, targetCardData.selectedPayerCost))
+                    sliderModel.append((targetNode.paymentMethodId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost))
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel(EmptyCard(), nil, [PXPayerCost](), nil))
+        sliderModel.append(PXCardSliderViewModel("", EmptyCard(), nil, [PXPayerCost](), nil))
         cardSliderViewModel = sliderModel
     }
 
@@ -142,7 +143,10 @@ extension PXOneTapViewModel {
                 text.append(thirdAttributedString)
             }
         }
-
         return text
+    }
+
+    func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
+        return paymentMethods.filter({return $0.id == targetId}).first
     }
 }

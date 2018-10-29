@@ -95,6 +95,7 @@ internal extension OneTapFlowModel {
     func reviewConfirmViewModel() -> PXOneTapViewModel {
         let viewModel = PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
         viewModel.expressData = search.expressCho
+        viewModel.paymentMethods = search.paymentMethods
         return viewModel
     }
 }
