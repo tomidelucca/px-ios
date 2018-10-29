@@ -54,7 +54,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
         }
     }
-    private var payerHelper: PXPayerData {
+    private var payerData: PXPayerData {
         get {
             return PXPayerData(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
         }
@@ -288,7 +288,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
-        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, payerHelper: self.payerHelper, reviewConfirmConfig: advancedConfig.reviewConfirmConfiguration, userLogged: !String.isNullOrEmpty(privateKey))
+        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, payerData: self.payerData, reviewConfirmConfig: advancedConfig.reviewConfirmConfiguration, userLogged: !String.isNullOrEmpty(privateKey))
     }
 
     func resultViewModel() -> PXResultViewModel {

@@ -22,11 +22,11 @@ class PXReviewViewModel: NSObject {
     var reviewScreenPreference: PXReviewConfirmConfiguration
     var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, payerHelper: PXPayerData?, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, payerData: PXPayerData?, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
-        self.payerData = payerHelper
+        self.payerData = payerData
         self.reviewScreenPreference = reviewConfirmConfig
         self.userLogged = userLogged
     }

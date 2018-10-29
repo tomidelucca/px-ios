@@ -41,7 +41,7 @@ final internal class OneTapFlowModel: PXFlowModel {
         }
     }
 
-    private var payerHelper: PXPayerData {
+    private var payerData: PXPayerData {
         get {
             return PXPayerData(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
         }
@@ -99,7 +99,7 @@ internal extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, payerHelper: self.payerHelper, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, payerData: self.payerData, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
     }
 }
 
