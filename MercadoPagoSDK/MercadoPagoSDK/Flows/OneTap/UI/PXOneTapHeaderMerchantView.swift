@@ -52,6 +52,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
         titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
+        titleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
         titleLabel.textAlignment = .center
         containerView.addSubview(titleLabel)
 
