@@ -98,7 +98,7 @@ extension PXOneTapViewController {
         loadMPStyles()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.whiteColor()
-        navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
+        navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.navigationBar().getTintColor()
         navigationController?.navigationBar.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     }
