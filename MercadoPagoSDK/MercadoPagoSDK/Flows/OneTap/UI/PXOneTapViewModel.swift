@@ -105,7 +105,8 @@ extension PXOneTapViewModel {
         let sliderViewModel = getCardSliderViewModel()
         for sliderNode in sliderViewModel {
             let installment = PXInstallment(issuer: nil, payerCosts: sliderNode.payerCost, paymentMethodId: nil, paymentTypeId: nil)
-            let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment)
+            let selectedPayerCost = sliderNode.selectedPayerCost
+            let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShow: selectedPayerCost != nil)
             model.append(installmentInfoModel)
         }
         // TODO: Check [] empty array scenario

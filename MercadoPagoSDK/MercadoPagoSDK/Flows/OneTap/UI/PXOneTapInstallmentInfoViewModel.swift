@@ -10,14 +10,20 @@ import Foundation
 final class PXOneTapInstallmentInfoViewModel {
     var text: NSAttributedString
     var installmentData: PXInstallment?
+    var selectedPayerCost: PXPayerCost?
+    var shouldShow: Bool
 
-    init(text: NSAttributedString, installmentData: PXInstallment?) {
+    init(text: NSAttributedString, installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, shouldShow: Bool) {
         self.text = text
         self.installmentData = installmentData
+        self.selectedPayerCost = selectedPayerCost
+        self.shouldShow = shouldShow
     }
 
-    func update(text: NSAttributedString, installmentData: PXInstallment?) {
+    func update(text: NSAttributedString, installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, shouldShow: Bool) {
         self.text = text
         self.installmentData = installmentData
+        self.selectedPayerCost = selectedPayerCost
+        self.shouldShow = shouldShow
     }
 }

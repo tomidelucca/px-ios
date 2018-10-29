@@ -47,14 +47,16 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
 }
 
 protocol PXOneTapInstallmentsSelectorProtocol: NSObjectProtocol {
-    func payerCostSelected(_ payerCost: PXPayerCost?)
+    func payerCostSelected(_ payerCost: PXPayerCost)
 }
 
 final class PXOneTapInstallmentsSelectorViewModel {
     let installmentData: PXInstallment
+    let selectedPayerCost: PXPayerCost?
 
-    init(installmentData: PXInstallment) {
+    init(installmentData: PXInstallment, selectedPayerCost: PXPayerCost?) {
         self.installmentData = installmentData
+        self.selectedPayerCost = selectedPayerCost
     }
 
     func numberOfRowsInSection(_ section: Int) -> Int {
@@ -64,7 +66,11 @@ final class PXOneTapInstallmentsSelectorViewModel {
     func cellForRowAt(_ indexPath: IndexPath) -> UITableViewCell {
         let cell = PXOneTapInstallmentsSelectorCell()
         if let payerCost = getPayerCostForRowAt(indexPath) {
-            let data = getDataFor(payerCost: payerCost, isSelected: indexPath.row == 1)
+            var isSelected = false
+            if let selectedPayerCost = selectedPayerCost, selectedPayerCost == payerCost {
+                isSelected = true
+            }
+            let data = getDataFor(payerCost: payerCost, isSelected: isSelected)
             cell.updateData(data)
             return cell
         }
@@ -220,7 +226,8 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedPayerCost = model.getPayerCostForRowAt(indexPath)
-        delegate?.payerCostSelected(selectedPayerCost)
+        if let selectedPayerCost = model.getPayerCostForRowAt(indexPath) {
+            delegate?.payerCostSelected(selectedPayerCost)
+        }
     }
 }

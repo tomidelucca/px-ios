@@ -323,11 +323,13 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 // MARK: Installment Row Info delegate.
 extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapInstallmentsSelectorProtocol {
 
-    func payerCostSelected(_ payerCost: PXPayerCost?) {
+    func payerCostSelected(_ payerCost: PXPayerCost) {
         installmentInfoRow?.toggleInstallments()
         PXFeedbackGenerator.heavyImpactFeedback()
 
-        //TODO: Update payment data
+        let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
+        currentPaymentData.payerCost = payerCost
+        callbackChangePaymentData(currentPaymentData)
     }
 
     func hideInstallments() {
@@ -354,7 +356,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         })
     }
 
-    func showInstallments(installmentData: PXInstallment?) {
+    func showInstallments(installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?) {
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
         }
@@ -363,7 +365,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
 
         self.installmentsSelectorView?.removeFromSuperview()
         self.installmentsSelectorView?.layoutIfNeeded()
-        let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData)
+        let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData, selectedPayerCost: selectedPayerCost)
         let installmentsSelectorView = PXOneTapInstallmentsSelectorView(viewModel: viewModel)
         installmentsSelectorView.delegate = self
         self.installmentsSelectorView = installmentsSelectorView

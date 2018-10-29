@@ -9,7 +9,7 @@ import UIKit
 
 protocol PXOneTapInstallmentInfoViewProtocol: NSObjectProtocol {
     func hideInstallments()
-    func showInstallments(installmentData: PXInstallment?)
+    func showInstallments(installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?)
 }
 
 final class PXOneTapInstallmentInfoView: PXComponentView {
@@ -82,7 +82,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     }
 
     @objc func toggleInstallments() {
-        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex) {
+        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex), currentModel[currentIndex].shouldShow  {
             if let installmentData = currentModel[currentIndex].installmentData {
                 if arrowImage.tag != colapsedTag {
                     delegate?.hideInstallments()
@@ -93,7 +93,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
                     }
                     arrowImage.tag = colapsedTag
                 } else {
-                    delegate?.showInstallments(installmentData: installmentData)
+                    delegate?.showInstallments(installmentData: installmentData, selectedPayerCost: currentModel[currentIndex].selectedPayerCost)
                     UIView.animate(withDuration: 0.3) { [weak self] in
                         self?.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
                         self?.pagerView.alpha = 0
