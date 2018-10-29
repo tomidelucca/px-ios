@@ -36,6 +36,11 @@ class PXOneTapHeaderMerchantView: PXComponentView {
 
     private func render() {
         let containerView = UIView()
+
+        let imageContainerView = UIView()
+        imageContainerView.translatesAutoresizingMaskIntoConstraints = false
+        imageContainerView.dropShadow()
+
         let imageView = PXUIImageView()
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = IMAGE_SIZE/2
@@ -44,9 +49,16 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         imageView.enableFadeIn()
         imageView.backgroundColor = .white
         imageView.image = image
-        containerView.addSubview(imageView)
-        PXLayout.setHeight(owner: imageView, height: IMAGE_SIZE).isActive = true
-        PXLayout.setWidth(owner: imageView, width: IMAGE_SIZE).isActive = true
+        imageContainerView.addSubview(imageView)
+
+        PXLayout.pinTop(view: imageView).isActive = true
+        PXLayout.pinBottom(view: imageView).isActive = true
+        PXLayout.pinLeft(view: imageView).isActive = true
+        PXLayout.pinRight(view: imageView).isActive = true
+
+        containerView.addSubview(imageContainerView)
+        PXLayout.setHeight(owner: imageContainerView, height: IMAGE_SIZE).isActive = true
+        PXLayout.setWidth(owner: imageContainerView, width: IMAGE_SIZE).isActive = true
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -62,17 +74,17 @@ class PXOneTapHeaderMerchantView: PXComponentView {
 
         if showHorizontally {
             self.pinContentViewToTop()
-            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinBottom(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinLeft(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinLeft(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.put(view: imageView, leftOf: titleLabel, withMargin: PXLayout.XXS_MARGIN, relation: .equal).isActive = true
-            PXLayout.centerVertically(view: imageView, to: titleLabel).isActive = true
+            PXLayout.put(view: imageContainerView, leftOf: titleLabel, withMargin: PXLayout.XXS_MARGIN, relation: .equal).isActive = true
+            PXLayout.centerVertically(view: imageContainerView, to: titleLabel).isActive = true
         } else {
-            PXLayout.centerHorizontally(view: imageView).isActive = true
-            PXLayout.pinTop(view: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.centerHorizontally(view: imageContainerView).isActive = true
+            PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.centerHorizontally(view: titleLabel).isActive = true
-            PXLayout.put(view: titleLabel, onBottomOf: imageView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.put(view: titleLabel, onBottomOf: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.matchWidth(ofView: containerView).isActive = true
         }
