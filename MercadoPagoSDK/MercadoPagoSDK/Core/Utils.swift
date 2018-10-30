@@ -360,7 +360,7 @@ internal class Utils {
         return nil
     }
 
-    class func getMaskId(typeId: PXIdentificationType?) -> [TextMaskFormater] {
+    class func getMasks(forId typeId: PXIdentificationType?) -> [TextMaskFormater] {
         let site = SiteManager.shared.getSiteId()
         let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
         let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)

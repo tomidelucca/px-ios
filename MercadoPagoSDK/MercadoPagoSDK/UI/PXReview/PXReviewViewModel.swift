@@ -292,7 +292,7 @@ extension PXReviewViewModel {
 
         if let payer = self.amountHelper.paymentData.payer {
             if let payerIdType = payer.identification?.type, let payerIdNumber = payer.identification?.number, let payerName = payer.firstName, let payerLastName = payer.lastName {
-                if let mask = Utils.getMaskId(typeId: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
+                if let mask = Utils.getMasks(forId: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
 
                     if let numberMasked = mask.textMasked(payerIdNumber)?.description {
                         let identification = NSAttributedString(string: "\(payerIdType): \(numberMasked)")

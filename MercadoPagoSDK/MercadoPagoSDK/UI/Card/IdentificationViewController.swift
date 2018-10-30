@@ -319,6 +319,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     private func remask() {
-        drawMask(masks: Utils.getMaskId(typeId: identificationType))
+        drawMask(masks: Utils.getMasks(forId: identificationType))
     }
 }
