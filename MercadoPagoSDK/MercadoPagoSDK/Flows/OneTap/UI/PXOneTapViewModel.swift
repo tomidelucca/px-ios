@@ -69,18 +69,12 @@ extension PXOneTapViewModel {
                     if let cardPattern = targetCardData.cardUI?.cardPattern {
                         templateCard.cardPattern = cardPattern
                     }
+
                     if let cardBackgroundColor = targetCardData.cardUI?.color {
                         templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
                     }
 
-                    /*
-                     Issuer image disabled in OneTap first iteration.
-                    if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
-                        templateCard.bankImage = ResourceManager.shared.getImage("issuer_\(String(issuerId))")
-                    } */
-
-                    // ResourceManager.shared.getImage("icoTc_" + targetNode.paymentMethodId.lowercased()
-                    if let paymentMethodImage = ResourceManager.shared.getImageForPaymentMethod(withDescription: targetNode.paymentMethodId) {
+                    if let paymentMethodImage = ResourceManager.shared.getPaymentMethodCardImage(paymentMethodId: targetNode.paymentMethodId.lowercased()) {
                         templateCard.cardLogoImage = paymentMethodImage
                     }
 
