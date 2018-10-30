@@ -19,7 +19,7 @@ open class PXIdentification: NSObject, Codable {
     }
 
     public init (identificationType: PXIdentificationType, identificationNumber: String) {
-        self.type = identificationType.type
+        self.type = identificationType.name
         self.number = identificationNumber
     }
 
