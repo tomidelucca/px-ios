@@ -180,12 +180,7 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView() -> UIView {
-        let viewModel = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
-            OneTapHeaderSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
-            OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
-            OneTapHeaderSummaryData("Total", "$ 1100", UIColor.black, true)
-            ])
-        let headerView = PXOneTapHeaderView(viewModel: viewModel)
+        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel())
         return headerView
     }
 

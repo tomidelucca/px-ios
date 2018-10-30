@@ -173,7 +173,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
-    [self.paymentConfig addChargeRulesWithCharges:chargesArray];
+    // [self.paymentConfig addChargeRulesWithCharges:chargesArray];
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {

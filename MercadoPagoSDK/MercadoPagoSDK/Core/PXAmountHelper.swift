@@ -42,6 +42,16 @@ internal struct PXAmountHelper {
         }
     }
 
+    var amountToPayWithoutPayerCost: Double {
+        get {
+            if let couponAmount = discount?.couponAmount {
+                return preferenceAmount - couponAmount + chargeRuleAmount
+            } else {
+                return preferenceAmount + chargeRuleAmount
+            }
+        }
+    }
+
     var amountOff: Double {
         get {
             guard let discount = self.discount else {

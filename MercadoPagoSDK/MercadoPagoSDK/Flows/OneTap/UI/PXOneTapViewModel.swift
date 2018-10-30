@@ -11,6 +11,7 @@ import Foundation
 final class PXOneTapViewModel: PXReviewViewModel {
     var expressData: [PXOneTapDto]?
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
+    var items: [PXItem] = [PXItem]()
     private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
 
     // Tracking overrides.
@@ -111,6 +112,43 @@ extension PXOneTapViewModel {
         }
         // TODO: Check [] empty array scenario
         return model
+    }
+
+    func getHeaderViewModel() -> PXOneTapHeaderViewModel {
+        let currency = SiteManager.shared.getCurrency()
+        let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+        let yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+        var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
+
+        if let discount = amountHelper.discount {
+            // TODO: Translations and Set proper colors / localized or beta_localize
+            customData.append(OneTapHeaderSummaryData("Tu compra".localized, yourPurchaseToShow, UIColor.black, false))
+            let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
+            customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), discountToShow, ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false))
+        }
+
+        customData.append(OneTapHeaderSummaryData("Total a pagar".localized, totalAmountToShow, UIColor.black, true))
+
+        // HeaderImage
+        var headerImage: UIImage = UIImage()
+        var headerTitle: String = ""
+        if let headerUrl = items.first?.getPictureURL() {
+            headerImage = PXUIImage(url: headerUrl)
+        } else {
+            if let defaultImage = ResourceManager.shared.getImage("MPSDK_review_iconoCarrito_white") {
+                headerImage = defaultImage
+            }
+        }
+
+        // HeaderTitle
+        if let headerTitleStr = items.first?._description {
+            headerTitle = headerTitleStr
+        } else if let headerTitleStr = items.first?.title {
+            headerTitle = headerTitleStr
+        }
+
+        let headerVM = PXOneTapHeaderViewModel(icon: headerImage, title: headerTitle, data: customData)
+        return headerVM
     }
 
     private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?) -> NSMutableAttributedString {
