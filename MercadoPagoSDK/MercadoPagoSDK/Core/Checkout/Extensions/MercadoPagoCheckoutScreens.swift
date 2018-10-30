@@ -144,13 +144,8 @@ extension MercadoPagoCheckout {
 
         }, finishButtonAnimation: {
             self.executeNextStep()
-        }, changePayerInformation: { [weak self] (paymentData: PXPaymentData) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-            strongSelf.executeNextStep()
+        }, changePayerInformation: {
+            self.executeNextStep()
         })
 
         if let changePaymentMethodAction = viewModel.lifecycleProtocol?.changePaymentMethodTapped?() {
