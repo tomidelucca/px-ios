@@ -7,7 +7,7 @@
 
 import UIKit
 
-typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, alpha: CGFloat, isTotal: Bool)
+typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, alpha: CGFloat, isTotal: Bool, image: UIImage?)
 
 protocol PXOneTapHeaderProtocol: NSObjectProtocol {
     func didTapSummary()
@@ -110,6 +110,18 @@ class PXOneTapHeaderView: PXComponentView {
         rowView.addSubview(titleLabel)
         PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerVertically(view: titleLabel).isActive = true
+
+        if let rightImage = data.image {
+            let imageView: UIImageView = UIImageView()
+            let imageSize: CGFloat = 16
+            imageView.image = rightImage
+            imageView.contentMode = .scaleAspectFit
+            rowView.addSubview(imageView)
+            PXLayout.setWidth(owner: imageView, width: imageSize).isActive = true
+            PXLayout.setHeight(owner: imageView, height: imageSize).isActive = true
+            PXLayout.centerVertically(view: imageView, to: titleLabel).isActive = true
+            PXLayout.put(view: imageView, rightOf: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
+        }
 
         let valueLabel = UILabel()
         valueLabel.translatesAutoresizingMaskIntoConstraints = false

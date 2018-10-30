@@ -131,12 +131,13 @@ extension PXOneTapViewModel {
 
         if let discount = amountHelper.discount {
             // TODO: Translations and Set proper colors / localized or beta_localize
-            customData.append(OneTapHeaderSummaryData("Tu compra".localized, yourPurchaseToShow, summaryColor, summaryAlpha, false))
+            customData.append(OneTapHeaderSummaryData("Tu compra".localized, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
             let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
-            customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false))
+            let helperImage: UIImage? = isDefaultStatusBarStyle ? ResourceManager.shared.getImage("helper_ico") : ResourceManager.shared.getImage("helper_ico_light")
+            customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
         }
 
-        customData.append(OneTapHeaderSummaryData("Total a pagar".localized, totalAmountToShow, totalColor, totalAlpha, true))
+        customData.append(OneTapHeaderSummaryData("Total a pagar".localized, totalAmountToShow, totalColor, totalAlpha, true, nil))
 
         // HeaderImage
         var headerImage: UIImage = UIImage()
