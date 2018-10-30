@@ -133,7 +133,7 @@ extension PXOneTapViewModel {
             // TODO: Translations and Set proper colors / localized or beta_localize
             customData.append(OneTapHeaderSummaryData("Tu compra".localized, yourPurchaseToShow, summaryColor, summaryAlpha, false))
             let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
-            customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), discountToShow, discountColor, discountAlpha, false))
+            customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false))
         }
 
         customData.append(OneTapHeaderSummaryData("Total a pagar".localized, totalAmountToShow, totalColor, totalAlpha, true))
