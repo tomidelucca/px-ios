@@ -83,4 +83,14 @@ internal extension UIView {
         PXLayout.matchWidth(ofView: view).isActive = true
         PXLayout.matchHeight(ofView: view).isActive = true
     }
+
+    func dropShadow(scale: Bool = true) {
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.3
+        layer.shadowOffset = .zero
+        layer.shadowRadius = 1
+        layer.shouldRasterize = true
+        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
 }

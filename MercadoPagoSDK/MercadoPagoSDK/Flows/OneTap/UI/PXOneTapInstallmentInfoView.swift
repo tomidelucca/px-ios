@@ -154,7 +154,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
 
 // MARK: Delegate
 extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
-    func getCurrentIndex() -> Int? {
+    private func getCurrentIndex() -> Int? {
         if let mModel = model, mModel.count > 0 {
             let scrollOffset = pagerView.scrollOffset
             let floorOffset = floor(scrollOffset)
@@ -164,7 +164,12 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
         }
     }
 
+    func didEndDecelerating() {
+        enableTap()
+    }
+
     func pagerViewDidScroll(_ pagerView: FSPagerView) {
+        disableTap()
         if let currentIndex = getCurrentIndex() {
             let newAlpha = 1 - (pagerView.scrollOffset - CGFloat(integerLiteral: currentIndex))
             if newAlpha < 0.5 {

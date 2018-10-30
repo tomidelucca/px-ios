@@ -12,6 +12,7 @@ protocol PXCardSliderProtocol: NSObjectProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel)
     func addPaymentMethodCardDidTap()
     func didScroll(offset: CGPoint)
+    func didEndDecelerating()
 }
 
 final class PXCardSlider: NSObject {
@@ -63,6 +64,10 @@ extension PXCardSlider: FSPagerViewDataSource {
 extension PXCardSlider: FSPagerViewDelegate {
     func pagerViewDidScroll(_ pagerView: FSPagerView) {
         delegate?.didScroll(offset: pagerView.literalScrollOffset)
+    }
+
+    func pagerViewDidEndDecelerating(_ pagerView: FSPagerView) {
+        delegate?.didEndDecelerating()
     }
 
     func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {

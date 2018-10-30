@@ -7,7 +7,7 @@
 
 import UIKit
 
-typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, isTotal: Bool)
+typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, alpha: CGFloat, isTotal: Bool)
 
 class PXOneTapHeaderViewModel {
     let icon: UIImage
@@ -36,7 +36,7 @@ class PXOneTapHeaderView: PXComponentView {
 
     private func render() {
         removeAllSubviews()
-        backgroundColor = ThemeManager.shared.highlightBackgroundColor()
+        backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
         let summaryView = PXComponentView()
         summaryView.pinContentViewToBottom()
 
@@ -97,6 +97,7 @@ class PXOneTapHeaderView: PXComponentView {
         titleLabel.textAlignment = .left
         titleLabel.font = titleFont
         titleLabel.textColor = data.highlightedColor
+        titleLabel.alpha = data.alpha
         rowView.addSubview(titleLabel)
         PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerVertically(view: titleLabel).isActive = true
@@ -107,6 +108,7 @@ class PXOneTapHeaderView: PXComponentView {
         valueLabel.textAlignment = .right
         valueLabel.font = valueFont
         valueLabel.textColor = data.highlightedColor
+        valueLabel.alpha = data.alpha
         rowView.addSubview(valueLabel)
         PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerVertically(view: valueLabel).isActive = true

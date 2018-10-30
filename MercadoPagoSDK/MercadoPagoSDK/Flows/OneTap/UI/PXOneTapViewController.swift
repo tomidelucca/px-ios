@@ -93,12 +93,12 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 // MARK: UI Methods.
 extension PXOneTapViewController {
     private func setupNavigationBar() {
-        setBackground(color: ThemeManager.shared.highlightBackgroundColor())
+        setBackground(color: ThemeManager.shared.navigationBar().backgroundColor)
         navBarTextColor = ThemeManager.shared.labelTintColor()
         loadMPStyles()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.whiteColor()
-        navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.labelTintColor()
+        navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.navigationBar().getTintColor()
         navigationController?.navigationBar.backgroundColor = ThemeManager.shared.highlightBackgroundColor()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     }
@@ -180,10 +180,18 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView() -> UIView {
+        let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
+        let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
+        let summaryAlpha: CGFloat = 0.45
+        let discountColor = isDefaultStatusBarStyle ? ThemeManager.shared.noTaxAndDiscountLabelTintColor() : ThemeManager.shared.whiteColor()
+        let discountAlpha: CGFloat = 1
+        let totalColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
+        let totalAlpha: CGFloat = 1
+
         let viewModel = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
-            OneTapHeaderSummaryData("Tu compra", "$ 1.000", ThemeManager.shared.greyColor(), false),
-            OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", ThemeManager.shared.noTaxAndDiscountLabelTintColor(), false),
-            OneTapHeaderSummaryData("Total", "$ 1100", UIColor.black, true)
+            OneTapHeaderSummaryData("Tu compra", "$ 1.000", summaryColor, summaryAlpha, false),
+            OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", discountColor, discountAlpha, false),
+            OneTapHeaderSummaryData("Total", "$ 1100", totalColor, totalAlpha, true)
             ])
         let headerView = PXOneTapHeaderView(viewModel: viewModel)
         return headerView
@@ -317,6 +325,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
     func didScroll(offset: CGPoint) {
         installmentInfoRow?.setSliderOffset(offset: offset)
+    }
+
+    func didEndDecelerating() {
+        installmentInfoRow?.didEndDecelerating()
     }
 }
 
