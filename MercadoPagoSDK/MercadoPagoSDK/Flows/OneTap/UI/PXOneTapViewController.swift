@@ -180,20 +180,7 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView() -> UIView {
-        let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
-        let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
-        let summaryAlpha: CGFloat = 0.45
-        let discountColor = isDefaultStatusBarStyle ? ThemeManager.shared.noTaxAndDiscountLabelTintColor() : ThemeManager.shared.whiteColor()
-        let discountAlpha: CGFloat = 1
-        let totalColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
-        let totalAlpha: CGFloat = 1
-
-        let viewModel = PXOneTapHeaderViewModel(icon: PXUIImage(url: "https://ih0.redbubble.net/image.491854097.6059/flat,550x550,075,f.u2.jpg"), title: "Burger King", data: [
-            OneTapHeaderSummaryData("Tu compra", "$ 1.000", summaryColor, summaryAlpha, false),
-            OneTapHeaderSummaryData("20% Descuento por usar QR", "- $ 200", discountColor, discountAlpha, false),
-            OneTapHeaderSummaryData("Total", "$ 1100", totalColor, totalAlpha, true)
-            ])
-        let headerView = PXOneTapHeaderView(viewModel: viewModel)
+        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(), delegate: self)
         return headerView
     }
 
@@ -246,24 +233,7 @@ extension PXOneTapViewController {
 }
 
 // MARK: User Actions.
-extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
-    @objc func shouldOpenSummary() {
-        viewModel.trackTapSummaryDetailEvent()
-        if viewModel.shouldShowSummaryModal() {
-            if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
-                let summaryViewController = PXOneTapSummaryModalViewController()
-                summaryViewController.setProps(summaryProps: summaryProps, bottomCustomView: getDiscountDetailView())
-                PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle".localized)
-            } else {
-                if let discountView = getDiscountDetailView() {
-                    let summaryViewController = PXOneTapSummaryModalViewController()
-                    summaryViewController.setProps(summaryProps: nil, bottomCustomView: discountView)
-                    PXComponentFactory.Modal.show(viewController: summaryViewController, title: nil)
-                }
-            }
-        }
-    }
-
+extension PXOneTapViewController {
     @objc func shouldChangePaymentMethod() {
         viewModel.trackChangePaymentMethodEvent()
         callbackPaymentData(viewModel.getClearPaymentData())
@@ -286,11 +256,16 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
     private func cancelPayment() {
         self.callbackExit()
     }
+}
 
-    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
-        let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
-        webVC.title = title
-        self.navigationController?.pushViewController(webVC, animated: true)
+// MARK: Summary delegate.
+extension PXOneTapViewController: PXOneTapHeaderProtocol {
+    func didTapSummary() {
+        if viewModel.amountHelper.discount != nil {
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: viewModel.amountHelper.discount?.getDiscountDescription())
+        } else if viewModel.amountHelper.consumedDiscount {
+            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: "modal_title_consumed_discount".localized_beta)
+        }
     }
 }
 

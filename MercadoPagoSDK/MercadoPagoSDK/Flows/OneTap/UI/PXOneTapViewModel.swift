@@ -11,6 +11,7 @@ import Foundation
 final class PXOneTapViewModel: PXReviewViewModel {
     var expressData: [PXOneTapDto]?
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
+    var items: [PXItem] = [PXItem]()
     private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
 
     // Tracking overrides.
@@ -56,7 +57,7 @@ extension PXOneTapViewModel {
         for targetNode in expressNode {
             if let accountMoney = targetNode.accountMoney {
                 // TODO: Translation
-                let cardData = PXCardDataFactory().create(cardName: "Total en tu cuenta: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
+                let cardData = PXCardDataFactory().create(cardName: "Total en Mercado Pago: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
                 sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
@@ -111,6 +112,52 @@ extension PXOneTapViewModel {
         }
         // TODO: Check [] empty array scenario
         return model
+    }
+
+    func getHeaderViewModel() -> PXOneTapHeaderViewModel {
+
+        let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
+        let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
+        let summaryAlpha: CGFloat = 0.45
+        let discountColor = isDefaultStatusBarStyle ? ThemeManager.shared.noTaxAndDiscountLabelTintColor() : ThemeManager.shared.whiteColor()
+        let discountAlpha: CGFloat = 1
+        let totalColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
+        let totalAlpha: CGFloat = 1
+
+        let currency = SiteManager.shared.getCurrency()
+        let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+        let yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+        var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
+
+        if let discount = amountHelper.discount {
+            // TODO: Translations and Set proper colors / localized or beta_localize
+            customData.append(OneTapHeaderSummaryData("Tu compra".localized, yourPurchaseToShow, summaryColor, summaryAlpha, false))
+            let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
+            customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false))
+        }
+
+        customData.append(OneTapHeaderSummaryData("Total a pagar".localized, totalAmountToShow, totalColor, totalAlpha, true))
+
+        // HeaderImage
+        var headerImage: UIImage = UIImage()
+        var headerTitle: String = ""
+        if let headerUrl = items.first?.getPictureURL() {
+            headerImage = PXUIImage(url: headerUrl)
+        } else {
+            if let defaultImage = ResourceManager.shared.getImage("MPSDK_review_iconoCarrito_white") {
+                headerImage = defaultImage
+            }
+        }
+
+        // HeaderTitle
+        if let headerTitleStr = items.first?._description {
+            headerTitle = headerTitleStr
+        } else if let headerTitleStr = items.first?.title {
+            headerTitle = headerTitleStr
+        }
+
+        let headerVM = PXOneTapHeaderViewModel(icon: headerImage, title: headerTitle, data: customData)
+        return headerVM
     }
 
     private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?) -> NSMutableAttributedString {

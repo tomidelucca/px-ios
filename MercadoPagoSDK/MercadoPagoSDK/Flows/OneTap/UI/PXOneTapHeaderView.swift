@@ -9,6 +9,10 @@ import UIKit
 
 typealias OneTapHeaderSummaryData = (title: String, value: String, highlightedColor: UIColor, alpha: CGFloat, isTotal: Bool)
 
+protocol PXOneTapHeaderProtocol: NSObjectProtocol {
+    func didTapSummary()
+}
+
 class PXOneTapHeaderViewModel {
     let icon: UIImage
     let title: String
@@ -23,9 +27,11 @@ class PXOneTapHeaderViewModel {
 
 class PXOneTapHeaderView: PXComponentView {
     let model: PXOneTapHeaderViewModel
+    private weak var delegate: PXOneTapHeaderProtocol?
 
-    init(viewModel: PXOneTapHeaderViewModel) {
+    init(viewModel: PXOneTapHeaderViewModel, delegate: PXOneTapHeaderProtocol?) {
         self.model = viewModel
+        self.delegate = delegate
         super.init()
         self.render()
     }
@@ -61,7 +67,7 @@ class PXOneTapHeaderView: PXComponentView {
             PXLayout.pinRight(view: rowView, withMargin: 0).isActive = true
         }
 
-        self.addSubview(summaryView)
+        addSubview(summaryView)
         summaryView.pinLastSubviewToBottom(withMargin: PXLayout.S_MARGIN)?.isActive = true
         PXLayout.matchWidth(ofView: summaryView).isActive = true
         PXLayout.pinBottom(view: summaryView).isActive = true
@@ -81,6 +87,9 @@ class PXOneTapHeaderView: PXComponentView {
             PXLayout.centerHorizontally(view: merchantView).isActive = true
             PXLayout.matchWidth(ofView: merchantView).isActive = true
         }
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSummaryTap))
+        summaryView.addGestureRecognizer(tapGesture)
     }
 
     func getSummaryRowView(with data: OneTapHeaderSummaryData) -> UIView {
@@ -116,5 +125,9 @@ class PXOneTapHeaderView: PXComponentView {
         PXLayout.setHeight(owner: rowView, height: rowHeight).isActive = true
 
         return rowView
+    }
+
+    @objc func handleSummaryTap() {
+        delegate?.didTapSummary()
     }
 }

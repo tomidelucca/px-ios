@@ -96,6 +96,7 @@ internal extension OneTapFlowModel {
         let viewModel = PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
         viewModel.expressData = search.expressCho
         viewModel.paymentMethods = search.paymentMethods
+        viewModel.items = checkoutPreference.items
         return viewModel
     }
 }

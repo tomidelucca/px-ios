@@ -38,7 +38,7 @@ extension EmptyCard {
         PXLayout.centerHorizontally(view: circleView).isActive = true
 
         let label = UILabel()
-        label.text = "Agregar nueva tarjeta".localized
+        label.text = "Agregar una tarjeta nueva".localized
         label.font = Utils.getFont(size: PXLayout.XXS_FONT)
         label.textColor = ThemeManager.shared.getAccentColor()
         label.textAlignment = .center

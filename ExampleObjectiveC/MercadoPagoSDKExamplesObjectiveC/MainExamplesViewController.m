@@ -82,11 +82,11 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
 
     // Add theme to advanced config.
-    MeliTheme *meliTheme = [[MeliTheme alloc] init];
-    [advancedConfig setTheme:meliTheme];
+    //MeliTheme *meliTheme = [[MeliTheme alloc] init];
+    //[advancedConfig setTheme:meliTheme];
 
-//    MPTheme *mpTheme = [[MPTheme alloc] init];
-//    [advancedConfig setTheme:mpTheme];
+    MPTheme *mpTheme = [[MPTheme alloc] init];
+    [advancedConfig setTheme:mpTheme];
 
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
@@ -175,7 +175,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     PXPaymentTypeChargeRule* chargeDebit = [[PXPaymentTypeChargeRule alloc] initWithPaymentMethdodId:@"debit_card" amountCharge:8];
     [chargesArray addObject:chargeCredit];
     [chargesArray addObject:chargeDebit];
-    [self.paymentConfig addChargeRulesWithCharges:chargesArray];
+    // [self.paymentConfig addChargeRulesWithCharges:chargesArray];
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
