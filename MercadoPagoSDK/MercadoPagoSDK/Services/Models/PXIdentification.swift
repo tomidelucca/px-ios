@@ -12,18 +12,15 @@ open class PXIdentification: NSObject, Codable {
 
     open var number: String? = "null"
     open var type: String? = "null"
-    open var name: String?
 
     public init(number: String?, type: String?) {
         self.type = type
         self.number = number
-        self.name = type
     }
 
     public init (identificationType: PXIdentificationType, identificationNumber: String) {
         self.type = identificationType.type
         self.number = identificationNumber
-        self.name = identificationType.name
     }
 
     open func toJSONString() throws -> String? {
