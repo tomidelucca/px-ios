@@ -150,9 +150,9 @@ internal class PXNavigationHandler: NSObject {
             var  validViewControllers = self.navigationController.viewControllers.filter {(!$0.isKind(of: MercadoPagoUIViewController.self)) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
 
             // Delete dynamic views intances
-            validViewControllers.removeAll { (viewController) -> Bool in
-                return dynamicViews.contains(viewController)
-            }
+
+            validViewControllers = validViewControllers.filter {!dynamicViews.contains($0)}
+
             self.navigationController.viewControllers = validViewControllers
         }
     }
