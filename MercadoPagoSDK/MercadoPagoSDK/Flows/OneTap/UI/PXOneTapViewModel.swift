@@ -57,7 +57,7 @@ extension PXOneTapViewModel {
         for targetNode in expressNode {
             if let accountMoney = targetNode.accountMoney {
                 // TODO: Translation
-                let cardData = PXCardDataFactory().create(cardName: "Total en tu cuenta: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
+                let cardData = PXCardDataFactory().create(cardName: "Total en Mercado Pago: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
                 sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
