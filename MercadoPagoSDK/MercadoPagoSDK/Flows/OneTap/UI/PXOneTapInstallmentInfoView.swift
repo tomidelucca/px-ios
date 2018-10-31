@@ -125,9 +125,8 @@ extension PXOneTapInstallmentInfoView {
 
 // MARK: DataSource
 extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
-
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-        guard let model = model else {return 0}
+        guard let model = model else { return 0 }
         return model.count
     }
 
@@ -178,5 +177,12 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
                 pagerView.alpha = newAlpha
             }
         }
+    }
+}
+
+// MARK: Publics
+extension PXOneTapInstallmentInfoView {
+    func getActiveRowIndex() -> Int {
+        return pagerView.currentIndex
     }
 }

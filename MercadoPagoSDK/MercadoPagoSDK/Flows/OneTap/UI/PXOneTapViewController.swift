@@ -309,14 +309,18 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
 // MARK: Installment Row Info delegate.
 extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapInstallmentsSelectorProtocol {
-
     func payerCostSelected(_ payerCost: PXPayerCost) {
+        // Update cardSliderViewModel
+        if let infoRow = installmentInfoRow, viewModel.updateCardSliderViewModel(newPayerCost: payerCost, forIndex: infoRow.getActiveRowIndex()) {
+            // Update selected payer cost.
+            let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
+            currentPaymentData.payerCost = payerCost
+            callbackChangePaymentData(currentPaymentData)
+            // Update installmentInfoRow viewModel
+            installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
+            PXFeedbackGenerator.heavyImpactFeedback()
+        }
         installmentInfoRow?.toggleInstallments()
-        PXFeedbackGenerator.heavyImpactFeedback()
-
-        let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
-        currentPaymentData.payerCost = payerCost
-        callbackChangePaymentData(currentPaymentData)
     }
 
     func hideInstallments() {
