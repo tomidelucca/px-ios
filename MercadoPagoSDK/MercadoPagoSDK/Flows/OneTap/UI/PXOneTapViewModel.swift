@@ -9,10 +9,13 @@
 import Foundation
 
 final class PXOneTapViewModel: PXReviewViewModel {
+    // Privates
+    private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
+
+    // Publics
     var expressData: [PXOneTapDto]?
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     var items: [PXItem] = [PXItem]()
-    private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
 
     // Tracking overrides.
     override var screenName: String { return TrackingUtil.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
@@ -50,6 +53,7 @@ extension PXOneTapViewModel {
     }
 }
 
+// MARK: ViewModels Publics.
 extension PXOneTapViewModel {
     func createCardSliderViewModel() {
         var sliderModel: [PXCardSliderViewModel] = []
@@ -91,10 +95,6 @@ extension PXOneTapViewModel {
         cardSliderViewModel = sliderModel
     }
 
-    func getCardSliderViewModel() -> [PXCardSliderViewModel] {
-        return cardSliderViewModel
-    }
-
     func getInstallmentInfoViewModel() -> [PXOneTapInstallmentInfoViewModel] {
         var model: [PXOneTapInstallmentInfoViewModel] = [PXOneTapInstallmentInfoViewModel]()
         let sliderViewModel = getCardSliderViewModel()
@@ -109,7 +109,6 @@ extension PXOneTapViewModel {
     }
 
     func getHeaderViewModel() -> PXOneTapHeaderViewModel {
-
         let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
         let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let summaryAlpha: CGFloat = 0.45
@@ -155,6 +154,25 @@ extension PXOneTapViewModel {
         return headerVM
     }
 
+    func getCardSliderViewModel() -> [PXCardSliderViewModel] {
+        return cardSliderViewModel
+    }
+
+    func updateCardSliderViewModel(newPayerCost: PXPayerCost?, forIndex: Int) -> Bool {
+        if cardSliderViewModel.indices.contains(forIndex) {
+            cardSliderViewModel[forIndex].selectedPayerCost = newPayerCost
+            return true
+        }
+        return false
+    }
+
+    func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
+        return paymentMethods.filter({return $0.id == targetId}).first
+    }
+}
+
+// MARK: Privates.
+extension PXOneTapViewModel {
     private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?) -> NSMutableAttributedString {
         let text: NSMutableAttributedString = NSMutableAttributedString(string: "")
 
@@ -187,9 +205,5 @@ extension PXOneTapViewModel {
             }
         }
         return text
-    }
-
-    func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
-        return paymentMethods.filter({return $0.id == targetId}).first
     }
 }
