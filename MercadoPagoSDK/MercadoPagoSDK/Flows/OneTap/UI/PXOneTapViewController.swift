@@ -24,7 +24,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Callbacks
     var callbackPaymentData: ((PXPaymentData) -> Void)
     var callbackConfirm: ((PXPaymentData) -> Void)
-    var callbackChangePaymentData: ((PXPaymentData) -> Void)
+    var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
     var callbackExit: (() -> Void)
     var finishButtonAnimation: (() -> Void)
 
@@ -38,12 +38,12 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var cardSliderMarginConstraint: NSLayoutConstraint?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackChangePaymentData: @escaping ((PXPaymentData) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
-        self.callbackChangePaymentData = callbackChangePaymentData
+        self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
         self.finishButtonAnimation = finishButtonAnimation
         self.timeOutPayButton = timeOutPayButton
         self.shouldAnimatePayButton = shouldAnimatePayButton
@@ -60,7 +60,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         setupUI()
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
-        UIApplication.shared.statusBarStyle = .default
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -284,8 +283,8 @@ extension PXOneTapViewController: PXCardSliderProtocol {
                 let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
                 currentPaymentData.payerCost = newPayerCost
                 currentPaymentData.paymentMethod = newPaymentMethod
-                callbackChangePaymentData(currentPaymentData)
-                print("newCardDidSelected: \(newPaymentMethodId)")
+                currentPaymentData.issuer = PXIssuer(id: String(targetModel.issuerId), name: nil)
+                callbackUpdatePaymentOption(targetModel)
                 loadingButtonComponent?.setEnabled()
             } else {
                 loadingButtonComponent?.setDisabled()
@@ -315,7 +314,6 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             // Update selected payer cost.
             let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
             currentPaymentData.payerCost = payerCost
-            callbackChangePaymentData(currentPaymentData)
             // Update installmentInfoRow viewModel
             installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
             PXFeedbackGenerator.heavyImpactFeedback()

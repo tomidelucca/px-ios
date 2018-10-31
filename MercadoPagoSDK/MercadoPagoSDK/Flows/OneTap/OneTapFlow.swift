@@ -75,6 +75,10 @@ final class OneTapFlow: NSObject, PXFlow {
     func exitCheckout() {
         resultHandler?.exitCheckout()
     }
+
+    func setCustomerPaymentMethods(_ customPaymentMethods: [CustomerPaymentMethod]?) {
+        model.customerPaymentOptions = customPaymentMethods
+    }
 }
 
 extension OneTapFlow {
@@ -95,12 +99,6 @@ extension OneTapFlow {
                 selectedPaymentOption = paymentMethodPlugin
             } else {
 
-                // POC - New way. Response dissociate of groups.
-                // selectedPaymentOption = search.expressCho?.first
-
-                 // Legacy check inside Groups response.
-                 // TODO: Check this with team.
-
                  // Check if can autoselect customer card
                 guard let customerPaymentMethods = customPaymentOptions else {
                     return nil
@@ -119,5 +117,13 @@ extension OneTapFlow {
             }
         }
         return selectedPaymentOption
+    }
+
+    func getCustomerPaymentOption(forId: String) -> PaymentMethodOption? {
+        guard let customerPaymentMethods = model.customerPaymentOptions else {
+            return nil
+        }
+        let customOptionsFound = customerPaymentMethods.filter { return $0.paymentMethodId == forId }
+        return customOptionsFound.first
     }
 }

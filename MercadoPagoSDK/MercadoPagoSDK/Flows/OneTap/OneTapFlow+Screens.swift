@@ -18,8 +18,10 @@ extension OneTapFlow {
 
                 // Deletes default one tap option in payment method search
                 self.executeNextStep()
-        }, callbackChangePaymentData: {(paymentData: PXPaymentData) in
-            self.model.updateCheckoutModel(paymentData: paymentData)
+        }, callbackUpdatePaymentOption: { [weak self] (newPaymentOption: PaymentMethodOption) in
+            if let newPaymentOptionSelected = self?.getCustomerPaymentOption(forId: newPaymentOption.getId()) {
+                self?.model.paymentOptionSelected = newPaymentOptionSelected
+            }
         }, callbackExit: { [weak self] () -> Void in
             guard let strongSelf = self else {
                 return

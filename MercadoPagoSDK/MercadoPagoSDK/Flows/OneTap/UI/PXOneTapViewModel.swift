@@ -62,7 +62,7 @@ extension PXOneTapViewModel {
             if let accountMoney = targetNode.accountMoney {
                 // TODO: Translation
                 let cardData = PXCardDataFactory().create(cardName: "Total en Mercado Pago: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
-                sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
+                sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, 0, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
 
@@ -87,11 +87,16 @@ extension PXOneTapViewModel {
                         payerCost = pCost
                     }
 
-                    sliderModel.append((targetNode.paymentMethodId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost))
+                    var targetIssuerId: Int = 0
+                    if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
+                        targetIssuerId = issuerId
+                    }
+
+                    sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost))
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel("", EmptyCard(), nil, [PXPayerCost](), nil))
+        sliderModel.append(PXCardSliderViewModel("", 0, EmptyCard(), nil, [PXPayerCost](), nil))
         cardSliderViewModel = sliderModel
     }
 
@@ -104,7 +109,6 @@ extension PXOneTapViewModel {
             let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShow: selectedPayerCost != nil)
             model.append(installmentInfoModel)
         }
-        // TODO: Check [] empty array scenario
         return model
     }
 
