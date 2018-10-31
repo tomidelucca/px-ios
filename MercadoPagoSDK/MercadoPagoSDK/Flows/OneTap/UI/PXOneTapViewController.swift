@@ -275,9 +275,9 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
         // Installments arrow animation
         if targetModel.selectedPayerCost == nil {
-            installmentInfoRow?.hideArrow(duration: 0.5)
+            installmentInfoRow?.hideArrow()
         } else {
-            installmentInfoRow?.showArrow(duration: 0.5)
+            installmentInfoRow?.showArrow()
         }
 
         // Add card. - CardData nil

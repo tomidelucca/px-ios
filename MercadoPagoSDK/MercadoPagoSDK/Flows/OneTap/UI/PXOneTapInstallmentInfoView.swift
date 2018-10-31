@@ -40,8 +40,13 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         removeAllSubviews()
         setupSlider()
         setupFadeImages()
+        setupChevron()
+        setupTitleLabel()
         PXLayout.setHeight(owner: self, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
+    }
 
+    func setupChevron() {
         addSubview(arrowImage)
         arrowImage.contentMode = UIViewContentMode.scaleAspectFit
         arrowImage.image = ResourceManager.shared.getImage("oneTapDownArrow")
@@ -51,8 +56,9 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         PXLayout.pinRight(view: arrowImage, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
         arrowImage.tag = colapsedTag
 
-        setupTitleLabel()
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
+        if let targetModel = model?.first, !targetModel.shouldShow {
+            hideArrow()
+        }
     }
 
     func setupFadeImages() {
@@ -95,11 +101,11 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         pagerView.itemSize = CGSize(width: PXCardSliderSizeManager.getItemSize().width, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT)
     }
 
-    func showArrow(duration: Double) {
+    func showArrow(duration: Double = 0.5) {
         animateArrow(alpha: 1, duration: duration)
     }
 
-    func hideArrow(duration: Double) {
+    func hideArrow(duration: Double = 0.5) {
         animateArrow(alpha: 0, duration: duration)
     }
 
