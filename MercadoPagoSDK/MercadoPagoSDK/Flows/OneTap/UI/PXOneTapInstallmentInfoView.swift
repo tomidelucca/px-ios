@@ -39,6 +39,7 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     func render() {
         removeAllSubviews()
         setupSlider()
+        setupFadeImages()
         PXLayout.setHeight(owner: self, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
 
         addSubview(arrowImage)
@@ -54,8 +55,25 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
     }
 
-    private func updateArroyImage(alpha: CGFloat) {
-        arrowImage.alpha = alpha
+    func setupFadeImages() {
+        let leftImage = ResourceManager.shared.getImage("one-tap-installments-info-left")
+        let leftImageView = UIImageView(image: leftImage)
+        leftImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(leftImageView)
+        PXLayout.pinTop(view: leftImageView).isActive = true
+        PXLayout.pinBottom(view: leftImageView).isActive = true
+        PXLayout.pinLeft(view: leftImageView).isActive = true
+        PXLayout.setWidth(owner: leftImageView, width: 16).isActive = true
+
+
+        let rightImage = ResourceManager.shared.getImage("one-tap-installments-info-right")
+        let rightImageView = UIImageView(image: rightImage)
+        rightImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(rightImageView)
+        PXLayout.pinTop(view: rightImageView).isActive = true
+        PXLayout.pinBottom(view: rightImageView).isActive = true
+        PXLayout.pinRight(view: rightImageView).isActive = true
+        PXLayout.setWidth(owner: rightImageView, width: 60).isActive = true
     }
 
     private func setupSlider() {
@@ -75,6 +93,23 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         pagerView.interitemSpacing = 0
         pagerView.decelerationDistance = 1
         pagerView.itemSize = CGSize(width: PXCardSliderSizeManager.getItemSize().width, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT)
+    }
+
+    func showArrow(duration: Double) {
+        animateArrow(alpha: 1, duration: duration)
+    }
+
+    func hideArrow(duration: Double) {
+        animateArrow(alpha: 0, duration: duration)
+    }
+
+    func animateArrow(alpha: CGFloat, duration: Double) {
+        var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            self?.arrowImage.alpha = alpha
+        })
+
+        pxAnimator.animate()
     }
 
     func setSliderOffset(offset: CGPoint) {
