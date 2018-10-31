@@ -41,7 +41,7 @@ internal class PayerInfoViewModel {
             fatalError("No valid identification types for PayerInfo View Controller")
         }
         self.identificationType = identificationTypes[0]
-        self.masks = Utils.getIdMask(IDtype: self.identificationType)
+        self.masks = Utils.getMasks(forId: self.identificationType)
         self.currentMask = masks[0]
     }
 

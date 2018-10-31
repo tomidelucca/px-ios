@@ -37,13 +37,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules, consumedDiscount: consumedDiscount)
-        }
-    }
-
-    private var payerHelper: PXPayerHelper {
-        get {
-            return PXPayerHelper(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules, consumedDiscount: consumedDiscount, payerData: PXPayerData(payer: self.paymentData.payer))
         }
     }
 
@@ -99,7 +93,7 @@ internal extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, payerHelper: self.payerHelper, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
+        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
     }
 }
 

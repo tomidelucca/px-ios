@@ -14,7 +14,7 @@ extension MercadoPagoCheckout: PXPaymentErrorHandlerProtocol {
     }
 
     func identificationError() {
-        self.viewModel.paymentData.clearCollectedData(clearPayer: true)
+        self.viewModel.paymentData.clearCollectedData()
         let mpInvalidIdentificationError = MPSDKError.init(message: "Algo salió mal...".localized, errorDetail: "El número de identificación es inválido".localized, retry: true)
         self.viewModel.errorInputs(error: mpInvalidIdentificationError, errorCallback: { [weak self] () in
             self?.viewModel.prepareForNewSelection()

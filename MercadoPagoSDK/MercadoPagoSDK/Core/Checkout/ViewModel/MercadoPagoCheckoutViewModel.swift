@@ -51,12 +51,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
-        }
-    }
-    private var payerHelper: PXPayerHelper {
-        get {
-            return PXPayerHelper(firstName: self.paymentData.payer?.firstName, lastName: self.paymentData.payer?.lastName, identificationType: self.paymentData.payer?.identification?.name, identificationNumber: self.paymentData.payer?.identification?.number )
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, payerData: PXPayerData(payer: self.paymentData.payer))
         }
     }
 
@@ -288,7 +283,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
-        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, payerHelper: self.payerHelper, reviewConfirmConfig: advancedConfig.reviewConfirmConfiguration, userLogged: !String.isNullOrEmpty(privateKey))
+        return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, reviewConfirmConfig: advancedConfig.reviewConfirmConfiguration, userLogged: !String.isNullOrEmpty(privateKey))
     }
 
     func resultViewModel() -> PXResultViewModel {
@@ -730,7 +725,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func resetInformation() {
-        self.cleanPaymentData()
+        self.clearCollectedData()
         self.cardToken = nil
         self.entityTypes = nil
         self.financialInstitutions = nil
@@ -740,13 +735,17 @@ extension MercadoPagoCheckoutViewModel {
         resetPaymentMethodConfigPlugin()
     }
 
-    func cleanPaymentData() {
+    func clearCollectedData() {
         let isPayerSet: Bool = self.checkoutPreference.payer.firstName != nil
             && self.checkoutPreference.payer.lastName != nil
             && self.checkoutPreference.payer.identification?.type != nil
             && self.checkoutPreference.payer.identification?.number != nil
 
-        self.paymentData.clearCollectedData(clearPayer: !isPayerSet)
+        self.paymentData.clearPaymentMethodData()
+
+        if !isPayerSet {
+            self.paymentData.clearPayerData()
+        }
     }
 
     func cleanPayerCostSearch() {

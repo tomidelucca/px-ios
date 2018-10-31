@@ -118,7 +118,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     @objc func updateCoupon(_ notification: Notification) {
         if (notification.userInfo?["coupon"] as? PXDiscount) != nil {
-            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules, consumedDiscount: viewModel.amountHelper.consumedDiscount)
+            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules, consumedDiscount: viewModel.amountHelper.consumedDiscount, payerData: PXPayerData(payer: viewModel.amountHelper.paymentData.payer))
             self.collectionSearch.reloadData()
         }
     }

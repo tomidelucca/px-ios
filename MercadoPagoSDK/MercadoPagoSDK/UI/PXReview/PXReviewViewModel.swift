@@ -18,15 +18,13 @@ class PXReviewViewModel: NSObject {
 
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
-    var payerHelper: PXPayerHelper?
     var reviewScreenPreference: PXReviewConfirmConfiguration
     var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, payerHelper: PXPayerHelper?, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
-        self.payerHelper = payerHelper
         self.reviewScreenPreference = reviewConfirmConfig
         self.userLogged = userLogged
     }
@@ -67,7 +65,7 @@ extension PXReviewViewModel {
     }
 
     func shouldShowPayer() -> Bool {
-        return self.payerHelper?.firstName != nil
+        return self.amountHelper.paymentData.payer?.firstName != nil
     }
 
     func shouldShowTermsAndCondition() -> Bool {
@@ -132,7 +130,13 @@ extension PXReviewViewModel {
 
     func getClearPaymentData() -> PXPaymentData {
         let newPaymentData: PXPaymentData = self.amountHelper.paymentData.copy() as? PXPaymentData ?? self.amountHelper.paymentData
-        newPaymentData.clearCollectedData(clearPayer: true)
+        newPaymentData.clearCollectedData()
+        return newPaymentData
+    }
+
+    func getClearPayerData() -> PXPaymentData {
+        let newPaymentData: PXPaymentData = self.amountHelper.paymentData.copy() as? PXPaymentData ?? self.amountHelper.paymentData
+        newPaymentData.clearPayerData()
         return newPaymentData
     }
 
@@ -285,16 +289,19 @@ extension PXReviewViewModel {
     }
 
     func buildPayerComponent(action: PXAction) -> PXPayerComponent? {
-        if let payerIdType = self.payerHelper?.identificationType, let payerIdNumber = self.payerHelper?.identificationNumber, let payerName = self.payerHelper?.firstName, let payerLastName = self.payerHelper?.lastName {
-            if let mask = Utils.getIdMask(IDtype: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
 
-                if let numberMasked = mask.textMasked(payerIdNumber)?.description {
-                    let identification = NSAttributedString(string: "\(payerIdType): \(numberMasked)")
-                    let fulltName = NSAttributedString(string: "\(payerName) \(payerLastName)".uppercased())
+        if let payer = self.amountHelper.paymentData.payer {
+            if let payerIdType = payer.identification?.type, let payerIdNumber = payer.identification?.number, let payerName = payer.firstName, let payerLastName = payer.lastName {
+                if let mask = Utils.getMasks(forId: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
 
-                    let payerIcon = ResourceManager.shared.getImage("MPSDK_review_iconoPayer")
-                    let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor(), separatorColor: ThemeManager.shared.lightTintColor())
-                    return PXPayerComponent(props: props)
+                    if let numberMasked = mask.textMasked(payerIdNumber)?.description {
+                        let identification = NSAttributedString(string: "\(payerIdType): \(numberMasked)")
+                        let fulltName = NSAttributedString(string: "\(payerName) \(payerLastName)".uppercased())
+
+                        let payerIcon = ResourceManager.shared.getImage("MPSDK_review_iconoPayer")
+                        let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor(), separatorColor: ThemeManager.shared.lightTintColor())
+                        return PXPayerComponent(props: props)
+                    }
                 }
             }
         }

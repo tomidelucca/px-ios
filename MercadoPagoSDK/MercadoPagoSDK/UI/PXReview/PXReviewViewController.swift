@@ -89,7 +89,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     }
 
     func setPayer() {
-        if let payer = viewModel.payerHelper {
+        if let payer = viewModel.amountHelper.payerData {
             self.viewModel.amountHelper.paymentData.payer?.firstName = payer.firstName
             self.viewModel.amountHelper.paymentData.payer?.lastName = payer.lastName
             self.viewModel.amountHelper.paymentData.payer?.identification = PXIdentification(number: payer.identificationNumber, type: payer.identificationType)
@@ -282,11 +282,10 @@ extension PXReviewViewController {
 
     fileprivate func getPayerComponentView() -> UIView? {
 
-        let action = PXAction(label: "review_change_payer_action".localized_beta, action: { [weak self] in
-            guard let strongSelf = self else { return }
-            if let reviewViewModel = self?.viewModel {
+        let action = PXAction(label: "review_change_payer_action".localized_beta, action: {
+            if let reviewViewModel = self.viewModel {
                 reviewViewModel.amountHelper.paymentData.payer?.clearCollectedData()
-                strongSelf.changePayerInformation()
+                self.changePayerInformation()
             }
         })
 

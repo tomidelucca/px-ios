@@ -24,6 +24,7 @@ class PXPayerComponentRenderer: NSObject {
         let payerView = PXPayerView()
         payerView.backgroundColor = component.props.backgroundColor
         payerView.translatesAutoresizingMaskIntoConstraints = false
+        payerView.accessibilityIdentifier = "review_change_payer_data_row"
 
         let payerIcon = component.getPayerIconComponent()
         payerView.payerIcon = payerIcon.render()
@@ -74,6 +75,7 @@ class PXPayerComponentRenderer: NSObject {
         payerView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.M_MARGIN)?.isActive = true
         PXLayout.pinLeft(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
         PXLayout.pinRight(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
+        actionButton.accessibilityIdentifier = "review_change_payer_action"
 
         // Separator
         let separator = UIView()
