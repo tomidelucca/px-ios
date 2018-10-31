@@ -48,6 +48,7 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         PXLayout.pinLeft(view: tableView).isActive = true
         PXLayout.pinRight(view: tableView).isActive = true
         tableView.separatorInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+//        tableView.contentInset = .init(top: 55, left: 0, bottom: 0, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
@@ -116,6 +117,7 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        shadowView.contentMode = .scaleToFill
         shadowView.translatesAutoresizingMaskIntoConstraints = false
         if tableView.contentOffset.y > CGFloat(0.0) {
             self.addSubview(shadowView)
