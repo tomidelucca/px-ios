@@ -272,6 +272,14 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
 // MARK: CardSlider delegate.
 extension PXOneTapViewController: PXCardSliderProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
+
+        // Installments arrow animation
+        if targetModel.selectedPayerCost == nil {
+            installmentInfoRow?.hideArrow()
+        } else {
+            installmentInfoRow?.showArrow()
+        }
+
         // Add card. - CardData nil
         if targetModel.cardData == nil {
             loadingButtonComponent?.setDisabled()
