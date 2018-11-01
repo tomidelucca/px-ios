@@ -51,7 +51,7 @@ extension AccountMoneyCard {
         label.textAlignment = .center
         label.layer.cornerRadius = 5
         label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5).cgColor
+        label.layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
         containerView.addSubview(label)
 
         PXLayout.pinLeft(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
