@@ -76,6 +76,7 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
     func animateTableViewHeight(tableViewHeight: CGFloat, hideTopSeparator: Bool = false, completion: @escaping () -> ()) {
         self.superview?.layoutIfNeeded()
 
+        tableView.isUserInteractionEnabled = false
         var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
         pxAnimator.addAnimation(animation: { [weak self] in
             guard let strongSelf = self else {
@@ -90,6 +91,9 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView, UITableViewDelega
         })
 
         pxAnimator.addCompletion(completion: completion)
+        pxAnimator.addCompletion { [weak self] in
+            self?.tableView.isUserInteractionEnabled = true
+        }
         pxAnimator.animate()
     }
 
