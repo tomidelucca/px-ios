@@ -291,7 +291,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
                 let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
                 currentPaymentData.payerCost = newPayerCost
                 currentPaymentData.paymentMethod = newPaymentMethod
-                currentPaymentData.issuer = PXIssuer(id: String(targetModel.issuerId), name: nil)
+                currentPaymentData.issuer = PXIssuer(id: targetModel.issuerId, name: nil)
                 callbackUpdatePaymentOption(targetModel)
                 loadingButtonComponent?.setEnabled()
             } else {

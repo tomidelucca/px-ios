@@ -22,7 +22,6 @@ internal extension PXPaymentMethodSearch {
     }
 
     func deleteCheckoutDefaultOption() {
-        oneTap = nil
         expressCho = nil
     }
 
