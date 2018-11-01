@@ -63,7 +63,6 @@ class PXReviewViewController: PXComponentContainerViewController {
         view.isUserInteractionEnabled = true
         // Temporary fix for MP/Meli UX incompatibility
         UIApplication.shared.statusBarStyle = .default
-        //self.setPayer()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -86,14 +85,6 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
-    }
-
-    func setPayer() {
-        /*if let payer = viewModel.amountHelper.payerData {
-            self.viewModel.amountHelper.paymentData.payer?.firstName = payer.firstName
-            self.viewModel.amountHelper.paymentData.payer?.lastName = payer.lastName
-            self.viewModel.amountHelper.paymentData.payer?.identification = PXIdentification(number: payer.identificationNumber, type: payer.identificationType)
-        }*/
     }
 }
 
