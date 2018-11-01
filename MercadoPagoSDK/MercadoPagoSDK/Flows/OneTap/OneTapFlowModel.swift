@@ -26,6 +26,8 @@ final internal class OneTapFlowModel: PXFlowModel {
     var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
     var consumedDiscount: Bool = false
+    var customerPaymentOptions: [CustomerPaymentMethod]?
+    var paymentMethodPlugins: [PXPaymentMethodPlugin]?
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -97,6 +99,7 @@ internal extension OneTapFlowModel {
         viewModel.expressData = search.expressCho
         viewModel.paymentMethods = search.paymentMethods
         viewModel.items = checkoutPreference.items
+        viewModel.paymentMethodPlugins = paymentMethodPlugins
         return viewModel
     }
 }
@@ -146,7 +149,7 @@ internal extension OneTapFlowModel {
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelected.getId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
 
-        if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
+        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
             return true
         }
         return false
