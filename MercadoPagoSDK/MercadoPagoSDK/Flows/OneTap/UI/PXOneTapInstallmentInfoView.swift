@@ -39,8 +39,14 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
     func render() {
         removeAllSubviews()
         setupSlider()
+        setupFadeImages()
+        setupChevron()
+        setupTitleLabel()
         PXLayout.setHeight(owner: self, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
+    }
 
+    func setupChevron() {
         addSubview(arrowImage)
         arrowImage.contentMode = UIViewContentMode.scaleAspectFit
         arrowImage.image = ResourceManager.shared.getImage("oneTapDownArrow")
@@ -50,12 +56,30 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         PXLayout.pinRight(view: arrowImage, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
         arrowImage.tag = colapsedTag
 
-        setupTitleLabel()
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
+        if let targetModel = model?.first, !targetModel.shouldShow {
+            hideArrow()
+        }
     }
 
-    private func updateArroyImage(alpha: CGFloat) {
-        arrowImage.alpha = alpha
+    func setupFadeImages() {
+        let leftImage = ResourceManager.shared.getImage("one-tap-installments-info-left")
+        let leftImageView = UIImageView(image: leftImage)
+        leftImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(leftImageView)
+        PXLayout.pinTop(view: leftImageView).isActive = true
+        PXLayout.pinBottom(view: leftImageView).isActive = true
+        PXLayout.pinLeft(view: leftImageView).isActive = true
+        PXLayout.setWidth(owner: leftImageView, width: 16).isActive = true
+
+
+        let rightImage = ResourceManager.shared.getImage("one-tap-installments-info-right")
+        let rightImageView = UIImageView(image: rightImage)
+        rightImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(rightImageView)
+        PXLayout.pinTop(view: rightImageView).isActive = true
+        PXLayout.pinBottom(view: rightImageView).isActive = true
+        PXLayout.pinRight(view: rightImageView).isActive = true
+        PXLayout.setWidth(owner: rightImageView, width: 60).isActive = true
     }
 
     private func setupSlider() {
@@ -75,6 +99,23 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
         pagerView.interitemSpacing = 0
         pagerView.decelerationDistance = 1
         pagerView.itemSize = CGSize(width: PXCardSliderSizeManager.getItemSize().width, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT)
+    }
+
+    func showArrow(duration: Double = 0.5) {
+        animateArrow(alpha: 1, duration: duration)
+    }
+
+    func hideArrow(duration: Double = 0.5) {
+        animateArrow(alpha: 0, duration: duration)
+    }
+
+    func animateArrow(alpha: CGFloat, duration: Double) {
+        var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            self?.arrowImage.alpha = alpha
+        })
+
+        pxAnimator.animate()
     }
 
     func setSliderOffset(offset: CGPoint) {

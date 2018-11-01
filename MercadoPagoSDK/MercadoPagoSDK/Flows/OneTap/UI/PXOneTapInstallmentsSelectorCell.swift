@@ -13,7 +13,10 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
 
     func updateData(_ data: PXOneTapInstallmentsSelectorData) {
         self.data = data
-        self.selectionStyle = .none
+        self.selectionStyle = .default
+        let selectedView = UIView()
+        selectedView.backgroundColor = #colorLiteral(red:0.96, green:0.96, blue:0.96, alpha:1.0)
+        self.selectedBackgroundView = selectedView
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
