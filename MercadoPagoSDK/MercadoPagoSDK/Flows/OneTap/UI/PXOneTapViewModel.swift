@@ -15,6 +15,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
     // Publics
     var expressData: [PXOneTapDto]?
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
+    var paymentMethodPlugins: [PXPaymentMethodPlugin]?
     var items: [PXItem] = [PXItem]()
 
     // Tracking overrides.
@@ -62,7 +63,7 @@ extension PXOneTapViewModel {
             if let accountMoney = targetNode.accountMoney {
                 // TODO: Translation
                 let cardData = PXCardDataFactory().create(cardName: "Total en Mercado Pago: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
-                sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
+                sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, 0, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
 
@@ -87,11 +88,16 @@ extension PXOneTapViewModel {
                         payerCost = pCost
                     }
 
-                    sliderModel.append((targetNode.paymentMethodId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost))
+                    var targetIssuerId: Int = 0
+                    if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
+                        targetIssuerId = issuerId
+                    }
+
+                    sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost))
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel("", EmptyCard(), nil, [PXPayerCost](), nil))
+        sliderModel.append(PXCardSliderViewModel("", 0, EmptyCard(), nil, [PXPayerCost](), nil))
         cardSliderViewModel = sliderModel
     }
 
@@ -104,7 +110,6 @@ extension PXOneTapViewModel {
             let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShow: selectedPayerCost != nil)
             model.append(installmentInfoModel)
         }
-        // TODO: Check [] empty array scenario
         return model
     }
 
@@ -167,6 +172,9 @@ extension PXOneTapViewModel {
     }
 
     func getPaymentMethod(targetId: String) -> PXPaymentMethod? {
+        if let plugins = paymentMethodPlugins, let pluginsPms = plugins.filter({return $0.getId() == targetId}).first {
+            return pluginsPms.toPaymentMethod()
+        }
         return paymentMethods.filter({return $0.id == targetId}).first
     }
 }

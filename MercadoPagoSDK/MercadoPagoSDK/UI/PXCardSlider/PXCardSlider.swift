@@ -6,8 +6,6 @@
 
 import UIKit
 
-internal typealias PXCardSliderViewModel = (paymentMethodId: String, cardUI: CardUI, cardData: CardData?, payerCost: [PXPayerCost], selectedPayerCost: PXPayerCost?)
-
 protocol PXCardSliderProtocol: NSObjectProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel)
     func addPaymentMethodCardDidTap()
