@@ -70,8 +70,7 @@ extension PXOneTapViewModel {
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
 
-                    // TODO: Proper cardNumber ended.
-                    let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration)
+                    let cardData = PXCardDataFactory().create(cardName: cardName.uppercased(), cardNumber: cardNumber, cardCode: "", cardExpiration: cardExpiration, cardPattern: targetCardData.cardUI?.cardPattern)
 
                     let templateCard = TemplateCard()
                     if let cardPattern = targetCardData.cardUI?.cardPattern {
@@ -80,6 +79,10 @@ extension PXOneTapViewModel {
 
                     if let cardBackgroundColor = targetCardData.cardUI?.color {
                         templateCard.cardBackgroundColor = cardBackgroundColor.hexToUIColor()
+                    }
+
+                    if let cardFontColor = targetCardData.cardUI?.fontColor {
+                        templateCard.cardFontColor = cardFontColor.hexToUIColor()
                     }
 
                     if let paymentMethodImage = ResourceManager.shared.getPaymentMethodCardImage(paymentMethodId: targetNode.paymentMethodId.lowercased()) {
