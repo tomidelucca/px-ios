@@ -284,7 +284,6 @@ extension PXReviewViewController {
 
         let action = PXAction(label: "review_change_payer_action".localized_beta, action: {
             if let reviewViewModel = self.viewModel {
-                reviewViewModel.amountHelper.paymentData.payer?.clearCollectedData()
                 self.changePayerInformation(reviewViewModel.getClearPayerData())
             }
         })
