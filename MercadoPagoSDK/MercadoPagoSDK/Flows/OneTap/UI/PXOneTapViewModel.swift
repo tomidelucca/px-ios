@@ -58,12 +58,15 @@ extension PXOneTapViewModel {
 extension PXOneTapViewModel {
     func createCardSliderViewModel() {
         var sliderModel: [PXCardSliderViewModel] = []
+        let currency = SiteManager.shared.getCurrency()
+        // TODO: Translation
+        let amTitle: String = "Total en Mercado Pago:"
         guard let expressNode = expressData else { return }
         for targetNode in expressNode {
             if let accountMoney = targetNode.accountMoney {
-                // TODO: Translation
-                let cardData = PXCardDataFactory().create(cardName: "Total en Mercado Pago: $ \(accountMoney.availableBalance)", cardNumber: "", cardCode: "", cardExpiration: "")
-                sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, 0, AccountMoneyCard(), cardData, [PXPayerCost](), nil))
+                let displayAmount = Utils.getAmountFormated(amount: accountMoney.availableBalance, forCurrency: currency)
+                let cardData = PXCardDataFactory().create(cardName: "\(amTitle) \(displayAmount)", cardNumber: "", cardCode: "", cardExpiration: "")
+                sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil))
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
 
@@ -88,7 +91,7 @@ extension PXOneTapViewModel {
                         payerCost = pCost
                     }
 
-                    var targetIssuerId: Int = 0
+                    var targetIssuerId: String = ""
                     if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
                         targetIssuerId = issuerId
                     }
@@ -97,7 +100,7 @@ extension PXOneTapViewModel {
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel("", 0, EmptyCard(), nil, [PXPayerCost](), nil))
+        sliderModel.append(PXCardSliderViewModel("", "", EmptyCard(), nil, [PXPayerCost](), nil))
         cardSliderViewModel = sliderModel
     }
 

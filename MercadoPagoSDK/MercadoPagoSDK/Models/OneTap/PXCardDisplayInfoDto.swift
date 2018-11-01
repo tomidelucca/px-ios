@@ -12,13 +12,13 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
     open var expiration: String?
     open var firstSixDigits: String?
     open var lastFourDigits: String?
-    open var issuerId: Int?
+    open var issuerId: String?
     open var name: String?
     open var cardPattern: [Int]?
     open var color: String?
     open var fontColor: String?
 
-    public init(expiration: String?, firstSixDigits: String?, lastFourDigits: String?, issuerId: Int?, name: String?, cardPattern: [Int]?, color: String?, fontColor: String?) {
+    public init(expiration: String?, firstSixDigits: String?, lastFourDigits: String?, issuerId: String?, name: String?, cardPattern: [Int]?, color: String?, fontColor: String?) {
         self.expiration = expiration
         self.firstSixDigits = firstSixDigits
         self.lastFourDigits = lastFourDigits
@@ -34,7 +34,7 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         case first_six_digits
         case last_four_digits
         case issuer_id
-        case name
+        case name = "cardholder_name"
         case card_pattern
         case color
         case font_color
@@ -45,7 +45,7 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         let expiration: String? = try container.decodeIfPresent(String.self, forKey: .expiration)
         let firstSixDigits: String? = try container.decodeIfPresent(String.self, forKey: .first_six_digits)
         let lastFourDigits: String? = try container.decodeIfPresent(String.self, forKey: .last_four_digits)
-        let issuerId: Int? = try container.decodeIfPresent(Int.self, forKey: .issuer_id)
+        let issuerId: String? = try container.decodeIfPresent(String.self, forKey: .issuer_id)
         let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
         let cardPattern: [Int]? = try container.decodeIfPresent([Int].self, forKey: .card_pattern)
         let color: String? = try container.decodeIfPresent(String.self, forKey: .color)
