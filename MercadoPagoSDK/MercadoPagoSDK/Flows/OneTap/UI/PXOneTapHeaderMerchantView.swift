@@ -39,7 +39,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
 
         let imageContainerView = UIView()
         imageContainerView.translatesAutoresizingMaskIntoConstraints = false
-        imageContainerView.dropShadow()
+        imageContainerView.dropShadow(radius: 2, opacity: 0.15)
 
         let imageView = PXUIImageView()
         imageView.layer.masksToBounds = false

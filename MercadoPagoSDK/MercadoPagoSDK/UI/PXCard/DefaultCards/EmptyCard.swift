@@ -23,15 +23,15 @@ class EmptyCard: NSObject, CardUI {
 
 extension EmptyCard {
     static func render(containerView: UIView) {
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        PXLayout.setHeight(owner: containerView, height: PXCardSliderSizeManager.getItemContainerSize().height).isActive = true
+        PXLayout.setWidth(owner: containerView, width: PXCardSliderSizeManager.getItemContainerSize().width).isActive = true
         let circleView = UIView()
         let circleSize: CGFloat = 60
         containerView.addSubview(circleView)
         circleView.backgroundColor = .white
-        circleView.layer.shadowColor = UIColor.black.cgColor
         circleView.layer.cornerRadius = circleSize / 2
-        circleView.layer.shadowRadius = 3
-        circleView.layer.shadowOpacity = 0.25
-        circleView.layer.shadowOffset = CGSize(width: 0.3, height: 0.3)
+        circleView.dropShadow(radius: 2, opacity: 0.15, offset: CGSize(width: 0.3, height: 0.3))
         PXLayout.setHeight(owner: circleView, height: circleSize).isActive = true
         PXLayout.setWidth(owner: circleView, width: circleSize).isActive = true
         PXLayout.centerVertically(view: circleView, withMargin: -PXLayout.S_MARGIN).isActive = true
