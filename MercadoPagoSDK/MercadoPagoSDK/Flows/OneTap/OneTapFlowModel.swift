@@ -27,6 +27,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var businessResult: PXBusinessResult?
     var consumedDiscount: Bool = false
     var customerPaymentOptions: [CustomerPaymentMethod]?
+    var paymentMethodPlugins: [PXPaymentMethodPlugin]?
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -98,6 +99,7 @@ internal extension OneTapFlowModel {
         viewModel.expressData = search.expressCho
         viewModel.paymentMethods = search.paymentMethods
         viewModel.items = checkoutPreference.items
+        viewModel.paymentMethodPlugins = paymentMethodPlugins
         return viewModel
     }
 }

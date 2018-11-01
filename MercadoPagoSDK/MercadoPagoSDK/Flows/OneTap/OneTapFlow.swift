@@ -79,6 +79,10 @@ final class OneTapFlow: NSObject, PXFlow {
     func setCustomerPaymentMethods(_ customPaymentMethods: [CustomerPaymentMethod]?) {
         model.customerPaymentOptions = customPaymentMethods
     }
+
+    func setPaymentMethodPlugins(_ plugins: [PXPaymentMethodPlugin]?) {
+        model.paymentMethodPlugins = plugins
+    }
 }
 
 extension OneTapFlow {

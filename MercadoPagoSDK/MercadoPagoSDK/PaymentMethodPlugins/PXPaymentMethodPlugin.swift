@@ -121,3 +121,11 @@ extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
         self.paymentMethodPluginDescription = text
     }
 }
+
+extension PXPaymentMethodPlugin {
+    internal func toPaymentMethod(financialInstitutions: [PXFinancialInstitution]? = nil) -> PXPaymentMethod {
+        let paymentMethod = PXPaymentMethod(additionalInfoNeeded: nil, id: self.getId(), name: self.getTitle(), paymentTypeId: PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID, status: nil, secureThumbnail: nil, thumbnail: nil, deferredCapture: nil, settings: [], minAllowedAmount: nil, maxAllowedAmount: nil, accreditationTime: nil, merchantAccountId: nil, financialInstitutions: financialInstitutions, description: self.paymentMethodPluginDescription)
+        paymentMethod.setExternalPaymentMethodImage(externalImage: self.getImage())
+        return paymentMethod
+    }
+}
