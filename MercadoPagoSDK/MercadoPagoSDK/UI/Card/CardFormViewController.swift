@@ -49,9 +49,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     var navItem: UINavigationItem?
     var viewModel: CardFormViewModel!
 
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM }
-
     init(cardFormManager: CardFormViewModel, callback : @escaping ((_ paymentMethod: [PXPaymentMethod], _ cardToken: PXCardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = cardFormManager
@@ -60,32 +57,28 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     override func trackInfo() {
-        var finalId = screenId
-        if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId += "/" + cardType
-        }
-        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
         self.trackStatus()
     }
 
     func trackStatus() {
-        var finalId = screenId
 
-        if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId += "/" + cardType
+        guard let cardType = self.viewModel.getPaymentMethodTypeId() else {
+            return
         }
+
+        var screenPath = ""
 
         if editingLabel === cardNumberLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_NUMBER, screenName: screenName)
+            screenPath = TrackingPaths.Screens.CardForm.getCardNumberPath(paymentTypeId: cardType)
         } else if editingLabel === nameLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_HOLDER_NAME, screenName: screenName)
+            screenPath = TrackingPaths.Screens.CardForm.getCardNamePath(paymentTypeId: cardType)
         } else if editingLabel === expirationDateLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_EXPIRATION_DATE, screenName: screenName)
+            screenPath = TrackingPaths.Screens.CardForm.getExpirationDatePath(paymentTypeId: cardType)
         } else if editingLabel === cvvLabel {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId + TrackingUtil.CARD_SECURITY_CODE, screenName: screenName)
-        } else if editingLabel == nil {
-            MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
+            screenPath = TrackingPaths.Screens.CardForm.getCvvPath(paymentTypeId: cardType)
         }
+
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -170,7 +163,9 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         PXNotificationManager.SuscribeTo.cardFormReset(self, selector: #selector(reset))
-        self.getPromos()
+        if viewModel.bankDealsEnabled {
+            self.getPromos()
+        }
         textBox.borderInactiveColor = ThemeManager.shared.secondaryColor()
         textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
         textBox.autocorrectionType = UITextAutocorrectionType.no
@@ -588,7 +583,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         }
         self.updateLabelsFontColors()
     }
-    
+
     @objc func reset() {
         if (self.viewModel.getGuessedPM()?.secCodeInBack())! {
             UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 0, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
@@ -898,5 +893,5 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     internal func validateExpirationDate() -> Bool {
         return self.viewModel.validateExpirationDate(self.cardNumberLabel!, expirationDateLabel: self.expirationDateLabel!, cvvLabel: self.cvvLabel!, cardholderNameLabel: self.nameLabel!)
     }
-    
+
 }

@@ -11,12 +11,13 @@ final class PXCardSliderViewModel {
     let paymentMethodId: String
     let issuerId: String
     let cardUI: CardUI
+    let shouldShowArrow: Bool
     var payerCost: [PXPayerCost] = [PXPayerCost]()
     var cardData: CardData?
     var selectedPayerCost: PXPayerCost?
     var cardId: String? = nil
 
-    init(_ paymentMethodId: String, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, cardId: String? = nil) {
+    init(_ paymentMethodId: String, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool) {
         self.paymentMethodId = paymentMethodId
         self.issuerId = issuerId
         self.cardUI = cardUI
@@ -24,6 +25,7 @@ final class PXCardSliderViewModel {
         self.payerCost = payerCost
         self.selectedPayerCost = selectedPayerCost
         self.cardId = cardId
+        self.shouldShowArrow = shouldShowArrow
     }
 }
 

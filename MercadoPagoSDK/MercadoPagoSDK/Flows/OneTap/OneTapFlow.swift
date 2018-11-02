@@ -20,7 +20,7 @@ final class OneTapFlow: NSObject, PXFlow {
         pxNavigationHandler = navigationController
         resultHandler = oneTapResultHandler
         advancedConfig = advancedConfiguration
-        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, reviewScreenConfiguration: reviewConfirmConfiguration, chargeRules: chargeRules, consumedDiscount: consumedDiscount, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfiguration)
+        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, chargeRules: chargeRules, consumedDiscount: consumedDiscount, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfiguration)
     }
 
     deinit {
@@ -103,18 +103,19 @@ extension OneTapFlow {
                 selectedPaymentOption = paymentMethodPlugin
             } else {
 
-                 // Check if can autoselect customer card
+                // Check if can autoselect customer card
                 guard let customerPaymentMethods = customPaymentOptions else {
                     return nil
                 }
 
-                let customOptionsFound = customerPaymentMethods.filter { return search.getPaymentMethodInExpressCheckout(targetId: $0.getCardId()).found }
-
-                if let customerPaymentMethod = customOptionsFound.first {
-                    // Check if one tap response has payer costs
-                    if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, expressPaymentMethod.selectedPayerCost != nil, expressPaymentMethod.selectedPayerCost != nil {
-                        if expressNode.paymentMethodId == customerPaymentMethod.getPaymentMethodId() && expressNode.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
-                            selectedPaymentOption = customerPaymentMethod
+                if let firstPaymentMethodId = search.expressCho?.first?.paymentMethodId {
+                    let customOptionsFound = customerPaymentMethods.filter { return  $0.getCardId() == firstPaymentMethodId }
+                    if let customerPaymentMethod = customOptionsFound.first {
+                        // Check if one tap response has payer costs
+                        if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, expressPaymentMethod.selectedPayerCost != nil {
+                            if expressNode.paymentMethodId == customerPaymentMethod.getPaymentMethodId() && expressNode.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
+                                selectedPaymentOption = customerPaymentMethod
+                            }
                         }
                     }
                 }

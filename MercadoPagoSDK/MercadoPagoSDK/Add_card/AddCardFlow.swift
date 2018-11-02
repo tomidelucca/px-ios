@@ -139,7 +139,7 @@ public class AddCardFlow: NSObject, PXFlow {
         guard let identificationTypes = self.model.identificationTypes else {
             return
         }
-        let identificationViewController = IdentificationViewController(identificationTypes: identificationTypes, callback: { [weak self] (identification) in
+        let identificationViewController = IdentificationViewController(identificationTypes: identificationTypes, paymentMethod: model.selectedPaymentMethod, callback: { [weak self] (identification) in
             self?.model.cardToken?.cardholder?.identification = identification
             self?.executeNextStep()
         }) { [weak self] in
@@ -157,7 +157,7 @@ public class AddCardFlow: NSObject, PXFlow {
             self?.model.tokenizedCard = token
             self?.executeNextStep()
             }, failure: {[weak self] (error) in
-                let reachabilityManager = MPXReach()
+                let reachabilityManager = PXReach()
                 if reachabilityManager.connectionStatus().description == ReachabilityStatus.offline.description {
                     self?.model.lastStepFailed = true
                     let sdkError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)

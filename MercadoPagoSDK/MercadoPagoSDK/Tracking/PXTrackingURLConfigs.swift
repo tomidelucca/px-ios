@@ -16,6 +16,5 @@ internal class PXTrackingURLConfigs: NSObject {
     static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
     static let MP_TRACKING_EVENTS_URI =  MP_ENVIROMENT + "/tracking/events"
     static let TRACKING_URL = MP_API_BASE_URL_PROD + MP_TRACKING_EVENTS_URI
-
     static let headerEventTracking = "Accept-version"
 }

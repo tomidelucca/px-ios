@@ -29,6 +29,10 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func trackInfo() {
+         MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.getTermsAndCondiontionReviewPath())
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadUrl(url!)

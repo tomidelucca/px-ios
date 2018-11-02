@@ -29,8 +29,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     // TODO: Deprecate after PaymentVault & AditionalStep redesign/refactor.
     var hideNavBarCallback: (() -> Void)?
 
-    open var screenName: String { return TrackingUtil.NO_NAME_SCREEN }
-    open var screenId: String { return TrackingUtil.NO_SCREEN_ID }
+    open var screenName: String { return TrackingPaths.NO_NAME_SCREEN }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +38,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
 
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if screenName != TrackingUtil.NO_NAME_SCREEN && screenId != TrackingUtil.NO_SCREEN_ID && !tracked {
-            tracked = true
-            trackInfo()
-        }
+        trackInfo()
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -88,7 +84,10 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
+        if screenName != TrackingPaths.NO_NAME_SCREEN && !tracked {
+            tracked = true
+            MPXTracker.sharedInstance.trackScreen(screenName: screenName)
+        }
     }
 
     internal func loadMPStyles() {

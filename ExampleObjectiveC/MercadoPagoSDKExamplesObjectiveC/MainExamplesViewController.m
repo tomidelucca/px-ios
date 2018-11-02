@@ -70,7 +70,8 @@
 
     [self setCheckoutPref_CreditCardNotExcluded];
 
-self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+
 
 //    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243962506-63f1b044-c8bf-4d34-a800-f257a46628b8"];
 
@@ -91,15 +92,24 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
 
+    // Add ReviewConfirm Dynamic views configuration to advanced config.
+    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
+
+    // Add ReviewConfirm Dynamic View Controller configuration to advanced config.
+    TestComponent *dynamicViewControllersConfigObject = [self getReviewScreenDynamicViewControllerConfigurationObject];
+    [advancedConfig setDynamicViewControllersConfiguration: [NSArray arrayWithObjects: dynamicViewControllersConfigObject, nil]];
+    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
+
     // Add PaymentResult configuration to advanced config.
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
 
     // Disable bank deals
-    [advancedConfig setBankDealsEnabled:NO];
+    //[advancedConfig setBankDealsEnabled:NO];
 
     // Set advanced comnfig
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
 
+    // Enable to test one tap
     [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-1458038826212807-062020-ff9273c67bc567320eae1a07d1c2d5b5-246046416"];
     // CDP color.
     // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
@@ -134,6 +144,19 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
     return config;
 }
+
+// ReviewConfirm Dynamic Views Configuration Object
+-(TestComponent *)getReviewScreenDynamicViewsConfigurationObject {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewsConfiguration];
+    return config;
+}
+
+// ReviewConfirm Dynamic View Controller Configuration Object
+-(TestComponent *)getReviewScreenDynamicViewControllerConfigurationObject {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewControllerConfiguration];
+    return config;
+}
+
 
 // PaymentResult
 -(PXPaymentResultConfiguration *)getPaymentResultConfiguration {
@@ -185,7 +208,7 @@ self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"T
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
     self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
-    [self.pref addExcludedPaymentType:@"ticket"];
+//    [self.pref addExcludedPaymentType:@"ticket"];
 }
 
 -(void)setCheckoutPref_WithId {

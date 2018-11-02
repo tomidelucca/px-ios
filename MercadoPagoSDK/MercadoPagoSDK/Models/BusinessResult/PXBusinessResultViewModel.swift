@@ -9,11 +9,20 @@
 import UIKit
 
 class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
-    var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT }
-    var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT_BUSINESS }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: [String: String]())
+
+        let paymentStatus = businessResult.getStatus()
+        var screenPath = ""
+        if paymentStatus == PXBusinessResultStatus.APPROVED {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+        } else if paymentStatus == PXBusinessResultStatus.IN_PROGRESS || paymentStatus == PXBusinessResultStatus.PENDING {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+        } else if paymentStatus == PXBusinessResultStatus.REJECTED {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        }
+
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: [String: String]())
     }
 
     let businessResult: PXBusinessResult
