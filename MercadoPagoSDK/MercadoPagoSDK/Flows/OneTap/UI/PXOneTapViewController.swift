@@ -273,10 +273,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
 
         // Installments arrow animation
-        if targetModel.selectedPayerCost == nil {
-            installmentInfoRow?.hideArrow()
-        } else {
+        if targetModel.shouldShowArrow {
             installmentInfoRow?.showArrow()
+        } else {
+            installmentInfoRow?.hideArrow()
         }
 
         // Add card. - CardData nil

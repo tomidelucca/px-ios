@@ -14,14 +14,11 @@ final class PXOneTapInstallmentInfoViewModel {
     var shouldShow: Bool
 
     init(text: NSAttributedString, installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, shouldShow: Bool) {
-        self.text = text
-        self.installmentData = installmentData
-        self.selectedPayerCost = selectedPayerCost
-        self.shouldShow = shouldShow
-    }
-
-    func update(text: NSAttributedString, installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, shouldShow: Bool) {
-        self.text = text
+        if shouldShow {
+            self.text = text
+        } else {
+            self.text = "".toAttributedString()
+        }
         self.installmentData = installmentData
         self.selectedPayerCost = selectedPayerCost
         self.shouldShow = shouldShow
