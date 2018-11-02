@@ -11,8 +11,7 @@ import UIKit
 class PXReviewViewController: PXComponentContainerViewController {
 
     // MARK: Tracking
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
+    override open var screenName: String { return TrackingPaths.Screens.getReviewAndConfirmPath() }
 
     var footerView: UIView!
     var floatingButtonView: UIView!
@@ -21,7 +20,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     var termsConditionView: PXTermsAndConditionView!
     var discountTermsConditionView: PXTermsAndConditionView?
     lazy var itemViews = [UIView]()
-    fileprivate var viewModel: PXReviewViewModel!
+    private var viewModel: PXReviewViewModel!
 
     var callbackPaymentData: ((PXPaymentData) -> Void)
     var callbackConfirm: ((PXPaymentData) -> Void)
@@ -31,7 +30,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     weak var loadingFloatingButtonComponent: PXAnimatedButton?
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
-    fileprivate let SHADOW_DELTA: CGFloat = 1
+    private let SHADOW_DELTA: CGFloat = 1
+    private var DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED: Bool = false
 
     internal var changePaymentMethodCallback: (() -> Void)?
 
@@ -48,6 +48,15 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED, let dynamicViewController = self.viewModel.getDynamicViewController() {
+            self.present(dynamicViewController, animated: true) { [weak self] in
+                self?.DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED = true
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -89,7 +98,7 @@ class PXReviewViewController: PXComponentContainerViewController {
 // MARK: UI Methods
 extension PXReviewViewController {
 
-    fileprivate func setupUI() {
+    private func setupUI() {
         navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         loadMPStyles()
         navigationController?.navigationBar.barTintColor = ThemeManager.shared.highlightBackgroundColor()
@@ -143,6 +152,17 @@ extension PXReviewViewController {
             itemView.addSeparatorLineToBottom(height: 1)
         }
 
+        // Top Dynamic Custom Views
+        if let topDynamicCustomViews = getTopDynamicCustomViews() {
+            for customView in topDynamicCustomViews {
+                customView.addSeparatorLineToBottom(height: 1)
+                customView.clipsToBounds = true
+                contentView.addSubviewToBottom(customView)
+                PXLayout.matchWidth(ofView: customView).isActive = true
+                PXLayout.centerHorizontally(view: customView).isActive = true
+            }
+        }
+
         // Top Custom View
         if let topCustomView = getTopCustomView() {
             topCustomView.addSeparatorLineToBottom(height: 1)
@@ -158,6 +178,17 @@ extension PXReviewViewController {
             contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
             PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+        }
+
+        // Bottom Dynamic Custom Views
+        if let bottomDynamicCustomViews = getBottomDynamicCustomViews() {
+            for customView in bottomDynamicCustomViews {
+                customView.addSeparatorLineToBottom(height: 1)
+                customView.clipsToBounds = true
+                contentView.addSubviewToBottom(customView)
+                PXLayout.matchWidth(ofView: customView).isActive = true
+                PXLayout.centerHorizontally(view: customView).isActive = true
+            }
         }
 
         // Bottom Custom View
@@ -217,7 +248,7 @@ extension PXReviewViewController {
 // MARK: Component Builders
 extension PXReviewViewController {
 
-    fileprivate func buildItemComponentsViews() -> [UIView] {
+    private func buildItemComponentsViews() -> [UIView] {
         var itemViews = [UIView]()
         let itemComponents = viewModel.buildItemComponents()
         for items in itemComponents {
@@ -226,7 +257,7 @@ extension PXReviewViewController {
         return itemViews
     }
 
-    fileprivate func isConfirmButtonVisible() -> Bool {
+    private func isConfirmButtonVisible() -> Bool {
         guard let floatingButton = self.floatingButtonView, let fixedButton = self.footerView else {
             return false
         }
@@ -235,7 +266,7 @@ extension PXReviewViewController {
         return fixedButtonCoordinates.y > floatingButtonCoordinates.y
     }
 
-    fileprivate func getPaymentMethodComponentView() -> UIView? {
+    private func getPaymentMethodComponentView() -> UIView? {
         let action = PXAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
                 self?.viewModel.trackChangePaymentMethodEvent()
@@ -254,18 +285,18 @@ extension PXReviewViewController {
         return nil
     }
 
-    fileprivate func getSummaryComponentView() -> UIView {
+    private func getSummaryComponentView() -> UIView {
         let summaryComponent = viewModel.buildSummaryComponent(width: PXLayout.getScreenWidth())
         let summaryView = summaryComponent.render()
         return summaryView
     }
 
-    fileprivate func getTitleComponentView() -> UIView {
+    private func getTitleComponentView() -> UIView {
         let titleComponent = viewModel.buildTitleComponent()
         return titleComponent.render()
     }
 
-    fileprivate func getCFTComponentView() -> UIView? {
+    private func getCFTComponentView() -> UIView? {
         if viewModel.hasPayerCostAddionalInfo() {
             let cftView = PXCFTComponentView(withCFTValue: self.viewModel.amountHelper.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
             return cftView
@@ -273,7 +304,7 @@ extension PXReviewViewController {
         return nil
     }
 
-    fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
+    private func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingFloatingButtonComponent)
@@ -288,7 +319,7 @@ extension PXReviewViewController {
         return containedButtonView
     }
 
-    fileprivate func getFooterView() -> UIView {
+    private func getFooterView() -> UIView {
         let payAction = PXAction(label: "Confirmar".localized) {
             if self.shouldAnimatePayButton {
                 self.subscribeLoadingButtonToNotifications(loadingButton: self.loadingButtonComponent)
@@ -305,16 +336,24 @@ extension PXReviewViewController {
         return footerView
     }
 
-    fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
+    private func getTermsAndConditionView() -> PXTermsAndConditionView {
         let termsAndConditionView = PXTermsAndConditionView()
         return termsAndConditionView
     }
 
-    fileprivate func getTopCustomView() -> UIView? {
+    private func getTopDynamicCustomViews() -> [UIView]? {
+        return viewModel.buildTopDynamicCustomViews()
+    }
+
+    private func getBottomDynamicCustomViews() -> [UIView]? {
+        return viewModel.buildBottomDynamicCustomViews()
+    }
+
+    private func getTopCustomView() -> UIView? {
         return viewModel.buildTopCustomView()
     }
 
-    fileprivate func getBottomCustomView() -> UIView? {
+    private func getBottomCustomView() -> UIView? {
         return viewModel.buildBottomCustomView()
     }
 
@@ -341,7 +380,7 @@ extension PXReviewViewController {
 // MARK: Actions.
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
-    fileprivate func confirmPayment() {
+    private func confirmPayment() {
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         self.viewModel.trackConfirmActionEvent()

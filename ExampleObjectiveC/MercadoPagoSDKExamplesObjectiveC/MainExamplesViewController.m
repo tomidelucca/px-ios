@@ -92,11 +92,19 @@
     // Add ReviewConfirm configuration to advanced config.
     [advancedConfig setReviewConfirmConfiguration: [self getReviewScreenConfiguration]];
 
+    // Add ReviewConfirm Dynamic views configuration to advanced config.
+    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
+
+    // Add ReviewConfirm Dynamic View Controller configuration to advanced config.
+    TestComponent *dynamicViewControllersConfigObject = [self getReviewScreenDynamicViewControllerConfigurationObject];
+    [advancedConfig setDynamicViewControllersConfiguration: [NSArray arrayWithObjects: dynamicViewControllersConfigObject, nil]];
+    [advancedConfig setReviewConfirmDynamicViewsConfiguration:[self getReviewScreenDynamicViewsConfigurationObject]];
+
     // Add PaymentResult configuration to advanced config.
     [advancedConfig setPaymentResultConfiguration: [self getPaymentResultConfiguration]];
 
     // Disable bank deals
-    [advancedConfig setBankDealsEnabled:NO];
+    //[advancedConfig setBankDealsEnabled:NO];
 
     // Set advanced comnfig
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
@@ -136,6 +144,19 @@
     PXReviewConfirmConfiguration *config = [TestComponent getReviewConfirmConfiguration];
     return config;
 }
+
+// ReviewConfirm Dynamic Views Configuration Object
+-(TestComponent *)getReviewScreenDynamicViewsConfigurationObject {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewsConfiguration];
+    return config;
+}
+
+// ReviewConfirm Dynamic View Controller Configuration Object
+-(TestComponent *)getReviewScreenDynamicViewControllerConfigurationObject {
+    TestComponent *config = [TestComponent getReviewConfirmDynamicViewControllerConfiguration];
+    return config;
+}
+
 
 // PaymentResult
 -(PXPaymentResultConfiguration *)getPaymentResultConfiguration {
@@ -187,7 +208,7 @@
     NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
     self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
-    [self.pref addExcludedPaymentType:@"ticket"];
+//    [self.pref addExcludedPaymentType:@"ticket"];
 }
 
 -(void)setCheckoutPref_WithId {

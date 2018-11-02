@@ -17,7 +17,7 @@ open class PXTracker: NSObject {
     /**
      Set your own tracker listener protocol to be aware of PX-Checkout tracking events
      */
-    open static func setListener(_ listener: PXTrackerListener) {
+    public static func setListener(_ listener: PXTrackerListener) {
         MPXTracker.sharedInstance.setTrack(listener: listener)
     }
 }

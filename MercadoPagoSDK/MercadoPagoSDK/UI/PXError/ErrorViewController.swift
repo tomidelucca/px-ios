@@ -23,8 +23,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
     var error: MPSDKError!
     var callback: (() -> Void)?
 
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_ERROR }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_ERROR }
+    override open var screenName: String { return TrackingPaths.Screens.getErrorPath() }
 
     open static var defaultErrorCancel: (() -> Void)?
 
@@ -49,26 +48,26 @@ internal class ErrorViewController: MercadoPagoUIViewController {
     }
 
     override open func trackInfo() {
-        var metadata: [String: String] = [:]
-
-        if let statusError = error.apiException?.status {
-            metadata[TrackingUtil.METADATA_ERROR_STATUS] = String(describing: statusError)
-        }
-        if let causeArray = error.apiException?.cause, causeArray.count > 0 {
-            if !String.isNullOrEmpty(causeArray[0].code) {
-                metadata[TrackingUtil.METADATA_ERROR_CODE] = causeArray[0].code
-            }
-        }
-
-        if !String.isNullOrEmpty(error.requestOrigin) {
-            metadata[TrackingUtil.METADATA_ERROR_REQUEST] = error.requestOrigin
-        }
-
-        if !String.isNullOrEmpty(error.message) {
-            metadata["error_message"] = error.message
-        }
-
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
+//        var metadata: [String: String] = [:]
+//
+//        if let statusError = error.apiException?.status {
+//            metadata[TrackingPaths.METADATA_ERROR_STATUS] = String(describing: statusError)
+//        }
+//        if let causeArray = error.apiException?.cause, causeArray.count > 0 {
+//            if !String.isNullOrEmpty(causeArray[0].code) {
+//                metadata[TrackingPaths.METADATA_ERROR_CODE] = causeArray[0].code
+//            }
+//        }
+//
+//        if !String.isNullOrEmpty(error.requestOrigin) {
+//            metadata[TrackingPaths.METADATA_ERROR_REQUEST] = error.requestOrigin
+//        }
+//
+//        if !String.isNullOrEmpty(error.message) {
+//            metadata["error_message"] = error.message
+//        }
+//
+//        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: metadata)
     }
 
     override open func viewDidLoad() {

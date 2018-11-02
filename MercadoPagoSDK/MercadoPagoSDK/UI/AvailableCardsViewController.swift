@@ -14,7 +14,7 @@ internal class AvailableCardsViewController: MercadoPagoUIViewController {
     let buttonFontSize: CGFloat = 18
 
     @IBOutlet weak var retryButton: UIButton!
-    override open var screenName: String { return "AVAILABLE_CARDS_DETAIL" }
+
     var availableCardsDetailView: AvailableCardsDetailView!
     var viewModel: AvailableCardsViewModel!
 
@@ -57,6 +57,14 @@ internal class AvailableCardsViewController: MercadoPagoUIViewController {
             callbackCancel()
         }
 
+    }
+
+    override func trackInfo() {
+        // Get the card type of the first track to track
+        guard let cardType = viewModel.paymentMethods.first?.paymentTypeId else {
+            return
+        }
+        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.getAvailablePaymentMethodsPath(paymentTypeId: cardType))
     }
 
 }

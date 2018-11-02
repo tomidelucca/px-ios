@@ -16,6 +16,9 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
 
     fileprivate var viewModel: PXBankDealDetailsViewModel!
 
+    // Tracking
+    override open var screenName: String { return TrackingPaths.Screens.getTermsAndConditionBankDealsPath() }
+
     init(viewModel: PXBankDealDetailsViewModel) {
         self.viewModel = viewModel
         super.init()
