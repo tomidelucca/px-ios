@@ -100,7 +100,7 @@ extension PXOneTapViewModel {
                     }
 
                     var showArrow: Bool = true
-                    if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == "debit_card" {
+                    if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == PXPaymentTypes.DEBIT_CARD.rawValue {
                         showArrow = false
                     } else if targetCardData.selectedPayerCost == nil {
                         showArrow = false
