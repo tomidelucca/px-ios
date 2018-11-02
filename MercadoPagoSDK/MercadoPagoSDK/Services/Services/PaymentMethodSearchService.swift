@@ -84,15 +84,17 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
             do {
-            let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                let dataMock = "{\"default_option\":null,\"custom_options\":[],\"groups\":[{\"children\":[],\"children_header\":null,\"comment\":null,\"description\":\"Boleto Bancário\",\"id\":\"bolbradesco\",\"show_icon\":true,\"type\":\"payment_method\"},{\"children\":[],\"children_header\":null,\"comment\":null,\"description\":\"Pagamento na lotérica sem boleto\",\"id\":\"pec\",\"show_icon\":true,\"type\":\"payment_method\"}],\"payment_methods\":[{\"id\":\"pec\",\"name\":\"Pagamento na lotérica sem boleto\",\"payment_type_id\":\"ticket\",\"status\":\"active\",\"secure_thumbnail\":\"https://www.mercadopago.com/org-img/MP3/API/logos/pec.gif\",\"thumbnail\":\"http://img.mlstatic.com/org-img/MP3/API/logos/pec.gif\",\"deferred_capture\":\"supported\",\"settings\":[],\"additional_info_needed\":[],\"min_allowed_amount\":4,\"max_allowed_amount\":2000,\"accreditation_time\":1440,\"financial_institutions\":[],\"processing_modes\":[\"aggregator\"]},{\"id\":\"bolbradesco\",\"name\":\"Boleto\",\"payment_type_id\":\"ticket\",\"status\":\"active\",\"secure_thumbnail\":\"https://www.mercadopago.com/org-img/MP3/API/logos/bolbradesco.gif\",\"thumbnail\":\"http://img.mlstatic.com/org-img/MP3/API/logos/bolbradesco.gif\",\"deferred_capture\":\"does_not_apply\",\"settings\":[],\"additional_info_needed\":[\"bolbradesco_name\",\"bolbradesco_identification_type\",\"bolbradesco_identification_number\"],\"min_allowed_amount\":4,\"max_allowed_amount\":15000,\"accreditation_time\":1440,\"financial_institutions\":[],\"processing_modes\":[\"aggregator\"]}],\"cards\":[]}".data(using: .utf8)
+
+            let jsonResult = try JSONSerialization.jsonObject(with: dataMock!, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
-                    let apiException = try PXApiException.fromJSON(data: data)
+                    let apiException = try PXApiException.fromJSON(data: dataMock!)
                     failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_EXCEPTION_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"], apiException: apiException))
                 } else {
 
                     if paymentSearchDic.allKeys.count > 0 {
-                        let paymentSearch = try PXPaymentMethodSearch.fromJSON(data: data)
+                        let paymentSearch = try PXPaymentMethodSearch.fromJSON(data: dataMock!)
                         success(paymentSearch)
                     } else {
                         failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
