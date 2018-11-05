@@ -45,7 +45,7 @@ extension AccountMoneyCard {
         PXLayout.pinRight(view: patternView, withMargin: patternDeltaOffset).isActive = true
 
         let label = UILabel()
-        label.text = " \(balanceText)   " //TODO: Proper inset with labels.
+        label.text = " \(balanceText)   "
         label.font = Utils.getFont(size: PXLayout.XXS_FONT)
         label.textColor = UIColor.white
         label.textAlignment = .center

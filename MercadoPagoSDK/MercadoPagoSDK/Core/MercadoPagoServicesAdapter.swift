@@ -18,7 +18,6 @@ internal class MercadoPagoServicesAdapter {
     }
 
     func getTimeOut() -> TimeInterval {
-        // TODO: Get it from services
         return 15.0
     }
 

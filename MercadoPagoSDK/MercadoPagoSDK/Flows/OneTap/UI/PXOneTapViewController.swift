@@ -122,8 +122,6 @@ extension PXOneTapViewController {
 
         // Center white View
         let whiteView = getWhiteView()
-        // TODO: Margin factor for white view is temporary. Only for test
-        // Make solution like expandBody
         contentView.addSubviewToBottom(whiteView)
         PXLayout.setHeight(owner: whiteView, height: PXCardSliderSizeManager.getWhiteViewHeight(viewController: self)).isActive = true
         PXLayout.centerHorizontally(view: whiteView).isActive = true
@@ -300,7 +298,6 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     func addPaymentMethodCardDidTap() {
-        // TODO: Go to grupos -> add new card
         shouldChangePaymentMethod()
     }
 
