@@ -11,7 +11,6 @@ import Foundation
 final class PXOneTapViewModel: PXReviewViewModel {
     // Privates
     private var cardSliderViewModel: [PXCardSliderViewModel] = [PXCardSliderViewModel]()
-
     // Publics
     var expressData: [PXOneTapDto]?
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
