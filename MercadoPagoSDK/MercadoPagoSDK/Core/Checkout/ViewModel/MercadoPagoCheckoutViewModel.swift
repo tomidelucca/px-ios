@@ -794,7 +794,7 @@ extension MercadoPagoCheckoutViewModel {
             return true
         }
         if let hashableSet = NSSet(array: actual) as? Set<AnyHashable> {
-            NSSet(array: root).isEqual(to: hashableSet)
+            return NSSet(array: root).isEqual(to: hashableSet)
         }
         return true
     }
