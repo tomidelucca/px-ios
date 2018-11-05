@@ -80,6 +80,14 @@ internal class PaymentResult {
     func isContingency() -> Bool {
         return self.statusDetail == PXPendingStatusDetail.CONTINGENCY.rawValue
     }
+
+    func isOfflinePayment() -> Bool {
+        if let paymentMethod = self.paymentData?.paymentMethod {
+            return PXPaymentTypes.offlinePaymentTypes().contains(paymentMethod.paymentTypeId)
+        }
+
+        return false
+    }
 }
 
 // MARK: Congrats logic
