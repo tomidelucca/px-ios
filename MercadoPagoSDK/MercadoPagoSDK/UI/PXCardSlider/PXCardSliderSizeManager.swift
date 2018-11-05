@@ -27,8 +27,10 @@ struct PXCardSliderSizeManager {
     static func getItemSize() -> CGSize {
         if UIDevice.isSmallDevice() {
             return CGSize(width: 290, height: 190)
-        } else if UIDevice.isBigDevice() {
+        } else if UIDevice.isLargeDevice() {
             return CGSize(width: 340, height: 220)
+        } else if UIDevice.isExtraLargeDevice() {
+            return CGSize(width: 380, height: 240)
         } else {
             return CGSize(width: 340, height: 220)
         }
