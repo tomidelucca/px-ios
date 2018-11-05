@@ -793,7 +793,10 @@ extension MercadoPagoCheckoutViewModel {
         guard let root = rootPaymentMethodOptions, let actual = paymentMethodOptions else {
             return true
         }
-        return NSSet(array: root).isEqual(to: NSSet(array: actual) as! Set<AnyHashable>)
+        if let hashableSet = NSSet(array: actual) as? Set<AnyHashable> {
+            NSSet(array: root).isEqual(to: hashableSet)
+        }
+        return true
     }
 }
 
