@@ -224,7 +224,15 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let paymentMethodsOptions = getPaymentMethodsOptions(paymentMethodPluginsToShow)
         PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS, value: paymentMethodsOptions)
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
+        var customerOptions : [PXCardInformation]? = nil
+        var pluginOptions : [PXPaymentMethodPlugin] = []
+        
+        if inRootGroupSelection() { // Solo se muestran las opciones custom y los plugines en root
+            customerOptions = self.customPaymentOptions
+            pluginOptions = paymentMethodPluginsToShow
+        }
+        
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions , paymentMethodPlugins: pluginOptions, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
             if self == nil {
                 return
             }
@@ -780,6 +788,15 @@ extension MercadoPagoCheckoutViewModel {
 
     static internal func clearEnviroment() {
         MercadoPagoCheckoutViewModel.error = nil
+    }
+    func inRootGroupSelection() -> Bool {
+        guard let root = rootPaymentMethodOptions, let actual = paymentMethodOptions else {
+            return true
+        }
+        if let hashableSet = NSSet(array: actual) as? Set<AnyHashable> {
+            return NSSet(array: root).isEqual(to: hashableSet)
+        }
+        return true
     }
 }
 
