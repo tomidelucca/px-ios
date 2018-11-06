@@ -61,7 +61,7 @@ extension PXOneTapViewModel {
                 let displayAmount = Utils.getAmountFormated(amount: accountMoney.availableBalance, forCurrency: currency)
                 let cardData = PXCardDataFactory().create(cardName: "\(amTitle) \(displayAmount)", cardNumber: "", cardCode: "", cardExpiration: "")
                 let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false)
-                if  !accountMoney.invested {
+                if  accountMoney.invested {
                     viewModelCard.displayMessage = "onetap_invested_account_money".localized_beta
                 }
                 sliderModel.append(viewModelCard)
