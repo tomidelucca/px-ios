@@ -262,6 +262,7 @@ extension PXOneTapViewController {
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
     func didTapSummary() {
         if viewModel.amountHelper.discount != nil {
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: viewModel.amountHelper.discount?.getDiscountDescription()) {
 
                 if UIDevice.isSmallDevice() {
@@ -269,6 +270,7 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
                 }
             }
         } else if viewModel.amountHelper.consumedDiscount {
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: "modal_title_consumed_discount".localized_beta) {
 
                 if UIDevice.isSmallDevice() {

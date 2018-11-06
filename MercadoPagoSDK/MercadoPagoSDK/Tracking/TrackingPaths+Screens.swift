@@ -175,5 +175,9 @@ extension TrackingPaths.Screens {
         static func getOneTapInstallmentsPath() -> String {
             return TrackingPaths.pxTrack + "/review/one_tap/installments"
         }
+
+        static func getOneTapDiscountPath() -> String {
+            return TrackingPaths.pxTrack + "/review/one_tap/applied_discount"
+        }
     }
 }
