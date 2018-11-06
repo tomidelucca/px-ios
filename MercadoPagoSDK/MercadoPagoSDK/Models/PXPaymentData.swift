@@ -230,7 +230,8 @@ extension PXPaymentData {
     }
 
     internal func clearPayerData() {
-        self.payer?.clearCollectedData() // No borrar el payer directo
+        self.payer = self.payer?.copy() as? PXPayer
+        self.payer?.clearCollectedData()
     }
 
     internal func clearDiscount() {

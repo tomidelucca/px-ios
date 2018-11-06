@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 @objcMembers
-open class PXPayer: NSObject, Codable {
+open class PXPayer: NSObject, Codable, NSCopying {
 
     open var id: String?
     open var accessToken: String?
@@ -47,6 +47,20 @@ open class PXPayer: NSObject, Codable {
         let identification: PXIdentification? = try container.decodeIfPresent(PXIdentification.self, forKey: .identification)
 
         self.init(id: id, accessToken: accessToken, identification: identification, type: type, entityType: entityType, email: email, firstName: firstName, lastName: lastName)
+    }
+
+    /// :nodoc:
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let copyObj = PXPayer(email: self.email)
+        copyObj.id = id
+        copyObj.accessToken = accessToken
+        copyObj.identification = identification
+        copyObj.type = type
+        copyObj.entityType = entityType
+        copyObj.email = email
+        copyObj.firstName = firstName
+        copyObj.lastName = lastName
+        return copyObj
     }
 }
 

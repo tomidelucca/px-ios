@@ -41,7 +41,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount, payerData: PXPayerData(payer: self.properties.paymentData.payer))
+            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, discount: self.properties.paymentData.discount, campaign: self.properties.paymentData.campaign, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount)
         }
     }
 
