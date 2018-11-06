@@ -51,7 +51,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, payerData: PXPayerData(payer: self.paymentData.payer))
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
         }
     }
 
@@ -569,8 +569,20 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             prepareForNewSelection()
             self.initWithPaymentData = false
         } else {
-            self.readyToPay = true
+            self.readyToPay = self.needToCompletePayerInfo(paymentData: paymentData)
         }
+    }
+
+    func needToCompletePayerInfo(paymentData: PXPaymentData) -> Bool {
+        if let paymentMethod = paymentData.getPaymentMethod() {
+            if paymentMethod.isPayerInfoRequired {
+                if self.isPayerSet(payer: paymentData.getPayer()) {
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
     public func updateCheckoutModel(payment: PXPayment) {
@@ -736,16 +748,19 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func clearCollectedData() {
-        let isPayerSet: Bool = self.checkoutPreference.payer.firstName != nil
-            && self.checkoutPreference.payer.lastName != nil
-            && self.checkoutPreference.payer.identification?.type != nil
-            && self.checkoutPreference.payer.identification?.number != nil
-
         self.paymentData.clearPaymentMethodData()
 
-        if !isPayerSet {
+        if !self.isPayerSet(payer: self.checkoutPreference.payer) {
             self.paymentData.clearPayerData()
         }
+    }
+
+    func isPayerSet(payer: PXPayer?) -> Bool {
+        if let payerData = payer, let payerIdentification = payerData.identification {
+            return payerData.firstName != nil && payerData.lastName != nil && payerIdentification.type != nil && payerIdentification.number != nil
+        }
+
+        return false
     }
 
     func cleanPayerCostSearch() {
