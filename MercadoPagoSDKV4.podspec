@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
   s.author           = "Mercado Pago"
-  s.source           = { :git => "https://github.com/mercadopago/px-ios.git", :tag => s.version.to_s }
+  s.source           = { :git => 'git@github.com:mercadopago/px-ios.git', :tag => s.version.to_s }
   s.swift_version = '4.0'
   s.platform     = :ios, '9.0'
   s.requires_arc = true
@@ -23,6 +23,8 @@ Pod::Spec.new do |s|
     esc.pod_target_xcconfig = {
       'OTHER_SWIFT_FLAGS[config=Debug]' => '-D PX_PRIVATE_POD',
       'OTHER_SWIFT_FLAGS[config=Release]' => '-D PX_PRIVATE_POD',
+      'OTHER_SWIFT_FLAGS[config=MDS-Custom]' => '-D PX_PRIVATE_POD',
+      'OTHER_SWIFT_FLAGS[config=MDS-Nightly]' => '-D PX_PRIVATE_POD',
       'OTHER_SWIFT_FLAGS[config=Testflight]' => '-D PX_PRIVATE_POD'
     }
   end
