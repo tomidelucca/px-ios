@@ -206,7 +206,7 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        var diffPricingString: String?
+        var diffPricingString: String? = nil
         if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
             diffPricingString = String(describing: differentialPricing)
         }
