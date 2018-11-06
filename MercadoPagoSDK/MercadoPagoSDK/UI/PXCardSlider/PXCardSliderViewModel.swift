@@ -16,6 +16,7 @@ final class PXCardSliderViewModel {
     var cardData: CardData?
     var selectedPayerCost: PXPayerCost?
     var cardId: String? = nil
+    var displayMessage: String?
 
     init(_ paymentMethodId: String, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool) {
         self.paymentMethodId = paymentMethodId
