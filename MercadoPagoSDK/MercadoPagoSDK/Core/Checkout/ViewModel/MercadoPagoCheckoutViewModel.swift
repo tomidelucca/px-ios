@@ -576,7 +576,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     func needToCompletePayerInfo(paymentData: PXPaymentData) -> Bool {
         if let paymentMethod = paymentData.getPaymentMethod() {
             if paymentMethod.isPayerInfoRequired {
-                if self.isPayerSet(payer: self.checkoutPreference.payer) && self.isPayerSet(payer: paymentData.getPayer()) {
+                if self.isPayerSet(payer: paymentData.getPayer()) {
                     return true
                 }
             }
