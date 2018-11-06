@@ -403,5 +403,12 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
         <key>value</key>
         <string>Total no Mercado Pago:</string>
     </dict>
+    <key>onetap_select_installment_title</key>
+    <dict>
+        <key>comment</key>
+        <string></string>
+        <key>value</key>
+        <string>Selecione o parcelamento</string>
+    </dict>
 </dict>
 </plist>

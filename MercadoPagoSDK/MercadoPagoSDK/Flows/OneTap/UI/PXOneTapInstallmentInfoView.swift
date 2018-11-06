@@ -28,12 +28,11 @@ extension PXOneTapInstallmentInfoView {
     private func setupTitleLabel() {
         titleLabel.alpha = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Selecciona la cuota".localized
+        titleLabel.text = "onetap_select_installment_title".localized_beta
         titleLabel.textAlignment = .left
         titleLabel.font = Utils.getFont(size: PXLayout.XS_FONT)
         titleLabel.textColor = ThemeManager.shared.greyColor()
         addSubview(titleLabel)
-
         PXLayout.matchHeight(ofView: titleLabel).isActive = true
         PXLayout.centerVertically(view: titleLabel).isActive = true
         PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
