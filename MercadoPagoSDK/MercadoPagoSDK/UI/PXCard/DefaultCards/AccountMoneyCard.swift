@@ -53,9 +53,18 @@ extension AccountMoneyCard {
         label.layer.borderWidth = 1
         label.layer.borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
         containerView.addSubview(label)
-
         PXLayout.pinLeft(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinBottom(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.setHeight(owner: label, height: PXLayout.L_MARGIN).isActive = true
+
+        let amLogo = UIImageView()
+        amLogo.backgroundColor = .clear
+        amLogo.contentMode = .scaleAspectFit
+        amLogo.image = ResourceManager.shared.getImage("amLogo")
+        containerView.addSubview(amLogo)
+        PXLayout.setWidth(owner: amLogo, width: PXCardSliderSizeManager.getItemContainerSize().height * 0.60).isActive = true
+        PXLayout.setHeight(owner: amLogo, height: PXCardSliderSizeManager.getItemContainerSize().height * 0.35).isActive = true
+        PXLayout.pinTop(view: amLogo, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        PXLayout.pinLeft(view: amLogo, to: label, withMargin: 0).isActive = true
     }
 }
