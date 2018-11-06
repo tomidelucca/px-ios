@@ -97,7 +97,6 @@ extension MercadoPagoCheckout {
                     identificationViewController.showErrorMessage("Revisa este dato".localized)
                 }
             } else {
-                strongSelf.viewModel.pxNavigationHandler.dismissLoading()
                 strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] () in
                     self?.createNewCardToken()
                 })
@@ -207,7 +206,7 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        var diffPricingString: String? = nil
+        var diffPricingString: String?
         if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
             diffPricingString = String(describing: differentialPricing)
         }
