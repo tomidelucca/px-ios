@@ -150,7 +150,8 @@ extension PXOneTapInstallmentInfoView {
         PXLayout.pinRight(view: arrowImage, withMargin: PXLayout.M_MARGIN + PXLayout.XXXS_MARGIN).isActive = true
         arrowImage.tag = colapsedTag
 
-        if let targetModel = model?.first, !targetModel.shouldShow {
+        if let targetModel = model?.first, !targetModel.shouldShowArrow {
+            disableTap()
             hideArrow()
         }
     }
@@ -197,7 +198,7 @@ extension PXOneTapInstallmentInfoView {
     }
 
     @objc func toggleInstallments() {
-        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex), currentModel[currentIndex].shouldShow  {
+        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex), currentModel[currentIndex].shouldShowArrow  {
             if let installmentData = currentModel[currentIndex].installmentData {
                 if arrowImage.tag != colapsedTag {
                     delegate?.hideInstallments()
