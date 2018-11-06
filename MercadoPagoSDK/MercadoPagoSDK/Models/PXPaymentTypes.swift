@@ -49,6 +49,10 @@ public enum PXPaymentTypes: String {
      */
     case BOLBRADESCO = "bolbradesco"
     /**
+     PEC - Payment type
+     */
+    case PEC = "pec"
+    /**
      PAYMENT_METHOD_PLUGIN - Payment type
      */
     case PAYMENT_METHOD_PLUGIN = "payment_method_plugin"
