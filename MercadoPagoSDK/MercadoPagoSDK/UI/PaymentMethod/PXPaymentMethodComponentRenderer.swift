@@ -28,6 +28,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
         let paymentMethodIcon = component.getPaymentMethodIconComponent()
         pmBodyView.paymentMethodIcon = paymentMethodIcon.render()
         pmBodyView.paymentMethodIcon!.layer.cornerRadius = IMAGE_WIDTH/2
+        pmBodyView.paymentMethodIcon!.layer.borderWidth = 2
+        pmBodyView.paymentMethodIcon!.layer.borderColor = ThemeManager.shared.lightTintColor().cgColor
         pmBodyView.addSubview(pmBodyView.paymentMethodIcon!)
         PXLayout.centerHorizontally(view: pmBodyView.paymentMethodIcon!).isActive = true
         PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true

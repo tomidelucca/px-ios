@@ -346,6 +346,38 @@ internal class Utils {
         return ""
     }
 
+    class func getMasks(inDictionary dictID: String, withKey key: String) -> [TextMaskFormater]? {
+        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+
+        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
+            if let mask = IDtype.value(forKey: key) as? String, mask != ""{
+                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false)
+                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: false, leftToRight: false, completeEmptySpacesWith: " ")
+                return[customInitialMask, customMask]
+            }
+        }
+        return nil
+    }
+
+    class func getMasks(forId typeId: PXIdentificationType?) -> [TextMaskFormater] {
+        let site = SiteManager.shared.getSiteId()
+        let defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
+        let defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
+
+        if typeId != nil {
+            if let masks = getMasks(inDictionary: site + "_" + (typeId?.id)!, withKey: "identification_mask") {
+                return masks
+            } else if let masks = getMasks(inDictionary: site, withKey: "identification_mask") {
+                return masks
+            } else {
+                return [defaultInitialMask, defaultMask]
+            }
+        } else {
+            return [defaultInitialMask, defaultMask]
+        }
+    }
+
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch: PXPaymentMethodSearch, paymentMethodId: String, paymentTypeId: PXPaymentTypes?) -> PXPaymentMethodSearchItem? {
         guard paymentMethodSearch.paymentMethodSearchItem != nil
             else {return nil}

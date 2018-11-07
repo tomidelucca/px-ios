@@ -23,8 +23,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     //identification Masks
     var identificationMask = TextMaskFormater(mask: "XXXXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
 
-    var defaultInitialMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX", completeEmptySpaces: true, leftToRight: false)
-    var defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
     var defaultEditTextMask = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
 
     var toolbar: PXToolbar?
@@ -304,36 +302,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         self.navigationController?.popViewController(animated: false)
     }
 
-    private func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]? {
-        let path = ResourceManager.shared.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
-
-        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary {
-            if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
-                let customInitialMask = TextMaskFormater(mask: mask, completeEmptySpaces: true, leftToRight: false)
-                let customMask = TextMaskFormater(mask: mask, completeEmptySpaces: true, leftToRight: false, completeEmptySpacesWith: " ")
-                return[customInitialMask, customMask]
-            }
-        }
-        return nil
-    }
-
-    private func getIdMask(IDtype: PXIdentificationType?) -> [TextMaskFormater] {
-        let site = SiteManager.shared.getSiteId()
-
-        if let identificationType = IDtype {
-            if let identificationTypeId = identificationType.id, let masks = maskFinder(dictID: site + "_" + identificationTypeId, forKey: "identification_mask") {
-                return masks
-            } else if let masks = maskFinder(dictID: site, forKey: "identification_mask") {
-                return masks
-            } else {
-                return [defaultInitialMask, defaultMask]
-            }
-        } else {
-            return [defaultInitialMask, defaultMask]
-        }
-    }
-
     private func drawMask(masks: [TextMaskFormater]) {
 
         let charactersCount = numberTextField.text?.count
@@ -351,6 +319,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     private func remask() {
-        drawMask(masks: getIdMask(IDtype: identificationType))
+        drawMask(masks: Utils.getMasks(forId: identificationType))
     }
 }
