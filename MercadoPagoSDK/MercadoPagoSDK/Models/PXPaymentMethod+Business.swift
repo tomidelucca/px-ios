@@ -36,7 +36,8 @@ extension PXPaymentMethod: Cellable {
     }
 
     internal var isPayerInfoRequired: Bool {
-        if isAdditionalInfoNeeded("bolbradesco_name") || isAdditionalInfoNeeded("bolbradesco_identification_type") || isAdditionalInfoNeeded("bolbradesco_identification_number") {
+        if isAdditionalInfoNeeded("bolbradesco_name") || isAdditionalInfoNeeded("bolbradesco_identification_type") || isAdditionalInfoNeeded("bolbradesco_identification_number")
+        || isAdditionalInfoNeeded("pec_name") || isAdditionalInfoNeeded("pec_identification_type") || isAdditionalInfoNeeded("pec_identification_number") {
             return true
         }
         return false
@@ -276,5 +277,9 @@ extension PXPaymentMethod: Cellable {
 
     var isBolbradesco: Bool {
         return self.id.contains(PXPaymentTypes.BOLBRADESCO.rawValue)
+    }
+
+    var isPec: Bool {
+        return self.id.contains(PXPaymentTypes.PEC.rawValue)
     }
 }
