@@ -31,6 +31,8 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var installmentInfoRow: PXOneTapInstallmentInfoView?
     var installmentsSelectorView: PXOneTapInstallmentsSelectorView?
 
+    var selectedCard: PXCardSliderViewModel?
+
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
@@ -63,10 +65,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isMovingToParentViewController {
-            viewModel.trackTapBackEvent()
-        }
-
         if shouldAnimatePayButton {
             PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
         }
@@ -169,6 +167,11 @@ extension PXOneTapViewController {
         scrollView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false
 
+        // Track back action.
+        callbackBack = { [weak self] in
+            self?.viewModel.trackTapBackEvent()
+        }
+
         addCardSlider(inContainerView: cardSliderContentView)
     }
 }
@@ -238,7 +241,9 @@ extension PXOneTapViewController {
     private func confirmPayment() {
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
-        self.viewModel.trackConfirmActionEvent()
+        if let selectedCardItem = selectedCard {
+            viewModel.trackConfirmEvent(selectedCard: selectedCardItem)
+        }
         self.hideBackButton()
         self.hideNavBar()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
@@ -258,6 +263,7 @@ extension PXOneTapViewController {
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
     func didTapSummary() {
         if viewModel.amountHelper.discount != nil {
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: viewModel.amountHelper.discount?.getDiscountDescription()) {
 
                 if UIDevice.isSmallDevice() {
@@ -265,6 +271,7 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
                 }
             }
         } else if viewModel.amountHelper.consumedDiscount {
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
             PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: "modal_title_consumed_discount".localized_beta) {
 
                 if UIDevice.isSmallDevice() {
@@ -278,6 +285,9 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
 // MARK: CardSlider delegate.
 extension PXOneTapViewController: PXCardSliderProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
+        selectedCard = targetModel
+
+        viewModel.trackSwipe()
 
         // Installments arrow animation
         if targetModel.shouldShowArrow {
@@ -362,6 +372,10 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     func showInstallments(installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?) {
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
+        }
+
+        if let selectedCardItem = selectedCard {
+            self.viewModel.trackInstallmentsView(installmentData: installmentData, selectedCard: selectedCardItem)
         }
 
         PXFeedbackGenerator.selectionFeedback()

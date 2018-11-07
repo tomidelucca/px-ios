@@ -12,6 +12,7 @@ final class PXCardSliderViewModel {
     let issuerId: String
     let cardUI: CardUI
     let shouldShowArrow: Bool
+    var accountMoneyBalance: Double?
     var payerCost: [PXPayerCost] = [PXPayerCost]()
     var cardData: CardData?
     var selectedPayerCost: PXPayerCost?
@@ -57,5 +58,12 @@ extension PXCardSliderViewModel: PaymentMethodOption {
 
     func isCustomerPaymentMethod() -> Bool {
         return PXPaymentTypes.ACCOUNT_MONEY.rawValue != paymentMethodId
+    }
+}
+
+// MARK: Setters
+extension PXCardSliderViewModel {
+    func setAccountMoney(accountMoneyBalance: Double) {
+        self.accountMoneyBalance = accountMoneyBalance
     }
 }
