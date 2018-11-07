@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MLUI
 
 class PXInstructionsActionRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
@@ -16,29 +17,38 @@ class PXInstructionsActionRenderer: NSObject {
     func render(_ instructionsAction: PXInstructionsActionComponent) -> PXInstructionsActionView {
         let instructionsActionView = PXInstructionsActionView()
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsActionView.backgroundColor = .pxLightGray
+        instructionsActionView.backgroundColor = .clear
 
-        guard let label = instructionsAction.props.instructionActionInfo?.label, instructionsAction.props.instructionActionInfo?.tag != nil, let url = instructionsAction.props.instructionActionInfo?.url else {
+        guard let label = instructionsAction.props.instructionActionInfo?.label, instructionsAction.props.instructionActionInfo?.tag != nil else {
             return instructionsActionView
         }
 
-        instructionsActionView.actionButton = buildActionButton(with: label, url: url, in: instructionsActionView)
+        instructionsActionView.actionButton = buildActionButton(with: label, props: instructionsAction.props.instructionActionInfo, in: instructionsActionView)
 
         return instructionsActionView
     }
 
-    func buildActionButton(with text: String, url: String, in superView: UIView) -> UIButton {
+    func buildActionButton(with text: String, props: PXInstructionAction?, in superView: UIView) -> UIButton {
         let button = MPButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = Utils.getFont(size: ACTION_LABEL_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
-        button.actionLink = url
-        button.add(for: .touchUpInside) {
-            if let URL = button.actionLink {
-                self.goToURL(URL)
+
+        if props?.tag == PXActionTag.LINK.rawValue, let url = props?.url {
+            button.actionLink = url
+
+            button.add(for: .touchUpInside) {
+                if let URL = button.actionLink {
+                    self.goToURL(URL)
+                }
+            }
+        } else if props?.tag == PXActionTag.COPY.rawValue, let content = props?.content {
+            button.add(for: .touchUpInside) {
+                self.copyContent(content)
             }
         }
+
         superView.addSubview(button)
 
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
@@ -57,6 +67,11 @@ class PXInstructionsActionRenderer: NSObject {
         if let url = URL(string: url) {
             UIApplication.shared.openURL(url)
         }
+    }
+
+    func copyContent(_ content: String) {
+        UIPasteboard.general.string = content
+        MLSnackbar.show(withTitle: "payment_result_screen_congrats_copy_button".localized_beta, type: MLSnackbarType.success(), duration: .short)
     }
 }
 

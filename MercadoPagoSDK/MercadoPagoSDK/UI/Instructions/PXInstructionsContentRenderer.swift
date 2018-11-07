@@ -42,6 +42,21 @@ class PXInstructionsContentRenderer: NSObject {
             }
         }
 
+        if instructionsContent.hasInteractions(), let interactionsComponent = instructionsContent.getInteractionsComponent() {
+            instructionsContentView.interactionsView = interactionsComponent.render()
+            if let interactionsView = instructionsContentView.interactionsView {
+                instructionsContentView.addSubview(interactionsView)
+                if let lastView = bottomView {
+                    PXLayout.put(view: interactionsView, onBottomOf: lastView).isActive = true
+                } else {
+                    PXLayout.pinTop(view: interactionsView).isActive = true
+                }
+                PXLayout.centerHorizontally(view: interactionsView).isActive = true
+                PXLayout.matchWidth(ofView: interactionsView).isActive = true
+                bottomView = instructionsContentView.interactionsView
+            }
+        }
+
         if instructionsContent.hasTertiaryInfo(), let tertiaryInfoComponent = instructionsContent.getTertiaryInfoComponent() {
             instructionsContentView.tertiaryInfoView = tertiaryInfoComponent.render()
             if let tertiaryInfoView = instructionsContentView.tertiaryInfoView {
@@ -96,6 +111,7 @@ class PXInstructionsContentRenderer: NSObject {
 class PXInstructionsContentView: PXComponentView {
     public var infoView: UIView?
     public var referencesView: UIView?
+    public var interactionsView: UIView?
     public var tertiaryInfoView: UIView?
     public var accreditationTimeView: UIView?
     public var actionsView: UIView?

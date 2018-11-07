@@ -81,6 +81,32 @@ internal class PXInstructionsContentComponent: PXComponentizable {
         return referencesComponent
     }
 
+    func getInteractionsComponent() -> PXInstructionsInteractionsComponent? {
+
+        let info: [String] = props.instruction.info
+        var spacesFound = 0
+        var title = ""
+        func isSpaceRepresentation(_ text: String) -> Bool {
+            return text.isEmpty
+        }
+        func isTitleRepresentation() -> Bool {
+            return spacesFound == 2
+        }
+
+        for text in info {
+            if isSpaceRepresentation(text) {
+                spacesFound += 1
+            } else if isTitleRepresentation() {
+                title = text
+                break
+            }
+        }
+
+        let interactionsProps = PXInstructionsInteractionsProps(title: title, interactions: props.instruction.interactions)
+        let interactiosComponent = PXInstructionsInteractionsComponent(props: interactionsProps)
+        return interactiosComponent
+    }
+
     func getTertiaryInfoComponent() -> PXInstructionsTertiaryInfoComponent? {
         let tertiaryInfoProps = PXInstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
         let tertiaryInfoComponent = PXInstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
@@ -103,6 +129,10 @@ internal class PXInstructionsContentComponent: PXComponentizable {
         return !Array.isNullOrEmpty(props.instruction.references)
     }
 
+    func hasInteractions() -> Bool {
+        return !Array.isNullOrEmpty(props.instruction.interactions)
+    }
+
     func hasTertiaryInfo() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.tertiaryInfo)
     }
@@ -121,7 +151,7 @@ internal class PXInstructionsContentComponent: PXComponentizable {
     }
 
     func needsBottomMargin() -> Bool {
-        return hasInfo() || hasReferences() || hasAccreditationTime()
+        return hasInfo() || hasReferences() || hasInteractions() || hasAccreditationTime()
     }
 
     func render() -> UIView {
