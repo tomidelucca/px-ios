@@ -65,10 +65,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isMovingToParentViewController {
-            viewModel.trackTapBackEvent()
-        }
-
         if shouldAnimatePayButton {
             PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
         }
@@ -170,6 +166,11 @@ extension PXOneTapViewController {
         refreshContentViewSize()
         scrollView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false
+
+        // Track back action.
+        callbackBack = { [weak self] in
+            self?.viewModel.trackTapBackEvent()
+        }
 
         addCardSlider(inContainerView: cardSliderContentView)
     }
