@@ -18,10 +18,6 @@ internal class PXPaymentMethodComponent: NSObject, PXComponentizable {
     func render() -> UIView {
         return PXPaymentMethodComponentRenderer().render(component: self)
     }
-
-    func oneTapRender() -> UIView {
-        return PXPaymentMethodComponentRenderer().oneTapRender(component: self)
-    }
 }
 
 // MARK: - Helper functions

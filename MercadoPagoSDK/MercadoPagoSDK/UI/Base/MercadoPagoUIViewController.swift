@@ -13,6 +13,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     private static let MLNavigationBarBackgroundViewTag = 569242
 
     var callbackCancel: (() -> Void)?
+    var callbackBack: (() -> Void)?
     var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
     private var navBarBackgroundColor = ThemeManager.shared.getMainColor()
     var shouldDisplayBackButton = false
@@ -140,9 +141,15 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         if let targetNavigationController = navigationController {
             let vcs = targetNavigationController.viewControllers.filter {$0.isKind(of: MercadoPagoUIViewController.self)}
             if vcs.count == 1 {
+                if let callbackBackAction = callbackBack {
+                    callbackBackAction()
+                }
                 PXNotificationManager.Post.attemptToClose()
                 return
             }
+        }
+        if let callbackBackAction = callbackBack {
+            callbackBackAction()
         }
         if let callbackCancel = callbackCancel {
             callbackCancel()
@@ -225,7 +232,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
             print("DEINIT - \(self)")
         #endif
     }
-
 }
 
 /** :nodoc: */

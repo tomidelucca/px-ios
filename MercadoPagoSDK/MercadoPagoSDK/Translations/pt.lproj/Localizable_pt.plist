@@ -340,40 +340,82 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Algo não vai bem</string>
 	</dict>
-    <key>add_card_congrats_title</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Pronto! O seu cartão foi salvo</string>
-    </dict>
-    <key>add_card_go_to_my_cards</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Ir para Meus cartões</string>
-    </dict>
-    <key>add_card_failed_label_text</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Ocorreu um erro…</string>
-    </dict>
-    <key>add_card_failed_title</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Não foi possível carregar os dados do seu cartão</string>
-    </dict>
-    <key>add_card_try_again</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Tentar novamente</string>
-    </dict>
+	<key>add_card_congrats_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Pronto! O seu cartão foi salvo</string>
+	</dict>
+	<key>add_card_go_to_my_cards</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Ir para Meus cartões</string>
+	</dict>
+	<key>add_card_failed_label_text</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Ocorreu um erro…</string>
+	</dict>
+	<key>add_card_failed_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Não foi possível carregar os dados do seu cartão</string>
+	</dict>
+	<key>add_card_try_again</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Tentar novamente</string>
+	</dict>
+	<key>onetap_add_new_card_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Adicionar um novo cartão</string>
+	</dict>
+	<key>onetap_purchase_summary_total</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Total a pagar</string>
+	</dict>
+	<key>onetap_purchase_summary_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Sua compra</string>
+	</dict>
+	<key>onetap_am_total_balance</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Total no Mercado Pago:</string>
+	</dict>
+	<key>onetap_select_installment_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Selecione o parcelamento</string>
+	</dict>
+	<key>onetap_invested_account_money</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Você está usando dinheiro investido</string>
+	</dict>
 </dict>
 </plist>

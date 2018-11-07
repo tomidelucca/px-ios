@@ -28,6 +28,11 @@ open class PXAdvancedConfiguration: NSObject {
     open var escEnabled: Bool = false
 
     /**
+     Add the possibility to enabled/disabled express checkout.
+     */
+    open var expressEnabled: Bool = false
+
+    /**
     Instores usage / money in usage. - Use case: Not all bank deals apply right now to all preferences.
      */
     open var bankDealsEnabled: Bool = true

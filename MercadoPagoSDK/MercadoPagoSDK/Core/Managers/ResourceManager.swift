@@ -69,6 +69,10 @@ extension ResourceManager {
         }
     }
 
+    func getPaymentMethodCardImage(paymentMethodId: String) -> UIImage? {
+        return ResourceManager.shared.getImage("icoTc_\(paymentMethodId.lowercased())_light")
+    }
+
     func getCardDefaultLogo() -> UIImage? {
         return ResourceManager.shared.getImage("icoTc_default")
     }

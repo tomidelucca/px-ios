@@ -115,10 +115,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
-    init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?) {
+    init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?, advancedConfig: PXAdvancedConfiguration? = nil) {
         self.publicKey = publicKey
         self.privateKey = privateKey
         self.checkoutPreference = checkoutPreference
+        if let advConfig = advancedConfig {
+            self.advancedConfig = advConfig
+        }
 
         mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: publicKey, privateKey: privateKey)
 
@@ -182,33 +185,17 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
     }
 
-    // Returns lists of all payment option available
-    fileprivate func getPaymentMethodsOptions(_ paymentMethodPluginsToShow: [PXPaymentMethodPlugin]) -> String {
-        var paymentMethodsOptions = ""
-
-        if let paymentMethods = search?.paymentMethods {
-            for paymentMethod in paymentMethods {
-                if let id = paymentMethod.id {
-                    paymentMethodsOptions += "\(id):\(paymentMethod.paymentTypeId)|"
-                }
-            }
-        }
-
+    // Returns list with all cards ids with esc
+    func getCardsIdsWithESC() -> [String] {
+        var cardIdsWithESC: [String] = []
         if let customPaymentOptions = customPaymentOptions {
             for customCard in customPaymentOptions {
-                paymentMethodsOptions += "\(customCard.getPaymentMethodId()):\(customCard.getPaymentTypeId()):\(customCard.getCardId())"
                 if mpESCManager.getESC(cardId: customCard.getCardId()) != nil {
-                    paymentMethodsOptions += ":ESC"
+                    cardIdsWithESC.append(customCard.getCardId())
                 }
-                paymentMethodsOptions += "|"
             }
         }
-
-        for paymentMethodPlugin in paymentMethodPluginsToShow {
-            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\(PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue)|"
-        }
-        paymentMethodsOptions = String(paymentMethodsOptions.dropLast())
-        return paymentMethodsOptions
+        return cardIdsWithESC
     }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {
@@ -220,11 +207,16 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         populateCheckoutStore()
         let paymentMethodPluginsToShow = paymentMethodPlugins.filter {$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
 
-        // Get payment methods options for tracking in PaymentVault
-        let paymentMethodsOptions = getPaymentMethodsOptions(paymentMethodPluginsToShow)
-        PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS, value: paymentMethodsOptions)
+        var customerOptions: [PXCardInformation]?
+        var pluginOptions: [PXPaymentMethodPlugin] = []
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
+        if inRootGroupSelection() { // Solo se muestran las opciones custom y los plugines en root
+            customerOptions = self.customPaymentOptions
+            pluginOptions = paymentMethodPluginsToShow
+        }
+
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
+
             if self == nil {
                 return
             }
@@ -780,6 +772,15 @@ extension MercadoPagoCheckoutViewModel {
 
     static internal func clearEnviroment() {
         MercadoPagoCheckoutViewModel.error = nil
+    }
+    func inRootGroupSelection() -> Bool {
+        guard let root = rootPaymentMethodOptions, let actual = paymentMethodOptions else {
+            return true
+        }
+        if let hashableSet = NSSet(array: actual) as? Set<AnyHashable> {
+            return NSSet(array: root).isEqual(to: hashableSet)
+        }
+        return true
     }
 }
 

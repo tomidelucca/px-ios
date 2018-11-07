@@ -220,6 +220,13 @@ class PXLayout: NSObject {
         return availableWidth
     }
 
+    static func getAvailabelScreenHeight(in viewController: UIViewController, applyingMarginFactor percent: CGFloat = 100) -> CGFloat {
+        let screenHeight = getScreenHeight()
+        let topBarHeight = UIApplication.shared.statusBarFrame.size.height + (viewController.navigationController?.navigationBar.frame.height ?? 0.0)
+        let availableScreenHeight = screenHeight - topBarHeight
+        return availableScreenHeight * percent / 100
+    }
+
     static func getScreenHeight(applyingMarginFactor percent: CGFloat = 100) -> CGFloat {
         let screenSize = UIScreen.main.bounds
         let availableHeight = screenSize.height * percent / 100

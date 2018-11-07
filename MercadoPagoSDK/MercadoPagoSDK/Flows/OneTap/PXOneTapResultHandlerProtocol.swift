@@ -10,8 +10,9 @@ import Foundation
 
 internal protocol PXOneTapResultHandlerProtocol: NSObjectProtocol {
     func finishOneTap(paymentResult: PaymentResult, instructionsInfo: PXInstructions?)
-    func finishOneTap(businessResult: PXBusinessResult)
+    func finishOneTap(businessResult: PXBusinessResult, paymentData: PXPaymentData)
     func finishOneTap(paymentData: PXPaymentData)
     func cancelOneTap()
+    func cancelOneTapForNewPaymentMethodSelection()
     func exitCheckout()
 }
