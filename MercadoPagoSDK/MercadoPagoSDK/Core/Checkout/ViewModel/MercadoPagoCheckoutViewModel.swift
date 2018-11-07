@@ -115,10 +115,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
-    init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?) {
+    init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?, advancedConfig: PXAdvancedConfiguration? = nil) {
         self.publicKey = publicKey
         self.privateKey = privateKey
         self.checkoutPreference = checkoutPreference
+        if let advConfig = advancedConfig {
+            self.advancedConfig = advConfig
+        }
 
         mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(publicKey: publicKey, privateKey: privateKey)
 

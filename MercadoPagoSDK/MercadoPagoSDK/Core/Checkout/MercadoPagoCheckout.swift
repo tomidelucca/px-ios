@@ -43,16 +43,13 @@ open class MercadoPagoCheckout: NSObject {
 
         PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? ""
 
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey, advancedConfig: builder.advancedConfig)
 
-        // Set advanced config.
-        if let advancedConfig = builder.advancedConfig {
-            viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
-            if let theme = advancedConfig.theme {
-                ThemeManager.shared.setTheme(theme: theme)
-            } else if let defaultColor = builder.defaultUIColor {
-                ThemeManager.shared.setDefaultColor(color: defaultColor)
-            }
+        // Set Theme.
+        if let customTheme = builder.advancedConfig?.theme {
+            ThemeManager.shared.setTheme(theme: customTheme)
+        } else if let defaultColor = builder.defaultUIColor {
+            ThemeManager.shared.setDefaultColor(color: defaultColor)
         }
 
         if let paymentConfiguration = builder.paymentConfig {
