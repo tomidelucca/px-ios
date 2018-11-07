@@ -25,7 +25,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
 
     override open var screenName: String { return TrackingPaths.Screens.getErrorPath() }
 
-    open static var defaultErrorCancel: (() -> Void)?
+    internal static var defaultErrorCancel: (() -> Void)?
 
     open var exitErrorCallback: (() -> Void)!
 
@@ -94,6 +94,11 @@ internal class ErrorViewController: MercadoPagoUIViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackErrorEvent()
+    }
+
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -115,7 +120,31 @@ internal class ErrorViewController: MercadoPagoUIViewController {
             cancelCallback()
         }
             self.exitErrorCallback()
-
     }
+}
 
+// MARK: Tracking
+extension ErrorViewController {
+    func trackErrorEvent() {
+        var properties: [String: Any] = [:]
+        properties["path"] = screenName
+        properties["style"] = "screen"
+        properties["id"] = "px_generic_error"
+        properties["message"] = "Hubo un error"
+        properties["attributable_to"] = "mercadopago"
+
+        var extraDic: [String: Any] = [:]
+        extraDic["api_url"] =  error.requestOrigin
+        extraDic["retry_available"] = error.retry ?? false
+
+        if let cause = error.apiException?.cause?.first {
+            if !String.isNullOrEmpty(cause.code) {
+                extraDic["api_status_code"] = cause.code
+                extraDic["api_error_message"] = cause.causeDescription
+            }
+        }
+
+        properties["extra_info"] = extraDic
+        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+    }
 }

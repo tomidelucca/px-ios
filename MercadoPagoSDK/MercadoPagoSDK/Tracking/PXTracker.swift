@@ -21,8 +21,9 @@ open class PXTracker: NSObject {
         MPXTracker.sharedInstance.setTrack(listener: listener)
     }
 
-    public static func setListener(_ listener: PXTrackerListener, flowDetails: [String: Any]) {
+    public static func setListener(_ listener: PXTrackerListener, flowName: String?, flowDetails: [String: Any]?) {
         MPXTracker.sharedInstance.setTrack(listener: listener)
         MPXTracker.sharedInstance.setFlowDetails(flowDetails: flowDetails)
+        MPXTracker.sharedInstance.setFlowName(name: flowName)
     }
 }

@@ -26,9 +26,12 @@ final class PXOneTapViewModel: PXReviewViewModel {
         var itemsDic: [Any] = []
         for item in amountHelper.preference.items {
             var itemDic: [String: Any] = [:]
-            itemDic["id"] = item.id
-            itemDic["description"] = item.getDescription()
-            itemDic["price"] = item.getUnitPrice()
+
+            var idItemDic: [String: Any] = [:]
+            idItemDic["id"] = item.id
+            idItemDic["description"] = item.getDescription()
+            idItemDic["price"] = item.getUnitPrice()
+            itemDic["item"] = idItemDic
             itemDic["quantity"] = item.getQuantity()
             itemDic["currency_id"] = SiteManager.shared.getCurrency().id
             itemsDic.append(itemDic)
@@ -53,7 +56,7 @@ extension PXOneTapViewModel {
                 let displayAmount = Utils.getAmountFormated(amount: accountMoney.availableBalance, forCurrency: currency)
                 let cardData = PXCardDataFactory().create(cardName: "\(amTitle) \(displayAmount)", cardNumber: "", cardCode: "", cardExpiration: "")
                 let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false)
-                viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)  
+                viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
                 if accountMoney.invested {
                     viewModelCard.displayMessage = "onetap_invested_account_money".localized_beta
                 }
@@ -247,6 +250,9 @@ extension PXOneTapViewModel {
                     extraInfo["card_id"] = savedCard.cardId
                     extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
                     extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
+                    if let issuerId = amountHelper.paymentData.issuer?.id {
+                        extraInfo["issuer_id"] = Int(issuerId)
+                    }
                     savedCardDic["extra_info"] = extraInfo
                     dic.append(savedCardDic)
                 } else if let accountMoney = expressItem.accountMoney {
@@ -276,7 +282,9 @@ extension PXOneTapViewModel {
         properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.id
         properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.paymentTypeId
         properties["card_id"] =  selectedCard.cardId
-        properties["issuer_id"] = amountHelper.paymentData.issuer?.id
+        if let issuerId = amountHelper.paymentData.issuer?.id {
+            properties["issuer_id"] = Int(issuerId)
+        }
         properties["total_amount"] = amountHelper.amountToPay
         var dic: [Any] = []
         for payerCost in installmentData.payerCosts {
@@ -296,14 +304,19 @@ extension PXOneTapViewModel {
         if paymentMethod.isCard {
             properties["payment_method_type"] = paymentMethod.id
             properties["payment_method_id"] = paymentMethod.paymentTypeId
+            properties["review_type"] = "one_tap"
             var extraInfo: [String: Any] = [:]
             extraInfo["card_id"] = selectedCard.cardId
             extraInfo["has_esc"] = cardIdsEsc.contains(selectedCard.cardId ?? "")
             extraInfo["selected_installment"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
+            if let issuerId = amountHelper.paymentData.issuer?.id {
+                extraInfo["issuer_id"] = Int(issuerId)
+            }
             properties["extra_info"] = extraInfo
         } else {
             properties["payment_method_type"] = paymentMethod.id
             properties["payment_method_id"] = paymentMethod.id
+            properties["review_type"] = "one_tap"
             var extraInfo: [String: Any] = [:]
             extraInfo["balance"] = selectedCard.accountMoneyBalance
             properties["extra_info"] = extraInfo
