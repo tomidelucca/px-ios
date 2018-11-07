@@ -569,16 +569,14 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             prepareForNewSelection()
             self.initWithPaymentData = false
         } else {
-            self.readyToPay = self.needToCompletePayerInfo(paymentData: paymentData)
+            self.readyToPay = self.needToCompletePayerInfo()
         }
     }
 
-    func needToCompletePayerInfo(paymentData: PXPaymentData) -> Bool {
-        if let paymentMethod = paymentData.getPaymentMethod() {
+    func needToCompletePayerInfo() -> Bool {
+        if let paymentMethod = self.paymentData.getPaymentMethod() {
             if paymentMethod.isPayerInfoRequired {
-                if self.isPayerSet(payer: paymentData.getPayer()) {
-                    return true
-                }
+                return self.isPayerSetted()
             }
         }
 
@@ -749,14 +747,14 @@ extension MercadoPagoCheckoutViewModel {
 
     func clearCollectedData() {
         self.paymentData.clearPaymentMethodData()
+        self.paymentData.clearPayerData()
 
-        if !self.isPayerSet(payer: self.checkoutPreference.payer) {
-            self.paymentData.clearPayerData()
-        }
+        // Se setea nuevamente el payer que tenemos en la preferencia para no perder los datos
+        self.paymentData.payer = self.checkoutPreference.payer
     }
 
-    func isPayerSet(payer: PXPayer?) -> Bool {
-        if let payerData = payer, let payerIdentification = payerData.identification {
+    func isPayerSetted() -> Bool {
+        if let payerData = self.paymentData.getPayer(), let payerIdentification = payerData.identification {
             return payerData.firstName != nil && payerData.lastName != nil && payerIdentification.type != nil && payerIdentification.number != nil
         }
 

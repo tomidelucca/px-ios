@@ -130,6 +130,13 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string> de descuento</string>
 	</dict>
+    <key>payment_result_screen_congrats_copy_button</key>
+    <dict>
+        <key>comment</key>
+        <string>Texto de snack bar al copiar</string>
+        <key>value</key>
+        <string>¡Listo! Copiado.</string>
+    </dict>
 	<key>payment_result_screen_congrats_finish_button</key>
 	<dict>
 		<key>comment</key>
