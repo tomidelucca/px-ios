@@ -47,7 +47,12 @@ internal extension PXResultViewModel {
 
     func labelTextHeader() -> NSAttributedString? {
         if paymentResult.isAccepted() {
-            if self.paymentResult.isWaitingForPayment() && !self.paymentResult.isOfflinePayment() {
+            var isOnlineMethod = true
+            if let paymentMethod = self.paymentResult.paymentData.getPaymentMethod() {
+                isOnlineMethod = paymentMethod.isOnlinePaymentMethod
+            }
+ç
+            if self.paymentResult.isWaitingForPayment() && isOnlineMethod {
                 return "¡Apúrate a pagar!".localized.toAttributedString(attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
             } else {
                 var labelText: String?
