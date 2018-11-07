@@ -96,7 +96,7 @@ extension PXOneTapHeaderView {
         titleLabel.textColor = data.highlightedColor
         titleLabel.alpha = data.alpha
         rowView.addSubview(titleLabel)
-        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         PXLayout.centerVertically(view: titleLabel).isActive = true
 
         if let rightImage = data.image {
@@ -119,7 +119,7 @@ extension PXOneTapHeaderView {
         valueLabel.textColor = data.highlightedColor
         valueLabel.alpha = data.alpha
         rowView.addSubview(valueLabel)
-        PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         PXLayout.centerVertically(view: valueLabel).isActive = true
 
         PXLayout.setHeight(owner: rowView, height: rowHeight).isActive = true

@@ -52,9 +52,12 @@ extension PXOneTapViewModel {
             if let accountMoney = targetNode.accountMoney {
                 let displayAmount = Utils.getAmountFormated(amount: accountMoney.availableBalance, forCurrency: currency)
                 let cardData = PXCardDataFactory().create(cardName: "\(amTitle) \(displayAmount)", cardNumber: "", cardCode: "", cardExpiration: "")
-                let cardVM = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false)
-                cardVM.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
-                sliderModel.append(cardVM)
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false)
+                viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)  
+                if accountMoney.invested {
+                    viewModelCard.displayMessage = "onetap_invested_account_money".localized_beta
+                }
+                sliderModel.append(viewModelCard)
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
 
@@ -88,13 +91,17 @@ extension PXOneTapViewModel {
                     }
 
                     var showArrow: Bool = true
+                    var displayMessage: String?
                     if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == PXPaymentTypes.DEBIT_CARD.rawValue {
                         showArrow = false
+                        displayMessage = ""
                     } else if targetCardData.selectedPayerCost == nil {
                         showArrow = false
                     }
 
-                    sliderModel.append(PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost, nil, showArrow))
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost, nil, showArrow)
+                    viewModelCard.displayMessage = displayMessage
+                    sliderModel.append(viewModelCard)
                 }
             }
         }
@@ -108,8 +115,13 @@ extension PXOneTapViewModel {
         for sliderNode in sliderViewModel {
             let installment = PXInstallment(issuer: nil, payerCosts: sliderNode.payerCost, paymentMethodId: nil, paymentTypeId: nil)
             let selectedPayerCost = sliderNode.selectedPayerCost
-            let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShow: sliderNode.shouldShowArrow)
-            model.append(installmentInfoModel)
+            if let displayMessage = sliderNode.displayMessage {
+                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getDisplayMessageAttrText(displayMessage), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
+                model.append(installmentInfoModel)
+            } else {
+                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
+                model.append(installmentInfoModel)
+            }
         }
         return model
     }
@@ -181,6 +193,12 @@ extension PXOneTapViewModel {
 
 // MARK: Privates.
 extension PXOneTapViewModel {
+    private func getDisplayMessageAttrText(_ displayMessage: String) -> NSAttributedString {
+        let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
+        let attributedString = NSAttributedString(string: displayMessage, attributes: attributes)
+        return attributedString
+    }
+
     private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?) -> NSMutableAttributedString {
         let text: NSMutableAttributedString = NSMutableAttributedString(string: "")
 

@@ -242,12 +242,33 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Add new card</string>
 	</dict>
-    <key>onetap_select_installment_title</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Select the installment plan</string>
-    </dict>
+	<key>onetap_select_installment_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Select the installment plan</string>
+	</dict>
+	<key>onetap_invested_account_money</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>You are using invested money</string>
+	</dict>
+	<key>total_row_title_percent_off</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>%1$s OFF</string>
+	</dict>
+	<key>total_row_title_amount_off</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>%1$s OFF</string>
+	</dict>
 </dict>
 </plist>
