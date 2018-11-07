@@ -20,4 +20,9 @@ open class PXTracker: NSObject {
     public static func setListener(_ listener: PXTrackerListener) {
         MPXTracker.sharedInstance.setTrack(listener: listener)
     }
+
+    public static func setListener(_ listener: PXTrackerListener, flowDetails: [String: Any]) {
+        MPXTracker.sharedInstance.setTrack(listener: listener)
+        MPXTracker.sharedInstance.setFlowDetails(flowDetails: flowDetails)
+    }
 }

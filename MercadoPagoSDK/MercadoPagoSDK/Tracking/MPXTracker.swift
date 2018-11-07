@@ -13,8 +13,7 @@ internal struct PXTrackingEnvironment {
     public static let staging = "staging"
 }
 
-@objc
-internal class MPXTracker: NSObject {
+@objc internal class MPXTracker: NSObject {
     @objc internal static let sharedInstance = MPXTracker()
 
     internal static let kTrackingSettings = "tracking_settings"
@@ -23,6 +22,7 @@ internal class MPXTracker: NSObject {
 
     private static let kTrackingEnabled = "tracking_enabled"
     private var trackListener: PXTrackerListener?
+    private var flowDetails: [String: Any] = [:]
     private var flowService: FlowService = FlowService()
     private lazy var currentEnvironment: String = PXTrackingEnvironment.production
 }
@@ -53,6 +53,10 @@ internal extension MPXTracker {
         trackListener = listener
     }
 
+    internal func setFlowDetails(flowDetails: [String: Any]) {
+        self.flowDetails = flowDetails
+    }
+
     internal func startNewFlow() {
         flowService.startNewFlow()
     }
@@ -64,19 +68,30 @@ internal extension MPXTracker {
     internal func getFlowID() -> String {
         return flowService.getFlowId()
     }
+
+    internal func clean() {
+        MPXTracker.sharedInstance.flowDetails = [:]
+        MPXTracker.sharedInstance.trackListener = nil
+    }
 }
 
 // MARK: Public interfase.
 internal extension MPXTracker {
     internal func trackScreen(screenName: String, properties: [String: Any] = [:]) {
         if let trackListenerInterfase = trackListener {
-            trackListenerInterfase.trackScreen(screenName: screenName, extraParams: [:])
+            var metadata = properties
+            metadata["flow_detail"] = flowDetails
+            trackListenerInterfase.trackScreen(screenName: screenName, extraParams: metadata)
         }
     }
 
     internal func trackEvent(path: String, properties: [String: Any] = [:]) {
         if let trackListenerInterfase = trackListener {
-            trackListenerInterfase.trackEvent(screenName: path, action: "", result: "", extraParams: properties)
+            var metadata = properties
+            if path != TrackingPaths.Events.getErrorPath() {
+                metadata["flow_detail"] = flowDetails
+            }
+            trackListenerInterfase.trackEvent(screenName: path, action: "", result: "", extraParams: metadata)
         }
     }
 }
