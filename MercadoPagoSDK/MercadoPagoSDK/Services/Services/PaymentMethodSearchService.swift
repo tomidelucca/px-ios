@@ -30,18 +30,18 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 internal class PaymentMethodSearchService: MercadoPagoService {
 
-    let merchantPublicKey: String!
+    let merchantPublicKey: String
     let payerAccessToken: String?
-    let processingMode: String!
+    let processingMode: String
 
-    init (baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil, processingMode: String) {
+    init(baseURL: String, merchantPublicKey: String, payerAccessToken: String? = nil, processingMode: String) {
         self.merchantPublicKey = merchantPublicKey
         self.payerAccessToken = payerAccessToken
         self.processingMode = processingMode
         super.init(baseURL: baseURL)
     }
 
-    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
         var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
 
@@ -63,6 +63,10 @@ internal class PaymentMethodSearchService: MercadoPagoService {
             params.paramsAppend(key: ApiParams.DEFAULT_PAYMENT_METHOD, value: defaultPaymenMethodId.trimSpaces())
         }
 
+        if let customDefaultInstallments = defaultInstallments {
+            params.paramsAppend(key: ApiParams.DEFAULT_INSTALLMENTS, value: customDefaultInstallments)
+        }
+
         params.paramsAppend(key: ApiParams.EMAIL, value: customerEmail)
         params.paramsAppend(key: ApiParams.CUSTOMER_ID, value: customerId)
         params.paramsAppend(key: ApiParams.SITE_ID, value: site.id)
@@ -77,6 +81,8 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         if let supportedPluginsParams = supportedPlugins?.map({$0}).joined(separator: ",") {
             params.paramsAppend(key: "support_plugins", value: supportedPluginsParams)
         }
+
+        params.paramsAppend(key: "express_enabled", value: expressEnabled)
 
         let groupsPayerBody = try? payer.toJSON()
 

@@ -49,6 +49,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        executeStep(PayerInfoFlowStep.SCREEN_IDENTIFICATION)
     }
 
     func getAvailableHeight() -> CGFloat {
@@ -222,6 +223,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     fileprivate func executeStep(_ currentStep: PayerInfoFlowStep) {
+        viewModel.trackStep(currentStep: currentStep)
         switch currentStep {
         case .SCREEN_IDENTIFICATION:
              self.presentIdentificationComponent()

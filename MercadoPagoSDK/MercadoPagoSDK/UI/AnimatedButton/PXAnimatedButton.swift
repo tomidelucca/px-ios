@@ -17,6 +17,8 @@ internal class PXAnimatedButton: UIButton {
     let loadingText: String
     let retryText: String
 
+    private var buttonColor: UIColor?
+
     init(normalText: String, loadingText: String, retryText: String) {
         self.normalText = normalText
         self.loadingText = loadingText
@@ -93,10 +95,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
             self.addSubview(iconImage)
 
-            if #available(iOS 10.0, *) {
-                let notification = UINotificationFeedbackGenerator()
-                notification.notificationOccurred(.success)
-            }
+            PXFeedbackGenerator.successNotificationFeedback()
 
             UIView.animate(withDuration: 0.6, animations: {
                 iconImage.alpha = 1
@@ -177,16 +176,46 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
     func isAnimated() -> Bool {
         return status != .normal
     }
+
+    func show(duration: Double = 0.5) {
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.alpha = 1
+        }
+    }
+
+    func hide(duration: Double = 0.5) {
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.alpha = 0
+        }
+    }
 }
 
 // MARK: Business Logic
 extension PXAnimatedButton {
-
     @objc func animateFinish(_ sender: NSNotification) {
         if let notificationObject = sender.object as? PXAnimatedButtonNotificationObject {
             let image = ResourceManager.shared.getBadgeImageWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail, clearBackground: true)
             let color = ResourceManager.shared.getResultColorWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail)
             finishAnimatingButton(color: color, image: image)
+        }
+    }
+}
+
+extension PXAnimatedButton {
+    func setEnabled() {
+        isUserInteractionEnabled = true
+        if backgroundColor == ThemeManager.shared.greyColor() {
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                self?.backgroundColor = self?.buttonColor
+            }
+        }
+    }
+
+    func setDisabled() {
+        buttonColor = backgroundColor
+        isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.backgroundColor = ThemeManager.shared.greyColor()
         }
     }
 }

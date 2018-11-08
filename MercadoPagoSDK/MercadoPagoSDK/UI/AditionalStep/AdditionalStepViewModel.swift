@@ -14,9 +14,7 @@ internal class AdditionalStepViewModel {
     var bundle: Bundle? = ResourceManager.shared.getBundle()
 
     var screenTitle: String
-
-    var screenId: String { return TrackingUtil.NO_SCREEN_ID }
-    var screenName: String { return TrackingUtil.NO_NAME_SCREEN }
+    var screenName: String { return TrackingPaths.NO_NAME_SCREEN }
 
     var email: String?
     var token: PXCardInformationForm?
@@ -68,10 +66,6 @@ internal class AdditionalStepViewModel {
 
     func getScreenName() -> String {
         return screenName
-    }
-
-    func getScreenId() -> String {
-        return screenId
     }
 
     func getTitle() -> String {
@@ -167,7 +161,7 @@ internal class AdditionalStepViewModel {
     }
 
     func track() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
 }
@@ -180,12 +174,10 @@ internal class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
         super.init(amountHelper: amountHelper, screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM_ISSUERS }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_ISSUER }
+    override open var screenName: String { return TrackingPaths.Screens.getIssuersPath() }
 
     override func track() {
-        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].id, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethods[0].id]
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
 }
@@ -198,8 +190,7 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         super.init(amountHelper: amountHelper, screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, email: email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_CARD_FORM_INSTALLMENTS }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_CARD_FORM + TrackingUtil.CARD_INSTALLMENTS }
+    override open var screenName: String { return TrackingPaths.Screens.getInstallmentsPath() }
 
     override func showFloatingTotalRow() -> Bool {
         return true
@@ -214,22 +205,9 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override func track() {
-        let metadata: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethods[0].id]
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
-}
-
-internal class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
-
-    let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
-
-    override open var screenName: String { return TrackingUtil.SCREEN_NAME_PAYMENT_TYPES }
-    override open var screenId: String { return TrackingUtil.SCREEN_ID_PAYMENT_TYPES }
-
-    init(amountHelper: PXAmountHelper, token: PXCardInformationForm?, paymentMethods: [PXPaymentMethod], dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
-        super.init(amountHelper: amountHelper, screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, token: token, paymentMethods: paymentMethods, dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
-    }
 }
 
 internal class FinancialInstitutionViewModel: AdditionalStepViewModel {

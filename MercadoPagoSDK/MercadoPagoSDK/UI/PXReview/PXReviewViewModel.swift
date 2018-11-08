@@ -10,41 +10,31 @@ import UIKit
 
 class PXReviewViewModel: NSObject {
 
-    var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
-    var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
+    var screenName: String { return TrackingPaths.Screens.getReviewAndConfirmPath() }
 
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
 
     internal var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption
-    var reviewScreenPreference: PXReviewConfirmConfiguration
+    var advancedConfiguration: PXAdvancedConfiguration
     var userLogged: Bool
 
-    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfig: PXReviewConfirmConfiguration, userLogged: Bool) {
+    public init(amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption, advancedConfig: PXAdvancedConfiguration, userLogged: Bool) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.amountHelper = amountHelper
         self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenPreference = reviewConfirmConfig
+        self.advancedConfiguration = advancedConfig
         self.userLogged = userLogged
     }
 
     // MARK: Tracking logic
     func trackConfirmActionEvent() {
-        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: self.amountHelper.paymentData.paymentMethod?.id ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: self.amountHelper.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: String(describing: self.amountHelper.preferenceAmountWithCharges)]
 
-        if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
-            properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
-        }
-        if let installments = amountHelper.paymentData.payerCost?.installments {
-            properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
-        }
-
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName, properties: properties)
     }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
     }
 
     func trackChangePaymentMethodEvent() {
@@ -103,6 +93,16 @@ extension PXReviewViewModel {
     func needUnlockCardComponent() -> Bool {
         return getUnlockLink() != nil
     }
+
+    func getDynamicViewController() -> UIViewController? {
+        let filteredViewControllers = advancedConfiguration.dynamicViewControllersConfiguration.filter { (dynamicViewControllerProtocol) -> Bool in
+            if dynamicViewControllerProtocol.position(store: PXCheckoutStore.sharedInstance) == PXDynamicViewControllerPosition.DID_ENTER_REVIEW_AND_CONFIRM {
+                return true
+            }
+            return false
+        }
+        return filteredViewControllers.first?.viewController(store: PXCheckoutStore.sharedInstance)
+    }
 }
 
 // MARK: - Getters
@@ -150,22 +150,22 @@ extension PXReviewViewModel {
         let charge = self.amountHelper.chargeRuleAmount
 
         // TODO: Check Double type precision.
-        if abs(amount - (self.reviewScreenPreference.getSummaryTotalAmount() + charge)) <= PXReviewViewModel.ERROR_DELTA {
-            summary = Summary(details: self.reviewScreenPreference.details)
-            if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
+        if abs(amount - (self.advancedConfiguration.reviewConfirmConfiguration.getSummaryTotalAmount() + charge)) <= PXReviewViewModel.ERROR_DELTA {
+            summary = Summary(details: self.advancedConfiguration.reviewConfirmConfiguration.details)
+            if self.advancedConfiguration.reviewConfirmConfiguration.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
                 summary.addAmountDetail(detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount), type: SummaryType.PRODUCT)
             }
         } else {
             summary = getDefaultSummary()
-            if self.reviewScreenPreference.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
-                if let title = self.reviewScreenPreference.details[SummaryType.PRODUCT]?.title {
+            if self.advancedConfiguration.reviewConfirmConfiguration.details[SummaryType.PRODUCT]?.details.count == 0 { //Si solo le cambio el titulo a Productos
+                if let title = self.advancedConfiguration.reviewConfirmConfiguration.details[SummaryType.PRODUCT]?.title {
                     summary.updateTitle(type: SummaryType.PRODUCT, oneWordTitle: title)
                 }
             }
         }
 
         if charge > PXReviewViewModel.ERROR_DELTA {
-            if let chargesTitle = self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE] {
+            if let chargesTitle = self.advancedConfiguration.reviewConfirmConfiguration.summaryTitles[SummaryType.CHARGE] {
                 let chargesAmountDetail = SummaryItemDetail(name: "", amount: charge)
                 let chargesSummaryDetail = SummaryDetail(title: chargesTitle, detail: chargesAmountDetail)
                 summary.addSummaryDetail(summaryDetail: chargesSummaryDetail, type: SummaryType.CHARGE)
@@ -178,7 +178,7 @@ extension PXReviewViewModel {
             if summary.details[SummaryType.DISCOUNT] != nil {
                 summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)
             } else {
-                let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
+                let discountSummaryDetail = SummaryDetail(title: self.advancedConfiguration.reviewConfirmConfiguration.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
                 summary.addSummaryDetail(summaryDetail: discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
             summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
@@ -198,20 +198,20 @@ extension PXReviewViewModel {
                 if summary.details[SummaryType.CHARGE] != nil {
                     summary.addAmountDetail(detail: interestAmountDetail, type: SummaryType.CHARGE)
                 } else {
-                    let interestSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.CHARGE]!, detail: interestAmountDetail)
+                    let interestSummaryDetail = SummaryDetail(title: self.advancedConfiguration.reviewConfirmConfiguration.summaryTitles[SummaryType.CHARGE]!, detail: interestAmountDetail)
                     summary.addSummaryDetail(summaryDetail: interestSummaryDetail, type: SummaryType.CHARGE)
                 }
             }
         }
-        if let disclaimer = self.reviewScreenPreference.getDisclaimerText() {
+        if let disclaimer = self.advancedConfiguration.reviewConfirmConfiguration.getDisclaimerText() {
             summary.disclaimer = disclaimer
-            summary.disclaimerColor = self.reviewScreenPreference.getDisclaimerTextColor()
+            summary.disclaimerColor = self.advancedConfiguration.reviewConfirmConfiguration.getDisclaimerTextColor()
         }
         return summary
     }
 
     func getDefaultSummary() -> Summary {
-        let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount))
+        let productSummaryDetail = SummaryDetail(title: self.advancedConfiguration.reviewConfirmConfiguration.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: self.amountHelper.preferenceAmount))
 
         return Summary(details: [SummaryType.PRODUCT: productSummaryDetail])
     }
@@ -233,7 +233,7 @@ extension PXReviewViewModel {
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = pm.paymentMethodDescription?.toAttributedString()
-        var accreditationTime: NSAttributedString? = nil
+        var accreditationTime: NSAttributedString?
         var action = withAction
         let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
         let lightLabelColor = ThemeManager.shared.labelTintColor()
@@ -255,7 +255,7 @@ extension PXReviewViewModel {
             subtitle = paymentMethodIssuerName.toAttributedString()
         }
 
-        if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
+        if !self.advancedConfiguration.reviewConfirmConfiguration.isChangeMethodOptionEnabled() {
             action = nil
         }
 
@@ -268,7 +268,7 @@ extension PXReviewViewModel {
 
         var customTitle = "Productos".localized
         let totalAmount: Double = self.amountHelper.preferenceAmountWithCharges
-        if let prefDetail = reviewScreenPreference.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
+        if let prefDetail = advancedConfiguration.reviewConfirmConfiguration.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
             customTitle = prefDetail.title
         } else {
             if self.amountHelper.preference.items.count == 1 {
@@ -316,7 +316,7 @@ extension PXReviewViewModel {
     // HotFix: TODO - Move to OneTapViewModel
     func buildOneTapItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
-        if reviewScreenPreference.hasItemsEnabled() {
+        if advancedConfiguration.reviewConfirmConfiguration.hasItemsEnabled() {
             for item in self.amountHelper.preference.items {
                 if let itemComponent = buildOneTapItemComponent(item: item) {
                     pxItemComponents.append(itemComponent)
@@ -328,7 +328,7 @@ extension PXReviewViewModel {
 
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
-        if reviewScreenPreference.hasItemsEnabled() { // Items can be disable
+        if advancedConfiguration.reviewConfirmConfiguration.hasItemsEnabled() { // Items can be disable
             for item in self.amountHelper.preference.items {
                 if let itemComponent = buildItemComponent(item: item) {
                     pxItemComponents.append(itemComponent)
@@ -347,7 +347,7 @@ extension PXReviewViewModel {
     }
 
     fileprivate func shouldShowCollectorIcon() -> Bool {
-        return !amountHelper.preference.hasMultipleItems() && reviewScreenPreference.getCollectorIcon() != nil
+        return !amountHelper.preference.hasMultipleItems() && advancedConfiguration.reviewConfirmConfiguration.getCollectorIcon() != nil
     }
 
     fileprivate func buildItemComponent(item: PXItem) -> PXItemComponent? {
@@ -360,8 +360,8 @@ extension PXReviewViewModel {
         let itemTitle = getItemTitle(item: item)
         let itemDescription = getItemDescription(item: item)
         let collectorIcon = getCollectorIcon()
-        let amountTitle = reviewScreenPreference.getAmountTitle()
-        let quantityTile = reviewScreenPreference.getQuantityLabel()
+        let amountTitle = advancedConfiguration.reviewConfirmConfiguration.getAmountTitle()
+        let quantityTile = advancedConfiguration.reviewConfirmConfiguration.getQuantityLabel()
 
         let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor(), lightLabelColor: ThemeManager.shared.labelTintColor())
 
@@ -417,24 +417,47 @@ extension PXReviewViewModel {
         if !shouldShowCollectorIcon() {
             return nil
         }
-        return reviewScreenPreference.getCollectorIcon()
+        return advancedConfiguration.reviewConfirmConfiguration.getCollectorIcon()
     }
 }
 
 // MARK: Custom Views
 extension PXReviewViewModel {
+    func buildTopDynamicCustomViews() -> [UIView]? {
+        if let reviewScreenDynamicViewsConfiguration = advancedConfiguration.reviewConfirmDynamicViewsConfiguration, let dynamicCustomViews = reviewScreenDynamicViewsConfiguration.topCustomViews(store: PXCheckoutStore.sharedInstance) {
+            return buildComponentViews(dynamicCustomViews)
+        }
+        return nil
+    }
+
+    func buildBottomDynamicCustomViews() -> [UIView]? {
+        if let reviewScreenDynamicViewsConfiguration = advancedConfiguration.reviewConfirmDynamicViewsConfiguration, let dynamicCustomViews = reviewScreenDynamicViewsConfiguration.bottomCustomViews(store: PXCheckoutStore.sharedInstance) {
+            return buildComponentViews(dynamicCustomViews)
+        }
+        return nil
+    }
+
     func buildTopCustomView() -> UIView? {
-        if let customView = reviewScreenPreference.getTopCustomView() {
+        if let customView = advancedConfiguration.reviewConfirmConfiguration.getTopCustomView() {
             return buildComponentView(customView)
         }
         return nil
     }
 
     func buildBottomCustomView() -> UIView? {
-        if let customView = reviewScreenPreference.getBottomCustomView() {
+        if let customView = advancedConfiguration.reviewConfirmConfiguration.getBottomCustomView() {
             return buildComponentView(customView)
         }
         return nil
+    }
+
+    private func buildComponentViews(_ customViews: [UIView]) -> [UIView] {
+        var componentViews: [UIView] = []
+        for customView in customViews {
+            let componentView = buildComponentView(customView)
+            componentViews.append(componentView)
+        }
+        return componentViews
     }
 
     private func buildComponentView(_ customView: UIView) -> UIView {

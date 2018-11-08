@@ -9,16 +9,16 @@
 import UIKit
 
 class AddCardFlowModel: NSObject, PXFlowModel {
-    
+
     var paymentMethods: [PXPaymentMethod]?
     var identificationTypes: [PXIdentificationType]?
     var cardToken: PXCardToken?
     var selectedPaymentMethod: PXPaymentMethod?
     var tokenizedCard: PXToken?
-    var associateCardResult: [String : Any]?
+    var associateCardResult: [String: Any]?
     var lastStepFailed = false
 
-    enum Steps : Int {
+    enum Steps: Int {
         case start
         case getPaymentMethods
         case getIdentificationTypes
@@ -29,9 +29,9 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         case showCongrats
         case finish
     }
-    
+
     private var currentStep = Steps.start
-    
+
     func nextStep() -> AddCardFlowModel.Steps {
         if lastStepFailed {
             lastStepFailed = false
@@ -45,7 +45,7 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         case .getIdentificationTypes:
             currentStep = .openCardForm
         case .openCardForm:
-            if let selectedPaymentMethod = self.selectedPaymentMethod, let identificationTypes = self.identificationTypes, !identificationTypes.isEmpty, selectedPaymentMethod.isIdentificationTypeRequired || selectedPaymentMethod.isIdentificationRequired{
+            if let selectedPaymentMethod = self.selectedPaymentMethod, let identificationTypes = self.identificationTypes, !identificationTypes.isEmpty, selectedPaymentMethod.isIdentificationTypeRequired || selectedPaymentMethod.isIdentificationRequired {
                 currentStep = .openIdentificationTypes
             } else {
                 currentStep = .createToken
@@ -67,7 +67,7 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         }
         return currentStep
     }
-    
+
     func reset() {
         if self.currentStep.rawValue > AddCardFlowModel.Steps.openCardForm.rawValue {
             self.currentStep = .openCardForm
@@ -76,5 +76,5 @@ class AddCardFlowModel: NSObject, PXFlowModel {
         self.selectedPaymentMethod = nil
         self.tokenizedCard = nil
     }
-    
+
 }

@@ -36,23 +36,20 @@ open class MercadoPagoCheckout: NSObject {
             choPref = PXCheckoutPreference(preferenceId: preferenceId)
         } else if let preference = builder.checkoutPreference {
             choPref = preference
-            SiteManager.shared.setSite(siteId: choPref.getSiteId()) // TODO: Ver esto
+            SiteManager.shared.setSite(siteId: choPref.getSiteId())
         } else {
             fatalError("CheckoutPreference or preferenceId must be mandatory.")
         }
 
         PXServicesURLConfigs.PX_SDK_VERSION = Utils.getSetting(identifier: "sdk_version") ?? ""
 
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey)
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey, advancedConfig: builder.advancedConfig)
 
-        // Set advanced config.
-        if let advancedConfig = builder.advancedConfig {
-            viewModel.setAdvancedConfiguration(advancedConfig: advancedConfig)
-            if let theme = advancedConfig.theme {
-                ThemeManager.shared.setTheme(theme: theme)
-            } else if let defaultColor = builder.defaultUIColor {
-                ThemeManager.shared.setDefaultColor(color: defaultColor)
-            }
+        // Set Theme.
+        if let customTheme = builder.advancedConfig?.theme {
+            ThemeManager.shared.setTheme(theme: customTheme)
+        } else if let defaultColor = builder.defaultUIColor {
+            ThemeManager.shared.setDefaultColor(color: defaultColor)
         }
 
         if let paymentConfiguration = builder.paymentConfig {
@@ -99,7 +96,6 @@ extension MercadoPagoCheckout {
         ThemeManager.shared.initialize()
         viewModel.setNavigationHandler(handler: PXNavigationHandler(navigationController: navigationController))
         ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
-        viewModel.pxNavigationHandler.suscribeToNavigationFlow()
         if initMode == .lazy {
             if viewModel.initFlow?.getStatus() == .finished {
                 executeNextStep()
@@ -135,6 +131,9 @@ extension MercadoPagoCheckout {
 extension MercadoPagoCheckout {
     internal func setPaymentResult(paymentResult: PaymentResult) {
         self.viewModel.paymentResult = paymentResult
+        if let paymentData = paymentResult.paymentData {
+            self.viewModel.paymentData = paymentData
+        }
     }
 
     internal func setPaymentData(paymentData: PXPaymentData) {
@@ -209,8 +208,10 @@ extension MercadoPagoCheckout {
     }
 
     internal func finish() {
+        MPXTracker.sharedInstance.clean()
         viewModel.pxNavigationHandler.removeRootLoading()
         ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
+        PXCheckoutStore.sharedInstance.clean()
         // LifecycleProtocol.finishCheckout - defined
         // Exit checkout with payment. (by state machine next)
         let result = viewModel.getResult()
@@ -227,8 +228,9 @@ extension MercadoPagoCheckout {
 
     /// :nodoc:
     @objc func closeCheckout() {
+        MPXTracker.sharedInstance.clean()
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
-
+        PXCheckoutStore.sharedInstance.clean()
         ThemeManager.shared.applyAppNavBarStyle(navigationController: viewModel.pxNavigationHandler.navigationController)
 
         // LifecycleProtocol.finishCheckout - defined

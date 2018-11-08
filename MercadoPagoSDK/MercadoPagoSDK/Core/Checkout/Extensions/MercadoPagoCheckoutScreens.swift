@@ -42,7 +42,7 @@ extension MercadoPagoCheckout {
     }
 
     func showIdentificationScreen() {
-        let identificationStep = IdentificationViewController (identificationTypes: self.viewModel.identificationTypes!, callback: { [weak self] (identification : PXIdentification) in
+        let identificationStep = IdentificationViewController (identificationTypes: self.viewModel.identificationTypes!, paymentMethod: viewModel.paymentData.paymentMethod, callback: { [weak self] (identification : PXIdentification) in
             guard let strongSelf = self else {
                 return
             }
@@ -305,7 +305,8 @@ extension MercadoPagoCheckout {
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
         let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewConfirmConfiguration: viewModel.getAdvancedConfiguration().reviewConfirmConfiguration, chargeRules: viewModel.chargeRules, oneTapResultHandler: self, consumedDiscount: self.viewModel.consumedDiscount, advancedConfiguration: viewModel.getAdvancedConfiguration(), mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter)
-
+        onetapFlow.setCustomerPaymentMethods(viewModel.customPaymentOptions)
+        onetapFlow.setPaymentMethodPlugins(viewModel.paymentMethodPlugins)
         onetapFlow.setPaymentFlow(paymentFlow: paymentFlow)
         onetapFlow.start()
     }

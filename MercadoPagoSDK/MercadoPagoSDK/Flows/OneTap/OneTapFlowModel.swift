@@ -22,11 +22,12 @@ final internal class OneTapFlowModel: PXFlowModel {
     var paymentOptionSelected: PaymentMethodOption
     let search: PXPaymentMethodSearch
     var readyToPay: Bool = false
-    var payerCosts: [PXPayerCost]?
     var paymentResult: PaymentResult?
     var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
     var consumedDiscount: Bool = false
+    var customerPaymentOptions: [CustomerPaymentMethod]?
+    var paymentMethodPlugins: [PXPaymentMethodPlugin]?
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -42,21 +43,22 @@ final internal class OneTapFlowModel: PXFlowModel {
     }
 
     let mpESCManager: MercadoPagoESC
-    let reviewScreenConfiguration: PXReviewConfirmConfiguration
+    let advancedConfiguration: PXAdvancedConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration(), chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
-        self.reviewScreenConfiguration = reviewScreenConfiguration
+        self.advancedConfiguration = advancedConfiguration
         self.chargeRules = chargeRules
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         self.mpESCManager = MercadoPagoESCImplementation(enabled: advancedConfiguration.escEnabled)
 
-        if let payerCost = search.oneTap?.oneTapCard?.selectedPayerCost {
+        // Payer cost pre selection.
+        if let payerCost = search.expressCho?.first?.oneTapCard?.selectedPayerCost {
             updateCheckoutModel(payerCost: payerCost)
         }
     }
@@ -93,7 +95,12 @@ internal extension OneTapFlowModel {
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {
-        return PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, reviewConfirmConfig: reviewScreenConfiguration, userLogged: false)
+        let viewModel = PXOneTapViewModel(amountHelper: self.amountHelper, paymentOptionSelected: paymentOptionSelected, advancedConfig: advancedConfiguration, userLogged: false)
+        viewModel.expressData = search.expressCho
+        viewModel.paymentMethods = search.paymentMethods
+        viewModel.items = checkoutPreference.items
+        viewModel.paymentMethodPlugins = paymentMethodPlugins
+        return viewModel
     }
 }
 
@@ -142,7 +149,7 @@ internal extension OneTapFlowModel {
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelected.getId() != PXPaymentTypes.ACCOUNT_MONEY.rawValue
 
-        if  isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
+        if isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded && !hasSavedESC() {
             return true
         }
         return false

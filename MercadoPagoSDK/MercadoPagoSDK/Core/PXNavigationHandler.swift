@@ -16,6 +16,8 @@ internal class PXNavigationHandler: NSObject {
     private var currentLoadingView: UIViewController?
     private var rootViewController: UIViewController?
 
+    private var dynamicViews: [UIViewController] = []
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         if self.navigationController.viewControllers.count > 0 {
@@ -100,7 +102,6 @@ internal class PXNavigationHandler: NSObject {
                                      animated: Bool, backToFirstPaymentVault: Bool = false) {
         viewController.hidesBottomBarWhenPushed = true
 
-        // TODO: Review with Product, navigation flow for -> backToFirstPaymentVault = true.
         if backToFirstPaymentVault {
             self.navigationController.navigationBar.isHidden = false
             viewController.callbackCancel = { [weak self] in self?.backToFirstPaymentVaultViewController() }
@@ -110,9 +111,9 @@ internal class PXNavigationHandler: NSObject {
         self.cleanCompletedCheckoutsFromNavigationStack()
         self.dismissLoading()
     }
-    
-    func pushViewController(cleanCompletedCheckouts : Bool = true,targetVC: UIViewController,
-                            animated: Bool){
+
+    func pushViewController(cleanCompletedCheckouts: Bool = true, targetVC: UIViewController,
+                            animated: Bool) {
         targetVC.hidesBottomBarWhenPushed = true
         self.navigationController.pushViewController(targetVC, animated: animated)
         if cleanCompletedCheckouts {
@@ -145,30 +146,23 @@ internal class PXNavigationHandler: NSObject {
         let  pxResultViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of: PXResultViewController.self)}
         if let lastResultViewController = pxResultViewControllers.last {
             let index = self.navigationController.viewControllers.index(of: lastResultViewController)
-            let  validViewControllers = self.navigationController.viewControllers.filter {!$0.isKind(of: MercadoPagoUIViewController.self) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
+            var  validViewControllers = self.navigationController.viewControllers.filter {(!$0.isKind(of: MercadoPagoUIViewController.self)) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
+
+            // Delete dynamic views intances
+
+            validViewControllers = validViewControllers.filter {!dynamicViews.contains($0)}
+
             self.navigationController.viewControllers = validViewControllers
         }
+    }
+
+    func addDynamicView(viewController: UIViewController) {
+        dynamicViews.append(viewController)
     }
 }
 
 internal extension PXNavigationHandler {
     static func getDefault() -> PXNavigationHandler {
         return PXNavigationHandler.init(navigationController: UINavigationController())
-    }
-}
-
-/** :nodoc: */
-extension PXNavigationHandler: UINavigationControllerDelegate {
-    func suscribeToNavigationFlow() {
-        navigationController.delegate = self
-    }
-
-    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        if !(viewController is MercadoPagoUIViewController) {
-            if (viewController is PXPaymentProcessor) || (viewController is PXPaymentMethodConfigProtocol) {
-                return
-            }
-            PXCheckoutStore.sharedInstance.clean()
-        }
     }
 }
