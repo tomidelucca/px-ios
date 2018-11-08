@@ -95,6 +95,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 extension PXPaymentFlow: PXPaymentProcessorErrorHandler {
     func showError() {
         let error = MPSDKError(message: "Hubo un error".localized, errorDetail: "", retry: false)
+        error.requestOrigin = ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue
         resultHandler?.finishPaymentFlow(error: error)
     }
 
