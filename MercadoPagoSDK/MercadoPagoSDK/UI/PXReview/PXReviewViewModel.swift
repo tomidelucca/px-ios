@@ -55,7 +55,11 @@ extension PXReviewViewModel {
     }
 
     func shouldShowPayer() -> Bool {
-        return self.amountHelper.paymentData.payer?.firstName != nil
+        if let paymentMethod = self.amountHelper.paymentData.getPaymentMethod() {
+            return (paymentMethod.isPec || paymentMethod.isBolbradesco)
+        }
+
+        return false
     }
 
     func shouldShowTermsAndCondition() -> Bool {
