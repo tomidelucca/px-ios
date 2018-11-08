@@ -74,7 +74,7 @@
 
 
 //    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243962506-63f1b044-c8bf-4d34-a800-f257a46628b8"];
-    NSDictionary *dict = @{ @"sarasa" : @"value"};
+    NSDictionary *dict = @{ @"key" : @"value"};
 
     [PXTracker setListener:self flowName:@"instore" flowDetails:dict];
 
