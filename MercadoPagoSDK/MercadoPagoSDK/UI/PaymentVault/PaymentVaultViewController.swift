@@ -70,7 +70,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         var screenPath = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
 
         if let groupName = groupName {
-            if groupName == PXPaymentTypes.BANK_TRANSFER.rawValue || groupName == PXPaymentTypes.TICKET.rawValue || groupName == PXPaymentTypes.BOLBRADESCO.rawValue {
+            if groupName == PXPaymentTypes.BANK_TRANSFER.rawValue || groupName == PXPaymentTypes.TICKET.rawValue || groupName == PXPaymentTypes.BOLBRADESCO.rawValue || groupName == PXPaymentTypes.PEC.rawValue {
                 screenPath = TrackingPaths.Screens.PaymentVault.getTicketPath()
             } else {
                 screenPath = TrackingPaths.Screens.PaymentVault.getCardTypePath()

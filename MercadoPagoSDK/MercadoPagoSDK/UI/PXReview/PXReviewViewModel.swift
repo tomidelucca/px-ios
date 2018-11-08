@@ -56,7 +56,7 @@ extension PXReviewViewModel {
 
     func shouldShowPayer() -> Bool {
         if let paymentMethod = self.amountHelper.paymentData.getPaymentMethod() {
-            return (paymentMethod.isPec || paymentMethod.isBolbradesco)
+            return paymentMethod.isPayerInfoRequired
         }
 
         return false
