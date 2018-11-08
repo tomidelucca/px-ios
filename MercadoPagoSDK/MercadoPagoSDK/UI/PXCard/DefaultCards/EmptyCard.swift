@@ -23,9 +23,6 @@ class EmptyCard: NSObject, CardUI {
 
 extension EmptyCard {
     static func render(containerView: UIView) {
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        PXLayout.setHeight(owner: containerView, height: PXCardSliderSizeManager.getItemContainerSize().height).isActive = true
-        PXLayout.setWidth(owner: containerView, width: PXCardSliderSizeManager.getItemContainerSize().width).isActive = true
         let circleView = UIView()
         let circleSize: CGFloat = 60
         containerView.addSubview(circleView)

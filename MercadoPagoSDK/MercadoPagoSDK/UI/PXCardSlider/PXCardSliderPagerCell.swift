@@ -38,6 +38,8 @@ extension PXCardSliderPagerCell {
         cardHeader?.show()
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
+            PXLayout.centerHorizontally(view: headerView).isActive = true
+            PXLayout.centerVertically(view: headerView).isActive = true
         }
     }
 
@@ -52,7 +54,9 @@ extension PXCardSliderPagerCell {
         cardHeader?.show()
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
-            EmptyCard.render(containerView: headerView)
+            EmptyCard.render(containerView: containerView)
+            PXLayout.centerHorizontally(view: headerView).isActive = true
+            PXLayout.centerVertically(view: headerView).isActive = true
         }
     }
 
@@ -68,6 +72,8 @@ extension PXCardSliderPagerCell {
         if let headerView = cardHeader?.view {
             containerView.addSubview(headerView)
             AccountMoneyCard.render(containerView: containerView, balanceText: balanceText)
+            PXLayout.centerHorizontally(view: headerView).isActive = true
+            PXLayout.centerVertically(view: headerView).isActive = true
         }
     }
 
