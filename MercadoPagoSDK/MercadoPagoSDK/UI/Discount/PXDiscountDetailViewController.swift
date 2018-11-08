@@ -10,8 +10,7 @@ import UIKit
 
 final class PXDiscountDetailViewController: MercadoPagoUIViewController {
 
-    override var screenName: String { return TrackingPaths.Screens.getDiscountDetailPath() }
-
+    private var trackingScreenName: String = TrackingPaths.Screens.getDiscountDetailPath()
     private var amountHelper: PXAmountHelper
     private let fontSize: CGFloat = PXLayout.S_FONT
     private let baselineOffSet: Int = 6
@@ -21,10 +20,15 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let currency = SiteManager.shared.getCurrency()
     let contentView: PXComponentView = PXComponentView()
 
-    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
+    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false, screenName: String = TrackingPaths.Screens.getDiscountDetailPath()) {
         self.amountHelper = amountHelper
         self.shouldShowTitle = shouldShowTitle
+        self.trackingScreenName = screenName
         super.init(nibName: nil, bundle: nil)
+    }
+
+    override func trackInfo() {
+        MPXTracker.sharedInstance.trackScreen(screenName: trackingScreenName)
     }
 
     required public init?(coder aDecoder: NSCoder) {
