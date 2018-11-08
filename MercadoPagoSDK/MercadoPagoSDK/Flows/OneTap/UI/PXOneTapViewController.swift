@@ -104,6 +104,9 @@ extension PXOneTapViewController {
         if contentView.getSubviews().isEmpty {
             viewModel.createCardSliderViewModel()
             renderViews()
+            if let preSelectedCard = viewModel.getCardSliderViewModel().first {
+                selectedCard = preSelectedCard
+            }
         }
     }
 
