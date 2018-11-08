@@ -216,13 +216,22 @@ extension PXPaymentData {
     }
 
     internal func clearCollectedData() {
+        clearPaymentMethodData()
+        clearPayerData()
+    }
+
+    internal func clearPaymentMethodData() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
-        self.payer?.clearCollectedData() // No borrar el payer directo
         self.transactionDetails = nil
         // No borrar el descuento
+    }
+
+    internal func clearPayerData() {
+        self.payer = self.payer?.copy() as? PXPayer
+        self.payer?.clearCollectedData()
     }
 
     internal func clearDiscount() {

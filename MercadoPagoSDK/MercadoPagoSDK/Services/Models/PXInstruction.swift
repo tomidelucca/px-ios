@@ -16,11 +16,12 @@ open class PXInstruction: NSObject, Codable {
     open var actions: [PXInstructionAction]?
     open var type: String?
     open var references: [PXInstructionReference]?
+    open var interactions: [PXInstructionInteraction]?
     open var secondaryInfo: [String]?
     open var tertiaryInfo: [String]?
     open var info: [String] = []
 
-    public init(title: String, subtitle: String?, accreditationMessage: String?, accreditationComments: [String], actions: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]) {
+    public init(title: String, subtitle: String?, accreditationMessage: String?, accreditationComments: [String], actions: [PXInstructionAction]?, type: String?, references: [PXInstructionReference]?, interactions: [PXInstructionInteraction]?, secondaryInfo: [String]?, tertiaryInfo: [String]?, info: [String]) {
         self.title = title
         self.subtitle = subtitle
         self.accreditationMessage = accreditationMessage
@@ -28,6 +29,7 @@ open class PXInstruction: NSObject, Codable {
         self.actions = actions
         self.type = type
         self.references = references
+        self.interactions = interactions
         self.secondaryInfo = secondaryInfo
         self.tertiaryInfo = tertiaryInfo
         self.info = info
@@ -41,6 +43,7 @@ open class PXInstruction: NSObject, Codable {
         case actions
         case type
         case references
+        case interactions
         case secondaryInfo = "secondary_info"
         case tertiaryInfo = "tertiary_info"
         case info
@@ -55,11 +58,12 @@ open class PXInstruction: NSObject, Codable {
         let action: [PXInstructionAction]? = try container.decodeIfPresent([PXInstructionAction].self, forKey: .actions)
         let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
         let references: [PXInstructionReference]? = try container.decodeIfPresent([PXInstructionReference].self, forKey: .references)
+        let interactions: [PXInstructionInteraction]? = try container.decodeIfPresent([PXInstructionInteraction].self, forKey: .interactions)
         let secondaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .secondaryInfo)
         let tertiaryInfo: [String]? = try container.decodeIfPresent([String].self, forKey: .tertiaryInfo)
         let info: [String] = try container.decodeIfPresent([String].self, forKey: .info) ?? []
 
-        self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, accreditationComments: accreditationComments, actions: action, type: type, references: references, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
+        self.init(title: title, subtitle: subtitle, accreditationMessage: accreditationMessage, accreditationComments: accreditationComments, actions: action, type: type, references: references, interactions: interactions, secondaryInfo: secondaryInfo, tertiaryInfo: tertiaryInfo, info: info)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -71,6 +75,7 @@ open class PXInstruction: NSObject, Codable {
         try container.encodeIfPresent(self.actions, forKey: .actions)
         try container.encodeIfPresent(self.type, forKey: .type)
         try container.encodeIfPresent(self.references, forKey: .references)
+        try container.encodeIfPresent(self.interactions, forKey: .interactions)
         try container.encodeIfPresent(self.secondaryInfo, forKey: .secondaryInfo)
         try container.encodeIfPresent(self.tertiaryInfo, forKey: .tertiaryInfo)
         try container.encodeIfPresent(self.info, forKey: .info)
@@ -94,5 +99,4 @@ open class PXInstruction: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXInstruction] {
         return try JSONDecoder().decode([PXInstruction].self, from: data)
     }
-
 }

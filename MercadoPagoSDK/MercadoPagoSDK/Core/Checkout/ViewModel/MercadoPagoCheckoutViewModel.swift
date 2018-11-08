@@ -54,6 +54,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
         }
     }
+
     var checkoutPreference: PXCheckoutPreference!
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
@@ -560,8 +561,18 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             prepareForNewSelection()
             self.initWithPaymentData = false
         } else {
-            self.readyToPay = true
+            self.readyToPay = self.needToCompletePayerInfo()
         }
+    }
+
+    func needToCompletePayerInfo() -> Bool {
+        if let paymentMethod = self.paymentData.getPaymentMethod() {
+            if paymentMethod.isPayerInfoRequired {
+                return self.isPayerSetted()
+            }
+        }
+
+        return false
     }
 
     public func updateCheckoutModel(payment: PXPayment) {
@@ -716,7 +727,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func resetInformation() {
-        self.paymentData.clearCollectedData()
+        self.clearCollectedData()
         self.cardToken = nil
         self.entityTypes = nil
         self.financialInstitutions = nil
@@ -724,6 +735,22 @@ extension MercadoPagoCheckoutViewModel {
         cleanIssuerSearch()
         cleanIdentificationTypesSearch()
         resetPaymentMethodConfigPlugin()
+    }
+
+    func clearCollectedData() {
+        self.paymentData.clearPaymentMethodData()
+        self.paymentData.clearPayerData()
+
+        // Se setea nuevamente el payer que tenemos en la preferencia para no perder los datos
+        self.paymentData.payer = self.checkoutPreference.payer
+    }
+
+    func isPayerSetted() -> Bool {
+        if let payerData = self.paymentData.getPayer(), let payerIdentification = payerData.identification {
+            return payerData.firstName != nil && payerData.lastName != nil && payerIdentification.type != nil && payerIdentification.number != nil
+        }
+
+        return false
     }
 
     func cleanPayerCostSearch() {

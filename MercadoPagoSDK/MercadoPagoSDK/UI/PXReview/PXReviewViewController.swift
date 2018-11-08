@@ -25,6 +25,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     var callbackPaymentData: ((PXPaymentData) -> Void)
     var callbackConfirm: ((PXPaymentData) -> Void)
     var finishButtonAnimation: (() -> Void)
+    var changePayerInformation: ((PXPaymentData) -> Void)
 
     weak var loadingButtonComponent: PXAnimatedButton?
     weak var loadingFloatingButtonComponent: PXAnimatedButton?
@@ -36,11 +37,12 @@ class PXReviewViewController: PXComponentContainerViewController {
     internal var changePaymentMethodCallback: (() -> Void)?
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), finishButtonAnimation: @escaping (() -> Void), changePayerInformation: @escaping ((PXPaymentData) -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.finishButtonAnimation = finishButtonAnimation
+        self.changePayerInformation = changePayerInformation
         self.timeOutPayButton = timeOutPayButton
         self.shouldAnimatePayButton = shouldAnimatePayButton
         super.init()
@@ -124,6 +126,15 @@ extension PXReviewViewController {
         contentView.addSubviewToBottom(summaryView)
         PXLayout.centerHorizontally(view: summaryView).isActive = true
         PXLayout.matchWidth(ofView: summaryView).isActive = true
+
+        // Payer info
+        if self.viewModel.shouldShowPayer() {
+            if let payerView = getPayerComponentView() {
+                contentView.addSubviewToBottom(payerView)
+                PXLayout.centerHorizontally(view: payerView).isActive = true
+                PXLayout.matchWidth(ofView: payerView).isActive = true
+            }
+        }
 
         // Add CFT view.
         if let cftView = getCFTComponentView() {
@@ -289,6 +300,22 @@ extension PXReviewViewController {
         let summaryComponent = viewModel.buildSummaryComponent(width: PXLayout.getScreenWidth())
         let summaryView = summaryComponent.render()
         return summaryView
+    }
+
+    fileprivate func getPayerComponentView() -> UIView? {
+
+        let action = PXAction(label: "review_change_payer_action".localized_beta, action: {
+            if let reviewViewModel = self.viewModel {
+                self.changePayerInformation(reviewViewModel.getClearPayerData())
+            }
+        })
+
+        if let payerComponent = viewModel.buildPayerComponent(action: action) {
+            let payerView = payerComponent.render()
+            return payerView
+        }
+
+        return nil
     }
 
     private func getTitleComponentView() -> UIView {

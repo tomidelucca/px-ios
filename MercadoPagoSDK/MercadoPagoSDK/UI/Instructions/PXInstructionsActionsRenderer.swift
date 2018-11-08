@@ -11,7 +11,7 @@ import Foundation
 class PXInstructionsActionsRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
-    let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
+    let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .clear
 
     func render(_ instructionsActions: PXInstructionsActionsComponent) -> PXInstructionsActionsView {
         let instructionsActionsView = PXInstructionsActionsView()

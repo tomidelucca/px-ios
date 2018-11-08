@@ -54,6 +54,14 @@ extension PXReviewViewModel {
         return self.amountHelper.paymentData.hasPaymentMethod()
     }
 
+    func shouldShowPayer() -> Bool {
+        if let paymentMethod = self.amountHelper.paymentData.getPaymentMethod() {
+            return paymentMethod.isPayerInfoRequired
+        }
+
+        return false
+    }
+
     func shouldShowTermsAndCondition() -> Bool {
         return !userLogged
     }
@@ -127,6 +135,12 @@ extension PXReviewViewModel {
     func getClearPaymentData() -> PXPaymentData {
         let newPaymentData: PXPaymentData = self.amountHelper.paymentData.copy() as? PXPaymentData ?? self.amountHelper.paymentData
         newPaymentData.clearCollectedData()
+        return newPaymentData
+    }
+
+    func getClearPayerData() -> PXPaymentData {
+        let newPaymentData: PXPaymentData = self.amountHelper.paymentData.copy() as? PXPaymentData ?? self.amountHelper.paymentData
+        newPaymentData.clearPayerData()
         return newPaymentData
     }
 
@@ -276,6 +290,27 @@ extension PXReviewViewModel {
     func buildTitleComponent() -> PXReviewTitleComponent {
         let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
+    }
+
+    func buildPayerComponent(action: PXAction) -> PXPayerComponent? {
+
+        if let payer = self.amountHelper.paymentData.payer {
+            if let payerIdType = payer.identification?.type, let payerIdNumber = payer.identification?.number, let payerName = payer.firstName, let payerLastName = payer.lastName {
+                if let mask = Utils.getMasks(forId: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
+
+                    if let numberMasked = mask.textMasked(payerIdNumber)?.description {
+                        let identification = NSAttributedString(string: "\(payerIdType): \(numberMasked)")
+                        let fulltName = NSAttributedString(string: "\(payerName) \(payerLastName)".uppercased())
+
+                        let payerIcon = ResourceManager.shared.getImage("MPSDK_review_iconoPayer")
+                        let props = PXPayerProps(payerIcon: payerIcon, identityfication: identification, fulltName: fulltName, action: action, backgroundColor: ThemeManager.shared.detailedBackgroundColor(), nameLabelColor: ThemeManager.shared.boldLabelTintColor(), identificationLabelColor: ThemeManager.shared.labelTintColor(), separatorColor: ThemeManager.shared.lightTintColor())
+                        return PXPayerComponent(props: props)
+                    }
+                }
+            }
+        }
+
+        return nil
     }
 }
 
