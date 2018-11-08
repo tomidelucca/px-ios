@@ -21,7 +21,7 @@ final class PXOneTapViewModel: PXReviewViewModel {
         var properties: [String: Any] = [:]
         properties["available_methods"] = getAvailablePaymentMethodForTracking()
         properties["total_amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getSiteId()
+        properties["currency_id"] = SiteManager.shared.getCurrency().id
         properties["discount"] = amountHelper.getDiscountForTracking()
         var itemsDic: [Any] = []
         for item in amountHelper.preference.items {
@@ -102,7 +102,7 @@ extension PXOneTapViewModel {
                         showArrow = false
                     }
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost, nil, showArrow)
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost, targetCardData.cardId, showArrow)
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
@@ -244,21 +244,22 @@ extension PXOneTapViewModel {
             for expressItem in expressData {
                 if let savedCard = expressItem.oneTapCard {
                     var savedCardDic: [String: Any] = [:]
-                    savedCardDic["payment_method_type"] = expressItem.paymentMethodId
-                    savedCardDic["payment_method_id"] = expressItem.paymentTypeId
+                    savedCardDic["payment_method_type"] = expressItem.paymentTypeId
+                    savedCardDic["payment_method_id"] = expressItem.paymentMethodId
                     var extraInfo: [String: Any] = [:]
                     extraInfo["card_id"] = savedCard.cardId
                     extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
                     extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
-                    if let issuerId = amountHelper.paymentData.issuer?.id {
+
+                    if let issuerId = savedCard.cardUI?.issuerId {
                         extraInfo["issuer_id"] = Int(issuerId)
                     }
                     savedCardDic["extra_info"] = extraInfo
                     dic.append(savedCardDic)
                 } else if let accountMoney = expressItem.accountMoney {
                     var accountMoneyDic: [String: Any] = [:]
-                    accountMoneyDic["payment_method_type"] = expressItem.paymentMethodId
-                    accountMoneyDic["payment_method_id"] = expressItem.paymentTypeId
+                    accountMoneyDic["payment_method_type"] = expressItem.paymentTypeId
+                    accountMoneyDic["payment_method_id"] = expressItem.paymentMethodId
                     var extraInfo: [String: Any] = [:]
                     extraInfo["balance"] = accountMoney.availableBalance
                     accountMoneyDic["extra_info"] = extraInfo
@@ -286,12 +287,13 @@ extension PXOneTapViewModel {
             properties["issuer_id"] = Int(issuerId)
         }
         properties["total_amount"] = amountHelper.amountToPay
+        properties["currency_id"] = SiteManager.shared.getCurrency().id
         var dic: [Any] = []
         for payerCost in installmentData.payerCosts {
             dic.append(payerCost.getPayerCostForTracking())
         }
         properties["available_installments"] = dic
-        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapInstallmentsPath())
+        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapInstallmentsPath(), properties: properties)
     }
 
     func trackConfirmEvent(selectedCard: PXCardSliderViewModel) {
@@ -302,8 +304,8 @@ extension PXOneTapViewModel {
 
         var properties: [String: Any] = [:]
         if paymentMethod.isCard {
-            properties["payment_method_type"] = paymentMethod.id
-            properties["payment_method_id"] = paymentMethod.paymentTypeId
+            properties["payment_method_type"] = paymentMethod.paymentTypeId
+            properties["payment_method_id"] = paymentMethod.id
             properties["review_type"] = "one_tap"
             var extraInfo: [String: Any] = [:]
             extraInfo["card_id"] = selectedCard.cardId

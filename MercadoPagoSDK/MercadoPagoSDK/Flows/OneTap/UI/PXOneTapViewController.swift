@@ -104,6 +104,9 @@ extension PXOneTapViewController {
         if contentView.getSubviews().isEmpty {
             viewModel.createCardSliderViewModel()
             renderViews()
+            if let preSelectedCard = viewModel.getCardSliderViewModel().first {
+                selectedCard = preSelectedCard
+            }
         }
     }
 
@@ -221,14 +224,6 @@ extension PXOneTapViewController {
         slider.render(containerView: inContainerView, cardSliderProtocol: self)
         slider.update(viewModel.getCardSliderViewModel())
     }
-
-    private func getDiscountDetailView() -> UIView? {
-        if self.viewModel.amountHelper.discount != nil || self.viewModel.amountHelper.consumedDiscount {
-            let discountDetailVC = PXDiscountDetailViewController(amountHelper: self.viewModel.amountHelper, shouldShowTitle: true)
-            return discountDetailVC.getContentView()
-        }
-        return nil
-    }
 }
 
 // MARK: User Actions.
@@ -262,17 +257,17 @@ extension PXOneTapViewController {
 // MARK: Summary delegate.
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
     func didTapSummary() {
+        let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper, screenName: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
+
         if viewModel.amountHelper.discount != nil {
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: viewModel.amountHelper.discount?.getDiscountDescription()) {
+            PXComponentFactory.Modal.show(viewController: discountViewController, title: viewModel.amountHelper.discount?.getDiscountDescription()) {
 
                 if UIDevice.isSmallDevice() {
                     self.setupNavigationBar()
                 }
             }
         } else if viewModel.amountHelper.consumedDiscount {
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
-            PXComponentFactory.Modal.show(viewController: PXDiscountDetailViewController(amountHelper: viewModel.amountHelper), title: "modal_title_consumed_discount".localized_beta) {
+            PXComponentFactory.Modal.show(viewController: discountViewController, title: "modal_title_consumed_discount".localized_beta) {
 
                 if UIDevice.isSmallDevice() {
                     self.setupNavigationBar()

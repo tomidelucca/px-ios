@@ -74,8 +74,9 @@
 
 
 //    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243962506-63f1b044-c8bf-4d34-a800-f257a46628b8"];
+    NSDictionary *dict = @{ @"key" : @"value"};
 
-    [PXTracker setListener:self];
+    [PXTracker setListener:self flowName:@"instore" flowDetails:dict];
 
 //    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
 
