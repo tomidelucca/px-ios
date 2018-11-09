@@ -1,3 +1,9 @@
+# v4.3.2
+🚀Private RC - 4.3.2 🚀
+MercadoPagoSDKV4 - Private Version
+- One Tap
+- MoneyIn - Fix Revisa y Confirma bucle infinito.
+
 # v4.3.1
 🚀Private RC - 4.3.1 🚀
 MercadoPagoSDKV4 - Private Version
