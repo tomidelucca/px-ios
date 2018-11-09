@@ -561,14 +561,14 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             prepareForNewSelection()
             self.initWithPaymentData = false
         } else {
-            self.readyToPay = self.needToCompletePayerInfo()
+            self.readyToPay = !self.needToCompletePayerInfo()
         }
     }
 
     func needToCompletePayerInfo() -> Bool {
         if let paymentMethod = self.paymentData.getPaymentMethod() {
             if paymentMethod.isPayerInfoRequired {
-                return self.isPayerSetted()
+                return !self.isPayerSetted()
             }
         }
 
