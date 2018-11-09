@@ -115,17 +115,20 @@ end
 lane :communicate_build_to_slack do |options|
     pod_version = CIHelper::spec_version()
     slack(
-      message: "Lib de PX publicada",
+      message: "🕺 Lib de PX publicada 💃",
       username: 'Release PX',
       default_payloads: [:git_author],
       attachment_properties: {
         fields: [
               {
-                title: "Lib Version Number",
+                title: "📲Lib Version Number",
                 value: pod_version
               },{
-                title: "Entorno",
+                title: "🚀Entorno",
                 value: options[:enviroment]
+              },{
+                title: "📝What´s new? RC Notes",
+                value: "https://github.com/mercadopago/px-ios/releases/tag/#{pod_version}"
               }
             ]
       }
