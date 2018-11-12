@@ -41,9 +41,11 @@ extension OneTapFlow {
     }
 
     func showSecurityCodeScreen() {
+        PXNotificationManager.Post.animateCvv()
+        /*
         let securityCodeVc = SecurityCodeViewController(viewModel: model.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: PXCardInformationForm, securityCode: String) -> Void in
             self?.createCardToken(cardInformation: cardInformation as? PXCardInformation, securityCode: securityCode)
         })
-        self.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
+        self.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)*/
     }
 }

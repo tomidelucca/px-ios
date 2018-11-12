@@ -19,6 +19,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     private var discountTermsConditionView: PXTermsAndConditionView?
 
     let slider = PXCardSlider()
+    private var selectedCardFrame: CGRect = .zero
 
     // MARK: Callbacks
     var callbackPaymentData: ((PXPaymentData) -> Void)
@@ -116,8 +117,9 @@ extension PXOneTapViewController {
 
         // Add header view.
         let headerView = getHeaderView()
+        let headerViewHeight = PXCardSliderSizeManager.getHeaderViewHeight(viewController: self)
         contentView.addSubviewToBottom(headerView)
-        PXLayout.setHeight(owner: headerView, height: PXCardSliderSizeManager.getHeaderViewHeight(viewController: self)).isActive = true
+        PXLayout.setHeight(owner: headerView, height: headerViewHeight).isActive = true
         PXLayout.centerHorizontally(view: headerView).isActive = true
         PXLayout.matchWidth(ofView: headerView).isActive = true
 
@@ -148,6 +150,7 @@ extension PXOneTapViewController {
         topMarginConstraint.isActive = true
         cardSliderMarginConstraint = topMarginConstraint
         PXLayout.setHeight(owner: cardSliderContentView, height: PXCardSliderSizeManager.getSliderSize().height).isActive = true
+        
 
         // Add footer payment button.
         if let footerView = getFooterView() {
@@ -175,7 +178,12 @@ extension PXOneTapViewController {
             self?.viewModel.trackTapBackEvent()
         }
 
+        subscribeCvvFlowToNotifications()
+
         addCardSlider(inContainerView: cardSliderContentView)
+
+        // TODO: Get proper frame from Slider selected cell.
+        selectedCardFrame = CGRect(x: 25, y: headerViewHeight + 123, width: 0, height: 0)
     }
 }
 
@@ -418,8 +426,8 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
         scrollView.isScrollEnabled = true
         view.isUserInteractionEnabled = true
         unsubscribeFromNotifications()
-        UIView.animate(withDuration: 0.3, animations: {
-            self.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            self?.loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
         })
     }
 
@@ -427,7 +435,8 @@ extension PXOneTapViewController: PXAnimatedButtonDelegate {
     }
 
     func didFinishAnimation() {
-        self.finishButtonAnimation()
+        finishButtonAnimation()
+        unsubscribeFromNotifications()
     }
 
     func progressButtonAnimationTimeOut() {
@@ -445,7 +454,24 @@ extension PXOneTapViewController {
         PXNotificationManager.SuscribeTo.animateButton(loadingButton, selector: #selector(loadingButton.animateFinish))
     }
 
+    func subscribeCvvFlowToNotifications() {
+        PXNotificationManager.SuscribeTo.animateCvv(self, selector: #selector(animatedCvvFlow))
+    }
+
     func unsubscribeFromNotifications() {
         PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
+        PXNotificationManager.UnsuscribeTo.animateCvv(self)
+    }
+}
+
+// MARK: Cvv Animated Flow
+extension PXOneTapViewController {
+    @objc func animatedCvvFlow() {
+        // loadingButtonComponent?.resetButton()
+        let cvvVC: PXAnimatedCvvViewController = PXAnimatedCvvViewController(withCard: selectedCard, frame: selectedCardFrame)
+        cvvVC.modalPresentationStyle = .overCurrentContext
+        present(cvvVC, animated: false, completion: { [weak self] in
+            print("PEPITO")
+        })
     }
 }

@@ -34,6 +34,10 @@ extension PXNotificationManager {
             notificationCenter.addObserver(observer, selector: selector, name: .cardFormReset, object: nil)
         }
 
+        static func animateCvv(_ observer: Any, selector: Selector) {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.addObserver(observer, selector: selector, name: .animateCvv, object: nil)
+        }
     }
 }
 
@@ -50,6 +54,14 @@ extension PXNotificationManager {
             }
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(observer, name: .animateButton, object: nil)
+        }
+
+        static func animateCvv(_ observer: Any?) {
+            guard let observer = observer else {
+                return
+            }
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.removeObserver(observer, name: .animateCvv, object: nil)
         }
     }
 }
@@ -70,6 +82,11 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.post(name: .cardFormReset, object: nil)
         }
+
+        static func animateCvv() {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.post(name: .animateCvv, object: nil)
+        }
     }
 }
 
@@ -77,4 +94,5 @@ internal extension NSNotification.Name {
     static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
     static let animateButton = Notification.Name(rawValue: "PXAnimateButton")
     static let cardFormReset = Notification.Name(rawValue: "PXCardFormReset")
+    static let animateCvv = Notification.Name(rawValue: "PXAnimateCvv")
 }
