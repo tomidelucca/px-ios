@@ -1,3 +1,10 @@
+# v4.3.3
+🚀Private RC - 4.3.3 🚀
+MercadoPagoSDKV4 - Private Version
+- One Tap
+- MoneyIn
+- Fix ESC Impl Default value.
+
 # v4.3.2
 🚀Private RC - 4.3.2 🚀
 MercadoPagoSDKV4 - Private Version
