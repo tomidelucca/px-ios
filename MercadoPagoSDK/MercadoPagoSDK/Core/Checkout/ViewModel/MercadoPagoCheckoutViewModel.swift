@@ -543,6 +543,12 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updateCheckoutModel(token: PXToken) {
+        if let esc = token.esc {
+            mpESCManager.saveESC(cardId: token.cardId, esc: esc)
+        } else {
+            mpESCManager.deleteESC(cardId: token.cardId)
+        }
+
         self.paymentData.updatePaymentDataWith(token: token)
     }
 
@@ -671,9 +677,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return false
         }
         if token.hasCardId() {
-            if isApprovedPayment && token.hasESC() {
-                return mpESCManager.saveESC(cardId: token.cardId, esc: token.esc!)
-            } else {
+            if !isApprovedPayment {
                 mpESCManager.deleteESC(cardId: token.cardId)
                 return false
             }
