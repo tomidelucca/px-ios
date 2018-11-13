@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     s.dependency 'MLUI', '~> 5.0'
   end
-
+  
   s.subspec 'ESC' do |esc|
     esc.dependency 'MercadoPagoSDKV4/Default'
     esc.dependency 'MLESCManager'
@@ -33,5 +33,4 @@ Pod::Spec.new do |s|
     #test_spec.source_files = 'MercadoPagoSDK/MercadoPagoSDKTests/*'
     #test_spec.frameworks = 'XCTest'
   #end
-
 end
