@@ -112,10 +112,12 @@ internal extension OneTapFlowModel {
     }
 
     func updateCheckoutModel(token: PXToken) {
-        if let esc = token.esc {
-            mpESCManager.saveESC(cardId: token.cardId, esc: esc)
-        } else {
-            mpESCManager.deleteESC(cardId: token.cardId)
+        if !token.cardId.isEmpty {
+            if let esc = token.esc {
+                mpESCManager.saveESC(cardId: token.cardId, esc: esc)
+            } else {
+                mpESCManager.deleteESC(cardId: token.cardId)
+            }
         }
 
         self.paymentData.updatePaymentDataWith(token: token)
