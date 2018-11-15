@@ -14,6 +14,7 @@ final class PXAnimatedCvvViewController: UIViewController {
     private var cardHeaderVC: CardHeaderController?
     private var cardFrame: CGRect = .zero
     private var accesoryView: UIButton = UIButton(frame: .zero)
+    private var blurEffectView: UIVisualEffectView = UIVisualEffectView(frame: .zero)
 
     convenience init(withCard: PXCardSliderViewModel?, frame: CGRect) {
         self.init()
@@ -40,13 +41,13 @@ extension PXAnimatedCvvViewController {
 
     private func makeBlur() {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurEffectView.alpha = 0
         view.addSubview(blurEffectView)
         UIView.animate(withDuration: 0.4) {
-            blurEffectView.alpha = 1
+            self.blurEffectView.alpha = 1
         }
     }
 
@@ -88,7 +89,7 @@ extension PXAnimatedCvvViewController {
     @objc func showKeyboard() {
         accesoryView = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 54))
         accesoryView.backgroundColor = ThemeManager.shared.greyColor()
-        accesoryView.setTitle("Pagar".localized, for: .normal)
+        accesoryView.setTitle("Confirmar".localized, for: .normal)
         accesoryView.setTitleColor(UIColor.white, for: .normal)
         accesoryView.isEnabled = false
         ghostTextField.inputAccessoryView = accesoryView
@@ -97,9 +98,7 @@ extension PXAnimatedCvvViewController {
         ghostTextField.isHidden = true
         ghostTextField.keyboardType = .numberPad
         ghostTextField.becomeFirstResponder()
-        UIView.animate(withDuration: 0.3) {
-
-        }
+        accesoryView.addTarget(self, action: #selector(doPay), for: .touchUpInside)
 
         UIView.animate(withDuration: 0.3, animations: {
             self.cardHeaderVC?.view.frame = CGRect(origin: CGPoint(x: self.cardFrame.origin.x, y: 85), size: PXCardSliderSizeManager.getItemContainerSize())
@@ -112,6 +111,35 @@ extension PXAnimatedCvvViewController {
 
     func flipCard() {
         self.cardHeaderVC?.showSecurityCode()
+    }
+
+    @objc func doPay() {
+        ghostTextField.resignFirstResponder()
+
+        UIView.animate(withDuration: 0.3, animations: {
+            self.cardHeaderVC?.view.frame = CGRect(origin: CGPoint(x: self.cardFrame.origin.x, y: self.cardFrame.origin.y), size: PXCardSliderSizeManager.getItemContainerSize())
+        }) { finish in
+            if finish {
+                self.cardHeaderVC?.show()
+                self.perform(#selector(self.dimiss), with: self, afterDelay: 1.0)
+            }
+        }
+    }
+
+    @objc func dimiss() {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.blurEffectView.alpha = 0
+        }, completion: { finish in
+            if finish {
+                UIView.animate(withDuration: 0.1, animations: {
+                    self.cardHeaderVC?.view.alpha = 0
+                }, completion: { finish in
+                    if finish {
+                        self.dismiss(animated: false, completion: nil)
+                    }
+                })
+            }
+        })
     }
 }
 
@@ -127,10 +155,12 @@ extension PXAnimatedCvvViewController: UITextFieldDelegate {
             card?.cardData?.securityCode += string
             UIView.animate(withDuration: 0.2) {
                 self.accesoryView.backgroundColor = ThemeManager.shared.greyColor()
+                self.accesoryView.isEnabled = false
             }
         } else {
             UIView.animate(withDuration: 0.2) {
                 self.accesoryView.backgroundColor = ThemeManager.shared.getAccentColor()
+                self.accesoryView.isEnabled = true
             }
         }
 

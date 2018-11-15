@@ -69,19 +69,7 @@ internal class MercadoPagoService: NSObject {
                 let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
                 failure?(error)
             }
-
-            MercadoPagoSDK.request(request).responseData { response in
-                MercadoPagoService.debugPrint(response: response)
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                if let data = response.result.value, response.error == nil {
-                    success(data)
-                } else if let error = response.error as NSError? {
-                    failure?(error)
-                } else {
-                    let error: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-                    failure?(error)
-                }
-            }
+        }
     }
 }
 
