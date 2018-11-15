@@ -98,6 +98,8 @@ extension PXOneTapViewModel {
                     if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == PXPaymentTypes.DEBIT_CARD.rawValue {
                         showArrow = false
                         displayMessage = ""
+                    } else if payerCost.count == 1 {
+                        showArrow = false
                     } else if targetCardData.selectedPayerCost == nil {
                         showArrow = false
                     }
