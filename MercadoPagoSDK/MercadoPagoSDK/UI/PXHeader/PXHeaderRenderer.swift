@@ -74,7 +74,7 @@ internal final class PXHeaderRenderer: NSObject {
         circleImage.clipsToBounds = true
         circleImage.translatesAutoresizingMaskIntoConstraints = false
         circleImage.enableFadeIn()
-        circleImage.setCustomContentMode(.scaleAspectFill)
+        circleImage.contentMode = .scaleAspectFill
         circleImage.image = image
         circleImage.backgroundColor = .clear
         PXLayout.setHeight(owner: circleImage, height: IMAGE_WIDTH).isActive = true
