@@ -9,7 +9,6 @@
 import UIKit
 
 class PXUIImageView: UIImageView {
-    private var customContentMode: UIView.ContentMode = .scaleAspectFit
     private var currentImage: UIImage?
     private var fadeInEnabled = false
     override var image: UIImage? {
@@ -21,18 +20,34 @@ class PXUIImageView: UIImageView {
         }
     }
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.contentMode = .scaleAspectFit
+    }
+
+    override init(image: UIImage?) {
+        super.init(image: image)
+        self.contentMode = .scaleAspectFit
+    }
+
+    override init(image: UIImage?, highlightedImage: UIImage?) {
+        super.init(image: image, highlightedImage: highlightedImage)
+        self.contentMode = .scaleAspectFit
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private func loadImage(image: UIImage?) {
-        self.contentMode = self.customContentMode
         if let pxImage = image as? PXUIImage {
             let placeholder = buildPlaceholderView(image: pxImage)
             let fallback = buildFallbackView(image: pxImage)
             Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback, fadeInEnabled: fadeInEnabled) { newImage in
                 self.currentImage = newImage
-                self.contentMode = self.customContentMode
             }
         } else {
             self.currentImage = image
-            self.contentMode = self.customContentMode
         }
     }
 
@@ -78,10 +93,5 @@ class PXUIImageView: UIImageView {
 
     func disableFadeIn() {
         fadeInEnabled = false
-    }
-
-    func setCustomContentMode(_ contentMode: UIView.ContentMode) {
-        self.contentMode = contentMode
-        customContentMode = contentMode
     }
 }
