@@ -94,3 +94,23 @@ internal extension UIView {
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
 }
+
+//MARK: UI Test Helper
+extension UIView {
+    public class func findByAccessibilityIdentifier(identifier: String) -> UIView? {
+        
+        guard let window = UIApplication.shared.keyWindow else {
+            return nil
+        }
+        
+        func findByID(_ view: UIView, _ id: String) -> UIView? {
+            if view.accessibilityIdentifier == id { return view }
+            for v in view.subviews {
+                if let a = findByID(v, id) { return a }
+            }
+            return nil
+        }
+        
+        return findByID(window, identifier)
+    }
+}

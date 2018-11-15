@@ -131,6 +131,7 @@ extension PXOneTapInstallmentInfoView {
     }
 
     func render() {
+        self.accessibilityIdentifier = "installment_button"
         removeAllSubviews()
         setupSlider()
         setupFadeImages()
