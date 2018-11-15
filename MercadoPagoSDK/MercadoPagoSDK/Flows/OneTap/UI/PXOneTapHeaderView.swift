@@ -108,7 +108,7 @@ extension PXOneTapHeaderView {
             PXLayout.setWidth(owner: imageView, width: imageSize).isActive = true
             PXLayout.setHeight(owner: imageView, height: imageSize).isActive = true
             PXLayout.centerVertically(view: imageView, to: titleLabel).isActive = true
-            PXLayout.put(view: imageView, rightOf: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.put(view: imageView, rightOf: titleLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         }
 
         let valueLabel = UILabel()
