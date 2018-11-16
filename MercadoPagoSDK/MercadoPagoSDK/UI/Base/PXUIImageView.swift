@@ -9,7 +9,6 @@
 import UIKit
 
 class PXUIImageView: UIImageView {
-
     private var currentImage: UIImage?
     private var fadeInEnabled = false
     override var image: UIImage? {
@@ -21,12 +20,29 @@ class PXUIImageView: UIImageView {
         }
     }
 
-    private func loadImage(image: UIImage?) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.contentMode = .scaleAspectFit
+    }
+
+    override init(image: UIImage?) {
+        super.init(image: image)
+        self.contentMode = .scaleAspectFit
+    }
+
+    override init(image: UIImage?, highlightedImage: UIImage?) {
+        super.init(image: image, highlightedImage: highlightedImage)
+        self.contentMode = .scaleAspectFit
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func loadImage(image: UIImage?) {
         if let pxImage = image as? PXUIImage {
             let placeholder = buildPlaceholderView(image: pxImage)
             let fallback = buildFallbackView(image: pxImage)
-
             Utils().loadImageFromURLWithCache(withUrl: pxImage.url, targetView: self, placeholderView: placeholder, fallbackView: fallback, fadeInEnabled: fadeInEnabled) { newImage in
                 self.currentImage = newImage
             }

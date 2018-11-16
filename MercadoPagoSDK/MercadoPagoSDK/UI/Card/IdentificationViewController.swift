@@ -90,6 +90,9 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        let backspace: String = ""
+
         guard let identificationType = identificationType else {
             return false
         }
@@ -97,7 +100,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
             return false
         }
         if textField.text?.count == identificationType.maxLength {
-            return false
+            return string == backspace
         }
         return true
     }

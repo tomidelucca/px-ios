@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.3.2"
+  s.version          = "4.3.4"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
     s.dependency 'MLUI', '~> 5.0'
   end
-
+  
   s.subspec 'ESC' do |esc|
     esc.dependency 'MercadoPagoSDKV4/Default'
     esc.dependency 'MLESCManager'
@@ -33,5 +33,4 @@ Pod::Spec.new do |s|
     #test_spec.source_files = 'MercadoPagoSDK/MercadoPagoSDKTests/*'
     #test_spec.frameworks = 'XCTest'
   #end
-
 end
