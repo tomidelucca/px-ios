@@ -47,9 +47,12 @@ extension PXOneTapInstallmentsSelectorView {
         tableView.tableFooterView = UIView()
         tableViewTopSeparator.translatesAutoresizingMaskIntoConstraints = false
         tableViewTopSeparator.backgroundColor = tableView.separatorColor
-        PXLayout.setHeight(owner: tableViewTopSeparator, height: 0.5).isActive = true
-        PXLayout.setWidth(owner: tableViewTopSeparator, width: PXLayout.getScreenWidth()).isActive = true
         tableView.tableHeaderView = tableViewTopSeparator
+        PXLayout.matchWidth(ofView: tableViewTopSeparator, toView: tableView).isActive = true
+        PXLayout.centerHorizontally(view: tableViewTopSeparator, to: tableView).isActive = true
+        PXLayout.pinTop(view: tableViewTopSeparator, to: tableView).isActive = true
+        PXLayout.setHeight(owner: tableViewTopSeparator, height: 0.5).isActive = true
+        tableView.tableHeaderView?.layoutIfNeeded()
         tableView.reloadData()
     }
 
