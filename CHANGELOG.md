@@ -1,3 +1,13 @@
+# v4.3.5
+🚀Private RC - 4.3.5 🚀
+MercadoPagoSDKV4 - Private Version
+HOTFIX: OneTap check by cardId / 1 installment UI Row
+- One Tap
+- MoneyIn
+- Fix ESC Impl Default value.
+- Improvement Green discount arrow OneTap.
+- Improvement Aspectfill congrats image.
+
 # v4.3.4
 🚀Private RC - 4.3.4 🚀
 MercadoPagoSDKV4 - Private Version
