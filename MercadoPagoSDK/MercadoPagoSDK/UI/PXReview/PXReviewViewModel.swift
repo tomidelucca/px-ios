@@ -34,7 +34,36 @@ class PXReviewViewModel: NSObject {
     }
 
     func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
+        var properties: [String: Any] = [:]
+        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.getPaymentTypeForTracking()
+        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
+        var extraInfo: [String: Any] = [:]
+        extraInfo["issuer_id"] = amountHelper.paymentData.issuer?.id
+        if let cardId = amountHelper.paymentData.token?.cardId {
+            let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
+            extraInfo["card_id"] = cardId
+            extraInfo["esc"] = cardIdsEsc.contains(cardId)
+        }
+        properties["payment_extra_info"] = extraInfo
+        properties["discount"] = amountHelper.getDiscountForTracking()
+        properties["currency_id"] = SiteManager.shared.getCurrency().id
+        properties["total_amount"] = amountHelper.amountToPay
+        properties["installments"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
+        var itemsDic: [Any] = []
+        for item in amountHelper.preference.items {
+            var itemDic: [String: Any] = [:]
+            var idItemDic: [String: Any] = [:]
+            idItemDic["id"] = item.id
+            idItemDic["description"] = item.getDescription()
+            idItemDic["price"] = item.getUnitPrice()
+            itemDic["item"] = idItemDic
+            itemDic["quantity"] = item.getQuantity()
+            itemDic["currency_id"] = SiteManager.shared.getCurrency().id
+            itemsDic.append(itemDic)
+        }
+        properties["items"] = itemsDic
+        properties["charges"] = self.amountHelper.chargeRuleAmount
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
     }
 
     func trackChangePaymentMethodEvent() {

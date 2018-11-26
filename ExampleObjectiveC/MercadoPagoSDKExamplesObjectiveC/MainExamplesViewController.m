@@ -82,7 +82,7 @@
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
-    [advancedConfig setExpressEnabled:YES];
+    [advancedConfig setExpressEnabled:NO];
 
     // Add theme to advanced config.
     MeliTheme *meliTheme = [[MeliTheme alloc] init];

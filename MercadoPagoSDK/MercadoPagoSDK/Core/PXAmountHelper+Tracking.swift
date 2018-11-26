@@ -24,6 +24,7 @@ extension PXAmountHelper {
         dic["amount_to_discount"] = discount.couponAmount
         dic["max_amount_to_discount"] = campaign.maxCouponAmount
         dic["max_redeem_per_user"] = campaign.maxRedeemPerUser
+        dic["campaign_id"] = campaign.id
         return dic
     }
 }

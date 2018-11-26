@@ -22,9 +22,7 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     var toolbar: PXToolbar?
 
     override func trackInfo() {
-        let screenPath = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
-
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
+        trackScreenView()
     }
 
     @objc func keyboardWillShow(notification: Notification) {
@@ -168,7 +166,9 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         securityCodeTextField.resignFirstResponder()
         securityCodeTextField.becomeFirstResponder()
 
+        trackError(errorMessage: errorMessage)
     }
+
     open func hideErrorMessage() {
         self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.secondaryColor()
         self.securityCodeTextField.borderActiveColor = ThemeManager.shared.secondaryColor()
@@ -199,5 +199,31 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
 
         label?.text?.append("•")
         return true
+    }
+}
+
+// MARK: Tracking
+extension SecurityCodeViewController {
+    func trackScreenView() {
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = viewModel.paymentMethod.getPaymentIdForTracking()
+        if let token = viewModel.cardInfo as? PXCardInformation {
+            properties["card_id"] =  token.getCardId()
+        }
+        let screenPath = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: properties)
+    }
+    func trackError(errorMessage: String) {
+        var properties: [String: Any] = [:]
+        properties["path"] = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
+        properties["style"] = "custom_component"
+        properties["id"] = "invalid_cvv"
+        properties["message"] = errorMessage
+        properties["attributable_to"] = "user"
+        var extraDic: [String: Any] = [:]
+        extraDic["payment_method_type"] = viewModel.paymentMethod?.getPaymentTypeForTracking()
+        extraDic["payment_method_id"] = viewModel.paymentMethod?.getPaymentIdForTracking()
+        properties["extra_info"] = extraDic
+        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 }

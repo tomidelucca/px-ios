@@ -13,6 +13,7 @@ extension MercadoPagoCheckout: InitFlowProtocol {
     func didFailInitFlow(flowError: InitFlowError) {
         if initMode == .lazy {
             initProtocol?.failure(checkout: self)
+            trackErrorEvent(flowError: flowError)
             #if DEBUG
                 print("Error - \(flowError.errorStep.rawValue)")
             #endif
@@ -41,5 +42,26 @@ extension MercadoPagoCheckout: InitFlowProtocol {
         } else {
             executeNextStep()
         }
+    }
+}
+extension MercadoPagoCheckout {
+    func trackErrorEvent(flowError: InitFlowError) {
+        var properties: [String: Any] = [:]
+        properties["path"] = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
+        properties["style"] = "screen"
+        properties["id"] = "px_generic_error"
+        properties["message"] = "Hubo un error"
+        properties["attributable_to"] = "mercadopago"
+        var extraDic: [String: Any] = [:]
+        extraDic["api_url"] =  flowError.requestOrigin
+        extraDic["retry_available"] = flowError.shouldRetry
+        if let cause = flowError.apiException?.cause?.first {
+            if !String.isNullOrEmpty(cause.code) {
+                extraDic["api_status_code"] = cause.code
+                extraDic["api_error_message"] = cause.causeDescription
+            }
+        }
+        properties["extra_info"] = extraDic
+        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 }

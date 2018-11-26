@@ -282,4 +282,21 @@ extension PXPaymentMethod: Cellable {
     var isPec: Bool {
         return self.id.contains(PXPaymentTypes.PEC.rawValue)
     }
+
+    internal var isPlugin: Bool {
+        return paymentTypeId == PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID
+    }
+}
+
+// MARK: Tracking
+extension PXPaymentMethod {
+    func getPaymentTypeForTracking() -> String {
+        if isPlugin {
+            return id
+        }
+        return paymentTypeId
+    }
+    func getPaymentIdForTracking() -> String {
+        return id
+    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PXPaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, campaigns: [PXCampaign]?, discount: PXDiscount?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration)
-internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?)
+internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?, apiException: ApiException?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
     func didFinishInitFlow()
@@ -73,7 +73,7 @@ extension InitFlowModel {
         if let error = flowError {
             return error
         }
-        return InitFlowError(errorStep: .ERROR, shouldRetry: false, requestOrigin: nil)
+        return InitFlowError(errorStep: .ERROR, shouldRetry: false, requestOrigin: nil, apiException: nil)
     }
 
     func setError(error: InitFlowError) {

@@ -60,27 +60,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         self.trackStatus()
     }
 
-    func trackStatus() {
-
-        guard let cardType = self.viewModel.getPaymentMethodTypeId() else {
-            return
-        }
-
-        var screenPath = ""
-
-        if editingLabel === cardNumberLabel {
-            screenPath = TrackingPaths.Screens.CardForm.getCardNumberPath(paymentTypeId: cardType)
-        } else if editingLabel === nameLabel {
-            screenPath = TrackingPaths.Screens.CardForm.getCardNamePath(paymentTypeId: cardType)
-        } else if editingLabel === expirationDateLabel {
-            screenPath = TrackingPaths.Screens.CardForm.getExpirationDatePath(paymentTypeId: cardType)
-        } else if editingLabel === cvvLabel {
-            screenPath = TrackingPaths.Screens.CardForm.getCvvPath(paymentTypeId: cardType)
-        }
-
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
-    }
-
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

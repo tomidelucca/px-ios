@@ -43,11 +43,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     override func trackInfo() {
-        guard let cardType = paymentMethod?.paymentTypeId else {
-            return
-        }
-
-         MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.CardForm.getIdentificationPath(paymentTypeId: cardType))
+        trackScreenView()
     }
 
     override func loadMPStyles() {
@@ -332,5 +328,34 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
 
     private func remask() {
         drawMask(masks: Utils.getMasks(forId: identificationType))
+    }
+}
+
+// MARK: Tracking
+extension IdentificationViewController {
+    func trackScreenView() {
+        guard let cardType = paymentMethod?.paymentTypeId else {
+            return
+        }
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = paymentMethod?.id
+        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.CardForm.getIdentificationPath(paymentTypeId: cardType), properties: properties)
+    }
+    func trackError(errorMessage: String) {
+        guard let cardType = paymentMethod?.paymentTypeId else {
+            return
+        }
+        var properties: [String: Any] = [:]
+        properties["path"] = TrackingPaths.Screens.CardForm.getIdentificationPath(paymentTypeId: cardType)
+        properties["style"] = "custom_component"
+        properties["id"] = "invalid_document_number"
+        properties["message"] = errorMessage
+        properties["attributable_to"] = "user"
+        var extraDic: [String: Any] = [:]
+        extraDic["payment_method_type"] = paymentMethod?.getPaymentTypeForTracking()
+        extraDic["payment_method_id"] = paymentMethod?.getPaymentIdForTracking()
+        extraDic["user_input"] = numberTextField.text
+        properties["extra_info"] = extraDic
+        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 }

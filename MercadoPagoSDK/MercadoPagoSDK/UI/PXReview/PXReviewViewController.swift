@@ -89,7 +89,9 @@ class PXReviewViewController: PXComponentContainerViewController {
     }
 
     override func trackInfo() {
-        self.viewModel.trackInfo()
+        if !DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED {
+            self.viewModel.trackInfo()
+        }
     }
 
     func update(viewModel: PXReviewViewModel) {

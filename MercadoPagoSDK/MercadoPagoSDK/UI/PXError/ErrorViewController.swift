@@ -48,26 +48,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
     }
 
     override open func trackInfo() {
-//        var metadata: [String: String] = [:]
-//
-//        if let statusError = error.apiException?.status {
-//            metadata[TrackingPaths.METADATA_ERROR_STATUS] = String(describing: statusError)
-//        }
-//        if let causeArray = error.apiException?.cause, causeArray.count > 0 {
-//            if !String.isNullOrEmpty(causeArray[0].code) {
-//                metadata[TrackingPaths.METADATA_ERROR_CODE] = causeArray[0].code
-//            }
-//        }
-//
-//        if !String.isNullOrEmpty(error.requestOrigin) {
-//            metadata[TrackingPaths.METADATA_ERROR_REQUEST] = error.requestOrigin
-//        }
-//
-//        if !String.isNullOrEmpty(error.message) {
-//            metadata["error_message"] = error.message
-//        }
-//
-//        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: metadata)
+        trackScreenView()
     }
 
     override open func viewDidLoad() {
@@ -146,5 +127,18 @@ extension ErrorViewController {
 
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+    }
+
+    func trackScreenView() {
+        var properties: [String: Any] = [:]
+        properties["api_url"] =  error.requestOrigin
+        properties["retry_available"] = error.retry ?? false
+        if let cause = error.apiException?.cause?.first {
+            if !String.isNullOrEmpty(cause.code) {
+                properties["api_status_code"] = cause.code
+                properties["api_error_message"] = cause.causeDescription
+            }
+        }
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
     }
 }

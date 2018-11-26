@@ -91,4 +91,20 @@ internal class MPSDKError {
         return cause
     }
 
+    class func getApiException(_ error: Error) -> ApiException? {
+        let mpError = MPSDKError()
+        let currentError = error as NSError
+        if !currentError.userInfo.isEmpty {
+            let errorMessage = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
+            mpError.message = errorMessage.localized
+            mpError.apiException = ApiException.fromJSON(currentError.userInfo as NSDictionary)
+            if let apiException = mpError.apiException {
+                if apiException.error == nil {
+                    let pxError = currentError as? PXError
+                    mpError.apiException = MPSDKError.pxApiExceptionToApiException(pxApiException: pxError?.apiException)
+                }
+            }
+        }
+        return mpError.apiException
+    }
 }

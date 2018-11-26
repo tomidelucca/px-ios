@@ -26,7 +26,38 @@ internal class PXResultViewModel: PXResultViewModelInterface {
     }
 
     func trackInfo() {
-        let paymentStatus = self.getPaymentStatus()
+        var properties: [String: Any] = [:]
+        properties["style"] = "generic"
+        properties["amount"] = amountHelper.amountToPay
+        properties["currency_id"] = SiteManager.shared.getCurrency().id
+        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
+        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.getPaymentTypeForTracking()
+        properties["payment_id"] = paymentResult.paymentId
+        properties["payment_status"] = paymentResult.status
+        properties["payment_status_details"] = paymentResult.statusDetail
+        properties["issuer_id"] = amountHelper.paymentData.issuer?.id
+
+        if paymentResult.status == PXPaymentStatus.REJECTED.rawValue {
+            properties["recoverable"] = getActionButton() != nil
+            properties["message"] = titleHeader().string
+        }
+
+        var extraInfo: [String: Any] = [:]
+
+        if let cardId = paymentResult.cardId {
+            let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
+            extraInfo["card_id"] = cardId
+            extraInfo["esc"] = cardIdsEsc.contains(cardId)
+        }
+
+        // TODO checkear esto
+        if instructionsInfo != nil {
+            extraInfo["reference"] = instructionsInfo?.instructions.first?.references?.first
+        }
+
+        properties["extra_info"] = extraInfo
+
+        let paymentStatus = PXPaymentStatus.IN_PROCESS.rawValue
         var screenPath = ""
 
         if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
@@ -37,7 +68,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
 
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
+        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: properties)
     }
 
     func getPaymentData() -> PXPaymentData {

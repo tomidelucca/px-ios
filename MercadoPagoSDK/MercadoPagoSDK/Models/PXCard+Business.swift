@@ -95,6 +95,9 @@ extension PXCard: PaymentOptionDrawable {
 }
 /// :nodoc:
 extension PXCard: PaymentMethodOption {
+    func getPaymentType() -> String {
+        return paymentMethod?.paymentTypeId ?? ""
+    }
 
     func getId() -> String {
         return String(describing: id)

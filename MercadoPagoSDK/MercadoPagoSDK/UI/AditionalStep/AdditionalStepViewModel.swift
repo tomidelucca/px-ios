@@ -177,7 +177,20 @@ internal class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     override open var screenName: String { return TrackingPaths.Screens.getIssuersPath() }
 
     override func track() {
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = paymentMethods.first?.getPaymentIdForTracking()
+        properties["payment_method_type"] = paymentMethods.first?.getPaymentTypeForTracking()
+        if let token = token as? PXCardInformation {
+            properties["card_id"] =  token.getCardId()
+        }
+        var dic: [Any] = []
+        for issuerObj in dataSource {
+            if let issuer = issuerObj as? PXIssuer {
+                dic.append(issuer.getIssuerForTracking())
+            }
+        }
+        properties["available_banks"] = dic
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
     }
 
 }
@@ -205,7 +218,21 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
 
     override func track() {
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = paymentMethods.first?.getPaymentIdForTracking()
+        properties["payment_method_type"] = paymentMethods.first?.getPaymentTypeForTracking()
+        if let token = token as? PXCardInformation {
+            properties["card_id"] =  token.getCardId()
+        }
+        properties["issuer_id"] = amountHelper.paymentData.issuer?.id
+        var dic: [Any] = []
+        for installmentObj in dataSource {
+            if let payerCost = installmentObj as? PXPayerCost {
+                dic.append(payerCost.getPayerCostForTracking())
+            }
+        }
+        properties["available_installments"] = dic
+        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
     }
 
 }
