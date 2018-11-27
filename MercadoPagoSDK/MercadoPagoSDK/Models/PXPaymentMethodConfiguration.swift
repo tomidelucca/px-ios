@@ -8,11 +8,11 @@
 import UIKit
 
 class PXPaymentMethodConfiguration: NSObject {
-    let paymentMethod: PXPaymentMethod
+    let paymentMethodOption: PaymentMethodOption
     let paymentOptionsConfigurations: [PXPaymentOptionConfiguration]
     let defaultConfigurationIndex: Int
-    init(paymentMethod: PXPaymentMethod, paymentOptionsConfigurations: [PXPaymentOptionConfiguration], defaultConfigurationIndex: Int = 0) {
-        self.paymentMethod = paymentMethod
+    init(paymentMethodOption: PaymentMethodOption, paymentOptionsConfigurations: [PXPaymentOptionConfiguration], defaultConfigurationIndex: Int = 0) {
+        self.paymentMethodOption = paymentMethodOption
         self.paymentOptionsConfigurations = paymentOptionsConfigurations
         self.defaultConfigurationIndex = defaultConfigurationIndex
         super.init()
@@ -21,7 +21,7 @@ class PXPaymentMethodConfiguration: NSObject {
         guard let otherConfiguration = object as? PXPaymentMethodConfiguration else {
             return false
         }
-        return paymentMethod.id == otherConfiguration.paymentMethod.id
+        return paymentMethodOption.getId() == otherConfiguration.paymentMethodOption.getId()
     }
 }
 

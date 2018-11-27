@@ -38,7 +38,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     // In order to ensure data updated create new instance for every usage
     private var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules, consumedDiscount: consumedDiscount)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, consumedDiscount: consumedDiscount)
         }
     }
 
