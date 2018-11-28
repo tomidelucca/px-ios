@@ -52,13 +52,6 @@ internal class MercadoPagoServicesAdapter {
 
         let pxSite = getPXSiteFromId(site)
 
-        let accountMoneyAvailable: Bool = false // TODO: This is temporary. (Warning: Until AM First Class Member)
-
-        var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
-        if !accountMoneyAvailable {
-            excludedPaymentTypesIds.append("account_money")
-        }
-
         var expressValue: String = "false"
         if let eParams = extraParams, eParams.expressEnabled {
             expressValue = "true"

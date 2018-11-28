@@ -515,18 +515,16 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentMethodOptions = self.rootPaymentMethodOptions
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
         customPaymentOptions?.removeAll()
+
         for pxCustomOptionSearchItem in search.customOptionSearchItems {
-            // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
-            if pxCustomOptionSearchItem.paymentMethodId != PXPaymentTypes.ACCOUNT_MONEY.rawValue {
-                let customerPaymentMethod =  pxCustomOptionSearchItem.getCustomerPaymentMethod()
-                if let paymentMethodSearchCards = paymentMethodSearch.cards {
-                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.id == customerPaymentMethod.customerPaymentMethodId})
-                    if !Array.isNullOrEmpty(filteredCustomerCard) {
-                        customerPaymentMethod.card = filteredCustomerCard[0]
-                    }
+            let customerPaymentMethod =  pxCustomOptionSearchItem.getCustomerPaymentMethod()
+            if let paymentMethodSearchCards = paymentMethodSearch.cards {
+                var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.id == customerPaymentMethod.customerPaymentMethodId})
+                if !Array.isNullOrEmpty(filteredCustomerCard) {
+                    customerPaymentMethod.card = filteredCustomerCard[0]
                 }
-                customPaymentOptions = Array.safeAppend(customPaymentOptions, customerPaymentMethod)
             }
+            customPaymentOptions = Array.safeAppend(customPaymentOptions, customerPaymentMethod)
         }
 
         let totalPaymentMethodSearchCount = search.getPaymentOptionsCount()
