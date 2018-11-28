@@ -17,3 +17,30 @@ internal struct TrackingPaths {
 
     static let NO_NAME_SCREEN = "NO NAME"
 }
+
+internal struct Tracking {
+    internal struct Style {
+        static let customComponent = "custom_component"
+        static let screen = "screen"
+        static let snackbar = "snackbar"
+    }
+
+    internal struct Error {
+        internal struct Atrributable {
+            static let user = "user"
+            static let mercadopago = "mercadopago"
+            static let merchant = "merchant"
+        }
+
+        internal struct Id {
+            static let genericError = "px_generic_error"
+            static let invalidDocument = "invalid_document_number"
+            static let invalidCVV = "invalid_cvv"
+            static let invalidName = "invalid_name"
+            static let invalidLastName = "invalid_lastname"
+            static let invalidBin = "invalid_bin"
+            static let invalidNumber = "invalid_cc_number"
+            static let invalidExpirationDate = "invalid_expiration_date"
+        }
+    }
+}

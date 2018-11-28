@@ -216,10 +216,10 @@ extension SecurityCodeViewController {
     func trackError(errorMessage: String) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
-        properties["style"] = "custom_component"
-        properties["id"] = "invalid_cvv"
+        properties["style"] = Tracking.Style.customComponent
+        properties["id"] = Tracking.Error.Id.invalidCVV
         properties["message"] = errorMessage
-        properties["attributable_to"] = "user"
+        properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
         extraDic["payment_method_type"] = viewModel.paymentMethod?.getPaymentTypeForTracking()
         extraDic["payment_method_id"] = viewModel.paymentMethod?.getPaymentIdForTracking()

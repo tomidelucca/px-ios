@@ -109,10 +109,10 @@ extension ErrorViewController {
     func trackErrorEvent() {
         var properties: [String: Any] = [:]
         properties["path"] = screenName
-        properties["style"] = "screen"
-        properties["id"] = "px_generic_error"
+        properties["style"] = Tracking.Style.screen
+        properties["id"] = Tracking.Error.Id.genericError
         properties["message"] = "Hubo un error"
-        properties["attributable_to"] = "mercadopago"
+        properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
 
         var extraDic: [String: Any] = [:]
         extraDic["api_url"] =  error.requestOrigin

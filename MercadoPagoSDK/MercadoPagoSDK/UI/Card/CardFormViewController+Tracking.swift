@@ -23,16 +23,13 @@ extension CardFormViewController {
         }
         var properties: [String: Any] = [:]
         properties["path"] = getScreenPath(cardType: cardType)
-        properties["style"] = "custom_component"
+        properties["style"] = Tracking.Style.customComponent
         properties["id"] = getIdError()
         properties["message"] = errorMessage
-        properties["attributable_to"] = "user"
+        properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
         extraDic["payment_method_type"] = viewModel.guessedPMS?.first?.getPaymentTypeForTracking()
         extraDic["payment_method_id"] = viewModel.guessedPMS?.first?.getPaymentIdForTracking()
-        if viewModel.guessedPMS == nil || viewModel.guessedPMS?.isEmpty ?? false {
-            extraDic["user_input"] = textBox.text
-        }
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
@@ -53,16 +50,16 @@ extension CardFormViewController {
         var idError = ""
         if editingLabel === cardNumberLabel {
             if viewModel.guessedPMS == nil || viewModel.guessedPMS?.isEmpty ?? false {
-                idError = "invalid_bin"
+                idError = Tracking.Error.Id.invalidBin
             } else {
-                idError = "invalid_cc_number"
+                idError = Tracking.Error.Id.invalidNumber
             }
         } else if editingLabel === nameLabel {
-            idError = "null_cc_name"
+            idError = Tracking.Error.Id.invalidName
         } else if editingLabel === expirationDateLabel {
-            idError = "invalid_expiration_date"
+            idError = Tracking.Error.Id.invalidExpirationDate
         } else if editingLabel === cvvLabel {
-            idError = "invalid_cvv"
+            idError = Tracking.Error.Id.invalidCVV
         }
         return idError
     }

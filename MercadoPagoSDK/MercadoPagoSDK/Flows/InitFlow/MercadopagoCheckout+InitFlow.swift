@@ -48,10 +48,10 @@ extension MercadoPagoCheckout {
     func trackErrorEvent(flowError: InitFlowError) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
-        properties["style"] = "screen"
-        properties["id"] = "px_generic_error"
+        properties["style"] = Tracking.Style.screen
+        properties["id"] = Tracking.Error.Id.genericError
         properties["message"] = "Hubo un error"
-        properties["attributable_to"] = "mercadopago"
+        properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
         extraDic["api_url"] =  flowError.requestOrigin
         extraDic["retry_available"] = flowError.shouldRetry

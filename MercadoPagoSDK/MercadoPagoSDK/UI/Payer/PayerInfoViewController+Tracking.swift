@@ -20,14 +20,13 @@ extension PayerInfoViewController {
     func trackError(errorMessage: String, currentStep: PayerInfoFlowStep) {
         var properties: [String: Any] = [:]
         properties["path"] = getScreenPath(currentStep: currentStep)
-        properties["style"] = "custom_component"
+        properties["style"] = Tracking.Style.customComponent
         properties["id"] = getErrorId(currentStep: currentStep)
         properties["message"] = errorMessage
-        properties["attributable_to"] = "user"
+        properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
         extraDic["payment_method_type"] = viewModel.amountHelper.paymentData.paymentMethod?.getPaymentTypeForTracking()
         extraDic["payment_method_id"] = viewModel.amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
-        extraDic["user_input"] = getUserInput(currentStep: currentStep)
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
@@ -63,11 +62,11 @@ extension PayerInfoViewController {
         var errorId: String
         switch currentStep {
         case .SCREEN_IDENTIFICATION:
-            errorId = "invalid_document_number"
+            errorId = Tracking.Error.Id.invalidDocument
         case .SCREEN_NAME:
-            errorId = "invalid_name"
+            errorId = Tracking.Error.Id.invalidName
         case .SCREEN_LAST_NAME:
-            errorId = "invalid_lastname"
+            errorId = Tracking.Error.Id.invalidLastName
         default:
             return ""
         }

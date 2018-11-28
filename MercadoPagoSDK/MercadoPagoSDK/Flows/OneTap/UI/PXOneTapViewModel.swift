@@ -264,6 +264,7 @@ extension PXOneTapViewModel {
                     accountMoneyDic["payment_method_id"] = expressItem.paymentMethodId
                     var extraInfo: [String: Any] = [:]
                     extraInfo["balance"] = accountMoney.availableBalance
+                    extraInfo["invested"] = accountMoney.invested
                     accountMoneyDic["extra_info"] = extraInfo
                     dic.append(accountMoneyDic)
                 }

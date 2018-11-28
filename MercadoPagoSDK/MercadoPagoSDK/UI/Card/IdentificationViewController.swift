@@ -347,14 +347,13 @@ extension IdentificationViewController {
         }
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.CardForm.getIdentificationPath(paymentTypeId: cardType)
-        properties["style"] = "custom_component"
-        properties["id"] = "invalid_document_number"
+        properties["style"] = Tracking.Style.customComponent
+        properties["id"] = Tracking.Error.Id.invalidDocument
         properties["message"] = errorMessage
-        properties["attributable_to"] = "user"
+        properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
         extraDic["payment_method_type"] = paymentMethod?.getPaymentTypeForTracking()
         extraDic["payment_method_id"] = paymentMethod?.getPaymentIdForTracking()
-        extraDic["user_input"] = numberTextField.text
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }

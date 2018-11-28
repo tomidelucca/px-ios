@@ -65,10 +65,10 @@ extension OneTapFlow {
     func trackErrorEvent(error: MPSDKError) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()
-        properties["style"] = "snackbar"
-        properties["id"] = "px_generic_error"
+        properties["style"] = Tracking.Style.snackbar
+        properties["id"] = Tracking.Error.Id.genericError
         properties["message"] = "review_and_confirm_toast_error".localized_beta
-        properties["attributable_to"] = "mercadopago"
+        properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
 
         var extraDic: [String: Any] = [:]
         extraDic["api_url"] =  error.requestOrigin
