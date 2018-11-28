@@ -118,21 +118,6 @@ internal class MercadoPagoServicesAdapter {
         }, failure: failure)
     }
 
-    func getCampaigns(payerEmail: String?, callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        mercadoPagoServices.getCampaigns(payerEmail: payerEmail, callback: callback, failure: failure)
-    }
-
-    func getCodeDiscount(amount: Double, payerEmail: String, couponCode: String?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        mercadoPagoServices.getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: couponCode, discountAdditionalInfo: nil, callback: { (pxDiscount) in
-            callback(pxDiscount)
-        }, failure: failure)
-    }
-
-    func getDirectDiscount(amount: Double, payerEmail: String, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        getCodeDiscount(amount: amount, payerEmail: payerEmail, couponCode: nil, callback: callback, failure: failure)
-    }
-
     open func getInstallments(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (pxInstallments) in

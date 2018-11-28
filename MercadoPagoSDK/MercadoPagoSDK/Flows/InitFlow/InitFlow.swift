@@ -51,10 +51,6 @@ final class InitFlow: PXFlow {
             getCheckoutPreference()
         case .ACTION_VALIDATE_PREFERENCE:
             validatePreference()
-        case .SERVICE_GET_CAMPAIGNS:
-            getCampaigns()
-        case .SERVICE_GET_DIRECT_DISCOUNT:
-            getDirectDiscount()
         case .SERVICE_GET_PAYMENT_METHODS:
             getPaymentMethodSearch()
         case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:

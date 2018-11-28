@@ -21,8 +21,6 @@ final class InitFlowModel: NSObject, PXFlowModel {
         case ERROR = "Error"
         case SERVICE_GET_PREFERENCE = "Obtener datos de preferencia"
         case ACTION_VALIDATE_PREFERENCE = "Validación de preferencia"
-        case SERVICE_GET_CAMPAIGNS = "Obtener campañas"
-        case SERVICE_GET_DIRECT_DISCOUNT = "Obtener descuento"
         case SERVICE_GET_PAYMENT_METHODS = "Obtener medios de pago"
         case SERVICE_PAYMENT_METHOD_PLUGIN_INIT = "Iniciando plugin de pago"
         case FINISH = "Finish step"
@@ -77,7 +75,7 @@ extension InitFlowModel {
     }
 
     func setError(error: InitFlowError) {
-        if error.errorStep != .SERVICE_GET_CAMPAIGNS && error.errorStep != .SERVICE_GET_DIRECT_DISCOUNT && error.errorStep != .SERVICE_PAYMENT_METHOD_PLUGIN_INIT {
+        if error.errorStep != .SERVICE_PAYMENT_METHOD_PLUGIN_INIT {
             flowError = error
         }
     }
@@ -152,17 +150,8 @@ extension InitFlowModel {
             return .ACTION_VALIDATE_PREFERENCE
         }
 
-        if needToSearchCampaign() {
-            return .SERVICE_GET_CAMPAIGNS
-        }
-
         if needToInitPaymentMethodPlugins() {
             return .SERVICE_PAYMENT_METHOD_PLUGIN_INIT
-        }
-
-        if needToSearchDirectDiscount() {
-            directDiscountSearchStatus = true
-            return .SERVICE_GET_DIRECT_DISCOUNT
         }
 
         if needSearch() {
@@ -177,14 +166,6 @@ extension InitFlowModel {
 extension InitFlowModel {
     private func needLoadPreference() -> Bool {
         return loadPreferenceStatus
-    }
-
-    private func needToSearchDirectDiscount() -> Bool {
-        return filterCampaignsByCodeType(campaigns: properties.campaigns, "none") != nil && !directDiscountSearchStatus && properties.paymentData.discount == nil && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && !Array.isNullOrEmpty(properties.campaigns)
-    }
-
-    func needToSearchCampaign() -> Bool {
-        return !directDiscountSearchStatus && !properties.paymentData.isComplete() && (properties.paymentMethodPlugins.isEmpty && properties.paymentPlugin == nil) && properties.campaigns == nil
     }
 
     private func needValidatePreference() -> Bool {
