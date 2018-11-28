@@ -14,12 +14,12 @@ Pod::Spec.new do |s|
   s.subspec 'Default' do |default|
     default.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf', 'MercadoPagoSDK/MercadoPagoSDK/*.lproj', 'MercadoPagoSDK/MercadoPagoSDK/Translations/**/**.{plist,strings}', 'MercadoPagoSDK/MercadoPagoSDK/Plist/*.plist', 'MercadoPagoSDK/MercadoPagoSDK/**/**.{xib,strings}']
     default.source_files = ['MercadoPagoSDK/MercadoPagoSDK/**/**/**.{h,m,swift}']
-    s.dependency 'MercadoPagoPXTracking', '2.0.1.1'
-    s.dependency 'MercadoPagoServices', '1.0.2.2'
+    s.dependency 'MercadoPagoPXTracking', '2.0.1.2'
+    s.dependency 'MercadoPagoServices', '1.0.2.3'
   end
-  
-s.pod_target_xcconfig = {
-  'SWIFT_VERSION' => '3.0.1'
-}
+
+  s.swift_version = '3.0'
+
+
 
 end
