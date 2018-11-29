@@ -66,7 +66,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if shouldAnimatePayButton {
-            PXNotificationManager.UnsuscribeTo.animateButton(loadingButtonComponent)
+            unsubscribeFromNotifications()
         }
     }
 
@@ -111,6 +111,7 @@ extension PXOneTapViewController {
     }
 
     private func renderViews() {
+        unsubscribeFromNotifications()
         contentView.prepareForRender()
         let safeAreaBottomHeight = PXLayout.getSafeAreaBottomInset()
 
@@ -190,12 +191,8 @@ extension PXOneTapViewController {
         loadingButtonComponent = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)
         loadingButtonComponent?.animationDelegate = self
         loadingButtonComponent?.layer.cornerRadius = 4
-        loadingButtonComponent?.add(for: .touchUpInside, {
-            if self.shouldAnimatePayButton {
-                self.subscribeLoadingButtonToNotifications()
-                self.loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
-            }
-            self.confirmPayment()
+        loadingButtonComponent?.add(for: .touchUpInside, { [weak self] in
+            self?.makePayment()
         })
         loadingButtonComponent?.setTitle("Pagar".localized, for: .normal)
         loadingButtonComponent?.backgroundColor = ThemeManager.shared.getAccentColor()
@@ -233,15 +230,19 @@ extension PXOneTapViewController {
         callbackPaymentData(viewModel.getClearPaymentData())
     }
 
-    private func confirmPayment() {
-        scrollView.isScrollEnabled = false
-        view.isUserInteractionEnabled = false
+    private func makePayment() {
         if let selectedCardItem = selectedCard {
             viewModel.trackConfirmEvent(selectedCard: selectedCardItem)
         }
-        self.hideBackButton()
-        self.hideNavBar()
-        self.callbackConfirm(self.viewModel.amountHelper.paymentData)
+        if shouldAnimatePayButton {
+            subscribeLoadingButtonToNotifications()
+            scrollView.isScrollEnabled = false
+            view.isUserInteractionEnabled = false
+            loadingButtonComponent?.startLoading(timeOut: self.timeOutPayButton)
+            hideBackButton()
+            hideNavBar()
+        }
+        callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
     func resetButton() {
