@@ -47,7 +47,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         self.callbackUpdatePaymentOption = callbackUpdatePaymentOption
         self.finishButtonAnimation = finishButtonAnimation
         self.timeOutPayButton = timeOutPayButton
-        self.shouldAnimatePayButton = shouldAnimatePayButton
+        self.shouldAnimatePayButton = true
         super.init()
     }
 
