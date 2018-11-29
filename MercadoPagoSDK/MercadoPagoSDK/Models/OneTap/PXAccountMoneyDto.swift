@@ -12,14 +12,12 @@ open class PXAccountMoneyDto: NSObject, Codable {
     open var message: String?
     open var availableBalance: Double = 0
     open var invested: Bool = false
-    open var token: String
     open var paymentMethod: PXPaymentMethod?
 
-    public init(message: String?, availableBalance: Double, invested: Bool, token: String, paymentMethod: PXPaymentMethod?) {
+    public init(message: String?, availableBalance: Double, invested: Bool, paymentMethod: PXPaymentMethod?) {
         self.message = message
         self.availableBalance = availableBalance
         self.invested = invested
-        self.token = token
         self.paymentMethod = paymentMethod
     }
 
@@ -27,7 +25,6 @@ open class PXAccountMoneyDto: NSObject, Codable {
         case message
         case availableBalance = "available_balance"
         case invested
-        case token
         case paymentMethod = "payment_method"
     }
 
@@ -36,9 +33,8 @@ open class PXAccountMoneyDto: NSObject, Codable {
         let message: String? = try container.decodeIfPresent(String.self, forKey: .message)
         let invested: Bool = try container.decode(Bool.self, forKey: .invested)
         let availableBalance: Double = try container.decode(Double.self, forKey: .availableBalance)
-        let token: String = try container.decode(String.self, forKey: .token)
         let paymentMethod: PXPaymentMethod? = try container.decodeIfPresent(PXPaymentMethod.self, forKey: .paymentMethod)
-        self.init(message: message, availableBalance: availableBalance, invested: invested, token: token, paymentMethod: paymentMethod)
+        self.init(message: message, availableBalance: availableBalance, invested: invested, paymentMethod: paymentMethod)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -46,7 +42,6 @@ open class PXAccountMoneyDto: NSObject, Codable {
         try container.encodeIfPresent(self.message, forKey: .message)
         try container.encode(self.availableBalance, forKey: .availableBalance)
         try container.encode(self.invested, forKey: .invested)
-        try container.encode(self.token, forKey: .token)
         try container.encodeIfPresent(self.paymentMethod, forKey: .paymentMethod)
     }
 
