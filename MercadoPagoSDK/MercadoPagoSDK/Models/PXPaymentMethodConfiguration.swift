@@ -8,29 +8,33 @@
 import UIKit
 
 class PXPaymentMethodConfiguration: NSObject {
-    let paymentMethodOption: PaymentMethodOption
+//    let paymentMethodOption: PaymentMethodOption
+    let paymentOptionID: String
     let paymentOptionsConfigurations: [PXPaymentOptionConfiguration]
-    let defaultConfigurationIndex: Int
-    init(paymentMethodOption: PaymentMethodOption, paymentOptionsConfigurations: [PXPaymentOptionConfiguration], defaultConfigurationIndex: Int = 0) {
-        self.paymentMethodOption = paymentMethodOption
+    let selectedAmountConfiguration: String
+    init(paymentOptionID: String, paymentOptionsConfigurations: [PXPaymentOptionConfiguration], selectedAmountConfiguration: String) {
+        self.paymentOptionID = paymentOptionID
         self.paymentOptionsConfigurations = paymentOptionsConfigurations
-        self.defaultConfigurationIndex = defaultConfigurationIndex
+        self.selectedAmountConfiguration = selectedAmountConfiguration
         super.init()
     }
+    
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherConfiguration = object as? PXPaymentMethodConfiguration else {
             return false
         }
-        return paymentMethodOption.getId() == otherConfiguration.paymentMethodOption.getId()
+        return paymentOptionID == otherConfiguration.paymentOptionID
     }
 }
 
 class PXPaymentOptionConfiguration: NSObject {
-    let discountConfiguration: (discount:PXDiscount, campaign:PXCampaign)?
-    let installment: PXInstallment?
-    init(discountConfiguration:(discount:PXDiscount, campaign:PXCampaign)? = nil, installment: PXInstallment? = nil) {
+    let id: String
+    let discountConfiguration: PXDiscountConfiguration?
+    let payerCostConfiguration: PXPayerCostConfiguration?
+    init(id: String, discountConfiguration: PXDiscountConfiguration? = nil, payerCostConfiguration: PXPayerCostConfiguration? = nil) {
+        self.id = id
         self.discountConfiguration = discountConfiguration
-        self.installment = installment
+        self.payerCostConfiguration = payerCostConfiguration
         super.init()
     }
 }

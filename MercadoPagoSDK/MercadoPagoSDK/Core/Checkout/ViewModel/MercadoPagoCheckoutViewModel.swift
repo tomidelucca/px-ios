@@ -98,6 +98,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     let mpESCManager: MercadoPagoESC
 
+    //
+    var paymentConfigurationServices: PXPaymentConfigurationServices?
+
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
@@ -498,6 +501,22 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updateCheckoutModel(paymentMethodSearch: PXPaymentMethodSearch) {
+        let discountConfigurationsKeys = paymentMethodSearch.discountConfigurations.keys
+        var configurations = Set<PXPaymentMethodConfiguration>()
+        for customOption in paymentMethodSearch.customOptionSearchItems {
+            var paymentOptionConfigurations = [PXPaymentOptionConfiguration]()
+            for key in discountConfigurationsKeys {
+                guard let discountConfiguration = paymentMethodSearch.discountConfigurations[key], let payerCostConfiguration = customOption.payerCostConfigurations[key] else {
+                    continue
+                }
+                let paymentOptionConfiguration = PXPaymentOptionConfiguration(id: key, discountConfiguration: discountConfiguration, payerCostConfiguration: payerCostConfiguration)
+                paymentOptionConfigurations.append(paymentOptionConfiguration)
+            }
+            let paymentMethodConfiguration = PXPaymentMethodConfiguration(paymentOptionID: customOption.id, paymentOptionsConfigurations: paymentOptionConfigurations, selectedAmountConfiguration: customOption.selectedAmountConfiguration)
+            configurations.insert(paymentMethodConfiguration)
+        }
+
+        self.paymentConfigurationServices = PXPaymentConfigurationServices(configurations: configurations)
 
         self.search = paymentMethodSearch
 

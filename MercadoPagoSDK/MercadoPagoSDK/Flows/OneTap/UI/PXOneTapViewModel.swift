@@ -84,9 +84,12 @@ extension PXOneTapViewModel {
                     }
 
                     var payerCost: [PXPayerCost] = [PXPayerCost]()
-                    if let pCost = targetCardData.payerCosts {
+                    if let pCost = MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getPayerCostsForPaymentMethod(targetCardData.cardId) {
                         payerCost = pCost
                     }
+//                    if let pCost = targetCardData.payerCosts {
+//                        payerCost = pCost
+//                    }
 
                     var targetIssuerId: String = ""
                     if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
@@ -100,11 +103,14 @@ extension PXOneTapViewModel {
                         displayMessage = ""
                     } else if payerCost.count == 1 {
                         showArrow = false
-                    } else if targetCardData.selectedPayerCost == nil {
+                    } else if MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getPayerCostsForPaymentMethod(targetCardData.cardId) == nil {
                         showArrow = false
                     }
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost, targetCardData.cardId, showArrow)
+                    let selectedPayerCost = MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)
+
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow)
+
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
@@ -251,7 +257,7 @@ extension PXOneTapViewModel {
                     var extraInfo: [String: Any] = [:]
                     extraInfo["card_id"] = savedCard.cardId
                     extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
-                    extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
+//                    extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
 
                     if let issuerId = savedCard.cardUI?.issuerId {
                         extraInfo["issuer_id"] = Int(issuerId)

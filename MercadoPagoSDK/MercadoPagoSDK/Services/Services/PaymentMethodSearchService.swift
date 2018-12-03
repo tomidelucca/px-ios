@@ -43,6 +43,8 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
     internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
+        self.baseURL = "http://private-f8df8-augustocollerone.apiary-mock.com/questions"
+
         var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
 
         params.paramsAppend(key: ApiParams.AMOUNT, value: String(amount))
@@ -84,11 +86,9 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         params.paramsAppend(key: "express_enabled", value: expressEnabled)
 
-        let groupsPayerBody = try? payer.toJSON()
-
         let headers = ["Accept-Language": language]
 
-        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: nil, body: nil, method: HTTPMethod.get, headers: headers, cache: false, success: { (data) -> Void in
             do {
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {

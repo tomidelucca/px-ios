@@ -58,9 +58,16 @@ final internal class OneTapFlowModel: PXFlowModel {
         self.mpESCManager = MercadoPagoESCImplementation(enabled: advancedConfiguration.escEnabled)
 
         // Payer cost pre selection.
-        if let payerCost = search.expressCho?.first?.oneTapCard?.selectedPayerCost {
+        if let firstCardID = search.expressCho?.first?.oneTapCard?.cardId, let payerCost = MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getSelectedPayerCostsForPaymentMethod(firstCardID) {
             updateCheckoutModel(payerCost: payerCost)
         }
+
+//        let filtered =  search.customOptionSearchItems.filter({ (customSearchItem) -> Bool in
+//            return customSearchItem.id == search.expressCho?.first?.oneTapCard?.cardId
+//        })
+//        if let payerCost = filtered[0].selectedPayerCostConfiguration?.selectedPayerCost {
+//            updateCheckoutModel(payerCost: payerCost)
+//        }
     }
     public func nextStep() -> Steps {
         if needReviewAndConfirmForOneTap() {
