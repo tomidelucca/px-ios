@@ -159,6 +159,7 @@ internal class PXNavigationHandler: NSObject {
     func addDynamicView(viewController: UIViewController) {
         dynamicViews.append(viewController)
     }
+
 }
 
 internal extension PXNavigationHandler {

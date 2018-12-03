@@ -10,21 +10,6 @@ import UIKit
 
 class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
-    func trackInfo() {
-
-        let paymentStatus = businessResult.getStatus()
-        var screenPath = ""
-        if paymentStatus == PXBusinessResultStatus.APPROVED {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXBusinessResultStatus.IN_PROGRESS || paymentStatus == PXBusinessResultStatus.PENDING {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-        } else if paymentStatus == PXBusinessResultStatus.REJECTED {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
-        }
-
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
-    }
-
     let businessResult: PXBusinessResult
     let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
@@ -240,5 +225,26 @@ class PXBusinessResultBodyComponent: PXComponentizable {
         PXLayout.pinFirstSubviewToTop(view: bodyView)?.isActive = true
         PXLayout.pinLastSubviewToBottom(view: bodyView)?.isActive = true
         return bodyView
+    }
+}
+
+// MARK: Tracking
+extension PXBusinessResultViewModel {
+
+    func getTrackingProperties() -> [String: Any] {
+        return [:]
+    }
+
+    func getTrackingPath() -> String {
+        let paymentStatus = businessResult.getStatus()
+        var screenPath = ""
+        if paymentStatus == PXBusinessResultStatus.APPROVED {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+        } else if paymentStatus == PXBusinessResultStatus.IN_PROGRESS || paymentStatus == PXBusinessResultStatus.PENDING {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+        } else if paymentStatus == PXBusinessResultStatus.REJECTED {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        }
+        return screenPath
     }
 }

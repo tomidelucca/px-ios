@@ -23,14 +23,9 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         self.loadingVC = PXLoadingViewController()
         super.init(nibName: "WebViewController", bundle: ResourceManager.shared.getBundle())
     }
-    override internal var screenName: String { return name! }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func trackInfo() {
-         MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.getTermsAndCondiontionReviewPath())
     }
 
     override func viewDidLoad() {
@@ -42,7 +37,8 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showNavBar()
+        showNavBar()
+        trackScreen()
     }
 
     override func getNavigationBarTitle() -> String {
@@ -56,5 +52,12 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
         self.loadingVC.dismiss(animated: false, completion: nil)
+    }
+}
+
+// MARK: Tracking
+extension WebViewController {
+    func trackScreen() {
+        trackScreen(path: TrackingPaths.Screens.getTermsAndCondiontionReviewPath())
     }
 }

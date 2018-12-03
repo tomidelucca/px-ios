@@ -17,6 +17,14 @@ extension TrackingPaths {
         static func getConfirmPath() -> String {
             return TrackingPaths.pxTrack + "/review/confirm"
         }
+
+        static func getBackPath(screen: String) -> String {
+            return screen + "/back"
+        }
+
+        static func getAbortPath(screen: String) -> String {
+            return screen + "/abort"
+        }
     }
 }
 

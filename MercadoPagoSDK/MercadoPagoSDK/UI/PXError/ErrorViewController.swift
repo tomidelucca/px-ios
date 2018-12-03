@@ -11,23 +11,15 @@ import UIKit
 internal class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var  errorTitle: MPLabel!
-
     @IBOutlet internal weak var errorSubtitle: MPLabel!
-
     @IBOutlet internal weak var errorIcon: UIImageView!
-
     @IBOutlet weak var exitButton: UIButton!
-
     @IBOutlet weak var retryButton: UIButton!
 
     var error: MPSDKError!
     var callback: (() -> Void)?
-
-    override open var screenName: String { return TrackingPaths.Screens.getErrorPath() }
-
-    internal static var defaultErrorCancel: (() -> Void)?
-
     open var exitErrorCallback: (() -> Void)!
+    internal static var defaultErrorCancel: (() -> Void)?
 
     public init(error: MPSDKError!, callback: (() -> Void)?, callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "ErrorViewController", bundle: ResourceManager.shared.getBundle())
@@ -45,10 +37,6 @@ internal class ErrorViewController: MercadoPagoUIViewController {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override open func trackInfo() {
-        trackScreenView()
     }
 
     override open func viewDidLoad() {
@@ -78,10 +66,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackErrorEvent()
-    }
-
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        trackScreenView()
     }
 
     @objc internal func invokeCallback() {
@@ -106,9 +91,10 @@ internal class ErrorViewController: MercadoPagoUIViewController {
 
 // MARK: Tracking
 extension ErrorViewController {
+
     func trackErrorEvent() {
         var properties: [String: Any] = [:]
-        properties["path"] = screenName
+        properties["path"] = TrackingPaths.Screens.getErrorPath()
         properties["style"] = Tracking.Style.screen
         properties["id"] = Tracking.Error.Id.genericError
         properties["message"] = "Hubo un error"
@@ -124,9 +110,8 @@ extension ErrorViewController {
                 extraDic["api_error_message"] = cause.causeDescription
             }
         }
-
         properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 
     func trackScreenView() {
@@ -139,6 +124,6 @@ extension ErrorViewController {
                 properties["api_error_message"] = cause.causeDescription
             }
         }
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
+        trackScreen(path: TrackingPaths.Screens.getErrorPath(), properties: properties)
     }
 }

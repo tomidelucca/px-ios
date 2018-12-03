@@ -10,30 +10,33 @@ import UIKit
 
 internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
-    var securityCodeLabel: PXMonospaceLabel!
+    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
-    var errorLabel: MPLabel?
-    @IBOutlet weak var panelView: UIView!
-    var viewModel: SecurityCodeViewModel!
     @IBOutlet weak var cardCvvThumbnail: UIImageView!
+    @IBOutlet weak var panelView: UIView!
+
+    var securityCodeLabel: PXMonospaceLabel!
+    var errorLabel: MPLabel?
+    var viewModel: SecurityCodeViewModel!
     var textMaskFormater: TextMaskFormater!
     var cardFront: CardFrontView!
     var ccvLabelEmpty: Bool = true
     var toolbar: PXToolbar?
 
-    override func trackInfo() {
-        trackScreenView()
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    @objc func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            self.keyboardHeightConstraint.constant = keyboardSize.height - 40
-            self.view.layoutIfNeeded()
-            self.view.setNeedsUpdateConstraints()
-        }
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 
-    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
+    public init(viewModel: SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: PXCardInformationForm, _ securityCode: String) -> Void ) {
+        super.init(nibName: "SecurityCodeViewController", bundle: ResourceManager.shared.getBundle())
+        self.viewModel = viewModel
+        self.viewModel.callback = collectSecurityCodeCallback
+    }
+
     override open func viewDidLoad() {
         super.viewDidLoad()
          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
@@ -55,25 +58,6 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         completeCvvLabel()
     }
 
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    public init(viewModel: SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: PXCardInformationForm, _ securityCode: String) -> Void ) {
-        super.init(nibName: "SecurityCodeViewController", bundle: ResourceManager.shared.getBundle())
-        self.viewModel = viewModel
-        self.viewModel.callback = collectSecurityCodeCallback
-    }
-
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         securityCodeTextField.becomeFirstResponder()
@@ -81,6 +65,41 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.showNavBar()
+    }
+
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreenView()
+    }
+
+    @objc func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.keyboardHeightConstraint.constant = keyboardSize.height - 40
+            self.view.layoutIfNeeded()
+            self.view.setNeedsUpdateConstraints()
+        }
+    }
+
+    @objc open func editingChanged(_ textField: UITextField) {
+        hideErrorMessage()
+        securityCodeLabel.text = textField.text
+        self.ccvLabelEmpty = (textField.text != nil && textField.text!.count == 0)
+        securityCodeLabel.textColor = self.viewModel.getPaymentMethodFontColor()
+        completeCvvLabel()
+    }
+
+    @objc func continueAction() {
+        securityCodeTextField.resignFirstResponder()
+        guard securityCodeTextField.text?.count == viewModel.secCodeLenght() else {
+            let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
+            showErrorMessage(errorMessage)
+            return
+        }
+        self.viewModel.executeCallback(secCode: securityCodeTextField.text)
+    }
+
+    @objc func backAction() {
+        self.executeBack()
     }
 
     func setupInputAccessoryView() {
@@ -100,20 +119,6 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         self.toolbar = toolbar
         self.securityCodeTextField.delegate = self
         self.securityCodeTextField.inputAccessoryView = toolbar
-    }
-
-    @objc func continueAction() {
-        securityCodeTextField.resignFirstResponder()
-        guard securityCodeTextField.text?.count == viewModel.secCodeLenght() else {
-            let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
-            showErrorMessage(errorMessage)
-            return
-        }
-        self.viewModel.executeCallback(secCode: securityCodeTextField.text)
-    }
-
-    @objc func backAction() {
-        self.executeBack()
     }
 
     func updateCardSkin(cardInformation: PXCardInformationForm?, paymentMethod: PXPaymentMethod) {
@@ -136,20 +141,10 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     }
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
         if ((textField.text?.count)! + string.count) > viewModel.secCodeLenght() {
             return false
         }
         return true
-    }
-
-    @objc open func editingChanged(_ textField: UITextField) {
-        hideErrorMessage()
-        securityCodeLabel.text = textField.text
-        self.ccvLabelEmpty = (textField.text != nil && textField.text!.count == 0)
-        securityCodeLabel.textColor = self.viewModel.getPaymentMethodFontColor()
-        completeCvvLabel()
-
     }
 
     open func showErrorMessage(_ errorMessage: String) {
@@ -184,7 +179,6 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         }
 
         while addCvvDot() != false {
-
         }
         securityCodeLabel.textColor = self.viewModel.getPaymentMethodFontColor()
     }
@@ -204,6 +198,7 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
 
 // MARK: Tracking
 extension SecurityCodeViewController {
+
     func trackScreenView() {
         var properties: [String: Any] = [:]
         properties["payment_method_id"] = viewModel.paymentMethod.getPaymentIdForTracking()
@@ -211,8 +206,9 @@ extension SecurityCodeViewController {
             properties["card_id"] =  token.getCardId()
         }
         let screenPath = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: properties)
+        trackScreen(path: screenPath, properties: properties, treatBackAsAbort: true)
     }
+
     func trackError(errorMessage: String) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
@@ -224,6 +220,6 @@ extension SecurityCodeViewController {
         extraDic["payment_method_type"] = viewModel.paymentMethod?.getPaymentTypeForTracking()
         extraDic["payment_method_id"] = viewModel.paymentMethod?.getPaymentIdForTracking()
         properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 }

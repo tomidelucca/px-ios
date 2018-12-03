@@ -18,23 +18,16 @@ extension PaymentVaultViewModel {
                 dic.append(pluginDic)
             }
             if let customerPaymentOptions = customerPaymentOptions {
-                let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
                 for savedCard in customerPaymentOptions {
-                    var savedCardDic: [String: Any] = [:]
-                    savedCardDic["payment_method_type"] = savedCard.getPaymentTypeId()
-                    savedCardDic["payment_method_id"] = savedCard.getPaymentMethodId()
-                    var extraInfo: [String: Any] = [:]
-                    extraInfo["card_id"] = savedCard.getCardId()
-                    extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.getCardId())
-                    extraInfo["saved"] = true
-                    savedCardDic["extra_info"] = extraInfo
-                    dic.append(savedCardDic)
+                    if let customerPM = savedCard as? CustomerPaymentMethod {
+                        dic.append(customerPM.getCustomerPaymentMethodForTrancking())
+                    }
                 }
             }
         }
         for paymentOption in paymentMethodOptions {
             var paymentOptionDic: [String: Any] = [:]
-            if paymentOption.getPaymentType() == "payment_method" {
+            if paymentOption.getPaymentType() == PXPaymentMethodSearchItemTypes.PAYMENT_METHOD {
                 let filterPaymentMethods = paymentMethods.filter {paymentOption.getId().startsWith($0.id)}
                 if let paymentMethod = filterPaymentMethods.first {
                     paymentOptionDic["payment_method_id"] = paymentOption.getId()
@@ -46,5 +39,30 @@ extension PaymentVaultViewModel {
             dic.append(paymentOptionDic)
         }
         return dic
+    }
+
+    func getScreenProperties() -> [String: Any] {
+        var properties: [String: Any] = ["discount": amountHelper.getDiscountForTracking()]
+        properties["amount"] = amountHelper.amountToPay
+        properties["currency_id"] = SiteManager.shared.getCurrency().id
+        properties["available_methods"] = getAvailablePaymentMethodForTracking()
+        var itemsDic: [Any] = []
+        for item in amountHelper.preference.items {
+            itemsDic.append(item.getItemForTracking())
+        }
+        properties["items"] = itemsDic
+        return properties
+    }
+
+    func getScreenPath() -> String {
+        var screenPath = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
+        if let groupName = groupName {
+            if groupName == PXPaymentTypes.BANK_TRANSFER.rawValue || groupName == PXPaymentTypes.TICKET.rawValue || groupName == PXPaymentTypes.BOLBRADESCO.rawValue {
+                screenPath = TrackingPaths.Screens.PaymentVault.getTicketPath()
+            } else {
+                screenPath = TrackingPaths.Screens.PaymentVault.getCardTypePath()
+            }
+        }
+        return screenPath
     }
 }

@@ -139,5 +139,21 @@ import UIKit
     func getPaymentType() -> String {
         return paymentMethodTypeId
     }
+}
 
+// MARK: Tracking
+extension CustomerPaymentMethod {
+    func getCustomerPaymentMethodForTrancking() -> [String: Any] {
+        let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
+
+        var savedCardDic: [String: Any] = [:]
+        savedCardDic["payment_method_type"] = getPaymentTypeId()
+        savedCardDic["payment_method_id"] = getPaymentMethodId()
+
+        var extraInfo: [String: Any] = [:]
+        extraInfo["card_id"] = getCardId()
+        extraInfo["has_esc"] = cardIdsEsc.contains(getCardId())
+        savedCardDic["extra_info"] = extraInfo
+        return savedCardDic
+    }
 }

@@ -24,11 +24,10 @@ extension OneTapFlow {
 
 extension OneTapFlow: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(error: MPSDKError) {
-        trackErrorEvent(error: error)
         guard let reviewScreen = pxNavigationHandler.navigationController.viewControllers.last as? PXOneTapViewController else {
             return
         }
-        reviewScreen.resetButton()
+        reviewScreen.resetButton(error: error)
     }
 
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstructions?) {
@@ -57,31 +56,5 @@ extension OneTapFlow: PXPaymentErrorHandlerProtocol {
         model.mpESCManager.deleteESC(cardId: model.paymentData.getToken()?.cardId ?? "")
         model.paymentData.cleanToken()
         executeNextStep()
-    }
-}
-
-// MARK: Tracking
-extension OneTapFlow {
-    func trackErrorEvent(error: MPSDKError) {
-        var properties: [String: Any] = [:]
-        properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()
-        properties["style"] = Tracking.Style.snackbar
-        properties["id"] = Tracking.Error.Id.genericError
-        properties["message"] = "review_and_confirm_toast_error".localized_beta
-        properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
-
-        var extraDic: [String: Any] = [:]
-        extraDic["api_url"] =  error.requestOrigin
-        extraDic["retry_available"] = error.retry ?? false
-
-        if let cause = error.apiException?.cause?.first {
-            if !String.isNullOrEmpty(cause.code) {
-                extraDic["api_status_code"] = cause.code
-                extraDic["api_error_message"] = cause.causeDescription
-            }
-        }
-
-        properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 }

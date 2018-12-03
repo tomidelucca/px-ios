@@ -10,8 +10,6 @@ import UIKit
 
 class PXReviewViewModel: NSObject {
 
-    var screenName: String { return TrackingPaths.Screens.getReviewAndConfirmPath() }
-
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
 
@@ -33,7 +31,7 @@ class PXReviewViewModel: NSObject {
 
     }
 
-    func trackInfo() {
+    func getScreenProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.getPaymentTypeForTracking()
         properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
@@ -51,19 +49,11 @@ class PXReviewViewModel: NSObject {
         properties["installments"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
         var itemsDic: [Any] = []
         for item in amountHelper.preference.items {
-            var itemDic: [String: Any] = [:]
-            var idItemDic: [String: Any] = [:]
-            idItemDic["id"] = item.id
-            idItemDic["description"] = item.getDescription()
-            idItemDic["price"] = item.getUnitPrice()
-            itemDic["item"] = idItemDic
-            itemDic["quantity"] = item.getQuantity()
-            itemDic["currency_id"] = SiteManager.shared.getCurrency().id
-            itemsDic.append(itemDic)
+            itemsDic.append(item.getItemForTracking())
         }
         properties["items"] = itemsDic
         properties["charges"] = self.amountHelper.chargeRuleAmount
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: properties)
+        return properties
     }
 
     func trackChangePaymentMethodEvent() {

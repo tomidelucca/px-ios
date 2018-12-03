@@ -53,11 +53,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         super.init(nibName: "CardFormViewController", bundle: ResourceManager.shared.getBundle())
         self.viewModel = cardFormManager
         self.callback = callback
-        //  self.paymentMethods = cardFormManager.getPaymentMethods()
-    }
-
-    override func trackInfo() {
-        self.trackStatus()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -110,8 +105,9 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     open override func viewDidAppear(_ animated: Bool) {
-
         super.viewDidAppear(animated)
+
+        self.trackScreen()
 
         if self.navigationController != nil {
             if viewModel.showBankDeals() {
@@ -154,7 +150,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.delegate = self
         cardFront = CardFrontView()
         cardBack = CardBackView()
-
         self.cardView = UIView()
 
         let cardHeight = getCardHeight()
@@ -295,10 +290,12 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         self.viewModel.cardholderNameEmpty = false
         return name.uppercased()
     }
+
     fileprivate func formatCVV(_ cvv: String) -> String {
         completeCvvLabel()
         return cvv
     }
+
     fileprivate func formatExpirationDate(_ expirationDate: String) -> String {
         if expirationDate.count == 0 {
             expirationLabelEmpty = true
@@ -317,7 +314,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.becomeFirstResponder()
         textBox.text = textEditMaskFormater.textMasked(cardNumberLabel!.text?.trimSpaces())
         textBox.placeholder = getTextboxPlaceholder()
-        self.trackStatus()
+        self.trackScreen()
     }
     fileprivate func prepareNameLabelForEdit() {
         editingLabel = nameLabel
@@ -326,7 +323,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.becomeFirstResponder()
         textBox.text = viewModel.cardholderNameEmpty ?  "" : nameLabel!.text!.replacingOccurrences(of: " ", with: "")
         textBox.placeholder = getTextboxPlaceholder()
-        self.trackStatus()
+        self.trackScreen()
     }
     fileprivate func prepareExpirationLabelForEdit() {
         editingLabel = expirationDateLabel
@@ -335,7 +332,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.becomeFirstResponder()
         textBox.text = expirationLabelEmpty ?  "" : expirationDateLabel!.text
         textBox.placeholder = getTextboxPlaceholder()
-        self.trackStatus()
+        self.trackScreen()
     }
     fileprivate func prepareCVVLabelForEdit() {
 
@@ -360,7 +357,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.becomeFirstResponder()
         textBox.text = self.viewModel.cvvEmpty  ?  "" : cvvLabel!.text!.replacingOccurrences(of: "•", with: "")
         textBox.placeholder = getTextboxPlaceholder()
-        self.trackStatus()
+        self.trackScreen()
     }
 
     /* Metodos para validar si un texto ingresado es valido, dependiendo del tipo

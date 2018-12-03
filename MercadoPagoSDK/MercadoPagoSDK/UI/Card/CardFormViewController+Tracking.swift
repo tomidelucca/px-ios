@@ -8,15 +8,17 @@
 import Foundation
 // MARK: Tracking
 extension CardFormViewController {
-    func trackStatus() {
+
+    func trackScreen() {
         guard let cardType = self.viewModel.getPaymentMethodTypeId() else {
             return
         }
         var properties: [String: Any] = [:]
         properties["payment_method_id"] = viewModel.guessedPMS?.first?.getPaymentIdForTracking()
-        let screenPath = getScreenPath(cardType: cardType)
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: properties)
+
+        trackScreen(path: getScreenPath(cardType: cardType), properties: properties)
     }
+
     func trackError(errorMessage: String) {
         guard let cardType = self.viewModel.getPaymentMethodTypeId() else {
             return
@@ -31,8 +33,9 @@ extension CardFormViewController {
         extraDic["payment_method_type"] = viewModel.guessedPMS?.first?.getPaymentTypeForTracking()
         extraDic["payment_method_id"] = viewModel.guessedPMS?.first?.getPaymentIdForTracking()
         properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
+
     func getScreenPath(cardType: String) -> String {
         var screenPath = ""
         if editingLabel === cardNumberLabel {
@@ -46,6 +49,7 @@ extension CardFormViewController {
         }
         return screenPath
     }
+
     func getIdError() -> String {
         var idError = ""
         if editingLabel === cardNumberLabel {

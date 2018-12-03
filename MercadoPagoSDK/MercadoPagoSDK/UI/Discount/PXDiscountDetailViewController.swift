@@ -27,8 +27,9 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    override func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenName: trackingScreenName)
+    override public func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -179,5 +180,12 @@ extension PXDiscountDetailViewController {
         let attributes = [NSAttributedStringKey.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
         let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
         return string
+    }
+}
+
+// MARK: Tracking
+extension PXDiscountDetailViewController {
+    func trackScreen() {
+        trackScreen(path: trackingScreenName)
     }
 }

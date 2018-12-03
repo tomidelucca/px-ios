@@ -19,7 +19,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     var shouldDisplayBackButton = false
     var shouldHideNavigationBar = false
     var shouldShowBackArrow = true
-    var tracked: Bool = false
 
     let STATUS_BAR_HEIGTH = ViewUtils.getStatusBarHeight()
     let NAV_BAR_HEIGHT = 44.0
@@ -30,16 +29,12 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     // TODO: Deprecate after PaymentVault & AditionalStep redesign/refactor.
     var hideNavBarCallback: (() -> Void)?
 
-    open var screenName: String { return TrackingPaths.NO_NAME_SCREEN }
+    private var screenPath: String?
+    private var treatBackAsAbort: Bool = false
 
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.loadMPStyles()
-    }
-
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        trackInfo()
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -82,13 +77,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
             totalReserveSpace += CGFloat(NAV_BAR_HEIGHT)
         }
         return totalReserveSpace
-    }
-
-    func trackInfo() {
-        if screenName != TrackingPaths.NO_NAME_SCREEN && !tracked {
-            tracked = true
-            MPXTracker.sharedInstance.trackScreen(screenName: screenName)
-        }
     }
 
     internal func loadMPStyles() {
@@ -139,15 +127,24 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
 
     @objc internal func executeBack() {
         if let targetNavigationController = navigationController {
+            // TODO: Tener en cuentra procesadora
             let vcs = targetNavigationController.viewControllers.filter {$0.isKind(of: MercadoPagoUIViewController.self)}
             if vcs.count == 1 {
                 if let callbackBackAction = callbackBack {
                     callbackBackAction()
                 }
+
+                trackAbortEvent()
                 PXNotificationManager.Post.attemptToClose()
                 return
             }
         }
+        if treatBackAsAbort {
+            trackAbortEvent()
+        } else {
+            trackBackEvent()
+        }
+
         if let callbackBackAction = callbackBack {
             callbackBackAction()
         }
@@ -247,5 +244,31 @@ internal extension UINavigationBar {
     }
     func restoreBottomLine() {
         self.setValue(false, forKey: "hidesShadow")
+    }
+}
+
+// MARK: Tracking
+extension MercadoPagoUIViewController {
+
+    func trackScreen(path: String, properties: [String: Any] = [:], treatBackAsAbort: Bool = false) {
+        self.treatBackAsAbort = treatBackAsAbort
+        screenPath = path
+        MPXTracker.sharedInstance.trackScreen(screenName: path, properties: properties)
+    }
+
+    func trackEvent(path: String, properties: [String: Any] = [:]) {
+        MPXTracker.sharedInstance.trackEvent(path: path, properties: properties)
+    }
+
+    private func trackAbortEvent() {
+        if let screenPath = screenPath {
+            trackEvent(path: TrackingPaths.Events.getAbortPath(screen: screenPath))
+        }
+    }
+
+    private func trackBackEvent() {
+        if let screenPath = screenPath {
+            trackEvent(path: TrackingPaths.Events.getBackPath(screen: screenPath))
+        }
     }
 }

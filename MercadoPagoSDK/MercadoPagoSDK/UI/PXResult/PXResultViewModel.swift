@@ -25,7 +25,37 @@ internal class PXResultViewModel: PXResultViewModelInterface {
         self.amountHelper = amountHelper
     }
 
-    func trackInfo() {
+    func getPaymentData() -> PXPaymentData {
+        return self.paymentResult.paymentData!
+    }
+
+    func setCallback(callback: @escaping ((PaymentResult.CongratsState) -> Void)) {
+        self.callback = callback
+    }
+
+    func getPaymentStatus() -> String {
+        return self.paymentResult.status
+    }
+
+    func getPaymentStatusDetail() -> String {
+        return self.paymentResult.statusDetail
+    }
+
+    func getPaymentId() -> String? {
+        return self.paymentResult.paymentId
+    }
+    func isCallForAuth() -> Bool {
+        return self.paymentResult.isCallForAuth()
+    }
+
+    func primaryResultColor() -> UIColor {
+        return ResourceManager.shared.getResultColorWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
+    }
+}
+
+// MARK: Tracking
+extension PXResultViewModel {
+    func getTrackingProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["style"] = "generic"
         properties["amount"] = amountHelper.amountToPay
@@ -56,7 +86,10 @@ internal class PXResultViewModel: PXResultViewModelInterface {
         }
 
         properties["extra_info"] = extraInfo
+        return properties
+    }
 
+    func getTrackingPath() -> String {
         let paymentStatus = PXPaymentStatus.IN_PROCESS.rawValue
         var screenPath = ""
 
@@ -67,34 +100,6 @@ internal class PXResultViewModel: PXResultViewModelInterface {
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
-
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath, properties: properties)
-    }
-
-    func getPaymentData() -> PXPaymentData {
-        return self.paymentResult.paymentData!
-    }
-
-    func setCallback(callback: @escaping ((PaymentResult.CongratsState) -> Void)) {
-        self.callback = callback
-    }
-
-    func getPaymentStatus() -> String {
-        return self.paymentResult.status
-    }
-
-    func getPaymentStatusDetail() -> String {
-        return self.paymentResult.statusDetail
-    }
-
-    func getPaymentId() -> String? {
-        return self.paymentResult.paymentId
-    }
-    func isCallForAuth() -> Bool {
-        return self.paymentResult.isCallForAuth()
-    }
-
-    func primaryResultColor() -> UIColor {
-        return ResourceManager.shared.getResultColorWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
+        return screenPath
     }
 }
