@@ -25,6 +25,8 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         self.defaultOption = defaultOption
         self.expressCho = expressCho
         self.accountMoney = aMoney
+        super.init()
+        self.populateOneTap() //TODO: Revisar. No me cierre este enfoque.
     }
 
     public enum PXPaymentMethodSearchKeys: String, CodingKey {
@@ -74,5 +76,16 @@ open class PXPaymentMethodSearch: NSObject, Codable {
 
     open class func fromJSON(data: Data) throws -> PXPaymentMethodSearch {
         return try JSONDecoder().decode(PXPaymentMethodSearch.self, from: data)
+    }
+}
+
+
+extension PXPaymentMethodSearch {
+    private func populateOneTap() {
+        if let expressNodes = expressCho {
+            for expressNode in expressNodes {
+                expressNode.setAccountMoneyNode(accountMoney)
+            }
+        }
     }
 }

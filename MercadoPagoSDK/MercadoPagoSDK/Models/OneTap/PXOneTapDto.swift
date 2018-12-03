@@ -61,7 +61,11 @@ open class PXOneTapDto: NSObject, Codable {
 }
 
 extension PXOneTapDto {
-    func setAccountMoney(_ accountMoney: PXAccountMoneyDto) {
-        self.accountMoney = accountMoney
+    internal func setAccountMoneyNode(_ accountMoney: PXAccountMoneyDto?) {
+        if let amNode = accountMoney, PXPaymentTypes.ACCOUNT_MONEY.rawValue == paymentMethodId {
+            self.accountMoney = amNode
+        } else {
+            self.accountMoney = nil
+        }
     }
 }
