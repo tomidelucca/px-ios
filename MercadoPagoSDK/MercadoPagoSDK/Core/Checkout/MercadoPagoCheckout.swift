@@ -53,22 +53,10 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         if let paymentConfiguration = builder.paymentConfig {
-            let (discountConfig, chargeRules, paymentPlugin, paymentMethodPlugins) = paymentConfiguration.getPaymentConfiguration()
+            let (chargeRules, paymentPlugin, paymentMethodPlugins) = paymentConfiguration.getPaymentConfiguration()
 
             // Set charge rules
             viewModel.chargeRules = chargeRules
-
-            // Set discount/campaign
-            if let dConfig = discountConfig {
-                let discountConfiguration = dConfig.getDiscountConfiguration()
-                if let campaign = discountConfiguration.campaign, let discount = discountConfiguration.discount {
-                    viewModel.setDiscount(discount, withCampaign: campaign)
-                }
-                if discountConfiguration.isNotAvailable {
-                    viewModel.clearDiscount()
-                    viewModel.consumedDiscount = true
-                }
-            }
 
             // Payment method plugins.
             viewModel.paymentMethodPlugins = paymentMethodPlugins

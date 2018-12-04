@@ -21,15 +21,6 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
-
-            if let installment = strongSelf.viewModel.paymentConfigurationServices?.getInstallmentsForPaymentMethod(paymentOptionSelected) {
-                strongSelf.viewModel.payerCosts = installment.payerCosts
-            }
-
-            if let discountConfiguration = strongSelf.viewModel.paymentConfigurationServices?.getDiscountConfigurationForPaymentMethod(paymentOptionSelected) {
-                strongSelf.viewModel.setDiscount(discountConfiguration.discount, withCampaign: discountConfiguration.campaign)
-            }
-
             strongSelf.viewModel.rootVC = false
             strongSelf.executeNextStep()
         })
