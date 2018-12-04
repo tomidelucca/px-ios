@@ -500,7 +500,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
-    public func updateCheckoutModel(paymentMethodSearch: PXPaymentMethodSearch) {
+    func getPaymentOptionConfigurations(paymentMethodSearch: PXPaymentMethodSearch) -> Set<PXPaymentMethodConfiguration> {
         let discountConfigurationsKeys = paymentMethodSearch.discountConfigurations.keys
         var configurations = Set<PXPaymentMethodConfiguration>()
         for customOption in paymentMethodSearch.customOptionSearchItems {
@@ -515,7 +515,12 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             let paymentMethodConfiguration = PXPaymentMethodConfiguration(paymentOptionID: customOption.id, paymentOptionsConfigurations: paymentOptionConfigurations, selectedAmountConfiguration: customOption.selectedAmountConfiguration)
             configurations.insert(paymentMethodConfiguration)
         }
+        return configurations
+    }
 
+    public func updateCheckoutModel(paymentMethodSearch: PXPaymentMethodSearch) {
+
+        let configurations = getPaymentOptionConfigurations(paymentMethodSearch: paymentMethodSearch)
         self.paymentConfigurationServices = PXPaymentConfigurationServices(configurations: configurations)
 
         self.search = paymentMethodSearch
