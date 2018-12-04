@@ -99,7 +99,12 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     }
 
     @objc func backAction() {
-        self.executeBack()
+        trackBackEvent()
+        if let callbackCancel = callbackCancel {
+            callbackCancel()
+            return
+        }
+        self.navigationController?.popViewController(animated: false)
     }
 
     func setupInputAccessoryView() {
@@ -200,26 +205,12 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
 extension SecurityCodeViewController {
 
     func trackScreenView() {
-        var properties: [String: Any] = [:]
-        properties["payment_method_id"] = viewModel.paymentMethod.getPaymentIdForTracking()
-        if let token = viewModel.cardInfo as? PXCardInformation {
-            properties["card_id"] =  token.getCardId()
-        }
         let screenPath = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
-        trackScreen(path: screenPath, properties: properties, treatBackAsAbort: true)
+        trackScreen(path: screenPath, properties: viewModel.getScreenProperties(), treatBackAsAbort: true)
     }
 
     func trackError(errorMessage: String) {
-        var properties: [String: Any] = [:]
-        properties["path"] = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: viewModel.paymentMethod.paymentTypeId)
-        properties["style"] = Tracking.Style.customComponent
-        properties["id"] = Tracking.Error.Id.invalidCVV
-        properties["message"] = errorMessage
-        properties["attributable_to"] = Tracking.Error.Atrributable.user
-        var extraDic: [String: Any] = [:]
-        extraDic["payment_method_type"] = viewModel.paymentMethod?.getPaymentTypeForTracking()
-        extraDic["payment_method_id"] = viewModel.paymentMethod?.getPaymentIdForTracking()
-        properties["extra_info"] = extraDic
+        let properties = viewModel.getInvalidUserInputErrorProperties(message: errorMessage)
         trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 }

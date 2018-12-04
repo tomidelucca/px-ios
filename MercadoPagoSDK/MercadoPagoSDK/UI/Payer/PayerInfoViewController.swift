@@ -252,6 +252,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     @objc func leftArrowKeyTapped() {
+        trackBackEvent()
         let currentStep = self.viewModel.getPreviousStep()
         executeStep(currentStep)
     }

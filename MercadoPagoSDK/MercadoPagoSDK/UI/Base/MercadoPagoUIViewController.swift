@@ -29,8 +29,8 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     // TODO: Deprecate after PaymentVault & AditionalStep redesign/refactor.
     var hideNavBarCallback: (() -> Void)?
 
-    private var screenPath: String?
-    private var treatBackAsAbort: Bool = false
+    var screenPath: String?
+    var treatBackAsAbort: Bool = false
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -244,31 +244,5 @@ internal extension UINavigationBar {
     }
     func restoreBottomLine() {
         self.setValue(false, forKey: "hidesShadow")
-    }
-}
-
-// MARK: Tracking
-extension MercadoPagoUIViewController {
-
-    func trackScreen(path: String, properties: [String: Any] = [:], treatBackAsAbort: Bool = false) {
-        self.treatBackAsAbort = treatBackAsAbort
-        screenPath = path
-        MPXTracker.sharedInstance.trackScreen(screenName: path, properties: properties)
-    }
-
-    func trackEvent(path: String, properties: [String: Any] = [:]) {
-        MPXTracker.sharedInstance.trackEvent(path: path, properties: properties)
-    }
-
-    private func trackAbortEvent() {
-        if let screenPath = screenPath {
-            trackEvent(path: TrackingPaths.Events.getAbortPath(screen: screenPath))
-        }
-    }
-
-    private func trackBackEvent() {
-        if let screenPath = screenPath {
-            trackEvent(path: TrackingPaths.Events.getBackPath(screen: screenPath))
-        }
     }
 }

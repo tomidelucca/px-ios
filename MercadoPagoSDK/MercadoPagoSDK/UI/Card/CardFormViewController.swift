@@ -540,6 +540,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     @objc func leftArrowKeyTapped() {
+        trackBackEvent()
         switch editingLabel! {
         case cardNumberLabel! :
             return
@@ -665,7 +666,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
             self.clearCardSkin()
             return
         }
-        if textEditMaskFormater.textUnmasked(textBox.text).count>=6 || viewModel.customerCard != nil ||
+        if textEditMaskFormater.textUnmasked(textBox.text).count >= 6 || viewModel.customerCard != nil ||
             viewModel.cardToken != nil {
             if isShowingTextBoxMessage {
                 hideMessage()

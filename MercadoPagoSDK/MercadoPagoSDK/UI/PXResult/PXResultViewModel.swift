@@ -55,6 +55,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
 
 // MARK: Tracking
 extension PXResultViewModel {
+
     func getTrackingProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["style"] = "generic"

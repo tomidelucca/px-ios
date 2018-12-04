@@ -25,40 +25,6 @@ class PXReviewViewModel: NSObject {
         self.advancedConfiguration = advancedConfig
         self.userLogged = userLogged
     }
-
-    // MARK: Tracking logic
-    func trackConfirmActionEvent() {
-
-    }
-
-    func getScreenProperties() -> [String: Any] {
-        var properties: [String: Any] = [:]
-        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.getPaymentTypeForTracking()
-        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
-        var extraInfo: [String: Any] = [:]
-        extraInfo["issuer_id"] = amountHelper.paymentData.issuer?.id
-        if let cardId = amountHelper.paymentData.token?.cardId {
-            let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
-            extraInfo["card_id"] = cardId
-            extraInfo["esc"] = cardIdsEsc.contains(cardId)
-        }
-        properties["payment_extra_info"] = extraInfo
-        properties["discount"] = amountHelper.getDiscountForTracking()
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
-        properties["total_amount"] = amountHelper.amountToPay
-        properties["installments"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
-        var itemsDic: [Any] = []
-        for item in amountHelper.preference.items {
-            itemsDic.append(item.getItemForTracking())
-        }
-        properties["items"] = itemsDic
-        properties["charges"] = self.amountHelper.chargeRuleAmount
-        return properties
-    }
-
-    func trackChangePaymentMethodEvent() {
-        // No tracking for change payment method event in review view controller for now
-    }
 }
 
 // MARK: - Logic.

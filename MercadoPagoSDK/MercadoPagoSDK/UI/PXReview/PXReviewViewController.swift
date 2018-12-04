@@ -278,7 +278,7 @@ extension PXReviewViewController {
     private func getPaymentMethodComponentView() -> UIView? {
         let action = PXAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
-                self?.viewModel.trackChangePaymentMethodEvent()
+                self?.trackEvent(path: TrackingPaths.Events.ReviewConfirm.getChangePaymentMethodPath())
                 if let callBackAction = self?.changePaymentMethodCallback {
                     PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
                     PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
@@ -408,7 +408,7 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
     private func confirmPayment() {
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
-        self.viewModel.trackConfirmActionEvent()
+        trackEvent(path: TrackingPaths.Events.ReviewConfirm.getConfirmPath(), properties: viewModel.getConfirmEventProperties())
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }

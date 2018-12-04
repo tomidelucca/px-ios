@@ -9,14 +9,14 @@
 import UIKit
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l__?, r__?):
-    return l__ < r__
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+    switch (lhs, rhs) {
+    case let (l__?, r__?):
+        return l__ < r__
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
 }
 
 internal class CardFormViewModel {
@@ -214,6 +214,7 @@ internal class CardFormViewModel {
         if paymentMethods.isEmpty {
             return nil
         } else {
+            trackRecognizeCardEvent()
             return paymentMethods
         }
 
@@ -238,7 +239,7 @@ internal class CardFormViewModel {
         if let card = customerCard {
             return card.getPaymentMethod()
         } else {
-           return guessedPMS?[0]
+            return guessedPMS?.first
         }
     }
     func hasGuessedPM() -> Bool {
@@ -266,6 +267,17 @@ internal class CardFormViewModel {
             return "Solo puedes pagar con ".localized + paymentMethodName
         } else {
             return defaultMessage
+        }
+    }
+}
+
+// MARK: Tracking
+extension CardFormViewModel {
+    func trackRecognizeCardEvent() {
+        if let paymentTypeId = getPaymentMethodTypeId() {
+            var properties: [String: Any] = [:]
+            properties["payment_method_id"] = paymentMethods.first?.id
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getRecognizedCardPath(paymentTypeId: paymentTypeId), properties: properties)
         }
     }
 }

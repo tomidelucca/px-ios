@@ -67,3 +67,29 @@ internal class SecurityCodeViewModel {
         case SAVED_CARD = "saved_card"
     }
 }
+
+// MARK: Tracking
+extension SecurityCodeViewModel {
+    func getScreenProperties() -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = paymentMethod.getPaymentIdForTracking()
+        if let token = cardInfo as? PXCardInformation {
+            properties["card_id"] =  token.getCardId()
+        }
+        return properties
+    }
+
+    func getInvalidUserInputErrorProperties(message: String) -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["path"] = TrackingPaths.Screens.getSecurityCodePath(paymentTypeId: paymentMethod.paymentTypeId)
+        properties["style"] = Tracking.Style.customComponent
+        properties["id"] = Tracking.Error.Id.invalidCVV
+        properties["message"] = message
+        properties["attributable_to"] = Tracking.Error.Atrributable.user
+        var extraDic: [String: Any] = [:]
+        extraDic["payment_method_type"] = paymentMethod?.getPaymentTypeForTracking()
+        extraDic["payment_method_id"] = paymentMethod?.getPaymentIdForTracking()
+        properties["extra_info"] = extraDic
+        return properties
+    }
+}
