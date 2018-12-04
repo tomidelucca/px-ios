@@ -13,10 +13,10 @@ final class InitFlow: PXFlow {
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
-    private let finishInitCallback: ((PXCheckoutPreference, PXPaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void)
+    private let finishInitCallback: ((PXCheckoutPreference, PXPaymentMethodSearch, PXDiscountConfiguration?) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
 
-    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXPaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
+    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXPaymentMethodSearch, PXDiscountConfiguration?) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
         pxNavigationHandler = PXNavigationHandler.getDefault()
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
@@ -65,7 +65,7 @@ final class InitFlow: PXFlow {
     func finishFlow() {
         status = .finished
         if let paymentMethodsSearch = model.getPaymentMethodSearch() {
-            finishInitCallback(model.properties.checkoutPreference, paymentMethodsSearch, model.properties.campaigns, model.properties.discount)
+            finishInitCallback(model.properties.checkoutPreference, paymentMethodsSearch, paymentMethodsSearch.selectedDiscountConfiguration)
         } else {
             cancelFlow()
         }

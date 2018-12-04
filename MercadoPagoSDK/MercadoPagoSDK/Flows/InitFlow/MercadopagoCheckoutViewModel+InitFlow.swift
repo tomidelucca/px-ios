@@ -26,12 +26,12 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.advancedConfig = self.getAdvancedConfiguration()
 
         // Create init flow.
-        initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse, pxCampaigns, pxDiscount)  in
+        initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse, pxDiscountConfiguration)  in
             self?.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
             PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.cardIdsESC, value: self?.getCardsIdsWithESC() ?? [])
-            self?.campaigns = pxCampaigns
+//            self?.campaigns = pxCampaigns
             self?.checkoutPreference = checkoutPreference
-            self?.attemptToApplyDiscount(discount: pxDiscount)
+            self?.attemptToApplyDiscount(discountConfiguration: pxDiscountConfiguration)
 
             self?.initFlowProtocol?.didFinishInitFlow()
         }, errorCallback: { [weak self] initFlowError in
@@ -51,14 +51,18 @@ extension MercadoPagoCheckoutViewModel {
         initFlow?.updateModel(paymentPlugin: self.paymentPlugin, paymentMethodPlugins: self.paymentMethodPlugins)
     }
 
-    func attemptToApplyDiscount(discount: PXDiscount?) {
-        if let discount = discount, let campaigns = self.campaigns {
-            let filteredCampaigns = campaigns.filter { (campaign: PXCampaign) -> Bool in
-                return campaign.id.stringValue == discount.id
+    func attemptToApplyDiscount(discountConfiguration: PXDiscountConfiguration?) {
+        if let discountConfiguration = discountConfiguration {
+
+            if let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
+                self.setDiscount(discount, withCampaign: campaign)
             }
-            if let firstFilteredCampaign = filteredCampaigns.first {
-                self.setDiscount(discount, withCampaign: firstFilteredCampaign)
+
+            if discountConfiguration.getDiscountConfiguration().isNotAvailable {
+                self.clearDiscount()
+                self.consumedDiscount = true
             }
+
         }
     }
 }

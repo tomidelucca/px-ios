@@ -61,13 +61,6 @@ final internal class OneTapFlowModel: PXFlowModel {
         if let firstCardID = search.expressCho?.first?.oneTapCard?.cardId, let payerCost = MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getSelectedPayerCostsForPaymentMethod(firstCardID) {
             updateCheckoutModel(payerCost: payerCost)
         }
-
-//        let filtered =  search.customOptionSearchItems.filter({ (customSearchItem) -> Bool in
-//            return customSearchItem.id == search.expressCho?.first?.oneTapCard?.cardId
-//        })
-//        if let payerCost = filtered[0].selectedPayerCostConfiguration?.selectedPayerCost {
-//            updateCheckoutModel(payerCost: payerCost)
-//        }
     }
     public func nextStep() -> Steps {
         if needReviewAndConfirmForOneTap() {

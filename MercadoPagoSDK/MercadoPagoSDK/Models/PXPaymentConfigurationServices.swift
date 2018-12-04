@@ -55,23 +55,21 @@ class PXPaymentConfigurationServices: NSObject {
     }
 
     // Discount Configuration
-    func getDiscountConfigurationForPaymentMethod(_ paymentMethodOption: PaymentMethodOption) -> (discount:PXDiscount, campaign:PXCampaign)? {
-//        if let configuration = configurations.first(where: {$0.paymentMethodOption.getId() == paymentMethodOption.getId()}) {
-//            let discountConfiguration = configuration.paymentOptionsConfigurations[configuration.defaultConfigurationIndex].discountConfiguration
-//            return discountConfiguration
-//        }
+    func getDiscountConfigurationForPaymentMethod(_ id: String) -> PXDiscountConfiguration? {
+        if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
+            if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
+                let discountConfiguration = paymentOptionConfiguration.discountConfiguration
+                return discountConfiguration
+            }
+        }
         return nil
     }
 
     // All Configurations
-    func getConfigurations(forPaymentMethod paymentMethodOption: PaymentMethodOption) -> [PXPaymentOptionConfiguration]? {
-//        if let config = configurations.first(where: {$0.paymentMethodOption.getId() == paymentMethodOption.getId()}) {
-//            return config.paymentOptionsConfigurations
-//        }
+    func getConfigurationsForPaymentMethod(_ id: String) -> [PXPaymentOptionConfiguration]? {
+        if let config = configurations.first(where: {$0.paymentOptionID == id}) {
+            return config.paymentOptionsConfigurations
+        }
         return nil
-    }
-
-    func setConfigurations(_ configurations: Set<PXPaymentMethodConfiguration>) {
-        self.configurations = configurations
     }
 }

@@ -28,8 +28,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.selectedAmountConfiguration = selectedAmountConfiguration
         self.payerCostConfigurations = payerCostConfigurations
 
-        if let selected = payerCostConfigurations[selectedAmountConfiguration] {
-            self.selectedPayerCostConfiguration = selected
+        if let selectedPayerCostConfiguration = payerCostConfigurations[selectedAmountConfiguration] {
+            self.selectedPayerCostConfiguration = selectedPayerCostConfiguration
         }
     }
 
