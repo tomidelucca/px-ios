@@ -279,6 +279,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
+        disableChangePaymentMethodIfNeed()
         return PXReviewViewModel(amountHelper: self.amountHelper, paymentOptionSelected: self.paymentOptionSelected!, advancedConfig: advancedConfig, userLogged: !String.isNullOrEmpty(privateKey))
     }
 
@@ -487,10 +488,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return
         }
 
-        if !search.paymentMethods.isEmpty, !search.paymentMethods[0].isCard {
-            self.advancedConfig.reviewConfirmConfiguration.disableChangeMethodOption()
-        }
-
         if !Array.isNullOrEmpty(search.paymentMethodSearchItem) && search.paymentMethodSearchItem.count == 1 {
             self.updateCheckoutModel(paymentOptionSelected: search.paymentMethodSearchItem[0])
         } else if !Array.isNullOrEmpty(search.customOptionSearchItems) && search.customOptionSearchItems.count == 1 {
@@ -531,7 +528,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let totalPaymentMethodSearchCount = search.getPaymentOptionsCount()
         self.paymentMethodPluginsToShow = getPluginPaymentMethodToShow()
-        let totalPaymentMethodsToShow =  totalPaymentMethodSearchCount + paymentMethodPluginsToShow.count
+        let totalPaymentMethodsToShow = totalPaymentMethodSearchCount + paymentMethodPluginsToShow.count
 
         if totalPaymentMethodsToShow == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
@@ -819,6 +816,12 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func getAdvancedConfiguration() -> PXAdvancedConfiguration {
         return advancedConfig
+    }
+
+    private func disableChangePaymentMethodIfNeed() {
+        if let pmSearch = search, let firsPm = pmSearch.paymentMethods.first, pmSearch.getPaymentOptionsCount() + paymentMethodPluginsToShow.count == 1, !firsPm.isCard {
+            advancedConfig.reviewConfirmConfiguration.disableChangeMethodOption()
+        }
     }
 }
 
