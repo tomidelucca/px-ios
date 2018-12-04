@@ -87,9 +87,6 @@ extension PXOneTapViewModel {
                     if let pCost = MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getPayerCostsForPaymentMethod(targetCardData.cardId) {
                         payerCost = pCost
                     }
-//                    if let pCost = targetCardData.payerCosts {
-//                        payerCost = pCost
-//                    }
 
                     var targetIssuerId: String = ""
                     if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {

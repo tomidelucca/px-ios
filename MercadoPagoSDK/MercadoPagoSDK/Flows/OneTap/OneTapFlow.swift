@@ -123,12 +123,6 @@ extension OneTapFlow {
                                 selectedPaymentOption = customerPaymentMethod
                             }
                         }
-
-//                        if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, expressPaymentMethod.selectedPayerCost != nil {
-//                            if expressNode.paymentMethodId == customerPaymentMethod.getPaymentMethodId() && expressNode.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
-//                                selectedPaymentOption = customerPaymentMethod
-//                            }
-//                        }
                     }
                 }
             }

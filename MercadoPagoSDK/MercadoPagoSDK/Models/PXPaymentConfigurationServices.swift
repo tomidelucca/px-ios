@@ -27,15 +27,6 @@ class PXPaymentConfigurationServices: NSObject {
         return defaultConfigs
     }
 
-    // Installments
-    func getInstallmentsForPaymentMethod(_ paymentMethodOption: PaymentMethodOption) -> PXInstallment? {
-//        if let configuration = configurations.first(where: {$0.paymentMethodOption.getId() == paymentMethodOption.getId()}) {
-//            let installment = configuration.paymentOptionsConfigurations[configuration.defaultConfigurationIndex].installment
-//            return installment
-//        }
-        return nil
-    }
-
     func getPayerCostsForPaymentMethod(_ id: String) -> [PXPayerCost]? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
