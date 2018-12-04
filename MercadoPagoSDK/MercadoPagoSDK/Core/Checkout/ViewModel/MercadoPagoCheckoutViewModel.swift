@@ -819,7 +819,11 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     private func disableChangePaymentMethodIfNeed() {
-        if let pmSearch = search, let firsPm = pmSearch.paymentMethods.first, pmSearch.getPaymentOptionsCount() + paymentMethodPluginsToShow.count == 1, !firsPm.isCard {
+        if let pmSearch = search, let firsPm = pmSearch.paymentMethods.first {
+            if pmSearch.getPaymentOptionsCount() + paymentMethodPluginsToShow.count == 1 && !firsPm.isCard {
+                 advancedConfig.reviewConfirmConfiguration.disableChangeMethodOption()
+            }
+        } else {
             advancedConfig.reviewConfirmConfiguration.disableChangeMethodOption()
         }
     }
