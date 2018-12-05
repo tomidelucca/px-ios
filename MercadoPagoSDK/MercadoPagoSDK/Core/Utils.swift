@@ -212,6 +212,35 @@ internal class Utils {
         return labelTitle
     }
 
+    class func getAccreditationTimeMessage(minutes: Int) -> String {
+        var accreditationMessage: String = ""
+
+        if minutes == 0 {
+            accreditationMessage = "Se acreditará instantáneamente".localized
+        } else {
+            let accreditationLocalized = "Se acreditará en".localized
+            let accreditationDay = "día hábil".localized
+            let accreditationDays = "días hábiles".localized
+            let accreditationHour = "hora".localized
+            let accreditationHours = "horas".localized
+
+            let hours = minutes / 60
+            let days = minutes / (60 * 24)
+
+            if minutes >= 1440 && minutes < 2880 {
+                accreditationMessage = "\(accreditationLocalized) 1 \(accreditationDay)"
+            } else if minutes == 60 {
+                accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHour)"
+            } else if minutes < 1440 {
+                accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHours)"
+            } else {
+                accreditationMessage = "\(accreditationLocalized) \(days) \(accreditationDays)"
+            }
+        }
+
+        return accreditationMessage;
+    }
+
     class func getTransactionInstallmentsDescription(_ installments: String, currency: PXCurrency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         let currency = SiteManager.shared.getCurrency()

@@ -250,8 +250,9 @@ extension PXReviewViewModel {
             }
         } else {
             title = paymentMethodName.toAttributedString()
-            if paymentOptionSelected.getComment().isNotEmpty {
-                accreditationTime = Utils.getAccreditationTimeAttributedString(from: paymentOptionSelected.getComment())
+            if let accreditationMinutes = pm.accreditationTime {
+                let accreditationMessage = Utils.getAccreditationTimeMessage(minutes: accreditationMinutes)
+                accreditationTime = Utils.getAccreditationTimeAttributedString(from: accreditationMessage)
             }
         }
 
