@@ -154,6 +154,6 @@ internal extension String {
         if let languageBundle = Bundle(path: Localizator.sharedInstance.getLocalizedPath()) {
             return languageBundle.localizedString(forKey: self, value: "", table: nil)
         }
-        return ""
+        return self
     }
 }
