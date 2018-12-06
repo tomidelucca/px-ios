@@ -282,4 +282,39 @@ extension PXPaymentMethod: Cellable {
     var isPec: Bool {
         return self.id.contains(PXPaymentTypes.PEC.rawValue)
     }
+
+    internal func getAccreditationTimeMessage() -> String? {
+
+        if let accreditationMinutes = self.accreditationTime {
+
+            var accreditationMessage: String = ""
+
+            if accreditationMinutes == 0 {
+                accreditationMessage = "Se acreditará instantáneamente".localized
+            } else {
+                let accreditationLocalized = "Se acreditará en".localized
+                let accreditationDay = "día hábil".localized
+                let accreditationDays = "días hábiles".localized
+                let accreditationHour = "hora".localized
+                let accreditationHours = "horas".localized
+
+                let hours = accreditationMinutes / 60
+                let days = accreditationMinutes / (60 * 24)
+
+                if accreditationMinutes >= 1440 && accreditationMinutes < 2880 {
+                    accreditationMessage = "\(accreditationLocalized) 1 \(accreditationDay)"
+                } else if accreditationMinutes == 60 {
+                    accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHour)"
+                } else if accreditationMinutes < 1440 {
+                    accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHours)"
+                } else {
+                    accreditationMessage = "\(accreditationLocalized) \(days) \(accreditationDays)"
+                }
+            }
+
+            return accreditationMessage
+        }
+
+        return nil
+    }
 }
