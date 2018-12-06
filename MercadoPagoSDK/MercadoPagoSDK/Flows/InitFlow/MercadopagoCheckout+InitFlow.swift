@@ -52,15 +52,23 @@ extension MercadoPagoCheckout {
         properties["id"] = Tracking.Error.Id.genericError
         properties["message"] = "Hubo un error"
         properties["attributable_to"] = Tracking.Error.Atrributable.user
+
         var extraDic: [String: Any] = [:]
-        extraDic["api_url"] =  flowError.requestOrigin
-        extraDic["retry_available"] = flowError.shouldRetry
-        if let cause = flowError.apiException?.cause?.first {
-            if !String.isNullOrEmpty(cause.code) {
-                extraDic["api_status_code"] = cause.code
-                extraDic["api_error_message"] = cause.causeDescription
+        var errorDic: [String: Any] = [:]
+
+        errorDic["url"] =  flowError.requestOrigin
+        errorDic["retry_available"] = flowError.shouldRetry
+        errorDic["status"] =  flowError.apiException?.status
+
+        if let causes = flowError.apiException?.cause {
+            var causesDic: [String: Any] = [:]
+            for cause in causes where !String.isNullOrEmpty(cause.code) {
+                causesDic["code"] = cause.code
+                causesDic["description"] = cause.causeDescription
             }
+            errorDic["causes"] = causesDic
         }
+        extraDic["api_error"] = errorDic
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }

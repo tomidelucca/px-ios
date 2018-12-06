@@ -91,18 +91,8 @@ extension PXOneTapViewModel {
         properties["id"] = Tracking.Error.Id.genericError
         properties["message"] = "review_and_confirm_toast_error".localized_beta
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
-
         var extraDic: [String: Any] = [:]
         extraDic["api_url"] =  error.requestOrigin
-        extraDic["retry_available"] = error.retry ?? false
-
-        if let cause = error.apiException?.cause?.first {
-            if !String.isNullOrEmpty(cause.code) {
-                extraDic["api_status_code"] = cause.code
-                extraDic["api_error_message"] = cause.causeDescription
-            }
-        }
-
         properties["extra_info"] = extraDic
         return properties
     }

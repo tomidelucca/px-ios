@@ -101,8 +101,8 @@ extension ErrorViewController {
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
 
         var extraDic: [String: Any] = [:]
-        extraDic["url"] =  error.requestOrigin
-        properties["api_error"] = error.getErrorForTracking()
+        extraDic["api_error"] = error.getErrorForTracking()
+        properties["extra_info"] = extraDic
         trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 

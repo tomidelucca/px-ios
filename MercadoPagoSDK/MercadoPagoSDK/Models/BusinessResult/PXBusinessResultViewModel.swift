@@ -233,7 +233,7 @@ extension PXBusinessResultViewModel {
 
     func getTrackingProperties() -> [String: Any] {
         var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
-        properties["style"] = "generic"
+        properties["style"] = "custom"
         properties["payment_id"] = getPaymentId()
         properties["payment_status"] = businessResult.paymentStatus
         properties["payment_status_details"] = businessResult.paymentStatusDetail
