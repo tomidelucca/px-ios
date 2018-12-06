@@ -57,41 +57,18 @@ internal class PXResultViewModel: PXResultViewModelInterface {
 extension PXResultViewModel {
 
     func getTrackingProperties() -> [String: Any] {
-        var properties: [String: Any] = [:]
+        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
         properties["style"] = "generic"
-        properties["amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
-        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
-        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.getPaymentTypeForTracking()
         properties["payment_id"] = paymentResult.paymentId
         properties["payment_status"] = paymentResult.status
         properties["payment_status_details"] = paymentResult.statusDetail
         properties["issuer_id"] = amountHelper.paymentData.issuer?.id
 
-        if paymentResult.status == PXPaymentStatus.REJECTED.rawValue {
-            properties["recoverable"] = getActionButton() != nil
-            properties["message"] = titleHeader().string
-        }
-
-        var extraInfo: [String: Any] = [:]
-
-        if let cardId = paymentResult.cardId {
-            let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
-            extraInfo["card_id"] = cardId
-            extraInfo["esc"] = cardIdsEsc.contains(cardId)
-        }
-
-        // TODO checkear esto
-        if instructionsInfo != nil {
-            extraInfo["reference"] = instructionsInfo?.instructions.first?.references?.first
-        }
-
-        properties["extra_info"] = extraInfo
         return properties
     }
 
     func getTrackingPath() -> String {
-        let paymentStatus = PXPaymentStatus.IN_PROCESS.rawValue
+        let paymentStatus = paymentResult.status
         var screenPath = ""
 
         if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
@@ -102,5 +79,13 @@ extension PXResultViewModel {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
         return screenPath
+    }
+
+    func trackChangePaymentMethodEvent() {
+
+    }
+
+    func trackContinueEvent() {
+
     }
 }

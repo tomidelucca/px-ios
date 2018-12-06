@@ -97,33 +97,19 @@ extension ErrorViewController {
         properties["path"] = TrackingPaths.Screens.getErrorPath()
         properties["style"] = Tracking.Style.screen
         properties["id"] = Tracking.Error.Id.genericError
-        properties["message"] = "Hubo un error"
+        properties["message"] = "Hubo un error".localized
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
 
         var extraDic: [String: Any] = [:]
-        extraDic["api_url"] =  error.requestOrigin
-        extraDic["retry_available"] = error.retry ?? false
-
-        if let cause = error.apiException?.cause?.first {
-            if !String.isNullOrEmpty(cause.code) {
-                extraDic["api_status_code"] = cause.code
-                extraDic["api_error_message"] = cause.causeDescription
-            }
-        }
-        properties["extra_info"] = extraDic
+        extraDic["url"] =  error.requestOrigin
+        properties["api_error"] = error.getErrorForTracking()
         trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }
 
     func trackScreenView() {
         var properties: [String: Any] = [:]
-        properties["api_url"] =  error.requestOrigin
-        properties["retry_available"] = error.retry ?? false
-        if let cause = error.apiException?.cause?.first {
-            if !String.isNullOrEmpty(cause.code) {
-                properties["api_status_code"] = cause.code
-                properties["api_error_message"] = cause.causeDescription
-            }
-        }
+        properties["api_error"] = error.getErrorForTracking()
+        properties["error_message"] = "Hubo un error".localized
         trackScreen(path: TrackingPaths.Screens.getErrorPath(), properties: properties)
     }
 }

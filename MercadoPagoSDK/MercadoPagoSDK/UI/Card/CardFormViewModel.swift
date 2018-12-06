@@ -277,7 +277,7 @@ extension CardFormViewModel {
         if let paymentTypeId = getPaymentMethodTypeId() {
             var properties: [String: Any] = [:]
             properties["payment_method_id"] = paymentMethods.first?.id
-            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getRecognizedCardPath(paymentTypeId: paymentTypeId), properties: properties)
+            MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getRecognizedCardPath(), properties: properties)
         }
     }
 }

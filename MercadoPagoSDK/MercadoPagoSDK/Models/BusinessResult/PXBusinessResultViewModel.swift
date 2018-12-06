@@ -232,17 +232,23 @@ class PXBusinessResultBodyComponent: PXComponentizable {
 extension PXBusinessResultViewModel {
 
     func getTrackingProperties() -> [String: Any] {
-        return [:]
+        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
+        properties["style"] = "generic"
+        properties["payment_id"] = getPaymentId()
+        properties["payment_status"] = businessResult.paymentStatus
+        properties["payment_status_details"] = businessResult.paymentStatusDetail
+        properties["issuer_id"] = amountHelper.paymentData.issuer?.id
+        return properties
     }
 
     func getTrackingPath() -> String {
-        let paymentStatus = businessResult.getStatus()
+        let paymentStatus = businessResult.paymentStatus
         var screenPath = ""
-        if paymentStatus == PXBusinessResultStatus.APPROVED {
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
             screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXBusinessResultStatus.IN_PROGRESS || paymentStatus == PXBusinessResultStatus.PENDING {
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
             screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-        } else if paymentStatus == PXBusinessResultStatus.REJECTED {
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
             screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
         }
         return screenPath

@@ -14,8 +14,6 @@ internal struct TrackingPaths {
     static let payments = "/payments"
     static let selectMethod = "/select_method"
     static let addPaymentMethod = "/add_payment_method"
-
-    static let NO_NAME_SCREEN = "NO NAME"
 }
 
 internal struct Tracking {

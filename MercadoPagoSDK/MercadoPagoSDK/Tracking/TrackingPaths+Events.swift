@@ -10,6 +10,11 @@ import Foundation
 // MARK: Events
 extension TrackingPaths {
     internal struct Events {
+
+        static func getInitPath() -> String {
+            return TrackingPaths.pxTrack + "/init"
+        }
+
         static func getErrorPath() -> String {
             return "/friction"
         }
@@ -26,8 +31,8 @@ extension TrackingPaths {
             return screen + "/abort"
         }
 
-        static func getRecognizedCardPath(paymentTypeId: String) -> String {
-            return TrackingPaths.pxTrack + TrackingPaths.addPaymentMethod + "/" + paymentTypeId + "/number" + "/recognized_card"
+        static func getRecognizedCardPath() -> String {
+            return TrackingPaths.pxTrack + TrackingPaths.addPaymentMethod + "/number" + "/recognized_card"
         }
     }
 }

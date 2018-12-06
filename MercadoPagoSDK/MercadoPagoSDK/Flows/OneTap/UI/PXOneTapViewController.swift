@@ -223,7 +223,6 @@ extension PXOneTapViewController {
 // MARK: User Actions.
 extension PXOneTapViewController {
     @objc func shouldChangePaymentMethod() {
-        viewModel.trackChangePaymentMethodEvent()
         callbackPaymentData(viewModel.getClearPaymentData())
     }
 

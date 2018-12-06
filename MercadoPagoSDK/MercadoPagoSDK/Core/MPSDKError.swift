@@ -108,3 +108,23 @@ internal class MPSDKError {
         return mpError.apiException
     }
 }
+// MARK: Tracking
+extension MPSDKError {
+
+    func getErrorForTracking() -> [String: Any] {
+        var errorDic: [String: Any] = [:]
+        errorDic["url"] =  requestOrigin
+        errorDic["retry_available"] = retry ?? false
+        errorDic["status"] =  apiException?.status
+
+        if let causes = apiException?.cause {
+            var causesDic: [String: Any] = [:]
+            for cause in causes where !String.isNullOrEmpty(cause.code) {
+                causesDic["code"] = cause.code
+                causesDic["description"] = cause.causeDescription
+            }
+            errorDic["causes"] = causesDic
+        }
+        return errorDic
+    }
+}

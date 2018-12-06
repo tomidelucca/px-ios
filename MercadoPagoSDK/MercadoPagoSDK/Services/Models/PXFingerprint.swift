@@ -87,7 +87,7 @@ open class PXFingerprint: NSObject, Codable {
             let vendorId: String = UIDevice.current.identifierForVendor!.uuidString
             let uuid: String = UUID().uuidString
 
-            let pxVendorId = PXDeviceId(name: "vendor_id", value: vendorId)
+            let pxVendorId = PXDeviceId(name: "vendor_id", value: "9C6620E6-8157-4E48-8690-7F4AD116A93C")
             let pxuuid = PXDeviceId(name: "uuid", value: uuid)
 
             return [pxVendorId, pxuuid]
