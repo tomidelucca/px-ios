@@ -8,7 +8,7 @@
 import UIKit
 
 class PXOneTapHeaderView: PXComponentView {
-    let model: PXOneTapHeaderViewModel
+    private var model: PXOneTapHeaderViewModel
     private weak var delegate: PXOneTapHeaderProtocol?
 
     init(viewModel: PXOneTapHeaderViewModel, delegate: PXOneTapHeaderProtocol?) {
@@ -20,6 +20,11 @@ class PXOneTapHeaderView: PXComponentView {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func updateModel(_ model: PXOneTapHeaderViewModel) {
+        self.model = model
+        render()
     }
 }
 

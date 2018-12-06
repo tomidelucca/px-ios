@@ -14,6 +14,7 @@ internal struct PXAmountHelper {
     internal let paymentData: PXPaymentData
     internal let chargeRules: [PXPaymentTypeChargeRule]?
     internal let consumedDiscount: Bool
+    internal let paymentConfigurationService: PXPaymentConfigurationServices
 
     var discount: PXDiscount? {
         get {

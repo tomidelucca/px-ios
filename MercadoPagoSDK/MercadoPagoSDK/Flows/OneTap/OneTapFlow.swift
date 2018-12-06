@@ -16,11 +16,11 @@ final class OneTapFlow: NSObject, PXFlow {
 
     let advancedConfig: PXAdvancedConfiguration
 
-    init(navigationController: PXNavigationHandler, paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, consumedDiscount: Bool, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    init(navigationController: PXNavigationHandler, paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewConfirmConfiguration: PXReviewConfirmConfiguration, chargeRules: [PXPaymentTypeChargeRule]?, oneTapResultHandler: PXOneTapResultHandlerProtocol, consumedDiscount: Bool, advancedConfiguration: PXAdvancedConfiguration, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentConfigurationService: PXPaymentConfigurationServices) {
         pxNavigationHandler = navigationController
         resultHandler = oneTapResultHandler
         advancedConfig = advancedConfiguration
-        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, chargeRules: chargeRules, consumedDiscount: consumedDiscount, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfiguration)
+        model = OneTapFlowModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected, chargeRules: chargeRules, consumedDiscount: consumedDiscount, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, advancedConfiguration: advancedConfiguration, paymentConfigurationService: paymentConfigurationService)
     }
 
     deinit {
@@ -118,7 +118,7 @@ extension OneTapFlow {
                     let customOptionsFound = customerPaymentMethods.filter { return $0.getPaymentMethodId() == firstPaymentMethodId }
                     if let customerPaymentMethod = customOptionsFound.first {
                         // Check if one tap response has payer costs
-                        if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getSelectedPayerCostsForPaymentMethod(expressPaymentMethod.cardId) != nil {
+                        if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(expressPaymentMethod.cardId) != nil {
                             if expressNode.paymentMethodId == customerPaymentMethod.getPaymentMethodId() && expressNode.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
                                 selectedPaymentOption = customerPaymentMethod
                             }

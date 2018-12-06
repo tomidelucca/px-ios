@@ -30,6 +30,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var loadingButtonComponent: PXAnimatedButton?
     var installmentInfoRow: PXOneTapInstallmentInfoView?
     var installmentsSelectorView: PXOneTapInstallmentsSelectorView?
+    var headerView: PXOneTapHeaderView?
 
     var selectedCard: PXCardSliderViewModel?
 
@@ -103,10 +104,10 @@ extension PXOneTapViewController {
     private func setupUI() {
         if contentView.getSubviews().isEmpty {
             viewModel.createCardSliderViewModel()
-            renderViews()
             if let preSelectedCard = viewModel.getCardSliderViewModel().first {
                 selectedCard = preSelectedCard
             }
+            renderViews()
         }
     }
 
@@ -115,7 +116,8 @@ extension PXOneTapViewController {
         let safeAreaBottomHeight = PXLayout.getSafeAreaBottomInset()
 
         // Add header view.
-        let headerView = getHeaderView()
+        let headerView = getHeaderView(selectedCard: selectedCard)
+        self.headerView = headerView
         contentView.addSubviewToBottom(headerView)
         PXLayout.setHeight(owner: headerView, height: PXCardSliderSizeManager.getHeaderViewHeight(viewController: self)).isActive = true
         PXLayout.centerHorizontally(view: headerView).isActive = true
@@ -181,8 +183,8 @@ extension PXOneTapViewController {
 
 // MARK: Components Builders.
 extension PXOneTapViewController {
-    private func getHeaderView() -> UIView {
-        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(), delegate: self)
+    private func getHeaderView(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderView {
+        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(selectedCard: selectedCard), delegate: self)
         return headerView
     }
 
@@ -294,8 +296,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         // Add card. - CardData nil
         if targetModel.cardData == nil {
             loadingButtonComponent?.setDisabled()
+            headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: nil))
         } else {
             // New payment method selected.
+            headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
             let newPaymentMethodId: String = targetModel.paymentMethodId
             let newPayerCost: PXPayerCost? = targetModel.selectedPayerCost
 

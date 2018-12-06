@@ -88,7 +88,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         let headers = ["Accept-Language": language]
 
-        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: nil, body: nil, method: HTTPMethod.get, headers: headers, cache: false, success: { (data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: nil, body: nil, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
             do {
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {

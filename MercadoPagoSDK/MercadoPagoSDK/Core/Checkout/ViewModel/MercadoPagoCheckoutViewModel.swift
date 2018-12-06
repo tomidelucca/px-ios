@@ -51,7 +51,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService)
         }
     }
 
@@ -99,7 +99,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     let mpESCManager: MercadoPagoESC
 
     //
-    var paymentConfigurationServices: PXPaymentConfigurationServices?
+    var paymentConfigurationService = PXPaymentConfigurationServices()
 
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
@@ -111,7 +111,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Discount and charges
     var chargeRules: [PXPaymentTypeChargeRule]?
-    var campaigns: [PXCampaign]?
 
     // Init Flow
     var initFlow: InitFlow?
@@ -158,6 +157,17 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
+        self.paymentData.setDiscount(discount, withCampaign: campaign)
+    }
+
+    func setDiscount(_ discountConfiguration: PXDiscountConfiguration) {
+        self.consumedDiscount = discountConfiguration.getDiscountConfiguration().isNotAvailable
+
+        guard let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign else {
+            clearDiscount()
+            return
+        }
+
         self.paymentData.setDiscount(discount, withCampaign: campaign)
     }
 
@@ -521,7 +531,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     public func updateCheckoutModel(paymentMethodSearch: PXPaymentMethodSearch) {
 
         let configurations = getPaymentOptionConfigurations(paymentMethodSearch: paymentMethodSearch)
-        self.paymentConfigurationServices = PXPaymentConfigurationServices(configurations: configurations)
+        self.paymentConfigurationService.setConfigurations(configurations)
 
         self.search = paymentMethodSearch
 

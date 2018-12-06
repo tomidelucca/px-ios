@@ -84,7 +84,7 @@ extension PXOneTapViewModel {
                     }
 
                     var payerCost: [PXPayerCost] = [PXPayerCost]()
-                    if let pCost = MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getPayerCostsForPaymentMethod(targetCardData.cardId) {
+                    if let pCost = amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) {
                         payerCost = pCost
                     }
 
@@ -100,11 +100,11 @@ extension PXOneTapViewModel {
                         displayMessage = ""
                     } else if payerCost.count == 1 {
                         showArrow = false
-                    } else if MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getPayerCostsForPaymentMethod(targetCardData.cardId) == nil {
+                    } else if amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) == nil {
                         showArrow = false
                     }
 
-                    let selectedPayerCost = MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationServices?.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)
+                    let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)
 
                     let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow)
 
@@ -134,7 +134,7 @@ extension PXOneTapViewModel {
         return model
     }
 
-    func getHeaderViewModel() -> PXOneTapHeaderViewModel {
+    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderViewModel {
         let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
         let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let summaryAlpha: CGFloat = 0.45
@@ -144,16 +144,32 @@ extension PXOneTapViewModel {
         let totalAlpha: CGFloat = 1
 
         let currency = SiteManager.shared.getCurrency()
-        let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
-        let yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+        var totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+        var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
 
-        if let discount = amountHelper.discount {
+        if let cardId = selectedCard?.cardId, let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(cardId), let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
+
             customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_title".localized_beta, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
             let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
             let helperImage: UIImage? = isDefaultStatusBarStyle ? ResourceManager.shared.getImage("helper_ico") : ResourceManager.shared.getImage("helper_ico_light")
             customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
+
+            amountHelper.paymentData.setDiscount(discount, withCampaign: campaign)
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+            yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+
+        } else {
+            amountHelper.paymentData.clearDiscount()
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+            yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         }
+        /*else if let discount = amountHelper.discount {
+            customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_title".localized_beta, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
+            let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
+            let helperImage: UIImage? = isDefaultStatusBarStyle ? ResourceManager.shared.getImage("helper_ico") : ResourceManager.shared.getImage("helper_ico_light")
+            customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
+        }*/
 
         customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_total".localized_beta, totalAmountToShow, totalColor, totalAlpha, true, nil))
 

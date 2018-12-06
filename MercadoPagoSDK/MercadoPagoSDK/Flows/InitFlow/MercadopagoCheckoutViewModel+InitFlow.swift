@@ -19,19 +19,19 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.paymentPlugin = self.paymentPlugin
         initFlowProperties.paymentMethodSearchResult = self.search
         initFlowProperties.chargeRules = self.chargeRules
-        initFlowProperties.campaigns = self.campaigns
         initFlowProperties.consumedDiscount = self.consumedDiscount
-        initFlowProperties.discount = self.paymentData.discount
         initFlowProperties.serviceAdapter = self.mercadoPagoServicesAdapter
         initFlowProperties.advancedConfig = self.getAdvancedConfiguration()
+        initFlowProperties.paymentConfigurationService = self.paymentConfigurationService
 
         // Create init flow.
-        initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse, pxDiscountConfiguration)  in
+        initFlow = InitFlow(flowProperties: initFlowProperties, finishCallback: { [weak self] (checkoutPreference, paymentMethodSearchResponse)  in
             self?.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
             PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.cardIdsESC, value: self?.getCardsIdsWithESC() ?? [])
-//            self?.campaigns = pxCampaigns
             self?.checkoutPreference = checkoutPreference
-            self?.attemptToApplyDiscount(discountConfiguration: pxDiscountConfiguration)
+
+            let selectedDiscountConfigurartion = paymentMethodSearchResponse.selectedDiscountConfiguration
+            self?.attemptToApplyDiscount(discountConfiguration: selectedDiscountConfigurartion)
 
             self?.initFlowProtocol?.didFinishInitFlow()
         }, errorCallback: { [weak self] initFlowError in

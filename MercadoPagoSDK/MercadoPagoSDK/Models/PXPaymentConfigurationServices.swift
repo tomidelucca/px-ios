@@ -7,14 +7,10 @@
 
 import UIKit
 
-class PXPaymentConfigurationServices: NSObject {
+class PXPaymentConfigurationServices {
     
-    internal var configurations: Set<PXPaymentMethodConfiguration> = []
+    private var configurations: Set<PXPaymentMethodConfiguration> = []
 
-    init(configurations: Set<PXPaymentMethodConfiguration>) {
-        self.configurations = configurations
-    }
-    
     // Grupos
     func getDefaultPayamentMethodsConfigurations() -> [(paymentMethodOption: PaymentMethodOption, configuration: PXPaymentOptionConfiguration)] {
         var defaultConfigs = [(paymentMethodOption: PaymentMethodOption, configuration: PXPaymentOptionConfiguration)]()
@@ -62,5 +58,9 @@ class PXPaymentConfigurationServices: NSObject {
             return config.paymentOptionsConfigurations
         }
         return nil
+    }
+
+    func setConfigurations(_ configurations: Set<PXPaymentMethodConfiguration>) {
+        self.configurations = configurations
     }
 }

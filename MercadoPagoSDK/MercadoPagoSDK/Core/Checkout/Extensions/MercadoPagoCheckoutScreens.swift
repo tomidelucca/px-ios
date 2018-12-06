@@ -21,6 +21,21 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
+
+            if let payerCost = strongSelf.viewModel.paymentConfigurationService.getPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
+                strongSelf.viewModel.payerCosts = payerCost
+            } else {
+                strongSelf.viewModel.payerCosts = nil
+            }
+
+            if let discountConfiguration = strongSelf.viewModel.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOptionSelected.getId()) {
+                strongSelf.viewModel.setDiscount(discountConfiguration)
+            } else if let defaultDiscountConfiguration = strongSelf.viewModel.search?.selectedDiscountConfiguration {
+                strongSelf.viewModel.setDiscount(defaultDiscountConfiguration)
+            } else {
+                strongSelf.viewModel.clearDiscount()
+            }
+
             strongSelf.viewModel.rootVC = false
             strongSelf.executeNextStep()
         })
@@ -286,7 +301,7 @@ extension MercadoPagoCheckout {
         }
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
-        let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewConfirmConfiguration: viewModel.getAdvancedConfiguration().reviewConfirmConfiguration, chargeRules: viewModel.chargeRules, oneTapResultHandler: self, consumedDiscount: self.viewModel.consumedDiscount, advancedConfiguration: viewModel.getAdvancedConfiguration(), mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter)
+        let onetapFlow = OneTapFlow(navigationController: viewModel.pxNavigationHandler, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, reviewConfirmConfiguration: viewModel.getAdvancedConfiguration().reviewConfirmConfiguration, chargeRules: viewModel.chargeRules, oneTapResultHandler: self, consumedDiscount: self.viewModel.consumedDiscount, advancedConfiguration: viewModel.getAdvancedConfiguration(), mercadoPagoServicesAdapter: viewModel.mercadoPagoServicesAdapter, paymentConfigurationService: self.viewModel.paymentConfigurationService)
         onetapFlow.setCustomerPaymentMethods(viewModel.customPaymentOptions)
         onetapFlow.setPaymentMethodPlugins(viewModel.paymentMethodPlugins)
         onetapFlow.setPaymentFlow(paymentFlow: paymentFlow)
