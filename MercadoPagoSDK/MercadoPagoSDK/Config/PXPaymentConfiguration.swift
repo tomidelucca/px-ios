@@ -36,7 +36,7 @@ extension PXPaymentConfiguration {
      Add your own payment method option to pay.
      - parameter plugin: Your custom payment method plugin.
      */
-    @available(*, deprecated: 4.4.0, message: "Payment method plugins is no longer available.")
+    @available(*, deprecated: 4.5.0, message: "Payment method plugins is no longer available.")
     /// :nodoc
     open func addPaymentMethodPlugin(plugin: PXPaymentMethodPlugin) -> PXPaymentConfiguration {
         return self
