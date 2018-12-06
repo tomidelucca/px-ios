@@ -26,7 +26,7 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         self.expressCho = expressCho
         self.accountMoney = aMoney
         super.init()
-        self.populateOneTap() //TODO: Revisar. No me cierre este enfoque.
+        self.populateOneTap()
     }
 
     public enum PXPaymentMethodSearchKeys: String, CodingKey {

@@ -128,7 +128,6 @@ extension InitFlow {
                 return
             }
 
-            // TODO: Juan - Ver con Android. - No me cierra mucho este enfoque del todo.
             if let amNode = paymentMethodSearch.accountMoney, let amPaymentMethod = amNode.paymentMethod {
                 if amNode.invested {
                     amPaymentMethod.paymentMethodDescription = "onetap_invested_account_money".localized_beta
