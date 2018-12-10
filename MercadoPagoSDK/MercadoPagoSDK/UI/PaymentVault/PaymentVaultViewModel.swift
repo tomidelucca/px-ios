@@ -77,7 +77,14 @@ extension PaymentVaultViewModel {
         }
         return nil
     }
-}
+
+    func getDiscountConfiguration(row: Int) -> PXDiscountConfiguration? {
+        if let paymentOption = getPaymentMethodOption(row: row) {
+            return amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOption.getId())
+        }
+        return nil
+    }
+ }
 
 // MARK: Drawable Builders
 extension PaymentVaultViewModel {
