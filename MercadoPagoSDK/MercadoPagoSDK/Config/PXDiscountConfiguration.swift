@@ -46,15 +46,15 @@ open class PXDiscountConfiguration: NSObject, Codable {
     public enum PXDiscountConfigurationKeys: String, CodingKey {
         case discount
         case campaign
-        case isNotAvailable =  "is_not_available"
+        case isAvailable =  "is_available"
     }
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXDiscountConfigurationKeys.self)
         let discount: PXDiscount? = try container.decodeIfPresent(PXDiscount.self, forKey: .discount)
         let campaign: PXCampaign? = try container.decodeIfPresent(PXCampaign.self, forKey: .campaign)
-        let isNotAvailable: Bool = try container.decode(Bool.self, forKey: .isNotAvailable)
-        self.init(discount: discount, campaign: campaign, isNotAvailable: isNotAvailable)
+        let isAvailable: Bool = try container.decode(Bool.self, forKey: .isAvailable)
+        self.init(discount: discount, campaign: campaign, isNotAvailable: !isAvailable)
     }
 
     /**
