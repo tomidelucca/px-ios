@@ -147,4 +147,15 @@ internal class MercadoPagoServicesAdapter {
 
         return NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey: "Hubo un error"])
     }
+    
+    open func getSummaryAmount(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        
+        mercadoPagoServices.getSummaryAmount(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (summaryAmount) in
+                guard let strongSelf = self else {
+                    return
+                }
+                callback(summaryAmount)
+            }
+            , failure: failure)
+    }
 }

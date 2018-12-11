@@ -168,7 +168,16 @@ internal class MercadoPagoServices: NSObject {
         let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         service.getInstallments(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, differential_pricing_id: differentialPricingId, success: callback, failure: failure)
     }
+    func getSummaryAmount(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
+        service.getSummaryAmount(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, differential_pricing_id: differentialPricingId, success: callback, failure: failure)
+    }
 
+    func getPaymentMethodConfiguration(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
+        service.getInstallments(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, differential_pricing_id: differentialPricingId, success: callback, failure: failure)
+    }
+    
     func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
         service.getIssuers(payment_method_id: paymentMethodId, bin: bin, success: {(data: Data) -> Void in
