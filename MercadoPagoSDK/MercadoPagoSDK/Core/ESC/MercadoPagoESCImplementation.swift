@@ -39,6 +39,7 @@ internal class MercadoPagoESCImplementation: NSObject, MercadoPagoESC {
         return nil
     }
 
+    @discardableResult
     func saveESC(cardId: String, esc: String) -> Bool {
         if hasESCEnable() {
             #if PX_PRIVATE_POD
