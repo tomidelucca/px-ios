@@ -25,7 +25,7 @@ open class PXAccountMoneyDto: NSObject, Codable {
         case availableBalance = "available_balance"
         case invested
         case displayInfo = "display_info"
-        case cardTitle = "card_title"
+        case cardTitle = "message"
         case sliderTitle = "slider_title"
     }
 
