@@ -79,7 +79,7 @@ extension PXPaymentMethodSearch {
         let targetId: String = PXPaymentTypes.ACCOUNT_MONEY.rawValue
         for customItem in customOptionSearchItems {
             if customItem.id == targetId {
-                descriptionToPopulate = customItem.subtitle
+                descriptionToPopulate = customItem.comment
                 break
             }
         }
