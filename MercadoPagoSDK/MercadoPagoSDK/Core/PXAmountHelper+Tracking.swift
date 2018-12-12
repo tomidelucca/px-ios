@@ -14,15 +14,10 @@ extension PXAmountHelper {
             return dic
         }
 
-        if discount.hasPercentOff() {
-            dic["type"] = "percentage"
-            dic["percentage"] = discount.percentOff
-        } else {
-            dic["type"] = "fixed_amount"
-            dic["fixed_amount"] = discount.amountOff
-        }
-        dic["amount_to_discount"] = discount.couponAmount
-        dic["max_amount_to_discount"] = campaign.maxCouponAmount
+        dic["percent_off"] = discount.percentOff
+        dic["amount_off"] = discount.amountOff
+        dic["coupon_amount"] = discount.couponAmount
+        dic["max_coupon_amount"] = campaign.maxCouponAmount
         dic["max_redeem_per_user"] = campaign.maxRedeemPerUser
         dic["campaign_id"] = campaign.id
         return dic

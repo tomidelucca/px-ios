@@ -248,9 +248,10 @@ extension PXPaymentData {
 
         let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
         var properties: [String: Any] = [:]
+
+        properties["payment_method_type"] = paymentMethod.getPaymentTypeForTracking()
+        properties["payment_method_id"] = paymentMethod.getPaymentIdForTracking()
         if paymentMethod.isCard {
-            properties["payment_method_type"] = paymentMethod.paymentTypeId
-            properties["payment_method_id"] = paymentMethod.id
             var extraInfo: [String: Any] = [:]
             if let cardId = token?.cardId {
                 extraInfo["card_id"] = cardId
@@ -258,12 +259,10 @@ extension PXPaymentData {
             }
             extraInfo["selected_installment"] = payerCost?.getPayerCostForTracking()
             if let issuerId = issuer?.id {
-                extraInfo["issuer_id"] = Int(issuerId)
+                extraInfo["issuer_id"] = Int64(issuerId)
             }
             properties["extra_info"] = extraInfo
-        } else {
-            properties["payment_method_type"] = paymentMethod.id
-            properties["payment_method_id"] = paymentMethod.id
+        } else if paymentMethod.isAccountMoney {
             // TODO: When account money becomes FCM
             // var extraInfo: [String: Any] = [:]
             // extraInfo["balance"] =

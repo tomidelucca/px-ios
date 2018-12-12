@@ -11,7 +11,6 @@ import Foundation
 extension TrackingPaths {
 
     internal struct Screens {
-        private static let from = "#from="
         private static let refer = "#refer="
 
         // Review and Confirm Path
@@ -46,7 +45,7 @@ extension TrackingPaths {
 
         // Discount details path
         static func getDiscountDetailPath() -> String {
-            return TrackingPaths.pxTrack + payments + selectMethod + "/applied_discount"
+            return TrackingPaths.pxTrack + payments + "/applied_discount"
         }
 
         // Error path
@@ -55,8 +54,8 @@ extension TrackingPaths {
         }
 
         // Available payment methods paths
-        static func getAvailablePaymentMethodsPath(paymentTypeId: String) -> String {
-            return TrackingPaths.pxTrack + addPaymentMethod + "/" + paymentTypeId + "/number/error_more_info"
+        static func getAvailablePaymentMethodsPath() -> String {
+            return TrackingPaths.pxTrack + addPaymentMethod + "/number/error_more_info"
         }
 
         // Security Code Paths
@@ -106,7 +105,7 @@ extension TrackingPaths.Screens {
         private static let name = "/name"
         private static let lastName = "/lastname"
 
-        private static let boleto = TrackingPaths.pxTrack + TrackingPaths.selectMethod + "/ticket"
+        private static let boleto = TrackingPaths.pxTrack + TrackingPaths.payments + TrackingPaths.selectMethod + "/ticket"
 
         static func getCpfPath() -> String {
             return boleto + cpf
@@ -174,10 +173,6 @@ extension TrackingPaths.Screens {
 
         static func getOneTapInstallmentsPath() -> String {
             return TrackingPaths.pxTrack + "/review/one_tap/installments"
-        }
-
-        static func getOneTapDiscountPath() -> String {
-            return TrackingPaths.pxTrack + "/review/one_tap/applied_discount"
         }
     }
 }

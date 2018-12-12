@@ -84,7 +84,7 @@ extension PXOneTapDto {
         extraInfo["has_esc"] = cardIdsEsc.contains(oneTapCard?.cardId ?? "")
         extraInfo["selected_installment"] = oneTapCard?.selectedPayerCost?.getPayerCostForTracking()
         if let issuerId = oneTapCard?.cardUI?.issuerId {
-            extraInfo["issuer_id"] = Int(issuerId)
+            extraInfo["issuer_id"] = Int64(issuerId)
         }
         savedCardDic["extra_info"] = extraInfo
         return savedCardDic

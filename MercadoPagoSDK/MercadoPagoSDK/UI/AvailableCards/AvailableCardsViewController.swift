@@ -68,10 +68,6 @@ internal class AvailableCardsViewController: MercadoPagoUIViewController {
 // MARK: Tracking
 extension AvailableCardsViewController {
     func trackScreen() {
-        guard let cardType = viewModel.paymentMethods.first?.paymentTypeId else {
-            return
-        }
-
-        trackScreen(path: TrackingPaths.Screens.getAvailablePaymentMethodsPath(paymentTypeId: cardType))
+        trackScreen(path: TrackingPaths.Screens.getAvailablePaymentMethodsPath())
     }
 }

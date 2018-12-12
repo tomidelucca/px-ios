@@ -252,7 +252,7 @@ extension PXOneTapViewController {
 // MARK: Summary delegate.
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
     func didTapSummary() {
-        let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper, screenName: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
+        let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper)
 
         if viewModel.amountHelper.discount != nil {
             PXComponentFactory.Modal.show(viewController: discountViewController, title: viewModel.amountHelper.discount?.getDiscountDescription()) {

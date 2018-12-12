@@ -53,7 +53,6 @@ extension PXPayerCost: Cellable {
     func getPayerCostForTracking() -> [String: Any] {
         var installmentDic: [String: Any] = [:]
         installmentDic["quantity"] = installments
-        installmentDic["currency_id"] = SiteManager.shared.getCurrency().id
         installmentDic["installment_amount"] = installmentAmount
         installmentDic["interest_rate"] = installmentRate
         if hasInstallmentsRate() {

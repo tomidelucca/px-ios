@@ -153,6 +153,9 @@ extension CustomerPaymentMethod {
         var extraInfo: [String: Any] = [:]
         extraInfo["card_id"] = getCardId()
         extraInfo["has_esc"] = cardIdsEsc.contains(getCardId())
+        if let issuerId = getIssuer()?.id {
+            extraInfo["issuer_id"] = Int(issuerId)
+        }
         savedCardDic["extra_info"] = extraInfo
         return savedCardDic
     }

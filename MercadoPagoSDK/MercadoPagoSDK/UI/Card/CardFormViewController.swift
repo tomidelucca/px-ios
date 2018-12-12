@@ -495,6 +495,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         if viewModel.shoudShowOnlyOneCardMessage() {
             setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.UIColorFromRGB(0xF04449), isError: true)
+            trackError(errorMessage: self.viewModel.getOnlyOneCardAvailableMessage())
         } else {
             let cardNotAvailableError = CardNotAvailableErrorView(frame: (toolbar?.frame)!, paymentMethods: paymentMethods, showAvaibleCardsCallback: {
                 self.editingLabel?.text = ""
@@ -504,6 +505,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                 self.navigationController?.present(availableCardsDetail, animated: true, completion: {})
             })
             setTextBox(isError: true, inputAccessoryView: cardNotAvailableError)
+            trackError(errorMessage: "No puedes pagar con esta tarjeta".localized, style: Tracking.Style.snackbar)
         }
     }
 
@@ -527,6 +529,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
         setTextBox(isError: true, inputAccessoryView: errorLabel!)
+        trackError(errorMessage: errorMessage)
     }
 
     func hideMessage() {
@@ -703,7 +706,6 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                 textEditMaskFormater = textEditMaskFormaterAux
             } else {
                 self.clearCardSkin()
-                //FIXME PASAR FRAME VER QUE ONDA TOOLBAR
                 showCardNotSupportedErrorMessage()
                 return
             }

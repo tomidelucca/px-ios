@@ -28,10 +28,9 @@ extension PXOneTapViewModel {
         properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.paymentTypeId
         properties["card_id"] =  selectedCard.cardId
         if let issuerId = amountHelper.paymentData.issuer?.id {
-            properties["issuer_id"] = Int(issuerId)
+            properties["issuer_id"] = Int64(issuerId)
         }
-        properties["total_amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
+        properties["preference_amount"] = amountHelper.preferenceAmount
         var dic: [Any] = []
         for payerCost in installmentData.payerCosts {
             dic.append(payerCost.getPayerCostForTracking())
@@ -56,7 +55,7 @@ extension PXOneTapViewModel {
             extraInfo["has_esc"] = cardIdsEsc.contains(selectedCard.cardId ?? "")
             extraInfo["selected_installment"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
             if let issuerId = amountHelper.paymentData.issuer?.id {
-                extraInfo["issuer_id"] = Int(issuerId)
+                extraInfo["issuer_id"] = Int64(issuerId)
             }
             properties["extra_info"] = extraInfo
         } else {
@@ -73,8 +72,7 @@ extension PXOneTapViewModel {
     func getOneTapScreenProperties() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["available_methods"] = getAvailablePaymentMethodForTracking()
-        properties["total_amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
+        properties["preference_amount"] = amountHelper.preferenceAmount
         properties["discount"] = amountHelper.getDiscountForTracking()
         var itemsDic: [Any] = []
         for item in amountHelper.preference.items {

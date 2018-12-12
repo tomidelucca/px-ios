@@ -8,11 +8,6 @@
 
 import UIKit
 
-internal struct PXTrackingEnvironment {
-    public static let production = "production"
-    public static let staging = "staging"
-}
-
 @objc internal class MPXTracker: NSObject {
     @objc internal static let sharedInstance = MPXTracker()
 
@@ -25,7 +20,6 @@ internal struct PXTrackingEnvironment {
     private var flowDetails: [String: Any]?
     private var flowName: String?
     private var flowService: FlowService = FlowService()
-    private lazy var currentEnvironment: String = PXTrackingEnvironment.production
 }
 
 // MARK: Getters/setters.
@@ -36,10 +30,6 @@ internal extension MPXTracker {
 
     internal func getPublicKey() -> String {
         return self.public_key
-    }
-
-    internal func setEnvironment(environment: String) {
-        self.currentEnvironment = environment
     }
 
     internal func getSdkVersion() -> String {
@@ -104,6 +94,18 @@ internal extension MPXTracker {
                 }
                 if let flowName = flowName {
                     metadata["flow"] = flowName
+                }
+            } else {
+                if let extraInfo = metadata["extra_info"] as? [String: Any] {
+                    var frictionExtraInfo: [String: Any] = extraInfo
+                    frictionExtraInfo["flow_detail"] = flowDetails
+                    frictionExtraInfo["flow"] = flowName
+                    metadata["extra_info"] = frictionExtraInfo
+                } else {
+                    var frictionExtraInfo: [String: Any] = [:]
+                    frictionExtraInfo["flow_detail"] = flowDetails
+                    frictionExtraInfo["flow"] = flowName
+                    metadata["extra_info"] = frictionExtraInfo
                 }
             }
             trackListenerInterfase.trackEvent(screenName: path, action: "", result: "", extraParams: metadata)

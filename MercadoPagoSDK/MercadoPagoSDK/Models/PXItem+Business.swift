@@ -25,7 +25,7 @@ extension PXItem {
         idItemDic["price"] = getUnitPrice()
         itemDic["item"] = idItemDic
         itemDic["quantity"] = getQuantity()
-        itemDic["currency_id"] = SiteManager.shared.getCurrency().id
+        itemDic["currency_id"] = currencyId
 
         return itemDic
     }

@@ -177,9 +177,6 @@ internal class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
         var properties: [String: Any] = [:]
         properties["payment_method_id"] = paymentMethods.first?.getPaymentIdForTracking()
         properties["payment_method_type"] = paymentMethods.first?.getPaymentTypeForTracking()
-        if let token = token as? PXCardInformation {
-            properties["card_id"] =  token.getCardId()
-        }
         var dic: [Any] = []
         for issuerObj in dataSource {
             if let issuer = issuerObj as? PXIssuer {
@@ -224,7 +221,9 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         if let token = token as? PXCardInformation {
             properties["card_id"] =  token.getCardId()
         }
-        properties["issuer_id"] = amountHelper.paymentData.issuer?.id
+        if let issuer = amountHelper.paymentData.issuer {
+            properties["issuer_id"] = Int64(issuer.id)
+        }
         var dic: [Any] = []
         for installmentObj in dataSource {
             if let payerCost = installmentObj as? PXPayerCost {

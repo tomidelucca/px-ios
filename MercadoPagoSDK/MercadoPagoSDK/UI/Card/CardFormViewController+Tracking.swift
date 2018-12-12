@@ -19,13 +19,13 @@ extension CardFormViewController {
         trackScreen(path: getScreenPath(cardType: cardType), properties: properties)
     }
 
-    func trackError(errorMessage: String) {
+    func trackError(errorMessage: String, style: String = Tracking.Style.customComponent) {
         guard let cardType = self.viewModel.getPaymentMethodTypeId() else {
             return
         }
         var properties: [String: Any] = [:]
         properties["path"] = getScreenPath(cardType: cardType)
-        properties["style"] = Tracking.Style.customComponent
+        properties["style"] = style
         properties["id"] = getIdError()
         properties["message"] = errorMessage
         properties["attributable_to"] = Tracking.Error.Atrributable.user

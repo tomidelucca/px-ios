@@ -92,9 +92,9 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         self.remask()
     }
 
-    override open func viewDidDisappear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        trackScreenView()
+        self.numberTextField.becomeFirstResponder()
     }
 
     override func loadMPStyles() {
@@ -198,11 +198,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         return ( getCardWidth() * 0.63 )
     }
 
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.numberTextField.becomeFirstResponder()
-    }
-
     open func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -286,7 +281,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         numberTextField.setNeedsDisplay()
         numberTextField.resignFirstResponder()
         numberTextField.becomeFirstResponder()
-
+        trackError(errorMessage: errorMessage)
     }
 
     func hideErrorMessage() {
