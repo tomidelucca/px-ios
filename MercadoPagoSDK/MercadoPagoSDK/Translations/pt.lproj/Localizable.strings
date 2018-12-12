@@ -290,3 +290,11 @@
 "October" = "Outubro";
 "November" = "Novembro";
 "December" = "Dezembro";
+
+// Accreditation
+"Se acreditará instantáneamente" = "É aprovado imediatamente";
+"Se acreditará en" = "Será aprovado em";
+"día hábil" = "dia útil";
+"días hábiles" = "dias úteis";
+"hora" = "hora";
+"horas" = "horas";

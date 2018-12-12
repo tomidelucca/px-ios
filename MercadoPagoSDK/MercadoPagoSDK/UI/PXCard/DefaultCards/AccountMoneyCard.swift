@@ -37,10 +37,14 @@ extension AccountMoneyCard {
         let patternView = UIImageView()
         patternView.contentMode = .scaleAspectFit
         patternView.image = ResourceManager.shared.getImage("amPattern")
-        let patternDeltaOffset: CGFloat = -40
+        let patternDeltaOffset: CGFloat = 5
         containerView.addSubview(patternView)
-        PXLayout.setWidth(owner: patternView, width: PXCardSliderSizeManager.getItemContainerSize().width).isActive = true
-        PXLayout.setHeight(owner: patternView, height: PXCardSliderSizeManager.getItemContainerSize().height).isActive = true
+
+        let height = PXCardSliderSizeManager.getItemContainerSize().height
+        let width = height * 1.1
+
+        PXLayout.setHeight(owner: patternView, height: height).isActive = true
+        PXLayout.setWidth(owner: patternView, width: width).isActive = true
         PXLayout.pinTop(view: patternView).isActive = true
         PXLayout.pinRight(view: patternView, withMargin: patternDeltaOffset).isActive = true
 

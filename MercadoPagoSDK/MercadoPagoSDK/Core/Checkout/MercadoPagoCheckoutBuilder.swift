@@ -102,4 +102,12 @@ extension MercadoPagoCheckoutBuilder {
         Localizator.sharedInstance.setLanguage(string: string)
         return self
     }
+
+    // Only for MoneyIn custom verb support.
+    /// :nodoc:
+    @discardableResult
+    open func setLanguage(_ string: String, _ customTranslations: [PXCustomTranslationKey: String]) -> MercadoPagoCheckoutBuilder {
+        Localizator.sharedInstance.setLanguage(string, customTranslations)
+        return self
+    }
 }
