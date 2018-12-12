@@ -130,13 +130,6 @@ extension InitFlow {
                 return
             }
 
-            if let amNode = paymentMethodSearch.accountMoney, let amPaymentMethod = amNode.paymentMethod {
-                if amNode.invested {
-                    amPaymentMethod.paymentMethodDescription = "onetap_invested_account_money".localized_beta
-                }
-                paymentMethodSearch.paymentMethods.append(amPaymentMethod)
-            }
-
             strongSelf.model.updateInitModel(paymentMethodsResponse: paymentMethodSearch)
             strongSelf.executeNextStep()
 

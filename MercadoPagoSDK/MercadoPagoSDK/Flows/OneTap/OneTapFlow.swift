@@ -114,8 +114,8 @@ extension OneTapFlow {
                     return nil
                 }
 
-                if let firstPaymentMethodId = search.expressCho?.first?.paymentMethodId, let amNode = search.accountMoney, firstPaymentMethodId == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
-                    selectedPaymentOption = amNode
+                if let suggestedAccountMoney = search.expressCho?.first?.accountMoney {
+                    selectedPaymentOption = suggestedAccountMoney
                 } else if let firstPaymentMethodId = search.expressCho?.first?.paymentMethodId {
                     let customOptionsFound = customerPaymentMethods.filter { return $0.getPaymentMethodId() == firstPaymentMethodId }
                     if let customerPaymentMethod = customOptionsFound.first {

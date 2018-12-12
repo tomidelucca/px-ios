@@ -14,10 +14,11 @@ open class PXOneTapDto: NSObject, Codable {
     open var oneTapCard: PXOneTapCardDto?
     open var accountMoney: PXAccountMoneyDto?
 
-    public init(paymentMethodId: String, paymentTypeId: String?, oneTapCard: PXOneTapCardDto?) {
+    public init(paymentMethodId: String, paymentTypeId: String?, oneTapCard: PXOneTapCardDto?, accountMoney: PXAccountMoneyDto?) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.oneTapCard = oneTapCard
+        self.accountMoney = accountMoney
     }
 
     public enum PXOneTapDtoKeys: String, CodingKey {
@@ -32,7 +33,8 @@ open class PXOneTapDto: NSObject, Codable {
         let oneTapCard: PXOneTapCardDto? = try container.decodeIfPresent(PXOneTapCardDto.self, forKey: .oneTapCard)
         let paymentMethodId: String = try container.decode(String.self, forKey: .paymentMethodId)
         let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
-        self.init(paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, oneTapCard: oneTapCard)
+        let aMoney: PXAccountMoneyDto? = try container.decodeIfPresent(PXAccountMoneyDto.self, forKey: .accountMoney)
+        self.init(paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, oneTapCard: oneTapCard, accountMoney: aMoney)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -56,15 +58,5 @@ open class PXOneTapDto: NSObject, Codable {
 
     open class func fromJSON(data: Data) throws -> PXOneTapDto {
         return try JSONDecoder().decode(PXOneTapDto.self, from: data)
-    }
-}
-
-extension PXOneTapDto {
-    internal func setAccountMoneyNode(_ accountMoney: PXAccountMoneyDto?) {
-        if let amNode = accountMoney, PXPaymentTypes.ACCOUNT_MONEY.rawValue == paymentMethodId {
-            self.accountMoney = amNode
-        } else {
-            self.accountMoney = nil
-        }
     }
 }

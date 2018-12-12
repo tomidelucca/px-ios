@@ -130,13 +130,13 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string> de descuento</string>
 	</dict>
-    <key>payment_result_screen_congrats_copy_button</key>
-    <dict>
-        <key>comment</key>
-        <string>Texto de snack bar al copiar</string>
-        <key>value</key>
-        <string>¡Listo! Copiado.</string>
-    </dict>
+	<key>payment_result_screen_congrats_copy_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Texto de snack bar al copiar</string>
+		<key>value</key>
+		<string>¡Listo! Copiado.</string>
+	</dict>
 	<key>payment_result_screen_congrats_finish_button</key>
 	<dict>
 		<key>comment</key>
@@ -193,13 +193,13 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Cambiar medio de pago</string>
 	</dict>
-    <key>review_change_payer_action</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Modificar</string>
-    </dict>
+	<key>review_change_payer_action</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Modificar</string>
+	</dict>
 	<key>bank_deal_details_title</key>
 	<dict>
 		<key>comment</key>
@@ -410,26 +410,12 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Tu compra</string>
 	</dict>
-	<key>onetap_am_total_balance</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Total en Mercado Pago:</string>
-	</dict>
 	<key>onetap_select_installment_title</key>
 	<dict>
 		<key>comment</key>
 		<string></string>
 		<key>value</key>
 		<string>Selecciona la cuota</string>
-	</dict>
-	<key>onetap_invested_account_money</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Estás usando dinero invertido</string>
 	</dict>
 </dict>
 </plist>

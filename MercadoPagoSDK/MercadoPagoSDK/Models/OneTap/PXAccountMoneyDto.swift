@@ -9,40 +9,42 @@ import Foundation
 
 /// :nodoc:
 open class PXAccountMoneyDto: NSObject, Codable {
-    open var message: String?
     open var availableBalance: Double = 0
     open var invested: Bool = false
-    open var paymentMethod: PXPaymentMethod?
+    open var cardTitle: String?
+    open var sliderTitle: String?
 
-    public init(message: String?, availableBalance: Double, invested: Bool, paymentMethod: PXPaymentMethod?) {
-        self.message = message
+    public init(availableBalance: Double, invested: Bool, sliderTitle: String?, cardTitle: String?) {
         self.availableBalance = availableBalance
         self.invested = invested
-        self.paymentMethod = paymentMethod
+        self.cardTitle = cardTitle
+        self.sliderTitle = sliderTitle
     }
 
     public enum PXAccountMoneyKeys: String, CodingKey {
-        case message
         case availableBalance = "available_balance"
         case invested
-        case paymentMethod = "payment_method"
+        case displayInfo = "display_info"
+        case cardTitle = "card_title"
+        case sliderTitle = "slider_title"
     }
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXAccountMoneyKeys.self)
-        let message: String? = try container.decodeIfPresent(String.self, forKey: .message)
         let invested: Bool = try container.decode(Bool.self, forKey: .invested)
         let availableBalance: Double = try container.decode(Double.self, forKey: .availableBalance)
-        let paymentMethod: PXPaymentMethod? = try container.decodeIfPresent(PXPaymentMethod.self, forKey: .paymentMethod)
-        self.init(message: message, availableBalance: availableBalance, invested: invested, paymentMethod: paymentMethod)
+        let display_info = try container.nestedContainer(keyedBy: PXAccountMoneyKeys.self, forKey: .displayInfo)
+        let cardTitle: String? = try display_info.decodeIfPresent(String.self, forKey: .cardTitle)
+        let sliderTitle: String? = try display_info.decodeIfPresent(String.self, forKey: .sliderTitle)
+        self.init(availableBalance: availableBalance, invested: invested, sliderTitle: sliderTitle, cardTitle: cardTitle)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXAccountMoneyKeys.self)
-        try container.encodeIfPresent(self.message, forKey: .message)
         try container.encode(self.availableBalance, forKey: .availableBalance)
         try container.encode(self.invested, forKey: .invested)
-        try container.encodeIfPresent(self.paymentMethod, forKey: .paymentMethod)
+        try container.encodeIfPresent(self.sliderTitle, forKey: .sliderTitle)
+        try container.encodeIfPresent(self.cardTitle, forKey: .cardTitle)
     }
 
     open func toJSONString() throws -> String? {
@@ -64,14 +66,11 @@ open class PXAccountMoneyDto: NSObject, Codable {
 /// :nodoc:
 extension PXAccountMoneyDto: PaymentMethodOption {
     func getId() -> String {
-        if let pmId = paymentMethod?.id {
-            return pmId
-        }
-        return ""
+        return PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
 
     func getDescription() -> String {
-        if let desc = paymentMethod?.paymentMethodDescription {
+        if let desc = sliderTitle {
             return desc
         }
         return ""
