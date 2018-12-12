@@ -62,37 +62,3 @@ open class PXAccountMoneyDto: NSObject, Codable {
         return try JSONDecoder().decode(PXAccountMoneyDto.self, from: data)
     }
 }
-
-/// :nodoc:
-extension PXAccountMoneyDto: PaymentMethodOption {
-    func getId() -> String {
-        return PXPaymentTypes.ACCOUNT_MONEY.rawValue
-    }
-
-    func getDescription() -> String {
-        if let desc = sliderTitle {
-            return desc
-        }
-        return ""
-    }
-
-    func getComment() -> String {
-        return ""
-    }
-
-    func hasChildren() -> Bool {
-        return false
-    }
-
-    func getChildren() -> [PaymentMethodOption]? {
-        return nil
-    }
-
-    func isCard() -> Bool {
-        return false
-    }
-
-    func isCustomerPaymentMethod() -> Bool {
-        return false
-    }
-}
