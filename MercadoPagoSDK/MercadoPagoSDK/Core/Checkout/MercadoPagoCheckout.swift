@@ -278,9 +278,10 @@ extension MercadoPagoCheckout {
             properties["checkout_preference_id"] = viewModel.checkoutPreference.id
         } else {
             properties["checkout_preference"] = viewModel.checkoutPreference.getCheckoutPrefForTracking()
-            properties["esc_enabled"] = viewModel.getAdvancedConfiguration().escEnabled
-            properties["express_enabled"] = viewModel.getAdvancedConfiguration().expressEnabled
         }
+
+        properties["esc_enabled"] = viewModel.getAdvancedConfiguration().escEnabled
+        properties["express_enabled"] = viewModel.getAdvancedConfiguration().expressEnabled
 
         MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getInitPath(), properties: properties)
     }
