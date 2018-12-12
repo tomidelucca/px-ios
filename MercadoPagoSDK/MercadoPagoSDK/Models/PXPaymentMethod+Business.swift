@@ -37,7 +37,7 @@ extension PXPaymentMethod: Cellable {
 
     internal var isPayerInfoRequired: Bool {
         if isAdditionalInfoNeeded("bolbradesco_name") || isAdditionalInfoNeeded("bolbradesco_identification_type") || isAdditionalInfoNeeded("bolbradesco_identification_number")
-        || isAdditionalInfoNeeded("pec_name") || isAdditionalInfoNeeded("pec_identification_type") || isAdditionalInfoNeeded("pec_identification_number") {
+            || isAdditionalInfoNeeded("pec_name") || isAdditionalInfoNeeded("pec_identification_type") || isAdditionalInfoNeeded("pec_identification_number") {
             return true
         }
         return false
@@ -286,40 +286,41 @@ extension PXPaymentMethod: Cellable {
     internal var isPlugin: Bool {
         return paymentTypeId == PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID
     }
-  
+
     internal func getAccreditationTimeMessage() -> String? {
 
-    if let accreditationMinutes = self.accreditationTime {
+        if let accreditationMinutes = self.accreditationTime {
 
-        var accreditationMessage: String = ""
+            var accreditationMessage: String = ""
 
-        if accreditationMinutes == 0 {
-            accreditationMessage = "Se acreditará instantáneamente".localized
-        } else {
-            let accreditationLocalized = "Se acreditará en".localized
-            let accreditationDay = "día hábil".localized
-            let accreditationDays = "días hábiles".localized
-            let accreditationHour = "hora".localized
-            let accreditationHours = "horas".localized
-
-            let hours = accreditationMinutes / 60
-            let days = accreditationMinutes / (60 * 24)
-
-            if accreditationMinutes >= 1440 && accreditationMinutes < 2880 {
-                accreditationMessage = "\(accreditationLocalized) 1 \(accreditationDay)"
-            } else if accreditationMinutes == 60 {
-                accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHour)"
-            } else if accreditationMinutes < 1440 {
-                accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHours)"
+            if accreditationMinutes == 0 {
+                accreditationMessage = "Se acreditará instantáneamente".localized
             } else {
-                accreditationMessage = "\(accreditationLocalized) \(days) \(accreditationDays)"
+                let accreditationLocalized = "Se acreditará en".localized
+                let accreditationDay = "día hábil".localized
+                let accreditationDays = "días hábiles".localized
+                let accreditationHour = "hora".localized
+                let accreditationHours = "horas".localized
+
+                let hours = accreditationMinutes / 60
+                let days = accreditationMinutes / (60 * 24)
+
+                if accreditationMinutes >= 1440 && accreditationMinutes < 2880 {
+                    accreditationMessage = "\(accreditationLocalized) 1 \(accreditationDay)"
+                } else if accreditationMinutes == 60 {
+                    accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHour)"
+                } else if accreditationMinutes < 1440 {
+                    accreditationMessage = "\(accreditationLocalized) \(hours) \(accreditationHours)"
+                } else {
+                    accreditationMessage = "\(accreditationLocalized) \(days) \(accreditationDays)"
+                }
             }
+
+            return accreditationMessage
         }
 
-        return accreditationMessage
+        return nil
     }
-
-    return nil
 }
 
 // MARK: Tracking
