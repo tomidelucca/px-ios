@@ -56,4 +56,6 @@ open class PXAdvancedConfiguration: NSObject {
      Add dynamic view controllers to flow.
      */
     open var dynamicViewControllersConfiguration: [PXDynamicViewControllerProtocol] = []
+
+    open var discountParamsConfiguration: PXDiscountParamsConfiguration?
 }
