@@ -15,15 +15,3 @@ internal extension PXPayer {
         lastName = nil
     }
 }
-
-// MARK: Tracking
-extension PXPayer {
-    func getPayerForTracking() -> [String: Any] {
-        var payerDic: [String: Any] = [:]
-        payerDic["email"] = email
-        payerDic["name"] = firstName
-        payerDic["lastname"] = lastName
-        payerDic["identification"] = identification?.getIdentificationForTracking()
-        return payerDic
-    }
-}
