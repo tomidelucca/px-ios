@@ -30,7 +30,6 @@ extension PXOneTapViewModel {
         if let issuerId = amountHelper.paymentData.issuer?.id {
             properties["issuer_id"] = Int64(issuerId)
         }
-        properties["preference_amount"] = amountHelper.preferenceAmount
         var dic: [Any] = []
         for payerCost in installmentData.payerCosts {
             dic.append(payerCost.getPayerCostForTracking())
