@@ -13,10 +13,13 @@ extension CardFormViewController {
         guard let cardType = self.viewModel.getPaymentMethodTypeId() else {
             return
         }
+        let screenPath = getScreenPath(cardType: cardType)
         var properties: [String: Any] = [:]
-        properties["payment_method_id"] = viewModel.guessedPMS?.first?.getPaymentIdForTracking()
+        if screenPath != TrackingPaths.Screens.CardForm.getCardNumberPath() {
+            properties["payment_method_id"] = viewModel.guessedPMS?.first?.getPaymentIdForTracking()
+        }
 
-        trackScreen(path: getScreenPath(cardType: cardType), properties: properties)
+        trackScreen(path: screenPath, properties: properties)
     }
 
     func trackError(errorMessage: String, style: String = Tracking.Style.customComponent) {

@@ -95,6 +95,11 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.numberTextField.becomeFirstResponder()
+        if let paymentMethod = paymentMethod {
+            var properties: [String: Any] = [:]
+            properties["payment_method_id"] = paymentMethod.id
+            trackScreen(path: TrackingPaths.Screens.CardForm.getIdentificationPath(paymentTypeId: paymentMethod.paymentTypeId), properties: properties, treatBackAsAbort: true)
+        }
     }
 
     override func loadMPStyles() {
