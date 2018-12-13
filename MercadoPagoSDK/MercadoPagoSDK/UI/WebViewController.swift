@@ -58,6 +58,8 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 // MARK: Tracking
 extension WebViewController {
     func trackScreen() {
-        trackScreen(path: TrackingPaths.Screens.getTermsAndCondiontionReviewPath())
+        var properties: [String: Any] = [:]
+        properties["url"] = url
+        trackScreen(path: TrackingPaths.Screens.getTermsAndCondiontionPath(), properties: properties)
     }
 }

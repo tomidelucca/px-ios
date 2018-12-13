@@ -18,9 +18,9 @@ extension TrackingPaths {
             return TrackingPaths.pxTrack + "/review/traditional"
         }
 
-        // Terms and condition review Path
-        static func getTermsAndCondiontionReviewPath() -> String {
-            return TrackingPaths.pxTrack + "/review/traditional/terms_and_conditions"
+        // Terms and condition Path
+        static func getTermsAndCondiontionPath() -> String {
+            return TrackingPaths.pxTrack + payments + "/terms_and_conditions"
         }
 
         // Bank Deaks Path
