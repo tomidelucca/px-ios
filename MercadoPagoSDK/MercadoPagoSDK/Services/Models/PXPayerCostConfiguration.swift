@@ -8,15 +8,15 @@
 import UIKit
 
 open class PXPayerCostConfiguration: NSObject, Codable {
-    open var selectedPayerCostIndex: Int
+    open var selectedPayerCostIndex: Int?
     open var selectedPayerCost: PXPayerCost?
     open var payerCosts: [PXPayerCost]?
 
-    public init(selectedPayerCostIndex: Int, payerCosts: [PXPayerCost]?) {
+    public init(selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
         self.selectedPayerCostIndex = selectedPayerCostIndex
         self.payerCosts = payerCosts
-        if let remotePayerCosts = payerCosts, remotePayerCosts.indices.contains(selectedPayerCostIndex) {
-            self.selectedPayerCost = remotePayerCosts[selectedPayerCostIndex]
+        if let remotePayerCosts = payerCosts, let selectedIndex = selectedPayerCostIndex,  remotePayerCosts.indices.contains(selectedIndex) {
+            self.selectedPayerCost = remotePayerCosts[selectedIndex]
         }
     }
 
@@ -28,7 +28,7 @@ open class PXPayerCostConfiguration: NSObject, Codable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostConfiguration.self)
         let payerCosts: [PXPayerCost]? = try container.decodeIfPresent([PXPayerCost].self, forKey: .payerCost)
-        let selectedPayerCostIndex: Int = try container.decode(Int.self, forKey: .selectedPayerCostIndex)
+        let selectedPayerCostIndex: Int? = try container.decodeIfPresent(Int.self, forKey: .selectedPayerCostIndex)
         self.init(selectedPayerCostIndex: selectedPayerCostIndex, payerCosts: payerCosts)
     }
 

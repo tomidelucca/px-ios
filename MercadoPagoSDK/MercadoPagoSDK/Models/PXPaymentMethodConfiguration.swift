@@ -61,9 +61,8 @@ class PXSummaryAmount: NSObject, Codable {
     }
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSummaryAmountKeys.self)
-        
-        let payercostConfigurations: [String:PXPayerCostConfiguration]? = try container.decodeIfPresent([String:PXPayerCostConfiguration].self, forKey: .payercostConfigurations)
         let discountConfigurations: [String:PXDiscountConfiguration]? = try container.decodeIfPresent([String:PXDiscountConfiguration].self, forKey: .discountConfigurations)
+        let payercostConfigurations: [String:PXPayerCostConfiguration]? = try container.decodeIfPresent([String:PXPayerCostConfiguration].self, forKey: .payercostConfigurations)
         let selectedAmountConfigurationId: String? = try container.decodeIfPresent(String.self, forKey: .selectedAmountConfigurationId)
         
         self.init(payercostConfigurations: payercostConfigurations!, discountConfigurations: discountConfigurations!, selectedAmountConfigurationId: selectedAmountConfigurationId!)

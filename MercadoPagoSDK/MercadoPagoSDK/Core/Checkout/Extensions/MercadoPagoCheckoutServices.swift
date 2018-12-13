@@ -197,53 +197,7 @@ extension MercadoPagoCheckout {
         })
     }
 
-    func getPayerCosts(updateCallback: (() -> Void)? = nil) {
-        viewModel.pxNavigationHandler.presentLoading()
-
-        guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
-            return
-        }
-
-        let bin = self.viewModel.cardToken?.getBin()
-
-        var diffPricingString: String? = nil
-        if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
-            diffPricingString = String(describing: differentialPricing)
-        }
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.amountHelper.amountToPay, issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.id, differentialPricingId: diffPricingString, callback: { [weak self] (installments) in
-
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.payerCosts = installments[0].payerCosts
-
-            let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(installments[0].payerCosts)
-            if let defaultPC = defaultPayerCost {
-                strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
-            }
-
-            if let updateCallback = updateCallback {
-                updateCallback()
-            } else {
-                strongSelf.executeNextStep()
-            }
-
-        }, failure: {[weak self] (error) in
-
-            guard let strongSelf = self else {
-                return
-            }
-
-            strongSelf.viewModel.errorInputs(error: MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS.rawValue), errorCallback: { [weak self] () in
-                self?.getPayerCosts()
-            })
-            strongSelf.executeNextStep()
-
-        })
-    }
-
-    func createPayment() {
+  func createPayment() {
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
         paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
         paymentFlow.start()

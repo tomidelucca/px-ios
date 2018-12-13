@@ -117,22 +117,7 @@ internal class MercadoPagoServicesAdapter {
             callback(pxIdentificationTypes)
         }, failure: failure)
     }
-
-    open func getInstallments(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-
-        mercadoPagoServices.getInstallments(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (pxInstallments) in
-            guard let strongSelf = self else {
-                return
-            }
-
-            if let installment = pxInstallments.first, !installment.payerCosts.isEmpty {
-                callback(pxInstallments)
-            } else {
-                failure(strongSelf.createSerializationError(requestOrigin: ApiUtil.RequestOrigin.GET_INSTALLMENTS))
-            }
-            }, failure: failure)
-    }
-
+    
     func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         mercadoPagoServices.getIssuers(paymentMethodId: paymentMethodId, bin: bin, callback: { (pxIssuers) in
@@ -148,9 +133,9 @@ internal class MercadoPagoServicesAdapter {
         return NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey: "Hubo un error"])
     }
     
-    open func getSummaryAmount(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getSummaryAmount(bin: String?, amount: Double, issuer: PXIssuer?, paymentMethodId: String, payment_type_id: String, differentialPricingId: String?, site: PXSite?,  marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer:PXPayer, defaultInstallments: Int?,callback: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         
-        mercadoPagoServices.getSummaryAmount(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, differentialPricingId: differentialPricingId, callback: { [weak self] (summaryAmount) in
+        mercadoPagoServices.getSummaryAmount(bin: bin, amount: amount, issuerId: issuer?.id, paymentMethodId: paymentMethodId, payment_type_id: payment_type_id, differentialPricingId: differentialPricingId, site: site,  marketplace: marketplace, discountParamsConfiguration: discountParamsConfiguration, payer:payer, defaultInstallments:defaultInstallments, callback: { [weak self] (summaryAmount) in
                 guard let strongSelf = self else {
                     return
                 }
