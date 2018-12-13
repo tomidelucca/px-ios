@@ -11,9 +11,9 @@ internal class AvailableCardsViewModel {
 
     let MARGIN_X_SCROLL_VIEW: CGFloat = 32
     let MIN_HEIGHT_PERCENT: CGFloat = 0.73
-    let screenSize: CGRect!
-    let screenHeight: CGFloat!
-    let screenWidth: CGFloat!
+    let screenSize: CGRect
+    let screenHeight: CGFloat
+    let screenWidth: CGFloat
 
     var paymentMethods: [PXPaymentMethod]!
     init(paymentMethods: [PXPaymentMethod]) {

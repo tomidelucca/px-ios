@@ -127,7 +127,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
 
     @objc internal func executeBack() {
         if let targetNavigationController = navigationController {
-            // TODO: Tener en cuentra procesadora
+            // TODO: Tener en cuenta las pantallas que no son de PX.
             let vcs = targetNavigationController.viewControllers.filter {$0.isKind(of: MercadoPagoUIViewController.self)}
             if vcs.count == 1 {
                 if let callbackBackAction = callbackBack {
