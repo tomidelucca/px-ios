@@ -268,24 +268,6 @@ extension MercadoPagoCheckout {
         viewModel.startInitFlow()
     }
 
-    private func startTracking() {
-        MPXTracker.sharedInstance.setPublicKey(viewModel.publicKey)
-        MPXTracker.sharedInstance.startNewFlow()
-
-        // Track init event
-        var properties: [String: Any] = [:]
-        if !String.isNullOrEmpty(viewModel.checkoutPreference.id) {
-            properties["checkout_preference_id"] = viewModel.checkoutPreference.id
-        } else {
-            properties["checkout_preference"] = viewModel.checkoutPreference.getCheckoutPrefForTracking()
-        }
-
-        properties["esc_enabled"] = viewModel.getAdvancedConfiguration().escEnabled
-        properties["express_enabled"] = viewModel.getAdvancedConfiguration().expressEnabled
-
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getInitPath(), properties: properties)
-    }
-
     private func commondInit() {
         viewModel.setInitFlowProtocol(flowInitProtocol: self)
         if !shouldApplyDiscount() {
