@@ -46,7 +46,7 @@ internal class MercadoPagoServicesAdapter {
     typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
     typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: Bool)
 
-    func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         payer.setAccessToken(accessToken: mercadoPagoServices.payerAccessToken)
 
@@ -64,7 +64,7 @@ internal class MercadoPagoServicesAdapter {
             expressValue = "true"
         }
 
-        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, defaultInstallments: extraParams?.defaultInstallments, expressEnabled: expressValue, callback: { (pxPaymentMethodSearch) in
+        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, defaultInstallments: extraParams?.defaultInstallments, expressEnabled: expressValue, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, callback: { (pxPaymentMethodSearch) in
             callback(pxPaymentMethodSearch)
         }, failure: failure)
     }

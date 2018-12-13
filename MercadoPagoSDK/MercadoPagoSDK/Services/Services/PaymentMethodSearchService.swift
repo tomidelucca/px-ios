@@ -41,9 +41,9 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: baseURL)
     }
 
-    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        self.baseURL = "https://private-18d06-matiasromar.apiary-mock.com/mercadopago"
+        self.baseURL = "http://private-ec80b-matiasromar.apiary-mock.com/mercadopago"
 
         var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
 
@@ -86,9 +86,12 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         params.paramsAppend(key: "express_enabled", value: expressEnabled)
 
+        let body = PXPaymentMethodSearchBody(privateKey: payer.accessToken, email: payer.email, marketplace: marketplace, productId: discountParamsConfiguration?.productId, labels: discountParamsConfiguration?.labels)
+        let bodyJSON = try? body.toJSON()
+
         let headers = ["Accept-Language": language]
 
-        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: nil, body: nil, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
+        self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: bodyJSON, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
             do {
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
             if let paymentSearchDic = jsonResult as? NSDictionary {
