@@ -11,7 +11,7 @@ import Foundation
 internal final class URLConfigs: NSObject {
     static let MP_ALPHA_ENV = "/gamma"
     static var MP_TEST_ENV = "/beta"
-    static var MP_PROD_ENV = "/v1"
+    static var MP_PROD_ENV = "/beta"
     static var MP_SELECTED_ENV = MP_PROD_ENV
 
     static var API_VERSION = PXServicesURLConfigs.API_VERSION

@@ -89,7 +89,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
         let headers = ["Accept-Language": language]
 
         // TODO: Remove before merge. Only for test in apiary.
-        self.baseURL = "http://private-175b69-onetapgroups.apiary-mock.com/pepito?"
+        //self.baseURL = "http://private-175b69-onetapgroups.apiary-mock.com/pepito?"
 
         self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
             do {
