@@ -62,7 +62,7 @@ extension PXResultViewModel {
             properties["payment_id"] = Int64(paymentId)
         }
         properties["payment_status"] = paymentResult.status
-        properties["payment_status_details"] = paymentResult.statusDetail
+        properties["payment_status_detail"] = paymentResult.statusDetail
 
         return properties
     }

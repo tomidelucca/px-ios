@@ -17,7 +17,7 @@ extension PXBusinessResultViewModel {
             properties["payment_id"] = Int64(paymentId)
         }
         properties["payment_status"] = businessResult.paymentStatus
-        properties["payment_status_details"] = businessResult.paymentStatusDetail
+        properties["payment_status_detail"] = businessResult.paymentStatusDetail
 
         return properties
     }
