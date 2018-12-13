@@ -167,7 +167,6 @@ extension MercadoPagoCheckout {
         case .SERVICE_GET_IDENTIFICATION_TYPES:
             self.getIdentificationTypes()
         case .SERVICE_GET_PAYER_COSTS:
-          //  self.getPayerCosts()
             self.getPayerCostsConfiguration()
         case .SCREEN_PAYER_COST:
             self.showPayerCostScreen()
