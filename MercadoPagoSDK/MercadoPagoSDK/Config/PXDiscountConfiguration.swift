@@ -14,7 +14,7 @@ internal typealias PXDiscountConfigurationType = (discount: PXDiscount?, campaig
  Configuration related to Mercadopago discounts and campaigns. More details: `PXDiscount` and `PXCampaign`.
  */
 @objcMembers
-open class PXDiscountConfiguration: NSObject, Decodable {
+open class PXDiscountConfiguration: NSObject, Codable {
     private var discount: PXDiscount?
     private var campaign: PXCampaign?
     private var isNotAvailable: Bool = false

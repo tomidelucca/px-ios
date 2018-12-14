@@ -8,7 +8,6 @@
 import UIKit
 
 class PXPaymentMethodConfiguration: NSObject {
-//    let paymentMethodOption: PaymentMethodOption
     let paymentOptionID: String
     let paymentOptionsConfigurations: [PXPaymentOptionConfiguration]
     let selectedAmountConfiguration: String
