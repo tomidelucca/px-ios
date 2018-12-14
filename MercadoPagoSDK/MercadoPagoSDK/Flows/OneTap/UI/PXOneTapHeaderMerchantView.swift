@@ -63,6 +63,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
+        titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
         titleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
         titleLabel.textAlignment = .center
@@ -74,6 +75,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
 
         if showHorizontally {
             self.pinContentViewToTop()
+            PXLayout.matchWidth(ofView: containerView, withPercentage: 80, relation: .lessThanOrEqual).isActive = true
             PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinBottom(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinLeft(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
@@ -81,12 +83,14 @@ class PXOneTapHeaderMerchantView: PXComponentView {
             PXLayout.put(view: imageContainerView, leftOf: titleLabel, withMargin: PXLayout.XXS_MARGIN, relation: .equal).isActive = true
             PXLayout.centerVertically(view: imageContainerView, to: titleLabel).isActive = true
         } else {
+            PXLayout.matchWidth(ofView: containerView).isActive = true
             PXLayout.centerHorizontally(view: imageContainerView).isActive = true
             PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
             PXLayout.centerHorizontally(view: titleLabel).isActive = true
             PXLayout.put(view: titleLabel, onBottomOf: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.matchWidth(ofView: containerView).isActive = true
         }
     }
 }

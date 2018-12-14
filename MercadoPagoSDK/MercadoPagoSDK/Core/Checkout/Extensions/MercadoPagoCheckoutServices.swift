@@ -120,6 +120,7 @@ extension MercadoPagoCheckout {
             if token.lastFourDigits.isEmpty {
                 token.lastFourDigits = cardInformation.getCardLastForDigits() ?? ""
             }
+
             strongSelf.viewModel.updateCheckoutModel(token: token)
             strongSelf.executeNextStep()
 
@@ -149,6 +150,7 @@ extension MercadoPagoCheckout {
                 let cardInformation = strongSelf.viewModel.paymentOptionSelected as? PXCardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
+
             strongSelf.viewModel.updateCheckoutModel(token: token)
             strongSelf.executeNextStep()
 
@@ -206,7 +208,7 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        var diffPricingString: String? = nil
+        var diffPricingString: String?
         if let differentialPricing = self.viewModel.checkoutPreference.differentialPricing?.id {
             diffPricingString = String(describing: differentialPricing)
         }
