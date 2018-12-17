@@ -11,10 +11,10 @@ typealias PXAnimation = (animation: () -> Void, delay: CGFloat)
 
 struct PXAnimator {
 
-    var animations: [PXAnimation] = []
-    var completions: [() -> Void] = []
-    let duration: Double
-    let dampingRatio: CGFloat
+    private var animations: [PXAnimation] = []
+    private var completions: [() -> Void] = []
+    private let duration: Double
+    private let dampingRatio: CGFloat
 
     init(duration: Double, dampingRatio: CGFloat) {
         self.duration = duration
