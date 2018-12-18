@@ -128,6 +128,8 @@ extension PXOneTapHeaderView {
         } else {
             summaryView?.update(newModel.data)
         }
+
+        addBorderToSubviewsOf(self)
     }
 
     private func animateToVertical(duration: Double = 0) {
@@ -191,7 +193,7 @@ extension PXOneTapHeaderView {
         self.horizontalLayoutConstraints.append(contentsOf: horizontalConstraints)
 
         let verticalLayoutConstraints = [PXLayout.pinTop(view: merchantView),
-                                         PXLayout.put(view: merchantView, aboveOf: summaryView),
+                                         PXLayout.put(view: merchantView, aboveOf: summaryView, relation: .greaterThanOrEqual),
                                          PXLayout.centerHorizontally(view: merchantView),
                                          PXLayout.matchWidth(ofView: merchantView)]
 
@@ -205,6 +207,8 @@ extension PXOneTapHeaderView {
         } else {
             animateToVertical()
         }
+
+        addBorderToSubviewsOf(self)
     }
 }
 
