@@ -128,8 +128,6 @@ extension PXOneTapHeaderView {
         } else {
             summaryView?.update(newModel.data)
         }
-
-        addBorderToSubviewsOf(self)
     }
 
     private func animateToVertical(duration: Double = 0) {
@@ -207,8 +205,6 @@ extension PXOneTapHeaderView {
         } else {
             animateToVertical()
         }
-
-        addBorderToSubviewsOf(self)
     }
 }
 
