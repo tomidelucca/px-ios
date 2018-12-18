@@ -178,11 +178,22 @@ extension PXOneTapHeaderView {
         return UIDevice.isSmallDevice() && data.count != 1 && !data[0].isTotal
     }
 
+    private func removeAnimations() {
+        self.layer.removeAllAnimations()
+        for view in self.getSubviews() {
+            view.layer.removeAllAnimations()
+        }
+    }
+
     private func updateLayout(newModel: PXOneTapHeaderViewModel, oldModel: PXOneTapHeaderViewModel) {
-        let animationDuration = 0.5
+        removeAnimations()
+
+        let animationDuration = 0.35
         let shouldShowHorizontally = self.shouldShowHorizontally(data: newModel.data)
         let shouldAnimateSummary = newModel.data.count != oldModel.data.count
         let shouldHideSummary = newModel.data.count < oldModel.data.count
+
+        self.layoutIfNeeded()
 
         if shouldShowHorizontally, isShowingHorizontally {
             print("")
@@ -200,18 +211,18 @@ extension PXOneTapHeaderView {
             //update hard
         }
 
+        self.layoutIfNeeded()
 
         if shouldAnimateSummary {
-
-            let animationDistance: CGFloat = 50
+            let animationDistance: CGFloat = 30
             var animationRows: [UIView] = []
             var pinTops: [NSLayoutConstraint] = []
 
             if !shouldHideSummary {
                 niceSummary?.update(newModel.data, hideAnimatedView: !shouldHideSummary)
-                self.layoutIfNeeded()
             }
 
+            self.layoutIfNeeded()
 
             if let subviews = niceSummary?.getSubviews() {
                 for view in subviews {
@@ -237,8 +248,7 @@ extension PXOneTapHeaderView {
             niceSummary?.update(newModel.data, hideAnimatedView: !shouldHideSummary)
 
             self.layoutIfNeeded()
-            var pxAnimator = PXAnimator(duration: 0.5, dampingRatio: 1)
-
+            var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
             pxAnimator.addAnimation(animation: {
                 for (index, view) in animationRows.enumerated() {
                     let pinTopConstraint = pinTops[index]
@@ -249,7 +259,9 @@ extension PXOneTapHeaderView {
             })
 
             pxAnimator.addCompletion {
-                self.niceSummary?.showAnimatedViews()
+                if !shouldHideSummary {
+                    self.niceSummary?.showAnimatedViews()
+                }
                 for view in animationRows {
                     view.removeFromSuperview()
                 }

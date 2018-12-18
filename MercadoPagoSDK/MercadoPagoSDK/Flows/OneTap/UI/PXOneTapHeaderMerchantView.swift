@@ -99,6 +99,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     }
 
     func updateContentViewLayout() {
+        self.layoutIfNeeded()
         if UIDevice.isLargeDevice() || UIDevice.isExtraLargeDevice() {
             self.pinContentViewToTop(margin: 24)
         } else if !UIDevice.isSmallDevice() {
@@ -107,6 +108,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     }
 
     func animateToVertical(duration: Double = 0) {
+        self.layoutIfNeeded()
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
         pxAnimator.addAnimation(animation: {
             self.layoutIfNeeded()
@@ -127,6 +129,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     }
 
     func animateToHorizontal(duration: Double = 0) {
+        self.layoutIfNeeded()
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
         pxAnimator.addAnimation(animation: {
             self.layoutIfNeeded()
