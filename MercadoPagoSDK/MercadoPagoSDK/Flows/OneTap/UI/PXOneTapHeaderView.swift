@@ -7,140 +7,6 @@
 
 import UIKit
 
-class PxOneTapSummaryRowView: UIView {
-
-    let data: OneTapHeaderSummaryData
-
-    init(data: OneTapHeaderSummaryData) {
-        self.data = data
-        super.init(frame: CGRect.zero)
-        render()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func render() {
-        let rowHeight: CGFloat = data.isTotal ? 20 : 16
-        let titleFont = data.isTotal ? Utils.getFont(size: PXLayout.S_FONT) : Utils.getFont(size: PXLayout.XXS_FONT)
-        let valueFont = data.isTotal ? Utils.getSemiBoldFont(size: PXLayout.S_FONT) : Utils.getFont(size: PXLayout.XXS_FONT)
-        let shouldAnimate = data.isTotal ? false : true
-
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.pxShouldAnimatedOneTapRow = shouldAnimate
-
-        let titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = data.title
-        titleLabel.textAlignment = .left
-        titleLabel.font = titleFont
-        titleLabel.textColor = data.highlightedColor
-        titleLabel.alpha = data.alpha
-        self.addSubview(titleLabel)
-        PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
-        PXLayout.centerVertically(view: titleLabel).isActive = true
-
-        if let rightImage = data.image {
-            let imageView: UIImageView = UIImageView()
-            let imageSize: CGFloat = 16
-            imageView.image = rightImage
-            imageView.contentMode = .scaleAspectFit
-            self.addSubview(imageView)
-            PXLayout.setWidth(owner: imageView, width: imageSize).isActive = true
-            PXLayout.setHeight(owner: imageView, height: imageSize).isActive = true
-            PXLayout.centerVertically(view: imageView, to: titleLabel).isActive = true
-            PXLayout.put(view: imageView, rightOf: titleLabel, withMargin: PXLayout.XXXS_MARGIN).isActive = true
-        }
-
-        let valueLabel = UILabel()
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        valueLabel.text = data.value
-        valueLabel.textAlignment = .right
-        valueLabel.font = valueFont
-        valueLabel.textColor = data.highlightedColor
-        valueLabel.alpha = data.alpha
-        self.addSubview(valueLabel)
-        PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.L_MARGIN).isActive = true
-        PXLayout.centerVertically(view: valueLabel).isActive = true
-
-        PXLayout.setHeight(owner: self, height: rowHeight).isActive = true
-    }
-}
-
-class PxOneTapSummaryView: PXComponentView {
-    private var data: [OneTapHeaderSummaryData] = []
-
-    init(data: [OneTapHeaderSummaryData] = []) {
-        self.data = data
-        super.init()
-        render()
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func render() {
-        self.removeAllSubviews()
-        self.pinContentViewToBottom()
-        self.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
-
-        for row in self.data {
-            let margin: CGFloat = row.isTotal ? PXLayout.S_MARGIN : PXLayout.XXS_MARGIN
-            let rowView = self.getSummaryRowView(with: row)
-
-            if row.isTotal {
-                let separatorView = UIView()
-                separatorView.backgroundColor = ThemeManager.shared.boldLabelTintColor()
-                separatorView.alpha = 0.1
-                separatorView.translatesAutoresizingMaskIntoConstraints = false
-                self.addSubviewToBottom(separatorView, withMargin: margin)
-                PXLayout.setHeight(owner: separatorView, height: 1).isActive = true
-                PXLayout.pinLeft(view: separatorView, withMargin: PXLayout.M_MARGIN).isActive = true
-                PXLayout.pinRight(view: separatorView, withMargin: PXLayout.M_MARGIN).isActive = true
-            }
-
-            self.addSubviewToBottom(rowView, withMargin: margin)
-
-            PXLayout.centerHorizontally(view: rowView).isActive = true
-            PXLayout.pinLeft(view: rowView, withMargin: 0).isActive = true
-            PXLayout.pinRight(view: rowView, withMargin: 0).isActive = true
-        }
-
-        self.pinLastSubviewToBottom(withMargin: PXLayout.S_MARGIN)?.isActive = true
-    }
-
-    func update(_ newData: [OneTapHeaderSummaryData], hideAnimatedView: Bool = false) {
-        self.data = newData
-        self.render()
-        if hideAnimatedView {
-            self.hideAnimatedViews()
-        }
-    }
-
-    func hideAnimatedViews() {
-        for view in self.getSubviews() {
-            if view.pxShouldAnimatedOneTapRow {
-                view.isHidden = true
-            }
-        }
-    }
-
-    func showAnimatedViews() {
-        for view in self.getSubviews() {
-            if view.pxShouldAnimatedOneTapRow {
-                view.isHidden = false
-            }
-        }
-    }
-
-    func getSummaryRowView(with data: OneTapHeaderSummaryData) -> UIView {
-        let rowView = PxOneTapSummaryRowView(data: data)
-        return rowView
-    }
-}
-
 class PXOneTapHeaderView: PXComponentView {
     private var model: PXOneTapHeaderViewModel {
         willSet(newModel) {
@@ -153,7 +19,7 @@ class PXOneTapHeaderView: PXComponentView {
     private var isShowingHorizontally: Bool = false
     private var verticalLayoutConstraints: [NSLayoutConstraint] = []
     private var horizontalLayoutConstraints: [NSLayoutConstraint] = []
-    private var niceSummary: PxOneTapSummaryView?
+    private var summaryView: PXOneTapSummaryView?
 
     init(viewModel: PXOneTapHeaderViewModel, delegate: PXOneTapHeaderProtocol?) {
         self.model = viewModel
@@ -195,20 +61,12 @@ extension PXOneTapHeaderView {
 
         self.layoutIfNeeded()
 
-        if shouldShowHorizontally, isShowingHorizontally {
-            print("")
-            //update hard
-        } else if shouldShowHorizontally, !isShowingHorizontally {
-            print("")
-            self.animateToHorizontal(duration: animationDuration)
+        if shouldShowHorizontally, !isShowingHorizontally {
             //animate to horizontal
+            self.animateToHorizontal(duration: animationDuration)
         } else if !shouldShowHorizontally, isShowingHorizontally {
-            print("")
-            self.animateToVertical(duration: animationDuration)
             //animate to vertical
-        } else {
-            print("")
-            //update hard
+            self.animateToVertical(duration: animationDuration)
         }
 
         self.layoutIfNeeded()
@@ -216,20 +74,19 @@ extension PXOneTapHeaderView {
         if shouldAnimateSummary {
             let animationDistance: CGFloat = 30
             var animationRows: [UIView] = []
-            var pinTops: [NSLayoutConstraint] = []
+            var pinTopConstraints: [NSLayoutConstraint] = []
 
             if !shouldHideSummary {
-                niceSummary?.update(newModel.data, hideAnimatedView: !shouldHideSummary)
+                summaryView?.update(newModel.data, hideAnimatedView: !shouldHideSummary)
             }
 
             self.layoutIfNeeded()
 
-            if let subviews = niceSummary?.getSubviews() {
+            if let subviews = summaryView?.getSubviews() {
                 for view in subviews {
-                    if view.pxShouldAnimatedOneTapRow, let summaryRowView = view as? PxOneTapSummaryRowView, let newRow = niceSummary?.getSummaryRowView(with: summaryRowView.data) {
+                    if view.pxShouldAnimatedOneTapRow, let summaryRowView = view as? PXOneTapSummaryRowView, let newRow = summaryView?.getSummaryRowView(with: summaryRowView.data) {
 
                         newRow.alpha = shouldHideSummary ? 1 : 0
-
                         animationRows.append(newRow)
                         self.addSubview(newRow)
 
@@ -240,18 +97,18 @@ extension PXOneTapHeaderView {
                         let pinTopConstraint = PXLayout.pinTop(view: newRow, withMargin: summaryRowViewFrame.minY)
                         pinTopConstraint.constant = shouldHideSummary ? pinTopConstraint.constant : pinTopConstraint.constant + animationDistance
                         pinTopConstraint.isActive = true
-                        pinTops.append(pinTopConstraint)
+                        pinTopConstraints.append(pinTopConstraint)
                     }
                 }
             }
 
-            niceSummary?.update(newModel.data, hideAnimatedView: !shouldHideSummary)
+            summaryView?.update(newModel.data, hideAnimatedView: !shouldHideSummary)
 
             self.layoutIfNeeded()
             var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
             pxAnimator.addAnimation(animation: {
                 for (index, view) in animationRows.enumerated() {
-                    let pinTopConstraint = pinTops[index]
+                    let pinTopConstraint = pinTopConstraints[index]
                     pinTopConstraint.constant = shouldHideSummary ? pinTopConstraint.constant + animationDistance : pinTopConstraint.constant - animationDistance
                     self.layoutIfNeeded()
                     view.alpha = shouldHideSummary ? 0 : 1
@@ -260,7 +117,7 @@ extension PXOneTapHeaderView {
 
             pxAnimator.addCompletion {
                 if !shouldHideSummary {
-                    self.niceSummary?.showAnimatedViews()
+                    self.summaryView?.showAnimatedViews()
                 }
                 for view in animationRows {
                     view.removeFromSuperview()
@@ -269,7 +126,7 @@ extension PXOneTapHeaderView {
 
             pxAnimator.animate()
         } else {
-            niceSummary?.update(newModel.data)
+            summaryView?.update(newModel.data)
         }
     }
 
@@ -309,14 +166,13 @@ extension PXOneTapHeaderView {
         pxAnimator.animate()
     }
 
-
     private func render() {
         removeAllSubviews()
         self.pinContentViewToBottom()
         backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
 
-        let summaryView = PxOneTapSummaryView(data: model.data)
-        self.niceSummary = summaryView
+        let summaryView = PXOneTapSummaryView(data: model.data)
+        self.summaryView = summaryView
 
         addSubview(summaryView)
         PXLayout.matchWidth(ofView: summaryView).isActive = true
@@ -354,7 +210,6 @@ extension PXOneTapHeaderView {
 
 // MARK: Publics.
 extension PXOneTapHeaderView {
-
     @objc func handleSummaryTap() {
         delegate?.didTapSummary()
     }
