@@ -57,5 +57,8 @@ open class PXAdvancedConfiguration: NSObject {
      */
     open var dynamicViewControllersConfiguration: [PXDynamicViewControllerProtocol] = []
 
+    /**
+     Set additional data to get discounts
+     */
     open var discountParamsConfiguration: PXDiscountParamsConfiguration?
 }

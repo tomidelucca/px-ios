@@ -53,6 +53,7 @@ extension PXPaymentConfiguration {
      `PXDiscountConfiguration` is an object that represents the discount to be applied or error information to present to the user. It's mandatory to handle your discounts by hand if you set a payment processor.
      - parameter config: Your custom discount configuration
      */
+    @available(*, deprecated)
     open func setDiscountConfiguration(config: PXDiscountConfiguration) -> PXPaymentConfiguration {
         return self
     }
