@@ -148,7 +148,9 @@ extension PXOneTapViewModel {
         var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
 
-        if let cardId = selectedCard?.cardId, let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(cardId), let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
+        let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(selectedCard?.cardId)
+
+        if let discountConfiguration = discountConfiguration, let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
 
             customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_title".localized_beta, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
             let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
@@ -158,7 +160,6 @@ extension PXOneTapViewModel {
             amountHelper.paymentData.setDiscount(discount, withCampaign: campaign)
             totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
             yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
-
         } else {
             amountHelper.paymentData.clearDiscount()
             totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)

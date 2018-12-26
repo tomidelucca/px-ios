@@ -10,6 +10,7 @@ import UIKit
 class PXPaymentConfigurationServices {
     
     private var configurations: Set<PXPaymentMethodConfiguration> = []
+    private var defaultDiscountConfiguration: PXDiscountConfiguration?
 
     // Payer Costs for Payment Method
     func getPayerCostsForPaymentMethod(_ id: String) -> [PXPayerCost]? {
@@ -31,7 +32,7 @@ class PXPaymentConfigurationServices {
         return nil
     }
 
-    // Discount Configuration
+    // Discount Configuration for Payment Method
     func getDiscountConfigurationForPaymentMethod(_ id: String) -> PXDiscountConfiguration? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
@@ -40,6 +41,19 @@ class PXPaymentConfigurationServices {
             }
         }
         return nil
+    }
+
+    // Discount Configuration for Payment Method or Default
+    func getDiscountConfigurationForPaymentMethodOrDefault(_ id: String?) -> PXDiscountConfiguration? {
+        if let id = id, let pmDiscountConfiguration = getDiscountConfigurationForPaymentMethod(id) {
+            return pmDiscountConfiguration
+        }
+        return getDefaultDiscountConfiguration()
+    }
+
+    // Default Discount Configuration
+    func getDefaultDiscountConfiguration() -> PXDiscountConfiguration? {
+        return self.defaultDiscountConfiguration
     }
 
     // All Configurations
@@ -52,5 +66,9 @@ class PXPaymentConfigurationServices {
 
     func setConfigurations(_ configurations: Set<PXPaymentMethodConfiguration>) {
         self.configurations = configurations
+    }
+
+    func setDefaultDiscountConfiguration(_ discountConfiguration: PXDiscountConfiguration?) {
+        self.defaultDiscountConfiguration = discountConfiguration
     }
 }

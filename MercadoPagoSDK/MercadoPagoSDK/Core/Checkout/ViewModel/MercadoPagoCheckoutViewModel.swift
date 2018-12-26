@@ -529,6 +529,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let configurations = getPaymentOptionConfigurations(paymentMethodSearch: paymentMethodSearch)
         self.paymentConfigurationService.setConfigurations(configurations)
+        self.paymentConfigurationService.setDefaultDiscountConfiguration(paymentMethodSearch.selectedDiscountConfiguration)
 
         self.search = paymentMethodSearch
 
