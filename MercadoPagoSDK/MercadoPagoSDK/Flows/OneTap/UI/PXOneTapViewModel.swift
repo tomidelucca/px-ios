@@ -263,7 +263,7 @@ extension PXOneTapViewModel {
                     var extraInfo: [String: Any] = [:]
                     extraInfo["card_id"] = savedCard.cardId
                     extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
-//                    extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
+                    extraInfo["selected_installment"] = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(savedCard.cardId)?.getPayerCostForTracking()
 
                     if let issuerId = savedCard.cardUI?.issuerId {
                         extraInfo["issuer_id"] = Int(issuerId)
