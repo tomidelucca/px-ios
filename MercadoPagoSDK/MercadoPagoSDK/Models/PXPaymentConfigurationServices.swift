@@ -10,6 +10,7 @@ import UIKit
 class PXPaymentConfigurationServices {
     
     private var configurations: Set<PXPaymentMethodConfiguration> = []
+    private var defaultDiscountConfiguration: PXDiscountConfiguration?
 
     // Payer Costs for Payment Method
     func getPayerCostsForPaymentMethod(_ id: String) -> [PXPayerCost]? {
@@ -42,6 +43,11 @@ class PXPaymentConfigurationServices {
         return nil
     }
 
+    // Default Discount Configuration
+    func getDefaultDiscountConfiguration() -> PXDiscountConfiguration? {
+        return self.defaultDiscountConfiguration
+    }
+
     // All Configurations
     func getConfigurationsForPaymentMethod(_ id: String) -> [PXPaymentOptionConfiguration]? {
         if let config = configurations.first(where: {$0.paymentOptionID == id}) {
@@ -52,5 +58,9 @@ class PXPaymentConfigurationServices {
 
     func setConfigurations(_ configurations: Set<PXPaymentMethodConfiguration>) {
         self.configurations = configurations
+    }
+
+    func setDefaultDiscountConfiguration(_ discountConfiguration: PXDiscountConfiguration?) {
+        self.defaultDiscountConfiguration = discountConfiguration
     }
 }
