@@ -11,9 +11,7 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
-
         viewModel.clearCollectedData()
-
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback: { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
@@ -22,18 +20,24 @@ extension MercadoPagoCheckout {
 
             strongSelf.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
 
-            if let payerCost = strongSelf.viewModel.paymentConfigurationService.getPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
-                strongSelf.viewModel.payerCosts = payerCost
+            if let payerCosts = strongSelf.viewModel.paymentConfigurationService.getPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
+                strongSelf.viewModel.payerCosts = payerCosts
+                let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(payerCosts)
+                if let defaultPC = defaultPayerCost {
+                    strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
+                }
             } else {
                 strongSelf.viewModel.payerCosts = nil
             }
-
             if let discountConfiguration = strongSelf.viewModel.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOptionSelected.getId()) {
                 strongSelf.viewModel.setDiscount(discountConfiguration)
             } else if let defaultDiscountConfiguration = strongSelf.viewModel.search?.selectedDiscountConfiguration {
                 strongSelf.viewModel.setDiscount(defaultDiscountConfiguration)
             } else {
                 strongSelf.viewModel.clearDiscount()
+            }
+            if let defaultPC = strongSelf.viewModel.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
+                strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
             }
 
             strongSelf.viewModel.rootVC = false
