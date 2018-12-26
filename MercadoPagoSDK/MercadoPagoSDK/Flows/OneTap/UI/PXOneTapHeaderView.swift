@@ -106,18 +106,18 @@ extension PXOneTapHeaderView {
 
             self.layoutIfNeeded()
             var pxAnimator = PXAnimator(duration: animationDuration, dampingRatio: 1)
-            pxAnimator.addAnimation(animation: {
+            pxAnimator.addAnimation(animation: { [weak self] in
                 for (index, view) in animationRows.enumerated() {
                     let pinTopConstraint = pinTopConstraints[index]
                     pinTopConstraint.constant = shouldHideSummary ? pinTopConstraint.constant + animationDistance : pinTopConstraint.constant - animationDistance
-                    self.layoutIfNeeded()
+                    self?.layoutIfNeeded()
                     view.alpha = shouldHideSummary ? 0 : 1
                 }
             })
 
-            pxAnimator.addCompletion {
+            pxAnimator.addCompletion { [weak self] in
                 if !shouldHideSummary {
-                    self.summaryView?.showAnimatedViews()
+                    self?.summaryView?.showAnimatedViews()
                 }
                 for view in animationRows {
                     view.removeFromSuperview()
@@ -134,15 +134,19 @@ extension PXOneTapHeaderView {
         self.isShowingHorizontally = false
         self.merchantView?.animateToVertical(duration: duration)
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
-        pxAnimator.addAnimation(animation: {
-            for constraint in self.horizontalLayoutConstraints.reversed() {
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            for constraint in strongSelf.horizontalLayoutConstraints.reversed() {
                 constraint.isActive = false
             }
 
-            for constraint in self.verticalLayoutConstraints.reversed() {
+            for constraint in strongSelf.verticalLayoutConstraints.reversed() {
                 constraint.isActive = true
             }
-            self.layoutIfNeeded()
+            strongSelf.layoutIfNeeded()
         })
 
         pxAnimator.animate()
@@ -152,15 +156,19 @@ extension PXOneTapHeaderView {
         self.isShowingHorizontally = true
         self.merchantView?.animateToHorizontal(duration: duration)
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
-        pxAnimator.addAnimation(animation: {
-            for constraint in self.horizontalLayoutConstraints.reversed() {
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            for constraint in strongSelf.horizontalLayoutConstraints.reversed() {
                 constraint.isActive = true
             }
 
-            for constraint in self.verticalLayoutConstraints.reversed() {
+            for constraint in strongSelf.verticalLayoutConstraints.reversed() {
                 constraint.isActive = false
             }
-            self.layoutIfNeeded()
+            strongSelf.layoutIfNeeded()
         })
 
         pxAnimator.animate()

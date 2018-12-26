@@ -110,19 +110,23 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     func animateToVertical(duration: Double = 0) {
         self.layoutIfNeeded()
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
-        pxAnimator.addAnimation(animation: {
-            self.layoutIfNeeded()
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
 
-            self.updateContentViewLayout()
+            strongSelf.layoutIfNeeded()
 
-            for constraint in self.horizontalLayoutConstraints {
+            strongSelf.updateContentViewLayout()
+
+            for constraint in strongSelf.horizontalLayoutConstraints {
                 constraint.isActive = false
             }
 
-            for constraint in self.verticalLayoutConstraints {
+            for constraint in strongSelf.verticalLayoutConstraints {
                 constraint.isActive = true
             }
-            self.layoutIfNeeded()
+            strongSelf.layoutIfNeeded()
         })
 
         pxAnimator.animate()
@@ -131,17 +135,21 @@ class PXOneTapHeaderMerchantView: PXComponentView {
     func animateToHorizontal(duration: Double = 0) {
         self.layoutIfNeeded()
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
-        pxAnimator.addAnimation(animation: {
-            self.layoutIfNeeded()
-            self.pinContentViewToTop()
-            for constraint in self.horizontalLayoutConstraints {
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.layoutIfNeeded()
+            strongSelf.pinContentViewToTop()
+            for constraint in strongSelf.horizontalLayoutConstraints {
                 constraint.isActive = true
             }
 
-            for constraint in self.verticalLayoutConstraints {
+            for constraint in strongSelf.verticalLayoutConstraints {
                 constraint.isActive = false
             }
-            self.layoutIfNeeded()
+            strongSelf.layoutIfNeeded()
         })
 
         pxAnimator.animate()
