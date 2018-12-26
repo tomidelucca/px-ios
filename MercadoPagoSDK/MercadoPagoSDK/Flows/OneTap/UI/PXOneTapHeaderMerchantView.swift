@@ -64,6 +64,7 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
+        titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = Utils.getSemiBoldFont(size: PXLayout.M_FONT)
         titleLabel.textColor = ThemeManager.shared.statusBarStyle() == UIStatusBarStyle.default ? UIColor.black : ThemeManager.shared.whiteColor()
         titleLabel.textAlignment = .center

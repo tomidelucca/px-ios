@@ -230,6 +230,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needOneTapFlow() -> Bool {
+        return false
         guard let search = self.search else {
             return false
         }

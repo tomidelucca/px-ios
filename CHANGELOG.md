@@ -1,3 +1,15 @@
+# v4.4.0
+🚀Private RC - 4.4.0 🚀
+MercadoPagoSDKV4 - Private Version
+- Share ESC feature
+- Save ESC when tokenized card
+- MoneyIn fixes & tech debt
+- One tap visual improvements
+
+# v4.3.6
+🚀Private RC - 4.3.6 🚀
+HotFix One Tap
+
 # v4.3.5
 🚀Private RC - 4.3.5 🚀
 MercadoPagoSDKV4 - Private Version

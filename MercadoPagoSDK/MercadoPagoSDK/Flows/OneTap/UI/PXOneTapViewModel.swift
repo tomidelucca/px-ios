@@ -230,8 +230,7 @@ extension PXOneTapViewModel {
             text.append(firstAttributedString)
 
             // Second attr
-            // if let recommendedMessage = payerCostData.recommendedMessage {
-            if payerCostData.installmentRate == 0 {
+            if payerCostData.installmentRate == 0, payerCostData.installments != 1 {
                 let secondAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
                 let secondText = " Sin interés".localized
                 let secondAttributedString = NSAttributedString(string: secondText, attributes: secondAttributes)

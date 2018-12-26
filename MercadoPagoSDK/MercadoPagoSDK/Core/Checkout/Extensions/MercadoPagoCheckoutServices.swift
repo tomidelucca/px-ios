@@ -120,6 +120,7 @@ extension MercadoPagoCheckout {
             if token.lastFourDigits.isEmpty {
                 token.lastFourDigits = cardInformation.getCardLastForDigits() ?? ""
             }
+
             strongSelf.viewModel.updateCheckoutModel(token: token)
             strongSelf.executeNextStep()
 
@@ -149,6 +150,7 @@ extension MercadoPagoCheckout {
                 let cardInformation = strongSelf.viewModel.paymentOptionSelected as? PXCardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
             }
+
             strongSelf.viewModel.updateCheckoutModel(token: token)
             strongSelf.executeNextStep()
 
