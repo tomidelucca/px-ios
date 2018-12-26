@@ -148,14 +148,8 @@ extension PXOneTapViewModel {
         var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
 
-        var discountConfiguration: PXDiscountConfiguration?
+        let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(selectedCard?.cardId)
 
-        if let cardId = selectedCard?.cardId {
-            discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(cardId)
-        } else {
-            discountConfiguration = amountHelper.paymentConfigurationService.getDefaultDiscountConfiguration()
-        }
-        
         if let discountConfiguration = discountConfiguration, let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
 
             customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_title".localized_beta, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))

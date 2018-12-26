@@ -32,7 +32,7 @@ class PXPaymentConfigurationServices {
         return nil
     }
 
-    // Discount Configuration
+    // Discount Configuration for Payment Method
     func getDiscountConfigurationForPaymentMethod(_ id: String) -> PXDiscountConfiguration? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
@@ -41,6 +41,14 @@ class PXPaymentConfigurationServices {
             }
         }
         return nil
+    }
+
+    // Discount Configuration for Payment Method or Default
+    func getDiscountConfigurationForPaymentMethodOrDefault(_ id: String?) -> PXDiscountConfiguration? {
+        if let id = id, let pmDiscountConfiguration = getDiscountConfigurationForPaymentMethod(id) {
+            return pmDiscountConfiguration
+        }
+        return getDefaultDiscountConfiguration()
     }
 
     // Default Discount Configuration
