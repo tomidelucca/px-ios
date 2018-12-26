@@ -69,7 +69,7 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         try container.encodeIfPresent(self.defaultOption, forKey: .defaultOption)
         try container.encodeIfPresent(self.expressCho, forKey: .expressCho)
         try container.encodeIfPresent(self.selectedAmountConfiguration, forKey: .selectedAmountConfiguration)
-//        try container.encodeIfPresent(self.discountConfigurations, forKey: .discountConfigurations)
+        try container.encodeIfPresent(self.discountConfigurations, forKey: .discountConfigurations)
     }
 
     open func toJSONString() throws -> String? {

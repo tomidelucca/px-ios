@@ -10,7 +10,9 @@ import UIKit
 class PXOneTapHeaderMerchantView: PXComponentView {
     let image: UIImage
     let title: String
-    let showHorizontally: Bool
+    private var showHorizontally: Bool
+    private var horizontalLayoutConstraints: [NSLayoutConstraint] = []
+    private var verticalLayoutConstraints: [NSLayoutConstraint] = []
 
     init(image: UIImage, title: String, showHorizontally: Bool) {
         self.image = image
@@ -36,7 +38,6 @@ class PXOneTapHeaderMerchantView: PXComponentView {
 
     private func render() {
         let containerView = UIView()
-
         let imageContainerView = UIView()
         imageContainerView.translatesAutoresizingMaskIntoConstraints = false
         imageContainerView.dropShadow(radius: 2, opacity: 0.15)
@@ -72,21 +73,85 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         PXLayout.pinBottom(view: containerView).isActive = true
         PXLayout.centerHorizontally(view: containerView).isActive = true
 
+        let horizontalConstraints = [PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN),
+                                     PXLayout.pinBottom(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN),
+                                     PXLayout.pinLeft(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN),
+                                     PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.XXS_MARGIN),
+                                     PXLayout.put(view: imageContainerView, leftOf: titleLabel, withMargin: PXLayout.XXS_MARGIN, relation: .equal),
+                                     PXLayout.centerVertically(view: imageContainerView, to: titleLabel)]
+
+        horizontalLayoutConstraints.append(contentsOf: horizontalConstraints)
+
+        let verticalConstraints = [PXLayout.centerHorizontally(view: imageContainerView),
+                                   PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN),
+                                   PXLayout.centerHorizontally(view: titleLabel),
+                                   PXLayout.put(view: titleLabel, onBottomOf: imageContainerView, withMargin: PXLayout.XXS_MARGIN),
+                                   PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XXS_MARGIN),
+                                   PXLayout.matchWidth(ofView: containerView)]
+
+        verticalLayoutConstraints.append(contentsOf: verticalConstraints)
+
         if showHorizontally {
-            self.pinContentViewToTop()
-            PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinBottom(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinLeft(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.put(view: imageContainerView, leftOf: titleLabel, withMargin: PXLayout.XXS_MARGIN, relation: .equal).isActive = true
-            PXLayout.centerVertically(view: imageContainerView, to: titleLabel).isActive = true
+            animateToHorizontal()
         } else {
-            PXLayout.centerHorizontally(view: imageContainerView).isActive = true
-            PXLayout.pinTop(view: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.centerHorizontally(view: titleLabel).isActive = true
-            PXLayout.put(view: titleLabel, onBottomOf: imageContainerView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.matchWidth(ofView: containerView).isActive = true
+            animateToVertical()
         }
+    }
+
+    func updateContentViewLayout() {
+        self.layoutIfNeeded()
+        if UIDevice.isLargeDevice() || UIDevice.isExtraLargeDevice() {
+            self.pinContentViewToTop(margin: 24)
+        } else if !UIDevice.isSmallDevice() {
+            self.pinContentViewToTop()
+        }
+    }
+
+    func animateToVertical(duration: Double = 0) {
+        self.layoutIfNeeded()
+        var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.layoutIfNeeded()
+
+            strongSelf.updateContentViewLayout()
+
+            for constraint in strongSelf.horizontalLayoutConstraints {
+                constraint.isActive = false
+            }
+
+            for constraint in strongSelf.verticalLayoutConstraints {
+                constraint.isActive = true
+            }
+            strongSelf.layoutIfNeeded()
+        })
+
+        pxAnimator.animate()
+    }
+
+    func animateToHorizontal(duration: Double = 0) {
+        self.layoutIfNeeded()
+        var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.layoutIfNeeded()
+            strongSelf.pinContentViewToTop()
+            for constraint in strongSelf.horizontalLayoutConstraints {
+                constraint.isActive = true
+            }
+
+            for constraint in strongSelf.verticalLayoutConstraints {
+                constraint.isActive = false
+            }
+            strongSelf.layoutIfNeeded()
+        })
+
+        pxAnimator.animate()
     }
 }

@@ -11,18 +11,7 @@ class PXPaymentConfigurationServices {
     
     private var configurations: Set<PXPaymentMethodConfiguration> = []
 
-    // Grupos
-    func getDefaultPayamentMethodsConfigurations() -> [(paymentMethodOption: PaymentMethodOption, configuration: PXPaymentOptionConfiguration)] {
-        var defaultConfigs = [(paymentMethodOption: PaymentMethodOption, configuration: PXPaymentOptionConfiguration)]()
-//        for configuration in configurations {
-//            if configuration.defaultConfigurationIndex < configuration.paymentOptionsConfigurations.count {
-//                let config = configuration.paymentOptionsConfigurations[configuration.defaultConfigurationIndex]
-//                defaultConfigs.append((paymentMethodOption: configuration.paymentMethodOption, configuration: config))
-//            }
-//        }
-        return defaultConfigs
-    }
-
+    // Payer Costs for Payment Method
     func getPayerCostsForPaymentMethod(_ id: String) -> [PXPayerCost]? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
@@ -32,6 +21,7 @@ class PXPaymentConfigurationServices {
         return nil
     }
 
+    // Selected Payer Cost for Payment Method
     func getSelectedPayerCostsForPaymentMethod(_ id: String) -> PXPayerCost? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {

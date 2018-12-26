@@ -9,15 +9,19 @@ import UIKit
 
 open class PXPayerCostConfiguration: NSObject, Codable {
     open var selectedPayerCostIndex: Int?
-    open var selectedPayerCost: PXPayerCost?
+    open var selectedPayerCost: PXPayerCost? {
+        get {
+            if let remotePayerCosts = payerCosts, let selectedIndex = selectedPayerCostIndex,  remotePayerCosts.indices.contains(selectedIndex) {
+                return remotePayerCosts[selectedIndex]
+            }
+            return nil
+        }
+    }
     open var payerCosts: [PXPayerCost]?
 
     public init(selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
         self.selectedPayerCostIndex = selectedPayerCostIndex
         self.payerCosts = payerCosts
-        if let remotePayerCosts = payerCosts, let selectedIndex = selectedPayerCostIndex,  remotePayerCosts.indices.contains(selectedIndex) {
-            self.selectedPayerCost = remotePayerCosts[selectedIndex]
-        }
     }
 
     public enum PXPayerCostConfiguration: String, CodingKey {
@@ -48,8 +52,4 @@ open class PXPayerCostConfiguration: NSObject, Codable {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
-
-//    open class func fromJSON(data: Data) throws -> PXPayerCostConfiguration {
-//        return try JSONDecoder().decode(PXPayerCostConfiguration.self, from: data)
-//    }
 }

@@ -98,7 +98,7 @@ extension OneTapFlow {
     ///   - search: payment method search item
     ///   - paymentMethodPlugins: payment Methods plugins that can be show
     /// - Returns: selected payment option if possible
-    static func autoSelectOneTapOption(search: PXPaymentMethodSearch, customPaymentOptions: [CustomerPaymentMethod]?, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
+    static func autoSelectOneTapOption(search: PXPaymentMethodSearch, customPaymentOptions: [CustomerPaymentMethod]?, paymentMethodPlugins: [PXPaymentMethodPlugin], amountHelper: PXAmountHelper) -> PaymentMethodOption? {
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
             // Check if can autoselect plugin
@@ -118,7 +118,7 @@ extension OneTapFlow {
                     let customOptionsFound = customerPaymentMethods.filter { return $0.getPaymentMethodId() == firstPaymentMethodId }
                     if let customerPaymentMethod = customOptionsFound.first {
                         // Check if one tap response has payer costs
-                        if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, MercadoPagoCheckout.currentCheckout?.viewModel.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(expressPaymentMethod.cardId) != nil {
+                        if let expressNode = search.getPaymentMethodInExpressCheckout(targetId: customerPaymentMethod.getId()).expressNode, let expressPaymentMethod = expressNode.oneTapCard, amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(expressPaymentMethod.cardId) != nil {
                             if expressNode.paymentMethodId == customerPaymentMethod.getPaymentMethodId() && expressNode.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
                                 selectedPaymentOption = customerPaymentMethod
                             }
