@@ -10,7 +10,7 @@ import Foundation
 
 internal extension PXPaymentFlow {
     func createPaymentWithPlugin(plugin: PXPaymentProcessor?) {
-        guard let paymentData = model.paymentData, let plugin = plugin else {
+        guard let paymentData = model.amountHelper?.paymentData, let plugin = plugin else {
             return
         }
 

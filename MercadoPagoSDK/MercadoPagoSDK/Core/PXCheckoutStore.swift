@@ -14,7 +14,7 @@ import Foundation
 open class PXCheckoutStore: NSObject {
     static let sharedInstance = PXCheckoutStore()
     internal var checkoutPreference: PXCheckoutPreference?
-    internal var paymentData = PXPaymentData()
+    internal var paymentData: [PXPaymentData] = []
     private var data = [String: Any]()
 }
 
@@ -24,6 +24,13 @@ extension PXCheckoutStore {
      Get `PXPaymentData` object.
      */
     public func getPaymentData() -> PXPaymentData {
+        return paymentData.first ?? PXPaymentData()
+    }
+
+    /**
+     Get list of `PXPaymentData` for split payment.
+     */
+    public func getPaymentDatas() -> [PXPaymentData] {
         return paymentData
     }
 
@@ -77,6 +84,6 @@ internal extension PXCheckoutStore {
     internal func clean() {
         removeAll()
         checkoutPreference = nil
-        paymentData = PXPaymentData()
+        paymentData = []
     }
 }

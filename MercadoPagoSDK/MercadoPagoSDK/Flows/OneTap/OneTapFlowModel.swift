@@ -36,7 +36,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var chargeRules: [PXPaymentTypeChargeRule]?
 
     // In order to ensure data updated create new instance for every usage
-    private var amountHelper: PXAmountHelper {
+    internal var amountHelper: PXAmountHelper {
         get {
             return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules, consumedDiscount: consumedDiscount)
         }
@@ -200,7 +200,7 @@ internal extension OneTapFlowModel {
 
     func getTimeoutForOneTapReviewController() -> TimeInterval {
         if let paymentFlow = paymentFlow {
-            paymentFlow.model.paymentData = paymentData
+            paymentFlow.model.amountHelper = amountHelper
             let tokenTimeOut: TimeInterval = mercadoPagoServicesAdapter.getTimeOut()
             // Payment Flow timeout + tokenization TimeOut
             return paymentFlow.getPaymentTimeOut() + tokenTimeOut

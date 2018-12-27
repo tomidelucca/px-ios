@@ -124,6 +124,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
         return PXErrorComponent(props: props)
     }
+
     public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.paymentData.paymentMethod!
 

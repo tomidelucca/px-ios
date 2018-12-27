@@ -247,7 +247,7 @@ extension MercadoPagoCheckout {
 
     func createPayment() {
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
-        paymentFlow.setData(paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
+        paymentFlow.setData(amountHelper: viewModel.amountHelper, checkoutPreference: viewModel.checkoutPreference, resultHandler: self)
         paymentFlow.start()
     }
 

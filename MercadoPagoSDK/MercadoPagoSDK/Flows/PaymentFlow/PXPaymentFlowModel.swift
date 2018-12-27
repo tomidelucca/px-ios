@@ -9,7 +9,7 @@
 import Foundation
 
 internal final class PXPaymentFlowModel: NSObject {
-    var paymentData: PXPaymentData?
+    var amountHelper: PXAmountHelper?
     var checkoutPreference: PXCheckoutPreference?
     let paymentPlugin: PXPaymentProcessor?
 
@@ -93,15 +93,18 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 
     func isOfflinePayment() -> Bool {
-        guard let paymentTypeId = paymentData?.paymentMethod?.paymentTypeId else {
+        guard let paymentTypeId = amountHelper?.paymentData.paymentMethod?.paymentTypeId else {
             return false
         }
         return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId)
     }
 
     func assignToCheckoutStore() {
-        if let paymentData = paymentData {
-            PXCheckoutStore.sharedInstance.paymentData = paymentData
+        if let amountHelper = amountHelper {
+            PXCheckoutStore.sharedInstance.paymentData = [amountHelper.paymentData]
+            if let splitAccountMoney = amountHelper.splitAccountMoney {
+                PXCheckoutStore.sharedInstance.paymentData.append(splitAccountMoney)
+            }
         }
         PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference
     }

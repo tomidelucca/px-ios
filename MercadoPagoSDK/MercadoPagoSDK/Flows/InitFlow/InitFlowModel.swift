@@ -125,7 +125,7 @@ extension InitFlowModel {
     }
 
     func populateCheckoutStore() {
-        PXCheckoutStore.sharedInstance.paymentData = self.properties.paymentData
+        PXCheckoutStore.sharedInstance.paymentData = [self.properties.paymentData]
         PXCheckoutStore.sharedInstance.checkoutPreference = self.properties.checkoutPreference
     }
 }

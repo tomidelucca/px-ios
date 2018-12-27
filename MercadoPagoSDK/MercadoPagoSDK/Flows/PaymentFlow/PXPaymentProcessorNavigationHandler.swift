@@ -32,7 +32,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
     /// :nodoc:
     open func didFinishPayment(paymentStatus: PXGenericPayment.RemotePaymentStatus, statusDetails: String = "", paymentId: String? = nil) {
 
-        guard let paymentData = self.flow?.model.paymentData else {
+        guard let paymentData = self.flow?.model.amountHelper?.paymentData else {
             return
         }
 
@@ -50,7 +50,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
         }
 
         // Set paymentPlugin image into payment method.
-        if self.flow?.model.paymentData?.paymentMethod?.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
+        if self.flow?.model.amountHelper?.paymentData.paymentMethod?.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
 
             // Defaults status details for paymentMethod plugin
             if paymentStatus == .APPROVED {
@@ -74,7 +74,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
      */
     open func didFinishPayment(status: String, statusDetail: String, paymentId: String? = nil) {
 
-        guard let paymentData = self.flow?.model.paymentData else {
+        guard let paymentData = self.flow?.model.amountHelper?.paymentData else {
             return
         }
 

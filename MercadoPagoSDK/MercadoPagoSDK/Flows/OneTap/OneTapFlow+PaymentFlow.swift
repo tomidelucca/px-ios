@@ -17,7 +17,7 @@ extension OneTapFlow {
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
-        paymentFlow.setData(paymentData: model.paymentData, checkoutPreference: model.checkoutPreference, resultHandler: self)
+        paymentFlow.setData(amountHelper: model.amountHelper, checkoutPreference: model.checkoutPreference, resultHandler: self)
         paymentFlow.start()
     }
 }
