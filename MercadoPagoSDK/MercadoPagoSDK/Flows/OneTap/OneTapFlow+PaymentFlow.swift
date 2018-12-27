@@ -35,8 +35,10 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
         self.model.paymentResult = paymentResult
         self.model.instructionsInfo = instructionsInfo
         if self.model.needToShowLoading() {
+            model.saveEsc()
             self.executeNextStep()
         } else {
+            model.saveEsc()
             PXAnimatedButton.animateButtonWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
         }
     }
@@ -44,8 +46,10 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(businessResult: PXBusinessResult) {
         self.model.businessResult = businessResult
         if self.model.needToShowLoading() {
+            model.saveEsc()
             self.executeNextStep()
         } else {
+            model.saveEsc()
             PXAnimatedButton.animateButtonWith(status: businessResult.getStatus().getDescription())
         }
     }
