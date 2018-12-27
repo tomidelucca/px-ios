@@ -1,7 +1,7 @@
 # v4.4.1
 🚀Private RC - 4.4.1 🚀
 MercadoPagoSDKV4 - Private Version
-- Hotfix save ESC in one tap
+- Hotfix save ESC in one tap.
 
 # v4.4.0
 🚀Private RC - 4.4.0 🚀
