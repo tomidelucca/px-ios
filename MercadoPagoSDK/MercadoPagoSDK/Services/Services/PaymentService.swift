@@ -33,9 +33,9 @@ internal class PaymentService: MercadoPagoService {
         })
     }
 
-    open func getSummaryAmount(uri: String = PXServicesURLConfigs.MP_INSTALLMENTS_URI, bin: String?, amount: Double, issuerId: String?, payment_method_id: String, payment_type_id: String, differential_pricing_id: String?, site: PXSite?,  marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer:PXPayer, defaultInstallments: Int?,  success: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    open func getSummaryAmount(uri: String = PXServicesURLConfigs.MP_SUMMARY_AMOUNT_URI, bin: String?, amount: Double, issuerId: String?, payment_method_id: String, payment_type_id: String, differential_pricing_id: String?, site: PXSite?,  marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer:PXPayer, defaultInstallments: Int?,  success: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         
-        self.baseURL = "https://private-28acd-summaryamountservermock.apiary-mock.com/v1/px_mobile_api/summary_amount?public_key=&access_token="
+        self.baseURL = "http://private-ec80b-matiasromar.apiary-mock.com/mercadopago"
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
         var body: [String:Any] = [String:Any]()
