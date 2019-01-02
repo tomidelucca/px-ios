@@ -37,5 +37,5 @@ internal class ApiParams: NSObject {
     static let MARKETPLACE = "marketplace"
     static let PRODUCT_ID = "product_id"
     static let LABELS = "labels"
-    
+    static let CHARGES = "charges"
 }

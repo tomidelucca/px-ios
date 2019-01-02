@@ -13,13 +13,15 @@ class PXPaymentMethodSearchBody: Codable {
     let marketplace: String?
     let productId: String?
     let labels: [String]?
+    let charges: [PXPaymentTypeChargeRule]?
 
-    init(privateKey: String?, email: String?, marketplace: String?, productId: String?, labels: [String]?) {
+    init(privateKey: String?, email: String?, marketplace: String?, productId: String?, labels: [String]?, charges: [PXPaymentTypeChargeRule]?) {
         self.privateKey = privateKey
         self.email = email
         self.marketplace = marketplace
         self.productId = productId
         self.labels = labels
+        self.charges = charges
     }
 
     public enum PXPaymentMethodSearchBodyKeys: String, CodingKey {
@@ -28,6 +30,7 @@ class PXPaymentMethodSearchBody: Codable {
         case marketplace
         case productId
         case labels
+        case charges
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -39,6 +42,7 @@ class PXPaymentMethodSearchBody: Codable {
         try container.encodeIfPresent(self.marketplace, forKey: .marketplace)
         try container.encodeIfPresent(self.productId, forKey: .productId)
         try container.encodeIfPresent(self.labels, forKey: .labels)
+        try container.encodeIfPresent(self.charges, forKey: .charges)
     }
 
     open func toJSONString() throws -> String? {

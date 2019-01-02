@@ -33,34 +33,16 @@ internal class PaymentService: MercadoPagoService {
         })
     }
 
-    open func getSummaryAmount(uri: String = PXServicesURLConfigs.MP_SUMMARY_AMOUNT_URI, bin: String?, amount: Double, issuerId: String?, payment_method_id: String, payment_type_id: String, differential_pricing_id: String?, site: PXSite?,  marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer:PXPayer, defaultInstallments: Int?,  success: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    open func getSummaryAmount(uri: String = PXServicesURLConfigs.MP_SUMMARY_AMOUNT_URI, bin: String?, amount: Double, issuerId: String?, payment_method_id: String, payment_type_id: String, differential_pricing_id: String?, siteId: String?,  marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer:PXPayer, defaultInstallments: Int?, charges: [PXPaymentTypeChargeRule]?, success: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         
         self.baseURL = "http://private-ec80b-matiasromar.apiary-mock.com/mercadopago"
 
         let params: String = MercadoPagoServices.getParamsPublicKeyAndAcessToken(merchantPublicKey, payerAccessToken)
-        var body: [String:Any] = [String:Any]()
-        body[ApiParams.SITE_ID] =  site?.id
-        body[ApiParams.TRANSACTION_AMOUNT] = String(format: "%.2f", amount)
-        body[ApiParams.MARKETPLACE] =  marketplace
-        body[ApiParams.EMAIL] =  payer.email
-        if let productId = discountParamsConfiguration?.productId {
-            body[ApiParams.PRODUCT_ID] = productId
-        }
-        body[ApiParams.PAYMENT_METHOD_ID] =  payment_method_id
-        body[ApiParams.PAYMENT_TYPE] =  payment_type_id
-        body[ApiParams.BIN] = bin
-        body[ApiParams.ISSUER_ID] = String(describing: issuerId!)
-        if let labels = discountParamsConfiguration?.labels {
-            body[ApiParams.LABELS] =  labels
-        }
-        if let defaultInstallments = defaultInstallments {
-            body[ApiParams.DEFAULT_INSTALLMENTS] =  defaultInstallments
-        }
-        body[ApiParams.DIFFERENTIAL_PRICING_ID] =  differential_pricing_id
-        body[ApiParams.PROCESSING_MODE] =  processingMode
 
-        let bodyData : Data = NSKeyedArchiver.archivedData(withRootObject: body)
-        self.request( uri: uri, params: params, body: bodyData, method: HTTPMethod.post, success: {(data: Data) -> Void in
+        let body = PXSummaryAmountBody(siteId: siteId, transactionAmount: String(format: "%.2f", amount), marketplace: marketplace, email: payer.email, productId: discountParamsConfiguration?.productId, paymentMethodId: payment_method_id, paymentType: payment_type_id, bin: bin, issuerId: issuerId, labels: discountParamsConfiguration?.labels, defaultInstallments: defaultInstallments, differentialPricingId: differential_pricing_id, processingMode: processingMode, charges: charges)
+        let bodyJSON = try? body.toJSON()
+
+        self.request( uri: uri, params: params, body: bodyJSON, method: HTTPMethod.post, success: {(data: Data) -> Void in
             do {
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
                 
