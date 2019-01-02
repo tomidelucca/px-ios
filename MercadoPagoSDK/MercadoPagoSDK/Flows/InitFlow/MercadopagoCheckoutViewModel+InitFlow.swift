@@ -48,7 +48,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func updateInitFlow() {
-        initFlow?.updateModel(paymentPlugin: self.paymentPlugin, paymentMethodPlugins: self.paymentMethodPlugins)
+        initFlow?.updateModel(paymentPlugin: self.paymentPlugin, paymentMethodPlugins: self.paymentMethodPlugins, chargeRules: self.chargeRules)
     }
 
     func attemptToApplyDiscount(discountConfiguration: PXDiscountConfiguration?) {

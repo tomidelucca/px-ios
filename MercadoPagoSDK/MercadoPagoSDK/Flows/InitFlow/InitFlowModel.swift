@@ -51,9 +51,10 @@ final class InitFlowModel: NSObject, PXFlowModel {
         super.init()
     }
 
-    func update(paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin]) {
+    func update(paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], chargeRules: [PXPaymentTypeChargeRule]?) {
         properties.paymentPlugin = paymentPlugin
         properties.paymentMethodPlugins = paymentMethodPlugins
+        properties.chargeRules = chargeRules
     }
 }
 
