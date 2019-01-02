@@ -299,7 +299,6 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: nil))
         } else {
             // New payment method selected.
-            headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
             let newPaymentMethodId: String = targetModel.paymentMethodId
             let newPayerCost: PXPayerCost? = targetModel.selectedPayerCost
 
@@ -313,6 +312,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             } else {
                 loadingButtonComponent?.setDisabled()
             }
+            headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
         }
     }
 
