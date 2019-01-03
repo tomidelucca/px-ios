@@ -25,21 +25,6 @@ internal class PXResultViewModel: PXResultViewModelInterface {
         self.amountHelper = amountHelper
     }
 
-    func trackInfo() {
-        let paymentStatus = self.getPaymentStatus()
-        var screenPath = ""
-
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
-        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
-        }
-
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
-    }
-
     func getPaymentData() -> PXPaymentData {
         return self.paymentResult.paymentData!
     }
@@ -65,5 +50,42 @@ internal class PXResultViewModel: PXResultViewModelInterface {
 
     func primaryResultColor() -> UIColor {
         return ResourceManager.shared.getResultColorWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
+    }
+}
+
+// MARK: Tracking
+extension PXResultViewModel {
+    func getTrackingProperties() -> [String: Any] {
+        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
+        properties["style"] = "generic"
+        if let paymentId = paymentResult.paymentId {
+            properties["payment_id"] = Int64(paymentId)
+        }
+        properties["payment_status"] = paymentResult.status
+        properties["payment_status_detail"] = paymentResult.statusDetail
+
+        return properties
+    }
+
+    func getTrackingPath() -> String {
+        let paymentStatus = paymentResult.status
+        var screenPath = ""
+
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessPath()
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionPath()
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorPath()
+        }
+        return screenPath
+    }
+
+    func trackChangePaymentMethodEvent() {
+
+    }
+
+    func trackContinueEvent() {
+
     }
 }

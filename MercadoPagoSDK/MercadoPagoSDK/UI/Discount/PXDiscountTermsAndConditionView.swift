@@ -15,7 +15,6 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     init(amountHelper: PXAmountHelper, shouldAddMargins: Bool = true) {
         self.amountHelper = amountHelper
         super.init(shouldAddMargins: shouldAddMargins)
-        self.SCREEN_NAME = TrackingPaths.ScreenId.DISCOUNT_TERM_CONDITION
         self.SCREEN_TITLE = "Términos y Condiciones"
     }
 

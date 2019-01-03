@@ -26,6 +26,7 @@ internal class PaymentResult {
     var payerEmail: String?
     var paymentId: String?
     var statementDescription: String?
+    var cardId: String?
 
     init (payment: PXPayment, paymentData: PXPaymentData) {
         self.status = payment.status
@@ -34,6 +35,7 @@ internal class PaymentResult {
         self.paymentId = payment.id.stringValue
         self.payerEmail = paymentData.payer?.email
         self.statementDescription = payment.statementDescriptor
+        self.cardId = payment.card?.id
     }
 
     init (status: String, statusDetail: String, paymentData: PXPaymentData, payerEmail: String?, paymentId: String?, statementDescription: String?) {
@@ -43,6 +45,7 @@ internal class PaymentResult {
         self.payerEmail = payerEmail
         self.paymentId = paymentId
         self.statementDescription = statementDescription
+        self.cardId = paymentData.token?.cardId
     }
 
     func isCallForAuth() -> Bool {

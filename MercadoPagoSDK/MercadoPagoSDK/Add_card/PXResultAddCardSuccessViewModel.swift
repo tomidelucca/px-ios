@@ -72,8 +72,11 @@ final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
         return nil
     }
 
-    func trackInfo() {
-
+    func getTrackingProperties() -> [String: Any] {
+        return [:]
     }
 
+    func getTrackingPath() -> String {
+        return ""
+    }
 }

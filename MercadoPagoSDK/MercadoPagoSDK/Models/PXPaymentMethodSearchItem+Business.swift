@@ -40,6 +40,9 @@ extension PXPaymentMethodSearchItem: PaymentOptionDrawable {
 }
 
 extension PXPaymentMethodSearchItem: PaymentMethodOption {
+    func getPaymentType() -> String {
+        return type ?? ""
+    }
 
     func hasChildren() -> Bool {
         return !Array.isNullOrEmpty(self.children)

@@ -11,23 +11,15 @@ import UIKit
 internal class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var  errorTitle: MPLabel!
-
     @IBOutlet internal weak var errorSubtitle: MPLabel!
-
     @IBOutlet internal weak var errorIcon: UIImageView!
-
     @IBOutlet weak var exitButton: UIButton!
-
     @IBOutlet weak var retryButton: UIButton!
 
     var error: MPSDKError!
     var callback: (() -> Void)?
-
-    override open var screenName: String { return TrackingPaths.Screens.getErrorPath() }
-
-    internal static var defaultErrorCancel: (() -> Void)?
-
     open var exitErrorCallback: (() -> Void)!
+    internal static var defaultErrorCancel: (() -> Void)?
 
     public init(error: MPSDKError!, callback: (() -> Void)?, callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "ErrorViewController", bundle: ResourceManager.shared.getBundle())
@@ -45,29 +37,6 @@ internal class ErrorViewController: MercadoPagoUIViewController {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override open func trackInfo() {
-//        var metadata: [String: String] = [:]
-//
-//        if let statusError = error.apiException?.status {
-//            metadata[TrackingPaths.METADATA_ERROR_STATUS] = String(describing: statusError)
-//        }
-//        if let causeArray = error.apiException?.cause, causeArray.count > 0 {
-//            if !String.isNullOrEmpty(causeArray[0].code) {
-//                metadata[TrackingPaths.METADATA_ERROR_CODE] = causeArray[0].code
-//            }
-//        }
-//
-//        if !String.isNullOrEmpty(error.requestOrigin) {
-//            metadata[TrackingPaths.METADATA_ERROR_REQUEST] = error.requestOrigin
-//        }
-//
-//        if !String.isNullOrEmpty(error.message) {
-//            metadata["error_message"] = error.message
-//        }
-//
-//        MPXTracker.sharedInstance.trackScreen(screenName: screenName, properties: metadata)
     }
 
     override open func viewDidLoad() {
@@ -97,10 +66,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackErrorEvent()
-    }
-
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        trackScreenView()
     }
 
     @objc internal func invokeCallback() {
@@ -125,26 +91,25 @@ internal class ErrorViewController: MercadoPagoUIViewController {
 
 // MARK: Tracking
 extension ErrorViewController {
+
     func trackErrorEvent() {
         var properties: [String: Any] = [:]
-        properties["path"] = screenName
-        properties["style"] = "screen"
-        properties["id"] = "px_generic_error"
-        properties["message"] = "Hubo un error"
-        properties["attributable_to"] = "mercadopago"
+        properties["path"] = TrackingPaths.Screens.getErrorPath()
+        properties["style"] = Tracking.Style.screen
+        properties["id"] = Tracking.Error.Id.genericError
+        properties["message"] = "Hubo un error".localized
+        properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
 
         var extraDic: [String: Any] = [:]
-        extraDic["api_url"] =  error.requestOrigin
-        extraDic["retry_available"] = error.retry ?? false
-
-        if let cause = error.apiException?.cause?.first {
-            if !String.isNullOrEmpty(cause.code) {
-                extraDic["api_status_code"] = cause.code
-                extraDic["api_error_message"] = cause.causeDescription
-            }
-        }
-
+        extraDic["api_error"] = error.getErrorForTracking()
         properties["extra_info"] = extraDic
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+        trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
+    }
+
+    func trackScreenView() {
+        var properties: [String: Any] = [:]
+        properties["api_error"] = error.getErrorForTracking()
+        properties["error_message"] = "Hubo un error".localized
+        trackScreen(path: TrackingPaths.Screens.getErrorPath(), properties: properties)
     }
 }

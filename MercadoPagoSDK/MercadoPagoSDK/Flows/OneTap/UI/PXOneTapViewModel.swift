@@ -16,30 +16,6 @@ final class PXOneTapViewModel: PXReviewViewModel {
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     var paymentMethodPlugins: [PXPaymentMethodPlugin]?
     var items: [PXItem] = [PXItem]()
-
-    override func trackInfo() {
-        var properties: [String: Any] = [:]
-        properties["available_methods"] = getAvailablePaymentMethodForTracking()
-        properties["total_amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
-        properties["discount"] = amountHelper.getDiscountForTracking()
-        var itemsDic: [Any] = []
-        for item in amountHelper.preference.items {
-            var itemDic: [String: Any] = [:]
-
-            var idItemDic: [String: Any] = [:]
-            idItemDic["id"] = item.id
-            idItemDic["description"] = item.getDescription()
-            idItemDic["price"] = item.getUnitPrice()
-            itemDic["item"] = idItemDic
-            itemDic["quantity"] = item.getQuantity()
-            itemDic["currency_id"] = SiteManager.shared.getCurrency().id
-            itemsDic.append(itemDic)
-        }
-        properties["items"] = itemsDic
-
-        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: properties)
-    }
 }
 
 // MARK: ViewModels Publics.
@@ -228,97 +204,5 @@ extension PXOneTapViewModel {
             }
         }
         return text
-    }
-}
-
-// MARK: Tracking
-extension PXOneTapViewModel {
-    func getAvailablePaymentMethodForTracking() -> [Any] {
-        var dic: [Any] = []
-        if let expressData = expressData {
-            let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
-            for expressItem in expressData {
-                if let savedCard = expressItem.oneTapCard {
-                    var savedCardDic: [String: Any] = [:]
-                    savedCardDic["payment_method_type"] = expressItem.paymentTypeId
-                    savedCardDic["payment_method_id"] = expressItem.paymentMethodId
-                    var extraInfo: [String: Any] = [:]
-                    extraInfo["card_id"] = savedCard.cardId
-                    extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
-                    extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
-
-                    if let issuerId = savedCard.cardUI?.issuerId {
-                        extraInfo["issuer_id"] = Int(issuerId)
-                    }
-                    savedCardDic["extra_info"] = extraInfo
-                    dic.append(savedCardDic)
-                } else if let accountMoney = expressItem.accountMoney {
-                    var accountMoneyDic: [String: Any] = [:]
-                    accountMoneyDic["payment_method_type"] = expressItem.paymentTypeId
-                    accountMoneyDic["payment_method_id"] = expressItem.paymentMethodId
-                    var extraInfo: [String: Any] = [:]
-                    extraInfo["balance"] = accountMoney.availableBalance
-                    accountMoneyDic["extra_info"] = extraInfo
-                    dic.append(accountMoneyDic)
-                }
-            }
-        }
-        return dic
-    }
-
-    func trackSwipe() {
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.OneTap.getSwipePath())
-    }
-
-    func trackTapBackEvent() {
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.OneTap.getAbortPath())
-    }
-
-    func trackInstallmentsView(installmentData: PXInstallment, selectedCard: PXCardSliderViewModel) {
-        var properties: [String: Any] = [:]
-        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.id
-        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.paymentTypeId
-        properties["card_id"] =  selectedCard.cardId
-        if let issuerId = amountHelper.paymentData.issuer?.id {
-            properties["issuer_id"] = Int(issuerId)
-        }
-        properties["total_amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
-        var dic: [Any] = []
-        for payerCost in installmentData.payerCosts {
-            dic.append(payerCost.getPayerCostForTracking())
-        }
-        properties["available_installments"] = dic
-        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapInstallmentsPath(), properties: properties)
-    }
-
-    func trackConfirmEvent(selectedCard: PXCardSliderViewModel) {
-        guard let paymentMethod = amountHelper.paymentData.paymentMethod else {
-            return
-        }
-        let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
-
-        var properties: [String: Any] = [:]
-        if paymentMethod.isCard {
-            properties["payment_method_type"] = paymentMethod.paymentTypeId
-            properties["payment_method_id"] = paymentMethod.id
-            properties["review_type"] = "one_tap"
-            var extraInfo: [String: Any] = [:]
-            extraInfo["card_id"] = selectedCard.cardId
-            extraInfo["has_esc"] = cardIdsEsc.contains(selectedCard.cardId ?? "")
-            extraInfo["selected_installment"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
-            if let issuerId = amountHelper.paymentData.issuer?.id {
-                extraInfo["issuer_id"] = Int(issuerId)
-            }
-            properties["extra_info"] = extraInfo
-        } else {
-            properties["payment_method_type"] = paymentMethod.id
-            properties["payment_method_id"] = paymentMethod.id
-            properties["review_type"] = "one_tap"
-            var extraInfo: [String: Any] = [:]
-            extraInfo["balance"] = selectedCard.accountMoneyBalance
-            properties["extra_info"] = extraInfo
-        }
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getConfirmPath(), properties: properties)
     }
 }
