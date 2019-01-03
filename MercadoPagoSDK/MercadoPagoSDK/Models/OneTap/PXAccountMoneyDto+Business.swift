@@ -9,6 +9,7 @@ import Foundation
 
 /// :nodoc:
 extension PXAccountMoneyDto: PaymentMethodOption {
+
     func getPaymentType() -> String {
         return PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
