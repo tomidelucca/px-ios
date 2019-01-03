@@ -46,20 +46,15 @@ final class PXOneTapViewModel: PXReviewViewModel {
 extension PXOneTapViewModel {
     func createCardSliderViewModel() {
         var sliderModel: [PXCardSliderViewModel] = []
-        let currency = SiteManager.shared.getCurrency()
-        let amTitle: String = "onetap_am_total_balance".localized_beta
         guard let expressNode = expressData else { return }
         for targetNode in expressNode {
-
-            // Caso account money
+            //  Account money
             if let accountMoney = targetNode.accountMoney {
-                let displayAmount = Utils.getAmountFormated(amount: accountMoney.availableBalance, forCurrency: currency)
-                let cardData = PXCardDataFactory().create(cardName: "\(amTitle) \(displayAmount)", cardNumber: "", cardCode: "", cardExpiration: "")
+                let displayTitle = accountMoney.cardTitle ?? ""
+                let cardData = PXCardDataFactory().create(cardName: displayTitle, cardNumber: "", cardCode: "", cardExpiration: "")
                 let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
-                if accountMoney.invested {
-                    viewModelCard.displayMessage = "onetap_invested_account_money".localized_beta
-                }
+                viewModelCard.displayMessage = accountMoney.sliderTitle
                 sliderModel.append(viewModelCard)
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {

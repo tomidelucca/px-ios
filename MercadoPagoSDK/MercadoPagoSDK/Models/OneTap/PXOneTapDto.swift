@@ -33,9 +33,8 @@ open class PXOneTapDto: NSObject, Codable {
         let oneTapCard: PXOneTapCardDto? = try container.decodeIfPresent(PXOneTapCardDto.self, forKey: .oneTapCard)
         let paymentMethodId: String = try container.decode(String.self, forKey: .paymentMethodId)
         let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
-        let accountMoney: PXAccountMoneyDto? = try container.decodeIfPresent(PXAccountMoneyDto.self, forKey: .accountMoney)
-
-        self.init(paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, oneTapCard: oneTapCard, accountMoney: accountMoney)
+        let aMoney: PXAccountMoneyDto? = try container.decodeIfPresent(PXAccountMoneyDto.self, forKey: .accountMoney)
+        self.init(paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, oneTapCard: oneTapCard, accountMoney: aMoney)
     }
 
     public func encode(to encoder: Encoder) throws {

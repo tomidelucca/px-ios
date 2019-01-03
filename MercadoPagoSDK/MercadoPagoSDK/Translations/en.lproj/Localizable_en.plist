@@ -130,13 +130,13 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string> of discount</string>
 	</dict>
-    <key>payment_result_screen_congrats_copy_button</key>
-    <dict>
-        <key>comment</key>
-        <string>Texto de snack bar al copiar</string>
-        <key>value</key>
-        <string>Done! Copied.</string>
-    </dict>
+	<key>payment_result_screen_congrats_copy_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Texto de snack bar al copiar</string>
+		<key>value</key>
+		<string>Done! Copied.</string>
+	</dict>
 	<key>payment_result_screen_congrats_finish_button</key>
 	<dict>
 		<key>comment</key>
@@ -193,13 +193,13 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Change payment method</string>
 	</dict>
-    <key>review_change_payer_action</key>
-    <dict>
-        <key>comment</key>
-        <string></string>
-        <key>value</key>
-        <string>Change</string>
-    </dict>
+	<key>review_change_payer_action</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Change</string>
+	</dict>
 	<key>bank_deal_details_title</key>
 	<dict>
 		<key>comment</key>
@@ -228,13 +228,6 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Something went wrong</string>
 	</dict>
-	<key>onetap_am_total_balance</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>Total in Mercado Pago:</string>
-	</dict>
 	<key>onetap_purchase_summary_title</key>
 	<dict>
 		<key>comment</key>
@@ -262,13 +255,6 @@ Or if you prefer, you can choose another payment method.</string>
 		<string></string>
 		<key>value</key>
 		<string>Select the installment plan</string>
-	</dict>
-	<key>onetap_invested_account_money</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>You are using invested money</string>
 	</dict>
 	<key>total_row_title_percent_off</key>
 	<dict>
