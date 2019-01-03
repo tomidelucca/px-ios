@@ -42,7 +42,7 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         case cards
         case defaultOption = "default_option"
         case expressCho = "express"
-        case discountConfigurations = "discount_configurations"
+        case discountConfigurations = "discounts_configurations"
         case selectedAmountConfiguration = "selected_amount_configuration"
     }
 

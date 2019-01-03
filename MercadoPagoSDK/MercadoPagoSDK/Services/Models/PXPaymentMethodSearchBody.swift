@@ -28,7 +28,7 @@ class PXPaymentMethodSearchBody: Codable {
         case privateKey
         case email
         case marketplace
-        case productId
+        case productId = "product_id"
         case labels
         case charges
     }

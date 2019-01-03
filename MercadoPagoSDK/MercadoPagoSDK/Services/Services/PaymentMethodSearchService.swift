@@ -43,8 +43,6 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
     internal func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: [String], excludedPaymentMethodIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, site: PXSite, payer: PXPayer, language: String, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, success: @escaping (_ paymentMethodSearch: PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
 
-        self.baseURL = "http://private-ec80b-matiasromar.apiary-mock.com/mercadopago"
-
         var params =  MercadoPagoServices.getParamsPublicKey(merchantPublicKey)
 
         params.paramsAppend(key: ApiParams.AMOUNT, value: String(amount))

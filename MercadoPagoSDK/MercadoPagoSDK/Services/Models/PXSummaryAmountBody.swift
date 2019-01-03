@@ -49,7 +49,7 @@ class PXSummaryAmountBody: Codable {
         case paymentMethodId = "payment_method_id"
         case paymentType = "payment_type"
         case bin = "bin"
-        case issuerId = "issuer.id"
+        case issuerId = "issuer_id"
         case labels
         case defaultInstallments = "default_installments"
         case differentialPricingId = "differential_pricing_id"
