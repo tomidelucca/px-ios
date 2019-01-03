@@ -41,7 +41,7 @@ class PXTermsAndConditionView: PXComponentView {
 
         addSubview(termsAndConditionsText)
 
-        let URLAttribute: [String: Any] = [NSAttributedStringKey.font.rawValue: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor.rawValue: ThemeManager.shared.secondaryColor()]
+        let URLAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: ThemeManager.shared.secondaryColor()]
 
         termsAndConditionsText.linkTextAttributes = URLAttribute
 
@@ -73,18 +73,18 @@ extension PXTermsAndConditionView {
 
         let termsAndConditionsText = "review_terms_and_conditions".localized_beta
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
+        let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: SCREEN_TITLE.localized)
 
-        mutableAttributedString.addAttribute(NSAttributedStringKey.link, value: SiteManager.shared.getTermsAndConditionsURL(), range: tycLinkRange)
+        mutableAttributedString.addAttribute(NSAttributedString.Key.link, value: SiteManager.shared.getTermsAndConditionsURL(), range: tycLinkRange)
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         style.lineSpacing = CGFloat(3)
 
-        mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length: mutableAttributedString.length))
+        mutableAttributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: mutableAttributedString.length))
         return mutableAttributedString
     }
 }

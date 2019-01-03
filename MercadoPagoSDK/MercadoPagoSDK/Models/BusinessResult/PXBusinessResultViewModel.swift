@@ -73,7 +73,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     func getAttributedTitle() -> NSAttributedString {
         let title = businessResult.getTitle()
-        let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]
+        let attributes = [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]
         let attributedString = NSAttributedString(string: title, attributes: attributes)
         return attributedString
     }

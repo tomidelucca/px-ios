@@ -93,10 +93,10 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
 
     internal func loadMPStyles() {
         if self.navigationController != nil {
-            var titleDict: [NSAttributedStringKey: Any] = [:]
+            var titleDict: [NSAttributedString.Key: Any] = [:]
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: navBarFontSize)
-            titleDict = [NSAttributedStringKey.foregroundColor: navBarTextColor, NSAttributedStringKey.font: fontChosed]
+            titleDict = [NSAttributedString.Key.foregroundColor: navBarTextColor, NSAttributedString.Key.font: fontChosed]
 
             if titleDict.count > 0 {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict
@@ -166,7 +166,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     internal func showLoading() {
         loadingView = PXComponentFactory.Loading.instance().showInView(view)
         if let lView = loadingView {
-            view.bringSubview(toFront: lView)
+            view.bringSubviewToFront(lView)
         }
     }
 
@@ -193,7 +193,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
             }
 
             let font: UIFont = Utils.getFont(size: navBarFontSize)
-            let titleDict: [NSAttributedStringKey: Any] = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedStringKey.font: font]
+            let titleDict: [NSAttributedString.Key: Any] = [NSAttributedString.Key.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedString.Key.font: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict
         }
 

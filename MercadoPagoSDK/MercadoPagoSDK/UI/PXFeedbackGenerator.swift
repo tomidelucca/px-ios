@@ -13,7 +13,7 @@ struct PXFeedbackGenerator {
         return UIDevice.current.batteryLevel
     }
 
-    private static func getBatteryState() -> UIDeviceBatteryState {
+    private static func getBatteryState() -> UIDevice.BatteryState {
         return UIDevice.current.batteryState
     }
 
@@ -22,11 +22,10 @@ struct PXFeedbackGenerator {
     }
 
     // UINotificationFeedbackGenerator
-    private static func executeNotificationFeedback(type: UINotificationFeedbackType) {
-        if #available(iOS 10.0, *) {
-            let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(type)
-        }
+    @available(iOS 10.0, *)
+    private static func executeNotificationFeedback(type: UINotificationFeedbackGenerator.FeedbackType) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(type)
     }
 
     // UISelectionFeedbackGenerator
@@ -38,11 +37,10 @@ struct PXFeedbackGenerator {
     }
 
     // UIImpactFeedbackGenerator
-    private static func executeImpactFeedback(style: UIImpactFeedbackStyle) {
-        if #available(iOS 10.0, *) {
-            let generator = UIImpactFeedbackGenerator(style: style)
-            generator.impactOccurred()
-        }
+    @available(iOS 10.0, *)
+    private static func executeImpactFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: style)
+        generator.impactOccurred()
     }
 }
 
@@ -50,19 +48,25 @@ struct PXFeedbackGenerator {
 extension PXFeedbackGenerator {
     static func successNotificationFeedback() {
         if shouldGiveFeedback() {
-            executeNotificationFeedback(type: .success)
+            if #available(iOS 10.0, *) {
+                executeNotificationFeedback(type: .success)
+            }
         }
     }
 
     static func warningNotificationFeedback() {
         if shouldGiveFeedback() {
-            executeNotificationFeedback(type: .warning)
+            if #available(iOS 10.0, *) {
+                executeNotificationFeedback(type: .warning)
+            }
         }
     }
 
     static func errorNotificationFeedback() {
         if shouldGiveFeedback() {
-            executeNotificationFeedback(type: .error)
+            if #available(iOS 10.0, *) {
+                executeNotificationFeedback(type: .error)
+            }
         }
     }
 }
@@ -80,19 +84,25 @@ extension PXFeedbackGenerator {
 extension PXFeedbackGenerator {
     static func lightImpactFeedback() {
         if shouldGiveFeedback() {
-            executeImpactFeedback(style: .light)
+            if #available(iOS 10.0, *) {
+                executeImpactFeedback(style: .light)
+            }
         }
     }
 
     static func mediumImpactFeedback() {
         if shouldGiveFeedback() {
-            executeImpactFeedback(style: .medium)
+            if #available(iOS 10.0, *) {
+                executeImpactFeedback(style: .medium)
+            }
         }
     }
 
     static func heavyImpactFeedback() {
         if shouldGiveFeedback() {
-            executeImpactFeedback(style: .heavy)
+            if #available(iOS 10.0, *) {
+                executeImpactFeedback(style: .heavy)
+            }
         }
     }
 }

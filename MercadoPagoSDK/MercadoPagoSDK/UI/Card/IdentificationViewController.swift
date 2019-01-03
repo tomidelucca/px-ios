@@ -51,10 +51,10 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     override func loadMPStyles() {
-        var titleDict: [NSAttributedStringKey: Any] = [:]
+        var titleDict: [NSAttributedString.Key: Any] = [:]
         if self.navigationController != nil {
             let font = Utils.getFont(size: 18)
-            titleDict = [NSAttributedStringKey.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedStringKey.font: font]
+            titleDict = [NSAttributedString.Key.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedString.Key.font: font]
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict
                 self.navigationItem.hidesBackButton = true
@@ -77,10 +77,10 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         toolBar.sizeToFit()
 
         let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(IdentificationViewController.donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
 
         let font = Utils.getFont(size: 14)
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: font], for: UIControlState())
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: font], for: UIControl.State())
 
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -132,7 +132,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
 
     @objc func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height + 61 // Keyboard + Vista, dejo el mismo nombre de variable para tener consistencia entre clases, pero esta constante no representa la altura real del teclado, sino una altura que varia dependiendo de la altura del teclado
             self.view.layoutIfNeeded()
             self.view.setNeedsUpdateConstraints()
@@ -141,7 +141,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         identificationCard = IdentificationCardView()
 
         self.identificationView = UIView()
@@ -175,7 +175,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         self.view.backgroundColor = ThemeManager.shared.getMainColor()
         numberTextField.autocorrectionType = UITextAutocorrectionType.no
         numberTextField.keyboardType = UIKeyboardType.numberPad
-        numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
+        numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControl.Event.editingChanged)
         self.setupInputAccessoryView()
         identificationType =  self.identificationTypes[0]
         textField.text = self.identificationTypes[0].name

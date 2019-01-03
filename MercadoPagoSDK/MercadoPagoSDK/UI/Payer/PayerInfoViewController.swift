@@ -39,7 +39,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         self.viewModel = viewModel
         self.view.backgroundColor = ThemeManager.shared.getMainColor()
         self.callback = callback
-        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -256,17 +256,17 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     func presentIdentificationComponent() {
-        self.view.bringSubview(toFront: self.identificationComponent!)
+        self.view.bringSubviewToFront(self.identificationComponent!)
         self.identificationComponent?.componentBecameFirstResponder()
         self.currentInput = self.identificationComponent
     }
     func presentFirstNameComponent() {
-        self.view.bringSubview(toFront: self.firstNameComponent!)
+        self.view.bringSubviewToFront(self.firstNameComponent!)
         self.firstNameComponent?.componentBecameFirstResponder()
         self.currentInput = self.firstNameComponent
     }
     func presentSecondNameComponent() {
-        self.view.bringSubview(toFront: self.secondNameComponent!)
+        self.view.bringSubviewToFront(self.secondNameComponent!)
         self.secondNameComponent?.componentBecameFirstResponder()
         self.currentInput = self.secondNameComponent
     }
@@ -279,7 +279,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
 
     @objc func keyboardWasShown(_ notification: NSNotification) {
         let info = notification.userInfo!
-        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         self.keyboardFrame = keyboardFrame
         setupView()
     }

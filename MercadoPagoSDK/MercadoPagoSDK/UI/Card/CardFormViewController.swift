@@ -92,10 +92,10 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: 18)
-            titleDict = [NSAttributedStringKey.foregroundColor: NAVIGATION_BAR_TEXT_COLOR, NSAttributedStringKey.font: fontChosed]
+            titleDict = [NSAttributedString.Key.foregroundColor: NAVIGATION_BAR_TEXT_COLOR, NSAttributedString.Key.font: fontChosed]
 
             if self.navigationController != nil {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [NSAttributedStringKey: AnyObject]
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [NSAttributedString.Key: AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController?.navigationBar.barTintColor = NAVIGATION_BAR_COLOR
                 self.navigationController?.navigationBar.removeBottomLine()
@@ -103,7 +103,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                 self.cardBackground.backgroundColor = NAVIGATION_BAR_COLOR
 
                 if viewModel.showBankDeals() {
-                    let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
+                    let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItem.Style.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                     promocionesButton.tintColor = NAVIGATION_BAR_TEXT_COLOR
                     self.navigationItem.rightBarButtonItem = promocionesButton
                 }
@@ -136,7 +136,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         if self.navigationController != nil {
             if viewModel.showBankDeals() {
-                let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
+                let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItem.Style.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                 promocionesButton.tintColor = NAVIGATION_BAR_TEXT_COLOR
                 self.navigationItem.rightBarButtonItem = promocionesButton
             }
@@ -161,7 +161,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         PXNotificationManager.SuscribeTo.cardFormReset(self, selector: #selector(reset))
         if viewModel.bankDealsEnabled {
             self.getPromos()
@@ -170,7 +170,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
         textBox.autocorrectionType = UITextAutocorrectionType.no
         textBox.keyboardType = UIKeyboardType.numberPad
-        textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
+        textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControl.Event.editingChanged)
         setupInputAccessoryView()
         textBox.delegate = self
         cardFront = CardFrontView()
@@ -211,7 +211,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
         textBox.placeholder = getTextboxPlaceholder()
     }
     @objc func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height - 40
             self.view.layoutIfNeeded()
             self.view.setNeedsUpdateConstraints()
@@ -361,7 +361,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
     fileprivate func prepareCVVLabelForEdit() {
 
         if !self.viewModel.isAmexCard(self.cardNumberLabel!.text!) {
-            UIView.transition(from: self.cardFront!, to: self.cardBack!, duration: viewModel.animationDuration, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: { (_) -> Void in
+            UIView.transition(from: self.cardFront!, to: self.cardBack!, duration: viewModel.animationDuration, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: { (_) -> Void in
                 self.updateLabelsFontColors()
             })
             cvvLabel = cardBack?.cardCVV
@@ -574,7 +574,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
         case cvvLabel! :
             if (self.viewModel.getGuessedPM()?.secCodeInBack())! {
-                UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: viewModel.animationDuration, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
+                UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: viewModel.animationDuration, options: UIView.AnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
                 })
             }
 
@@ -586,7 +586,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
 
     @objc func reset() {
         if (self.viewModel.getGuessedPM()?.secCodeInBack())! {
-            UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 0, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
+            UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: 0, options: UIView.AnimationOptions.transitionFlipFromRight, completion: { (_) -> Void in
             })
         }
         self.cardNumberLabel?.clearText()
@@ -844,7 +844,7 @@ internal class CardFormViewController: MercadoPagoUIViewController, UITextFieldD
                 let errorCVV = viewModel.cardToken!.validateSecurityCode()
                 if (errorCVV) != nil {
                     markErrorLabel(cvvLabel!)
-                    UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: viewModel.animationDuration, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: nil)
+                    UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: viewModel.animationDuration, options: UIView.AnimationOptions.transitionFlipFromLeft, completion: nil)
                     return
                 }
             }
