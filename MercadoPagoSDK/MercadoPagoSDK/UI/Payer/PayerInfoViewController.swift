@@ -126,6 +126,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         errorLabel!.textAlignment = .center
         errorLabel!.font = errorLabel!.font.withSize(12)
         self.toolbar?.addSubview(errorLabel!)
+        trackError(errorMessage: message, currentStep: viewModel.currentStep)
     }
 
     func hideErrorMessage() {
@@ -223,7 +224,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     fileprivate func executeStep(_ currentStep: PayerInfoFlowStep) {
-        viewModel.trackStep(currentStep: currentStep)
+        trackStep(currentStep: currentStep)
         switch currentStep {
         case .SCREEN_IDENTIFICATION:
              self.presentIdentificationComponent()
@@ -251,6 +252,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     @objc func leftArrowKeyTapped() {
+        trackBackEvent()
         let currentStep = self.viewModel.getPreviousStep()
         executeStep(currentStep)
     }

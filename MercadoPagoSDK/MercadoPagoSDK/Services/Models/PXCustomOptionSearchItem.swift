@@ -13,6 +13,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var _description: String?
     open var paymentMethodId: String?
     open var paymentTypeId: String?
+    open var comment: String?
 
     public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?) {
         self.id = id
@@ -21,11 +22,20 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.paymentTypeId = paymentTypeId
     }
 
+    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, comment: String?) {
+        self.id = id
+        self._description = description
+        self.paymentMethodId = paymentMethodId
+        self.paymentTypeId = paymentTypeId
+        self.comment = comment
+    }
+
     public enum PXCustomOptionSearchItemKeys: String, CodingKey {
         case id
         case description
         case paymentMethodId = "payment_method_id"
         case paymentTypeId = "payment_type_id"
+        case comment = "comment"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -34,8 +44,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         let description: String? = try container.decodeIfPresent(String.self, forKey: .description)
         let paymentMethodId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodId)
         let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
-
-        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId)
+        let comment: String? = try container.decodeIfPresent(String.self, forKey: .comment)
+        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, comment: comment)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +54,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         try container.encodeIfPresent(self._description, forKey: .description)
         try container.encodeIfPresent(self.paymentMethodId, forKey: .paymentMethodId)
         try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
+        try container.encodeIfPresent(self.comment, forKey: .comment)
     }
 
     open func toJSONString() throws -> String? {

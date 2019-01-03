@@ -135,4 +135,8 @@ import UIKit
     func canBeClone() -> Bool {
         return false
     }
+
+    func getPaymentType() -> String {
+        return paymentMethodTypeId
+    }
 }

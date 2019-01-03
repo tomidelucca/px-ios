@@ -10,7 +10,6 @@ import UIKit
 
 final class PXDiscountDetailViewController: MercadoPagoUIViewController {
 
-    private var trackingScreenName: String = TrackingPaths.Screens.getDiscountDetailPath()
     private var amountHelper: PXAmountHelper
     private let fontSize: CGFloat = PXLayout.S_FONT
     private let baselineOffSet: Int = 6
@@ -20,15 +19,15 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     private let currency = SiteManager.shared.getCurrency()
     let contentView: PXComponentView = PXComponentView()
 
-    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false, screenName: String = TrackingPaths.Screens.getDiscountDetailPath()) {
+    init(amountHelper: PXAmountHelper, shouldShowTitle: Bool = false) {
         self.amountHelper = amountHelper
         self.shouldShowTitle = shouldShowTitle
-        self.trackingScreenName = screenName
         super.init(nibName: nil, bundle: nil)
     }
 
-    override func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenName: trackingScreenName)
+    override public func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -179,5 +178,15 @@ extension PXDiscountDetailViewController {
         let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
         let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
         return string
+    }
+}
+
+// MARK: Tracking
+extension PXDiscountDetailViewController {
+    func trackScreen() {
+        var properties: [String: Any] = [:]
+        properties["discount"] = amountHelper.getDiscountForTracking()
+
+        trackScreen(path: TrackingPaths.Screens.getDiscountDetailPath(), properties: properties)
     }
 }

@@ -10,9 +10,6 @@ import UIKit
 
 class PXReviewViewController: PXComponentContainerViewController {
 
-    // MARK: Tracking
-    override open var screenName: String { return TrackingPaths.Screens.getReviewAndConfirmPath() }
-
     var footerView: UIView!
     var floatingButtonView: UIView!
 
@@ -54,9 +51,14 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED, let dynamicViewController = self.viewModel.getDynamicViewController() {
-            self.present(dynamicViewController, animated: true) { [weak self] in
-                self?.DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED = true
+        if !DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED {
+
+            trackScreen(path: TrackingPaths.Screens.getReviewAndConfirmPath(), properties: viewModel.getScreenProperties())
+
+            if let dynamicViewController = self.viewModel.getDynamicViewController() {
+                self.present(dynamicViewController, animated: true) { [weak self] in
+                    self?.DID_ENTER_DYNAMIC_VIEW_CONTROLLER_SHOWED = true
+                }
             }
         }
     }
@@ -86,10 +88,6 @@ class PXReviewViewController: PXComponentContainerViewController {
         super.viewDidDisappear(animated)
         loadingButtonComponent?.resetButton()
         loadingFloatingButtonComponent?.resetButton()
-    }
-
-    override func trackInfo() {
-        self.viewModel.trackInfo()
     }
 
     func update(viewModel: PXReviewViewModel) {
@@ -280,7 +278,7 @@ extension PXReviewViewController {
     private func getPaymentMethodComponentView() -> UIView? {
         let action = PXAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
-                self?.viewModel.trackChangePaymentMethodEvent()
+                self?.trackEvent(path: TrackingPaths.Events.ReviewConfirm.getChangePaymentMethodPath())
                 if let callBackAction = self?.changePaymentMethodCallback {
                     PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
                     PXNotificationManager.UnsuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout)
@@ -410,7 +408,7 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
     private func confirmPayment() {
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
-        self.viewModel.trackConfirmActionEvent()
+        trackEvent(path: TrackingPaths.Events.ReviewConfirm.getConfirmPath(), properties: viewModel.getConfirmEventProperties())
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }

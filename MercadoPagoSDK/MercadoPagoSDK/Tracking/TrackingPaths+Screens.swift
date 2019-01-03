@@ -11,7 +11,6 @@ import Foundation
 extension TrackingPaths {
 
     internal struct Screens {
-        private static let from = "#from="
         private static let refer = "#refer="
 
         // Review and Confirm Path
@@ -19,9 +18,9 @@ extension TrackingPaths {
             return TrackingPaths.pxTrack + "/review/traditional"
         }
 
-        // Terms and condition review Path
-        static func getTermsAndCondiontionReviewPath() -> String {
-            return TrackingPaths.pxTrack + "/review/traditional/terms_and_conditions"
+        // Terms and condition Path
+        static func getTermsAndCondiontionPath() -> String {
+            return TrackingPaths.pxTrack + payments + "/terms_and_conditions"
         }
 
         // Bank Deaks Path
@@ -46,7 +45,7 @@ extension TrackingPaths {
 
         // Discount details path
         static func getDiscountDetailPath() -> String {
-            return TrackingPaths.pxTrack + payments + selectMethod + "/applied_discount"
+            return TrackingPaths.pxTrack + payments + "/applied_discount"
         }
 
         // Error path
@@ -55,8 +54,8 @@ extension TrackingPaths {
         }
 
         // Available payment methods paths
-        static func getAvailablePaymentMethodsPath(paymentTypeId: String) -> String {
-            return TrackingPaths.pxTrack + addPaymentMethod + "/" + paymentTypeId + "/number/error_more_info"
+        static func getAvailablePaymentMethodsPath() -> String {
+            return TrackingPaths.pxTrack + addPaymentMethod + "/number/error_more_info"
         }
 
         // Security Code Paths
@@ -77,8 +76,8 @@ extension TrackingPaths.Screens {
 
         static let cardForm = TrackingPaths.pxTrack + TrackingPaths.addPaymentMethod
 
-        static func getCardNumberPath(paymentTypeId: String) -> String {
-            return cardForm + "/" + paymentTypeId + number
+        static func getCardNumberPath() -> String {
+            return cardForm + number
         }
 
         static func getCardNamePath(paymentTypeId: String) -> String {
@@ -106,7 +105,7 @@ extension TrackingPaths.Screens {
         private static let name = "/name"
         private static let lastName = "/lastname"
 
-        private static let boleto = TrackingPaths.pxTrack + TrackingPaths.selectMethod + "/ticket"
+        private static let boleto = TrackingPaths.pxTrack + TrackingPaths.payments + TrackingPaths.selectMethod + "/ticket"
 
         static func getCpfPath() -> String {
             return boleto + cpf
@@ -149,7 +148,7 @@ extension TrackingPaths.Screens {
 extension TrackingPaths.Screens {
     internal struct PaymentVault {
         private static let ticket = "/ticket"
-        private static let cardType = "/select_card_type"
+        private static let cardType = "/cards"
 
         static func getPaymentVaultPath() -> String {
             return TrackingPaths.pxTrack + TrackingPaths.payments + TrackingPaths.selectMethod
@@ -174,10 +173,6 @@ extension TrackingPaths.Screens {
 
         static func getOneTapInstallmentsPath() -> String {
             return TrackingPaths.pxTrack + "/review/one_tap/installments"
-        }
-
-        static func getOneTapDiscountPath() -> String {
-            return TrackingPaths.pxTrack + "/review/one_tap/applied_discount"
         }
     }
 }

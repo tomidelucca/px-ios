@@ -117,3 +117,16 @@ extension PXPaymentPreference {
         return self
     }
 }
+
+// MARK: Tracking
+extension PXPaymentPreference {
+    func getPaymentPreferenceForTracking() -> [String: Any] {
+        var paymentPrefDic: [String: Any] = [:]
+        paymentPrefDic["max_installments"] = maxAcceptedInstallments
+        paymentPrefDic["default_installments"] = defaultInstallments
+        paymentPrefDic["excluded_payment_methdos_ids"] = excludedPaymentMethodIds
+        paymentPrefDic["excluded_payment_types_ids"] = excludedPaymentTypeIds
+        paymentPrefDic["card_id"] = cardId
+        return paymentPrefDic
+    }
+}

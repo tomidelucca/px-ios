@@ -32,4 +32,6 @@ internal protocol PaymentMethodOption {
     func isCard() -> Bool
 
     func isCustomerPaymentMethod() -> Bool
+
+    func getPaymentType() -> String
 }

@@ -5,16 +5,16 @@
 //  Created by Demian Tejo on 5/3/16.
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
-
 import UIKit
 
 internal class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    var tipoDeDocumentoLabel: UILabel!
     @IBOutlet weak var textField: HoshiTextField!
-    var numberDocLabel: UILabel!
+    @IBOutlet var typePicker: UIPickerView! = UIPickerView()
     @IBOutlet weak var numberTextField: HoshiTextField!
-
+    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
+    var numberDocLabel: UILabel!
+    var tipoDeDocumentoLabel: UILabel!
     var callback : (( PXIdentification) -> Void)?
     var errorExitCallback: (() -> Void)?
     var identificationTypes: [PXIdentificationType]!
@@ -22,17 +22,18 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
 
     //identification Masks
     var identificationMask = TextMaskFormater(mask: "XXXXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
-
     var defaultEditTextMask = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
 
     var toolbar: PXToolbar?
-
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
-
     var paymentMethod: PXPaymentMethod?
 
-    @IBOutlet var typePicker: UIPickerView! = UIPickerView()
+    var navItem: UINavigationItem?
+    var doneNext: UIBarButtonItem?
+    var donePrev: UIBarButtonItem?
+
+    var errorLabel: MPLabel?
 
     public init(identificationTypes: [PXIdentificationType], paymentMethod: PXPaymentMethod?, callback : @escaping (( _ identification: PXIdentification) -> Void), errorExitCallback: (() -> Void)?) {
         self.paymentMethod = paymentMethod
@@ -42,101 +43,8 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         self.errorExitCallback = errorExitCallback
     }
 
-    override func trackInfo() {
-        guard let cardType = paymentMethod?.paymentTypeId else {
-            return
-        }
-
-         MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.CardForm.getIdentificationPath(paymentTypeId: cardType))
-    }
-
-    override func loadMPStyles() {
-        var titleDict: [NSAttributedString.Key: Any] = [:]
-        if self.navigationController != nil {
-            let font = Utils.getFont(size: 18)
-            titleDict = [NSAttributedString.Key.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedString.Key.font: font]
-            if self.navigationController != nil {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict
-                self.navigationItem.hidesBackButton = true
-                self.navigationController?.navigationBar.tintColor = UIColor.white
-                self.navigationController?.navigationBar.barTintColor = ThemeManager.shared.getMainColor()
-                self.navigationController?.navigationBar.removeBottomLine()
-                self.navigationController?.navigationBar.isTranslucent = false
-                displayBackButton()
-            }
-        }
-        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 150, width: view.frame.width, height: 216))
-        pickerView.backgroundColor = UIColor.white
-        pickerView.showsSelectionIndicator = true
-        pickerView.backgroundColor = UIColor.white
-        pickerView.showsSelectionIndicator = true
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        let toolBar = PXToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.sizeToFit()
-
-        let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(IdentificationViewController.donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-
-        let font = Utils.getFont(size: 14)
-        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: font], for: UIControl.State())
-
-        toolBar.setItems([spaceButton, doneButton], animated: false)
-        toolBar.isUserInteractionEnabled = true
-
-        textField.inputView = pickerView
-        textField.inputAccessoryView = toolBar
-    }
-
-    open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
-        let backspace: String = ""
-
-        guard let identificationType = identificationType else {
-            return false
-        }
-        if identificationType.isNumberType(), !string.isNumber {
-            return false
-        }
-        if textField.text?.count == identificationType.maxLength {
-            return string == backspace
-        }
-        return true
-    }
-
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-        self.remask()
-    }
-
-    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.numberDocLabel.resignFirstResponder()
-        return true
-    }
-
-    @objc open func editingChanged(_ textField: UITextField) {
-        hideErrorMessage()
-        self.remask()
-        textField.text = defaultEditTextMask.textMasked(textField.text, remasked: true)
-    }
-
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc open func donePicker() {
-        textField.resignFirstResponder()
-        numberTextField.becomeFirstResponder()
-    }
-
-    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
-
-    @objc func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            self.keyboardHeightConstraint.constant = keyboardSize.height + 61 // Keyboard + Vista, dejo el mismo nombre de variable para tener consistencia entre clases, pero esta constante no representa la altura real del teclado, sino una altura que varia dependiendo de la altura del teclado
-            self.view.layoutIfNeeded()
-            self.view.setNeedsUpdateConstraints()
-        }
     }
 
     override open func viewDidLoad() {
@@ -183,6 +91,98 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         self.remask()
     }
 
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.numberTextField.becomeFirstResponder()
+        if let paymentMethod = paymentMethod {
+            var properties: [String: Any] = [:]
+            properties["payment_method_id"] = paymentMethod.id
+            trackScreen(path: TrackingPaths.Screens.CardForm.getIdentificationPath(paymentTypeId: paymentMethod.paymentTypeId), properties: properties, treatBackAsAbort: true)
+        }
+    }
+
+    override func loadMPStyles() {
+        var titleDict: [NSAttributedString.Key: Any] = [:]
+        if self.navigationController != nil {
+            let font = Utils.getFont(size: 18)
+            titleDict = [NSAttributedString.Key.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedString.Key.font: font]
+            if self.navigationController != nil {
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict
+                self.navigationItem.hidesBackButton = true
+                self.navigationController?.navigationBar.tintColor = UIColor.white
+                self.navigationController?.navigationBar.barTintColor = ThemeManager.shared.getMainColor()
+                self.navigationController?.navigationBar.removeBottomLine()
+                self.navigationController?.navigationBar.isTranslucent = false
+                displayBackButton()
+            }
+        }
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 150, width: view.frame.width, height: 216))
+        pickerView.backgroundColor = UIColor.white
+        pickerView.showsSelectionIndicator = true
+        pickerView.backgroundColor = UIColor.white
+        pickerView.showsSelectionIndicator = true
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        let toolBar = PXToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.sizeToFit()
+
+        let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(IdentificationViewController.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+
+        let font = Utils.getFont(size: 14)
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: font], for: UIControl.State())
+
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+
+        textField.inputView = pickerView
+        textField.inputAccessoryView = toolBar
+    }
+
+    open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let backspace: String = ""
+
+        guard let identificationType = identificationType else {
+            return false
+        }
+        if identificationType.isNumberType(), !string.isNumber {
+            return false
+        }
+        if textField.text?.count == identificationType.maxLength {
+            return string == backspace
+        }
+        return true
+    }
+
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        self.remask()
+    }
+
+    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.numberDocLabel.resignFirstResponder()
+        return true
+    }
+
+    @objc open func editingChanged(_ textField: UITextField) {
+        hideErrorMessage()
+        self.remask()
+        textField.text = defaultEditTextMask.textMasked(textField.text, remasked: true)
+    }
+
+    @objc open func donePicker() {
+        textField.resignFirstResponder()
+        numberTextField.becomeFirstResponder()
+    }
+
+    @objc func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            self.keyboardHeightConstraint.constant = keyboardSize.height + 61 // Keyboard + Vista, dejo el mismo nombre de variable para tener consistencia entre clases, pero esta constante no representa la altura real del teclado, sino una altura que varia dependiendo de la altura del teclado
+            self.view.layoutIfNeeded()
+            self.view.setNeedsUpdateConstraints()
+        }
+    }
+
     func getCardWidth() -> CGFloat {
         let widthTotal = UIScreen.main.bounds.size.width * 0.70
         if widthTotal < 512 {
@@ -202,15 +202,9 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         return ( getCardWidth() * 0.63 )
     }
 
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.numberTextField.becomeFirstResponder()
-    }
-
     open func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-   open
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if self.identificationTypes == nil {
@@ -236,10 +230,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         numberTextField.resignFirstResponder()
     }
 
-    var navItem: UINavigationItem?
-    var doneNext: UIBarButtonItem?
-    var donePrev: UIBarButtonItem?
-
     func setupInputAccessoryView() {
 
         if self.toolbar == nil {
@@ -261,7 +251,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
             self.toolbar = toolbar
         }
         numberTextField.inputAccessoryView = self.toolbar
-
     }
 
     @objc func rightArrowKeyTapped() {
@@ -277,8 +266,6 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         }
 
     }
-
-    var errorLabel: MPLabel?
 
     func showErrorMessage(_ errorMessage: String) {
 
@@ -298,7 +285,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
         numberTextField.setNeedsDisplay()
         numberTextField.resignFirstResponder()
         numberTextField.becomeFirstResponder()
-
+        trackError(errorMessage: errorMessage)
     }
 
     func hideErrorMessage() {
@@ -311,6 +298,7 @@ internal class IdentificationViewController: MercadoPagoUIViewController, UIText
     }
 
     @objc func leftArrowKeyTapped() {
+        trackBackEvent()
         self.navigationController?.popViewController(animated: false)
     }
 

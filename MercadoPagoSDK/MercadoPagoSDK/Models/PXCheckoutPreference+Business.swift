@@ -292,3 +292,18 @@ extension PXCheckoutPreference {
         return nil
     }
 }
+// MARK: Tracking
+extension PXCheckoutPreference {
+    func getCheckoutPrefForTracking() -> [String: Any] {
+        var checkoutPrefDic: [String: Any] = [:]
+
+        var itemsDic: [Any] = []
+        for item in items {
+            itemsDic.append(item.getItemForTracking())
+        }
+        checkoutPrefDic["items"] = itemsDic
+        checkoutPrefDic["payment_preference"] = paymentPreference.getPaymentPreferenceForTracking()
+
+        return checkoutPrefDic
+    }
+}

@@ -9,8 +9,6 @@
 import UIKit
 
 final class PXOneTapViewController: PXComponentContainerViewController {
-    // MARK: Tracking
-    override var screenName: String { return TrackingPaths.ScreenId.REVIEW_AND_CONFIRM_ONE_TAP }
 
     // MARK: Definitions
     lazy var itemViews = [UIView]()
@@ -75,8 +73,9 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         loadingButtonComponent?.resetButton()
     }
 
-    override func trackInfo() {
-        self.viewModel.trackInfo()
+    override public func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: viewModel.getOneTapScreenProperties())
     }
 
     func update(viewModel: PXOneTapViewModel) {
@@ -170,11 +169,6 @@ extension PXOneTapViewController {
         scrollView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false
 
-        // Track back action.
-        callbackBack = { [weak self] in
-            self?.viewModel.trackTapBackEvent()
-        }
-
         addCardSlider(inContainerView: cardSliderContentView)
     }
 }
@@ -229,7 +223,6 @@ extension PXOneTapViewController {
 // MARK: User Actions.
 extension PXOneTapViewController {
     @objc func shouldChangePaymentMethod() {
-        viewModel.trackChangePaymentMethodEvent()
         callbackPaymentData(viewModel.getClearPaymentData())
     }
 
@@ -237,16 +230,18 @@ extension PXOneTapViewController {
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         if let selectedCardItem = selectedCard {
-            viewModel.trackConfirmEvent(selectedCard: selectedCardItem)
+            let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem)
+            trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
         }
         self.hideBackButton()
         self.hideNavBar()
         self.callbackConfirm(self.viewModel.amountHelper.paymentData)
     }
 
-    func resetButton() {
+    func resetButton(error: MPSDKError) {
         loadingButtonComponent?.resetButton()
         loadingButtonComponent?.showErrorToast()
+        trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: viewModel.getErrorProperties(error: error))
     }
 
     private func cancelPayment() {
@@ -257,7 +252,7 @@ extension PXOneTapViewController {
 // MARK: Summary delegate.
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
     func didTapSummary() {
-        let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper, screenName: TrackingPaths.Screens.OneTap.getOneTapDiscountPath())
+        let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper)
 
         if viewModel.amountHelper.discount != nil {
             PXComponentFactory.Modal.show(viewController: discountViewController, title: viewModel.amountHelper.discount?.getDiscountDescription()) {
@@ -268,7 +263,6 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
             }
         } else if viewModel.amountHelper.consumedDiscount {
             PXComponentFactory.Modal.show(viewController: discountViewController, title: "modal_title_consumed_discount".localized_beta) {
-
                 if UIDevice.isSmallDevice() {
                     self.setupNavigationBar()
                 }
@@ -282,7 +276,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     func newCardDidSelected(targetModel: PXCardSliderViewModel) {
         selectedCard = targetModel
 
-        viewModel.trackSwipe()
+        trackEvent(path: TrackingPaths.Events.OneTap.getSwipePath())
 
         // Installments arrow animation
         if targetModel.shouldShowArrow {
@@ -370,7 +364,8 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         }
 
         if let selectedCardItem = selectedCard {
-            self.viewModel.trackInstallmentsView(installmentData: installmentData, selectedCard: selectedCardItem)
+            let properties = self.viewModel.getInstallmentsScreenProperties(installmentData: installmentData, selectedCard: selectedCardItem)
+            trackScreen(path: TrackingPaths.Screens.OneTap.getOneTapInstallmentsPath(), properties: properties)
         }
 
         PXFeedbackGenerator.selectionFeedback()

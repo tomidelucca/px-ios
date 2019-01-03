@@ -23,6 +23,8 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         self.cards = cards
         self.defaultOption = defaultOption
         self.expressCho = expressCho
+        super.init()
+        self.populateAMDescription()
     }
 
     public enum PXPaymentMethodSearchKeys: String, CodingKey {
@@ -42,7 +44,6 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         let cards: [PXCard]? = try container.decodeIfPresent([PXCard].self, forKey: .cards)
         let defaultOption: PXPaymentMethodSearchItem? = try container.decodeIfPresent(PXPaymentMethodSearchItem.self, forKey: .defaultOption)
         let expressCho: [PXOneTapDto]? = try container.decodeIfPresent([PXOneTapDto].self, forKey: .expressCho)
-
         self.init(paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: cards, defaultOption: defaultOption, oneTap: nil, expressCho: expressCho)
     }
 
@@ -69,5 +70,26 @@ open class PXPaymentMethodSearch: NSObject, Codable {
 
     open class func fromJSON(data: Data) throws -> PXPaymentMethodSearch {
         return try JSONDecoder().decode(PXPaymentMethodSearch.self, from: data)
+    }
+}
+
+extension PXPaymentMethodSearch {
+    private func populateAMDescription() {
+        var descriptionToPopulate: String?
+        let targetId: String = PXPaymentTypes.ACCOUNT_MONEY.rawValue
+        for customItem in customOptionSearchItems {
+            if customItem.id == targetId {
+                descriptionToPopulate = customItem.comment
+                break
+            }
+        }
+        if let amDescription = descriptionToPopulate {
+            for pMethod in paymentMethods {
+                if pMethod.id == targetId {
+                    pMethod.paymentMethodDescription = amDescription
+                    break
+                }
+            }
+        }
     }
 }
