@@ -34,7 +34,7 @@ internal extension PXPaymentFlow {
     }
 
     func createPayment() {
-        guard let paymentData = model.paymentData, let checkoutPreference = model.checkoutPreference else {
+        guard let paymentData = model.amountHelper?.paymentData, let checkoutPreference = model.checkoutPreference else {
             return
         }
 
@@ -44,7 +44,7 @@ internal extension PXPaymentFlow {
         }
 
         model.mercadoPagoServicesAdapter.createPayment(url: URLConfigs.MP_API_BASE_URL, uri: URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION, paymentDataJSON: paymentBody, query: nil, callback: { (payment) in
-            guard let paymentData = self.model.paymentData else {
+            guard let paymentData = self.model.amountHelper?.paymentData else {
                 return
             }
             let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)

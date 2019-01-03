@@ -17,6 +17,7 @@ import UIKit
     internal var payerCost: PXPayerCost?
     internal var token: PXToken?
     internal var payer: PXPayer?
+    internal var transactionAmount: Double?
     internal var transactionDetails: PXTransactionDetails?
     internal private(set) var discount: PXDiscount?
     internal private(set) var campaign: PXCampaign?
@@ -147,6 +148,20 @@ extension PXPaymentData {
      */
     public func getDiscount() -> PXDiscount? {
         return discount
+    }
+
+    /**
+     getTransactionAmount
+     */
+    public func getTransactionAmount() -> Double? {
+        guard let paymentMethod = paymentMethod else {
+            return nil
+        }
+        if paymentMethod.isCard &&
+            !paymentTypesWithoutInstallments.contains(paymentMethod.paymentTypeId) {
+            return payerCost?.totalAmount
+        }
+        return transactionAmount
     }
 }
 
