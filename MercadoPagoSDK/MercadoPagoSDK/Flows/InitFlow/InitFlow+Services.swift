@@ -79,7 +79,7 @@ extension InitFlow {
 
         var defaultInstallments: String?
         let dInstallments = model.properties.checkoutPreference.getDefaultInstallments()
-        if dInstallments > 0 {
+        if let dInstallments = dInstallments {
             defaultInstallments = String(dInstallments)
         }
 
