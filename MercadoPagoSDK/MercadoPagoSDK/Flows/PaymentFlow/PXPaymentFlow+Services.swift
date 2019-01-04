@@ -19,14 +19,14 @@ internal extension PXPaymentFlow {
         plugin.startPayment?(checkoutStore: PXCheckoutStore.sharedInstance, errorHandler: self as PXPaymentProcessorErrorHandler, successWithBusinessResult: { [weak self] businessResult in
             self?.model.businessResult = businessResult
             self?.executeNextStep()
-            }, successWithPaymentResult: { [weak self] paymentPluginResult in
+            }, successWithPaymentResult: { [weak self] genericPayment in
 
-                if paymentPluginResult.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue {
+                if genericPayment.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue {
                     self?.paymentErrorHandler?.escError()
                     return
                 }
 
-                let paymentResult = PaymentResult(status: paymentPluginResult.status, statusDetail: paymentPluginResult.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentPluginResult.paymentId, statementDescription: nil)
+                let paymentResult = PaymentResult(status: genericPayment.status, statusDetail: genericPayment.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: genericPayment.paymentId, statementDescription: nil)
                 self?.model.paymentResult = paymentResult
                 self?.executeNextStep()
         })

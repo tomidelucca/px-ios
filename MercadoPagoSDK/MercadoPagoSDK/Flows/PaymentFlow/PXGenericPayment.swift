@@ -46,6 +46,16 @@ open class PXGenericPayment: NSObject, PXResult {
      */
     public let statusDetail: String
 
+    /**
+     Error payment method type id.
+     */
+    public let errorPaymentMethodId: String?
+
+    /**
+     Error payment method type id.
+     */
+    public let errorPaymentMethodTypeId: String?
+
     // MARK: Init.
     /**
      - parameter status: Status of payment.
@@ -56,6 +66,8 @@ open class PXGenericPayment: NSObject, PXResult {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentId = paymentId
+        self.errorPaymentMethodId = nil
+        self.errorPaymentMethodTypeId = nil
     }
 
     /// :nodoc:
@@ -68,5 +80,15 @@ open class PXGenericPayment: NSObject, PXResult {
         self.status = paymentStatusStrDefault
         self.statusDetail = statusDetail
         self.paymentId = receiptId
+        self.errorPaymentMethodId = nil
+        self.errorPaymentMethodTypeId = nil
+    }
+
+    @objc public init(status: String, statusDetail: String, paymentId: String? = nil, errorPaymentMethodId: String?, errorPaymentMethodTypeId: String?) {
+        self.status = status
+        self.statusDetail = statusDetail
+        self.paymentId = paymentId
+        self.errorPaymentMethodId = errorPaymentMethodId
+        self.errorPaymentMethodTypeId = errorPaymentMethodTypeId
     }
 }

@@ -19,9 +19,12 @@ internal final class PXPaymentFlowModel: NSObject {
     var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    let escManager: MercadoPagoESC
+
+    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, escEnabled: Bool) {
         self.paymentPlugin = paymentPlugin
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.escManager = MercadoPagoESCImplementation(enabled: escEnabled)
     }
 
     enum Steps: String {
@@ -89,7 +92,7 @@ internal final class PXPaymentFlowModel: NSObject {
         if !needToCreatePayment() {
             return false
         }
-       return hasPluginPaymentScreen()
+        return hasPluginPaymentScreen()
     }
 
     func isOfflinePayment() -> Bool {
@@ -125,5 +128,31 @@ internal extension PXPaymentFlowModel {
         paymentPlugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
         let processorViewController = paymentPlugin.paymentProcessorViewController()
         return processorViewController != nil
+    }
+}
+
+// MARK: Manage ESC
+internal extension PXPaymentFlowModel {
+    func handleESCForGenericPayment(status: String, statusDetails: String, errorPaymentType: String?) {
+        guard let token = amountHelper?.paymentData.getToken() else {
+            return
+        }
+        var isApprovedPayment: Bool = true
+        if self.paymentResult != nil {
+            isApprovedPayment = self.paymentResult!.isApproved()
+
+            if token.hasCardId() {
+                if !isApprovedPayment {
+                    guard let errorPaymentType = errorPaymentType else {
+                        escManager.deleteESC(cardId: token.cardId)
+                        return
+                    }
+                    // If it has error Payment Type, check if the error was from a card
+                    if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
+                        escManager.deleteESC(cardId: token.cardId)
+                    }
+                }
+            }
+        }
     }
 }

@@ -838,7 +838,7 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
         guard let paymentFlow = paymentFlow else {
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, amountHelper: amountHelper, checkoutPreference: checkoutPreference)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, amountHelper: amountHelper, checkoutPreference: checkoutPreference, escEnabled: advancedConfig.escEnabled)
             self.paymentFlow = paymentFlow
             return paymentFlow
         }
