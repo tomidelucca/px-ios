@@ -16,4 +16,11 @@ extension PXIssuer: Cellable {
             self.objectType = ObjectTypes.issuer
         }
     }
+
+    func getIssuerForTracking() -> [String: Any] {
+        var issuerDic: [String: Any] = [:]
+        issuerDic["id"] = id
+        issuerDic["name"] = name
+        return issuerDic
+    }
 }

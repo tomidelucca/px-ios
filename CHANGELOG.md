@@ -1,3 +1,14 @@
+# v4.5.0
+🚀Private RC - 4.5.0 🚀
+MercadoPagoSDKV4 - Private Version
+- Account money as First Class Member, plugin funcionality is deprecated.
+- Add tracking events and data in screen views.
+
+# v4.4.1
+🚀Private RC - 4.4.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Hotfix save ESC in one tap.
+
 # v4.4.0
 🚀Private RC - 4.4.0 🚀
 MercadoPagoSDKV4 - Private Version

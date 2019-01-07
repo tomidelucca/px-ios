@@ -13,7 +13,6 @@ internal enum PayerInfoFlowStep: String {
     // For CNPJ: case SCREEN_LEGAL_NAME
     case SCREEN_NAME
     case SCREEN_LAST_NAME
-    case SCREEN_ERROR
     case FINISH
 
 }
@@ -27,14 +26,15 @@ internal class PayerInfoViewModel {
     var lastName: String = ""
     var identificationNumber: String = ""
     let payer: PXPayer!
+    let amountHelper: PXAmountHelper
 
     var identificationType: PXIdentificationType!
 
     var currentStep: PayerInfoFlowStep = PayerInfoFlowStep.SCREEN_IDENTIFICATION
 
-    init(identificationTypes: [PXIdentificationType], payer: PXPayer) {
+    init(identificationTypes: [PXIdentificationType], payer: PXPayer, amountHelper: PXAmountHelper) {
         self.payer = payer
-
+        self.amountHelper = amountHelper
         self.identificationTypes = filterSupported(identificationTypes: identificationTypes)
 
         if identificationTypes.isEmpty {
@@ -152,23 +152,5 @@ internal class PayerInfoViewModel {
         self.payer.lastName = lastName
 
         return payer
-    }
-}
-
-// MARK: Tracking
-extension PayerInfoViewModel {
-    func trackStep(currentStep: PayerInfoFlowStep) {
-        var screenPath = ""
-        switch currentStep {
-        case .SCREEN_IDENTIFICATION:
-            screenPath = TrackingPaths.Screens.Boleto.getCpfPath()
-        case .SCREEN_NAME:
-            screenPath = TrackingPaths.Screens.Boleto.getNamePath()
-        case .SCREEN_LAST_NAME:
-            screenPath = TrackingPaths.Screens.Boleto.getLastNamePath()
-        default:
-            return
-        }
-         MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
     }
 }

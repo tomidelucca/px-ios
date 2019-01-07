@@ -23,7 +23,7 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-                let customError = InitFlowError(errorStep: .SERVICE_GET_PREFERENCE, shouldRetry: true, requestOrigin: .GET_PREFERENCE)
+                let customError = InitFlowError(errorStep: .SERVICE_GET_PREFERENCE, shouldRetry: true, requestOrigin: .GET_PREFERENCE, apiException: MPSDKError.getApiException(error))
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })
@@ -32,7 +32,7 @@ extension InitFlow {
     func validatePreference() {
         let errorMessage = model.properties.checkoutPreference.validate()
         if errorMessage != nil {
-            let customError = InitFlowError(errorStep: .ACTION_VALIDATE_PREFERENCE, shouldRetry: false, requestOrigin: nil)
+            let customError = InitFlowError(errorStep: .ACTION_VALIDATE_PREFERENCE, shouldRetry: false, requestOrigin: nil, apiException: nil)
             model.setError(error: customError)
         }
         executeNextStep()
@@ -72,7 +72,7 @@ extension InitFlow {
         let exclusions: MercadoPagoServicesAdapter.PaymentSearchExclusions = (model.getExcludedPaymentTypesIds(), model.getExcludedPaymentMethodsIds())
         let oneTapInfo: MercadoPagoServicesAdapter.PaymentSearchOneTapInfo = (cardIdsWithEsc, pluginIds)
 
-        var differentialPricingString: String? = nil
+        var differentialPricingString: String?
         if let diffPricing = model.properties.checkoutPreference.differentialPricing?.id {
             differentialPricingString = String(describing: diffPricing)
         }
@@ -83,10 +83,11 @@ extension InitFlow {
             defaultInstallments = String(dInstallments)
         }
 
+        let hasPaymentProcessor: Bool = model.properties.paymentPlugin != nil ? true : false
         let discountParamsConfiguration = model.properties.advancedConfig.discountParamsConfiguration
         let marketplace = model.amountHelper.preference.marketplace
 
-        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
+        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return
@@ -99,7 +100,7 @@ extension InitFlow {
                 guard let strongSelf = self else {
                     return
                 }
-                let customError = InitFlowError(errorStep: .SERVICE_GET_PAYMENT_METHODS, shouldRetry: true, requestOrigin: .PAYMENT_METHOD_SEARCH)
+                let customError = InitFlowError(errorStep: .SERVICE_GET_PAYMENT_METHODS, shouldRetry: true, requestOrigin: .PAYMENT_METHOD_SEARCH, apiException: MPSDKError.getApiException(error))
                 strongSelf.model.setError(error: customError)
                 strongSelf.executeNextStep()
         })

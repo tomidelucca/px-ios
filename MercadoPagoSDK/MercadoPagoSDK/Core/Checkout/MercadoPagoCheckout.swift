@@ -256,11 +256,6 @@ extension MercadoPagoCheckout {
         viewModel.startInitFlow()
     }
 
-    private func startTracking() {
-        MPXTracker.sharedInstance.setPublicKey(viewModel.publicKey)
-        MPXTracker.sharedInstance.startNewFlow()
-    }
-
     private func commondInit() {
         viewModel.setInitFlowProtocol(flowInitProtocol: self)
         if !shouldApplyDiscount() {

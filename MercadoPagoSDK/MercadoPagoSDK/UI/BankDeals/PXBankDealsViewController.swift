@@ -13,8 +13,6 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     fileprivate let MARGINS: CGFloat = PXLayout.S_MARGIN
     fileprivate let CELL_HEIGHT: CGFloat = 128
 
-    override open var screenName: String { return TrackingPaths.Screens.getBankDealsPath() }
-
     fileprivate var viewModel: PXBankDealsViewModel
 
     init(viewModel: PXBankDealsViewModel) {
@@ -29,6 +27,11 @@ class PXBankDealsViewController: MercadoPagoUIViewController, UICollectionViewDa
     override func viewDidLoad() {
         self.title = "bank_deals_screen_title".localized_beta
         createCollectionView()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen()
     }
 
     func createCollectionView() {
@@ -101,5 +104,12 @@ extension PXBankDealsViewController {
         let component = self.viewModel.getBankDealComponentForIndexPath(indexPath)
         let view = component.render()
         return view
+    }
+}
+
+// MARK: Tracking
+extension PXBankDealsViewController {
+    func trackScreen() {
+        trackScreen(path: TrackingPaths.Screens.getBankDealsPath())
     }
 }

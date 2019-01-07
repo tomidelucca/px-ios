@@ -99,6 +99,7 @@ internal extension PXResultViewModel {
     }
 
     private func pressButton() {
+        trackChangePaymentMethodEvent()
         if paymentResult.isAccepted() {
              self.callback(PaymentResult.CongratsState.approved)
         } else if paymentResult.isError() {
@@ -113,6 +114,7 @@ internal extension PXResultViewModel {
     }
 
     private func pressLink() {
+        trackContinueEvent()
         if paymentResult.isAccepted() {
             self.callback(PaymentResult.CongratsState.approved)
         } else if paymentResult.isError() {

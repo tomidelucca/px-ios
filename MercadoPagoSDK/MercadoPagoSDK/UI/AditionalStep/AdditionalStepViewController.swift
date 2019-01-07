@@ -13,11 +13,18 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
     @IBOutlet weak var tableView: UITableView!
 
     var bundle: Bundle? = ResourceManager.shared.getBundle()
-
     let viewModel: AdditionalStepViewModel!
     override var maxFontSize: CGFloat { return self.viewModel.maxFontSize}
 
-    override open var screenName: String { return viewModel.getScreenName() }
+    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void)) {
+        self.viewModel = viewModel
+        self.viewModel.callback = callback
+        super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +65,11 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
         }
     }
 
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen(path: viewModel.getScreenPath(), properties: viewModel.getScreenProperties())
+    }
+
     private func getTableViewPinBottomContraint() -> NSLayoutConstraint? {
         let filteredConstraints = self.view.constraints.filter { $0.identifier == "table_view_pin_bottom" }
         if let bottomContraint = filteredConstraints.first {
@@ -96,20 +108,6 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
 
             displayBackButton()
         }
-    }
-
-    override func trackInfo() {
-        viewModel.track()
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void)) {
-        self.viewModel = viewModel
-        self.viewModel.callback = callback
-        super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

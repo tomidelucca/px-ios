@@ -16,9 +16,6 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
 
     fileprivate var viewModel: PXBankDealDetailsViewModel!
 
-    // Tracking
-    override open var screenName: String { return TrackingPaths.Screens.getTermsAndConditionBankDealsPath() }
-
     init(viewModel: PXBankDealDetailsViewModel) {
         self.viewModel = viewModel
         super.init()
@@ -34,6 +31,11 @@ class PXBankDealDetailsViewController: PXComponentContainerViewController {
         self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen()
     }
 }
 
@@ -101,5 +103,12 @@ extension PXBankDealDetailsViewController {
         legalsTextView.isScrollEnabled = false
         legalsTextView.isEditable = false
         return legalsTextView
+    }
+}
+
+// MARK: Tracking
+internal extension PXBankDealDetailsViewController {
+    func trackScreen() {
+        trackScreen(path: TrackingPaths.Screens.getTermsAndConditionBankDealsPath())
     }
 }

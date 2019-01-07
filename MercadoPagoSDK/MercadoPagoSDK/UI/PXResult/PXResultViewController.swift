@@ -29,16 +29,8 @@ class PXResultViewController: PXComponentContainerViewController {
         self.shouldHideNavigationBar = true
     }
 
-    override func adjustInsets() {
-
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func trackInfo() {
-        self.viewModel.trackInfo()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +44,13 @@ class PXResultViewController: PXComponentContainerViewController {
             super.animateContentView { (_) in
                 self.headerView?.badgeImage?.animate(duration: 0.2)
             }
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !String.isNullOrEmpty(viewModel.getTrackingPath()) {
+            trackScreen(path: viewModel.getTrackingPath(), properties: viewModel.getTrackingProperties())
         }
     }
 
@@ -114,10 +113,6 @@ class PXResultViewController: PXComponentContainerViewController {
 
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
         super.refreshContentViewSize()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
 
     func expandHeader() {

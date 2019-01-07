@@ -91,4 +91,40 @@ internal class MPSDKError {
         return cause
     }
 
+    class func getApiException(_ error: Error) -> ApiException? {
+        let mpError = MPSDKError()
+        let currentError = error as NSError
+        if !currentError.userInfo.isEmpty {
+            let errorMessage = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
+            mpError.message = errorMessage.localized
+            mpError.apiException = ApiException.fromJSON(currentError.userInfo as NSDictionary)
+            if let apiException = mpError.apiException {
+                if apiException.error == nil {
+                    let pxError = currentError as? PXError
+                    mpError.apiException = MPSDKError.pxApiExceptionToApiException(pxApiException: pxError?.apiException)
+                }
+            }
+        }
+        return mpError.apiException
+    }
+}
+// MARK: Tracking
+extension MPSDKError {
+
+    func getErrorForTracking() -> [String: Any] {
+        var errorDic: [String: Any] = [:]
+        errorDic["url"] =  requestOrigin
+        errorDic["retry_available"] = retry ?? false
+        errorDic["status"] =  apiException?.status
+
+        if let causes = apiException?.cause {
+            var causesDic: [String: Any] = [:]
+            for cause in causes where !String.isNullOrEmpty(cause.code) {
+                causesDic["code"] = cause.code
+                causesDic["description"] = cause.causeDescription
+            }
+            errorDic["causes"] = causesDic
+        }
+        return errorDic
+    }
 }

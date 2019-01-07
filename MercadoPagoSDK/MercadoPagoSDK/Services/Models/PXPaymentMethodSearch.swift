@@ -33,6 +33,9 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         if let selectedDiscountConfiguration = discountConfigurations[selectedAmountConfiguration] {
             self.selectedDiscountConfiguration = selectedDiscountConfiguration
         }
+
+        super.init()
+        self.populateAMDescription()
     }
 
     public enum PXPaymentMethodSearchKeys: String, CodingKey {
@@ -85,5 +88,26 @@ open class PXPaymentMethodSearch: NSObject, Codable {
 
     open class func fromJSON(data: Data) throws -> PXPaymentMethodSearch {
         return try JSONDecoder().decode(PXPaymentMethodSearch.self, from: data)
+    }
+}
+
+extension PXPaymentMethodSearch {
+    private func populateAMDescription() {
+        var descriptionToPopulate: String?
+        let targetId: String = PXPaymentTypes.ACCOUNT_MONEY.rawValue
+        for customItem in customOptionSearchItems {
+            if customItem.id == targetId {
+                descriptionToPopulate = customItem.comment
+                break
+            }
+        }
+        if let amDescription = descriptionToPopulate {
+            for pMethod in paymentMethods {
+                if pMethod.id == targetId {
+                    pMethod.paymentMethodDescription = amDescription
+                    break
+                }
+            }
+        }
     }
 }

@@ -66,18 +66,9 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         self.callback = callback
     }
 
-    override func trackInfo() {
-        var screenPath = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
-
-        if let groupName = groupName {
-            if groupName == PXPaymentTypes.BANK_TRANSFER.rawValue || groupName == PXPaymentTypes.TICKET.rawValue || groupName == PXPaymentTypes.BOLBRADESCO.rawValue || groupName == PXPaymentTypes.PEC.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentVault.getTicketPath()
-            } else {
-                screenPath = TrackingPaths.Screens.PaymentVault.getCardTypePath()
-            }
-        }
-
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen(path: viewModel.getScreenPath(), properties: viewModel.getScreenProperties())
     }
 
     required  public init(coder aDecoder: NSCoder) {
