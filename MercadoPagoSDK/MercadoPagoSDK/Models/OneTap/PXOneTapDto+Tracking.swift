@@ -21,7 +21,7 @@ extension PXOneTapDto {
         return accountMoneyDic
     }
 
-    func getCardForTracking() -> [String: Any] {
+    func getCardForTracking(amountHelper: PXAmountHelper) -> [String: Any] {
         var savedCardDic: [String: Any] = [:]
         savedCardDic["payment_method_type"] = paymentTypeId
         savedCardDic["payment_method_id"] = paymentMethodId
@@ -29,7 +29,9 @@ extension PXOneTapDto {
         extraInfo["card_id"] = oneTapCard?.cardId
         let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
         extraInfo["has_esc"] = cardIdsEsc.contains(oneTapCard?.cardId ?? "")
-//        extraInfo["selected_installment"] = oneTapCard?.selectedPayerCost?.getPayerCostForTracking()
+        if let cardId = oneTapCard?.cardId {
+            extraInfo["selected_installment"] = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(cardId)?.getPayerCostForTracking()
+        }
         if let issuerId = oneTapCard?.cardUI?.issuerId {
             extraInfo["issuer_id"] = Int64(issuerId)
         }
