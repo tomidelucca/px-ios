@@ -14,13 +14,13 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var paymentMethodId: String?
     open var paymentTypeId: String?
     open var discountInfo: String?
-    open var selectedAmountConfiguration: String
+    open var selectedAmountConfiguration: String?
     open var selectedPayerCostConfiguration: PXPayerCostConfiguration?
-    open var payerCostConfigurations: [String: PXPayerCostConfiguration]
+    open var payerCostConfigurations: [String: PXPayerCostConfiguration]?
     open var comment: String?
 
 
-    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, selectedAmountConfiguration: String, payerCostConfigurations: [String: PXPayerCostConfiguration], comment: String?) {
+    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, selectedAmountConfiguration: String?, payerCostConfigurations: [String: PXPayerCostConfiguration]?, comment: String?) {
         self.id = id
         self._description = description
         self.paymentMethodId = paymentMethodId
@@ -30,7 +30,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.payerCostConfigurations = payerCostConfigurations
         self.comment = comment
 
-        if let selectedPayerCostConfiguration = payerCostConfigurations[selectedAmountConfiguration] {
+        if let selectedAmountConfiguration = selectedAmountConfiguration, let selectedPayerCostConfiguration = payerCostConfigurations?[selectedAmountConfiguration] {
             self.selectedPayerCostConfiguration = selectedPayerCostConfiguration
         }
     }
@@ -54,8 +54,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
         let comment: String? = try container.decodeIfPresent(String.self, forKey: .comment)
         let discountInfo: String? = try container.decodeIfPresent(String.self, forKey: .discountInfo)
-        let selectedAmountConfiguration: String = try container.decode(String.self, forKey: .selectedAmountConfiguration)
-        let payerCostConfigurations: [String: PXPayerCostConfiguration] = try container.decode([String: PXPayerCostConfiguration].self, forKey: .payerCostConfigurations)
+        let selectedAmountConfiguration: String? = try container.decodeIfPresent(String.self, forKey: .selectedAmountConfiguration)
+        let payerCostConfigurations: [String: PXPayerCostConfiguration]? = try container.decodeIfPresent([String: PXPayerCostConfiguration].self, forKey: .payerCostConfigurations)
 
         self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, discountInfo: discountInfo, selectedAmountConfiguration: selectedAmountConfiguration, payerCostConfigurations: payerCostConfigurations, comment: comment)
     }
