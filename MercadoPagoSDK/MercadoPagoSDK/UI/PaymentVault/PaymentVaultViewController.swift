@@ -66,18 +66,9 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
         self.callback = callback
     }
 
-    override func trackInfo() {
-        var screenPath = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
-
-        if let groupName = groupName {
-            if groupName == PXPaymentTypes.BANK_TRANSFER.rawValue || groupName == PXPaymentTypes.TICKET.rawValue || groupName == PXPaymentTypes.BOLBRADESCO.rawValue || groupName == PXPaymentTypes.PEC.rawValue {
-                screenPath = TrackingPaths.Screens.PaymentVault.getTicketPath()
-            } else {
-                screenPath = TrackingPaths.Screens.PaymentVault.getCardTypePath()
-            }
-        }
-
-        MPXTracker.sharedInstance.trackScreen(screenName: screenPath)
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen(path: viewModel.getScreenPath(), properties: viewModel.getScreenProperties())
     }
 
     required  public init(coder aDecoder: NSCoder) {
@@ -119,7 +110,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     @objc func updateCoupon(_ notification: Notification) {
         if (notification.userInfo?["coupon"] as? PXDiscount) != nil {
-            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules, consumedDiscount: viewModel.amountHelper.consumedDiscount)
+            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, chargeRules: viewModel.amountHelper.chargeRules, consumedDiscount: viewModel.amountHelper.consumedDiscount, paymentConfigurationService: viewModel.amountHelper.paymentConfigurationService)
             self.collectionSearch.reloadData()
         }
     }
@@ -291,7 +282,8 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell", for: indexPath) as? PaymentSearchCollectionViewCell else { return UICollectionViewCell.init() }
 
             if let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row) {
-                cell.fillCell(drawablePaymentOption: paymentMethodToDisplay)
+                let discountConfiguration = self.viewModel.getDiscountConfiguration(row: indexPath.row)
+                cell.fillCell(drawablePaymentOption: paymentMethodToDisplay, discountConfiguration: discountConfiguration)
             }
 
             return cell
@@ -361,8 +353,8 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     func heightOfItem(indexItem: Int) -> CGFloat {
         if let paymentMethodOptionDrawable = self.viewModel.getPaymentMethodOption(row: indexItem) {
-
-            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption: paymentMethodOptionDrawable)
+            let discountConfiguration = self.viewModel.getDiscountConfiguration(row: indexItem)
+            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption: paymentMethodOptionDrawable, discountConfiguration: discountConfiguration)
         }
         return 0
     }

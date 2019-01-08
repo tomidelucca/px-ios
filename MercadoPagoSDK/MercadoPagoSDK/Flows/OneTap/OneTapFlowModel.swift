@@ -38,15 +38,16 @@ final internal class OneTapFlowModel: PXFlowModel {
     // In order to ensure data updated create new instance for every usage
     internal var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: chargeRules, consumedDiscount: consumedDiscount)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService)
         }
     }
 
     let mpESCManager: MercadoPagoESC
     let advancedConfiguration: PXAdvancedConfiguration
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
+    let paymentConfigurationService: PXPaymentConfigurationServices
 
-    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration) {
+    init(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, search: PXPaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool = false, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, advancedConfiguration: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices) {
         self.consumedDiscount = consumedDiscount
         self.paymentData = paymentData.copy() as? PXPaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
@@ -56,9 +57,10 @@ final internal class OneTapFlowModel: PXFlowModel {
         self.chargeRules = chargeRules
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         self.mpESCManager = MercadoPagoESCImplementation(enabled: advancedConfiguration.escEnabled)
+        self.paymentConfigurationService = paymentConfigurationService
 
         // Payer cost pre selection.
-        if let payerCost = search.expressCho?.first?.oneTapCard?.selectedPayerCost {
+        if let firstCardID = search.expressCho?.first?.oneTapCard?.cardId, let payerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(firstCardID) {
             updateCheckoutModel(payerCost: payerCost)
         }
     }
@@ -112,14 +114,6 @@ internal extension OneTapFlowModel {
     }
 
     func updateCheckoutModel(token: PXToken) {
-        if !token.cardId.isEmpty {
-            if let esc = token.esc {
-                mpESCManager.saveESC(cardId: token.cardId, esc: esc)
-            } else {
-                mpESCManager.deleteESC(cardId: token.cardId)
-            }
-        }
-
         self.paymentData.updatePaymentDataWith(token: token)
     }
 
@@ -127,6 +121,19 @@ internal extension OneTapFlowModel {
         if paymentOptionSelected.isCard() {
             self.paymentData.updatePaymentDataWith(payerCost: payerCost)
             self.paymentData.cleanToken()
+        }
+    }
+
+    func saveEsc() {
+        guard let token = paymentData.token else {
+            return
+        }
+        if !token.cardId.isEmpty {
+            if let esc = token.esc {
+                mpESCManager.saveESC(cardId: token.cardId, esc: esc)
+            } else {
+                mpESCManager.deleteESC(cardId: token.cardId)
+            }
         }
     }
 }

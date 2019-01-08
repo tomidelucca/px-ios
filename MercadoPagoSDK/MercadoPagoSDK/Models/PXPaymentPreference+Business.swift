@@ -74,11 +74,8 @@ extension PXPaymentPreference {
             return excludedPaymentTypeIds
     }
 
-    internal func getDefaultInstallments() -> Int {
-        if defaultInstallments > 0 {
-            return defaultInstallments
-        }
-        return 0
+    internal func getDefaultInstallments() -> Int? {
+        return defaultInstallments
     }
 
     internal func getMaxAcceptedInstallments() -> Int {
@@ -99,7 +96,7 @@ extension PXPaymentPreference {
         return nil
     }
 
-    internal func addSettings(_ defaultPaymentTypeId: String? = nil, excludedPaymentMethodsIds: [String] = [], excludedPaymentTypesIds: [String] = [], defaultPaymentMethodId: String? = nil, maxAcceptedInstallment: Int = 0, defaultInstallments: Int = 0) -> PXPaymentPreference {
+    internal func addSettings(_ defaultPaymentTypeId: String? = nil, excludedPaymentMethodsIds: [String] = [], excludedPaymentTypesIds: [String] = [], defaultPaymentMethodId: String? = nil, maxAcceptedInstallment: Int = 0, defaultInstallments: Int? = nil) -> PXPaymentPreference {
 
         self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
         self.excludedPaymentTypeIds = excludedPaymentTypesIds
@@ -115,5 +112,18 @@ extension PXPaymentPreference {
         }
 
         return self
+    }
+}
+
+// MARK: Tracking
+extension PXPaymentPreference {
+    func getPaymentPreferenceForTracking() -> [String: Any] {
+        var paymentPrefDic: [String: Any] = [:]
+        paymentPrefDic["max_installments"] = maxAcceptedInstallments
+        paymentPrefDic["default_installments"] = defaultInstallments
+        paymentPrefDic["excluded_payment_methdos_ids"] = excludedPaymentMethodIds
+        paymentPrefDic["excluded_payment_types_ids"] = excludedPaymentTypeIds
+        paymentPrefDic["card_id"] = cardId
+        return paymentPrefDic
     }
 }

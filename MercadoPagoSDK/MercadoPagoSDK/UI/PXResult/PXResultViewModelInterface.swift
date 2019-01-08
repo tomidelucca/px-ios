@@ -22,5 +22,6 @@ protocol PXResultViewModelInterface {
     func buildBodyComponent() -> PXComponentizable?
     func buildTopCustomView() -> UIView?
     func buildBottomCustomView() -> UIView?
-    func trackInfo()
+    func getTrackingProperties() -> [String: Any]
+    func getTrackingPath() -> String
 }

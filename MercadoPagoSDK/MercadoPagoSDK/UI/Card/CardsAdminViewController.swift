@@ -13,8 +13,6 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    override open var screenName: String { return "CARDS_ADMIN" }
-
     static let VIEW_CONTROLLER_NIB_NAME: String = "CardsAdminViewController"
 
     var merchantBaseUrl: String!

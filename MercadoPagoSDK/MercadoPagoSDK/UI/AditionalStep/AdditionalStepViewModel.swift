@@ -14,7 +14,6 @@ internal class AdditionalStepViewModel {
     var bundle: Bundle? = ResourceManager.shared.getBundle()
 
     var screenTitle: String
-    var screenName: String { return TrackingPaths.NO_NAME_SCREEN }
 
     var email: String?
     var token: PXCardInformationForm?
@@ -28,7 +27,6 @@ internal class AdditionalStepViewModel {
     var defaultRowCellHeight: CGFloat = 80
     var callback: ((_ result: NSObject) -> Void)!
     var maxFontSize: CGFloat { return 24 }
-    var couponCallback: ((PXDiscount) -> Void)?
 
     let amountHelper: PXAmountHelper
 
@@ -62,10 +60,6 @@ internal class AdditionalStepViewModel {
 
     func showFloatingTotalRow() -> Bool {
         return false
-    }
-
-    func getScreenName() -> String {
-        return screenName
     }
 
     func getTitle() -> String {
@@ -160,8 +154,12 @@ internal class AdditionalStepViewModel {
         case body = 2
     }
 
-    func track() {
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
+    func getScreenPath() -> String {
+        return ""
+    }
+
+    func getScreenProperties() -> [String: Any] {
+        return [:]
     }
 
 }
@@ -174,10 +172,23 @@ internal class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
         super.init(amountHelper: amountHelper, screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
-    override open var screenName: String { return TrackingPaths.Screens.getIssuersPath() }
+    override func getScreenProperties() -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = paymentMethods.first?.getPaymentIdForTracking()
+        properties["payment_method_type"] = paymentMethods.first?.getPaymentTypeForTracking()
+        var dic: [Any] = []
+        for issuerObj in dataSource {
+            if let issuer = issuerObj as? PXIssuer {
+                dic.append(issuer.getIssuerForTracking())
+            }
+        }
+        properties["available_banks"] = dic
 
-    override func track() {
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
+        return properties
+    }
+
+    override func getScreenPath() -> String {
+        return TrackingPaths.Screens.getIssuersPath()
     }
 
 }
@@ -189,8 +200,6 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     init(amountHelper: PXAmountHelper, token: PXCardInformationForm?, paymentMethod: PXPaymentMethod, dataSource: [Cellable], email: String? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         super.init(amountHelper: amountHelper, screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, email: email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
-
-    override open var screenName: String { return TrackingPaths.Screens.getInstallmentsPath() }
 
     override func showFloatingTotalRow() -> Bool {
         return true
@@ -204,15 +213,33 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue && showBankInsterestCell()
     }
 
-    override func track() {
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
+    override func getScreenProperties() -> [String: Any] {
+        var properties: [String: Any] = [:]
+        properties["payment_method_id"] = paymentMethods.first?.getPaymentIdForTracking()
+        properties["payment_method_type"] = paymentMethods.first?.getPaymentTypeForTracking()
+        if let token = token as? PXCardInformation {
+            properties["card_id"] =  token.getCardId()
+        }
+        if let issuer = amountHelper.paymentData.issuer {
+            properties["issuer_id"] = Int64(issuer.id)
+        }
+        var dic: [Any] = []
+        for installmentObj in dataSource {
+            if let payerCost = installmentObj as? PXPayerCost {
+                dic.append(payerCost.getPayerCostForTracking())
+            }
+        }
+        properties["available_installments"] = dic
+        return properties
+    }
+
+    override func getScreenPath() -> String {
+        return TrackingPaths.Screens.getInstallmentsPath()
     }
 
 }
 
 internal class FinancialInstitutionViewModel: AdditionalStepViewModel {
-
-    override open var screenName: String { return "FINANCIAL_INSTITUTION" }
 
     init(amountHelper: PXAmountHelper, token: PXCardInformationForm?, paymentMethod: PXPaymentMethod, dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         super.init(amountHelper: amountHelper, screenTitle: "¿Cuál es tu banco?".localized, cardSectionVisible: false, cardSectionView: nil, totalRowVisible: false, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
@@ -223,8 +250,6 @@ internal class EntityTypeViewModel: AdditionalStepViewModel {
     override var maxFontSize: CGFloat { return 21 }
 
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
-
-    override open var screenName: String { return "ENTITY_TYPE" }
 
     init(amountHelper: PXAmountHelper, token: PXCardInformationForm?, paymentMethod: PXPaymentMethod, dataSource: [Cellable], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         super.init(amountHelper: amountHelper, screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView: IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)

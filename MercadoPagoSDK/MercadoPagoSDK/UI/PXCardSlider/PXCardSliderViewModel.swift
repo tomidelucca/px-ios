@@ -16,7 +16,7 @@ final class PXCardSliderViewModel {
     var payerCost: [PXPayerCost] = [PXPayerCost]()
     var cardData: CardData?
     var selectedPayerCost: PXPayerCost?
-    var cardId: String? = nil
+    var cardId: String?
     var displayMessage: String?
 
     init(_ paymentMethodId: String, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool) {
@@ -32,6 +32,10 @@ final class PXCardSliderViewModel {
 }
 
 extension PXCardSliderViewModel: PaymentMethodOption {
+    func getPaymentType() -> String {
+        return paymentMethodId
+    }
+
     func getId() -> String {
         return paymentMethodId
     }

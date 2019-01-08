@@ -16,50 +16,21 @@ final class PXOneTapViewModel: PXReviewViewModel {
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     var paymentMethodPlugins: [PXPaymentMethodPlugin]?
     var items: [PXItem] = [PXItem]()
-
-    override func trackInfo() {
-        var properties: [String: Any] = [:]
-        properties["available_methods"] = getAvailablePaymentMethodForTracking()
-        properties["total_amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
-        properties["discount"] = amountHelper.getDiscountForTracking()
-        var itemsDic: [Any] = []
-        for item in amountHelper.preference.items {
-            var itemDic: [String: Any] = [:]
-
-            var idItemDic: [String: Any] = [:]
-            idItemDic["id"] = item.id
-            idItemDic["description"] = item.getDescription()
-            idItemDic["price"] = item.getUnitPrice()
-            itemDic["item"] = idItemDic
-            itemDic["quantity"] = item.getQuantity()
-            itemDic["currency_id"] = SiteManager.shared.getCurrency().id
-            itemsDic.append(itemDic)
-        }
-        properties["items"] = itemsDic
-
-        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapPath(), properties: properties)
-    }
 }
 
 // MARK: ViewModels Publics.
 extension PXOneTapViewModel {
     func createCardSliderViewModel() {
         var sliderModel: [PXCardSliderViewModel] = []
-        let currency = SiteManager.shared.getCurrency()
-        let amTitle: String = "onetap_am_total_balance".localized_beta
         guard let expressNode = expressData else { return }
         for targetNode in expressNode {
-
-            // Caso account money
+            //  Account money
             if let accountMoney = targetNode.accountMoney {
-                let displayAmount = Utils.getAmountFormated(amount: accountMoney.availableBalance, forCurrency: currency)
-                let cardData = PXCardDataFactory().create(cardName: "\(amTitle) \(displayAmount)", cardNumber: "", cardCode: "", cardExpiration: "")
+                let displayTitle = accountMoney.cardTitle ?? ""
+                let cardData = PXCardDataFactory().create(cardName: displayTitle, cardNumber: "", cardCode: "", cardExpiration: "")
                 let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
-                if accountMoney.invested {
-                    viewModelCard.displayMessage = "onetap_invested_account_money".localized_beta
-                }
+                viewModelCard.displayMessage = accountMoney.sliderTitle
                 sliderModel.append(viewModelCard)
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
@@ -84,7 +55,7 @@ extension PXOneTapViewModel {
                     }
 
                     var payerCost: [PXPayerCost] = [PXPayerCost]()
-                    if let pCost = targetCardData.payerCosts {
+                    if let pCost = amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) {
                         payerCost = pCost
                     }
 
@@ -100,11 +71,14 @@ extension PXOneTapViewModel {
                         displayMessage = ""
                     } else if payerCost.count == 1 {
                         showArrow = false
-                    } else if targetCardData.selectedPayerCost == nil {
+                    } else if amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) == nil {
                         showArrow = false
                     }
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost, targetCardData.cardId, showArrow)
+                    let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)
+
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow)
+
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
@@ -131,7 +105,7 @@ extension PXOneTapViewModel {
         return model
     }
 
-    func getHeaderViewModel() -> PXOneTapHeaderViewModel {
+    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderViewModel {
         let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
         let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let summaryAlpha: CGFloat = 0.45
@@ -141,15 +115,26 @@ extension PXOneTapViewModel {
         let totalAlpha: CGFloat = 1
 
         let currency = SiteManager.shared.getCurrency()
-        let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
-        let yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+        var totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+        var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
 
-        if let discount = amountHelper.discount {
+        let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(selectedCard?.cardId)
+
+        if let discountConfiguration = discountConfiguration, let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
+
             customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_title".localized_beta, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
             let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
             let helperImage: UIImage? = isDefaultStatusBarStyle ? ResourceManager.shared.getImage("helper_ico") : ResourceManager.shared.getImage("helper_ico_light")
             customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
+
+            amountHelper.paymentData.setDiscount(discount, withCampaign: campaign)
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+            yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+        } else {
+            amountHelper.paymentData.clearDiscount()
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+            yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         }
 
         customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_total".localized_beta, totalAmountToShow, totalColor, totalAlpha, true, nil))
@@ -233,97 +218,5 @@ extension PXOneTapViewModel {
             }
         }
         return text
-    }
-}
-
-// MARK: Tracking
-extension PXOneTapViewModel {
-    func getAvailablePaymentMethodForTracking() -> [Any] {
-        var dic: [Any] = []
-        if let expressData = expressData {
-            let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
-            for expressItem in expressData {
-                if let savedCard = expressItem.oneTapCard {
-                    var savedCardDic: [String: Any] = [:]
-                    savedCardDic["payment_method_type"] = expressItem.paymentTypeId
-                    savedCardDic["payment_method_id"] = expressItem.paymentMethodId
-                    var extraInfo: [String: Any] = [:]
-                    extraInfo["card_id"] = savedCard.cardId
-                    extraInfo["has_esc"] = cardIdsEsc.contains(savedCard.cardId)
-                    extraInfo["selected_installment"] = savedCard.selectedPayerCost?.getPayerCostForTracking()
-
-                    if let issuerId = savedCard.cardUI?.issuerId {
-                        extraInfo["issuer_id"] = Int(issuerId)
-                    }
-                    savedCardDic["extra_info"] = extraInfo
-                    dic.append(savedCardDic)
-                } else if let accountMoney = expressItem.accountMoney {
-                    var accountMoneyDic: [String: Any] = [:]
-                    accountMoneyDic["payment_method_type"] = expressItem.paymentTypeId
-                    accountMoneyDic["payment_method_id"] = expressItem.paymentMethodId
-                    var extraInfo: [String: Any] = [:]
-                    extraInfo["balance"] = accountMoney.availableBalance
-                    accountMoneyDic["extra_info"] = extraInfo
-                    dic.append(accountMoneyDic)
-                }
-            }
-        }
-        return dic
-    }
-
-    func trackSwipe() {
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.OneTap.getSwipePath())
-    }
-
-    func trackTapBackEvent() {
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.OneTap.getAbortPath())
-    }
-
-    func trackInstallmentsView(installmentData: PXInstallment, selectedCard: PXCardSliderViewModel) {
-        var properties: [String: Any] = [:]
-        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.id
-        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.paymentTypeId
-        properties["card_id"] =  selectedCard.cardId
-        if let issuerId = amountHelper.paymentData.issuer?.id {
-            properties["issuer_id"] = Int(issuerId)
-        }
-        properties["total_amount"] = amountHelper.amountToPay
-        properties["currency_id"] = SiteManager.shared.getCurrency().id
-        var dic: [Any] = []
-        for payerCost in installmentData.payerCosts {
-            dic.append(payerCost.getPayerCostForTracking())
-        }
-        properties["available_installments"] = dic
-        MPXTracker.sharedInstance.trackScreen(screenName: TrackingPaths.Screens.OneTap.getOneTapInstallmentsPath(), properties: properties)
-    }
-
-    func trackConfirmEvent(selectedCard: PXCardSliderViewModel) {
-        guard let paymentMethod = amountHelper.paymentData.paymentMethod else {
-            return
-        }
-        let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
-
-        var properties: [String: Any] = [:]
-        if paymentMethod.isCard {
-            properties["payment_method_type"] = paymentMethod.paymentTypeId
-            properties["payment_method_id"] = paymentMethod.id
-            properties["review_type"] = "one_tap"
-            var extraInfo: [String: Any] = [:]
-            extraInfo["card_id"] = selectedCard.cardId
-            extraInfo["has_esc"] = cardIdsEsc.contains(selectedCard.cardId ?? "")
-            extraInfo["selected_installment"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
-            if let issuerId = amountHelper.paymentData.issuer?.id {
-                extraInfo["issuer_id"] = Int(issuerId)
-            }
-            properties["extra_info"] = extraInfo
-        } else {
-            properties["payment_method_type"] = paymentMethod.id
-            properties["payment_method_id"] = paymentMethod.id
-            properties["review_type"] = "one_tap"
-            var extraInfo: [String: Any] = [:]
-            extraInfo["balance"] = selectedCard.accountMoneyBalance
-            properties["extra_info"] = extraInfo
-        }
-        MPXTracker.sharedInstance.trackEvent(path: TrackingPaths.Events.getConfirmPath(), properties: properties)
     }
 }

@@ -51,7 +51,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, discount: self.paymentData.discount, campaign: self.paymentData.campaign, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService)
         }
     }
 
@@ -98,6 +98,9 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     let mpESCManager: MercadoPagoESC
 
+    //
+    var paymentConfigurationService = PXPaymentConfigurationServices()
+
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
@@ -108,7 +111,6 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Discount and charges
     var chargeRules: [PXPaymentTypeChargeRule]?
-    var campaigns: [PXCampaign]?
 
     // Init Flow
     var initFlow: InitFlow?
@@ -158,6 +160,17 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentData.setDiscount(discount, withCampaign: campaign)
     }
 
+    func setDiscount(_ discountConfiguration: PXDiscountConfiguration) {
+        self.consumedDiscount = discountConfiguration.getDiscountConfiguration().isNotAvailable
+
+        guard let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign else {
+            clearDiscount()
+            return
+        }
+
+        self.paymentData.setDiscount(discount, withCampaign: campaign)
+    }
+
     func clearDiscount() {
         self.paymentData.clearDiscount()
     }
@@ -181,7 +194,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func payerInfoFlow() -> PayerInfoViewModel {
-        let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer!)
+        let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer!, amountHelper: amountHelper)
         return viewModel
     }
 
@@ -220,13 +233,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             pluginOptions = paymentMethodPluginsToShow
         }
 
-        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (_) in
-
-            if self == nil {
-                return
-            }
-            // object.paymentData.discount = discount // TODO SET DISCOUNT WITH CAMPAIGN
-        })
+        return PaymentVaultViewModel(amountHelper: self.amountHelper, paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: customerOptions, paymentMethodPlugins: pluginOptions, paymentMethods: search?.paymentMethods ?? [], groupName: groupName, isRoot: rootVC, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func entityTypeViewModel() -> AdditionalStepViewModel {
@@ -500,7 +507,29 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
     }
 
+    func getPaymentOptionConfigurations(paymentMethodSearch: PXPaymentMethodSearch) -> Set<PXPaymentMethodConfiguration> {
+        let discountConfigurationsKeys = paymentMethodSearch.discountConfigurations.keys
+        var configurations = Set<PXPaymentMethodConfiguration>()
+        for customOption in paymentMethodSearch.customOptionSearchItems {
+            var paymentOptionConfigurations = [PXPaymentOptionConfiguration]()
+            for key in discountConfigurationsKeys {
+                guard let discountConfiguration = paymentMethodSearch.discountConfigurations[key], let payerCostConfiguration = customOption.payerCostConfigurations[key] else {
+                    continue
+                }
+                let paymentOptionConfiguration = PXPaymentOptionConfiguration(id: key, discountConfiguration: discountConfiguration, payerCostConfiguration: payerCostConfiguration)
+                paymentOptionConfigurations.append(paymentOptionConfiguration)
+            }
+            let paymentMethodConfiguration = PXPaymentMethodConfiguration(paymentOptionID: customOption.id, paymentOptionsConfigurations: paymentOptionConfigurations, selectedAmountConfiguration: customOption.selectedAmountConfiguration)
+            configurations.insert(paymentMethodConfiguration)
+        }
+        return configurations
+    }
+
     public func updateCheckoutModel(paymentMethodSearch: PXPaymentMethodSearch) {
+
+        let configurations = getPaymentOptionConfigurations(paymentMethodSearch: paymentMethodSearch)
+        self.paymentConfigurationService.setConfigurations(configurations)
+        self.paymentConfigurationService.setDefaultDiscountConfiguration(paymentMethodSearch.selectedDiscountConfiguration)
 
         self.search = paymentMethodSearch
 
@@ -512,18 +541,16 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.paymentMethodOptions = self.rootPaymentMethodOptions
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
         customPaymentOptions?.removeAll()
+
         for pxCustomOptionSearchItem in search.customOptionSearchItems {
-            // Removemos account_money como opción de pago (Warning: Until AM First Class Member)
-            if pxCustomOptionSearchItem.paymentMethodId != PXPaymentTypes.ACCOUNT_MONEY.rawValue {
-                let customerPaymentMethod =  pxCustomOptionSearchItem.getCustomerPaymentMethod()
-                if let paymentMethodSearchCards = paymentMethodSearch.cards {
-                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.id == customerPaymentMethod.customerPaymentMethodId})
-                    if !Array.isNullOrEmpty(filteredCustomerCard) {
-                        customerPaymentMethod.card = filteredCustomerCard[0]
-                    }
+            let customerPaymentMethod =  pxCustomOptionSearchItem.getCustomerPaymentMethod()
+            if let paymentMethodSearchCards = paymentMethodSearch.cards {
+                var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.id == customerPaymentMethod.customerPaymentMethodId})
+                if !Array.isNullOrEmpty(filteredCustomerCard) {
+                    customerPaymentMethod.card = filteredCustomerCard[0]
                 }
-                customPaymentOptions = Array.safeAppend(customPaymentOptions, customerPaymentMethod)
             }
+            customPaymentOptions = Array.safeAppend(customPaymentOptions, customerPaymentMethod)
         }
 
         let totalPaymentMethodSearchCount = search.getPaymentOptionsCount()

@@ -15,7 +15,6 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     init(amountHelper: PXAmountHelper, shouldAddMargins: Bool = true) {
         self.amountHelper = amountHelper
         super.init(shouldAddMargins: shouldAddMargins)
-        self.SCREEN_NAME = TrackingPaths.ScreenId.DISCOUNT_TERM_CONDITION
         self.SCREEN_TITLE = "Términos y Condiciones"
     }
 
@@ -49,8 +48,8 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     }
 
     func getTyCURL() -> String {
-        if let campaignID = self.amountHelper.campaign?.id {
-            return "https://api.mercadolibre.com/campaigns/\(campaignID)/terms_and_conditions?format_type=html"
+        if let legalTermsURL = self.amountHelper.campaign?.legalTermsUrl {
+            return legalTermsURL
         }
         return ""
     }

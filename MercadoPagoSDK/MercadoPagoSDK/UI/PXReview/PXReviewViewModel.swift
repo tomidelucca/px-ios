@@ -10,8 +10,6 @@ import UIKit
 
 class PXReviewViewModel: NSObject {
 
-    var screenName: String { return TrackingPaths.Screens.getReviewAndConfirmPath() }
-
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
 
@@ -26,19 +24,6 @@ class PXReviewViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         self.advancedConfiguration = advancedConfig
         self.userLogged = userLogged
-    }
-
-    // MARK: Tracking logic
-    func trackConfirmActionEvent() {
-
-    }
-
-    func trackInfo() {
-        MPXTracker.sharedInstance.trackScreen(screenName: screenName)
-    }
-
-    func trackChangePaymentMethodEvent() {
-        // No tracking for change payment method event in review view controller for now
     }
 }
 

@@ -37,7 +37,7 @@ extension PXPaymentMethod: Cellable {
 
     internal var isPayerInfoRequired: Bool {
         if isAdditionalInfoNeeded("bolbradesco_name") || isAdditionalInfoNeeded("bolbradesco_identification_type") || isAdditionalInfoNeeded("bolbradesco_identification_number")
-        || isAdditionalInfoNeeded("pec_name") || isAdditionalInfoNeeded("pec_identification_type") || isAdditionalInfoNeeded("pec_identification_number") {
+            || isAdditionalInfoNeeded("pec_name") || isAdditionalInfoNeeded("pec_identification_type") || isAdditionalInfoNeeded("pec_identification_number") {
             return true
         }
         return false
@@ -283,6 +283,10 @@ extension PXPaymentMethod: Cellable {
         return self.id.contains(PXPaymentTypes.PEC.rawValue)
     }
 
+    internal var isPlugin: Bool {
+        return paymentTypeId == PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID
+    }
+
     internal func getAccreditationTimeMessage() -> String? {
 
         if let accreditationMinutes = self.accreditationTime {
@@ -316,5 +320,18 @@ extension PXPaymentMethod: Cellable {
         }
 
         return nil
+    }
+}
+
+// MARK: Tracking
+extension PXPaymentMethod {
+    func getPaymentTypeForTracking() -> String {
+        if isPlugin {
+            return id
+        }
+        return paymentTypeId
+    }
+    func getPaymentIdForTracking() -> String {
+        return id
     }
 }
