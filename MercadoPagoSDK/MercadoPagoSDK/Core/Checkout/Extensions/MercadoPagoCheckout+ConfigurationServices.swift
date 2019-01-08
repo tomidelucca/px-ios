@@ -31,7 +31,7 @@ extension MercadoPagoCheckout {
             
             strongSelf.viewModel.payerCosts = summaryAmount.selectedAmountConfiguration.payerCostConfiguration?.payerCosts
             if let discountConfig = summaryAmount.selectedAmountConfiguration.discountConfiguration {
-                strongSelf.viewModel.setDiscount(discountConfig)
+                strongSelf.viewModel.attemptToApplyDiscount(discountConfig)
             }
             if let payerCosts = strongSelf.viewModel.payerCosts {
                 let defaultPayerCost = strongSelf.viewModel.checkoutPreference.paymentPreference.autoSelectPayerCost(payerCosts)

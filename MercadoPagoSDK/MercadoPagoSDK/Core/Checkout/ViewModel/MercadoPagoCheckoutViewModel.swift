@@ -156,14 +156,15 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return MercadoPagoCheckoutViewModel.error != nil
     }
 
-    func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        self.paymentData.setDiscount(discount, withCampaign: campaign)
-    }
+    func attemptToApplyDiscount(_ discountConfiguration: PXDiscountConfiguration?) {
+        guard let discountConfiguration = discountConfiguration else {
+            clearDiscount()
+            return
+        }
 
-    func setDiscount(_ discountConfiguration: PXDiscountConfiguration) {
         self.consumedDiscount = discountConfiguration.getDiscountConfiguration().isNotAvailable
 
-        guard let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign else {
+        guard let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign, shouldApplyDiscount() else {
             clearDiscount()
             return
         }
@@ -173,6 +174,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     func clearDiscount() {
         self.paymentData.clearDiscount()
+    }
+
+    func shouldApplyDiscount() -> Bool {
+        if paymentPlugin != nil {
+            return !consumedDiscount
+        }
+        return false
     }
 
     public func getPaymentPreferences() -> PXPaymentPreference? {

@@ -31,7 +31,7 @@ extension MercadoPagoCheckoutViewModel {
             self?.checkoutPreference = checkoutPreference
 
             let selectedDiscountConfigurartion = paymentMethodSearchResponse.selectedDiscountConfiguration
-            self?.attemptToApplyDiscount(discountConfiguration: selectedDiscountConfigurartion)
+            self?.attemptToApplyDiscount(selectedDiscountConfigurartion)
 
             self?.initFlowProtocol?.didFinishInitFlow()
         }, errorCallback: { [weak self] initFlowError in
@@ -49,20 +49,5 @@ extension MercadoPagoCheckoutViewModel {
 
     func updateInitFlow() {
         initFlow?.updateModel(paymentPlugin: self.paymentPlugin, paymentMethodPlugins: self.paymentMethodPlugins, chargeRules: self.chargeRules)
-    }
-
-    func attemptToApplyDiscount(discountConfiguration: PXDiscountConfiguration?) {
-        if let discountConfiguration = discountConfiguration {
-
-            if let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
-                self.setDiscount(discount, withCampaign: campaign)
-            }
-
-            if discountConfiguration.getDiscountConfiguration().isNotAvailable {
-                self.clearDiscount()
-                self.consumedDiscount = true
-            }
-
-        }
     }
 }

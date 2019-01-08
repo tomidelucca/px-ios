@@ -30,9 +30,9 @@ extension MercadoPagoCheckout {
                 strongSelf.viewModel.payerCosts = nil
             }
             if let discountConfiguration = strongSelf.viewModel.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOptionSelected.getId()) {
-                strongSelf.viewModel.setDiscount(discountConfiguration)
+                strongSelf.viewModel.attemptToApplyDiscount(discountConfiguration)
             } else if let defaultDiscountConfiguration = strongSelf.viewModel.search?.selectedDiscountConfiguration {
-                strongSelf.viewModel.setDiscount(defaultDiscountConfiguration)
+                strongSelf.viewModel.attemptToApplyDiscount(defaultDiscountConfiguration)
             } else {
                 strongSelf.viewModel.clearDiscount()
             }

@@ -258,16 +258,9 @@ extension MercadoPagoCheckout {
 
     private func commondInit() {
         viewModel.setInitFlowProtocol(flowInitProtocol: self)
-        if !shouldApplyDiscount() {
+        if !viewModel.shouldApplyDiscount() {
             viewModel.clearDiscount()
         }
-    }
-
-    private func shouldApplyDiscount() -> Bool {
-        if viewModel.paymentPlugin != nil {
-            return !viewModel.consumedDiscount
-        }
-        return false
     }
 
     private func removeDiscount() {
