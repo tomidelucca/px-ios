@@ -29,8 +29,8 @@ class PXPaymentMethodConfiguration: NSObject {
 class PXPaymentOptionConfiguration: NSObject {
     let id: String
     let discountConfiguration: PXDiscountConfiguration?
-    let payerCostConfiguration: PXPayerCostConfiguration?
-    init(id: String, discountConfiguration: PXDiscountConfiguration? = nil, payerCostConfiguration: PXPayerCostConfiguration? = nil) {
+    let payerCostConfiguration: PXAmountConfiguration?
+    init(id: String, discountConfiguration: PXDiscountConfiguration? = nil, payerCostConfiguration: PXAmountConfiguration? = nil) {
         self.id = id
         self.discountConfiguration = discountConfiguration
         self.payerCostConfiguration = payerCostConfiguration

@@ -1,5 +1,5 @@
 //
-//  PXPayerCostConfiguration.swift
+//  PXAmountConfiguration.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 29/11/2018.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class PXPayerCostConfiguration: NSObject, Codable {
+open class PXAmountConfiguration: NSObject, Codable {
     open var selectedPayerCostIndex: Int?
     open var selectedPayerCost: PXPayerCost? {
         get {

@@ -15,12 +15,12 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var paymentTypeId: String?
     open var discountInfo: String?
     open var defaultAmountConfiguration: String?
-    open var selectedPayerCostConfiguration: PXPayerCostConfiguration?
-    open var amountConfigurations: [String: PXPayerCostConfiguration]?
+    open var selectedPayerCostConfiguration: PXAmountConfiguration?
+    open var amountConfigurations: [String: PXAmountConfiguration]?
     open var comment: String?
 
 
-    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, defaultAmountConfiguration: String?, amountConfigurations: [String: PXPayerCostConfiguration]?, comment: String?) {
+    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, defaultAmountConfiguration: String?, amountConfigurations: [String: PXAmountConfiguration]?, comment: String?) {
         self.id = id
         self._description = description
         self.paymentMethodId = paymentMethodId
@@ -55,7 +55,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         let comment: String? = try container.decodeIfPresent(String.self, forKey: .comment)
         let discountInfo: String? = try container.decodeIfPresent(String.self, forKey: .discountInfo)
         let defaultAmountConfiguration: String? = try container.decodeIfPresent(String.self, forKey: .defaultAmountConfiguration)
-        let amountConfigurations: [String: PXPayerCostConfiguration]? = try container.decodeIfPresent([String: PXPayerCostConfiguration].self, forKey: .amountConfigurations)
+        let amountConfigurations: [String: PXAmountConfiguration]? = try container.decodeIfPresent([String: PXAmountConfiguration].self, forKey: .amountConfigurations)
 
         self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, discountInfo: discountInfo, defaultAmountConfiguration: defaultAmountConfiguration, amountConfigurations: amountConfigurations, comment: comment)
     }
