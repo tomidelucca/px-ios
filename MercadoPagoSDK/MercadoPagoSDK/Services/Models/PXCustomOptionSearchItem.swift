@@ -14,23 +14,23 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var paymentMethodId: String?
     open var paymentTypeId: String?
     open var discountInfo: String?
-    open var selectedAmountConfiguration: String?
+    open var defaultAmountConfiguration: String?
     open var selectedPayerCostConfiguration: PXPayerCostConfiguration?
-    open var payerCostConfigurations: [String: PXPayerCostConfiguration]?
+    open var amountConfigurations: [String: PXPayerCostConfiguration]?
     open var comment: String?
 
 
-    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, selectedAmountConfiguration: String?, payerCostConfigurations: [String: PXPayerCostConfiguration]?, comment: String?) {
+    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, defaultAmountConfiguration: String?, amountConfigurations: [String: PXPayerCostConfiguration]?, comment: String?) {
         self.id = id
         self._description = description
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
         self.discountInfo = discountInfo
-        self.selectedAmountConfiguration = selectedAmountConfiguration
-        self.payerCostConfigurations = payerCostConfigurations
+        self.defaultAmountConfiguration = defaultAmountConfiguration
+        self.amountConfigurations = amountConfigurations
         self.comment = comment
 
-        if let selectedAmountConfiguration = selectedAmountConfiguration, let selectedPayerCostConfiguration = payerCostConfigurations?[selectedAmountConfiguration] {
+        if let defaultAmountConfiguration = defaultAmountConfiguration, let selectedPayerCostConfiguration = amountConfigurations?[defaultAmountConfiguration] {
             self.selectedPayerCostConfiguration = selectedPayerCostConfiguration
         }
     }
@@ -41,8 +41,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         case paymentMethodId = "payment_method_id"
         case paymentTypeId = "payment_type_id"
         case discountInfo = "discount_info"
-        case selectedAmountConfiguration = "selected_amount_configuration"
-        case payerCostConfigurations = "payer_cost_configurations"
+        case defaultAmountConfiguration = "default_amount_configuration"
+        case amountConfigurations = "amount_configurations"
         case comment = "comment"
     }
 
@@ -54,10 +54,10 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         let paymentTypeId: String? = try container.decodeIfPresent(String.self, forKey: .paymentTypeId)
         let comment: String? = try container.decodeIfPresent(String.self, forKey: .comment)
         let discountInfo: String? = try container.decodeIfPresent(String.self, forKey: .discountInfo)
-        let selectedAmountConfiguration: String? = try container.decodeIfPresent(String.self, forKey: .selectedAmountConfiguration)
-        let payerCostConfigurations: [String: PXPayerCostConfiguration]? = try container.decodeIfPresent([String: PXPayerCostConfiguration].self, forKey: .payerCostConfigurations)
+        let defaultAmountConfiguration: String? = try container.decodeIfPresent(String.self, forKey: .defaultAmountConfiguration)
+        let amountConfigurations: [String: PXPayerCostConfiguration]? = try container.decodeIfPresent([String: PXPayerCostConfiguration].self, forKey: .amountConfigurations)
 
-        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, discountInfo: discountInfo, selectedAmountConfiguration: selectedAmountConfiguration, payerCostConfigurations: payerCostConfigurations, comment: comment)
+        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, discountInfo: discountInfo, defaultAmountConfiguration: defaultAmountConfiguration, amountConfigurations: amountConfigurations, comment: comment)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -67,8 +67,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         try container.encodeIfPresent(self.paymentMethodId, forKey: .paymentMethodId)
         try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
         try container.encodeIfPresent(self.discountInfo, forKey: .discountInfo)
-        try container.encodeIfPresent(self.selectedAmountConfiguration, forKey: .selectedAmountConfiguration)
-        try container.encodeIfPresent(self.payerCostConfigurations, forKey: .payerCostConfigurations)
+        try container.encodeIfPresent(self.defaultAmountConfiguration, forKey: .defaultAmountConfiguration)
+        try container.encodeIfPresent(self.amountConfigurations, forKey: .amountConfigurations)
         try container.encodeIfPresent(self.comment, forKey: .comment)
     }
 

@@ -8,39 +8,39 @@
 import Foundation
 
 class PXSummaryAmount: NSObject, Codable {
-    let payerCostConfigurations: [String:PXPayerCostConfiguration]?
+    let amountConfigurations: [String:PXPayerCostConfiguration]?
     let discountConfigurations: [String:PXDiscountConfiguration]?
-    let selectedAmountConfigurationId: String
+    let defaultAmountConfigurationId: String
     var selectedAmountConfiguration: PXPaymentOptionConfiguration {
         get {
-            return PXPaymentOptionConfiguration(id: selectedAmountConfigurationId, discountConfiguration: discountConfigurations?[selectedAmountConfigurationId], payerCostConfiguration: payerCostConfigurations?[selectedAmountConfigurationId])
+            return PXPaymentOptionConfiguration(id: defaultAmountConfigurationId, discountConfiguration: discountConfigurations?[defaultAmountConfigurationId], payerCostConfiguration: amountConfigurations?[defaultAmountConfigurationId])
         }
     }
     
-    init(payerCostConfigurations: [String:PXPayerCostConfiguration]?, discountConfigurations: [String:PXDiscountConfiguration]?, selectedAmountConfigurationId: String) {
-        self.payerCostConfigurations = payerCostConfigurations
+    init(amountConfigurations: [String:PXPayerCostConfiguration]?, discountConfigurations: [String:PXDiscountConfiguration]?, defaultAmountConfigurationId: String) {
+        self.amountConfigurations = amountConfigurations
         self.discountConfigurations = discountConfigurations
-        self.selectedAmountConfigurationId = selectedAmountConfigurationId
+        self.defaultAmountConfigurationId = defaultAmountConfigurationId
     }
     
     public enum PXSummaryAmountKeys: String, CodingKey {
-        case payerCostConfigurations = "payer_cost_configurations"
+        case amountConfigurations = "amount_configurations"
         case discountConfigurations = "discounts_configurations"
-        case  selectedAmountConfigurationId = "selected_amount_configuration"
+        case defaultAmountConfigurationId = "default_amount_configuration"
     }
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSummaryAmountKeys.self)
         let discountConfigurations: [String:PXDiscountConfiguration]? = try container.decodeIfPresent([String:PXDiscountConfiguration].self, forKey: .discountConfigurations)
-        let payerCostConfigurations: [String:PXPayerCostConfiguration]? = try container.decodeIfPresent([String:PXPayerCostConfiguration].self, forKey: .payerCostConfigurations)
-        let selectedAmountConfigurationId: String? = try container.decodeIfPresent(String.self, forKey: .selectedAmountConfigurationId)
+        let amountConfigurations: [String:PXPayerCostConfiguration]? = try container.decodeIfPresent([String:PXPayerCostConfiguration].self, forKey: .amountConfigurations)
+        let defaultAmountConfigurationId: String? = try container.decodeIfPresent(String.self, forKey: .defaultAmountConfigurationId)
         
-        self.init(payerCostConfigurations: payerCostConfigurations, discountConfigurations: discountConfigurations, selectedAmountConfigurationId: selectedAmountConfigurationId!)
+        self.init(amountConfigurations: amountConfigurations, discountConfigurations: discountConfigurations, defaultAmountConfigurationId: defaultAmountConfigurationId!)
     }
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXSummaryAmountKeys.self)
-        try container.encodeIfPresent(self.payerCostConfigurations, forKey: .payerCostConfigurations)
+        try container.encodeIfPresent(self.amountConfigurations, forKey: .amountConfigurations)
         try container.encodeIfPresent(self.discountConfigurations, forKey: .discountConfigurations)
-        try container.encodeIfPresent(self.selectedAmountConfigurationId, forKey: .selectedAmountConfigurationId)
+        try container.encodeIfPresent(self.defaultAmountConfigurationId, forKey: .defaultAmountConfigurationId)
     }
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
