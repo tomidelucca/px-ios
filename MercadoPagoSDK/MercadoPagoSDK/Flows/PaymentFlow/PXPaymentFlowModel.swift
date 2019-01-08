@@ -133,7 +133,7 @@ internal extension PXPaymentFlowModel {
 
 // MARK: Manage ESC
 internal extension PXPaymentFlowModel {
-    func handleESCForGenericPayment(status: String, statusDetails: String, errorPaymentType: String?) {
+    func handleESCForPayment(status: String, statusDetails: String, errorPaymentType: String?) {
         guard let token = amountHelper?.paymentData.getToken() else {
             return
         }

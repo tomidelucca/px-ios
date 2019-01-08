@@ -18,8 +18,11 @@ internal extension PXPaymentFlow {
 
         plugin.startPayment?(checkoutStore: PXCheckoutStore.sharedInstance, errorHandler: self as PXPaymentProcessorErrorHandler, successWithBusinessResult: { [weak self] businessResult in
             self?.model.businessResult = businessResult
+            self?.model.handleESCForPayment(status: businessResult.paymentStatus, statusDetails: businessResult.paymentStatusDetail, errorPaymentType: nil)
             self?.executeNextStep()
             }, successWithPaymentResult: { [weak self] genericPayment in
+
+                self?.model.handleESCForPayment(status: genericPayment.status, statusDetails: genericPayment.statusDetail, errorPaymentType: genericPayment.errorPaymentMethodTypeId)
 
                 if genericPayment.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue {
                     self?.paymentErrorHandler?.escError()
@@ -47,6 +50,9 @@ internal extension PXPaymentFlow {
             guard let paymentData = self.model.amountHelper?.paymentData else {
                 return
             }
+
+            self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: nil)
+
             let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
             self.model.paymentResult = paymentResult
             self.executeNextStep()
