@@ -11,7 +11,7 @@ open class PXSplitConfiguration: NSObject, Codable {
     open var splitAmount: Double = 0
     open var discountToken: Int64?
     open var splitToken: Int64?
-    open var defaultSplit: Bool = false
+    open var splitEnabled: Bool = false
     open var selectedPayerCostIndex: Int?
     open var payerCosts: [PXPayerCost]?
     open var selectedPayerCost: PXPayerCost? {
@@ -27,7 +27,7 @@ open class PXSplitConfiguration: NSObject, Codable {
         self.splitAmount = splitAmount
         self.discountToken = discountToken
         self.splitToken = splitToken
-        self.defaultSplit = defaultSplit
+        self.splitEnabled = defaultSplit
         self.selectedPayerCostIndex = selectedPayerCostIndex
         self.payerCosts = payerCosts
     }
@@ -38,7 +38,7 @@ open class PXSplitConfiguration: NSObject, Codable {
         case splitAmount = "split_amount"
         case discountToken = "discount_token"
         case splitToken = "split_token"
-        case defaultSplit = "default_split"
+        case defaultSplit = "split_enabled"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -59,7 +59,7 @@ open class PXSplitConfiguration: NSObject, Codable {
         try container.encodeIfPresent(self.splitAmount, forKey: .splitAmount)
         try container.encodeIfPresent(self.discountToken, forKey: .discountToken)
         try container.encodeIfPresent(self.splitToken, forKey: .splitToken)
-        try container.encodeIfPresent(self.defaultSplit, forKey: .defaultSplit)
+        try container.encodeIfPresent(self.splitEnabled, forKey: .defaultSplit)
     }
 
     open func toJSONString() throws -> String? {

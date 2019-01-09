@@ -18,7 +18,7 @@ open class PXAmountConfiguration: NSObject, Codable {
         }
     }
     open var payerCosts: [PXPayerCost]?
-    open var sliptConfiguration: PXSplitConfiguration?
+    open var splitConfiguration: PXSplitConfiguration?
     open var discountToken: Int64?
 
     public init(selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?, splitConfiguration: PXSplitConfiguration?, discountToken: Int64?) {
