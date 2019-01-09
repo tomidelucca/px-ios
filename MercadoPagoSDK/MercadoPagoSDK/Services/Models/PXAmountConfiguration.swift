@@ -24,6 +24,8 @@ open class PXAmountConfiguration: NSObject, Codable {
     public init(selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?, splitConfiguration: PXSplitConfiguration?, discountToken: Int64?) {
         self.selectedPayerCostIndex = selectedPayerCostIndex
         self.payerCosts = payerCosts
+        self.splitConfiguration = splitConfiguration
+        self.discountToken = discountToken
     }
 
     public enum PXPayerCostConfiguration: String, CodingKey {
