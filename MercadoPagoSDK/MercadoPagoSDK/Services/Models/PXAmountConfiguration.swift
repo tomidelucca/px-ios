@@ -47,7 +47,7 @@ open class PXAmountConfiguration: NSObject, Codable {
         try container.encodeIfPresent(self.payerCosts, forKey: .payerCost)
         try container.encodeIfPresent(self.selectedPayerCostIndex, forKey: .selectedPayerCostIndex)
         try container.encodeIfPresent(self.discountToken, forKey: .discountToken)
-        try container.encodeIfPresent(self.sliptConfiguration, forKey: .split)
+        try container.encodeIfPresent(self.splitConfiguration, forKey: .split)
     }
 
     open func toJSONString() throws -> String? {

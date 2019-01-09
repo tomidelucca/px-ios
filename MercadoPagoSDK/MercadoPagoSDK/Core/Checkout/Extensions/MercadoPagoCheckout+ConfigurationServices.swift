@@ -28,7 +28,7 @@ extension MercadoPagoCheckout {
                 return
             }
 
-            strongSelf.viewModel.payerCosts = summaryAmount.selectedAmountConfiguration.payerCostConfiguration?.payerCosts
+            strongSelf.viewModel.payerCosts = summaryAmount.selectedAmountConfiguration.amountConfiguration?.payerCosts
             if let discountConfig = summaryAmount.selectedAmountConfiguration.discountConfiguration {
                 strongSelf.viewModel.attemptToApplyDiscount(discountConfig)
             }
@@ -39,7 +39,7 @@ extension MercadoPagoCheckout {
                 }
             }
 
-            if let defaultPC = summaryAmount.selectedAmountConfiguration.payerCostConfiguration?.selectedPayerCost {
+            if let defaultPC = summaryAmount.selectedAmountConfiguration.amountConfiguration?.selectedPayerCost {
                 strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
             }
 
