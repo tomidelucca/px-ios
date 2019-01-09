@@ -25,7 +25,7 @@ class PXPaymentMethodSearchBody: Codable {
     }
 
     public enum PXPaymentMethodSearchBodyKeys: String, CodingKey {
-        case privateKey
+        case privateKey = "access_token"
         case email
         case marketplace
         case productId = "product_id"

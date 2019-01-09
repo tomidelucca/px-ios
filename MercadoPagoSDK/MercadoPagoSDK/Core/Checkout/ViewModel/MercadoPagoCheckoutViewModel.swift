@@ -156,14 +156,15 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return MercadoPagoCheckoutViewModel.error != nil
     }
 
-    func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
-        self.paymentData.setDiscount(discount, withCampaign: campaign)
-    }
+    func attemptToApplyDiscount(_ discountConfiguration: PXDiscountConfiguration?) {
+        guard let discountConfiguration = discountConfiguration else {
+            clearDiscount()
+            return
+        }
 
-    func setDiscount(_ discountConfiguration: PXDiscountConfiguration) {
         self.consumedDiscount = discountConfiguration.getDiscountConfiguration().isNotAvailable
 
-        guard let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign else {
+        guard let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign, shouldApplyDiscount() else {
             clearDiscount()
             return
         }
@@ -173,6 +174,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     func clearDiscount() {
         self.paymentData.clearDiscount()
+    }
+
+    func shouldApplyDiscount() -> Bool {
+        if paymentPlugin != nil {
+            return !consumedDiscount
+        }
+        return false
     }
 
     public func getPaymentPreferences() -> PXPaymentPreference? {
@@ -513,13 +521,13 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         for customOption in paymentMethodSearch.customOptionSearchItems {
             var paymentOptionConfigurations = [PXPaymentOptionConfiguration]()
             for key in discountConfigurationsKeys {
-                guard let discountConfiguration = paymentMethodSearch.discountConfigurations[key], let payerCostConfiguration = customOption.payerCostConfigurations[key] else {
+                guard let discountConfiguration = paymentMethodSearch.discountConfigurations[key], let payerCostConfiguration = customOption.amountConfigurations?[key] else {
                     continue
                 }
                 let paymentOptionConfiguration = PXPaymentOptionConfiguration(id: key, discountConfiguration: discountConfiguration, payerCostConfiguration: payerCostConfiguration)
                 paymentOptionConfigurations.append(paymentOptionConfiguration)
             }
-            let paymentMethodConfiguration = PXPaymentMethodConfiguration(paymentOptionID: customOption.id, paymentOptionsConfigurations: paymentOptionConfigurations, selectedAmountConfiguration: customOption.selectedAmountConfiguration)
+            let paymentMethodConfiguration = PXPaymentMethodConfiguration(paymentOptionID: customOption.id, paymentOptionsConfigurations: paymentOptionConfigurations, selectedAmountConfiguration: customOption.defaultAmountConfiguration)
             configurations.insert(paymentMethodConfiguration)
         }
         return configurations
