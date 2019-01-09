@@ -40,8 +40,8 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         case paymentMethodId = "payment_method_id"
         case paymentTypeId = "payment_type_id"
         case discountInfo = "discount_info"
-        case selectedAmountConfiguration = "selected_amount_configuration"
-        case payerCostConfigurations = "payer_cost_configurations"
+        case selectedAmountConfiguration = "default_amount_configuration"
+        case payerCostConfigurations = "amount_configurations"
         case comment = "comment"
     }
 
