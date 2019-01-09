@@ -12,6 +12,7 @@ open class PXSplitConfiguration: NSObject, Codable {
     open var discountToken: Int64?
     open var splitToken: Int64?
     open var splitEnabled: Bool = false
+    open var message: String?
     open var selectedPayerCostIndex: Int?
     open var payerCosts: [PXPayerCost]?
     open var selectedPayerCost: PXPayerCost? {
@@ -23,9 +24,10 @@ open class PXSplitConfiguration: NSObject, Codable {
         }
     }
 
-    public init(splitAmount: Double, discountToken: Int64?, splitToken: Int64?, defaultSplit: Bool, selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
+    public init(splitAmount: Double, discountToken: Int64?, message: String?, splitToken: Int64?, defaultSplit: Bool, selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
         self.splitAmount = splitAmount
         self.discountToken = discountToken
+        self.message = message
         self.splitToken = splitToken
         self.splitEnabled = defaultSplit
         self.selectedPayerCostIndex = selectedPayerCostIndex
@@ -35,10 +37,11 @@ open class PXSplitConfiguration: NSObject, Codable {
     public enum PXPayerCostConfiguration: String, CodingKey {
         case selectedPayerCostIndex = "selected_payer_cost_index"
         case payerCost = "payer_costs"
-        case splitAmount = "split_amount"
-        case discountToken = "discount_token"
-        case splitToken = "split_token"
-        case defaultSplit = "split_enabled"
+        case splitAmount
+        case discountToken = "primary_method_discount_token"
+        case splitToken = "secondary_method_discount_token"
+        case defaultSplit = "default_enabled"
+        case message
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -49,7 +52,8 @@ open class PXSplitConfiguration: NSObject, Codable {
         let defaultSplit: Bool = try container.decodeIfPresent(Bool.self, forKey: .defaultSplit) ?? false
         let payerCosts: [PXPayerCost]? = try container.decodeIfPresent([PXPayerCost].self, forKey: .payerCost)
         let selectedPayerCostIndex: Int? = try container.decodeIfPresent(Int.self, forKey: .selectedPayerCostIndex)
-        self.init(splitAmount: splitAmount, discountToken: discountToken, splitToken: splitToken, defaultSplit: defaultSplit, selectedPayerCostIndex: selectedPayerCostIndex, payerCosts: payerCosts)
+        let message: String? = try container.decodeIfPresent(String.self, forKey: .message)
+        self.init(splitAmount: splitAmount, discountToken: discountToken, message: message, splitToken: splitToken, defaultSplit: defaultSplit, selectedPayerCostIndex: selectedPayerCostIndex, payerCosts: payerCosts)
     }
 
     public func encode(to encoder: Encoder) throws {
