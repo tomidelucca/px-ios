@@ -105,7 +105,7 @@ extension PXOneTapViewModel {
         return model
     }
 
-    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderViewModel {
+    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?, splitPaymentEnabled: Bool = false) -> PXOneTapHeaderViewModel {
         let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
         let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let summaryAlpha: CGFloat = 0.45
@@ -114,6 +114,7 @@ extension PXOneTapViewModel {
         let totalColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let totalAlpha: CGFloat = 1
 
+        let splitConfiguration = selectedCard?.splitConfiguration
         let currency = SiteManager.shared.getCurrency()
         var totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
         var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
@@ -157,7 +158,7 @@ extension PXOneTapViewModel {
             headerTitle = headerTitleStr
         }
 
-        let headerVM = PXOneTapHeaderViewModel(icon: headerImage, title: headerTitle, data: customData)
+        let headerVM = PXOneTapHeaderViewModel(icon: headerImage, title: headerTitle, data: customData, splitConfiguration: splitConfiguration)
         return headerVM
     }
 

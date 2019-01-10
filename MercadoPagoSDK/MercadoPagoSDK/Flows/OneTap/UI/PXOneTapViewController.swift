@@ -178,7 +178,7 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderView {
-        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(selectedCard: selectedCard), delegate: self)
+        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(selectedCard: selectedCard, splitPaymentEnabled: selectedCard?.splitConfiguration?.splitEnabled ?? false), delegate: self)
         return headerView
     }
 
@@ -253,6 +253,13 @@ extension PXOneTapViewController {
 
 // MARK: Summary delegate.
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
+    
+    func splitPaymentSwitchChangedValue(isOn: Bool) {
+        headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard, splitPaymentEnabled: isOn))
+        installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel(splitPaymentEnabled: isOn)
+        print("Is the switch on? ---->: ", isOn)
+    }
+
     func didTapSummary() {
         let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper)
 
@@ -307,6 +314,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
                 loadingButtonComponent?.setDisabled()
             }
             headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
+            headerView?.updateSplitPaymentView(splitConfiguration: selectedCard?.splitConfiguration)
         }
     }
 

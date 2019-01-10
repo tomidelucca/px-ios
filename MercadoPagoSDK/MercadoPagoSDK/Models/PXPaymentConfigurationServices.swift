@@ -12,21 +12,42 @@ class PXPaymentConfigurationServices {
     private var configurations: Set<PXPaymentMethodConfiguration> = []
     private var defaultDiscountConfiguration: PXDiscountConfiguration?
 
-    // Payer Costs for Payment Method
-    func getPayerCostsForPaymentMethod(_ id: String) -> [PXPayerCost]? {
+    func getSplitConfigurationForPaymentMethod(_ id: String?) -> PXSplitConfiguration? {
+        guard let id = id else {
+            return nil
+        }
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
-                return paymentOptionConfiguration.amountConfiguration?.payerCosts
+                return paymentOptionConfiguration.amountConfiguration?.splitConfiguration
+            }
+        }
+        return nil
+    }
+
+    // Payer Costs for Payment Method
+    func getPayerCostsForPaymentMethod(_ id: String, splitPaymentEnabled: Bool = false) -> [PXPayerCost]? {
+        if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
+            if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
+                if splitPaymentEnabled {
+                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.payerCosts
+                } else {
+                    return paymentOptionConfiguration.amountConfiguration?.payerCosts
+                }
             }
         }
         return nil
     }
 
     // Selected Payer Cost for Payment Method
-    func getSelectedPayerCostsForPaymentMethod(_ id: String) -> PXPayerCost? {
+    func getSelectedPayerCostsForPaymentMethod(_ id: String, splitPaymentEnabled: Bool = false) -> PXPayerCost? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
-                return paymentOptionConfiguration.amountConfiguration?.selectedPayerCost
+                if splitPaymentEnabled {
+                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.selectedPayerCost
+                } else {
+                    return paymentOptionConfiguration.amountConfiguration?.selectedPayerCost
+                }
+
             }
         }
         return nil

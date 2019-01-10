@@ -18,8 +18,9 @@ final class PXCardSliderViewModel {
     var selectedPayerCost: PXPayerCost?
     var cardId: String?
     var displayMessage: String?
+    var splitConfiguration: PXSplitConfiguration?
 
-    init(_ paymentMethodId: String, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool) {
+    init(_ paymentMethodId: String, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, splitConfiguration: PXSplitConfiguration?) {
         self.paymentMethodId = paymentMethodId
         self.issuerId = issuerId
         self.cardUI = cardUI
@@ -28,6 +29,7 @@ final class PXCardSliderViewModel {
         self.selectedPayerCost = selectedPayerCost
         self.cardId = cardId
         self.shouldShowArrow = shouldShowArrow
+        self.splitConfiguration = splitConfiguration
     }
 }
 
