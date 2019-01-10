@@ -104,9 +104,9 @@ internal final class PXPaymentFlowModel: NSObject {
 
     func assignToCheckoutStore() {
         if let amountHelper = amountHelper {
-            PXCheckoutStore.sharedInstance.paymentData = [amountHelper.paymentData]
+            PXCheckoutStore.sharedInstance.paymentDatas = [amountHelper.paymentData]
             if let splitAccountMoney = amountHelper.splitAccountMoney {
-                PXCheckoutStore.sharedInstance.paymentData.append(splitAccountMoney)
+                PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
             }
         }
         PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference

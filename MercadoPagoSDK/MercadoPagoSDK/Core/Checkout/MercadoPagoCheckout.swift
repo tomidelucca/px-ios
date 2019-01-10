@@ -119,6 +119,7 @@ extension MercadoPagoCheckout {
 extension MercadoPagoCheckout {
     internal func setPaymentResult(paymentResult: PaymentResult) {
         self.viewModel.paymentResult = paymentResult
+        self.viewModel.splitAccountMoney = self.viewModel.paymentResult?.splitAccountMoney
         if let paymentData = paymentResult.paymentData {
             self.viewModel.paymentData = paymentData
         }

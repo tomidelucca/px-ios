@@ -51,7 +51,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
         }
     }
 
@@ -77,6 +77,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var rootVC = true
 
     internal var paymentData = PXPaymentData()
+    internal var splitAccountMoney: PXPaymentData?
     var payment: PXPayment?
     internal var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
@@ -723,7 +724,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func populateCheckoutStore() {
-        PXCheckoutStore.sharedInstance.paymentData = [self.paymentData]
+        PXCheckoutStore.sharedInstance.paymentDatas = [self.paymentData]
+        if let splitAccountMoney = amountHelper.splitAccountMoney {
+            PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
+        }
         PXCheckoutStore.sharedInstance.checkoutPreference = self.checkoutPreference
     }
 

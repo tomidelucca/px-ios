@@ -189,7 +189,7 @@ extension ResourceManager {
     func getResultColorWith(status: String, statusDetail: String? = nil) -> UIColor {
         if let statusDetail = statusDetail {
             //Payment Result Logic
-            let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), payerEmail: nil, paymentId: nil, statementDescription: nil)
+            let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), splitAccountMoney: nil, payerEmail: nil, paymentId: nil, statementDescription: nil)
             if paymentResult.isApproved() || paymentResult.isInProcess() || paymentResult.isWaitingForPayment() {
                 return ThemeManager.shared.successColor()
             }
@@ -217,7 +217,7 @@ extension ResourceManager {
 
         if let statusDetail = statusDetail {
             //Payment Result Logic
-            let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), payerEmail: nil, paymentId: nil, statementDescription: nil)
+            let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), splitAccountMoney: nil, payerEmail: nil, paymentId: nil, statementDescription: nil)
             if paymentResult.isAccepted() {
                 if paymentResult.isApproved() {
                     return getBadgeImage(name: "ok_badge", clearBackground: clearBackground)

@@ -15,6 +15,7 @@ internal struct PXAmountHelper {
     internal let chargeRules: [PXPaymentTypeChargeRule]?
     internal let consumedDiscount: Bool
     internal let paymentConfigurationService: PXPaymentConfigurationServices
+    internal var splitAccountMoney: PXPaymentData?
 
     var discount: PXDiscount? {
         get {
@@ -27,7 +28,6 @@ internal struct PXAmountHelper {
             return paymentData.campaign
         }
     }
-    internal let splitAccountMoney: PXPaymentData? = nil
 
     var preferenceAmount: Double {
         get {

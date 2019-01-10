@@ -60,7 +60,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
             }
         }
 
-        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: statusDetailsStr, paymentData: paymentData, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
+        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: statusDetailsStr, paymentData: paymentData, splitAccountMoney: flow?.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
 
         flow?.model.paymentResult = paymentResult
         flow?.executeNextStep()
@@ -83,7 +83,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
             return
         }
 
-        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
+        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, splitAccountMoney: self.flow?.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
 
         flow?.model.paymentResult = paymentResult
         flow?.executeNextStep()

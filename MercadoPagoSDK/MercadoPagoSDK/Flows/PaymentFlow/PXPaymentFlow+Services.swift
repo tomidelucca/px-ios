@@ -29,7 +29,7 @@ internal extension PXPaymentFlow {
                     return
                 }
 
-                let paymentResult = PaymentResult(status: genericPayment.status, statusDetail: genericPayment.statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: genericPayment.paymentId, statementDescription: nil)
+                let paymentResult = PaymentResult(status: genericPayment.status, statusDetail: genericPayment.statusDetail, paymentData: paymentData, splitAccountMoney: self?.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: genericPayment.paymentId, statementDescription: nil, errorPaymentMethodId: genericPayment.errorPaymentMethodId, errorPaymentTypeId: genericPayment.errorPaymentMethodTypeId)
                 self?.model.paymentResult = paymentResult
                 self?.executeNextStep()
         })

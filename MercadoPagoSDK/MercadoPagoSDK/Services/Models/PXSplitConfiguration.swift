@@ -37,7 +37,7 @@ open class PXSplitConfiguration: NSObject, Codable {
     public enum PXPayerCostConfiguration: String, CodingKey {
         case selectedPayerCostIndex = "selected_payer_cost_index"
         case payerCost = "payer_costs"
-        case splitAmount
+        case splitAmount = "amount"
         case discountToken = "primary_method_discount_token"
         case splitToken = "secondary_method_discount_token"
         case defaultSplit = "default_enabled"
