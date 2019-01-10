@@ -13,9 +13,8 @@ extension OneTapFlow {
         let reviewVC = PXOneTapViewController(viewModel: model.reviewConfirmViewModel(), timeOutPayButton: model.getTimeoutForOneTapReviewController(), shouldAnimatePayButton: !model.needToShowLoading(), callbackPaymentData: { [weak self] (paymentData: PXPaymentData) in
             self?.cancelFlowForNewPaymentSelection()
             return
-            }, callbackConfirm: {(paymentData: PXPaymentData) in
-                self.model.updateCheckoutModel(paymentData: paymentData)
-
+            }, callbackConfirm: {(paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) in
+                self.model.updateCheckoutModel(paymentData: paymentData, splitAccountMoneyEnabled: splitAccountMoneyEnabled)
                 // Deletes default one tap option in payment method search
                 self.executeNextStep()
         }, callbackUpdatePaymentOption: { [weak self] (newPaymentOption: PaymentMethodOption) in

@@ -38,6 +38,16 @@ class PXPaymentConfigurationServices {
         return nil
     }
 
+    // Split Configuration for Payment Method
+    func getSplitConfigurationForPaymentMethod(_ id: String) -> PXSplitConfiguration? {
+        if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
+            if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
+                return paymentOptionConfiguration.amountConfiguration?.splitConfiguration
+            }
+        }
+        return nil
+    }
+
     // Selected Payer Cost for Payment Method
     func getSelectedPayerCostsForPaymentMethod(_ id: String, splitPaymentEnabled: Bool = false) -> PXPayerCost? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {

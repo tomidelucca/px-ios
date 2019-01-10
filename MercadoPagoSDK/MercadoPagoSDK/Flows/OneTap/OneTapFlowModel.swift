@@ -28,6 +28,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var consumedDiscount: Bool = false
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var paymentMethodPlugins: [PXPaymentMethodPlugin]?
+    var splitAccountMoney: PXPaymentData?
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -38,7 +39,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     // In order to ensure data updated create new instance for every usage
     internal var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
         }
     }
 
@@ -108,8 +109,23 @@ internal extension OneTapFlowModel {
 
 // MARK: Update view models
 internal extension OneTapFlowModel {
-    func updateCheckoutModel(paymentData: PXPaymentData) {
+    func updateCheckoutModel(paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) {
         self.paymentData = paymentData
+        if splitAccountMoneyEnabled {
+            let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionSelected.getId())
+
+            let accountMoneyPMs = search.paymentMethods.filter { (paymentMethod) -> Bool in
+                return paymentMethod.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue
+            }
+            if let accountMoneyPM = accountMoneyPMs.first {
+                splitAccountMoney = PXPaymentData()
+                splitAccountMoney?.transactionAmount = splitConfiguration?.splitAmount
+                splitAccountMoney?.updatePaymentDataWith(paymentMethod: accountMoneyPM)
+            }
+        } else {
+            splitAccountMoney = nil
+        }
+
         self.readyToPay = true
     }
 

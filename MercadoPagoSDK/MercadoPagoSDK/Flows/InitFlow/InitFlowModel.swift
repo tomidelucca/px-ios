@@ -39,7 +39,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount, paymentConfigurationService: self.properties.paymentConfigurationService)
+            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount, paymentConfigurationService: self.properties.paymentConfigurationService, splitAccountMoney: nil)
         }
     }
 
@@ -124,7 +124,10 @@ extension InitFlowModel {
     }
 
     func populateCheckoutStore() {
-        PXCheckoutStore.sharedInstance.paymentData = [self.properties.paymentData]
+        PXCheckoutStore.sharedInstance.paymentDatas = [self.properties.paymentData]
+        if let splitAccountMoney = amountHelper.splitAccountMoney {
+            PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
+        }
         PXCheckoutStore.sharedInstance.checkoutPreference = self.properties.checkoutPreference
     }
 }

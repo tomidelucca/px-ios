@@ -89,7 +89,7 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         let headers = ["Accept-Language": language]
 
-        self.baseURL = "http://private-fd022-split2.apiary-mock.com/split?"
+        self.baseURL = "http://private-fd022-split2.apiary-mock.com"
 
         self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: bodyJSON, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
             do {

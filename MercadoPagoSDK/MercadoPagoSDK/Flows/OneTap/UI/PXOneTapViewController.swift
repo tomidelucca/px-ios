@@ -20,7 +20,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     // MARK: Callbacks
     var callbackPaymentData: ((PXPaymentData) -> Void)
-    var callbackConfirm: ((PXPaymentData) -> Void)
+    var callbackConfirm: ((PXPaymentData, Bool) -> Void)
     var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
     var callbackExit: (() -> Void)
     var finishButtonAnimation: (() -> Void)
@@ -38,7 +38,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var cardSliderMarginConstraint: NSLayoutConstraint?
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, timeOutPayButton: TimeInterval = 15, shouldAnimatePayButton: Bool, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
@@ -235,9 +235,12 @@ extension PXOneTapViewController {
             let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem)
             trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
         }
+        // TODO Change this
+        let splitPayment = true
+
         self.hideBackButton()
         self.hideNavBar()
-        self.callbackConfirm(self.viewModel.amountHelper.paymentData)
+        self.callbackConfirm(self.viewModel.amountHelper.paymentData, splitPayment)
     }
 
     func resetButton(error: MPSDKError) {
