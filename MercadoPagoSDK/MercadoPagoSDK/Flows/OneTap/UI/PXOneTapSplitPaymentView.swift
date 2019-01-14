@@ -8,12 +8,12 @@
 import UIKit
 
 class PXOneTapSplitPaymentView: PXComponentView {
-    let callback : ((_ isOn: Bool) -> Void)
+    let callback : ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)
     var splitConfiguration: PXSplitConfiguration
     var splitPaymentSwitch: UISwitch?
     var splitMessageLabel: UILabel?
 
-    init(splitConfiguration: PXSplitConfiguration, callback : @escaping ((_ isOn: Bool) -> Void)) {
+    init(splitConfiguration: PXSplitConfiguration, callback : @escaping ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)) {
         self.splitConfiguration = splitConfiguration
         self.callback = callback
         super.init()
@@ -27,22 +27,17 @@ class PXOneTapSplitPaymentView: PXComponentView {
     func update(splitConfiguration: PXSplitConfiguration) {
         self.splitConfiguration = splitConfiguration
         splitMessageLabel?.attributedText = splitConfiguration.message?.toAttributedString()
+
+        if splitPaymentSwitch?.isOn != splitConfiguration.splitEnabled {
+            callback(splitConfiguration.splitEnabled, false)
+        }
+
         splitPaymentSwitch?.setOn(splitConfiguration.splitEnabled, animated: true)
     }
 
     private func render() {
         removeAllSubviews()
         self.backgroundColor = .white
-        let label = UILabel()
-        self.splitMessageLabel = label
-        label.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(label)
-        PXLayout.centerVertically(view: label).isActive = true
-        PXLayout.pinLeft(view: label, withMargin: PXLayout.L_MARGIN).isActive = true
-        PXLayout.pinTop(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
-        PXLayout.pinBottom(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
-        label.attributedText = splitConfiguration.message?.toAttributedString()
-
         let splitSwitch = UISwitch()
         self.splitPaymentSwitch = splitSwitch
         splitSwitch.addTarget(self, action: #selector(PXOneTapSplitPaymentView.switchStateChanged(_:)), for: UIControl.Event.valueChanged)
@@ -53,6 +48,17 @@ class PXOneTapSplitPaymentView: PXComponentView {
         PXLayout.pinRight(view: splitSwitch, withMargin: PXLayout.L_MARGIN).isActive = true
         PXLayout.centerVertically(view: splitSwitch).isActive = true
         splitSwitch.onTintColor = ThemeManager.shared.getAccentColor()
+
+        let label = UILabel()
+        self.splitMessageLabel = label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(label)
+        PXLayout.centerVertically(view: label).isActive = true
+        PXLayout.pinLeft(view: label, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.put(view: label, leftOf: splitSwitch, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        PXLayout.pinTop(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.pinBottom(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
+        label.attributedText = splitConfiguration.message?.toAttributedString()
 
         let separatorView = UIView()
         separatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,6 +71,6 @@ class PXOneTapSplitPaymentView: PXComponentView {
     }
 
     @objc private func switchStateChanged(_ sender: UISwitch) {
-        callback(sender.isOn)
+        callback(sender.isOn, true)
     }
 }
