@@ -45,10 +45,10 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         return titleSearch.requiredHeight() + subtitleSearch.requiredHeight() + 112
     }
 
-    func fillCell(drawablePaymentOption: PaymentOptionDrawable, discountConfiguration: PXDiscountConfiguration? = nil) {
+    func fillCell(drawablePaymentOption: PaymentOptionDrawable, discountInfo: String? = nil) {
         let image = drawablePaymentOption.getImage()
 
-        let attributedSubtitle = PaymentSearchCollectionViewCell.getSubtitleAttributedString(subtitle: drawablePaymentOption.getSubtitle(), discountConfiguration: discountConfiguration, fontSize: subtitleSearch.font.pointSize, textColor: subtitleSearch.textColor)
+        let attributedSubtitle = PaymentSearchCollectionViewCell.getSubtitleAttributedString(subtitle: drawablePaymentOption.getSubtitle(), discountInfo: discountInfo, fontSize: subtitleSearch.font.pointSize, textColor: subtitleSearch.textColor)
 
         self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: attributedSubtitle)
     }
@@ -57,23 +57,23 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         self.fillCell(image: nil, title: optionText, subtitle: nil)
     }
 
-    static func getSubtitleAttributedString(subtitle: String?, discountConfiguration: PXDiscountConfiguration? = nil, fontSize: CGFloat = 15, textColor: UIColor = .black) -> NSAttributedString {
+    static func getSubtitleAttributedString(subtitle: String?, discountInfo: String? = nil, fontSize: CGFloat = 15, textColor: UIColor = .black) -> NSAttributedString {
         let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: textColor]
         let discountAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: fontSize), NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 
         let subtitleAttributedString = NSMutableAttributedString(string: subtitle ?? "", attributes: normalAttributes)
 
-        guard let discount = discountConfiguration?.getDiscountConfiguration().discount, discountConfiguration?.getDiscountConfiguration().campaign != nil else {
+        guard let discountInfo = discountInfo else {
             return subtitleAttributedString
         }
 
-        let discountAttributedString = NSAttributedString(string: discount.getDiscountDescription(), attributes: discountAttributes)
+        let discountAttributedString = NSAttributedString(string: discountInfo, attributes: discountAttributes)
         return discountAttributedString
     }
 
-    static func totalHeight(drawablePaymentOption: PaymentOptionDrawable, discountConfiguration: PXDiscountConfiguration? = nil) -> CGFloat {
+    static func totalHeight(drawablePaymentOption: PaymentOptionDrawable, discountInfo: String? = nil) -> CGFloat {
 
-        let subtitle = getSubtitleAttributedString(subtitle: drawablePaymentOption.getSubtitle(), discountConfiguration: discountConfiguration)
+        let subtitle = getSubtitleAttributedString(subtitle: drawablePaymentOption.getSubtitle(), discountInfo: discountInfo)
         return PaymentSearchCollectionViewCell.totalHeight(title: drawablePaymentOption.getTitle(), subtitle: subtitle.string)
     }
 

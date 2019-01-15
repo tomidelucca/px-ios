@@ -9,10 +9,12 @@ import UIKit
 
 class PXPaymentMethodConfiguration: NSObject {
     let paymentOptionID: String
+    let discountInfo: String?
     let paymentOptionsConfigurations: [PXPaymentOptionConfiguration]
     let selectedAmountConfiguration: String?
-    init(paymentOptionID: String, paymentOptionsConfigurations: [PXPaymentOptionConfiguration], selectedAmountConfiguration: String?) {
+    init(paymentOptionID: String, discountInfo: String?, paymentOptionsConfigurations: [PXPaymentOptionConfiguration], selectedAmountConfiguration: String?) {
         self.paymentOptionID = paymentOptionID
+        self.discountInfo = discountInfo
         self.paymentOptionsConfigurations = paymentOptionsConfigurations
         self.selectedAmountConfiguration = selectedAmountConfiguration
         super.init()
