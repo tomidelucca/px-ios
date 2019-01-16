@@ -268,6 +268,10 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
             //Update only selected card model
         }
 
+        if let installmentInfoRow = installmentInfoRow, installmentInfoRow.isExpanded() {
+            installmentInfoRow.toggleInstallments()
+        }
+
         //Update installment row
         installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
 
