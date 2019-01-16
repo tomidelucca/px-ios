@@ -28,13 +28,13 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
     }
 
     public enum PXPaymentTypeChargeRuleKeys: String, CodingKey {
-        case paymentMethodId = "id"
+        case paymentTypeId = "payment_type_id"
         case amountCharge = "charge"
     }
 
     public func encode(to encoder: Encoder) throws {
-        var container = try encoder.container(keyedBy: PXPaymentTypeChargeRuleKeys.self)
-        try container.encodeIfPresent(self.paymentMethdodId, forKey: .paymentMethodId)
+        var container = encoder.container(keyedBy: PXPaymentTypeChargeRuleKeys.self)
+        try container.encodeIfPresent(self.paymentMethdodId, forKey: .paymentTypeId)
         try container.encodeIfPresent(self.amountCharge, forKey: .amountCharge)
     }
 
