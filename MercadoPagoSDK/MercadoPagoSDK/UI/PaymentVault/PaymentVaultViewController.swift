@@ -282,8 +282,8 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell", for: indexPath) as? PaymentSearchCollectionViewCell else { return UICollectionViewCell.init() }
 
             if let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row) {
-                let discountConfiguration = self.viewModel.getDiscountConfiguration(row: indexPath.row)
-                cell.fillCell(drawablePaymentOption: paymentMethodToDisplay, discountConfiguration: discountConfiguration)
+                let discountInfo = self.viewModel.getDiscountInfo(row: indexPath.row)
+                cell.fillCell(drawablePaymentOption: paymentMethodToDisplay, discountInfo: discountInfo)
             }
 
             return cell
@@ -353,8 +353,8 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     func heightOfItem(indexItem: Int) -> CGFloat {
         if let paymentMethodOptionDrawable = self.viewModel.getPaymentMethodOption(row: indexItem) {
-            let discountConfiguration = self.viewModel.getDiscountConfiguration(row: indexItem)
-            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption: paymentMethodOptionDrawable, discountConfiguration: discountConfiguration)
+            let discountInfo = self.viewModel.getDiscountInfo(row: indexItem)
+            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption: paymentMethodOptionDrawable, discountInfo: discountInfo)
         }
         return 0
     }
