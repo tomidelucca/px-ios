@@ -180,7 +180,7 @@ extension PXOneTapViewController {
 // MARK: Components Builders.
 extension PXOneTapViewController {
     private func getHeaderView(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderView {
-        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(selectedCard: selectedCard, splitPaymentEnabled: selectedCard?.amountConfiguration?.splitConfiguration?.splitEnabled ?? false), delegate: self)
+        let headerView = PXOneTapHeaderView(viewModel: viewModel.getHeaderViewModel(selectedCard: selectedCard), delegate: self)
         return headerView
     }
 
@@ -274,9 +274,6 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
 
         //Update installment row
         installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
-
-        //Update header view
-        headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard, splitPaymentEnabled: isOn))
     }
 
     func didTapSummary() {

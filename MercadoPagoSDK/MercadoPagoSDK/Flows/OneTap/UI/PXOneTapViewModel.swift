@@ -111,7 +111,7 @@ extension PXOneTapViewModel {
         return model
     }
 
-    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?, splitPaymentEnabled: Bool = false) -> PXOneTapHeaderViewModel {
+    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderViewModel {
         let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
         let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let summaryAlpha: CGFloat = 0.45
@@ -122,9 +122,7 @@ extension PXOneTapViewModel {
 
         let splitConfiguration = selectedCard?.amountConfiguration?.splitConfiguration
         let currency = SiteManager.shared.getCurrency()
-        let splitPaymentAmount: Double = splitConfiguration?.splitAmount ?? 0
-        let amount = splitPaymentEnabled ? amountHelper.amountToPayWithoutPayerCost - splitPaymentAmount : amountHelper.amountToPayWithoutPayerCost
-        var totalAmountToShow = Utils.getAmountFormated(amount: amount, forCurrency: currency)
+        var totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
         var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
 
@@ -138,13 +136,11 @@ extension PXOneTapViewModel {
             customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
 
             amountHelper.paymentData.setDiscount(discount, withCampaign: campaign)
-//            amount = splitPaymentEnabled ? amountHelper.amountToPayWithoutPayerCost - splitPaymentAmount : amount
-            totalAmountToShow = Utils.getAmountFormated(amount: amount, forCurrency: currency)
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
             yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         } else {
             amountHelper.paymentData.clearDiscount()
-//            amount = splitPaymentEnabled ? amountHelper.amountToPayWithoutPayerCost - splitPaymentAmount : amount
-            totalAmountToShow = Utils.getAmountFormated(amount: amount, forCurrency: currency)
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
             yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         }
 
