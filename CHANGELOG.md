@@ -1,3 +1,8 @@
+# v4.5.1
+🚀Private RC - 4.5.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Resolve visual bug en congrats
+
 # v4.5.0
 🚀Private RC - 4.5.0 🚀
 MercadoPagoSDKV4 - Private Version
