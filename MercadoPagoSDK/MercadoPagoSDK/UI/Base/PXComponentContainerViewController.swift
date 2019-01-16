@@ -48,7 +48,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
         PXLayout.pinLeft(view: scrollView, to: view).isActive = true
         PXLayout.pinRight(view: scrollView, to: view).isActive = true
-        PXLayout.pinTop(view: scrollView, to: view).isActive = true
+        PXLayout.pinTop(view: scrollView, to: view, withMargin: PXLayout.getSafeAreaTopInset()).isActive = true
 
         let bottomDeltaMargin: CGFloat = PXLayout.getSafeAreaBottomInset()
 
