@@ -79,9 +79,9 @@ extension PaymentVaultViewModel {
         return nil
     }
 
-    func getDiscountConfiguration(row: Int) -> PXDiscountConfiguration? {
+    func getDiscountInfo(row: Int) -> String? {
         if let paymentOption = getPaymentMethodOption(row: row) {
-            return amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOption.getId())
+            return amountHelper.paymentConfigurationService.getDiscountInfoForPaymentMethod(paymentOption.getId())
         }
         return nil
     }
