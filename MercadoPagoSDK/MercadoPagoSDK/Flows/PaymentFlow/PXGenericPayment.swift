@@ -12,7 +12,16 @@ import Foundation
  Use this object in order to notify you own custom payment using `PXPaymentProcessor`.
  */
 @objcMembers
-open class PXGenericPayment: NSObject, PXResult {
+open class PXGenericPayment: NSObject, PXBasePayment {
+
+    public func getPaymentMethodId() -> String {
+        return paymentMethodId ?? ""
+    }
+
+    public func getPaymentMethodTypeId() -> String {
+        return paymentMethodTypeId ?? ""
+    }
+
     public func getPaymentId() -> String? {
         return paymentId
     }
@@ -47,14 +56,14 @@ open class PXGenericPayment: NSObject, PXResult {
     public let statusDetail: String
 
     /**
-     Error payment method type id.
+     Payment method type id.
      */
-    public let errorPaymentMethodId: String?
+    public let paymentMethodId: String?
 
     /**
-     Error payment method type id.
+     Payment method type id.
      */
-    public let errorPaymentMethodTypeId: String?
+    public let paymentMethodTypeId: String?
 
     // MARK: Init.
     /**
@@ -66,8 +75,8 @@ open class PXGenericPayment: NSObject, PXResult {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentId = paymentId
-        self.errorPaymentMethodId = nil
-        self.errorPaymentMethodTypeId = nil
+        self.paymentMethodId = nil
+        self.paymentMethodTypeId = nil
     }
 
     /// :nodoc:
@@ -80,15 +89,15 @@ open class PXGenericPayment: NSObject, PXResult {
         self.status = paymentStatusStrDefault
         self.statusDetail = statusDetail
         self.paymentId = receiptId
-        self.errorPaymentMethodId = nil
-        self.errorPaymentMethodTypeId = nil
+        self.paymentMethodId = nil
+        self.paymentMethodTypeId = nil
     }
 
-    @objc public init(status: String, statusDetail: String, paymentId: String? = nil, errorPaymentMethodId: String?, errorPaymentMethodTypeId: String?) {
+    @objc public init(status: String, statusDetail: String, paymentId: String? = nil, paymentMethodId: String?, paymentMethodTypeId: String?) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentId = paymentId
-        self.errorPaymentMethodId = errorPaymentMethodId
-        self.errorPaymentMethodTypeId = errorPaymentMethodTypeId
+        self.paymentMethodId = paymentMethodId
+        self.paymentMethodTypeId = paymentMethodTypeId
     }
 }

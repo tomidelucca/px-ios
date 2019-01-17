@@ -46,7 +46,7 @@ import UIKit
  This class represents a business payment result.
  For example, when there is an error when making a payment that has to do with the business and not with the payment method.
  */
-@objcMembers open class PXBusinessResult: NSObject {
+@objcMembers open class PXBusinessResult: NSObject, PXBasePayment {
     private let status: PXBusinessResultStatus // APPROVED REJECTED PENDING
     private let title: String // Titluo de Congrats
     private let subtitle: String? // Sub Titluo de Congrats
@@ -105,7 +105,7 @@ import UIKit
 // MARK: Getters
 internal extension PXBusinessResult {
 
-    func getStatus() -> PXBusinessResultStatus {
+    func getBusinessStatus() -> PXBusinessResultStatus {
         return self.status
     }
     func getTitle() -> String {
@@ -160,5 +160,27 @@ extension PXBusinessResult {
 
     internal func isError() -> Bool {
         return self.status == .REJECTED
+    }
+}
+
+// MARK: PXBaseResult implementation
+extension PXBusinessResult {
+    public func getPaymentMethodId() -> String {
+        return ""
+    }
+
+    public func getPaymentMethodTypeId() -> String {
+        return  ""
+    }
+
+    public func getPaymentId() -> String? {
+        return receiptId
+    }
+    public func getStatus() -> String {
+        return paymentStatus
+    }
+
+    public func getStatusDetail() -> String {
+        return paymentStatusDetail
     }
 }

@@ -30,18 +30,18 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func primaryResultColor() -> UIColor {
-        return ResourceManager.shared.getResultColorWith(status: self.businessResult.getStatus().getDescription())
+        return ResourceManager.shared.getResultColorWith(status: self.businessResult.getBusinessStatus().getDescription())
     }
 
     func setCallback(callback: @escaping (PaymentResult.CongratsState) -> Void) {
     }
 
     func getPaymentStatus() -> String {
-        return businessResult.getStatus().getDescription()
+        return businessResult.getBusinessStatus().getDescription()
     }
 
     func getPaymentStatusDetail() -> String {
-        return businessResult.getStatus().getDescription()
+        return businessResult.getBusinessStatus().getDescription()
     }
 
     func getPaymentId() -> String? {
@@ -53,7 +53,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func getBadgeImage() -> UIImage? {
-        return ResourceManager.shared.getBadgeImageWith(status: self.businessResult.getStatus().getDescription())
+        return ResourceManager.shared.getBadgeImageWith(status: self.businessResult.getBusinessStatus().getDescription())
     }
 
     func getAttributedTitle() -> NSAttributedString {

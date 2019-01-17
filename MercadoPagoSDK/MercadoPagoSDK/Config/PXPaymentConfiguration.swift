@@ -8,14 +8,14 @@
 
 import Foundation
 
-internal typealias PXPaymentConfigurationType = (chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXPaymentProcessor, paymentMethodPlugins: [PXPaymentMethodPlugin])
+internal typealias PXPaymentConfigurationType = (chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXSplitPaymentProcessor, paymentMethodPlugins: [PXPaymentMethodPlugin])
 
 /**
  Any configuration related to the Payment. You can set you own `PXPaymentProcessor`. Configuration of discounts, charges and custom Payment Method Plugin.
  */
 @objcMembers
 open class PXPaymentConfiguration: NSObject {
-    private let paymentPlugin: PXPaymentProcessor
+    private let splitPaymentProcessor: PXSplitPaymentProcessor
     private var chargeRules: [PXPaymentTypeChargeRule] = [PXPaymentTypeChargeRule]()
     private var paymentMethodPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
 
@@ -25,7 +25,11 @@ open class PXPaymentConfiguration: NSObject {
      - parameter paymentProcessor: Your custom implementation of `PXPaymentProcessor`.
      */
     public init(paymentProcessor: PXPaymentProcessor) {
-        self.paymentPlugin = paymentProcessor
+        self.splitPaymentProcessor = algo(paymentProcessor: paymentProcessor)
+    }
+
+    public init(splitPaymentProcessor: PXSplitPaymentProcessor) {
+        self.splitPaymentProcessor = splitPaymentProcessor
     }
 }
 
@@ -63,6 +67,6 @@ extension PXPaymentConfiguration {
 // MARK: - Internals
 extension PXPaymentConfiguration {
     internal func getPaymentConfiguration() -> PXPaymentConfigurationType {
-        return (chargeRules, paymentPlugin, paymentMethodPlugins)
+        return (chargeRules, splitPaymentProcessor, paymentMethodPlugins)
     }
 }

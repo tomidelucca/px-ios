@@ -49,7 +49,7 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
             self.executeNextStep()
         } else {
             model.saveEsc()
-            PXAnimatedButton.animateButtonWith(status: businessResult.getStatus().getDescription())
+            PXAnimatedButton.animateButtonWith(status: businessResult.getBusinessStatus().getDescription())
         }
     }
 }

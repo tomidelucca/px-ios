@@ -33,7 +33,7 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
     func finishPaymentFlow(businessResult: PXBusinessResult) {
         self.viewModel.businessResult = businessResult
         if self.viewModel.pxNavigationHandler.navigationController.viewControllers.last as? PXReviewViewController != nil {
-            PXAnimatedButton.animateButtonWith(status: businessResult.getStatus().getDescription())
+            PXAnimatedButton.animateButtonWith(status: businessResult.getBusinessStatus().getDescription())
         } else {
             self.executeNextStep()
         }

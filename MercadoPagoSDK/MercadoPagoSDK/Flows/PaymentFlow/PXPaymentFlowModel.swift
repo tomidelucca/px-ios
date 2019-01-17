@@ -11,7 +11,7 @@ import Foundation
 internal final class PXPaymentFlowModel: NSObject {
     var amountHelper: PXAmountHelper?
     var checkoutPreference: PXCheckoutPreference?
-    let paymentPlugin: PXPaymentProcessor?
+    let paymentPlugin: PXSplitPaymentProcessor?
 
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
@@ -21,7 +21,7 @@ internal final class PXPaymentFlowModel: NSObject {
 
     let escManager: MercadoPagoESC
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, escEnabled: Bool) {
+    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, escEnabled: Bool) {
         self.paymentPlugin = paymentPlugin
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
         self.escManager = MercadoPagoESCImplementation(enabled: escEnabled)

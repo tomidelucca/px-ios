@@ -16,7 +16,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, amountHelper: PXAmountHelper?, checkoutPreference: PXCheckoutPreference?, escEnabled: Bool) {
+    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, amountHelper: PXAmountHelper?, checkoutPreference: PXCheckoutPreference?, escEnabled: Bool) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, escEnabled: escEnabled)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
@@ -57,7 +57,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     func getPaymentTimeOut() -> TimeInterval {
         let instructionTimeOut: TimeInterval = model.isOfflinePayment() ? 15 : 0
-        if let paymentPluginTimeOut = model.paymentPlugin?.paymentTimeOut?() {
+        if let paymentPluginTimeOut = model.paymentPlugin?.paymentTimeOut?(), paymentPluginTimeOut > 0 {
             return paymentPluginTimeOut + instructionTimeOut
         } else {
             return model.mercadoPagoServicesAdapter.getTimeOut() + instructionTimeOut

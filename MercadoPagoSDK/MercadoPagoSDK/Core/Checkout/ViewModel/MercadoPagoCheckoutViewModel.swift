@@ -107,7 +107,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
 
     // Payment plugin
-    var paymentPlugin: PXPaymentProcessor?
+    var paymentPlugin: PXSplitPaymentProcessor?
     var paymentFlow: PXPaymentFlow?
 
     // Discount and charges

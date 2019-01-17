@@ -11,3 +11,9 @@ public protocol PXResult {
     func getStatus() -> String
     func getStatusDetail() -> String
 }
+
+@objc
+public protocol PXBasePayment: PXResult {
+    func getPaymentMethodId() -> String
+    func getPaymentMethodTypeId() -> String
+}
