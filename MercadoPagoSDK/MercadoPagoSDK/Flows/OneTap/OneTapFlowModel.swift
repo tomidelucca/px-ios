@@ -115,12 +115,20 @@ internal extension OneTapFlowModel {
             let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionSelected.getId())
 
             let accountMoneyPMs = search.paymentMethods.filter { (paymentMethod) -> Bool in
-                return paymentMethod.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue
+                return paymentMethod.id == splitConfiguration?.paymentMethodId
             }
             if let accountMoneyPM = accountMoneyPMs.first {
                 splitAccountMoney = PXPaymentData()
                 splitAccountMoney?.transactionAmount = splitConfiguration?.splitAmount
                 splitAccountMoney?.updatePaymentDataWith(paymentMethod: accountMoneyPM)
+
+            let campaign = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionSelected.getId())?.getDiscountConfiguration().campaign
+                if let discount = splitConfiguration?.primaryPaymentMethodDiscount, let campaign = campaign {
+                    paymentData.setDiscount(discount, withCampaign: campaign)
+                }
+                if let discount = splitConfiguration?.secondaryPaymentMethodDiscount, let campaign = campaign {
+                    splitAccountMoney?.setDiscount(discount, withCampaign: campaign)
+                }
             }
         } else {
             splitAccountMoney = nil

@@ -56,6 +56,7 @@ extension PXOneTapViewModel {
             if let issuerId = amountHelper.paymentData.issuer?.id {
                 extraInfo["issuer_id"] = Int64(issuerId)
             }
+            // TODO: Trackear si se pago con split
             properties["extra_info"] = extraInfo
         } else {
             properties["payment_method_type"] = paymentMethod.id

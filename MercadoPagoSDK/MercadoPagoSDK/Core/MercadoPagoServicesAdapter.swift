@@ -44,7 +44,7 @@ internal class MercadoPagoServicesAdapter {
 
     typealias PaymentSearchExclusions = (excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String])
     typealias PaymentSearchOneTapInfo = (cardsWithEsc: [String]?, supportedPlugins: [String]?)
-    typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: Bool, hasPaymentProcessor: Bool)
+    typealias ExtraParams = (defaultPaymentMethod: String?, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: Bool, hasPaymentProcessor: Bool, splitEnabled: Bool)
 
     func getPaymentMethodSearch(amount: Double, exclusions: PaymentSearchExclusions, oneTapInfo: PaymentSearchOneTapInfo, payer: PXPayer, site: String, extraParams: ExtraParams?, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
@@ -57,6 +57,11 @@ internal class MercadoPagoServicesAdapter {
             expressValue = "true"
         }
 
+        var splitValue: String = "false"
+        if let eParams = extraParams, eParams.splitEnabled {
+            splitValue = "true"
+        }
+
         var excludedPaymentTypesIds = exclusions.excludedPaymentTypesIds
         if let eParams = extraParams, !eParams.hasPaymentProcessor {
         // Only until our backend can pay with account money.
@@ -64,7 +69,7 @@ internal class MercadoPagoServicesAdapter {
         excludedPaymentTypesIds.append(PXPaymentTypes.ACCOUNT_MONEY.rawValue)
         }
 
-        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, defaultInstallments: extraParams?.defaultInstallments, expressEnabled: expressValue, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
+        mercadoPagoServices.getPaymentMethodSearch(amount: amount, excludedPaymentTypesIds: exclusions.excludedPaymentTypesIds, excludedPaymentMethodsIds: exclusions.excludedPaymentMethodsIds, cardsWithEsc: oneTapInfo.cardsWithEsc, supportedPlugins: oneTapInfo.supportedPlugins, defaultPaymentMethod: extraParams?.defaultPaymentMethod, payer: payer, site: pxSite, differentialPricingId: extraParams?.differentialPricingId, defaultInstallments: extraParams?.defaultInstallments, expressEnabled: expressValue, splitEnabled: splitValue, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, callback: { (pxPaymentMethodSearch) in
             callback(pxPaymentMethodSearch)
         }, failure: failure)
     }

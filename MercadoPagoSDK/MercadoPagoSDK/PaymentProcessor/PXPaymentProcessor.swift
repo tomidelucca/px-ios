@@ -43,3 +43,7 @@ import Foundation
      */
     @objc optional func paymentTimeOut() -> Double
 }
+
+@objc public protocol PXSplitPaymentProcessor: PXPaymentProcessor {
+
+}
