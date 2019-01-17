@@ -70,10 +70,10 @@
 
     [self setCheckoutPref_CreditCardNotExcluded];
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+   // self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-77d0c0c0-0594-4951-ac78-16c03461fcbc" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
 
-//    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243962506-63f1b044-c8bf-4d34-a800-f257a46628b8"];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-77d0c0c0-0594-4951-ac78-16c03461fcbc" preferenceId:@"245099733-3a38ed92-f013-4bfd-861f-9a467f74204f"];
     NSDictionary *dict = @{ @"key" : @"value"};
 
     [PXTracker setListener:self flowName:@"instore" flowDetails:dict];
@@ -112,7 +112,7 @@
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
 
     // Enable to test one tap
-    [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-1458038826212807-062020-ff9273c67bc567320eae1a07d1c2d5b5-246046416"];
+  //  [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-1458038826212807-062020-ff9273c67bc567320eae1a07d1c2d5b5-246046416"];
     // CDP color.
     // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
@@ -214,7 +214,7 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[PXCheckoutPreference alloc] initWithPreferenceId: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
+    self.pref = [[PXCheckoutPreference alloc] initWithPreferenceId: @"245099733-3a38ed92-f013-4bfd-861f-9a467f74204f"];
 }
 
 
