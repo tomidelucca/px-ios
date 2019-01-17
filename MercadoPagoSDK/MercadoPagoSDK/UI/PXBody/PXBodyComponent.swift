@@ -63,18 +63,6 @@ internal class PXBodyComponent: PXComponentizable {
             if let payerCostTotalAmount = self.props.paymentResult.paymentData?.payerCost?.totalAmount {
                 amount = payerCostTotalAmount + self.props.amountHelper.amountOff
             }
-
-            let preferenceAmountString = Utils.getStrikethroughAmount(amount: amount, forCurrency: currency)
-
-            if subtitle == nil {
-                subtitle = preferenceAmountString
-            } else {
-                let discountStrikethroughFont = Utils.getFont(size: PXLayout.XXS_FONT)
-                preferenceAmountString.addAttribute(NSAttributedStringKey.font, value: discountStrikethroughFont, range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
-                preferenceAmountString.addAttribute(NSAttributedStringKey.foregroundColor, value: ThemeManager.shared.greyColor(), range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
-                amountTitle.append("".getAttributedStringNewLine())
-                amountTitle.append(preferenceAmountString)
-            }
         }
 
         var pmDescription: String = ""

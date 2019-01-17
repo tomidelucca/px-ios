@@ -35,6 +35,9 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
+    var splitPaymentEnabled: Bool = false
+    var splitPaymentSelectionByUser: Bool?
+
     var cardSliderMarginConstraint: NSLayoutConstraint?
 
     // MARK: Lifecycle/Publics
@@ -105,6 +108,7 @@ extension PXOneTapViewController {
             viewModel.createCardSliderViewModel()
             if let preSelectedCard = viewModel.getCardSliderViewModel().first {
                 selectedCard = preSelectedCard
+                splitPaymentEnabled = preSelectedCard.amountConfiguration?.splitConfiguration?.splitEnabled ?? false
             }
             renderViews()
         }
@@ -152,7 +156,6 @@ extension PXOneTapViewController {
 
         // Add footer payment button.
         if let footerView = getFooterView() {
-            //contentView.addSubviewToBottom(footerView, withMargin: PXLayout.M_MARGIN)
             whiteView.addSubview(footerView)
             PXLayout.centerHorizontally(view: footerView).isActive = true
             PXLayout.pinLeft(view: footerView, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -235,8 +238,8 @@ extension PXOneTapViewController {
             let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem)
             trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
         }
-        // TODO Change this
-        let splitPayment = true
+
+        let splitPayment = splitPaymentEnabled
 
         self.hideBackButton()
         self.hideNavBar()
@@ -256,6 +259,25 @@ extension PXOneTapViewController {
 
 // MARK: Summary delegate.
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
+    
+    func splitPaymentSwitchChangedValue(isOn: Bool, isUserSelection: Bool) {
+        splitPaymentEnabled = isOn
+        if isUserSelection {
+            self.splitPaymentSelectionByUser = isOn
+            //Update all models payer cost and selected payer cost
+            viewModel.updateAllCardSliderModels(splitPaymentEnabled: isOn)
+        } else if let infoRow = installmentInfoRow, viewModel.updateCardSliderSplitPaymentPreference(splitPaymentEnabled: isOn, forIndex: infoRow.getActiveRowIndex()) {
+            //Update only selected card model
+        }
+
+        if let installmentInfoRow = installmentInfoRow, installmentInfoRow.isExpanded() {
+            installmentInfoRow.toggleInstallments()
+        }
+
+        //Update installment row
+        installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
+    }
+
     func didTapSummary() {
         let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper)
 
@@ -310,6 +332,10 @@ extension PXOneTapViewController: PXCardSliderProtocol {
                 loadingButtonComponent?.setDisabled()
             }
             headerView?.updateModel(viewModel.getHeaderViewModel(selectedCard: selectedCard))
+
+            if splitPaymentSelectionByUser == nil {
+                headerView?.updateSplitPaymentView(splitConfiguration: selectedCard?.amountConfiguration?.splitConfiguration)
+            }
         }
     }
 

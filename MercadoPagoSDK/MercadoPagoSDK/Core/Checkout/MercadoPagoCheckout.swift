@@ -130,7 +130,6 @@ extension MercadoPagoCheckout {
     }
 
     internal func enableBetaServices() {
-        URLConfigs.MP_SELECTED_ENV = URLConfigs.MP_TEST_ENV
         PXServicesSettings.enableBetaServices()
         PXTrackingSettings.enableBetaServices()
     }
