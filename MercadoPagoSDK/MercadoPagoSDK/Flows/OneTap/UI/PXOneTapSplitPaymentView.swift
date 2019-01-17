@@ -9,11 +9,11 @@ import UIKit
 
 class PXOneTapSplitPaymentView: PXComponentView {
     let callback : ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)
-    var splitConfiguration: PXSplitConfiguration
+    var splitConfiguration: PXSplitConfiguration?
     var splitPaymentSwitch: UISwitch?
     var splitMessageLabel: UILabel?
 
-    init(splitConfiguration: PXSplitConfiguration, callback : @escaping ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)) {
+    init(splitConfiguration: PXSplitConfiguration?, callback : @escaping ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)) {
         self.splitConfiguration = splitConfiguration
         self.callback = callback
         super.init()
@@ -24,8 +24,27 @@ class PXOneTapSplitPaymentView: PXComponentView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(splitConfiguration: PXSplitConfiguration) {
+    func hide() {
+        splitMessageLabel?.alpha = 0
+        splitPaymentSwitch?.alpha = 0
+    }
+
+    func show() {
+        splitMessageLabel?.alpha = 1
+        splitPaymentSwitch?.alpha = 1
+    }
+
+    func update(splitConfiguration: PXSplitConfiguration?) {
         self.splitConfiguration = splitConfiguration
+        show()
+
+        guard let splitConfiguration = splitConfiguration else {
+            hide()
+            splitMessageLabel?.attributedText = "".toAttributedString()
+            splitPaymentSwitch?.setOn(false, animated: false)
+            return
+        }
+
         splitMessageLabel?.attributedText = splitConfiguration.message?.toAttributedString()
 
         if splitPaymentSwitch?.isOn != splitConfiguration.splitEnabled {
@@ -42,7 +61,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
         self.splitPaymentSwitch = splitSwitch
         splitSwitch.addTarget(self, action: #selector(PXOneTapSplitPaymentView.switchStateChanged(_:)), for: UIControl.Event.valueChanged)
 
-        splitSwitch.setOn(splitConfiguration.splitEnabled, animated: false)
+        splitSwitch.setOn(splitConfiguration?.splitEnabled ?? false, animated: false)
         splitSwitch.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(splitSwitch)
         PXLayout.pinRight(view: splitSwitch, withMargin: PXLayout.L_MARGIN).isActive = true
@@ -58,7 +77,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
         PXLayout.put(view: label, leftOf: splitSwitch, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         PXLayout.pinTop(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinBottom(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
-        label.attributedText = splitConfiguration.message?.toAttributedString()
+        label.attributedText = splitConfiguration?.message?.toAttributedString()
 
         let separatorView = UIView()
         separatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -68,6 +87,12 @@ class PXOneTapSplitPaymentView: PXComponentView {
         PXLayout.pinBottom(view: separatorView).isActive = true
         PXLayout.pinLeft(view: separatorView, withMargin: PXLayout.L_MARGIN).isActive = true
         PXLayout.pinRight(view: separatorView, withMargin: PXLayout.L_MARGIN).isActive = true
+
+        if splitConfiguration == nil {
+            hide()
+        } else {
+            show()
+        }
     }
 
     @objc private func switchStateChanged(_ sender: UISwitch) {
