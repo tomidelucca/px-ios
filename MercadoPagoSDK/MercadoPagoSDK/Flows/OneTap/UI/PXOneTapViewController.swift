@@ -35,6 +35,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
+    var splitPaymentEnabled: Bool = false
     var splitPaymentSelectionByUser: Bool?
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
@@ -107,6 +108,7 @@ extension PXOneTapViewController {
             viewModel.createCardSliderViewModel()
             if let preSelectedCard = viewModel.getCardSliderViewModel().first {
                 selectedCard = preSelectedCard
+                splitPaymentEnabled = preSelectedCard.amountConfiguration?.splitConfiguration?.splitEnabled ?? false
             }
             renderViews()
         }
@@ -236,8 +238,8 @@ extension PXOneTapViewController {
             let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem)
             trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
         }
-        // TODO Change this
-        let splitPayment = true
+
+        let splitPayment = splitPaymentEnabled
 
         self.hideBackButton()
         self.hideNavBar()
@@ -259,6 +261,7 @@ extension PXOneTapViewController {
 extension PXOneTapViewController: PXOneTapHeaderProtocol {
     
     func splitPaymentSwitchChangedValue(isOn: Bool, isUserSelection: Bool) {
+        splitPaymentEnabled = isOn
         if isUserSelection {
             self.splitPaymentSelectionByUser = isOn
             //Update all models payer cost and selected payer cost
