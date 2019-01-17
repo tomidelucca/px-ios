@@ -47,7 +47,8 @@ class PXOneTapHeaderView: PXComponentView {
 // MARK: Privates.
 extension PXOneTapHeaderView {
 
-    private func shouldShowHorizontally(data: [OneTapHeaderSummaryData]) -> Bool {
+    private func shouldShowHorizontally(model: PXOneTapHeaderViewModel) -> Bool {
+        let data = model.data
         if UIDevice.isSmallDevice() && model.splitConfiguration != nil {
             return true
         } else {
@@ -66,7 +67,7 @@ extension PXOneTapHeaderView {
         removeAnimations()
 
         let animationDuration = 0.35
-        let shouldShowHorizontally = self.shouldShowHorizontally(data: newModel.data)
+        let shouldShowHorizontally = self.shouldShowHorizontally(model: newModel)
         let shouldAnimateSummary = newModel.data.count != oldModel.data.count
         let shouldHideSummary = newModel.data.count < oldModel.data.count
 
@@ -199,8 +200,8 @@ extension PXOneTapHeaderView {
         PXLayout.matchWidth(ofView: summaryView).isActive = true
 
         if let splitConfiguration = model.splitConfiguration {
-            let splitPaymentView = PXOneTapSplitPaymentView(splitConfiguration: splitConfiguration) { (isOn) in
-                self.delegate?.splitPaymentSwitchChangedValue(isOn: isOn)
+            let splitPaymentView = PXOneTapSplitPaymentView(splitConfiguration: splitConfiguration) { (isOn, isUserSelection) in
+                self.delegate?.splitPaymentSwitchChangedValue(isOn: isOn, isUserSelection: isUserSelection)
             }
             self.splitPaymentView = splitPaymentView
             self.addSubview(splitPaymentView)
@@ -213,7 +214,7 @@ extension PXOneTapHeaderView {
             PXLayout.pinBottom(view: summaryView).isActive = true
         }
 
-        let showHorizontally = shouldShowHorizontally(data: model.data)
+        let showHorizontally = shouldShowHorizontally(model: model)
         let merchantView = PXOneTapHeaderMerchantView(image: model.icon, title: model.title, showHorizontally: showHorizontally)
         self.merchantView = merchantView
         self.addSubview(merchantView)

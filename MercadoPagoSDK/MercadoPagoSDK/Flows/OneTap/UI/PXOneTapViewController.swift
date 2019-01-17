@@ -35,7 +35,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     let timeOutPayButton: TimeInterval
     let shouldAnimatePayButton: Bool
 
-
     var splitPaymentSelectionByUser: Bool?
 
     var cardSliderMarginConstraint: NSLayoutConstraint?
