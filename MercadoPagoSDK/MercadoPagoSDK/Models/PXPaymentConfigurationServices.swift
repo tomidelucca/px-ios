@@ -13,10 +13,24 @@ class PXPaymentConfigurationServices {
     private var defaultDiscountConfiguration: PXDiscountConfiguration?
 
     // Payer Costs for Payment Method
-    func getPayerCostsForPaymentMethod(_ id: String) -> [PXPayerCost]? {
+    func getPayerCostsForPaymentMethod(_ id: String, splitPaymentEnabled: Bool = false) -> [PXPayerCost]? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
-                return paymentOptionConfiguration.amountConfiguration?.payerCosts
+                if splitPaymentEnabled {
+                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.payerCosts
+                } else {
+                    return paymentOptionConfiguration.amountConfiguration?.payerCosts
+                }
+            }
+        }
+        return nil
+    }
+
+    // Amount Configuration for Payment Method
+    func getAmountConfigurationForPaymentMethod(_ id: String) -> PXAmountConfiguration? {
+        if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
+            if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
+                return paymentOptionConfiguration.amountConfiguration
             }
         }
         return nil
@@ -33,10 +47,15 @@ class PXPaymentConfigurationServices {
     }
 
     // Selected Payer Cost for Payment Method
-    func getSelectedPayerCostsForPaymentMethod(_ id: String) -> PXPayerCost? {
+    func getSelectedPayerCostsForPaymentMethod(_ id: String, splitPaymentEnabled: Bool = false) -> PXPayerCost? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
-                return paymentOptionConfiguration.amountConfiguration?.selectedPayerCost
+                if splitPaymentEnabled {
+                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.selectedPayerCost
+                } else {
+                    return paymentOptionConfiguration.amountConfiguration?.selectedPayerCost
+                }
+
             }
         }
         return nil

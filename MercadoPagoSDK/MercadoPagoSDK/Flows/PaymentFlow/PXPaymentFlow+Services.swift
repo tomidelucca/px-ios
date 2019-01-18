@@ -32,7 +32,8 @@ internal extension PXPaymentFlow {
             fatalError("Cannot make payment json body")
         }
 
-        model.mercadoPagoServicesAdapter.createPayment(url: URLConfigs.MP_API_BASE_URL, uri: URLConfigs.MP_PAYMENTS_URI + "?api_version=" + URLConfigs.API_VERSION, paymentDataJSON: paymentBody, query: nil, callback: { (_) in
+        model.mercadoPagoServicesAdapter.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.MP_PAYMENTS_URI + "?api_version=" + PXServicesURLConfigs.API_VERSION, paymentDataJSON: paymentBody, query: nil, callback: { (payment) in
+            self.handlePayment(payment: payment)
 
         }, failure: { [weak self] (error) in
 

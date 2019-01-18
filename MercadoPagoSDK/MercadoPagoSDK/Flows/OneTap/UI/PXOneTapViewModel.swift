@@ -28,7 +28,7 @@ extension PXOneTapViewModel {
             if let accountMoney = targetNode.accountMoney {
                 let displayTitle = accountMoney.cardTitle ?? ""
                 let cardData = PXCardDataFactory().create(cardName: displayTitle, cardNumber: "", cardCode: "", cardExpiration: "")
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false)
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false, amountConfiguration: nil)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
                 viewModelCard.displayMessage = accountMoney.sliderTitle
                 sliderModel.append(viewModelCard)
@@ -54,8 +54,12 @@ extension PXOneTapViewModel {
                         templateCard.cardLogoImage = paymentMethodImage
                     }
 
+                    let amountConfiguration = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(targetCardData.cardId)
+
+                    let defaultEnabledSplitPayment: Bool = amountConfiguration?.splitConfiguration?.splitEnabled ?? false
+
                     var payerCost: [PXPayerCost] = [PXPayerCost]()
-                    if let pCost = amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) {
+                    if let pCost = amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment) {
                         payerCost = pCost
                     }
 
@@ -75,16 +79,16 @@ extension PXOneTapViewModel {
                         showArrow = false
                     }
 
-                    let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)
+                    let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment)
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow)
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration)
 
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel("", "", EmptyCard(), nil, [PXPayerCost](), nil, nil, false))
+        sliderModel.append(PXCardSliderViewModel("", "", EmptyCard(), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil))
         cardSliderViewModel = sliderModel
     }
 
@@ -92,13 +96,15 @@ extension PXOneTapViewModel {
         var model: [PXOneTapInstallmentInfoViewModel] = [PXOneTapInstallmentInfoViewModel]()
         let sliderViewModel = getCardSliderViewModel()
         for sliderNode in sliderViewModel {
-            let installment = PXInstallment(issuer: nil, payerCosts: sliderNode.payerCost, paymentMethodId: nil, paymentTypeId: nil)
+            let payerCost = sliderNode.payerCost
             let selectedPayerCost = sliderNode.selectedPayerCost
+
+            let installment = PXInstallment(issuer: nil, payerCosts: payerCost, paymentMethodId: nil, paymentTypeId: nil)
             if let displayMessage = sliderNode.displayMessage {
                 let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getDisplayMessageAttrText(displayMessage), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
                 model.append(installmentInfoModel)
             } else {
-                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(sliderNode.selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
+                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
                 model.append(installmentInfoModel)
             }
         }
@@ -114,6 +120,7 @@ extension PXOneTapViewModel {
         let totalColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let totalAlpha: CGFloat = 1
 
+        let splitConfiguration = selectedCard?.amountConfiguration?.splitConfiguration
         let currency = SiteManager.shared.getCurrency()
         var totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
         var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
@@ -157,12 +164,32 @@ extension PXOneTapViewModel {
             headerTitle = headerTitleStr
         }
 
-        let headerVM = PXOneTapHeaderViewModel(icon: headerImage, title: headerTitle, data: customData)
+        let headerVM = PXOneTapHeaderViewModel(icon: headerImage, title: headerTitle, data: customData, splitConfiguration: splitConfiguration)
         return headerVM
     }
 
     func getCardSliderViewModel() -> [PXCardSliderViewModel] {
         return cardSliderViewModel
+    }
+
+    func updateAllCardSliderModels(splitPaymentEnabled: Bool) {
+        for index in cardSliderViewModel.indices {
+            _ = updateCardSliderSplitPaymentPreference(splitPaymentEnabled: splitPaymentEnabled, forIndex: index)
+        }
+    }
+
+    func updateCardSliderSplitPaymentPreference(splitPaymentEnabled: Bool, forIndex: Int) -> Bool {
+        if cardSliderViewModel.indices.contains(forIndex) {
+            if splitPaymentEnabled {
+                cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.selectedPayerCost
+                cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.payerCosts ?? []
+            } else {
+                cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.selectedPayerCost
+                cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.payerCosts ?? []
+            }
+            return true
+        }
+        return false
     }
 
     func updateCardSliderViewModel(newPayerCost: PXPayerCost?, forIndex: Int) -> Bool {

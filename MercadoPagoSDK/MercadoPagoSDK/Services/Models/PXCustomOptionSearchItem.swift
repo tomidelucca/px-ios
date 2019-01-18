@@ -15,7 +15,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var paymentTypeId: String?
     open var discountInfo: String?
     open var defaultAmountConfiguration: String?
-    open var selectedPayerCostConfiguration: PXAmountConfiguration?
+    open var selectedAmountConfiguration: PXAmountConfiguration?
     open var amountConfigurations: [String: PXAmountConfiguration]?
     open var comment: String?
 
@@ -30,7 +30,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.comment = comment
 
         if let defaultAmountConfiguration = defaultAmountConfiguration, let selectedPayerCostConfiguration = amountConfigurations?[defaultAmountConfiguration] {
-            self.selectedPayerCostConfiguration = selectedPayerCostConfiguration
+            self.selectedAmountConfiguration = selectedPayerCostConfiguration
         }
     }
 

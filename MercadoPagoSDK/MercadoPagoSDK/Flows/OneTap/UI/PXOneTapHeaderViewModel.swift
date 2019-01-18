@@ -13,10 +13,12 @@ class PXOneTapHeaderViewModel {
     let icon: UIImage
     let title: String
     let data: [OneTapHeaderSummaryData]
+    let splitConfiguration: PXSplitConfiguration?
 
-    init(icon: UIImage, title: String, data: [OneTapHeaderSummaryData]) {
+    init(icon: UIImage, title: String, data: [OneTapHeaderSummaryData], splitConfiguration: PXSplitConfiguration?) {
         self.icon = icon
         self.title = title
         self.data = data
+        self.splitConfiguration = splitConfiguration
     }
 }
