@@ -25,7 +25,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     var scrollViewPinBottomConstraint: NSLayoutConstraint!
     private var topContentConstraint: NSLayoutConstraint?
 
-    init() {
+    init(topMargin: CGFloat = 0) {
         scrollView = UIScrollView()
         scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +48,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
         PXLayout.pinLeft(view: scrollView, to: view).isActive = true
         PXLayout.pinRight(view: scrollView, to: view).isActive = true
-        PXLayout.pinTop(view: scrollView, to: view, withMargin: PXLayout.getSafeAreaTopInset()).isActive = true
+        PXLayout.pinTop(view: scrollView, to: view, withMargin: topMargin).isActive = true
 
         let bottomDeltaMargin: CGFloat = PXLayout.getSafeAreaBottomInset()
 
