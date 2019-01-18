@@ -24,7 +24,7 @@ class PXResultViewController: PXComponentContainerViewController {
     init(viewModel: PXResultViewModelInterface, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
-        super.init(topMargin: PXLayout.getSafeAreaTopInset())
+        super.init(adjustInsets: false)
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
         self.shouldHideNavigationBar = true
     }
@@ -212,7 +212,7 @@ extension PXResultViewController {
             bottomCustomView.layoutIfNeeded()
         }
 
-        view.pinLastSubviewToBottom(withMargin: -PXLayout.getSafeAreaBottomInset())?.isActive = true
+        view.pinLastSubviewToBottom()?.isActive = true
         view.layoutIfNeeded()
         self.view.layoutIfNeeded()
 
