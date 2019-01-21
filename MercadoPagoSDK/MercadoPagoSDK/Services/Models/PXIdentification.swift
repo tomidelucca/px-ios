@@ -13,6 +13,12 @@ open class PXIdentification: NSObject, Codable {
     open var number: String? = "null"
     open var type: String? = "null"
 
+    open var isComplete: Bool {
+        get {
+            return number != "null" && type != "null" && number != "" && type != "" 
+        }
+    }
+    
     public init(number: String?, type: String?) {
         self.type = type
         self.number = number

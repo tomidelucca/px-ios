@@ -46,7 +46,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         self.finishButtonAnimation = finishButtonAnimation
         self.timeOutPayButton = timeOutPayButton
         self.shouldAnimatePayButton = true
-        super.init()
+        super.init(adjustInsets: false)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -81,8 +81,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
     }
-
-    override func adjustInsets() {}
 }
 
 // MARK: UI Methods.

@@ -24,7 +24,7 @@ class PXResultViewController: PXComponentContainerViewController {
     init(viewModel: PXResultViewModelInterface, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
-        super.init()
+        super.init(adjustInsets: false)
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
         self.shouldHideNavigationBar = true
     }
