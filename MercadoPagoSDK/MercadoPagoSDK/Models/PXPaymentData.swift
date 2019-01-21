@@ -47,8 +47,13 @@ import UIKit
             return false
         }
 
-        if paymentMethod.isPayerInfoRequired && payer?.identification == nil {
-            return false
+        if paymentMethod.isPayerInfoRequired {
+            guard let identification = payer?.identification else {
+                return false
+            }
+            if !identification.isComplete {
+                return false
+            }
         }
 
         if !Array.isNullOrEmpty(paymentMethod.financialInstitutions) && transactionDetails?.financialInstitution == nil {
