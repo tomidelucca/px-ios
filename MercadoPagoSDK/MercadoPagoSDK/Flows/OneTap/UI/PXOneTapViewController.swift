@@ -262,11 +262,12 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
 
     func splitPaymentSwitchChangedValue(isOn: Bool, isUserSelection: Bool) {
         splitPaymentEnabled = isOn
+
         if isUserSelection {
             self.splitPaymentSelectionByUser = isOn
             //Update all models payer cost and selected payer cost
             viewModel.updateAllCardSliderModels(splitPaymentEnabled: isOn)
-        } else if let infoRow = installmentInfoRow, viewModel.updateCardSliderSplitPaymentPreference(splitPaymentEnabled: isOn, forIndex: infoRow.getActiveRowIndex()) {
+        } else if let infoRow = installmentInfoRow, viewModel.updateCardSliderSplitPaymentPreference(splitPaymentEnabled: isOn, forIndex: infoRow.getActiveRowIndex() + 1) {
             //Update only selected card model
         }
 
