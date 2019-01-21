@@ -370,12 +370,12 @@ extension PXPayment {
         return statusDetail
     }
 
-    public func getPaymentMethodId() -> String {
-        return paymentMethodId ?? ""
+    public func getPaymentMethodId() -> String? {
+        return paymentMethodId
     }
 
-    public func getPaymentMethodTypeId() -> String {
-        return paymentTypeId ?? ""
+    public func getPaymentMethodTypeId() -> String? {
+        return paymentTypeId
     }
 
 }

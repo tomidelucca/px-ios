@@ -41,8 +41,6 @@
     // Setear una preferencia hecha a mano
     //[self setCheckoutPref_CardsNotExcluded];
 
-    [self setCheckoutPref_WithId];
-
 /*
     DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
     
@@ -207,10 +205,9 @@
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:90.0];
-    PXItem *item2 = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:60.0];
 
-    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, nil];
 
     self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
 //    [self.pref addExcludedPaymentType:@"ticket"];

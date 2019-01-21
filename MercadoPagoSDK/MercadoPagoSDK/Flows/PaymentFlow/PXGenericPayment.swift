@@ -14,12 +14,12 @@ import Foundation
 @objcMembers
 open class PXGenericPayment: NSObject, PXBasePayment {
 
-    public func getPaymentMethodId() -> String {
-        return paymentMethodId ?? ""
+    public func getPaymentMethodId() -> String? {
+        return paymentMethodId
     }
 
-    public func getPaymentMethodTypeId() -> String {
-        return paymentMethodTypeId ?? ""
+    public func getPaymentMethodTypeId() -> String? {
+        return paymentMethodTypeId
     }
 
     public func getPaymentId() -> String? {

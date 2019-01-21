@@ -14,6 +14,6 @@ public protocol PXResult {
 
 @objc
 public protocol PXBasePayment: PXResult {
-    func getPaymentMethodId() -> String
-    func getPaymentMethodTypeId() -> String
+    func getPaymentMethodId() -> String?
+    func getPaymentMethodTypeId() -> String?
 }

@@ -92,7 +92,7 @@ import Foundation
     @objc func supportSplitPaymentMehtodPayment(checkoutStore: PXCheckoutStore) -> Bool
 }
 
-internal class algo: NSObject, PXSplitPaymentProcessor {
+internal class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
 
     let paymentProcessor: PXPaymentProcessor
 

@@ -25,7 +25,7 @@ open class PXPaymentConfiguration: NSObject {
      - parameter paymentProcessor: Your custom implementation of `PXPaymentProcessor`.
      */
     public init(paymentProcessor: PXPaymentProcessor) {
-        self.splitPaymentProcessor = algo(paymentProcessor: paymentProcessor)
+        self.splitPaymentProcessor = PXPaymentProcessorAdapter(paymentProcessor: paymentProcessor)
     }
 
     public init(splitPaymentProcessor: PXSplitPaymentProcessor) {

@@ -16,6 +16,9 @@ final class PXOneTapViewModel: PXReviewViewModel {
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     var paymentMethodPlugins: [PXPaymentMethodPlugin]?
     var items: [PXItem] = [PXItem]()
+
+    var splitPaymentEnabled: Bool = false
+    var splitPaymentSelectionByUser: Bool?
 }
 
 // MARK: ViewModels Publics.
@@ -28,9 +31,10 @@ extension PXOneTapViewModel {
             if let accountMoney = targetNode.accountMoney {
                 let displayTitle = accountMoney.cardTitle ?? ""
                 let cardData = PXCardDataFactory().create(cardName: displayTitle, cardNumber: "", cardCode: "", cardExpiration: "")
-                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false, amountConfiguration: nil)
+                let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, "", AccountMoneyCard(), cardData, [PXPayerCost](), nil, nil, false, amountConfiguration: nil)
                 viewModelCard.setAccountMoney(accountMoneyBalance: accountMoney.availableBalance)
-                viewModelCard.displayMessage = accountMoney.sliderTitle
+                let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
+                viewModelCard.displayMessage = NSAttributedString(string: accountMoney.sliderTitle ?? "", attributes: attributes)
                 sliderModel.append(viewModelCard)
             } else if let targetCardData = targetNode.oneTapCard {
                 if let cardName = targetCardData.cardUI?.name, let cardNumber = targetCardData.cardUI?.lastFourDigits, let cardExpiration = targetCardData.cardUI?.expiration {
@@ -69,10 +73,12 @@ extension PXOneTapViewModel {
                     }
 
                     var showArrow: Bool = true
-                    var displayMessage: String?
+                    var displayMessage: NSAttributedString?
                     if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == PXPaymentTypes.DEBIT_CARD.rawValue {
                         showArrow = false
-                        displayMessage = ""
+                        if let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(targetCardData.cardId) {
+                            displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration)
+                        }
                     } else if payerCost.count == 1 {
                         showArrow = false
                     } else if amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) == nil {
@@ -81,14 +87,14 @@ extension PXOneTapViewModel {
 
                     let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: defaultEnabledSplitPayment)
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration)
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetNode.paymentTypeId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow, amountConfiguration: amountConfiguration)
 
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
             }
         }
-        sliderModel.append(PXCardSliderViewModel("", "", EmptyCard(), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil))
+        sliderModel.append(PXCardSliderViewModel("", "", "", EmptyCard(), nil, [PXPayerCost](), nil, nil, false, amountConfiguration: nil))
         cardSliderViewModel = sliderModel
     }
 
@@ -101,7 +107,7 @@ extension PXOneTapViewModel {
 
             let installment = PXInstallment(issuer: nil, payerCosts: payerCost, paymentMethodId: nil, paymentTypeId: nil)
             if let displayMessage = sliderNode.displayMessage {
-                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getDisplayMessageAttrText(displayMessage), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
+                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
                 model.append(installmentInfoModel)
             } else {
                 let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
@@ -187,6 +193,9 @@ extension PXOneTapViewModel {
                 cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.selectedPayerCost
                 cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.payerCosts ?? []
             }
+            if let splitConfiguration = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration, cardSliderViewModel[forIndex].paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
+                cardSliderViewModel[forIndex].displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration)
+            }
             return true
         }
         return false
@@ -210,11 +219,6 @@ extension PXOneTapViewModel {
 
 // MARK: Privates.
 extension PXOneTapViewModel {
-    private func getDisplayMessageAttrText(_ displayMessage: String) -> NSAttributedString {
-        let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
-        let attributedString = NSAttributedString(string: displayMessage, attributes: attributes)
-        return attributedString
-    }
 
     private func getInstallmentInfoAttrText(_ payerCost: PXPayerCost?) -> NSMutableAttributedString {
         let text: NSMutableAttributedString = NSMutableAttributedString(string: "")
@@ -245,5 +249,16 @@ extension PXOneTapViewModel {
             }
         }
         return text
+    }
+
+    internal func getSplitMessageForDebit(splitConfiguration: PXSplitConfiguration) -> NSAttributedString {
+        var amount: String = ""
+        let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+        if splitPaymentEnabled {
+            amount = Utils.getAttributedAmount(splitConfiguration.splitAmount, currency: SiteManager.shared.getCurrency()).string
+        } else {
+            amount = Utils.getAttributedAmount(amountHelper.amountToPay, currency: SiteManager.shared.getCurrency()).string
+        }
+        return NSAttributedString(string: amount, attributes: attributes)
     }
 }

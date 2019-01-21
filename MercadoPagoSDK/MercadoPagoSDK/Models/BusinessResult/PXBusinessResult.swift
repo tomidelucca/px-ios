@@ -60,6 +60,8 @@ import UIKit
     private let topCustomView: UIView?
     private let bottomCustomView: UIView?
     private var receiptId: String?
+    private let paymentMethodId: String?
+    private let paymentTypeId: String?
     let paymentStatus: String
     let paymentStatusDetail: String
 
@@ -98,6 +100,50 @@ import UIKit
         self.bottomCustomView = bottomCustomView
         self.paymentStatus = paymentStatus
         self.paymentStatusDetail = paymentStatusDetail
+        self.paymentMethodId = nil
+        self.paymentTypeId = nil
+        super.init()
+    }
+
+    // MARK: Initialization
+    /**
+     Creates a `PXBusinessResult` which represents Business Payment Result.
+     - parameter receiptId: Reference id for payment receipt.
+     - parameter status: Business Status Result
+     - parameter title: Title that will be displayed on the result screen
+     - parameter subtitle: Sub-title that will be displayed on the result screen
+     - parameter icon: Icon that will be displayed on the result screen
+     - parameter mainAction: Action for the main action button that will be displayed on the result screen
+     - parameter secondaryAction: Action for the secondary action button that will be displayed on the result screen
+     - parameter helpMessage: Help message that will be displayed on the result screen
+     - parameter showPaymentMethod: True if you want to show the cell of payment method in the result screen
+     - parameter statementDescription: Statement description that will be displayed on the result screen
+     - parameter imageUrl: Image url for the icon that will be displayed on the result screen
+     - parameter topCustomView: Custom view that will be displayed on the result screen on top
+     - parameter bottomCustomView: Custom view that will be displayed on the result screen on bottom
+     - parameter paymentStatus: Payment status of the payment result
+     - parameter paymentStatusDetail: Payment status detail of the payment result
+     - parameter paymentMethodId: Payment method id
+     - parameter paymentTypeId: Payment type id
+     */
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXAction? = nil, secondaryAction: PXAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil, topCustomView: UIView? = nil, bottomCustomView: UIView? = nil, paymentStatus: String, paymentStatusDetail: String, paymentMethodId: String, paymentTypeId: String) {
+        self.receiptId = receiptId
+        self.status = status
+        self.title = title
+        self.subtitle = subtitle
+        self.icon = icon
+        self.mainAction = mainAction
+        self.secondaryAction = secondaryAction
+        self.helpMessage = helpMessage
+        self.showPaymentMethod = showPaymentMethod
+        self.statementDescription = statementDescription
+        self.imageUrl = imageUrl
+        self.topCustomView = topCustomView
+        self.bottomCustomView = bottomCustomView
+        self.paymentStatus = paymentStatus
+        self.paymentStatusDetail = paymentStatusDetail
+        self.paymentMethodId = paymentMethodId
+        self.paymentTypeId = paymentTypeId
         super.init()
     }
 }
@@ -165,22 +211,22 @@ extension PXBusinessResult {
 
 // MARK: PXBaseResult implementation
 extension PXBusinessResult {
-    public func getPaymentMethodId() -> String {
-        return ""
+    public func getPaymentMethodId() -> String? {
+        return paymentMethodId
     }
 
-    public func getPaymentMethodTypeId() -> String {
-        return  ""
+    public func getPaymentMethodTypeId() -> String? {
+        return  paymentTypeId
     }
 
     public func getPaymentId() -> String? {
         return receiptId
     }
     public func getStatus() -> String {
-        return paymentStatus
+        return paymentStatus ?? ""
     }
 
     public func getStatusDetail() -> String {
-        return paymentStatusDetail
+        return paymentStatusDetail ?? ""
     }
 }
