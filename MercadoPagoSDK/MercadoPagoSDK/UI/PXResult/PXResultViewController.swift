@@ -201,6 +201,7 @@ extension PXResultViewController {
             view.addSubviewToBottom(bodyView)
             PXLayout.matchWidth(ofView: bodyView).isActive = true
             PXLayout.centerHorizontally(view: bodyView).isActive = true
+            bodyView.layoutIfNeeded()
         }
 
         if let bottomCustomView = buildBottomCustomView() {

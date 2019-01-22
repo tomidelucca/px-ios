@@ -43,37 +43,43 @@ internal class PXBodyComponent: PXComponentizable {
         return paymentMethodImage
     }
 
-    func getPaymentMethodComponent() -> PXPaymentMethodComponent {
-        let pm = self.props.paymentResult.paymentData!.paymentMethod!
+    func getPaymentMethodComponents() -> [PXPaymentMethodComponent] {
+        var paymentMethodsComponents: [PXPaymentMethodComponent] = []
+        if let paymentData = props.paymentResult.paymentData, let firstPMComponent = getPaymentMethodComponent(paymentData: paymentData) {
+            paymentMethodsComponents.append(firstPMComponent)
+        }
 
-        let image = getPaymentMethodIcon(paymentMethod: pm)
+        if let splitAccountMoney = props.paymentResult.splitAccountMoney, let secondPMComponent = getPaymentMethodComponent(paymentData: splitAccountMoney) {
+            paymentMethodsComponents.append(secondPMComponent)
+        }
+        return paymentMethodsComponents
+    }
+
+    func getPaymentMethodComponent(paymentData: PXPaymentData) -> PXPaymentMethodComponent? {
+        guard let paymentMethod = paymentData.paymentMethod else {
+            return nil
+        }
+
+        let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
         let currency = SiteManager.shared.getCurrency()
-        var amountTitle: NSMutableAttributedString = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency).toAttributedString()
+        var amountTitle: NSMutableAttributedString = Utils.getAmountFormated(amount: paymentData.transactionAmount ?? 0, forCurrency: currency).toAttributedString()
         var subtitle: NSMutableAttributedString?
-        if let payerCost = self.props.paymentResult.paymentData?.payerCost {
+        if let payerCost = paymentData.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)).toAttributedString()
                 subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
             }
         }
 
-        if self.props.amountHelper.discount != nil {
-            var amount = self.props.amountHelper.preferenceAmountWithCharges
-
-            if let payerCostTotalAmount = self.props.paymentResult.paymentData?.payerCost?.totalAmount {
-                amount = payerCostTotalAmount + self.props.amountHelper.amountOff
-            }
-        }
-
         var pmDescription: String = ""
-        let paymentMethodName = pm.name ?? ""
+        let paymentMethodName = paymentMethod.name ?? ""
 
-        let issuer = self.props.paymentResult.paymentData?.getIssuer()
+        let issuer = paymentData.getIssuer()
         let paymentMethodIssuerName = issuer?.name ?? ""
         var descriptionDetail: NSAttributedString?
 
-        if pm.isCard {
-            if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
+        if paymentMethod.isCard {
+            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
             }
             if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {

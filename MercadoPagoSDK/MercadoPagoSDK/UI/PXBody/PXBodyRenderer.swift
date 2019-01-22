@@ -14,7 +14,18 @@ class PXBodyRenderer: NSObject {
         if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent() {
             return instructionsComponent.render()
         } else if body.props.paymentResult.isApproved() {
-            return body.getPaymentMethodComponent().render()
+            let bodyView = PXComponentView()
+            bodyView.translatesAutoresizingMaskIntoConstraints = false
+            let components = body.getPaymentMethodComponents()
+            for paymentMethodComponent in components {
+                let pmView = paymentMethodComponent.render()
+                bodyView.addSubviewToBottom(pmView)
+                PXLayout.pinLeft(view: pmView).isActive = true
+                PXLayout.pinRight(view: pmView).isActive = true
+            }
+            bodyView.pinLastSubviewToBottom()?.isActive = true
+            bodyView.layoutIfNeeded()
+            return bodyView
         } else if body.hasBodyError() {
             return body.getBodyErrorComponent().render()
         }
