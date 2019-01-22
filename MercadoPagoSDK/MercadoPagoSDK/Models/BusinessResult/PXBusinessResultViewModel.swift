@@ -85,18 +85,18 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildBodyComponent() -> PXComponentizable? {
-        var pmComponent: PXComponentizable?
+        var pmComponents: [PXComponentizable] = []
         var helpComponent: PXComponentizable?
 
         if self.businessResult.mustShowPaymentMethod() {
-            pmComponent =  getPaymentMethodComponent()
+            pmComponents =  getPaymentMethodComponents()
         }
 
         if self.businessResult.getHelpMessage() != nil {
             helpComponent = getHelpMessageComponent()
         }
 
-        return PXBusinessResultBodyComponent(paymentMethodComponent: pmComponent, helpMessageComponent: helpComponent)
+        return PXBusinessResultBodyComponent(paymentMethodComponents: pmComponents, helpMessageComponent: helpComponent)
     }
 
     func getHelpMessageComponent() -> PXErrorComponent? {
@@ -110,14 +110,28 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return PXErrorComponent(props: props)
     }
 
-    public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
-        let pm = self.paymentData.paymentMethod!
+    func getPaymentMethodComponents() -> [PXPaymentMethodComponent] {
+        var paymentMethodsComponents: [PXPaymentMethodComponent] = []
+        if let firstPMComponent = getPaymentMethodComponent(paymentData: self.amountHelper.paymentData) {
+            paymentMethodsComponents.append(firstPMComponent)
+        }
 
-        let image = getPaymentMethodIcon(paymentMethod: pm)
+        if let splitAccountMoney = amountHelper.splitAccountMoney, let secondPMComponent = getPaymentMethodComponent(paymentData: splitAccountMoney) {
+            paymentMethodsComponents.append(secondPMComponent)
+        }
+        return paymentMethodsComponents
+    }
+
+    public func getPaymentMethodComponent(paymentData: PXPaymentData) -> PXPaymentMethodComponent? {
+        guard let paymentMethod = paymentData.paymentMethod else {
+            return nil
+        }
+
+        let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
         let currency = SiteManager.shared.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.amountHelper.amountToPay, forCurrency: currency)
         var subtitle: NSMutableAttributedString?
-        if let payerCost = self.paymentData.payerCost {
+        if let payerCost = paymentData.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
                 subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
@@ -127,7 +141,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         if self.amountHelper.discount != nil {
             var amount = self.amountHelper.preferenceAmountWithCharges
 
-            if let payerCostTotalAmount = self.paymentData.payerCost?.totalAmount {
+            if let payerCostTotalAmount = paymentData.payerCost?.totalAmount {
                 amount = payerCostTotalAmount + self.amountHelper.amountOff
             }
 
@@ -143,13 +157,13 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
 
         var pmDescription: String = ""
-        let paymentMethodName = pm.name ?? ""
+        let paymentMethodName = paymentMethod.name ?? ""
 
         let issuer = self.paymentData.getIssuer()
         let paymentMethodIssuerName = issuer?.name ?? ""
         var descriptionDetail: NSAttributedString?
 
-        if pm.isCard {
+        if paymentMethod.isCard {
             if let lastFourDigits = (self.paymentData.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
             }
@@ -199,11 +213,11 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 }
 
 class PXBusinessResultBodyComponent: PXComponentizable {
-    var paymentMethodComponent: PXComponentizable?
+    var paymentMethodComponents: [PXComponentizable]
     var helpMessageComponent: PXComponentizable?
 
-    init(paymentMethodComponent: PXComponentizable?, helpMessageComponent: PXComponentizable?) {
-        self.paymentMethodComponent = paymentMethodComponent
+    init(paymentMethodComponents: [PXComponentizable], helpMessageComponent: PXComponentizable?) {
+        self.paymentMethodComponents = paymentMethodComponents
         self.helpMessageComponent = helpMessageComponent
     }
 
@@ -216,8 +230,9 @@ class PXBusinessResultBodyComponent: PXComponentizable {
             PXLayout.pinLeft(view: helpView).isActive = true
             PXLayout.pinRight(view: helpView).isActive = true
         }
-        if let paymentMethodComponent = self.paymentMethodComponent {
+        for paymentMethodComponent in paymentMethodComponents {
             let pmView = paymentMethodComponent.render()
+            pmView.addSeparatorLineToTop(height: 1)
             bodyView.addSubview(pmView)
             PXLayout.put(view: pmView, onBottomOfLastViewOf: bodyView)?.isActive = true
             PXLayout.pinLeft(view: pmView).isActive = true

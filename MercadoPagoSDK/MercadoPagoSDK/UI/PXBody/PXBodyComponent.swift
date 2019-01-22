@@ -68,6 +68,8 @@ internal class PXBodyComponent: PXComponentizable {
             if payerCost.installments > 1 {
                 amountTitle = String(String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)).toAttributedString()
                 subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
+            } else {
+                amountTitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency).toAttributedString()
             }
         }
 

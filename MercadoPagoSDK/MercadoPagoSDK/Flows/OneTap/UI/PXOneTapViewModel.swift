@@ -77,6 +77,7 @@ extension PXOneTapViewModel {
                     if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == PXPaymentTypes.DEBIT_CARD.rawValue {
                         showArrow = false
                         if let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(targetCardData.cardId), let totalAmount = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)?.totalAmount {
+                            // If it's debit and has split, update split message
                             displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: totalAmount)
                         }
                     } else if payerCost.count == 1 {
@@ -107,6 +108,7 @@ extension PXOneTapViewModel {
             let installment = PXInstallment(issuer: nil, payerCosts: payerCost, paymentMethodId: nil, paymentTypeId: nil)
 
             if sliderNode.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
+                // If it's debit and has split, update split message
                 if let splitConfiguration = sliderNode.amountConfiguration?.splitConfiguration, let amountToPay = sliderNode.amountConfiguration?.selectedPayerCost?.totalAmount {
                     let displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: amountToPay)
                     let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)

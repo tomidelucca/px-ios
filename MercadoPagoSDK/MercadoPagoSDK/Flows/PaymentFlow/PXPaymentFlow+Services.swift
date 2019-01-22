@@ -17,16 +17,14 @@ internal extension PXPaymentFlow {
         plugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
         plugin.startPayment?(checkoutStore: PXCheckoutStore.sharedInstance, errorHandler: self as PXPaymentProcessorErrorHandler, successWithBasePayment: { [weak self] (basePayment) in
-            self?.handlePayment(payment: basePayment)
+            self?.handlePayment(basePayment: basePayment)
         })
-
     }
 
     func createPayment() {
         guard let paymentData = model.amountHelper?.paymentData, let checkoutPreference = model.checkoutPreference else {
             return
         }
-
         let mpPayment = MPPayment(preferenceId: checkoutPreference.id, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
         guard let paymentBody = (try? mpPayment.toJSON()) else {
             fatalError("Cannot make payment json body")
@@ -77,48 +75,5 @@ internal extension PXPaymentFlow {
                 self?.showError(error: mpError)
 
         })
-    }
-}
-
-internal protocol PaymentHandler {
-    func handlePayment(payment: PXPayment)
-    func handlePayment(payment: PXBusinessResult)
-    func handlePayment(payment: PXBasePayment)
-}
-
-extension PXPaymentFlow: PaymentHandler {
-    func handlePayment(payment: PXPayment) {
-        guard let paymentData = self.model.amountHelper?.paymentData else {
-            return
-        }
-
-        self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: nil)
-
-        let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
-        self.model.paymentResult = paymentResult
-        self.executeNextStep()
-    }
-
-    func handlePayment(payment: PXBusinessResult) {
-        self.model.businessResult = payment
-        self.model.handleESCForPayment(status: payment.paymentStatus, statusDetails: payment.paymentStatusDetail, errorPaymentType: nil)
-        self.executeNextStep()
-    }
-
-    func handlePayment(payment: PXBasePayment) {
-        guard let paymentData = self.model.amountHelper?.paymentData else {
-            return
-        }
-
-        self.model.handleESCForPayment(status: payment.getStatus(), statusDetails: payment.getStatusDetail(), errorPaymentType: payment.getPaymentMethodTypeId())
-
-        if payment.getStatusDetail() == PXRejectedStatusDetail.INVALID_ESC.rawValue {
-            self.paymentErrorHandler?.escError()
-            return
-        }
-
-        let paymentResult = PaymentResult(status: payment.getStatus(), statusDetail: payment.getStatusDetail(), paymentData: paymentData, splitAccountMoney: self.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: payment.getPaymentId(), statementDescription: nil, errorPaymentMethodId: payment.getPaymentMethodId(), errorPaymentTypeId: payment.getPaymentMethodTypeId())
-        self.model.paymentResult = paymentResult
-        self.executeNextStep()
     }
 }

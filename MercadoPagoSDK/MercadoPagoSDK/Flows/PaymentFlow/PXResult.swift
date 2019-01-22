@@ -6,7 +6,7 @@
 //
 
 @objc
-public protocol PXResult {
+public protocol PXResult: NSObjectProtocol {
     func getPaymentId() -> String?
     func getStatus() -> String
     func getStatusDetail() -> String

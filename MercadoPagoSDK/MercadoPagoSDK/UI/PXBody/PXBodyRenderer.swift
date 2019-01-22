@@ -19,6 +19,7 @@ class PXBodyRenderer: NSObject {
             let components = body.getPaymentMethodComponents()
             for paymentMethodComponent in components {
                 let pmView = paymentMethodComponent.render()
+                pmView.addSeparatorLineToTop(height: 1)
                 bodyView.addSubviewToBottom(pmView)
                 PXLayout.pinLeft(view: pmView).isActive = true
                 PXLayout.pinRight(view: pmView).isActive = true

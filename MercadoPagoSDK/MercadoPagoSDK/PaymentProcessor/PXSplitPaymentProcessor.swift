@@ -1,20 +1,15 @@
 //
-//  PXPaymentProcessor.swift
+//  File.swift
 //  MercadoPagoSDK
 //
-//  Created by Juan sebastian Sanzone on 23/8/18.
-//  Copyright © 2018 MercadoPago. All rights reserved.
+//  Created by Eden Torres on 22/01/2019.
 //
 
 import Foundation
 
-/**
- Implement this protocol to create your custom Payment Processor.
- */
-@objc public protocol PXPaymentProcessor: NSObjectProtocol {
-
+@objc public protocol PXSplitPaymentProcessor: NSObjectProtocol {
     /**
-      ViewController associated to your Payment Processor. This is optional VC. If you need a screen to make the payment, return your Payment processor viewController. If you return nil, we use our custom Animated progress Button.
+     ViewController associated to your Payment Processor. This is optional VC. If you need a screen to make the payment, return your Payment processor viewController. If you return nil, we use our custom Animated progress Button.
      */
     @objc func paymentProcessorViewController() -> UIViewController?
     /**
@@ -31,15 +26,14 @@ import Foundation
      - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
      */
     @objc optional func didReceive(checkoutStore: PXCheckoutStore)
+
     /**
      Method that we will call if `paymentProcessorViewController()` is nil. You can return the data of your custom payment. You can return a `PXGenericPayment` or `PXBusinessResult`.
      - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
      - parameter errorHandler: Use to receive an error handler.
-     - parameter successWithBusinessResult: Use to return a custom PXBusinessResult.
-     - parameter successWithPaymentResult: Use to return a simple payment PXGenericPayment.
+     - parameter successWithBasePayment: Use to return a custom PXBasePayment.
      */
-
-     @objc optional func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXGenericPayment) -> Void))
+    @objc optional func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBasePayment: @escaping ((PXBasePayment) -> Void))
 
     /**
      Optional method to inform your Payment timeout. (This is the timeout of your payment backend). Define this value for a superb checkout animated progress button experience.
@@ -47,7 +41,8 @@ import Foundation
     @objc optional func paymentTimeOut() -> Double
 
     /**
-     Optional method to inform if this payment processor supports split payment method payment.
+     Method to inform if this payment processor supports split payment method payment.
      - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
      */
+    @objc func supportSplitPaymentMehtodPayment(checkoutStore: PXCheckoutStore) -> Bool
 }
