@@ -25,7 +25,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     var scrollViewPinBottomConstraint: NSLayoutConstraint!
     private var topContentConstraint: NSLayoutConstraint?
 
-    init() {
+    init(adjustInsets: Bool = true) {
         scrollView = UIScrollView()
         scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +42,9 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
 
-        adjustInsets()
+        if adjustInsets {
+            self.adjustInsets()
+        }
 
         view.addSubview(scrollView)
 
