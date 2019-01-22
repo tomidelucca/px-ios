@@ -137,20 +137,17 @@ internal extension PXPaymentFlowModel {
         guard let token = amountHelper?.paymentData.getToken() else {
             return
         }
-        var isApprovedPayment: Bool = true
-        if self.paymentResult != nil {
-            isApprovedPayment = self.paymentResult!.isApproved()
+        let isApprovedPayment: Bool = status == PXPaymentStatus.APPROVED.rawValue
 
-            if token.hasCardId() {
-                if !isApprovedPayment {
-                    guard let errorPaymentType = errorPaymentType else {
-                        escManager.deleteESC(cardId: token.cardId)
-                        return
-                    }
-                    // If it has error Payment Type, check if the error was from a card
-                    if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
-                        escManager.deleteESC(cardId: token.cardId)
-                    }
+        if token.hasCardId() {
+            if !isApprovedPayment {
+                guard let errorPaymentType = errorPaymentType else {
+                    escManager.deleteESC(cardId: token.cardId)
+                    return
+                }
+                // If it has error Payment Type, check if the error was from a card
+                if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
+                    escManager.deleteESC(cardId: token.cardId)
                 }
             }
         }

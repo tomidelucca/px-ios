@@ -187,14 +187,14 @@ extension PXResultViewController {
         let view = PXComponentView()
         view.translatesAutoresizingMaskIntoConstraints = false
 
-//        if let topCustomView = buildTopCustomView() {
-//            self.topCustomView = topCustomView
-//            topCustomView.clipsToBounds = true
-//            view.addSubviewToBottom(topCustomView)
-//            PXLayout.matchWidth(ofView: topCustomView).isActive = true
-//            PXLayout.centerHorizontally(view: topCustomView).isActive = true
-//            topCustomView.layoutIfNeeded()
-//        }
+        if let topCustomView = buildTopCustomView() {
+            self.topCustomView = topCustomView
+            topCustomView.clipsToBounds = true
+            view.addSubviewToBottom(topCustomView)
+            PXLayout.matchWidth(ofView: topCustomView).isActive = true
+            PXLayout.centerHorizontally(view: topCustomView).isActive = true
+            topCustomView.layoutIfNeeded()
+        }
 
         if let bodyView = buildBodyView() {
             self.bodyView = bodyView
@@ -204,14 +204,14 @@ extension PXResultViewController {
             bodyView.layoutIfNeeded()
         }
 
-//        if let bottomCustomView = buildBottomCustomView() {
-//            self.bottomCustomView = bottomCustomView
-//            bottomCustomView.clipsToBounds = true
-//            view.addSubviewToBottom(bottomCustomView)
-//            PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
-//            PXLayout.centerHorizontally(view: bottomCustomView).isActive = true
-//            bottomCustomView.layoutIfNeeded()
-//        }
+        if let bottomCustomView = buildBottomCustomView() {
+            self.bottomCustomView = bottomCustomView
+            bottomCustomView.clipsToBounds = true
+            view.addSubviewToBottom(bottomCustomView)
+            PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
+            PXLayout.centerHorizontally(view: bottomCustomView).isActive = true
+            bottomCustomView.layoutIfNeeded()
+        }
 
         view.pinLastSubviewToBottom()?.isActive = true
         view.layoutIfNeeded()

@@ -28,8 +28,8 @@ internal class PaymentResult {
     var paymentId: String?
     var statementDescription: String?
     var cardId: String?
-    var errorPaymentMethod: String?
-    var errorPaymentType: String?
+    var paymentMethodId: String?
+    var paymentMethodTypeId: String?
 
     init (payment: PXPayment, paymentData: PXPaymentData) {
         self.status = payment.status
@@ -41,7 +41,7 @@ internal class PaymentResult {
         self.cardId = payment.card?.id
     }
 
-    init (status: String, statusDetail: String, paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, payerEmail: String?, paymentId: String?, statementDescription: String?, errorPaymentMethodId: String? = nil, errorPaymentTypeId: String? = nil) {
+    init (status: String, statusDetail: String, paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, payerEmail: String?, paymentId: String?, statementDescription: String?, paymentMethodId: String? = nil, paymentMethodTypeId: String? = nil) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData
@@ -50,8 +50,8 @@ internal class PaymentResult {
         self.paymentId = paymentId
         self.statementDescription = statementDescription
         self.cardId = paymentData.token?.cardId
-        self.errorPaymentType = errorPaymentTypeId
-        self.errorPaymentMethod = errorPaymentMethodId
+        self.paymentMethodTypeId = paymentMethodTypeId
+        self.paymentMethodId = paymentMethodId
     }
 
     func isCallForAuth() -> Bool {

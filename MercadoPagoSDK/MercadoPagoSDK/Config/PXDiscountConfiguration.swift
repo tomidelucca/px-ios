@@ -18,7 +18,6 @@ open class PXDiscountConfiguration: NSObject, Codable {
     private var discount: PXDiscount?
     private var campaign: PXCampaign?
     private var isNotAvailable: Bool = false
-    internal var discountToken: Int64?
 
     internal override init() {
         self.discount = nil
@@ -38,27 +37,24 @@ open class PXDiscountConfiguration: NSObject, Codable {
         self.campaign = campaign
     }
 
-    internal init(discount: PXDiscount?, campaign: PXCampaign?, isNotAvailable: Bool, token: Int64?) {
+    internal init(discount: PXDiscount?, campaign: PXCampaign?, isNotAvailable: Bool) {
         self.discount = discount
         self.campaign = campaign
         self.isNotAvailable = isNotAvailable
-        self.discountToken = token
     }
 
     public enum PXDiscountConfigurationKeys: String, CodingKey {
         case discount
         case campaign
         case isAvailable =  "is_available"
-        case discountToken = "discount_token"
     }
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXDiscountConfigurationKeys.self)
         let discount: PXDiscount? = try container.decodeIfPresent(PXDiscount.self, forKey: .discount)
         let campaign: PXCampaign? = try container.decodeIfPresent(PXCampaign.self, forKey: .campaign)
-        let token: Int64? = try container.decodeIfPresent(Int64.self, forKey: .discountToken)
         let isAvailable: Bool = try container.decode(Bool.self, forKey: .isAvailable)
-        self.init(discount: discount, campaign: campaign, isNotAvailable: !isAvailable, token: token)
+        self.init(discount: discount, campaign: campaign, isNotAvailable: !isAvailable)
     }
 
     /**

@@ -14,7 +14,12 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
             return
         }
 
-        self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: nil)
+        self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: payment.getPaymentMethodTypeId())
+
+        if payment.getStatusDetail() == PXRejectedStatusDetail.INVALID_ESC.rawValue {
+            self.paymentErrorHandler?.escError()
+            return
+        }
 
         let paymentResult = PaymentResult(payment: payment, paymentData: paymentData)
         self.model.paymentResult = paymentResult
@@ -23,7 +28,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
 
     func handlePayment(business: PXBusinessResult) {
         self.model.businessResult = business
-        self.model.handleESCForPayment(status: business.paymentStatus, statusDetails: business.paymentStatusDetail, errorPaymentType: nil)
+        self.model.handleESCForPayment(status: business.paymentStatus, statusDetails: business.paymentStatusDetail, errorPaymentType: business.getPaymentMethodTypeId())
         self.executeNextStep()
     }
 
@@ -44,7 +49,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
                 return
             }
 
-            let paymentResult = PaymentResult(status: basePayment.getStatus(), statusDetail: basePayment.getStatusDetail(), paymentData: paymentData, splitAccountMoney: self.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: basePayment.getPaymentId(), statementDescription: nil, errorPaymentMethodId: basePayment.getPaymentMethodId(), errorPaymentTypeId: basePayment.getPaymentMethodTypeId())
+            let paymentResult = PaymentResult(status: basePayment.getStatus(), statusDetail: basePayment.getStatusDetail(), paymentData: paymentData, splitAccountMoney: self.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: basePayment.getPaymentId(), statementDescription: nil, paymentMethodId: basePayment.getPaymentMethodId(), paymentMethodTypeId: basePayment.getPaymentMethodTypeId())
             self.model.paymentResult = paymentResult
             self.executeNextStep()
         }

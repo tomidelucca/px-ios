@@ -84,13 +84,14 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         params.paramsAppend(key: "express_enabled", value: expressEnabled)
 
-        //params.paramsAppend(key: "split_payment_enabled", value: splitEnabled)
+        params.paramsAppend(key: "split_payment_enabled", value: splitEnabled)
 
         let body = PXPaymentMethodSearchBody(privateKey: payer.accessToken, email: payer.email, marketplace: marketplace, productId: discountParamsConfiguration?.productId, labels: discountParamsConfiguration?.labels, charges: charges)
         let bodyJSON = try? body.toJSON()
 
         let headers = ["Accept-Language": language]
 
+        // TODO: Remove this
         self.baseURL = "http://private-2fdc63-split2.apiary-mock.com"
 
         self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: bodyJSON, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
