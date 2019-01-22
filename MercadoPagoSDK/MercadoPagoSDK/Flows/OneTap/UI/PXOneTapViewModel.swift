@@ -76,8 +76,8 @@ extension PXOneTapViewModel {
                     var displayMessage: NSAttributedString?
                     if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == PXPaymentTypes.DEBIT_CARD.rawValue {
                         showArrow = false
-                        if let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(targetCardData.cardId) {
-                            displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration)
+                        if let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(targetCardData.cardId), let totalAmount = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)?.totalAmount {
+                            displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: totalAmount)
                         }
                     } else if payerCost.count == 1 {
                         showArrow = false
@@ -104,14 +104,23 @@ extension PXOneTapViewModel {
         for sliderNode in sliderViewModel {
             let payerCost = sliderNode.payerCost
             let selectedPayerCost = sliderNode.selectedPayerCost
-
             let installment = PXInstallment(issuer: nil, payerCosts: payerCost, paymentMethodId: nil, paymentTypeId: nil)
-            if let displayMessage = sliderNode.displayMessage {
-                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
-                model.append(installmentInfoModel)
+
+            if sliderNode.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
+                if let splitConfiguration = sliderNode.amountConfiguration?.splitConfiguration, let amountToPay = sliderNode.amountConfiguration?.selectedPayerCost?.totalAmount {
+                    let displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: amountToPay)
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
+                    model.append(installmentInfoModel)
+                }
+
             } else {
-                let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
-                model.append(installmentInfoModel)
+                if let displayMessage = sliderNode.displayMessage {
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
+                    model.append(installmentInfoModel)
+                } else {
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
+                    model.append(installmentInfoModel)
+                }
             }
         }
         return model
@@ -193,9 +202,6 @@ extension PXOneTapViewModel {
                 cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.selectedPayerCost
                 cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.payerCosts ?? []
             }
-            if let splitConfiguration = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration, cardSliderViewModel[forIndex].paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
-                cardSliderViewModel[forIndex].displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration)
-            }
             return true
         }
         return false
@@ -251,13 +257,13 @@ extension PXOneTapViewModel {
         return text
     }
 
-    internal func getSplitMessageForDebit(splitConfiguration: PXSplitConfiguration) -> NSAttributedString {
+    internal func getSplitMessageForDebit(splitConfiguration: PXSplitConfiguration, amountToPay: Double) -> NSAttributedString {
         var amount: String = ""
         let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
         if splitPaymentEnabled {
-            amount = Utils.getAttributedAmount(splitConfiguration.splitAmount, currency: SiteManager.shared.getCurrency()).string
+            amount = Utils.getAttributedAmount(amountToPay-splitConfiguration.splitAmount, currency: SiteManager.shared.getCurrency()).string
         } else {
-            amount = Utils.getAttributedAmount(amountHelper.amountToPay, currency: SiteManager.shared.getCurrency()).string
+            amount = Utils.getAttributedAmount(amountToPay, currency: SiteManager.shared.getCurrency()).string
         }
         return NSAttributedString(string: amount, attributes: attributes)
     }
