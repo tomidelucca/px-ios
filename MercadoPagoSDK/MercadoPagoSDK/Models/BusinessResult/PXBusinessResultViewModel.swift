@@ -129,13 +129,18 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
         let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
         let currency = SiteManager.shared.getCurrency()
-        var amountTitle = Utils.getAmountFormated(amount: self.amountHelper.amountToPay, forCurrency: currency)
+        var amountTitle: String = ""
         var subtitle: NSMutableAttributedString?
         if let payerCost = paymentData.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
                 subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
+            } else {
+                amountTitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency)
             }
+        } else {
+            // Caso account money
+            amountTitle = Utils.getAmountFormated(amount: paymentData.getTransactionAmountWithDiscount() ?? 0, forCurrency: currency)
         }
 
         if self.amountHelper.discount != nil {

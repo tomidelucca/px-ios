@@ -62,7 +62,7 @@ internal class PXBodyComponent: PXComponentizable {
 
         let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
         let currency = SiteManager.shared.getCurrency()
-        var amountTitle: NSMutableAttributedString = Utils.getAmountFormated(amount: paymentData.transactionAmount ?? 0, forCurrency: currency).toAttributedString()
+        var amountTitle: NSMutableAttributedString =  "".toAttributedString()
         var subtitle: NSMutableAttributedString?
         if let payerCost = paymentData.payerCost {
             if payerCost.installments > 1 {
@@ -71,6 +71,9 @@ internal class PXBodyComponent: PXComponentizable {
             } else {
                 amountTitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency).toAttributedString()
             }
+        } else {
+            // Caso account money
+            amountTitle = Utils.getAmountFormated(amount: paymentData.getTransactionAmountWithDiscount() ?? 0, forCurrency: currency).toAttributedString()
         }
 
         var pmDescription: String = ""

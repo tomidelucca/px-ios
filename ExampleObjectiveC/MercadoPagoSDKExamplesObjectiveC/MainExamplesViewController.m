@@ -113,7 +113,7 @@
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
 
     // Enable to test one tap
-    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-7092-012313-00268c40fdc23d560e0eee2cee34ab9c-39796526"];
+    [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-1458038826212807-062020-ff9273c67bc567320eae1a07d1c2d5b5-246046416"];
     // CDP color.
     // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 

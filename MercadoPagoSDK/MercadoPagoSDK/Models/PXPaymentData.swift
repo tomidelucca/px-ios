@@ -168,6 +168,13 @@ extension PXPaymentData {
         }
         return transactionAmount
     }
+
+    internal func getTransactionAmountWithDiscount() -> Double? {
+        if let transactionAmount = transactionAmount, let discount = discount {
+            return transactionAmount - discount.couponAmount
+        }
+        return transactionAmount
+    }
 }
 
 // MARK: Setters
