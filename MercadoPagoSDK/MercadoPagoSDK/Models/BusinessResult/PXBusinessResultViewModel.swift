@@ -143,24 +143,6 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             amountTitle = Utils.getAmountFormated(amount: paymentData.getTransactionAmountWithDiscount() ?? 0, forCurrency: currency)
         }
 
-        if self.amountHelper.discount != nil {
-            var amount = self.amountHelper.preferenceAmountWithCharges
-
-            if let payerCostTotalAmount = paymentData.payerCost?.totalAmount {
-                amount = payerCostTotalAmount + self.amountHelper.amountOff
-            }
-
-            let preferenceAmountString = Utils.getStrikethroughAmount(amount: amount, forCurrency: currency)
-
-            if subtitle == nil {
-                subtitle = preferenceAmountString
-            } else {
-                subtitle?.append(String.NON_BREAKING_LINE_SPACE.toAttributedString())
-                subtitle?.append(preferenceAmountString)
-            }
-
-        }
-
         var pmDescription: String = ""
         let paymentMethodName = paymentMethod.name ?? ""
 
