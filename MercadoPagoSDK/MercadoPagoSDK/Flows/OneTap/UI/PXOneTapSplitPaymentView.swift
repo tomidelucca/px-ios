@@ -45,7 +45,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
             return
         }
 
-        splitMessageLabel?.attributedText = splitConfiguration.message?.toAttributedString()
+        splitMessageLabel?.attributedText = getSplitMessage(splitConfiguration: splitConfiguration)
 
         if splitPaymentSwitch?.isOn != splitConfiguration.splitEnabled {
             callback(splitConfiguration.splitEnabled, false)
@@ -77,7 +77,12 @@ class PXOneTapSplitPaymentView: PXComponentView {
         PXLayout.put(view: label, leftOf: splitSwitch, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         PXLayout.pinTop(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinBottom(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
-        label.attributedText = splitConfiguration?.message?.toAttributedString()
+
+        if let splitConfiguration  = splitConfiguration {
+            label.attributedText = getSplitMessage(splitConfiguration: splitConfiguration)
+        } else {
+            label.attributedText = "".toAttributedString()
+        }
 
         let separatorView = UIView()
         separatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,4 +103,16 @@ class PXOneTapSplitPaymentView: PXComponentView {
     @objc private func switchStateChanged(_ sender: UISwitch) {
         callback(sender.isOn, true)
     }
+
+    private func getSplitMessage(splitConfiguration: PXSplitConfiguration) -> NSMutableAttributedString {
+        let amount: String = Utils.getAttributedAmount(splitConfiguration.getSplitAmountToPay(), currency: SiteManager.shared.getCurrency()).string
+
+        let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+
+        let amountAttributed = NSMutableAttributedString(string: amount, attributes: attributes)
+        amountAttributed.append(" ".toAttributedString())
+        amountAttributed.append(splitConfiguration.message?.toAttributedString() ?? "".toAttributedString())
+        return amountAttributed
+    }
+
 }
