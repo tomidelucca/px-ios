@@ -76,9 +76,9 @@ extension PXOneTapViewModel {
                     var displayMessage: NSAttributedString?
                     if let targetPaymentMethodId = targetNode.paymentTypeId, targetPaymentMethodId == PXPaymentTypes.DEBIT_CARD.rawValue {
                         showArrow = false
-                        if let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(targetCardData.cardId), let totalAmount = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)?.totalAmount {
+                        if let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(targetCardData.cardId), let totalAmount = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId, splitPaymentEnabled: splitConfiguration.splitEnabled)?.totalAmount {
                             // If it's debit and has split, update split message
-                            displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: totalAmount)
+                            displayMessage = getSplitMessageForDebit(amountToPay: totalAmount)
                         }
                     } else if payerCost.count == 1 {
                         showArrow = false
@@ -109,8 +109,8 @@ extension PXOneTapViewModel {
 
             if sliderNode.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
                 // If it's debit and has split, update split message
-                if let splitConfiguration = sliderNode.amountConfiguration?.splitConfiguration, let amountToPay = sliderNode.amountConfiguration?.selectedPayerCost?.totalAmount {
-                    let displayMessage = getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: amountToPay)
+                if let amountToPay = sliderNode.selectedPayerCost?.totalAmount {
+                    let displayMessage = getSplitMessageForDebit(amountToPay: amountToPay)
                     let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: sliderNode.shouldShowArrow)
                     model.append(installmentInfoModel)
                 }
@@ -198,11 +198,11 @@ extension PXOneTapViewModel {
     func updateCardSliderSplitPaymentPreference(splitPaymentEnabled: Bool, forIndex: Int) -> Bool {
         if cardSliderViewModel.indices.contains(forIndex) {
             if splitPaymentEnabled {
-                cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.selectedPayerCost
                 cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.payerCosts ?? []
+                cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.selectedPayerCost
             } else {
-                cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.selectedPayerCost
                 cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.payerCosts ?? []
+                cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.selectedPayerCost
             }
             return true
         }
@@ -259,14 +259,11 @@ extension PXOneTapViewModel {
         return text
     }
 
-    internal func getSplitMessageForDebit(splitConfiguration: PXSplitConfiguration, amountToPay: Double) -> NSAttributedString {
+    internal func getSplitMessageForDebit(amountToPay: Double) -> NSAttributedString {
         var amount: String = ""
         let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
-        if splitPaymentEnabled {
-            amount = Utils.getAttributedAmount(amountToPay-splitConfiguration.splitAmount, currency: SiteManager.shared.getCurrency()).string
-        } else {
-            amount = Utils.getAttributedAmount(amountToPay, currency: SiteManager.shared.getCurrency()).string
-        }
+
+        amount = Utils.getAttributedAmount(amountToPay, currency: SiteManager.shared.getCurrency()).string
         return NSAttributedString(string: amount, attributes: attributes)
     }
 }

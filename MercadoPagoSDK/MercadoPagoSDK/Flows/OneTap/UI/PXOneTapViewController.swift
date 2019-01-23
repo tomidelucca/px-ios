@@ -269,17 +269,17 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
             installmentInfoRow.toggleInstallments()
         }
 
+        //Update installment row
+        installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
+
         // If it's debit and has split, update split message
         if let infoRow = installmentInfoRow, viewModel.getCardSliderViewModel().indices.contains(infoRow.getActiveRowIndex()) {
             let selectedCard = viewModel.getCardSliderViewModel()[infoRow.getActiveRowIndex()]
 
-            if let splitConfiguration = selectedCard.amountConfiguration?.splitConfiguration, selectedCard.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
-                selectedCard.displayMessage = viewModel.getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: selectedCard.amountConfiguration?.selectedPayerCost?.totalAmount ?? 0)
+            if selectedCard.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
+                selectedCard.displayMessage = viewModel.getSplitMessageForDebit(amountToPay: selectedCard.selectedPayerCost?.totalAmount ?? 0)
             }
         }
-
-        //Update installment row
-        installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()
     }
 
     func didTapSummary() {
@@ -333,11 +333,6 @@ extension PXOneTapViewController: PXCardSliderProtocol {
                 callbackUpdatePaymentOption(targetModel)
                 loadingButtonComponent?.setEnabled()
 
-                // If it's debit and has split, update split message
-                if let splitConfiguration = targetModel.amountConfiguration?.splitConfiguration, let totalAmount = currentPaymentData.payerCost?.totalAmount, targetModel.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
-                    targetModel.displayMessage = viewModel.getSplitMessageForDebit(splitConfiguration: splitConfiguration, amountToPay: totalAmount)
-                }
-
             } else {
                 loadingButtonComponent?.setDisabled()
             }
@@ -345,6 +340,11 @@ extension PXOneTapViewController: PXCardSliderProtocol {
 
             if viewModel.splitPaymentSelectionByUser == nil {
                 headerView?.updateSplitPaymentView(splitConfiguration: selectedCard?.amountConfiguration?.splitConfiguration)
+            }
+
+            // If it's debit and has split, update split message
+            if let totalAmount = targetModel.selectedPayerCost?.totalAmount, targetModel.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
+                targetModel.displayMessage = viewModel.getSplitMessageForDebit(amountToPay: totalAmount)
             }
 
         }
