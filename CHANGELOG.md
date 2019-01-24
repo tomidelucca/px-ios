@@ -1,3 +1,9 @@
+# v4.5.2
+🚀Private RC - 4.5.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Resolve visual bug in Review And Confirm
+- Resolve bug in boleto without payment processor
+
 # v4.5.1
 🚀Private RC - 4.5.1 🚀
 MercadoPagoSDKV4 - Private Version

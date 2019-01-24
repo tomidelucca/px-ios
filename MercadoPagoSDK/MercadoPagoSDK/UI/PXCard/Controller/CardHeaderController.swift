@@ -42,7 +42,7 @@ class CardHeaderController: UIViewController {
         shouldAnimate = animated
     }
 
-    func transition(from origin: UIView, to destination: UIView, _ options: UIViewAnimationOptions) {
+    func transition(from origin: UIView, to destination: UIView, _ options: UIView.AnimationOptions) {
         addSubview(destination)
         Animator.flip(origin, destination, options)
     }

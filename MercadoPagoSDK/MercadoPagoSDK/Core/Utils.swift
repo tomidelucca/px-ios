@@ -34,13 +34,13 @@ internal class Utils {
     private static let kSdkSettingsFile = "mpsdk_settings"
 
     class func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
-        let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
         NSLayoutConstraint.activate(widthConstraints)
     }
 
     class func setContrainsVertical(label: UIView, previus: UIView?, constrain: CGFloat) {
         if let previus = previus {
-            let heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: constrain)]
+            let heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: previus, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: constrain)]
             NSLayoutConstraint.activate(heightConstraints)
         }
     }
@@ -69,8 +69,8 @@ internal class Utils {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
-        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
+        let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize), NSAttributedString.Key.foregroundColor: color]
+        let smallAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont(name: ResourceManager.shared.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize), NSAttributedString.Key.foregroundColor: color, NSAttributedString.Key.baselineOffset: baselineOffset as AnyObject]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -94,8 +94,8 @@ internal class Utils {
         let normalAttributesFont = lightFont ? Utils.getLightFont(size: fontSize) : Utils.getFont(size: fontSize)
         let smallAttributesFont = lightFont ? Utils.getLightFont(size: centsFontSize) : Utils.getFont(size: centsFontSize)
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: normalAttributesFont, NSAttributedStringKey.foregroundColor: color]
-        let smallAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: smallAttributesFont, NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.baselineOffset: baselineOffset as AnyObject]
+        let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: normalAttributesFont, NSAttributedString.Key.foregroundColor: color]
+        let smallAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: smallAttributesFont, NSAttributedString.Key.foregroundColor: color, NSAttributedString.Key.baselineOffset: baselineOffset as AnyObject]
 
         var symbols: String!
         if negativeAmount {
@@ -124,7 +124,7 @@ internal class Utils {
         return getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis)
     }
 
-    class func getAttributedAmount(withAttributes attributes: [NSAttributedStringKey: Any], amount: Double, currency: PXCurrency, negativeAmount: Bool) -> NSMutableAttributedString {
+    class func getAttributedAmount(withAttributes attributes: [NSAttributedString.Key: Any], amount: Double, currency: PXCurrency, negativeAmount: Bool) -> NSMutableAttributedString {
 
         let amount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
 
@@ -142,7 +142,7 @@ internal class Utils {
         return finalAttributedString
     }
 
-    class func getAttributedPercentage(withAttributes attributes: [NSAttributedStringKey: Any], amount: Double, addPercentageSymbol: Bool, negativeAmount: Bool) -> NSMutableAttributedString {
+    class func getAttributedPercentage(withAttributes attributes: [NSAttributedString.Key: Any], amount: Double, addPercentageSymbol: Bool, negativeAmount: Bool) -> NSMutableAttributedString {
 
         let decimalSeparator = "."
         var percentage = amount.stringValue
@@ -195,15 +195,15 @@ internal class Utils {
 
     class func getStrikethroughAmount(amount: Double, forCurrency currency: PXCurrency, addingParenthesis: Bool = false) -> NSMutableAttributedString {
         let formatedAttrAmount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis).toAttributedString()
-        formatedAttrAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: formatedAttrAmount.string.count))
+        formatedAttrAmount.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: formatedAttrAmount.string.count))
         return formatedAttrAmount
     }
 
     class func getAccreditationTimeAttributedString(from text: String, fontSize: CGFloat? = nil) -> NSAttributedString {
         let clockImage = NSTextAttachment()
-        var attributes: [NSAttributedStringKey: Any]? = nil
+        var attributes: [NSAttributedString.Key: Any]?
         if let fontSize = fontSize {
-            attributes = [NSAttributedStringKey.font: Utils.getFont(size: fontSize)]
+            attributes = [NSAttributedString.Key.font: Utils.getFont(size: fontSize)]
         }
         clockImage.image = ResourceManager.shared.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
@@ -217,7 +217,7 @@ internal class Utils {
         let color = color ?? UIColor.lightBlue()
         let currency = SiteManager.shared.getCurrency()
 
-        let descriptionAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: getFont(size: fontSize), NSAttributedStringKey.foregroundColor: color]
+        let descriptionAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: getFont(size: fontSize), NSAttributedString.Key.foregroundColor: color]
 
         let stringToWrite = NSMutableAttributedString()
 
@@ -629,7 +629,7 @@ internal class Utils {
         return
     }
 
-    func createImageView(with image: UIImage?, contentMode: UIViewContentMode) -> UIImageView {
+    func createImageView(with image: UIImage?, contentMode: UIView.ContentMode) -> UIImageView {
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = contentMode

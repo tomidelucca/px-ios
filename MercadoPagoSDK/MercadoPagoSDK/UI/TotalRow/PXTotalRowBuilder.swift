@@ -20,8 +20,8 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         //////////////// TITLE ////////////////
         if let discount = amountHelper.discount {
 
-            let activeDiscountAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                                            NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
+            let activeDiscountAttributes = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                                            NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 
             let string = discount.getDiscountDescription()
             let attributedString = NSMutableAttributedString(string: string, attributes: activeDiscountAttributes)
@@ -31,8 +31,8 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
             if amountHelper.consumedDiscount {
                 defaultTitleString = "total_row_consumed_discount".localized_beta
             }
-            let defaultAttributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                                     NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
+            let defaultAttributes = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                                     NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
 
             let defaultTitleAttributedString = NSAttributedString(string: defaultTitleString, attributes: defaultAttributes)
             title = defaultTitleAttributedString
@@ -40,8 +40,8 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
 
         //////////////// DISCLAIMER ////////////////
         if amountHelper.maxCouponAmount != nil {
-            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                              NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
+            let attributes = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                              NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
 
             let string = NSAttributedString(string: "total_row_disclaimer".localized_beta, attributes: attributes)
             disclaimer = string
@@ -50,9 +50,9 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         //////////////// MAIN VALUE ////////////////
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .right
-        let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.L_FONT),
-                          NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor(),
-                          NSAttributedStringKey.paragraphStyle: paragraph]
+        let attributes = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.L_FONT),
+                          NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor(),
+                          NSAttributedString.Key.paragraphStyle: paragraph]
 
         let string = Utils.getAttributedAmount(withAttributes: attributes, amount: amountHelper.amountToPay, currency: currency, negativeAmount: false)
 
@@ -63,10 +63,10 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
 
             let paragraph = NSMutableParagraphStyle()
             paragraph.alignment = .right
-            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXS_FONT),
-                              NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor(),
-                              NSAttributedStringKey.paragraphStyle: paragraph,
-                              NSAttributedStringKey.strikethroughStyle: 1]
+            let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
+                                                             NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor(),
+                                                             NSAttributedString.Key.paragraphStyle: paragraph,
+                                                             NSAttributedString.Key.strikethroughStyle: 1]
 
             let string = Utils.getAttributedAmount(withAttributes: attributes, amount: amountHelper.preferenceAmountWithCharges, currency: currency, negativeAmount: false)
 
