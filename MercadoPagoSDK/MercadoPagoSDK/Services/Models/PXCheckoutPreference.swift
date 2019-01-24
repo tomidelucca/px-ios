@@ -52,10 +52,6 @@ import Foundation
      differentialPricing
      */
     open var differentialPricing: PXDifferentialPricing?
-    /**
-     marketplace
-     */
-    open var marketplace: String? = "NONE"
     internal var binaryModeEnabled: Bool = false
 
     // MARK: Initialization
@@ -86,7 +82,7 @@ import Foundation
         self.payer = PXPayer(email: payerEmail)
     }
 
-    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?) {
+    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -98,7 +94,6 @@ import Foundation
         self.expirationDateFrom = expirationDateFrom
         self.site = site
         self.differentialPricing = differentialPricing
-        self.marketplace = marketplace
     }
 
     /// :nodoc:
@@ -112,7 +107,6 @@ import Foundation
         case expirationDateFrom = "expiration_date_from"
         case differentialPricing = "differential_pricing"
         case site
-        case marketplace
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -126,8 +120,7 @@ import Foundation
         let siteId: String = try container.decode(String.self, forKey: .siteId)
         let site: PXSite? = try container.decodeIfPresent(PXSite.self, forKey: .site)
         let differentialPricing: PXDifferentialPricing? = try container.decodeIfPresent(PXDifferentialPricing.self, forKey: .differentialPricing)
-        let marketplace: String? = try container.decodeIfPresent(String.self, forKey: .marketplace)
-        self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace)
+        self.init(id: id, items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing)
     }
 
     /// :nodoc:
@@ -140,7 +133,6 @@ import Foundation
         try container.encodeIfPresent(self.siteId, forKey: .siteId)
         try container.encodeIfPresent(self.site, forKey: .site)
         try container.encodeIfPresent(self.differentialPricing, forKey: .differentialPricing)
-        try container.encodeIfPresent(self.marketplace, forKey: .marketplace)
     }
 
     /// :nodoc:

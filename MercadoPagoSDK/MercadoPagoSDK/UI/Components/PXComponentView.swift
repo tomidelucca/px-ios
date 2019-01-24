@@ -55,17 +55,15 @@ import Foundation
         carryMarginY = 0
     }
 
-    public func pinContentViewToTop(margin: CGFloat = 0) {
+    public func pinContentViewToTop() {
         topGuideZeroHeightContraint?.isActive = true
-        topGuideZeroHeightContraint?.constant = margin
         bottomGuideZeroHeightContraint?.isActive = false
         matchGuidesHeightContraint?.isActive = false
     }
 
-    public func pinContentViewToBottom(margin: CGFloat = 0) {
+    public func pinContentViewToBottom() {
         topGuideZeroHeightContraint?.isActive = false
         bottomGuideZeroHeightContraint?.isActive = true
-        bottomGuideZeroHeightContraint?.constant = margin
         matchGuidesHeightContraint?.isActive = false
     }
 
@@ -73,12 +71,6 @@ import Foundation
         topGuideZeroHeightContraint?.isActive = false
         bottomGuideZeroHeightContraint?.isActive = false
         matchGuidesHeightContraint?.isActive = true
-    }
-
-    public func removeMargins() {
-        topGuideZeroHeightContraint?.isActive = true
-        bottomGuideZeroHeightContraint?.isActive = true
-        matchGuidesHeightContraint?.isActive = false
     }
 
     func fixHeight(height: CGFloat) {

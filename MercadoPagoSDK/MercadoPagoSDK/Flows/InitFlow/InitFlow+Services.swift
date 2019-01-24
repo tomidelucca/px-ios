@@ -38,6 +38,45 @@ extension InitFlow {
         executeNextStep()
     }
 
+    func getDirectDiscount() {
+        model.getService().getDirectDiscount(amount: model.amountHelper.amountToPay, payerEmail: model.properties.checkoutPreference.payer.email, callback: { [weak self] (discount) in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.model.properties.discount = discount
+            strongSelf.executeNextStep()
+
+            }, failure: { [weak self] (error) in
+                guard let strongSelf = self else {
+                    return
+                }
+                let customError = InitFlowError(errorStep: .SERVICE_GET_DIRECT_DISCOUNT, shouldRetry: true, requestOrigin: .GET_DIRECT_DISCOUNT, apiException: MPSDKError.getApiException(error))
+                strongSelf.model.setError(error: customError)
+                strongSelf.executeNextStep()
+        })
+    }
+
+    func getCampaigns() {
+        let payerEmail = model.properties.checkoutPreference.getPayer().email
+        model.getService().getCampaigns(payerEmail: payerEmail, callback: { [weak self] (pxCampaigns) in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.model.properties.campaigns = pxCampaigns
+            strongSelf.executeNextStep()
+
+            }, failure: { [weak self] (error) in
+                guard let strongSelf = self else {
+                    return
+                }
+                let customError = InitFlowError(errorStep: .SERVICE_GET_CAMPAIGNS, shouldRetry: true, requestOrigin: .GET_CAMPAIGNS, apiException: MPSDKError.getApiException(error))
+                strongSelf.model.setError(error: customError)
+                strongSelf.executeNextStep()
+        })
+    }
+
     func initPaymentMethodPlugins() {
         if !model.properties.paymentMethodPlugins.isEmpty {
             initPlugin(plugins: model.properties.paymentMethodPlugins, index: model.properties.paymentMethodPlugins.count - 1)
@@ -79,15 +118,13 @@ extension InitFlow {
 
         var defaultInstallments: String?
         let dInstallments = model.properties.checkoutPreference.getDefaultInstallments()
-        if let dInstallments = dInstallments {
+        if dInstallments > 0 {
             defaultInstallments = String(dInstallments)
         }
 
         let hasPaymentProcessor: Bool = model.properties.paymentPlugin != nil ? true : false
-        let discountParamsConfiguration = model.properties.advancedConfig.discountParamsConfiguration
-        let marketplace = model.amountHelper.preference.marketplace
 
-        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor), discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: self.model.amountHelper.chargeRules, callback: { [weak self] (paymentMethodSearch) in
+        model.getService().getPaymentMethodSearch(amount: model.amountHelper.amountToPay, exclusions: exclusions, oneTapInfo: oneTapInfo, payer: model.properties.paymentData.payer ?? PXPayer(email: ""), site: SiteManager.shared.getSiteId(), extraParams: (defaultPaymentMethod: model.getDefaultPaymentMethodId(), differentialPricingId: differentialPricingString, defaultInstallments: defaultInstallments, expressEnabled: model.properties.advancedConfig.expressEnabled, hasPaymentProcessor: hasPaymentProcessor), callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return

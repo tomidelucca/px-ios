@@ -203,8 +203,8 @@ extension PXCheckoutPreference {
     /**
      getDefaultInstallments
      */
-    open func getDefaultInstallments() -> Int? {
-        return paymentPreference.getDefaultInstallments()
+    open func getDefaultInstallments() -> Int {
+        return paymentPreference.getDefaultInstallments() ?? 0
     }
 
     /**

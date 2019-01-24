@@ -11,7 +11,7 @@ import Foundation
 open class PXPaymentPreference: NSObject, Codable {
 
     open var maxAcceptedInstallments: Int = 0
-    open var defaultInstallments: Int?
+    open var defaultInstallments: Int = 0
     open var excludedPaymentMethodIds: [String] = []
     open var excludedPaymentTypeIds: [String] = []
     open var defaultPaymentMethodId: String?

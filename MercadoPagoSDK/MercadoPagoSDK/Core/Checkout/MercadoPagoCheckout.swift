@@ -53,10 +53,22 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         if let paymentConfiguration = builder.paymentConfig {
-            let (chargeRules, paymentPlugin, paymentMethodPlugins) = paymentConfiguration.getPaymentConfiguration()
+            let (discountConfig, chargeRules, paymentPlugin, paymentMethodPlugins) = paymentConfiguration.getPaymentConfiguration()
 
             // Set charge rules
             viewModel.chargeRules = chargeRules
+
+            // Set discount/campaign
+            if let dConfig = discountConfig {
+                let discountConfiguration = dConfig.getDiscountConfiguration()
+                if let campaign = discountConfiguration.campaign, let discount = discountConfiguration.discount {
+                    viewModel.setDiscount(discount, withCampaign: campaign)
+                }
+                if discountConfiguration.isNotAvailable {
+                    viewModel.clearDiscount()
+                    viewModel.consumedDiscount = true
+                }
+            }
 
             // Payment method plugins.
             viewModel.paymentMethodPlugins = paymentMethodPlugins
@@ -167,7 +179,7 @@ extension MercadoPagoCheckout {
         case .SERVICE_GET_IDENTIFICATION_TYPES:
             self.getIdentificationTypes()
         case .SERVICE_GET_PAYER_COSTS:
-            self.getPayerCostsConfiguration()
+            self.getPayerCosts()
         case .SCREEN_PAYER_COST:
             self.showPayerCostScreen()
         case .SCREEN_REVIEW_AND_CONFIRM:
@@ -258,9 +270,16 @@ extension MercadoPagoCheckout {
 
     private func commondInit() {
         viewModel.setInitFlowProtocol(flowInitProtocol: self)
-        if !viewModel.shouldApplyDiscount() {
+        if !shouldApplyDiscount() {
             viewModel.clearDiscount()
         }
+    }
+
+    private func shouldApplyDiscount() -> Bool {
+        if viewModel.paymentPlugin != nil {
+            return !viewModel.consumedDiscount
+        }
+        return false
     }
 
     private func removeDiscount() {

@@ -13,22 +13,22 @@ final class InitFlow: PXFlow {
     let model: InitFlowModel
 
     private var status: PXFlowStatus = .ready
-    private let finishInitCallback: ((PXCheckoutPreference, PXPaymentMethodSearch) -> Void)
+    private let finishInitCallback: ((PXCheckoutPreference, PXPaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void)
     private let errorInitCallback: ((InitFlowError) -> Void)
 
-    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXPaymentMethodSearch) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
+    init(flowProperties: InitFlowProperties, finishCallback: @escaping ((PXCheckoutPreference, PXPaymentMethodSearch, [PXCampaign]?, PXDiscount?) -> Void), errorCallback: @escaping ((InitFlowError) -> Void)) {
         pxNavigationHandler = PXNavigationHandler.getDefault()
         finishInitCallback = finishCallback
         errorInitCallback = errorCallback
         model = InitFlowModel(flowProperties: flowProperties)
     }
 
-    func updateModel(paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin]?, chargeRules: [PXPaymentTypeChargeRule]?) {
+    func updateModel(paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin]?) {
         var pmPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
         if let targetPlugins = paymentMethodPlugins {
             pmPlugins = targetPlugins
         }
-        model.update(paymentPlugin: paymentPlugin, paymentMethodPlugins: pmPlugins, chargeRules: chargeRules)
+        model.update(paymentPlugin: paymentPlugin, paymentMethodPlugins: pmPlugins)
     }
 
     deinit {
@@ -51,6 +51,10 @@ final class InitFlow: PXFlow {
             getCheckoutPreference()
         case .ACTION_VALIDATE_PREFERENCE:
             validatePreference()
+        case .SERVICE_GET_CAMPAIGNS:
+            getCampaigns()
+        case .SERVICE_GET_DIRECT_DISCOUNT:
+            getDirectDiscount()
         case .SERVICE_GET_PAYMENT_METHODS:
             getPaymentMethodSearch()
         case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
@@ -65,7 +69,7 @@ final class InitFlow: PXFlow {
     func finishFlow() {
         status = .finished
         if let paymentMethodsSearch = model.getPaymentMethodSearch() {
-            finishInitCallback(model.properties.checkoutPreference, paymentMethodsSearch)
+            finishInitCallback(model.properties.checkoutPreference, paymentMethodsSearch, model.properties.campaigns, model.properties.discount)
         } else {
             cancelFlow()
         }

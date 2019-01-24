@@ -45,9 +45,9 @@ internal class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, defaultPaymentMethod: String?, payer: PXPayer, site: PXSite, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, discountParamsConfiguration: PXDiscountParamsConfiguration?, marketplace: String?, charges: [PXPaymentTypeChargeRule]?, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: [String], excludedPaymentMethodsIds: [String], cardsWithEsc: [String]?, supportedPlugins: [String]?, defaultPaymentMethod: String?, payer: PXPayer, site: PXSite, differentialPricingId: String?, defaultInstallments: String?, expressEnabled: String, callback : @escaping (PXPaymentMethodSearch) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let paymentMethodSearchService = PaymentMethodSearchService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
-        paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, cardsWithEsc: cardsWithEsc, supportedPlugins: supportedPlugins, site: site, payer: payer, language: language, differentialPricingId: differentialPricingId, defaultInstallments: defaultInstallments, expressEnabled: expressEnabled, discountParamsConfiguration: discountParamsConfiguration, marketplace: marketplace, charges: charges, success: callback, failure: failure)
+        paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId: defaultPaymentMethod, excludedPaymentTypeIds: excludedPaymentTypesIds, excludedPaymentMethodIds: excludedPaymentMethodsIds, cardsWithEsc: cardsWithEsc, supportedPlugins: supportedPlugins, site: site, payer: payer, language: language, differentialPricingId: differentialPricingId, defaultInstallments: defaultInstallments, expressEnabled: expressEnabled, success: callback, failure: failure)
     }
 
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -164,9 +164,9 @@ internal class MercadoPagoServices: NSObject {
         }, failure: failure)
     }
 
-    func getSummaryAmount(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String,  payment_type_id: String, differentialPricingId: String?,  siteId: String?,  marketplace: String?, discountParamsConfiguration: PXDiscountParamsConfiguration?, payer:PXPayer, defaultInstallments: Int?, charges: [PXPaymentTypeChargeRule]?, callback: @escaping (PXSummaryAmount) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getInstallments(bin: String?, amount: Double, issuerId: String?, paymentMethodId: String, differentialPricingId: String?, callback: @escaping ([PXInstallment]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let service: PaymentService = PaymentService(baseURL: baseURL, merchantPublicKey: merchantPublicKey, payerAccessToken: payerAccessToken, processingMode: procesingMode)
-        service.getSummaryAmount(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, payment_type_id: payment_type_id, differential_pricing_id: differentialPricingId, siteId: siteId, marketplace: marketplace, discountParamsConfiguration: discountParamsConfiguration, payer:payer, defaultInstallments: defaultInstallments, charges: charges, success: callback, failure: failure)
+        service.getInstallments(bin: bin, amount: amount, issuerId: issuerId, payment_method_id: paymentMethodId, differential_pricing_id: differentialPricingId, success: callback, failure: failure)
     }
 
     func getIssuers(paymentMethodId: String, bin: String? = nil, callback: @escaping ([PXIssuer]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
@@ -210,6 +210,32 @@ internal class MercadoPagoServices: NSObject {
                     failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "No se ha podido obtener los métodos de pago"]))
             }
         }, failure: failure)
+    }
+
+    func getDirectDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, discountAdditionalInfo: [String: String]?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        getCodeDiscount(url: url, uri: uri, amount: amount, payerEmail: payerEmail, couponCode: nil, discountAdditionalInfo: discountAdditionalInfo, callback: callback, failure: failure)
+    }
+
+    func getCodeDiscount(url: String = PXServicesURLConfigs.MP_API_BASE_URL, uri: String = PXServicesURLConfigs.MP_DISCOUNT_URI, amount: Double, payerEmail: String, couponCode: String?, discountAdditionalInfo: [String: String]?, callback: @escaping (PXDiscount?) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        var addInfo: String? = nil
+        if let discountAdditionalInfo = discountAdditionalInfo {
+            let discountAdditionalInfoDic = discountAdditionalInfo as NSDictionary
+            if !NSDictionary.isNullOrEmpty(discountAdditionalInfoDic) {
+                addInfo = discountAdditionalInfoDic.parseToQuery()
+            }
+        }
+        var discountUrl = url
+        if discountUrl == PXServicesURLConfigs.MP_API_BASE_URL, baseURL != PXServicesURLConfigs.MP_API_BASE_URL {
+            discountUrl = baseURL
+        }
+        let discountService = DiscountService(baseURL: discountUrl, URI: uri)
+
+        discountService.getDiscount(publicKey: merchantPublicKey, amount: amount, code: couponCode, payerEmail: payerEmail, additionalInfo: addInfo, success: callback, failure: failure)
+    }
+
+    func getCampaigns(payerEmail: String?, callback: @escaping ([PXCampaign]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+        let discountService = DiscountService(baseURL: baseURL, URI: PXServicesURLConfigs.MP_CAMPAIGNS_URI)
+        discountService.getCampaigns(publicKey: merchantPublicKey, payerEmail: payerEmail, success: callback, failure: failure)
     }
 
     func getCustomer(url: String, uri: String, additionalInfo: [String: String]? = nil, callback: @escaping (PXCustomer) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {

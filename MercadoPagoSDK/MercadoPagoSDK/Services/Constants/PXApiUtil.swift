@@ -20,7 +20,6 @@ internal class ApiParams: NSObject {
     static let PUBLIC_KEY = "public_key"
     static let BIN = "bin"
     static let AMOUNT = "amount"
-    static let TRANSACTION_AMOUNT = "transaction_amount"
     static let ISSUER_ID = "issuer.id"
     static let PAYMENT_METHOD_ID = "payment_method_id"
     static let PROCESSING_MODE = "processing_mode"
@@ -34,8 +33,4 @@ internal class ApiParams: NSObject {
     static let EXCLUDED_PAYMET_TYPES = "excluded_payment_types"
     static let DIFFERENTIAL_PRICING_ID = "differential_pricing_id"
     static let DEFAULT_INSTALLMENTS = "default_installments"
-    static let MARKETPLACE = "marketplace"
-    static let PRODUCT_ID = "product_id"
-    static let LABELS = "labels"
-    static let CHARGES = "charges"
 }

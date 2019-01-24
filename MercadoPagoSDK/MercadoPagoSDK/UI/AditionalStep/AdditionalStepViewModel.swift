@@ -27,6 +27,7 @@ internal class AdditionalStepViewModel {
     var defaultRowCellHeight: CGFloat = 80
     var callback: ((_ result: NSObject) -> Void)!
     var maxFontSize: CGFloat { return 24 }
+    var couponCallback: ((PXDiscount) -> Void)?
 
     let amountHelper: PXAmountHelper
 

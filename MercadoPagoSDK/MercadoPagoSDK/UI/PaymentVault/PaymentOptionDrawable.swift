@@ -10,8 +10,6 @@ import UIKit
 
 @objc
 internal protocol PaymentOptionDrawable {
-    func getId() -> String
-
     func getImage() -> UIImage?
 
     func getTitle() -> String

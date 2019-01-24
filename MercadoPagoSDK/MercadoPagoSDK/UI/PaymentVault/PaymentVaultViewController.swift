@@ -110,7 +110,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     @objc func updateCoupon(_ notification: Notification) {
         if (notification.userInfo?["coupon"] as? PXDiscount) != nil {
-            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, chargeRules: viewModel.amountHelper.chargeRules, consumedDiscount: viewModel.amountHelper.consumedDiscount, paymentConfigurationService: viewModel.amountHelper.paymentConfigurationService)
+            self.viewModel.amountHelper = PXAmountHelper(preference: viewModel.amountHelper.preference, paymentData: viewModel.amountHelper.paymentData, discount: viewModel.amountHelper.discount, campaign: viewModel.amountHelper.campaign, chargeRules: viewModel.amountHelper.chargeRules, consumedDiscount: viewModel.amountHelper.consumedDiscount)
             self.collectionSearch.reloadData()
         }
     }
@@ -282,8 +282,7 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell", for: indexPath) as? PaymentSearchCollectionViewCell else { return UICollectionViewCell.init() }
 
             if let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row) {
-                let discountInfo = self.viewModel.getDiscountInfo(row: indexPath.row)
-                cell.fillCell(drawablePaymentOption: paymentMethodToDisplay, discountInfo: discountInfo)
+                cell.fillCell(drawablePaymentOption: paymentMethodToDisplay)
             }
 
             return cell
@@ -353,8 +352,8 @@ internal class PaymentVaultViewController: MercadoPagoUIScrollViewController, UI
 
     func heightOfItem(indexItem: Int) -> CGFloat {
         if let paymentMethodOptionDrawable = self.viewModel.getPaymentMethodOption(row: indexItem) {
-            let discountInfo = self.viewModel.getDiscountInfo(row: indexItem)
-            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption: paymentMethodOptionDrawable, discountInfo: discountInfo)
+
+            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption: paymentMethodOptionDrawable)
         }
         return 0
     }

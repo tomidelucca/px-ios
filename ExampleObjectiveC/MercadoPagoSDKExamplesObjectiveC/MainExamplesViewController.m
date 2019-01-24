@@ -84,9 +84,6 @@
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
     [advancedConfig setExpressEnabled:YES];
 
-    PXDiscountParamsConfiguration* disca = [[PXDiscountParamsConfiguration alloc] initWithLabels:[NSArray arrayWithObjects: @"1", @"2", nil] productId:@"test_product_id"];
-    [advancedConfig setDiscountParamsConfiguration: disca];
-
     // Add theme to advanced config.
     MeliTheme *meliTheme = [[MeliTheme alloc] init];
     [advancedConfig setTheme:meliTheme];
