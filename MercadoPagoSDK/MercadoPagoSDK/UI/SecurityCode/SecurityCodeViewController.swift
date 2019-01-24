@@ -5,7 +5,6 @@
 //  Created by Demian Tejo on 11/3/16.
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
-
 import UIKit
 
 internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
@@ -39,8 +38,8 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-         self.hideNavBar()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        self.hideNavBar()
         loadMPStyles()
         self.securityCodeTextField.placeholder = "security_code".localized
         setupInputAccessoryView()
@@ -48,12 +47,12 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
         self.view.addSubview(cardFront)
         self.securityCodeLabel = cardFront.cardCVV
-        self.view.bringSubview(toFront: panelView)
+        self.view.bringSubviewToFront(panelView)
         self.updateCardSkin(cardInformation: viewModel.cardInfo, paymentMethod: viewModel.paymentMethod)
 
         securityCodeTextField.autocorrectionType = UITextAutocorrectionType.no
         securityCodeTextField.keyboardType = UIKeyboardType.numberPad
-        securityCodeTextField.addTarget(self, action: #selector(SecurityCodeViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
+        securityCodeTextField.addTarget(self, action: #selector(SecurityCodeViewController.editingChanged(_:)), for: UIControl.Event.editingChanged)
         securityCodeTextField.delegate = self
         completeCvvLabel()
     }
@@ -73,7 +72,7 @@ internal class SecurityCodeViewController: MercadoPagoUIViewController, UITextFi
     }
 
     @objc func keyboardWillShow(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.keyboardHeightConstraint.constant = keyboardSize.height - 40
             self.view.layoutIfNeeded()
             self.view.setNeedsUpdateConstraints()

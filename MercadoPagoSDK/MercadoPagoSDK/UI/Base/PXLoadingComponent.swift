@@ -33,7 +33,7 @@ final class PXLoadingComponent {
         loadingContainer.backgroundColor = backgroundColor
 
         view.addSubview(loadingContainer)
-        view.bringSubview(toFront: loadingContainer)
+        view.bringSubviewToFront(loadingContainer)
 
         return loadingContainer
     }

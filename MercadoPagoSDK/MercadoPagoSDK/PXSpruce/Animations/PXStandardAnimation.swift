@@ -31,7 +31,7 @@ internal struct StandardAnimation: Animation {
 
     var changeFunction: ChangeFunction?
     var duration: TimeInterval
-    var animationOptions: UIViewAnimationOptions = .curveEaseOut
+    var animationOptions: UIView.AnimationOptions = .curveEaseOut
 
     init(duration: TimeInterval) {
         self.duration = duration

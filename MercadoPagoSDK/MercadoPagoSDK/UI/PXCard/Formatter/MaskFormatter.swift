@@ -4,7 +4,7 @@ class Mask {
     let pad: Character = "*"
     var pattern = [Int]()
     var placeholder = ""
-    var attributes = [NSAttributedStringKey : Any]()
+    var attributes = [NSAttributedString.Key: Any]()
     var length: Int { return pattern.reduce(0, +) }
     var shadow = NSShadow()
 
@@ -34,13 +34,13 @@ class Mask {
         let len = text == placeholder ? 0 : text.index(of: pad)?.encodedOffset ?? text.count
         let attributed = NSMutableAttributedString(string: text, attributes: attributes)
 
-        attributed.addAttributes(editAtributes(font, color), range: NSMakeRange(0, len))
+        attributed.addAttributes(editAtributes(font, color), range: NSRange(location: 0, length: len))
 
         return attributed
     }
 
-    func editAtributes(_ font: Font, _ color: UIColor?) -> [NSAttributedStringKey : Any] {
-        var editedAttributes = [NSAttributedStringKey : Any]()
+    func editAtributes(_ font: Font, _ color: UIColor?) -> [NSAttributedString.Key: Any] {
+        var editedAttributes = [NSAttributedString.Key: Any]()
         editedAttributes[.shadow] = font.shadow ? shadow : nil
         editedAttributes[.foregroundColor] = color ?? font.color
 
