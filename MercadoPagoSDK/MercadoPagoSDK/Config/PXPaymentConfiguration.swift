@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal typealias PXPaymentConfigurationType = (discountConfiguration: PXDiscountConfiguration?, chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXPaymentProcessor, paymentMethodPlugins: [PXPaymentMethodPlugin])
+internal typealias PXPaymentConfigurationType = (chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXPaymentProcessor, paymentMethodPlugins: [PXPaymentMethodPlugin])
 
 /**
  Any configuration related to the Payment. You can set you own `PXPaymentProcessor`. Configuration of discounts, charges and custom Payment Method Plugin.
@@ -16,7 +16,6 @@ internal typealias PXPaymentConfigurationType = (discountConfiguration: PXDiscou
 @objcMembers
 open class PXPaymentConfiguration: NSObject {
     private let paymentPlugin: PXPaymentProcessor
-    private var discountConfiguration: PXDiscountConfiguration?
     private var chargeRules: [PXPaymentTypeChargeRule] = [PXPaymentTypeChargeRule]()
     private var paymentMethodPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
 
@@ -55,8 +54,8 @@ extension PXPaymentConfiguration {
      `PXDiscountConfiguration` is an object that represents the discount to be applied or error information to present to the user. It's mandatory to handle your discounts by hand if you set a payment processor.
      - parameter config: Your custom discount configuration
      */
+    @available(*, deprecated)
     open func setDiscountConfiguration(config: PXDiscountConfiguration) -> PXPaymentConfiguration {
-        self.discountConfiguration = config
         return self
     }
 }
@@ -64,6 +63,6 @@ extension PXPaymentConfiguration {
 // MARK: - Internals
 extension PXPaymentConfiguration {
     internal func getPaymentConfiguration() -> PXPaymentConfigurationType {
-        return (discountConfiguration, chargeRules, paymentPlugin, paymentMethodPlugins)
+        return (chargeRules, paymentPlugin, paymentMethodPlugins)
     }
 }

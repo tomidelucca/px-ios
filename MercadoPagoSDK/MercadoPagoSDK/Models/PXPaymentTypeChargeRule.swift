@@ -12,7 +12,7 @@ import UIKit
 Use this object to make a charge related to any payment method. The relationship is by `paymentMethodId`. You can especify a default `amountCharge` for each payment method.
  */ 
 @objc
-public final class PXPaymentTypeChargeRule: NSObject {
+public final class PXPaymentTypeChargeRule: NSObject, Codable {
     let paymentMethdodId: String
     let amountCharge: Double
 
@@ -25,5 +25,31 @@ public final class PXPaymentTypeChargeRule: NSObject {
         self.paymentMethdodId = paymentMethdodId
         self.amountCharge = amountCharge
         super.init()
+    }
+
+    public enum PXPaymentTypeChargeRuleKeys: String, CodingKey {
+        case paymentTypeId = "payment_type_id"
+        case amountCharge = "charge"
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: PXPaymentTypeChargeRuleKeys.self)
+        try container.encodeIfPresent(self.paymentMethdodId, forKey: .paymentTypeId)
+        try container.encodeIfPresent(self.amountCharge, forKey: .amountCharge)
+    }
+
+    public func toJSONString() throws -> String? {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
+        return String(data: data, encoding: .utf8)
+    }
+
+    public func toJSON() throws -> Data {
+        let encoder = JSONEncoder()
+        return try encoder.encode(self)
+    }
+
+    public class func fromJSON(data: Data) throws -> PXPaymentTypeChargeRule {
+        return try JSONDecoder().decode(PXPaymentTypeChargeRule.self, from: data)
     }
 }

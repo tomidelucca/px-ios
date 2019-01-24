@@ -9,6 +9,9 @@
 import Foundation
 /// :nodoc:
 open class PXPaymentMethodSearch: NSObject, Codable {
+    open var defaultAmountConfiguration: String
+    open var discountConfigurations: [String: PXDiscountConfiguration]
+    open var selectedDiscountConfiguration: PXDiscountConfiguration?
     open var paymentMethodSearchItem: [PXPaymentMethodSearchItem] = []
     open var customOptionSearchItems: [PXCustomOptionSearchItem] = []
     open var paymentMethods: [PXPaymentMethod] = []
@@ -16,13 +19,21 @@ open class PXPaymentMethodSearch: NSObject, Codable {
     open var defaultOption: PXPaymentMethodSearchItem?
     open var expressCho: [PXOneTapDto]?
 
-    public init(paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?, oneTap: PXOneTapItem?, expressCho: [PXOneTapDto]?) {
+    public init(defaultAmountConfiguration: String, discountConfigurations: [String: PXDiscountConfiguration], paymentMethodSearchItem: [PXPaymentMethodSearchItem], customOptionSearchItems: [PXCustomOptionSearchItem], paymentMethods: [PXPaymentMethod], cards: [PXCard]?, defaultOption: PXPaymentMethodSearchItem?, oneTap: PXOneTapItem?, expressCho: [PXOneTapDto]?) {
+
+        self.defaultAmountConfiguration = defaultAmountConfiguration
+        self.discountConfigurations = discountConfigurations
         self.paymentMethodSearchItem = paymentMethodSearchItem
         self.customOptionSearchItems = customOptionSearchItems
         self.paymentMethods = paymentMethods
         self.cards = cards
         self.defaultOption = defaultOption
         self.expressCho = expressCho
+
+        if let selectedDiscountConfiguration = discountConfigurations[defaultAmountConfiguration] {
+            self.selectedDiscountConfiguration = selectedDiscountConfiguration
+        }
+
         super.init()
         self.populateAMDescription()
     }
@@ -34,6 +45,8 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         case cards
         case defaultOption = "default_option"
         case expressCho = "express"
+        case discountConfigurations = "discounts_configurations"
+        case defaultAmountConfiguration = "default_amount_configuration"
     }
 
     required public convenience init(from decoder: Decoder) throws {
@@ -44,7 +57,10 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         let cards: [PXCard]? = try container.decodeIfPresent([PXCard].self, forKey: .cards)
         let defaultOption: PXPaymentMethodSearchItem? = try container.decodeIfPresent(PXPaymentMethodSearchItem.self, forKey: .defaultOption)
         let expressCho: [PXOneTapDto]? = try container.decodeIfPresent([PXOneTapDto].self, forKey: .expressCho)
-        self.init(paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: cards, defaultOption: defaultOption, oneTap: nil, expressCho: expressCho)
+        let defaultAmountConfiguration: String = try container.decode(String.self, forKey: .defaultAmountConfiguration)
+        let discountConfigurations: [String: PXDiscountConfiguration] = try container.decode([String: PXDiscountConfiguration].self, forKey: .discountConfigurations)
+
+        self.init(defaultAmountConfiguration: defaultAmountConfiguration, discountConfigurations: discountConfigurations, paymentMethodSearchItem: paymentMethodSearchItem, customOptionSearchItems: customOptionSearchItems, paymentMethods: paymentMethods, cards: cards, defaultOption: defaultOption, oneTap: nil, expressCho: expressCho)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -55,6 +71,8 @@ open class PXPaymentMethodSearch: NSObject, Codable {
         try container.encodeIfPresent(self.cards, forKey: .cards)
         try container.encodeIfPresent(self.defaultOption, forKey: .defaultOption)
         try container.encodeIfPresent(self.expressCho, forKey: .expressCho)
+        try container.encodeIfPresent(self.defaultAmountConfiguration, forKey: .defaultAmountConfiguration)
+        try container.encodeIfPresent(self.discountConfigurations, forKey: .discountConfigurations)
     }
 
     open func toJSONString() throws -> String? {

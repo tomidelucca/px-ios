@@ -175,7 +175,8 @@ internal class Utils {
     }
 
     class func getAmountFormatted(amount: Double, thousandSeparator: String, decimalSeparator: String, addingCurrencySymbol symbol: String? = nil, addingParenthesis: Bool = false) -> String {
-        let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
+        let amountString = String(format: "%.2f", amount)
+        let cents = getCentsFormatted(amountString, decimalSeparator: ".")
         let entireAmount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
         var amountFotmated = entireAmount
         if !cents.isEmpty {

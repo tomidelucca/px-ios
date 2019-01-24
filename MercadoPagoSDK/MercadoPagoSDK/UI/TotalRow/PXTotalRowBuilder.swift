@@ -80,7 +80,9 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
     }
 
     static func shouldAddActionToRow(amountHelper: PXAmountHelper) -> Bool {
-        return amountHelper.discount != nil
+        return false
+        //This funtionality is turned off temporarily
+//        return amountHelper.discount != nil
     }
 
     static func handleTap(amountHelper: PXAmountHelper) {
