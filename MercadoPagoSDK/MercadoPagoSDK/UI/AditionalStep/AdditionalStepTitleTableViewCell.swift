@@ -15,7 +15,7 @@ class AdditionalStepTitleTableViewCell: UITableViewCell, TitleCellScrollable {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = UITableViewCellSelectionStyle.none
+        self.selectionStyle = UITableViewCell.SelectionStyle.none
         // Initialization code
     }
 

@@ -37,7 +37,7 @@ internal class MPLabel: UILabel {
         if self.attributedText != nil {
             attributedString.append(self.attributedText!)
         }
-        attributedString.addAttribute(NSAttributedStringKey.kern, value: spacing, range: NSRange(location: 0, length: self.attributedText!.length))
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSRange(location: 0, length: self.attributedText!.length))
         self.attributedText = attributedString
     }
 
@@ -51,7 +51,7 @@ internal class MPLabel: UILabel {
         if centered {
             paragraphStyle.alignment = .center
         }
-        attributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         self.attributedText = attributedString
     }
 }

@@ -142,7 +142,7 @@ extension PXOneTapInstallmentInfoView {
 
     func setupChevron() {
         addSubview(arrowImage)
-        arrowImage.contentMode = UIViewContentMode.scaleAspectFit
+        arrowImage.contentMode = UIView.ContentMode.scaleAspectFit
         arrowImage.image = ResourceManager.shared.getImage("oneTapDownArrow")
         PXLayout.centerVertically(view: arrowImage).isActive = true
         PXLayout.setWidth(owner: arrowImage, width: 14).isActive = true
@@ -198,7 +198,7 @@ extension PXOneTapInstallmentInfoView {
     }
 
     @objc func toggleInstallments() {
-        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex), currentModel[currentIndex].shouldShowArrow  {
+        if let currentIndex = getCurrentIndex(), let currentModel = model, tapEnabled, currentModel.indices.contains(currentIndex), currentModel[currentIndex].shouldShowArrow {
             if let installmentData = currentModel[currentIndex].installmentData {
                 if arrowImage.tag != colapsedTag {
                     delegate?.hideInstallments()

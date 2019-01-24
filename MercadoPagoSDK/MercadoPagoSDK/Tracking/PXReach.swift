@@ -77,7 +77,7 @@ internal class PXReach {
                                             object: nil,
                                             userInfo: ["Status": status.description])
         }, &context)
-        SCNetworkReachabilityScheduleWithRunLoop(reachability, CFRunLoopGetMain(), RunLoopMode.commonModes as CFString)
+        SCNetworkReachabilityScheduleWithRunLoop(reachability, CFRunLoopGetMain(), RunLoop.Mode.common as CFString)
     }
 }
 
