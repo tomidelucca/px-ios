@@ -24,12 +24,11 @@ class PaymentVaultViewModel: NSObject {
 
     var customerId: String?
 
-    var couponCallback: ((PXDiscount) -> Void)?
     var mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
     internal var isRoot = true
 
-    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [PXCardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethods: [PXPaymentMethod], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil, couponCallback: ((PXDiscount) -> Void)? = nil) {
+    init(amountHelper: PXAmountHelper, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [PXCardInformation]?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethods: [PXPaymentMethod], groupName: String? = nil, isRoot: Bool, email: String, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callbackCancel: (() -> Void)? = nil) {
         self.amountHelper = amountHelper
         self.email = email
         self.groupName = groupName
@@ -38,7 +37,6 @@ class PaymentVaultViewModel: NSObject {
         self.paymentMethodPlugins = paymentMethodPlugins
         self.paymentMethods = paymentMethods
         self.isRoot = isRoot
-        self.couponCallback = couponCallback
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
 
         super.init()
@@ -80,7 +78,14 @@ extension PaymentVaultViewModel {
         }
         return nil
     }
-}
+
+    func getDiscountInfo(row: Int) -> String? {
+        if let paymentOption = getPaymentMethodOption(row: row) {
+            return amountHelper.paymentConfigurationService.getDiscountInfoForPaymentMethod(paymentOption.getId())
+        }
+        return nil
+    }
+ }
 
 // MARK: Drawable Builders
 extension PaymentVaultViewModel {

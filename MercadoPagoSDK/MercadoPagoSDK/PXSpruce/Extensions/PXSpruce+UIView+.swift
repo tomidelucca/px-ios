@@ -35,6 +35,7 @@ extension UIView: PXPropertyStoring {
 
     private struct PXCustomProperties {
         static var animationEnabled: Bool = true
+        static var onetapRowAnimatedEnabled: Bool = false
     }
 
     typealias CustomT = Bool
@@ -45,6 +46,15 @@ extension UIView: PXPropertyStoring {
         }
         set {
             return objc_setAssociatedObject(self, &PXCustomProperties.animationEnabled, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+
+    var pxShouldAnimatedOneTapRow: Bool {
+        get {
+            return getAssociatedObject(&PXCustomProperties.onetapRowAnimatedEnabled, defaultValue: false)
+        }
+        set {
+            return objc_setAssociatedObject(self, &PXCustomProperties.onetapRowAnimatedEnabled, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
 }

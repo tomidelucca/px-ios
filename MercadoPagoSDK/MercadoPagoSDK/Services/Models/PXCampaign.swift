@@ -69,6 +69,8 @@ open class PXCampaign: NSObject, Codable {
     open var couponAmount: Double?
     /// :nodoc:
     open var collectors: [Int64]?
+    /// :nodoc:
+    open var legalTermsUrl: String?
 
     // MARK: Init.
     /**
@@ -100,35 +102,37 @@ open class PXCampaign: NSObject, Codable {
     }
 
     /// :nodoc:
-    public init(id: Int64, code: String?, name: String?, discountType: String?, value: Double?, endDate: Date?, minPaymentAmount: Double?, maxPaymentAmount: Double?, maxCouponAmount: Double?, totalAmountLimit: Double?, maxCoupons: Int64?, maxCouponsByCode: Int?, maxRedeemPerUser: Int?, siteId: String?, marketplace: String?, codeType: String?, maxUserAmountPerCampaign: Double?, labels: [String]?, paymentMethodsIds: [String]?, paymentTypesIds: [String]?, cardIssuersIds: [String]?, shippingModes: [String]?, clientId: Int64?, tags: [String]?, multipleCodeLimit: Int?, codeCount: Int?, couponAmount: Double?, collectors: [Int64]?) {
-            self.id = id
-            self.code = code
-            self.name = name
-            self.discountType = discountType
-            self.value = value
-            self.endDate = endDate
-            self.minPaymentAmount = minPaymentAmount
-            self.maxPaymentAmount = maxPaymentAmount
-            self.maxCouponAmount = maxCouponAmount!
-            self.totalAmountLimit = totalAmountLimit
-            self.maxCoupons = maxCoupons
-            self.maxCouponsByCode = maxCouponsByCode
-            self.maxRedeemPerUser = maxRedeemPerUser
-            self.siteId = siteId
-            self.marketplace = marketplace
-            self.codeType = codeType
-            self.maxUserAmountPerCampaign = maxUserAmountPerCampaign
-            self.labels = labels
-            self.paymentMethodsIds = paymentMethodsIds
-            self.paymentTypesIds = paymentTypesIds
-            self.cardIssuersIds = cardIssuersIds
-            self.shippingModes = shippingModes
-            self.clientId = clientId
-            self.tags = tags
-            self.multipleCodeLimit = multipleCodeLimit
-            self.codeCount = codeCount
-            self.couponAmount = couponAmount
-            self.collectors = collectors
+    public init(id: Int64, code: String?, name: String?, discountType: String?, value: Double?, endDate: Date?, minPaymentAmount: Double?, maxPaymentAmount: Double?, maxCouponAmount: Double?, totalAmountLimit: Double?, maxCoupons: Int64?, maxCouponsByCode: Int?, maxRedeemPerUser: Int?, siteId: String?, marketplace: String?, codeType: String?, maxUserAmountPerCampaign: Double?, labels: [String]?, paymentMethodsIds: [String]?, paymentTypesIds: [String]?, cardIssuersIds: [String]?, shippingModes: [String]?, clientId: Int64?, tags: [String]?, multipleCodeLimit: Int?, codeCount: Int?, couponAmount: Double?, collectors: [Int64]?, legalTermsUrl: String?) {
+        self.id = id
+        self.code = code
+        self.name = name
+        self.discountType = discountType
+        self.value = value
+        self.endDate = endDate
+        self.minPaymentAmount = minPaymentAmount
+        self.maxPaymentAmount = maxPaymentAmount
+        self.maxCouponAmount = maxCouponAmount!
+        self.totalAmountLimit = totalAmountLimit
+        self.maxCoupons = maxCoupons
+        self.maxCouponsByCode = maxCouponsByCode
+        self.maxRedeemPerUser = maxRedeemPerUser
+        self.siteId = siteId
+        self.marketplace = marketplace
+        self.codeType = codeType
+        self.maxUserAmountPerCampaign = maxUserAmountPerCampaign
+        self.labels = labels
+        self.paymentMethodsIds = paymentMethodsIds
+        self.paymentTypesIds = paymentTypesIds
+        self.cardIssuersIds = cardIssuersIds
+        self.shippingModes = shippingModes
+        self.clientId = clientId
+        self.tags = tags
+        self.multipleCodeLimit = multipleCodeLimit
+        self.codeCount = codeCount
+        self.couponAmount = couponAmount
+        self.collectors = collectors
+        self.legalTermsUrl = legalTermsUrl
+
     }
 
     /// :nodoc:
@@ -161,6 +165,7 @@ open class PXCampaign: NSObject, Codable {
         case codeCount = "code_count"
         case couponAmount = "coupon_amount"
         case collectors
+        case legalTermsUrl = "legal_terms"
     }
 
     /// :nodoc:
@@ -194,8 +199,9 @@ open class PXCampaign: NSObject, Codable {
         let codeCount: Int? = try container.decodeIfPresent(Int.self, forKey: .codeCount)
         let couponAmount: Double? = try container.decodeIfPresent(Double.self, forKey: .couponAmount)
         let collectors: [Int64]? = try container.decodeIfPresent([Int64].self, forKey: .collectors)
+        let legalTermsUrl: String? = try container.decodeIfPresent(String.self, forKey: .legalTermsUrl)
 
-       self.init(id: id, code: code, name: name, discountType: discountType, value: value, endDate: endDate, minPaymentAmount: minPaymentAmount, maxPaymentAmount: maxPaymentAmount, maxCouponAmount: maxCouponAmount, totalAmountLimit: totalAmountLimit, maxCoupons: maxCoupons, maxCouponsByCode: maxCouponsByCode, maxRedeemPerUser: maxRedeemPerUser, siteId: siteId, marketplace: marketplace, codeType: codeType, maxUserAmountPerCampaign: maxUserAmountPerCampaign, labels: labels, paymentMethodsIds: paymentMethodsIds, paymentTypesIds: paymentTypesIds, cardIssuersIds: cardIssuersIds, shippingModes: shippingModes, clientId: clientId, tags: tags, multipleCodeLimit: multipleCodeLimit, codeCount: codeCount, couponAmount: couponAmount, collectors: collectors)
+        self.init(id: id, code: code, name: name, discountType: discountType, value: value, endDate: endDate, minPaymentAmount: minPaymentAmount, maxPaymentAmount: maxPaymentAmount, maxCouponAmount: maxCouponAmount, totalAmountLimit: totalAmountLimit, maxCoupons: maxCoupons, maxCouponsByCode: maxCouponsByCode, maxRedeemPerUser: maxRedeemPerUser, siteId: siteId, marketplace: marketplace, codeType: codeType, maxUserAmountPerCampaign: maxUserAmountPerCampaign, labels: labels, paymentMethodsIds: paymentMethodsIds, paymentTypesIds: paymentTypesIds, cardIssuersIds: cardIssuersIds, shippingModes: shippingModes, clientId: clientId, tags: tags, multipleCodeLimit: multipleCodeLimit, codeCount: codeCount, couponAmount: couponAmount, collectors: collectors, legalTermsUrl: legalTermsUrl)
     }
 
     /// :nodoc:
@@ -229,6 +235,7 @@ open class PXCampaign: NSObject, Codable {
         try container.encodeIfPresent(self, forKey: .codeCount)
         try container.encodeIfPresent(self, forKey: .couponAmount)
         try container.encodeIfPresent(self, forKey: .collectors)
+        try container.encodeIfPresent(self, forKey: .legalTermsUrl)
     }
 
     /// :nodoc:
