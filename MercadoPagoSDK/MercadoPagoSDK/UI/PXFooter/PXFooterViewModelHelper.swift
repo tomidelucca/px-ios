@@ -71,7 +71,7 @@ internal extension PXResultViewModel {
     private func pressButton() {
         trackChangePaymentMethodEvent()
         if paymentResult.isAccepted() {
-             self.callback(PaymentResult.CongratsState.approved)
+             self.callback(PaymentResult.CongratsState.cancel_EXIT)
         } else if paymentResult.isError() {
              self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
         } else if paymentResult.isWarning() {
