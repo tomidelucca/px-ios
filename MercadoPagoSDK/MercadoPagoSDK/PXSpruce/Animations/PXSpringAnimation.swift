@@ -34,7 +34,7 @@ internal struct SpringAnimation: Animation {
     var duration: TimeInterval
 
     /// A mask of options indicating how you want to perform the animations
-    var animationOptions: UIViewAnimationOptions = []
+    var animationOptions: UIView.AnimationOptions = []
     var damping: CGFloat = 0.5
     var initialVelocity: CGFloat = 0.7
 

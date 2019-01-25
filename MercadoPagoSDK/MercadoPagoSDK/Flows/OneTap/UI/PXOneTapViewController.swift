@@ -104,7 +104,7 @@ extension PXOneTapViewController {
             if let preSelectedCard = viewModel.getCardSliderViewModel().first {
                 selectedCard = preSelectedCard
                 viewModel.splitPaymentEnabled = preSelectedCard.amountConfiguration?.splitConfiguration?.splitEnabled ?? false
-                viewModel.amountHelper.paymentData.payerCost = preSelectedCard.selectedPayerCost
+                viewModel.amountHelper.getPaymentData().payerCost = preSelectedCard.selectedPayerCost
             }
             renderViews()
         }
@@ -231,7 +231,7 @@ extension PXOneTapViewController {
         scrollView.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         if let selectedCardItem = selectedCard {
-            viewModel.amountHelper.paymentData.payerCost = selectedCardItem.selectedPayerCost
+            viewModel.amountHelper.getPaymentData().payerCost = selectedCardItem.selectedPayerCost
             let properties = viewModel.getConfirmEventProperties(selectedCard: selectedCardItem)
             trackEvent(path: TrackingPaths.Events.OneTap.getConfirmPath(), properties: properties)
         }
@@ -240,7 +240,7 @@ extension PXOneTapViewController {
 
         self.hideBackButton()
         self.hideNavBar()
-        self.callbackConfirm(self.viewModel.amountHelper.paymentData, splitPayment)
+        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData(), splitPayment)
     }
 
     func resetButton(error: MPSDKError) {
@@ -326,7 +326,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
             let newPayerCost: PXPayerCost? = targetModel.selectedPayerCost
 
             if let newPaymentMethod = viewModel.getPaymentMethod(targetId: newPaymentMethodId) {
-                let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
+                let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
                 currentPaymentData.payerCost = newPayerCost
                 currentPaymentData.paymentMethod = newPaymentMethod
                 currentPaymentData.issuer = PXIssuer(id: targetModel.issuerId, name: nil)
@@ -367,7 +367,7 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         // Update cardSliderViewModel
         if let infoRow = installmentInfoRow, viewModel.updateCardSliderViewModel(newPayerCost: payerCost, forIndex: infoRow.getActiveRowIndex()) {
             // Update selected payer cost.
-            let currentPaymentData: PXPaymentData = viewModel.amountHelper.paymentData
+            let currentPaymentData: PXPaymentData = viewModel.amountHelper.getPaymentData()
             currentPaymentData.payerCost = payerCost
             // Update installmentInfoRow viewModel
             installmentInfoRow?.model = viewModel.getInstallmentInfoViewModel()

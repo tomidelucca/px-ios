@@ -10,7 +10,7 @@ import Foundation
 // MARK: PaymentHandlerProtocol implementation
 extension PXPaymentFlow: PaymentHandlerProtocol {
     func handlePayment(payment: PXPayment) {
-        guard let paymentData = self.model.amountHelper?.paymentData else {
+        guard let paymentData = self.model.amountHelper?.getPaymentData() else {
             return
         }
 
@@ -38,7 +38,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
         } else if let payment = basePayment as? PXPayment {
             handlePayment(basePayment: payment)
         } else {
-            guard let paymentData = self.model.amountHelper?.paymentData else {
+            guard let paymentData = self.model.amountHelper?.getPaymentData() else {
                 return
             }
 

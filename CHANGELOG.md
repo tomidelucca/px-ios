@@ -1,7 +1,13 @@
+# v4.6.0
+🚀Private RC - 4.6.0 🚀
+MercadoPagoSDKV4 - Private Version
+- Disocunt V2, discounts by payment method
+- Swift 4.2
+
 # v4.5.2
 🚀Private RC - 4.5.2 🚀
 MercadoPagoSDKV4 - Private Version
-- Resolve visual bug in Review And Confirm
+- Resolve visual bug in Review And Confirm and Congrats
 - Resolve bug in boleto without payment processor
 
 # v4.5.1

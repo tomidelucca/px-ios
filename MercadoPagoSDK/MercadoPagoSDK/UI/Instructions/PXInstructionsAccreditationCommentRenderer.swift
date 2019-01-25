@@ -19,7 +19,7 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
         instructionsAccreditationCommentView.backgroundColor = .pxLightGray
 
         if let comment = instructionsAccreditationComment.props.accreditationComment {
-            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: ACCREDITATION_LABEL_FONT_SIZE)]
+            let attributes = [NSAttributedString.Key.font: Utils.getFont(size: ACCREDITATION_LABEL_FONT_SIZE)]
             let attributedString = NSAttributedString(string: comment, attributes: attributes)
             instructionsAccreditationCommentView.commentLabel = buildLabel(with: attributedString, in: instructionsAccreditationCommentView)
         }

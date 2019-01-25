@@ -58,8 +58,8 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     }
 
     static func getSubtitleAttributedString(subtitle: String?, discountInfo: String? = nil, fontSize: CGFloat = 15, textColor: UIColor = .black) -> NSAttributedString {
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: fontSize), NSAttributedStringKey.foregroundColor: textColor]
-        let discountAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: fontSize), NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
+        let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: fontSize), NSAttributedString.Key.foregroundColor: textColor]
+        let discountAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: fontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
 
         let subtitleAttributedString = NSMutableAttributedString(string: subtitle ?? "", attributes: normalAttributes)
 

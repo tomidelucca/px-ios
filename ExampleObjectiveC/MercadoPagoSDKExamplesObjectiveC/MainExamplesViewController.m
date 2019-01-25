@@ -205,7 +205,7 @@
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:60.0];
+    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:600.0];
 
     NSArray *items = [NSArray arrayWithObjects:item, nil];
 

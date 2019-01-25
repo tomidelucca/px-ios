@@ -24,10 +24,10 @@ extension PXOneTapViewModel {
 
     func getInstallmentsScreenProperties(installmentData: PXInstallment, selectedCard: PXCardSliderViewModel) -> [String: Any] {
         var properties: [String: Any] = [:]
-        properties["payment_method_id"] = amountHelper.paymentData.paymentMethod?.id
-        properties["payment_method_type"] = amountHelper.paymentData.paymentMethod?.paymentTypeId
+        properties["payment_method_id"] = amountHelper.getPaymentData().paymentMethod?.id
+        properties["payment_method_type"] = amountHelper.getPaymentData().paymentMethod?.paymentTypeId
         properties["card_id"] =  selectedCard.cardId
-        if let issuerId = amountHelper.paymentData.issuer?.id {
+        if let issuerId = amountHelper.getPaymentData().issuer?.id {
             properties["issuer_id"] = Int64(issuerId)
         }
         var dic: [Any] = []
@@ -39,7 +39,7 @@ extension PXOneTapViewModel {
     }
 
     func getConfirmEventProperties(selectedCard: PXCardSliderViewModel) -> [String: Any] {
-        guard let paymentMethod = amountHelper.paymentData.paymentMethod else {
+        guard let paymentMethod = amountHelper.getPaymentData().paymentMethod else {
             return [:]
         }
         let cardIdsEsc = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.cardIdsESC) as? [String] ?? []
@@ -52,8 +52,8 @@ extension PXOneTapViewModel {
             var extraInfo: [String: Any] = [:]
             extraInfo["card_id"] = selectedCard.cardId
             extraInfo["has_esc"] = cardIdsEsc.contains(selectedCard.cardId ?? "")
-            extraInfo["selected_installment"] = amountHelper.paymentData.payerCost?.getPayerCostForTracking()
-            if let issuerId = amountHelper.paymentData.issuer?.id {
+            extraInfo["selected_installment"] = amountHelper.getPaymentData().payerCost?.getPayerCostForTracking()
+            if let issuerId = amountHelper.getPaymentData().issuer?.id {
                 extraInfo["issuer_id"] = Int64(issuerId)
             }
             // TODO: Trackear si se pago con split

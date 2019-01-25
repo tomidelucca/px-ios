@@ -11,11 +11,20 @@ import Foundation
 internal struct PXAmountHelper {
 
     internal let preference: PXCheckoutPreference
-    internal let paymentData: PXPaymentData
+    private let paymentData: PXPaymentData
     internal let chargeRules: [PXPaymentTypeChargeRule]?
     internal let consumedDiscount: Bool
     internal let paymentConfigurationService: PXPaymentConfigurationServices
     internal var splitAccountMoney: PXPaymentData?
+
+    init (preference: PXCheckoutPreference, paymentData: PXPaymentData, chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool, paymentConfigurationService: PXPaymentConfigurationServices, splitAccountMoney: PXPaymentData?) {
+        self.preference = preference
+        self.paymentData = paymentData
+        self.chargeRules = chargeRules
+        self.consumedDiscount = consumedDiscount
+        self.paymentConfigurationService = paymentConfigurationService
+        self.splitAccountMoney = splitAccountMoney
+    }
 
     var discount: PXDiscount? {
         get {
@@ -93,6 +102,15 @@ internal struct PXAmountHelper {
                 }
             }
             return 0
+        }
+    }
+
+    internal func getPaymentData() -> PXPaymentData {
+        if let isCard = self.paymentData.paymentMethod?.isCard, isCard {
+            return paymentData
+        } else {
+            self.paymentData.transactionAmount = amountToPay
+            return paymentData
         }
     }
 }

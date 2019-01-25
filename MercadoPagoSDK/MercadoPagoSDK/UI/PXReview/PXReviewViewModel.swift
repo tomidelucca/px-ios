@@ -32,15 +32,15 @@ extension PXReviewViewModel {
 
     // Logic.
     func isPaymentMethodSelectedCard() -> Bool {
-        return self.amountHelper.paymentData.hasPaymentMethod() && self.amountHelper.paymentData.getPaymentMethod()!.isCard
+        return self.amountHelper.getPaymentData().hasPaymentMethod() && self.amountHelper.getPaymentData().getPaymentMethod()!.isCard
     }
 
     func isPaymentMethodSelected() -> Bool {
-        return self.amountHelper.paymentData.hasPaymentMethod()
+        return self.amountHelper.getPaymentData().hasPaymentMethod()
     }
 
     func shouldShowPayer() -> Bool {
-        if let paymentMethod = self.amountHelper.paymentData.getPaymentMethod() {
+        if let paymentMethod = self.amountHelper.getPaymentData().getPaymentMethod() {
             return paymentMethod.isPayerInfoRequired
         }
 
@@ -64,15 +64,15 @@ extension PXReviewViewModel {
     }
 
     func shouldShowInstallmentSummary() -> Bool {
-        return isPaymentMethodSelectedCard() && self.amountHelper.paymentData.getPaymentMethod()!.paymentTypeId != "debit_card" && self.amountHelper.paymentData.hasPayerCost() && self.amountHelper.paymentData.getPayerCost()!.installments != 1
+        return isPaymentMethodSelectedCard() && self.amountHelper.getPaymentData().getPaymentMethod()!.paymentTypeId != "debit_card" && self.amountHelper.getPaymentData().hasPayerCost() && self.amountHelper.getPaymentData().getPayerCost()!.installments != 1
     }
 
     func shouldDisplayNoRate() -> Bool {
-        return self.amountHelper.paymentData.hasPayerCost() && !self.amountHelper.paymentData.getPayerCost()!.hasInstallmentsRate() && self.amountHelper.paymentData.getPayerCost()!.installments != 1
+        return self.amountHelper.getPaymentData().hasPayerCost() && !self.amountHelper.getPaymentData().getPayerCost()!.hasInstallmentsRate() && self.amountHelper.getPaymentData().getPayerCost()!.installments != 1
     }
 
     func hasPayerCostAddionalInfo() -> Bool {
-        return self.amountHelper.paymentData.hasPayerCost() && self.amountHelper.paymentData.getPayerCost()!.getCFTValue() != nil && self.amountHelper.paymentData.paymentMethod!.isCreditCard
+        return self.amountHelper.getPaymentData().hasPayerCost() && self.amountHelper.getPaymentData().getPayerCost()!.getCFTValue() != nil && self.amountHelper.getPaymentData().paymentMethod!.isCreditCard
     }
 
     func hasConfirmAdditionalInfo() -> Bool {
@@ -105,7 +105,7 @@ extension PXReviewViewModel {
         let path = ResourceManager.shared.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = SiteManager.shared.getSiteId()
-        guard let issuerID = self.amountHelper.paymentData.getIssuer()?.id else {
+        guard let issuerID = self.amountHelper.getPaymentData().getIssuer()?.id else {
             return nil
         }
         let searchString: String = site + "_" + "\(issuerID)"
@@ -118,13 +118,13 @@ extension PXReviewViewModel {
     }
 
     func getClearPaymentData() -> PXPaymentData {
-        let newPaymentData: PXPaymentData = self.amountHelper.paymentData.copy() as? PXPaymentData ?? self.amountHelper.paymentData
+        let newPaymentData: PXPaymentData = self.amountHelper.getPaymentData().copy() as? PXPaymentData ?? self.amountHelper.getPaymentData()
         newPaymentData.clearCollectedData()
         return newPaymentData
     }
 
     func getClearPayerData() -> PXPaymentData {
-        let newPaymentData: PXPaymentData = self.amountHelper.paymentData.copy() as? PXPaymentData ?? self.amountHelper.paymentData
+        let newPaymentData: PXPaymentData = self.amountHelper.getPaymentData().copy() as? PXPaymentData ?? self.amountHelper.getPaymentData()
         newPaymentData.clearPayerData()
         return newPaymentData
     }
@@ -161,7 +161,7 @@ extension PXReviewViewModel {
             }
         }
 
-        if let discount = self.amountHelper.paymentData.discount {
+        if let discount = self.amountHelper.getPaymentData().discount {
             let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: discount.couponAmount)
 
             if summary.details[SummaryType.DISCOUNT] != nil {
@@ -173,10 +173,10 @@ extension PXReviewViewModel {
             summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
             summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
         }
-        if self.amountHelper.paymentData.payerCost != nil {
+        if self.amountHelper.getPaymentData().payerCost != nil {
             var interest = 0.0
 
-            if (self.amountHelper.paymentData.discount?.couponAmount) != nil {
+            if (self.amountHelper.getPaymentData().discount?.couponAmount) != nil {
                 interest = self.amountHelper.amountToPay - (self.amountHelper.preferenceAmountWithCharges - self.amountHelper.amountOff)
             } else {
                 interest = self.amountHelper.amountToPay - self.amountHelper.preferenceAmountWithCharges
@@ -211,11 +211,11 @@ extension PXReviewViewModel {
 
     func buildPaymentMethodComponent(withAction: PXAction?) -> PXPaymentMethodComponent? {
 
-        guard let pm = self.amountHelper.paymentData.getPaymentMethod() else {
+        guard let pm = self.amountHelper.getPaymentData().getPaymentMethod() else {
             return nil
         }
 
-        let issuer = self.amountHelper.paymentData.getIssuer()
+        let issuer = self.amountHelper.getPaymentData().getIssuer()
         let paymentMethodName = pm.name ?? ""
         let paymentMethodIssuerName = issuer?.name ?? ""
 
@@ -229,7 +229,7 @@ extension PXReviewViewModel {
         let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
 
         if pm.isCard {
-            if let lastFourDigits = (self.amountHelper.paymentData.token?.lastFourDigits) {
+            if let lastFourDigits = (self.amountHelper.getPaymentData().token?.lastFourDigits) {
                 let text = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
                 title = text.toAttributedString()
             }
@@ -279,7 +279,7 @@ extension PXReviewViewModel {
 
     func buildPayerComponent(action: PXAction) -> PXPayerComponent? {
 
-        if let payer = self.amountHelper.paymentData.payer {
+        if let payer = self.amountHelper.getPaymentData().payer {
             if let payerIdType = payer.identification?.type, let payerIdNumber = payer.identification?.number, let payerName = payer.firstName, let payerLastName = payer.lastName {
                 if let mask = Utils.getMasks(forId: PXIdentificationType(id: payerIdType, name: nil, minLength: 0, maxLength: 0, type: nil)).first {
 

@@ -146,7 +146,7 @@ extension PXOneTapInstallmentInfoView {
 
     private func setupChevron() {
         addSubview(arrowImage)
-        arrowImage.contentMode = UIViewContentMode.scaleAspectFit
+        arrowImage.contentMode = UIView.ContentMode.scaleAspectFit
         arrowImage.image = ResourceManager.shared.getImage("oneTapDownArrow")
         PXLayout.centerVertically(view: arrowImage).isActive = true
         PXLayout.setWidth(owner: arrowImage, width: 14).isActive = true

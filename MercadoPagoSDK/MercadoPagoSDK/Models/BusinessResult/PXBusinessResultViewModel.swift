@@ -58,7 +58,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     func getAttributedTitle() -> NSAttributedString {
         let title = businessResult.getTitle()
-        let attributes = [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]
+        let attributes = [NSAttributedString.Key.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]
         let attributedString = NSAttributedString(string: title, attributes: attributes)
         return attributedString
     }
@@ -112,7 +112,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     func getPaymentMethodComponents() -> [PXPaymentMethodComponent] {
         var paymentMethodsComponents: [PXPaymentMethodComponent] = []
-        if let firstPMComponent = getPaymentMethodComponent(paymentData: self.amountHelper.paymentData) {
+        if let firstPMComponent = getPaymentMethodComponent(paymentData: self.amountHelper.getPaymentData()) {
             paymentMethodsComponents.append(firstPMComponent)
         }
 
@@ -140,7 +140,11 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             }
         } else {
             // Caso account money
-            amountTitle = Utils.getAmountFormated(amount: paymentData.getTransactionAmountWithDiscount() ?? 0, forCurrency: currency)
+            if  let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
+                amountTitle = Utils.getAmountFormated(amount: splitAccountMoneyAmount ?? 0, forCurrency: currency)
+            } else {
+                amountTitle = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
+            }
         }
 
         var pmDescription: String = ""

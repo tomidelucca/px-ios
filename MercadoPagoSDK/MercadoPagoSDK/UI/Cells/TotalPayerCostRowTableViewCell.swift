@@ -27,7 +27,7 @@ class TotalPayerCostRowTableViewCell: UITableViewCell {
         let currency = SiteManager.shared.getCurrency()
         // amount currency color fontsize centfontsize baselineoffset
         // (total, currency: currency, color : UIColor.black, fontSize: 16, centsFontSize: 12,  baselineOffset:3)
-        let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "Total".localized + ": ", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black]))
+        let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "Total".localized + ": ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]))
         attributedTotal.append(Utils.getAttributedAmount(total, currency: currency, color: UIColor.black, fontSize: 16, centsFontSize: 12, baselineOffset: 3))
         totalLabel.attributedText = attributedTotal
     }

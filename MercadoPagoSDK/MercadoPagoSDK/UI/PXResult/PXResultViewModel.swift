@@ -56,7 +56,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
 // MARK: Tracking
 extension PXResultViewModel {
     func getTrackingProperties() -> [String: Any] {
-        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
+        var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
         properties["style"] = "generic"
         if let paymentId = paymentResult.paymentId {
             properties["payment_id"] = Int64(paymentId)

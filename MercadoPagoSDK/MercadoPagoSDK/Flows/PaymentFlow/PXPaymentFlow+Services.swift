@@ -22,7 +22,7 @@ internal extension PXPaymentFlow {
     }
 
     func createPayment() {
-        guard let paymentData = model.amountHelper?.paymentData, let checkoutPreference = model.checkoutPreference else {
+        guard let paymentData = model.amountHelper?.getPaymentData(), let checkoutPreference = model.checkoutPreference else {
             return
         }
         let mpPayment = MPPayment(preferenceId: checkoutPreference.id, publicKey: model.mercadoPagoServicesAdapter.mercadoPagoServices.merchantPublicKey, paymentData: paymentData, binaryMode: model.checkoutPreference?.isBinaryMode() ?? false)
