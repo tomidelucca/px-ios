@@ -13,7 +13,7 @@ extension PXOneTapViewModel {
         if let expressData = expressData {
             for expressItem in expressData {
                 if expressItem.oneTapCard != nil {
-                    dic.append(expressItem.getCardForTracking())
+                    dic.append(expressItem.getCardForTracking(amountHelper: amountHelper))
                 } else if expressItem.accountMoney != nil {
                     dic.append(expressItem.getAccountMoneyForTracking())
                 }

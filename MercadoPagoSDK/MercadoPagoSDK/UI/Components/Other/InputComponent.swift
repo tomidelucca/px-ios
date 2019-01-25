@@ -48,7 +48,7 @@ class SimpleInputComponent: UIView, PXComponent {
         inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         inputTextField.autocorrectionType = .no
-        inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControlEvents.editingChanged)
+        inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControl.Event.editingChanged)
         self.addSubview(inputTextField)
         self.frame.size.height = getHeight()
         inputTextField.text = ""
@@ -122,7 +122,7 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         dropDownTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         dropDownTextField.font = Utils.getFont(size: 20.0)
         inputTextField = HoshiTextField(frame: CGRect(x: getInputX(), y: getInputY(), width: getInputWidth(), height: INPUT_HEIGHT))
-        inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControlEvents.editingChanged)
+        inputTextField.addTarget(self, action: #selector(SimpleInputComponent.editingChanged(textField:)), for: UIControl.Event.editingChanged)
         inputTextField.borderInactiveColor = INACTIVE_BORDER_COLOR
         inputTextField.borderActiveColor = ACTIVE_BORDER_COLOR
         inputTextField.autocorrectionType = .no
@@ -156,9 +156,9 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         let toolBar = PXToolbar()
         toolBar.barStyle = UIBarStyle.default
         let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(CompositeInputComponent.donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let font = Utils.getFont(size: 14)
-        doneButton.setTitleTextAttributes([NSAttributedStringKey.font: font], for: UIControlState())
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.font: font], for: UIControl.State())
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         return toolBar

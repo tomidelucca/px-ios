@@ -55,7 +55,7 @@ extension PXOneTapViewModel {
                     }
 
                     var payerCost: [PXPayerCost] = [PXPayerCost]()
-                    if let pCost = targetCardData.payerCosts {
+                    if let pCost = amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) {
                         payerCost = pCost
                     }
 
@@ -71,11 +71,14 @@ extension PXOneTapViewModel {
                         displayMessage = ""
                     } else if payerCost.count == 1 {
                         showArrow = false
-                    } else if targetCardData.selectedPayerCost == nil {
+                    } else if amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) == nil {
                         showArrow = false
                     }
 
-                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, targetCardData.selectedPayerCost, targetCardData.cardId, showArrow)
+                    let selectedPayerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(targetCardData.cardId)
+
+                    let viewModelCard = PXCardSliderViewModel(targetNode.paymentMethodId, targetIssuerId, templateCard, cardData, payerCost, selectedPayerCost, targetCardData.cardId, showArrow)
+
                     viewModelCard.displayMessage = displayMessage
                     sliderModel.append(viewModelCard)
                 }
@@ -102,7 +105,7 @@ extension PXOneTapViewModel {
         return model
     }
 
-    func getHeaderViewModel() -> PXOneTapHeaderViewModel {
+    func getHeaderViewModel(selectedCard: PXCardSliderViewModel?) -> PXOneTapHeaderViewModel {
         let isDefaultStatusBarStyle = ThemeManager.shared.statusBarStyle() == .default
         let summaryColor = isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
         let summaryAlpha: CGFloat = 0.45
@@ -112,15 +115,26 @@ extension PXOneTapViewModel {
         let totalAlpha: CGFloat = 1
 
         let currency = SiteManager.shared.getCurrency()
-        let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
-        let yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+        var totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+        var yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         var customData: [OneTapHeaderSummaryData] = [OneTapHeaderSummaryData]()
 
-        if let discount = amountHelper.discount {
+        let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(selectedCard?.cardId)
+
+        if let discountConfiguration = discountConfiguration, let discount = discountConfiguration.getDiscountConfiguration().discount, let campaign = discountConfiguration.getDiscountConfiguration().campaign {
+
             customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_title".localized_beta, yourPurchaseToShow, summaryColor, summaryAlpha, false, nil))
             let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
             let helperImage: UIImage? = isDefaultStatusBarStyle ? ResourceManager.shared.getImage("helper_ico") : ResourceManager.shared.getImage("helper_ico_light")
             customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
+
+            amountHelper.paymentData.setDiscount(discount, withCampaign: campaign)
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+            yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
+        } else {
+            amountHelper.paymentData.clearDiscount()
+            totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
+            yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         }
 
         customData.append(OneTapHeaderSummaryData("onetap_purchase_summary_total".localized_beta, totalAmountToShow, totalColor, totalAlpha, true, nil))
@@ -170,7 +184,7 @@ extension PXOneTapViewModel {
 // MARK: Privates.
 extension PXOneTapViewModel {
     private func getDisplayMessageAttrText(_ displayMessage: String) -> NSAttributedString {
-        let attributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
+        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
         let attributedString = NSAttributedString(string: displayMessage, attributes: attributes)
         return attributedString
     }
@@ -181,7 +195,7 @@ extension PXOneTapViewModel {
         if let payerCostData = payerCost {
             // First attr
             let currency = SiteManager.shared.getCurrency()
-            let firstAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+            let firstAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
             let amountDisplayStr = Utils.getAmountFormated(amount: payerCostData.installmentAmount, forCurrency: currency).trimmingCharacters(in: .whitespaces)
             let firstText = "\(payerCostData.installments)x \(amountDisplayStr)"
             let firstAttributedString = NSAttributedString(string: firstText, attributes: firstAttributes)
@@ -189,7 +203,7 @@ extension PXOneTapViewModel {
 
             // Second attr
             if payerCostData.installmentRate == 0, payerCostData.installments != 1 {
-                let secondAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
+                let secondAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()]
                 let secondText = " Sin interés".localized
                 let secondAttributedString = NSAttributedString(string: secondText, attributes: secondAttributes)
                 text.append(secondAttributedString)
@@ -197,7 +211,7 @@ extension PXOneTapViewModel {
 
             // Third attr
             if let cftDisplayStr = payerCostData.getCFTValue(), payerCostData.hasCFTValue() {
-                let thirdAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.greyColor()]
+                let thirdAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 let thirdText = " CFT: \(cftDisplayStr)"
                 let thirdAttributedString = NSAttributedString(string: thirdText, attributes: thirdAttributes)
                 text.append(thirdAttributedString)

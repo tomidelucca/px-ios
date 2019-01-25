@@ -70,8 +70,8 @@ internal class PXBodyComponent: PXComponentizable {
                 subtitle = preferenceAmountString
             } else {
                 let discountStrikethroughFont = Utils.getFont(size: PXLayout.XXS_FONT)
-                preferenceAmountString.addAttribute(NSAttributedStringKey.font, value: discountStrikethroughFont, range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
-                preferenceAmountString.addAttribute(NSAttributedStringKey.foregroundColor, value: ThemeManager.shared.greyColor(), range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
+                preferenceAmountString.addAttribute(NSAttributedString.Key.font, value: discountStrikethroughFont, range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
+                preferenceAmountString.addAttribute(NSAttributedString.Key.foregroundColor, value: ThemeManager.shared.greyColor(), range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
                 amountTitle.append("".getAttributedStringNewLine())
                 amountTitle.append(preferenceAmountString)
             }

@@ -7,7 +7,7 @@ class Animator {
     class func overlay(on view: CardView,
                        cardUI: CardUI,
                        views: [UIView],
-                       complete: @escaping ()->()) {
+                       complete: @escaping ()->Void) {
 
         UIView.animate(withDuration: 0.1, delay: 0.3, options: .curveEaseOut, animations: {
             views.forEach({ $0.alpha = 0.3 })
@@ -33,7 +33,7 @@ class Animator {
 
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.7)
-        let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        let timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         CATransaction.setAnimationTimingFunction(timingFunction)
         CATransaction.setCompletionBlock {
             ellipseLayer.removeFromSuperlayer()
@@ -46,7 +46,7 @@ class Animator {
         let pathAnimation = CABasicAnimation(keyPath: "path")
         pathAnimation.toValue = toPath
         pathAnimation.isRemovedOnCompletion = false
-        pathAnimation.fillMode = kCAFillModeForwards
+        pathAnimation.fillMode = CAMediaTimingFillMode.forwards
         ellipseLayer.add(pathAnimation, forKey: nil)
 
         CATransaction.commit()
@@ -54,7 +54,7 @@ class Animator {
 
     class func flip(_ origin: UIView,
                     _ destination: UIView,
-                    _ options: UIViewAnimationOptions) {
+                    _ options: UIView.AnimationOptions) {
 
         UIView.transition(from: origin,
                           to: destination,

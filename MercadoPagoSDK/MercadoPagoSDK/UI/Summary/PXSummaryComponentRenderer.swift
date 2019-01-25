@@ -36,7 +36,7 @@ extension PXSummaryComponentRenderer {
 
         let amountAttributeText = Utils.getAttributedAmount(props.amountHelper.amountToPay, currency: SiteManager.shared.getCurrency(), color: props.textColor, fontSize: PXSummaryCompactComponentView.TITLE_FONT_SIZE, baselineOffset: BASELINE_OFFSET)
 
-        let customTitleAttributeText = NSAttributedString(string: props.customTitle, attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXSummaryCompactComponentView.CUSTOM_TITLE_FONT_SIZE)])
+        let customTitleAttributeText = NSAttributedString(string: props.customTitle, attributes: [NSAttributedString.Key.font: Utils.getFont(size: PXSummaryCompactComponentView.CUSTOM_TITLE_FONT_SIZE)])
 
         let viewHeight = compactView.buildView(amountAttributeText: amountAttributeText, bottomCustomTitle: customTitleAttributeText, textColor: props.textColor, backgroundColor: props.backgroundColor)
 

@@ -128,9 +128,9 @@ internal class CardsAdminViewController: MercadoPagoUIScrollViewController, UICo
 
         let title = self.viewModel.getAlertCardTitle(card: card)
 
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "No".localized, style: UIAlertActionStyle.cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Si".localized, style: UIAlertActionStyle.default, handler: { (_) -> Void in
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "No".localized, style: UIAlertAction.Style.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Si".localized, style: UIAlertAction.Style.default, handler: { (_) -> Void in
             self.callback(card)
         }))
 

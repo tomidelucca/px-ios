@@ -26,18 +26,18 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
         let termsAndConditionsText = "review_discount_terms_and_conditions".localized_beta
         let highlightedText = "review_discount_terms_and_conditions_link".localized_beta
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedStringKey.foregroundColor: ThemeManager.shared.labelTintColor()]
+        let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: highlightedText)
 
-        mutableAttributedString.addAttribute(NSAttributedStringKey.link, value: self.getTyCURL(), range: tycLinkRange)
+        mutableAttributedString.addAttribute(NSAttributedString.Key.link, value: self.getTyCURL(), range: tycLinkRange)
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         style.lineSpacing = CGFloat(3)
 
-        mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: NSRange(location: 0, length: mutableAttributedString.length))
+        mutableAttributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: mutableAttributedString.length))
         return mutableAttributedString
     }
 
@@ -48,8 +48,8 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
     }
 
     func getTyCURL() -> String {
-        if let campaignID = self.amountHelper.campaign?.id {
-            return "https://api.mercadolibre.com/campaigns/\(campaignID)/terms_and_conditions?format_type=html"
+        if let legalTermsURL = self.amountHelper.campaign?.legalTermsUrl {
+            return legalTermsURL
         }
         return ""
     }
