@@ -28,13 +28,15 @@ class PXHeaderProps {
     var productImage: UIImage?
     var statusImage: UIImage?
     var imageURL: String?
+    var closeAction : (() -> Void)?
 
-    init (labelText: NSAttributedString?, title: NSAttributedString, backgroundColor: UIColor, productImage: UIImage?, statusImage: UIImage?, imageURL: String? = nil) {
+    init (labelText: NSAttributedString?, title: NSAttributedString, backgroundColor: UIColor, productImage: UIImage?, statusImage: UIImage?, imageURL: String? = nil, closeAction: (() -> Void)? = nil) {
         self.labelText = labelText
         self.title = title
         self.backgroundColor = backgroundColor
         self.productImage = productImage
         self.statusImage = statusImage
         self.imageURL = imageURL
+        self.closeAction = closeAction
     }
 }

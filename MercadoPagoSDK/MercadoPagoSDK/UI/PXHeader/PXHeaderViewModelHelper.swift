@@ -11,7 +11,9 @@ import UIKit
 internal extension PXResultViewModel {
 
     func getHeaderComponentProps() -> PXHeaderProps {
-        let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
+        let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage(), closeAction:{
+            self.callback(PaymentResult.CongratsState.approved)
+        })
         return props
     }
 

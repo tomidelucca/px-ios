@@ -50,7 +50,22 @@ internal final class PXHeaderRenderer: NSObject {
         headerView.addSubview(headerView.badgeImage!)
         PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_HORIZONTAL_OFFSET).isActive = true
         PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_VERTICAL_OFFSET).isActive = true
-
+        
+        //Close button
+        let button = buildCloseButton()
+        headerView.closeButton = button
+        headerView.addSubview(button)
+        
+        button.add(for: .touchUpInside, {
+            if let action = header.props.closeAction {
+                action()
+            }
+        })
+        PXLayout.setHeight(owner: button, height: PXLayout.BUTTON_SIDE).isActive = true
+        PXLayout.setWidth(owner: button, width: PXLayout.BUTTON_SIDE).isActive = true
+        PXLayout.pinTop(view: button, to: headerView, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.pinLeft(view: button, to: headerView, withMargin: PXLayout.S_MARGIN).isActive = true
+        
         //Status Label
         headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
         PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView.statusLabel!.superview!).isActive = true
@@ -86,6 +101,15 @@ internal final class PXHeaderRenderer: NSObject {
         let imageView = PXAnimatedImageView(image: image, size: CGSize(width: BADGE_IMAGE_SIZE, height: BADGE_IMAGE_SIZE))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }
+    
+    func buildCloseButton() -> UIButton {
+        let button = UIButton()
+        let image = ResourceManager.shared.getImage("close-button")
+        let margin = PXLayout.XS_MARGIN
+        button.contentEdgeInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        button.setImage(image, for: .normal)
+        return button
     }
 
     func buildStatusLabel(with text: NSAttributedString?, in superView: UIView, onBottomOf upperView: UIView) -> UILabel {
@@ -124,4 +148,5 @@ internal final class PXHeaderView: PXComponentView {
     var badgeImage: PXAnimatedImageView?
     var statusLabel: UILabel?
     var messageLabel: UILabel?
+    var closeButton: UIButton?
 }
