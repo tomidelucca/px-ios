@@ -11,7 +11,7 @@ import Foundation
 struct PXSummaryComponentRenderer {
 
     func render(_ summaryComponent: PXSummaryComponent) -> UIView {
-        if summaryComponent.props.summaryViewModel.details.count > 1 || summaryComponent.props.amountHelper.paymentData.getNumberOfInstallments() > 1 {
+        if summaryComponent.props.summaryViewModel.details.count > 1 || summaryComponent.props.amountHelper.getPaymentData().getNumberOfInstallments() > 1 {
             return buildFullSummary(props: summaryComponent.props)
         }
         return buildCompactSummary(props: summaryComponent.props)

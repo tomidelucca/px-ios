@@ -152,11 +152,11 @@ extension PXOneTapViewModel {
             let helperImage: UIImage? = isDefaultStatusBarStyle ? ResourceManager.shared.getImage("helper_ico") : ResourceManager.shared.getImage("helper_ico_light")
             customData.append(OneTapHeaderSummaryData(discount.getDiscountDescription(), "- \(discountToShow)", discountColor, discountAlpha, false, helperImage))
 
-            amountHelper.paymentData.setDiscount(discount, withCampaign: campaign)
+            amountHelper.getPaymentData().setDiscount(discount, withCampaign: campaign)
             totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
             yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         } else {
-            amountHelper.paymentData.clearDiscount()
+            amountHelper.getPaymentData().clearDiscount()
             totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.amountToPayWithoutPayerCost, forCurrency: currency)
             yourPurchaseToShow = Utils.getAmountFormated(amount: amountHelper.preferenceAmount, forCurrency: currency)
         }

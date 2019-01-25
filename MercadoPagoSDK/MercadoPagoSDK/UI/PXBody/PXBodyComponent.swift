@@ -73,7 +73,11 @@ internal class PXBodyComponent: PXComponentizable {
             }
         } else {
             // Caso account money
-            amountTitle = Utils.getAmountFormated(amount: paymentData.getTransactionAmountWithDiscount() ?? 0, forCurrency: currency).toAttributedString()
+            if  let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
+                amountTitle = Utils.getAmountFormated(amount: splitAccountMoneyAmount, forCurrency: currency).toAttributedString()
+            } else {
+                amountTitle = Utils.getAmountFormated(amount: props.amountHelper.amountToPay, forCurrency: currency).toAttributedString()
+            }
         }
 
         var pmDescription: String = ""

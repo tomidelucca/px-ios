@@ -96,7 +96,7 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 
     func isOfflinePayment() -> Bool {
-        guard let paymentTypeId = amountHelper?.paymentData.paymentMethod?.paymentTypeId else {
+        guard let paymentTypeId = amountHelper?.getPaymentData().paymentMethod?.paymentTypeId else {
             return false
         }
         return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId)
@@ -104,7 +104,7 @@ internal final class PXPaymentFlowModel: NSObject {
 
     func assignToCheckoutStore() {
         if let amountHelper = amountHelper {
-            PXCheckoutStore.sharedInstance.paymentDatas = [amountHelper.paymentData]
+            PXCheckoutStore.sharedInstance.paymentDatas = [amountHelper.getPaymentData()]
             if let splitAccountMoney = amountHelper.splitAccountMoney {
                 PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
             }
@@ -134,7 +134,7 @@ internal extension PXPaymentFlowModel {
 // MARK: Manage ESC
 internal extension PXPaymentFlowModel {
     func handleESCForPayment(status: String, statusDetails: String, errorPaymentType: String?) {
-        guard let token = amountHelper?.paymentData.getToken() else {
+        guard let token = amountHelper?.getPaymentData().getToken() else {
             return
         }
         let isApprovedPayment: Bool = status == PXPaymentStatus.APPROVED.rawValue

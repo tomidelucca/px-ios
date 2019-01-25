@@ -14,7 +14,7 @@ extension PayerInfoViewController {
             return
         }
         var properties: [String: Any] = [:]
-        properties["payment_method_id"] = viewModel.amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
+        properties["payment_method_id"] = viewModel.amountHelper.getPaymentData().paymentMethod?.getPaymentIdForTracking()
         trackScreen(path: screenPath, properties: properties, treatBackAsAbort: true)
     }
     func trackError(errorMessage: String, currentStep: PayerInfoFlowStep) {
@@ -25,8 +25,8 @@ extension PayerInfoViewController {
         properties["message"] = errorMessage
         properties["attributable_to"] = Tracking.Error.Atrributable.user
         var extraDic: [String: Any] = [:]
-        extraDic["payment_method_type"] = viewModel.amountHelper.paymentData.paymentMethod?.getPaymentTypeForTracking()
-        extraDic["payment_method_id"] = viewModel.amountHelper.paymentData.paymentMethod?.getPaymentIdForTracking()
+        extraDic["payment_method_type"] = viewModel.amountHelper.getPaymentData().paymentMethod?.getPaymentTypeForTracking()
+        extraDic["payment_method_id"] = viewModel.amountHelper.getPaymentData().paymentMethod?.getPaymentIdForTracking()
         properties["extra_info"] = extraDic
         trackEvent(path: TrackingPaths.Events.getErrorPath(), properties: properties)
     }

@@ -11,13 +11,13 @@ import Foundation
 extension PXReviewViewModel {
 
     func getConfirmEventProperties() -> [String: Any] {
-        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
+        var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
         properties["review_type"] = "traditional"
         return properties
     }
 
     func getScreenProperties() -> [String: Any] {
-        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
+        var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
 
         properties["discount"] = amountHelper.getDiscountForTracking()
         properties["preference_amount"] = amountHelper.preferenceAmount

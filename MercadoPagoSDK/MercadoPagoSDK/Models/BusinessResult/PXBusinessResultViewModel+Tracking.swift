@@ -10,7 +10,7 @@ import Foundation
 extension PXBusinessResultViewModel {
 
     func getTrackingProperties() -> [String: Any] {
-        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
+        var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
         properties["style"] = "custom"
 
         if let paymentId = getPaymentId() {
