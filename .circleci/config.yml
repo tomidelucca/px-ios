@@ -4,7 +4,7 @@
 # and stuff that all jobs should have
 ##
 default: &defaultJob
-  # Set the xcode version this virtual machine will use
+  # Set the xcode version this virtual machine will  use
   macos:
     xcode: "10.1.0"
   # We need to set this for RVM.
