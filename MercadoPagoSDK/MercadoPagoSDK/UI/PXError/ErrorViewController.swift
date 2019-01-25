@@ -44,7 +44,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
         self.errorTitle.text = error.message
         self.errorSubtitle.textColor = UIColor.pxBrownishGray
 
-        let normalAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: Utils.getFont(size: 14)]
+        let normalAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: 14)]
 
         self.errorSubtitle.attributedText = NSAttributedString(string: error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)

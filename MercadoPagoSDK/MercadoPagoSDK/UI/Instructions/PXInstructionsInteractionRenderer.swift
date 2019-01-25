@@ -21,14 +21,14 @@ class PXInstructionsInteractionRenderer: NSObject {
         var lastView: UIView?
 
         if let title = instructionInteraction.props.interaction?.title {
-            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE)]
+            let attributes = [NSAttributedString.Key.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE)]
             let attributedString = NSAttributedString(string: title, attributes: attributes)
             instructionInteractionView.titleLabel = buildLabel(with: attributedString, in: instructionInteractionView, onBottomOf: nil, isTitle: true)
             lastView = instructionInteractionView.titleLabel
         }
 
         if let interactionContent = instructionInteraction.props.interaction?.content, interactionContent.isNotEmpty {
-            let attributes = [NSAttributedStringKey.font: Utils.getFont(size: INTERACTION_LABEL_FONT_SIZE)]
+            let attributes = [NSAttributedString.Key.font: Utils.getFont(size: INTERACTION_LABEL_FONT_SIZE)]
             let attributedString = NSAttributedString(string: interactionContent, attributes: attributes)
             instructionInteractionView.interactionLabel = buildLabel(with: attributedString, in: instructionInteractionView, onBottomOf: lastView)
             lastView = instructionInteractionView.interactionLabel

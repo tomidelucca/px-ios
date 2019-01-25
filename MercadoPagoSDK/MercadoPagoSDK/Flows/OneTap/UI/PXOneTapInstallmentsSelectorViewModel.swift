@@ -50,9 +50,9 @@ final class PXOneTapInstallmentsSelectorViewModel {
         if payerCost.installments == 1 {
             value = NSAttributedString(string: "")
         } else if payerCost.hasInstallmentsRate() {
-            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSAttributedStringKey.foregroundColor: UIColor.px_grayLight()]))
+            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSAttributedString.Key.foregroundColor: UIColor.px_grayLight()]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color: UIColor.px_grayLight(), fontSize: 15, baselineOffset: 3))
-            attributedTotal.append(NSAttributedString(string: ")", attributes: [NSAttributedStringKey.foregroundColor: UIColor.px_grayLight()]))
+            attributedTotal.append(NSAttributedString(string: ")", attributes: [NSAttributedString.Key.foregroundColor: UIColor.px_grayLight()]))
 
             if showDescription == false {
                 value = NSAttributedString(string: "")
@@ -64,7 +64,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
             if showDescription == false {
                 value = NSAttributedString(string: "")
             } else {
-                value = NSAttributedString(string: "Sin interés".localized, attributes: [NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()])
+                value = NSAttributedString(string: "Sin interés".localized, attributes: [NSAttributedString.Key.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()])
             }
 
         }
@@ -72,7 +72,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
         installmentNumber = "\(installmentNumber) x "
         let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: UIColor.black, centsFontSize: 14, baselineOffset: 5)
 
-        let atribute = [NSAttributedStringKey.font: Utils.getFont(size: 20), NSAttributedStringKey.foregroundColor: UIColor.black]
+        let atribute = [NSAttributedString.Key.font: Utils.getFont(size: 20), NSAttributedString.Key.foregroundColor: UIColor.black]
         let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: atribute)
 
         installmentLabel.append(totalAmount)

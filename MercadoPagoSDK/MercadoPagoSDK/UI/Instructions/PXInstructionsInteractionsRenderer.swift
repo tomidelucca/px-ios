@@ -19,7 +19,7 @@ class PXInstructionsInteractionsRenderer: NSObject {
         var lastView: UIView?
 
         if let title = instructionsInteractions.props.title, !title.isEmpty {
-            let attributes = [ NSAttributedStringKey.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
+            let attributes = [ NSAttributedString.Key.font: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: title, attributes: attributes)
             instructionsInteractionsView.titleLabel = buildTitleLabel(with: attributedString, in: instructionsInteractionsView)
             lastView = instructionsInteractionsView.titleLabel

@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDKV4"
-  s.version          = "4.5.2"
+  s.version          = "4.6.0"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
   s.author           = "Mercado Pago"
   s.source           = { :git => 'git@github.com:mercadopago/px-ios.git', :tag => s.version.to_s }
-  s.swift_version = '4.0'
+  s.swift_version = '4.2'
   s.platform     = :ios, '9.0'
   s.requires_arc = true
   s.default_subspec = 'Default'

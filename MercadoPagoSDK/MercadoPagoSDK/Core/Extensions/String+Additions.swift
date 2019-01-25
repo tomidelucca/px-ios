@@ -65,7 +65,7 @@ internal extension String {
         }
     }
 
-    func toAttributedString(attributes: [NSAttributedStringKey: Any]? = nil) -> NSMutableAttributedString {
+    func toAttributedString(attributes: [NSAttributedString.Key: Any]? = nil) -> NSMutableAttributedString {
         return NSMutableAttributedString(string: self, attributes: attributes)
     }
 

@@ -12,7 +12,7 @@ internal class NavigationControllerMemento {
 
     var navBarTintColor: UIColor?
     var navTintColor: UIColor?
-    var navTitleTextAttributes: [NSAttributedStringKey: Any]?
+    var navTitleTextAttributes: [NSAttributedString.Key: Any]?
     var navIsTranslucent: Bool = false
     var navViewBackgroundColor: UIColor?
     var navBackgroundColor: UIColor?
