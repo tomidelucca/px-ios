@@ -111,22 +111,27 @@ internal extension OneTapFlowModel {
 internal extension OneTapFlowModel {
     func updateCheckoutModel(paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) {
         self.paymentData = paymentData
+
         if splitAccountMoneyEnabled {
             let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionSelected.getId())
 
+            // Set total amount to pay with card without discount
+            paymentData.transactionAmount = splitConfiguration?.primaryPaymentMethod?.amount
+
             let accountMoneyPMs = search.paymentMethods.filter { (paymentMethod) -> Bool in
-                return paymentMethod.id == splitConfiguration?.paymentMethodId
+                return paymentMethod.id == splitConfiguration?.secondaryPaymentMethod?.id
             }
             if let accountMoneyPM = accountMoneyPMs.first {
                 splitAccountMoney = PXPaymentData()
-                splitAccountMoney?.transactionAmount = splitConfiguration?.splitAmount
+                // Set total amount to pay with account money without discount
+                splitAccountMoney?.transactionAmount = splitConfiguration?.secondaryPaymentMethod?.amount
                 splitAccountMoney?.updatePaymentDataWith(paymentMethod: accountMoneyPM)
 
             let campaign = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionSelected.getId())?.getDiscountConfiguration().campaign
-                if let discount = splitConfiguration?.primaryPaymentMethodDiscount, let campaign = campaign {
+                if let discount = splitConfiguration?.primaryPaymentMethod?.discount, let campaign = campaign {
                     paymentData.setDiscount(discount, withCampaign: campaign)
                 }
-                if let discount = splitConfiguration?.secondaryPaymentMethodDiscount, let campaign = campaign {
+                if let discount = splitConfiguration?.secondaryPaymentMethod?.discount, let campaign = campaign {
                     splitAccountMoney?.setDiscount(discount, withCampaign: campaign)
                 }
             }

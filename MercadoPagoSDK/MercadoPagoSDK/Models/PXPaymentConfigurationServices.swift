@@ -17,7 +17,7 @@ class PXPaymentConfigurationServices {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
                 if splitPaymentEnabled {
-                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.payerCosts
+                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.payerCosts
                 } else {
                     return paymentOptionConfiguration.amountConfiguration?.payerCosts
                 }
@@ -51,7 +51,7 @@ class PXPaymentConfigurationServices {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
                 if splitPaymentEnabled {
-                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.selectedPayerCost
+                    return paymentOptionConfiguration.amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.selectedPayerCost
                 } else {
                     return paymentOptionConfiguration.amountConfiguration?.selectedPayerCost
                 }

@@ -111,7 +111,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
 
         let amountAttributed = NSMutableAttributedString(string: amount, attributes: attributes)
         amountAttributed.append(" ".toAttributedString())
-        amountAttributed.append(splitConfiguration.message?.toAttributedString() ?? "".toAttributedString())
+        amountAttributed.append(splitConfiguration.secondaryPaymentMethod?.message?.toAttributedString() ?? "".toAttributedString())
         return amountAttributed
     }
 

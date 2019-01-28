@@ -10,10 +10,13 @@ import Foundation
 internal extension PXSplitConfiguration {
 
     func getSplitAmountToPay() -> Double {
-        if let discountAmountOff = secondaryPaymentMethodDiscount?.couponAmount {
-            return splitAmount - discountAmountOff
+        guard let amount = secondaryPaymentMethod?.amount else {
+            return 0
+        }
+        if let discountAmountOff = secondaryPaymentMethod?.discount?.couponAmount {
+            return amount - discountAmountOff
         } else {
-            return splitAmount
+            return amount
         }
     }
 }
