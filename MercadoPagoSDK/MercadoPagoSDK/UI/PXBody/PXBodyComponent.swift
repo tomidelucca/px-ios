@@ -45,13 +45,15 @@ internal class PXBodyComponent: PXComponentizable {
 
     func getPaymentMethodComponents() -> [PXPaymentMethodComponent] {
         var paymentMethodsComponents: [PXPaymentMethodComponent] = []
-        if let paymentData = props.paymentResult.paymentData, let firstPMComponent = getPaymentMethodComponent(paymentData: paymentData) {
-            paymentMethodsComponents.append(firstPMComponent)
-        }
 
         if let splitAccountMoney = props.paymentResult.splitAccountMoney, let secondPMComponent = getPaymentMethodComponent(paymentData: splitAccountMoney) {
             paymentMethodsComponents.append(secondPMComponent)
         }
+
+        if let paymentData = props.paymentResult.paymentData, let firstPMComponent = getPaymentMethodComponent(paymentData: paymentData) {
+            paymentMethodsComponents.append(firstPMComponent)
+        }
+
         return paymentMethodsComponents
     }
 

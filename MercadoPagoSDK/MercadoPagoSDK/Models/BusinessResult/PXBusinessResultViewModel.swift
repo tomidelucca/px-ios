@@ -112,13 +112,15 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     func getPaymentMethodComponents() -> [PXPaymentMethodComponent] {
         var paymentMethodsComponents: [PXPaymentMethodComponent] = []
-        if let firstPMComponent = getPaymentMethodComponent(paymentData: self.amountHelper.getPaymentData()) {
-            paymentMethodsComponents.append(firstPMComponent)
-        }
 
         if let splitAccountMoney = amountHelper.splitAccountMoney, let secondPMComponent = getPaymentMethodComponent(paymentData: splitAccountMoney) {
             paymentMethodsComponents.append(secondPMComponent)
         }
+
+        if let firstPMComponent = getPaymentMethodComponent(paymentData: self.amountHelper.getPaymentData()) {
+            paymentMethodsComponents.append(firstPMComponent)
+        }
+
         return paymentMethodsComponents
     }
 
