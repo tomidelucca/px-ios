@@ -1,3 +1,8 @@
+# v4.5.3
+🚀Private RC - 4.5.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Tracking key hot fix
+
 # v4.5.2
 🚀Private RC - 4.5.2 🚀
 MercadoPagoSDKV4 - Private Version
