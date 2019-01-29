@@ -14,17 +14,17 @@ open class PXSplitPaymentMethod: NSObject, Codable {
     open var discount: PXDiscount?
     open var message: String?
     open var selectedPayerCostIndex: Int?
-    open var payerCosts: [PXPayerCost] = []
+    open var payerCosts: [PXPayerCost]?
     open var selectedPayerCost: PXPayerCost? {
         get {
-            if let selectedIndex = selectedPayerCostIndex, payerCosts.indices.contains(selectedIndex) {
-                return payerCosts[selectedIndex]
+            if let remotePayerCosts = payerCosts, let selectedIndex = selectedPayerCostIndex, remotePayerCosts.indices.contains(selectedIndex) {
+                return remotePayerCosts[selectedIndex]
             }
-            return payerCosts.first
+            return nil
         }
     }
 
-    init(amount: Double, id: String, discount: PXDiscount?, message: String?, selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]) {
+    init(amount: Double, id: String, discount: PXDiscount?, message: String?, selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
         self.amount = amount
         self.id = id
         self.discount = discount
@@ -49,7 +49,7 @@ open class PXSplitPaymentMethod: NSObject, Codable {
         let discount: PXDiscount? = try container.decodeIfPresent(PXDiscount.self, forKey: .discount)
         let message: String? = try container.decodeIfPresent(String.self, forKey: .message)
         let selectedPayerCostIndex: Int? = try container.decodeIfPresent(Int.self, forKey: .selectedPayerCostIndex)
-        let payerCosts: [PXPayerCost] = try container.decodeIfPresent([PXPayerCost].self, forKey: .payerCosts) ?? []
+        let payerCosts: [PXPayerCost]? = try container.decodeIfPresent([PXPayerCost].self, forKey: .payerCosts)
         self.init(amount: amount, id: id, discount: discount, message: message, selectedPayerCostIndex: selectedPayerCostIndex, payerCosts: payerCosts)
     }
 

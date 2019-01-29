@@ -201,10 +201,25 @@ extension PXOneTapViewModel {
                 cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.payerCosts ?? []
                 cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.primaryPaymentMethod?.selectedPayerCost
                 cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.splitEnabled = splitPaymentEnabled
+
+                // Show arrow to switch installments
+                if cardSliderViewModel[forIndex].payerCost.count > 1 {
+                    cardSliderViewModel[forIndex].shouldShowArrow = true
+                } else {
+                    cardSliderViewModel[forIndex].shouldShowArrow = false
+                }
+
             } else {
                 cardSliderViewModel[forIndex].payerCost = cardSliderViewModel[forIndex].amountConfiguration?.payerCosts ?? []
                 cardSliderViewModel[forIndex].selectedPayerCost = cardSliderViewModel[forIndex].amountConfiguration?.selectedPayerCost
                 cardSliderViewModel[forIndex].amountConfiguration?.splitConfiguration?.splitEnabled = splitPaymentEnabled
+
+                // Show arrow to switch installments
+                if cardSliderViewModel[forIndex].payerCost.count > 1 {
+                    cardSliderViewModel[forIndex].shouldShowArrow = true
+                } else {
+                    cardSliderViewModel[forIndex].shouldShowArrow = false
+                }
             }
             return true
         }

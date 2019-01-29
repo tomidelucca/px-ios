@@ -12,7 +12,7 @@ final class PXCardSliderViewModel {
     let paymentTypeId: String?
     let issuerId: String
     let cardUI: CardUI
-    let shouldShowArrow: Bool
+    var shouldShowArrow: Bool
     var accountMoneyBalance: Double?
     var cardData: CardData?
     var selectedPayerCost: PXPayerCost?

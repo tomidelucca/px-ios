@@ -279,6 +279,13 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
             if selectedCard.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
                 selectedCard.displayMessage = viewModel.getSplitMessageForDebit(amountToPay: selectedCard.selectedPayerCost?.totalAmount ?? 0)
             }
+
+            // Installments arrow animation
+            if selectedCard.shouldShowArrow {
+                installmentInfoRow?.showArrow()
+            } else {
+                installmentInfoRow?.hideArrow()
+            }
         }
     }
 
