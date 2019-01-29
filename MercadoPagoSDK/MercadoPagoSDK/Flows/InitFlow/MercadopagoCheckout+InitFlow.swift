@@ -56,7 +56,7 @@ extension MercadoPagoCheckout {
         var extraDic: [String: Any] = [:]
         var errorDic: [String: Any] = [:]
 
-        errorDic["url"] =  flowError.requestOrigin
+        errorDic["url"] =  flowError.requestOrigin?.rawValue
         errorDic["retry_available"] = flowError.shouldRetry
         errorDic["status"] =  flowError.apiException?.status
 
