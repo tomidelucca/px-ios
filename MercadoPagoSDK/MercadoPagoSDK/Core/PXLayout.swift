@@ -36,7 +36,6 @@ class PXLayout: NSObject {
     static let DEFAULT_CONTRAINT_ACTIVE = true
 
     static let NAV_BAR_HEIGHT: CGFloat = 44
-    static let BUTTON_SIDE: CGFloat = 44.0
 
     static func checkContraintActivation(_ constraint: NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
         constraint.isActive = isActive
