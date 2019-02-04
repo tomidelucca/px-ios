@@ -28,6 +28,11 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         self.model.paymentData = paymentData
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
+
+        if let discountToken = MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(self.model.paymentData?.token?.cardId)?.discountToken {
+            self.model.paymentData?.discount?.id = discountToken.stringValue
+            self.model.paymentData?.campaign?.id = discountToken
+        }
     }
 
     deinit {

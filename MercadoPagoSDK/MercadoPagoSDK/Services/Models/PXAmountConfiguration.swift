@@ -18,28 +18,33 @@ open class PXAmountConfiguration: NSObject, Codable {
         }
     }
     open var payerCosts: [PXPayerCost]?
+    open var discountToken: Int64?
 
-    public init(selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
+    public init(selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?, discountToken: Int64?) {
         self.selectedPayerCostIndex = selectedPayerCostIndex
         self.payerCosts = payerCosts
+        self.discountToken = discountToken
     }
 
     public enum PXPayerCostConfiguration: String, CodingKey {
         case selectedPayerCostIndex = "selected_payer_cost_index"
         case payerCost = "payer_costs"
+        case discountToken = "discount_token"
     }
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostConfiguration.self)
         let payerCosts: [PXPayerCost]? = try container.decodeIfPresent([PXPayerCost].self, forKey: .payerCost)
         let selectedPayerCostIndex: Int? = try container.decodeIfPresent(Int.self, forKey: .selectedPayerCostIndex)
-        self.init(selectedPayerCostIndex: selectedPayerCostIndex, payerCosts: payerCosts)
+        let discountToken: Int64? = try container.decodeIfPresent(Int64.self, forKey: .discountToken)
+        self.init(selectedPayerCostIndex: selectedPayerCostIndex, payerCosts: payerCosts, discountToken: discountToken)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXPayerCostConfiguration.self)
         try container.encodeIfPresent(self.payerCosts, forKey: .payerCost)
         try container.encodeIfPresent(self.selectedPayerCostIndex, forKey: .selectedPayerCostIndex)
+        try container.encodeIfPresent(self.discountToken, forKey: .discountToken)
     }
 
     open func toJSONString() throws -> String? {
