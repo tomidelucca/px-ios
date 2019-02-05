@@ -10,18 +10,20 @@ import Foundation
 
 internal final class PXPaymentFlow: NSObject, PXFlow {
     let model: PXPaymentFlowModel
+    let amountHelper: PXAmountHelper
 
     weak var resultHandler: PXPaymentResultHandlerProtocol?
     weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: PXCheckoutPreference?) {
+    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: PXCheckoutPreference?, amountHelper: PXAmountHelper) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
         self.model.paymentData = paymentData
         self.model.checkoutPreference = checkoutPreference
+        self.amountHelper = amountHelper
     }
 
     func setData(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
@@ -29,7 +31,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
 
-        if let discountToken = MercadoPagoCheckout.currentCheckout?.viewModel.amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(self.model.paymentData?.token?.cardId)?.discountToken {
+        if let discountToken = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(self.model.paymentData?.token?.cardId)?.discountToken {
             self.model.paymentData?.discount?.id = discountToken.stringValue
             self.model.paymentData?.campaign?.id = discountToken
         }
