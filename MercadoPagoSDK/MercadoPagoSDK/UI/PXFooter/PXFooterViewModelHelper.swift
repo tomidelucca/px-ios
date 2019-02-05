@@ -88,15 +88,16 @@ internal extension PXResultViewModel {
 
     private func pressButton() {
         trackChangePaymentMethodEvent()
+        guard let callback = self.callback else {return}
         if paymentResult.isAccepted() {
-             self.callback(PaymentResult.CongratsState.cancel_EXIT)
+             callback(PaymentResult.CongratsState.cancel_EXIT)
         } else if paymentResult.isError() {
-             self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
+             callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
         } else if paymentResult.isWarning() {
             if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue {
-                self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
+                callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
             } else {
-                self.callback(PaymentResult.CongratsState.cancel_RETRY)
+                callback(PaymentResult.CongratsState.cancel_RETRY)
             }
         }
     }
@@ -104,7 +105,9 @@ internal extension PXResultViewModel {
     private func pressLink() {
         trackContinueEvent()
         if paymentResult.isAccepted() {
-            self.callback(PaymentResult.CongratsState.cancel_EXIT)
+            if let callback = self.callback {
+                callback(PaymentResult.CongratsState.cancel_EXIT)
+            }
         }
     }
 }

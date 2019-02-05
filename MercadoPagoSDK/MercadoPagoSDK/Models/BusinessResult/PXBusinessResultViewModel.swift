@@ -13,7 +13,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     let businessResult: PXBusinessResult
     let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
-    var callback: ((PaymentResult.CongratsState) -> Void)!
+    var callback: ((PaymentResult.CongratsState) -> Void)?
 
     //Default Image
     private lazy var approvedIconName = "default_item_icon"
@@ -68,7 +68,9 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     func buildHeaderComponent() -> PXHeaderComponent {
         let headerImage = getHeaderDefaultIcon()
         let headerProps = PXHeaderProps(labelText: businessResult.getSubTitle()?.toAttributedString(), title: getAttributedTitle(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage(), imageURL: businessResult.getImageUrl(), closeAction: { [weak self] in
-            self?.callback(PaymentResult.CongratsState.cancel_EXIT)
+            if let callback = self?.callback {
+                callback(PaymentResult.CongratsState.cancel_EXIT)
+            }
         })
         return PXHeaderComponent(props: headerProps)
     }

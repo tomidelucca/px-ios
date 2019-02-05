@@ -11,7 +11,7 @@ final class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
 
     let buttonCallback: () -> Void
     let linkCallback: () -> Void
-    var callback: ((PaymentResult.CongratsState) -> Void)!
+    var callback: ((PaymentResult.CongratsState) -> Void)?
 
     init(buttonCallback: @escaping () -> Void, linkCallback: @escaping () -> Void) {
         self.buttonCallback = buttonCallback
@@ -48,7 +48,9 @@ final class PXResultAddCardFailedViewModel: PXResultViewModelInterface {
 
     func buildHeaderComponent() -> PXHeaderComponent {
         let props = PXHeaderProps(labelText: NSAttributedString(string: "add_card_failed_label_text".localized_beta), title: NSAttributedString(string: "add_card_failed_title".localized_beta, attributes: [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: 26)]), backgroundColor: ThemeManager.shared.warningColor(), productImage: UIImage(named: "card_icon", in: ResourceManager.shared.getBundle(), compatibleWith: nil), statusImage: UIImage(named: "need_action_badge", in: ResourceManager.shared.getBundle(), compatibleWith: nil), closeAction: { [weak self] in
-            self?.callback(PaymentResult.CongratsState.cancel_EXIT)
+            if let callback = self?.callback {
+                callback(PaymentResult.CongratsState.cancel_EXIT)
+            }
         })
         let header = PXHeaderComponent(props: props)
         return header
