@@ -16,7 +16,20 @@ class PXPaymentConfigurationServices {
     func getPayerCostsForPaymentMethod(_ id: String) -> [PXPayerCost]? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
-                return paymentOptionConfiguration.payerCostConfiguration?.payerCosts
+                return paymentOptionConfiguration.amountConfiguration?.payerCosts
+            }
+        }
+        return nil
+    }
+
+    // Amount Configuration for Payment Method
+    func getAmountConfigurationForPaymentMethod(_ id: String?) -> PXAmountConfiguration? {
+        guard let id = id else {
+            return nil
+        }
+        if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
+            if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
+                return paymentOptionConfiguration.amountConfiguration
             }
         }
         return nil
@@ -26,7 +39,7 @@ class PXPaymentConfigurationServices {
     func getSelectedPayerCostsForPaymentMethod(_ id: String) -> PXPayerCost? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
-                return paymentOptionConfiguration.payerCostConfiguration?.selectedPayerCost
+                return paymentOptionConfiguration.amountConfiguration?.selectedPayerCost
             }
         }
         return nil
