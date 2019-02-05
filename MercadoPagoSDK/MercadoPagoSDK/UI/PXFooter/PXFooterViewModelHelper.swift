@@ -11,7 +11,7 @@ import UIKit
 internal extension PXResultViewModel {
 
     func getFooterComponentProps() -> PXFooterProps {
-        return PXFooterProps(buttonAction: getActionButton(), linkAction: nil)
+        return PXFooterProps(buttonAction: getActionButton(), linkAction: getActionLink())
     }
 
     func buildFooterComponent() -> PXFooterComponent {
@@ -29,6 +29,13 @@ internal extension PXResultViewModel {
             actionButton = PXAction(label: label, action: action)
         }
         return actionButton
+    }
+
+    func getActionLink() -> PXAction? {
+        guard let labelLink = self.getLinkLabel(), let actionOfLink = self.getLinkAction() else {
+            return nil
+        }
+        return PXAction(label: labelLink, action: actionOfLink)
     }
 
     private func getButtonLabel() -> String? {
@@ -64,8 +71,19 @@ internal extension PXResultViewModel {
         return PXFooterResultConstants.DEFAULT_BUTTON_TEXT
     }
 
+    private func getLinkLabel() -> String? {
+        if paymentResult.isAccepted() {
+            return PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta
+        }
+        return nil
+    }
+
     private func getButtonAction() -> (() -> Void)? {
         return { self.pressButton() }
+    }
+
+    private func getLinkAction() -> (() -> Void)? {
+        return { self.pressLink() }
     }
 
     private func pressButton() {
@@ -80,6 +98,13 @@ internal extension PXResultViewModel {
             } else {
                 self.callback(PaymentResult.CongratsState.cancel_RETRY)
             }
+        }
+    }
+
+    private func pressLink() {
+        trackContinueEvent()
+        if paymentResult.isAccepted() {
+            self.callback(PaymentResult.CongratsState.cancel_EXIT)
         }
     }
 }

@@ -26,7 +26,7 @@ internal final class PXHeaderRenderer: NSObject {
     static let TITLE_FONT_SIZE: CGFloat = PXLayout.XXXL_FONT
 
     //Close Button
-    let CLOSE_BUTTON_SIZE: CGFloat = 18
+    let CLOSE_BUTTON_SIZE: CGFloat = 42
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
@@ -66,8 +66,8 @@ internal final class PXHeaderRenderer: NSObject {
 
             PXLayout.setHeight(owner: button, height: CLOSE_BUTTON_SIZE).isActive = true
             PXLayout.setWidth(owner: button, width: CLOSE_BUTTON_SIZE).isActive = true
-            PXLayout.pinTop(view: button, to: headerView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.pinLeft(view: button, to: headerView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.pinTop(view: button, to: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+            PXLayout.pinLeft(view: button, to: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
         }
         
         //Status Label
@@ -111,7 +111,8 @@ internal final class PXHeaderRenderer: NSObject {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = ResourceManager.shared.getImage("close-button")
-//        button.contentEdgeInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        let margin: CGFloat = PXLayout.XS_MARGIN
+        button.contentEdgeInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
         button.setImage(image, for: .normal)
         return button
     }
