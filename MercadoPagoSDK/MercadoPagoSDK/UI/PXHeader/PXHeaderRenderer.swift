@@ -67,7 +67,7 @@ internal final class PXHeaderRenderer: NSObject {
             PXLayout.setHeight(owner: button, height: CLOSE_BUTTON_SIZE).isActive = true
             PXLayout.setWidth(owner: button, width: CLOSE_BUTTON_SIZE).isActive = true
             PXLayout.pinTop(view: button, to: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
-            PXLayout.pinLeft(view: button, to: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+            PXLayout.pinLeft(view: button, to: headerView, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         }
         
         //Status Label
