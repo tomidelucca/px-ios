@@ -55,18 +55,12 @@ class PXInstructionsInteractionRenderer: NSObject {
         label.attributedText = text
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
-        var textColor: UIColor = INTERACTION_LABEL_FONT_COLOR
-        var textSize: CGFloat = INTERACTION_LABEL_FONT_SIZE
+        var textColor = INTERACTION_LABEL_FONT_COLOR
         if isTitle {
             textColor = TITLE_LABEL_FONT_COLOR
-            textSize = TITLE_LABEL_FONT_SIZE
         }
         label.textColor = textColor
 
-        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-
-        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
-        PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.matchWidth(ofView: label, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label).isActive = true
 
