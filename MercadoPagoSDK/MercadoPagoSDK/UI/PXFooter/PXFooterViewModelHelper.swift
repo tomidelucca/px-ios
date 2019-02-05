@@ -32,11 +32,10 @@ internal extension PXResultViewModel {
     }
 
     func getActionLink() -> PXAction? {
-        var actionLink: PXAction?
-        if let labelLink = self.getLinkLabel(), let actionOfLink = self.getLinkAction() {
-            actionLink = PXAction(label: labelLink, action: actionOfLink)
+        guard let labelLink = self.getLinkLabel(), let actionOfLink = self.getLinkAction() else {
+            return nil
         }
-        return actionLink
+        return PXAction(label: labelLink, action: actionOfLink)
     }
 
     private func getButtonLabel() -> String? {
@@ -73,21 +72,10 @@ internal extension PXResultViewModel {
     }
 
     private func getLinkLabel() -> String? {
-        if let label = preference.getExitButtonTitle() {
-            return label
-        }
         if paymentResult.isAccepted() {
-           return PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta
-        } else if paymentResult.isError() {
-            return PXFooterResultConstants.ERROR_LINK_TEXT.localized
-        } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue {
-                return PXFooterResultConstants.ERROR_LINK_TEXT.localized
-            } else {
-                return PXFooterResultConstants.WARNING_LINK_TEXT.localized
-            }
+            return PXFooterResultConstants.APPROVED_LINK_TEXT.localized_beta
         }
-        return PXFooterResultConstants.DEFAULT_LINK_TEXT.localized
+        return nil
     }
 
     private func getButtonAction() -> (() -> Void)? {
@@ -101,7 +89,7 @@ internal extension PXResultViewModel {
     private func pressButton() {
         trackChangePaymentMethodEvent()
         if paymentResult.isAccepted() {
-             self.callback(PaymentResult.CongratsState.approved)
+             self.callback(PaymentResult.CongratsState.cancel_EXIT)
         } else if paymentResult.isError() {
              self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
         } else if paymentResult.isWarning() {
@@ -116,15 +104,7 @@ internal extension PXResultViewModel {
     private func pressLink() {
         trackContinueEvent()
         if paymentResult.isAccepted() {
-            self.callback(PaymentResult.CongratsState.approved)
-        } else if paymentResult.isError() {
-            self.callback(PaymentResult.CongratsState.approved) //
-        } else if paymentResult.isWarning() {
-            if self.paymentResult.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue || self.paymentResult.statusDetail == PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue {
-                self.callback(PaymentResult.CongratsState.approved)
-            } else {
-                self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
-            }
+            self.callback(PaymentResult.CongratsState.cancel_EXIT)
         }
     }
 }
