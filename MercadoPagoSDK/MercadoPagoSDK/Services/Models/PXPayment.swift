@@ -401,5 +401,6 @@ extension PXPayment {
         public static let REJECTED_CARD_DISABLED = "cc_rejected_card_disabled"
         public static let REJECTED_INSUFFICIENT_DATA = "rejected_insufficient_data"
         public static let REJECTED_BY_BANK = "rejected_by_bank"
+        public static let REJECTED_BY_REGULATIONS = "rejected_by_regulations"
     }
 }
