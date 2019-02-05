@@ -1,3 +1,8 @@
+# v4.6.2
+🚀Private RC - 4.6.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Discount Token fix
+	
 # v4.6.1
 🚀Private RC - 4.6.1 🚀
 MercadoPagoSDKV4 - Private Version
