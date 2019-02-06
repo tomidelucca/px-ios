@@ -1,3 +1,8 @@
+# v4.5.4
+🚀Private RC - 4.5.4 🚀
+MercadoPagoSDKV4 - Private Version
+- Autoselect payment method hot fix
+
 # v4.5.3
 🚀Private RC - 4.5.3 🚀
 MercadoPagoSDKV4 - Private Version
