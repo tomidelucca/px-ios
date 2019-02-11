@@ -54,6 +54,9 @@ extension PXOneTapViewModel {
                         templateCard.cardLogoImage = paymentMethodImage
                     }
 
+
+
+
                     var payerCost: [PXPayerCost] = [PXPayerCost]()
                     if let pCost = amountHelper.paymentConfigurationService.getPayerCostsForPaymentMethod(targetCardData.cardId) {
                         payerCost = pCost
@@ -63,6 +66,12 @@ extension PXOneTapViewModel {
                     if let issuerId = targetNode.oneTapCard?.cardUI?.issuerId {
                         targetIssuerId = issuerId
                     }
+
+                    // TODO: Juan - IssuerImage - Check Get from DTO (issuerName)
+                    if let issuerImageName = targetNode.oneTapCard?.cardUI?.issuerName {
+                        templateCard.bankImage = ResourceManager.shared.getIssuerCardImage(issuerName: issuerImageName)
+                    }
+                    templateCard.bankImage = ResourceManager.shared.getIssuerCardImage(issuerName: "banco-patagonia")
 
                     var showArrow: Bool = true
                     var displayMessage: String?
