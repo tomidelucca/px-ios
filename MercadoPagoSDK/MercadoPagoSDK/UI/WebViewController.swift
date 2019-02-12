@@ -46,30 +46,34 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         PXLayout.pinBottom(view: webView).isActive = true
 
         if self.navigationController == nil, forceAddNavBar {
-            let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: PXLayout.getSafeAreaTopInset(), width: PXLayout.getScreenWidth(), height: 44))
-            self.view.addSubview(navBar);
-
-            navBar.isTranslucent = true
-            navBar.barTintColor = ThemeManager.shared.whiteColor()
-            navBar.tintColor = ThemeManager.shared.navigationBar().tintColor
-            navBar.backgroundColor = ThemeManager.shared.getMainColor()
-            navBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-
-            let textAttributes = [NSAttributedString.Key.foregroundColor:ThemeManager.shared.navigationBar().tintColor]
-            navBar.titleTextAttributes = textAttributes
-
-            let navItem = UINavigationItem(title: navBarTitle);
-            let closeImage = ResourceManager.shared.getImage("modal_close_button")?.ml_tintedImage(with: ThemeManager.shared.navigationBar().getTintColor())
-            let closeButton = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(close))
-            navItem.leftBarButtonItem = closeButton;
-            navBar.setItems([navItem], animated: false);
-            PXLayout.put(view: webView, onBottomOf: navBar).isActive = true
+            addNavigationBar()
         } else {
             PXLayout.pinTop(view: webView).isActive = true
         }
 
         self.view.backgroundColor = ThemeManager.shared.getMainColor()
         self.present(loadingVC, animated: false, completion: nil)
+    }
+
+    func addNavigationBar() {
+        let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: PXLayout.getSafeAreaTopInset(), width: PXLayout.getScreenWidth(), height: PXLayout.NAV_BAR_HEIGHT))
+        self.view.addSubview(navBar);
+
+        navBar.isTranslucent = true
+        navBar.barTintColor = ThemeManager.shared.whiteColor()
+        navBar.tintColor = ThemeManager.shared.navigationBar().tintColor
+        navBar.backgroundColor = ThemeManager.shared.getMainColor()
+        navBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+
+        let textAttributes = [NSAttributedString.Key.foregroundColor:ThemeManager.shared.navigationBar().tintColor]
+        navBar.titleTextAttributes = textAttributes
+
+        let navItem = UINavigationItem(title: navBarTitle);
+        let closeImage = ResourceManager.shared.getImage("modal_close_button")?.ml_tintedImage(with: ThemeManager.shared.navigationBar().getTintColor())
+        let closeButton = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(close))
+        navItem.leftBarButtonItem = closeButton;
+        navBar.setItems([navItem], animated: false);
+        PXLayout.put(view: webView, onBottomOf: navBar).isActive = true
     }
 
     override func viewDidAppear(_ animated: Bool) {

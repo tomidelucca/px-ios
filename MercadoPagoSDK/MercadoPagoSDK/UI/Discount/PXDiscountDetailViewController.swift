@@ -206,7 +206,6 @@ extension PXDiscountDetailViewController {
         let SCREEN_TITLE = "terms_and_conditions_title".localized_beta
 
         if let legalTermsURLString = amountHelper.campaign?.legalTermsUrl, let url = URL(string: legalTermsURLString) {
-
             let webVC = WebViewController(url: url, navigationBarTitle: SCREEN_TITLE, forceAddNavBar: true)
             webVC.title = SCREEN_TITLE
             present(webVC, animated: true)
