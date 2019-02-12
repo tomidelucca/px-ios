@@ -1,3 +1,8 @@
+# v4.6.3
+🚀Private RC - 4.6.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Discount Terms and Conditions fix
+
 # v4.6.2
 🚀Private RC - 4.6.2 🚀
 MercadoPagoSDKV4 - Private Version
