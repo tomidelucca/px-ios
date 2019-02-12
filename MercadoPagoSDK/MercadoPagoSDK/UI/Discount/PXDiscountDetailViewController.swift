@@ -203,16 +203,13 @@ extension PXDiscountDetailViewController {
 // MARK: Accions
 extension PXDiscountDetailViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        let SCREEN_NAME = "TERMS_AND_CONDITIONS"
-        let SCREEN_TITLE = "terms_and_conditions_title"
+        let SCREEN_TITLE = "terms_and_conditions_title".localized_beta
 
         if let legalTermsURLString = amountHelper.campaign?.legalTermsUrl, let url = URL(string: legalTermsURLString) {
 
-            let webVC = WebViewController(url: url, screenName: SCREEN_NAME, navigationBarTitle: SCREEN_TITLE.localized_beta, forceAddNavBar: true)
-            webVC.title = SCREEN_TITLE.localized_beta
-            present(webVC, animated: true) {
-                print("presented")
-            }
+            let webVC = WebViewController(url: url, navigationBarTitle: SCREEN_TITLE, forceAddNavBar: true)
+            webVC.title = SCREEN_TITLE
+            present(webVC, animated: true)
         }
     }
 }

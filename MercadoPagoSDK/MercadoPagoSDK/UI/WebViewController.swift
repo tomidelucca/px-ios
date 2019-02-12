@@ -11,15 +11,13 @@ import UIKit
 class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 
     var url: URL
-    var name: String?
     var navBarTitle: String
     let webView: UIWebView
     let forceAddNavBar: Bool
     private var loadingVC: PXLoadingViewController
 
-    init(url: URL, screenName: String, navigationBarTitle: String, forceAddNavBar: Bool = false) {
+    init(url: URL, navigationBarTitle: String, forceAddNavBar: Bool = false) {
         self.url = url
-        self.name = screenName
         self.navBarTitle = navigationBarTitle
         self.forceAddNavBar = forceAddNavBar
         self.loadingVC = PXLoadingViewController()
