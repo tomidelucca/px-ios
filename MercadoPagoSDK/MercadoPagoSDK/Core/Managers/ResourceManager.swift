@@ -258,7 +258,7 @@ extension ResourceManager {
 // MARK: Issuers
 // TODO: Change by OnDemand resources. - Q2 2019
 extension ResourceManager {
-    func getIssuerCardImage(issuerName: String) -> UIImage? {
-        return ResourceManager.shared.getImage("buflo_payment_card_\(issuerName)")
+    func getIssuerCardImage(issuerImageName: String) -> UIImage? {
+        return ResourceManager.shared.getImage(issuerImageName)
     }
 }
