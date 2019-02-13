@@ -1,3 +1,8 @@
+# v4.6.5
+🚀Private RC - 4.6.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Discount clear when changing payment method 
+	
 # v4.6.4
 🚀Private RC - 4.6.4 🚀
 MercadoPagoSDKV4 - Private Version
