@@ -9,7 +9,7 @@
 import Foundation
 /// :nodoc:
 open class PXCustomOptionSearchItem: NSObject, Codable {
-    open var id: String!
+    open var id: String
     open var _description: String?
     open var paymentMethodId: String?
     open var paymentTypeId: String?
