@@ -207,6 +207,7 @@ extension PXCardToken {
 
     func validateIdentificationNumber(_ identificationType: PXIdentificationType?) -> String? {
         if identificationType != nil {
+            // VALIDACION CPF
             if cardholder?.identification != nil && cardholder?.identification?.number != nil {
                 let len = cardholder!.identification!.number!.count
                 let min = identificationType!.minLength
@@ -215,7 +216,11 @@ extension PXCardToken {
                     if len > max || len < min {
                         return "invalid_field".localized
                     } else {
-                        return nil
+                        if identificationType!.validate(identification: cardholder?.identification?.number ?? "") {
+                            return nil
+                        } else {
+                            return "invalid_field".localized
+                        }
                     }
                 } else {
                     return validateIdentificationNumber()
