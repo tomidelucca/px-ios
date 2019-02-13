@@ -156,6 +156,14 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return MercadoPagoCheckoutViewModel.error != nil
     }
 
+    func applyDefaultDiscountOrClear() {
+        if let defaultDiscountConfiguration = search?.selectedDiscountConfiguration {
+            attemptToApplyDiscount(defaultDiscountConfiguration)
+        } else {
+            clearDiscount()
+        }
+    }
+
     func attemptToApplyDiscount(_ discountConfiguration: PXDiscountConfiguration?) {
         guard let discountConfiguration = discountConfiguration else {
             clearDiscount()
@@ -825,6 +833,7 @@ extension MercadoPagoCheckoutViewModel {
         self.cleanPaymentResult()
         self.resetInformation()
         self.resetGroupSelection()
+        self.applyDefaultDiscountOrClear()
         self.rootVC = true
         hookService.resetHooksToShow()
     }
