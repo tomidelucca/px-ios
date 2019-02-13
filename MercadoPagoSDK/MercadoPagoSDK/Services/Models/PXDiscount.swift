@@ -128,7 +128,7 @@ extension PXDiscount {
         return id
     }
     
-    ////////////////
+    /// :nodoc:
     @objc
     public func getCouponAmount() -> NSDecimalNumber? {
         return NSDecimalNumber(value: couponAmount)
