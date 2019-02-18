@@ -280,7 +280,6 @@
 				4B10DBC02139891C00EA2208 /* Resources */,
 				566C2527E61696E3F28310A3 /* [CP] Embed Pods Frameworks */,
 				241F85E381FBE0F789D9F57E /* [CP] Embed Pods Frameworks */,
-				1D267E9B203D205FBD35F9CC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -362,25 +361,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1D267E9B203D205FBD35F9CC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKExamplesObjectiveC/Pods-MercadoPagoSDKExamplesObjectiveC-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		241F85E381FBE0F789D9F57E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

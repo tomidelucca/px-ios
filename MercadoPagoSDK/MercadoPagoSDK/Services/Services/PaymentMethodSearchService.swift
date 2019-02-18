@@ -91,9 +91,6 @@ internal class PaymentMethodSearchService: MercadoPagoService {
 
         let headers = ["Accept-Language": language]
 
-        // TODO: Remove this
-        self.baseURL = "http://private-2fdc63-split2.apiary-mock.com"
-
         self.request(uri: PXServicesURLConfigs.MP_SEARCH_PAYMENTS_URI, params: params, body: bodyJSON, method: HTTPMethod.post, headers: headers, cache: false, success: { (data) -> Void in
             do {
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
