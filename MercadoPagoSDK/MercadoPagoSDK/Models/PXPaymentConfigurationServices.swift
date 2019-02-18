@@ -27,7 +27,10 @@ class PXPaymentConfigurationServices {
     }
 
     // Amount Configuration for Payment Method
-    func getAmountConfigurationForPaymentMethod(_ id: String) -> PXAmountConfiguration? {
+    func getAmountConfigurationForPaymentMethod(_ id: String?) -> PXAmountConfiguration? {
+        guard let id = id else {
+            return nil
+        }
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
             if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
                 return paymentOptionConfiguration.amountConfiguration
