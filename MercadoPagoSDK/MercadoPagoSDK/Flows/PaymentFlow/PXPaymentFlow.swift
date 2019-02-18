@@ -10,6 +10,7 @@ import Foundation
 
 internal final class PXPaymentFlow: NSObject, PXFlow {
     let model: PXPaymentFlowModel
+    let amountHelper: PXAmountHelper
 
     weak var resultHandler: PXPaymentResultHandlerProtocol?
     weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
@@ -22,12 +23,18 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         self.pxNavigationHandler = navigationHandler
         self.model.amountHelper = amountHelper
         self.model.checkoutPreference = checkoutPreference
+        self.amountHelper = amountHelper
     }
 
     func setData(amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
         self.model.amountHelper = amountHelper
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
+
+        if let discountToken = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(self.model.paymentData?.token?.cardId)?.discountToken {
+            self.model.paymentData?.discount?.id = discountToken.stringValue
+            self.model.paymentData?.campaign?.id = discountToken
+        }
     }
 
     deinit {

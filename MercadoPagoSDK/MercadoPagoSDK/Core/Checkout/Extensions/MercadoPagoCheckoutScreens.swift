@@ -31,10 +31,8 @@ extension MercadoPagoCheckout {
             }
             if let discountConfiguration = strongSelf.viewModel.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOptionSelected.getId()) {
                 strongSelf.viewModel.attemptToApplyDiscount(discountConfiguration)
-            } else if let defaultDiscountConfiguration = strongSelf.viewModel.search?.selectedDiscountConfiguration {
-                strongSelf.viewModel.attemptToApplyDiscount(defaultDiscountConfiguration)
             } else {
-                strongSelf.viewModel.clearDiscount()
+                strongSelf.viewModel.applyDefaultDiscountOrClear()
             }
             if let defaultPC = strongSelf.viewModel.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
                 strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)

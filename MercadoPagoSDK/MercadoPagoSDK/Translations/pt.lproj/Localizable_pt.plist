@@ -417,5 +417,12 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Selecione o parcelamento</string>
 	</dict>
+	<key>terms_and_conditions_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Termos e Condições</string>
+	</dict>
 </dict>
 </plist>

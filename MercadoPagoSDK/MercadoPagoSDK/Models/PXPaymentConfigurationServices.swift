@@ -55,7 +55,6 @@ class PXPaymentConfigurationServices {
                 } else {
                     return paymentOptionConfiguration.amountConfiguration?.selectedPayerCost
                 }
-
             }
         }
         return nil

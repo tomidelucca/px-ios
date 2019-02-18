@@ -417,5 +417,12 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Selecciona la cuota</string>
 	</dict>
+	<key>terms_and_conditions_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Términos y Condiciones</string>
+	</dict>
 </dict>
 </plist>

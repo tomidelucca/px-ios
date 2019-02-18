@@ -427,8 +427,8 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 //        loadingButtonComponent?.shake()
     }
 
-    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
-        let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
+    func shouldOpenTermsCondition(_ title: String, url: URL) {
+        let webVC = WebViewController(url: url, navigationBarTitle: title)
         webVC.title = title
         self.navigationController?.pushViewController(webVC, animated: true)
     }
