@@ -100,7 +100,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 extension WebViewController {
     func trackScreen() {
         var properties: [String: Any] = [:]
-        properties["url"] = url
+        properties["url"] = url.absoluteString
         trackScreen(path: TrackingPaths.Screens.getTermsAndCondiontionPath(), properties: properties)
     }
 }
