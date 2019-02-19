@@ -70,7 +70,6 @@ extension PXOneTapViewModel {
                     if let issuerImageName = targetNode.oneTapCard?.cardUI?.issuerImage {
                         templateCard.bankImage = ResourceManager.shared.getIssuerCardImage(issuerImageName: issuerImageName)
                     }
-                    templateCard.bankImage = ResourceManager.shared.getIssuerCardImage(issuerImageName: "buflo_payment_card_banco-patagonia")
 
                     var showArrow: Bool = true
                     var displayMessage: String?
