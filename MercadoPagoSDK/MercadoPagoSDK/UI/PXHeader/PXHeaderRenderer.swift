@@ -57,6 +57,10 @@ internal final class PXHeaderRenderer: NSObject {
         //Close button
         if let closeAction = header.props.closeAction {
             let button = buildCloseButton()
+            button.add(for: .touchUpInside) {
+                headerView.delegate?.didTapCloseButton()
+            }
+
             headerView.closeButton = button
             headerView.addSubview(button)
 
@@ -149,9 +153,14 @@ internal final class PXHeaderRenderer: NSObject {
 }
 
 internal final class PXHeaderView: PXComponentView {
+    var delegate: PXHeaderTrackingProtocol?
     var circleImage: PXUIImageView?
     var badgeImage: PXAnimatedImageView?
     var statusLabel: UILabel?
     var messageLabel: UILabel?
     var closeButton: UIButton?
+}
+
+protocol PXHeaderTrackingProtocol: NSObjectProtocol {
+    func didTapCloseButton()
 }

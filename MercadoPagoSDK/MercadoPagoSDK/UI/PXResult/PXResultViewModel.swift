@@ -81,11 +81,45 @@ extension PXResultViewModel {
         return screenPath
     }
 
-    func trackChangePaymentMethodEvent() {
+    func getFooterPrimaryActionTrackingPath() -> String {
+        let paymentStatus = paymentResult.status
+        var screenPath = ""
 
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = ""
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = ""
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorChangePaymentMethodPath()
+        }
+        return screenPath
     }
 
-    func trackContinueEvent() {
+    func getFooterSecondaryActionTrackingPath() -> String {
+        let paymentStatus = paymentResult.status
+        var screenPath = ""
 
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessContinuePath()
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionContinuePath()
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = ""
+        }
+        return screenPath
+    }
+
+    func getHeaderCloseButtonTrackingPath() -> String {
+        let paymentStatus = paymentResult.status
+        var screenPath = ""
+
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getSuccessAbortPath()
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getFurtherActionAbortPath()
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            screenPath = TrackingPaths.Screens.PaymentResult.getErrorAbortPath()
+        }
+        return screenPath
     }
 }
