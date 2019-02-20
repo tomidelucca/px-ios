@@ -53,13 +53,13 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.hideNavBar()
-        self.extendedLayoutIncludesOpaqueBars = true
-        self.titleCellHeight = 44
+        hideNavBar()
+        extendedLayoutIncludesOpaqueBars = true
+        titleCellHeight = 44
 
-        if self.viewModel.showFloatingTotalRow() {
+        if let bottomConstraintEnabled = getTableViewPinBottomContraint()?.isActive, viewModel.showFloatingTotalRow() && bottomConstraintEnabled {
             getTableViewPinBottomContraint()?.isActive = false
-            renderViews()
+            renderBottomTotalRow()
         } else {
             getTableViewPinBottomContraint()?.isActive = true
         }
@@ -78,9 +78,9 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
         return nil
     }
 
-    private func renderViews() {
+    private func renderBottomTotalRow() {
         let floatingRowView = getFloatingTotalRowView()
-        self.view.addSubview(floatingRowView)
+        view.addSubview(floatingRowView)
         PXLayout.matchWidth(ofView: floatingRowView).isActive = true
         PXLayout.centerHorizontally(view: floatingRowView).isActive = true
         PXLayout.pinBottom(view: floatingRowView, to: view).isActive = true
