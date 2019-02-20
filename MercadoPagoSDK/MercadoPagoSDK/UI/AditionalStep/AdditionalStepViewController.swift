@@ -8,26 +8,60 @@
 
 import UIKit
 
-internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate, UITableViewDataSource {
-
+internal class AdditionalStepViewController: MercadoPagoUIScrollViewController {
+    // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
 
+    // MARK: Defs
     var bundle: Bundle? = ResourceManager.shared.getBundle()
     let viewModel: AdditionalStepViewModel!
     override var maxFontSize: CGFloat { return self.viewModel.maxFontSize}
 
+    // MARK: Init
     public init(viewModel: AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject) -> Void)) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
         super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
     }
-
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: Lifecycle
     override open func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+    }
+
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateView()
+    }
+
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackScreen(path: viewModel.getScreenPath(), properties: viewModel.getScreenProperties())
+    }
+
+    // MARK: Overrides
+    override func loadMPStyles() {
+        if navigationController != nil {
+            navigationController?.navigationBar.tintColor = UIColor(red: 255, green: 255, blue: 255)
+            navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
+            navigationController?.navigationBar.removeBottomLine()
+            navigationController?.navigationBar.isTranslucent = false
+            displayBackButton()
+        }
+    }
+
+    override func getNavigationBarTitle() -> String {
+        return self.viewModel.getTitle()
+    }
+}
+
+// MARK: Privates - Setup view
+extension AdditionalStepViewController {
+    private func setupView() {
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         loadMPStyles()
@@ -39,20 +73,19 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
         tableView.addSubview(upperView)
 
         self.showNavBar()
-        loadCells()
+        setupCells()
     }
 
-    func loadCells() {
+    private func setupCells() {
         let titleNib = UINib(nibName: "AdditionalStepTitleTableViewCell", bundle: self.bundle)
-        self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
+        tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
         let cardNib = UINib(nibName: "AdditionalStepCardTableViewCell", bundle: self.bundle)
-        self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
+        tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
         let bankInsterestNib = UINib(nibName: "BankInsterestTableViewCell", bundle: self.bundle)
-        self.tableView.register(bankInsterestNib, forCellReuseIdentifier: "bankInsterestNib")
+        tableView.register(bankInsterestNib, forCellReuseIdentifier: "bankInsterestNib")
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    private func updateView() {
         hideNavBar()
         extendedLayoutIncludesOpaqueBars = true
         titleCellHeight = 44
@@ -63,11 +96,6 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
         } else {
             getTableViewPinBottomContraint()?.isActive = true
         }
-    }
-
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        trackScreen(path: viewModel.getScreenPath(), properties: viewModel.getScreenProperties())
     }
 
     private func getTableViewPinBottomContraint() -> NSLayoutConstraint? {
@@ -94,22 +122,17 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
         view.addGestureRecognizer(tap)
         return view
     }
+}
 
+// MARK: User actions
+extension AdditionalStepViewController {
     @objc func handleTotalRowTap() {
         PXTotalRowBuilder.handleTap(amountHelper: self.viewModel.amountHelper)
     }
+}
 
-    override func loadMPStyles() {
-        if self.navigationController != nil {
-            self.navigationController?.navigationBar.tintColor = UIColor(red: 255, green: 255, blue: 255)
-            self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
-            self.navigationController?.navigationBar.removeBottomLine()
-            self.navigationController?.navigationBar.isTranslucent = false
-
-            displayBackButton()
-        }
-    }
-
+// MARK: TableView
+extension AdditionalStepViewController: UITableViewDelegate, UITableViewDataSource  {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.viewModel.heightForRowAt(indexPath: indexPath)
     }
@@ -150,7 +173,7 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
 
         } else if viewModel.isBankInterestCellFor(indexPath: indexPath) {
             let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
-                bankInsterestCell.backgroundColor = UIColor.primaryColor()
+            bankInsterestCell.backgroundColor = UIColor.primaryColor()
             return bankInsterestCell
 
         } else if viewModel.isBodyCellFor(indexPath: indexPath) {
@@ -191,9 +214,4 @@ internal class AdditionalStepViewController: MercadoPagoUIScrollViewController, 
             }
         }
     }
-
-    override func getNavigationBarTitle() -> String {
-        return self.viewModel.getTitle()
-    }
-
 }
