@@ -17,7 +17,7 @@ class PXResultViewController: PXComponentContainerViewController {
     var topCustomView: UIView?
     var bottomCustomView: UIView?
     var bodyView: UIView?
-    var footerView: UIView?
+    var footerView: PXFooterView?
 
     internal var changePaymentMethodCallback: (() -> Void)?
 
@@ -66,6 +66,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Header
         self.headerView = self.buildHeaderView()
         if let headerView = self.headerView {
+            headerView.delegate = self
             headerView.pxShouldAnimated = false
             headerView.accessibilityIdentifier = "result_header_view"
             contentView.addSubview(headerView)
@@ -93,6 +94,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Footer
         self.footerView = self.buildFooterView()
         if let footerView = self.footerView {
+            footerView.delegate = self
             footerView.addSeparatorLineToTop(height: 1)
             contentView.addSubviewToBottom(footerView)
             PXLayout.matchWidth(ofView: footerView).isActive = true
@@ -167,9 +169,12 @@ extension PXResultViewController {
         return nil
     }
 
-    func buildFooterView() -> UIView {
+    func buildFooterView() -> PXFooterView? {
         let footerComponent = viewModel.buildFooterComponent()
-        return footerComponent.render()
+        if let footerView = footerComponent.render() as? PXFooterView {
+            return footerView
+        }
+        return nil
     }
 
     func buildReceiptView() -> UIView? {

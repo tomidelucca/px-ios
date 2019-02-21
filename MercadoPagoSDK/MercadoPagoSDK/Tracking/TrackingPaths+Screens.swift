@@ -127,6 +127,11 @@ extension TrackingPaths.Screens {
         private static let success = "/success"
         private static let furtherAction = "/further_action_needed"
         private static let error = "/error"
+        private static let abort = "/abort"
+        private static let _continue = "/continue"
+        private static let primaryAction = "/primary_action"
+        private static let secondaryAction = "/secondary_action"
+        private static let changePaymentMethod = "/change_payment_method"
 
         private static let result = TrackingPaths.pxTrack + "/result"
 
@@ -134,12 +139,60 @@ extension TrackingPaths.Screens {
             return result + success
         }
 
+        static func getSuccessAbortPath() -> String {
+            return getSuccessPath() + abort
+        }
+
+        static func getSuccessContinuePath() -> String {
+            return getSuccessPath() + _continue
+        }
+
+        static func getSuccessPrimaryActionPath() -> String {
+            return getSuccessPath() + primaryAction
+        }
+
+        static func getSuccessSecondaryActionPath() -> String {
+            return getSuccessPath() + secondaryAction
+        }
+
         static func getFurtherActionPath() -> String {
             return result + furtherAction
         }
 
+        static func getFurtherActionAbortPath() -> String {
+            return getFurtherActionPath() + abort
+        }
+
+        static func getFurtherActionContinuePath() -> String {
+            return getFurtherActionPath() + _continue
+        }
+
+        static func getFurtherActionPrimaryActionPath() -> String {
+            return getFurtherActionPath() + primaryAction
+        }
+
+        static func getFurtherActionSecondaryActionPath() -> String {
+            return getFurtherActionPath() + secondaryAction
+        }
+
         static func getErrorPath() -> String {
             return result + error
+        }
+
+        static func getErrorAbortPath() -> String {
+            return getErrorPath() + abort
+        }
+
+        static func getErrorChangePaymentMethodPath() -> String {
+            return getErrorPath() + changePaymentMethod
+        }
+
+        static func getErrorPrimaryActionPath() -> String {
+            return getErrorPath() + primaryAction
+        }
+
+        static func getErrorSecondaryActionPath() -> String {
+            return getErrorPath() + secondaryAction
         }
     }
 }

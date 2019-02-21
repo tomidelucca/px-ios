@@ -24,4 +24,7 @@ protocol PXResultViewModelInterface {
     func buildBottomCustomView() -> UIView?
     func getTrackingProperties() -> [String: Any]
     func getTrackingPath() -> String
+    func getFooterPrimaryActionTrackingPath() -> String
+    func getFooterSecondaryActionTrackingPath() -> String
+    func getHeaderCloseButtonTrackingPath() -> String
 }

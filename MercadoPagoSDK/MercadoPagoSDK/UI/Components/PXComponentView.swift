@@ -119,6 +119,11 @@ import Foundation
         self.contentView.addSubview(view)
     }
 
+    func addSubviewToComponentView(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        super.addSubview(view)
+    }
+
     public func addSubviewToBottom(_ view: UIView, withMargin margin: CGFloat = 0) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
