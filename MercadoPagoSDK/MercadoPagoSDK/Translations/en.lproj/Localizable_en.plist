@@ -95,6 +95,13 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Use a payment method other than a card.</string>
 	</dict>
+	<key>error_body_description_rejected_by_regulations</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>You have details pending update. In order to pay with account money, you must inform the missing details.</string>
+	</dict>
 	<key>error_body_action_text_</key>
 	<dict>
 		<key>comment</key>

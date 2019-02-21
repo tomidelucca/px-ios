@@ -71,7 +71,7 @@
     //successWithBusinessResult(businessResult);
 
     // Success example payment result generic payment.
-    PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"approved" statusDetail:@"" paymentId: @""];
+    PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_call_for_authorize" paymentId: @""];
     successWithPaymentResult(result);
 }
 
