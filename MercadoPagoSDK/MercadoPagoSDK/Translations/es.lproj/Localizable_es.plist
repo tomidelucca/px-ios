@@ -95,6 +95,13 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>Usa un medio de pago distinto de tarjeta.</string>
 	</dict>
+	<key>error_body_description_rejected_by_regulations</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Tienes datos pendientes para actualizar. Para pagar con dinero en cuenta debes completar los datos faltantes.</string>
+	</dict>
 	<key>error_body_action_text_</key>
 	<dict>
 		<key>comment</key>
@@ -416,6 +423,13 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<string></string>
 		<key>value</key>
 		<string>Selecciona la cuota</string>
+	</dict>
+	<key>terms_and_conditions_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Términos y Condiciones</string>
 	</dict>
 </dict>
 </plist>

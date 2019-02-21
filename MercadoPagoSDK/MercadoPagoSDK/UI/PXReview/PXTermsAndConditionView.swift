@@ -9,12 +9,11 @@
 import Foundation
 
 protocol PXTermsAndConditionViewDelegate: NSObjectProtocol {
-    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL)
+    func shouldOpenTermsCondition(_ title: String, url: URL)
 }
 
 class PXTermsAndConditionView: PXComponentView {
 
-    var SCREEN_NAME = "TERMS_AND_CONDITIONS"
     var SCREEN_TITLE = "Términos y Condiciones"
 
     fileprivate let termsAndConditionsText: MPTextView = MPTextView()
@@ -93,7 +92,7 @@ extension PXTermsAndConditionView: UITextViewDelegate, UIGestureRecognizerDelega
 
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let url = URL(string: SiteManager.shared.getTermsAndConditionsURL()) {
-            delegate?.shouldOpenTermsCondition(SCREEN_TITLE.localized, screenName: SCREEN_NAME, url: url)
+            delegate?.shouldOpenTermsCondition(SCREEN_TITLE.localized, url: url)
         }
     }
 

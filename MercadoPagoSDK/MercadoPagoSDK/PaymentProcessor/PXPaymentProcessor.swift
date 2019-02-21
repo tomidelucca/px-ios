@@ -12,6 +12,7 @@ import Foundation
  Implement this protocol to create your custom Payment Processor.
  */
 @objc public protocol PXPaymentProcessor: NSObjectProtocol {
+
     /**
       ViewController associated to your Payment Processor. This is optional VC. If you need a screen to make the payment, return your Payment processor viewController. If you return nil, we use our custom Animated progress Button.
      */
@@ -37,9 +38,16 @@ import Foundation
      - parameter successWithBusinessResult: Use to return a custom PXBusinessResult.
      - parameter successWithPaymentResult: Use to return a simple payment PXGenericPayment.
      */
-    @objc optional func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXGenericPayment) -> Void))
+
+     @objc optional func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBusinessResult: @escaping ((PXBusinessResult) -> Void), successWithPaymentResult: @escaping  ((PXGenericPayment) -> Void))
+
     /**
      Optional method to inform your Payment timeout. (This is the timeout of your payment backend). Define this value for a superb checkout animated progress button experience.
      */
     @objc optional func paymentTimeOut() -> Double
+
+    /**
+     Optional method to inform if this payment processor supports split payment method payment.
+     - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
+     */
 }

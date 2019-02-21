@@ -17,7 +17,7 @@ extension OneTapFlow {
         if model.needToShowLoading() {
             self.pxNavigationHandler.presentLoading()
         }
-        paymentFlow.setData(paymentData: model.paymentData, checkoutPreference: model.checkoutPreference, resultHandler: self)
+        paymentFlow.setData(amountHelper: model.amountHelper, checkoutPreference: model.checkoutPreference, resultHandler: self)
         paymentFlow.start()
     }
 }
@@ -49,7 +49,7 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
             self.executeNextStep()
         } else {
             model.saveEsc()
-            PXAnimatedButton.animateButtonWith(status: businessResult.getStatus().getDescription())
+            PXAnimatedButton.animateButtonWith(status: businessResult.getBusinessStatus().getDescription())
         }
     }
 }

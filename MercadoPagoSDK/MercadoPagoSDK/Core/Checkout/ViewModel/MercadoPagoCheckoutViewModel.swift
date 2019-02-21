@@ -51,7 +51,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // In order to ensure data updated create new instance for every usage
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData.copy() as! PXPaymentData, chargeRules: self.chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
         }
     }
 
@@ -77,6 +77,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var rootVC = true
 
     internal var paymentData = PXPaymentData()
+    internal var splitAccountMoney: PXPaymentData?
     var payment: PXPayment?
     internal var paymentResult: PaymentResult?
     var businessResult: PXBusinessResult?
@@ -106,7 +107,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
 
     // Payment plugin
-    var paymentPlugin: PXPaymentProcessor?
+    var paymentPlugin: PXSplitPaymentProcessor?
     var paymentFlow: PXPaymentFlow?
 
     // Discount and charges
@@ -154,6 +155,14 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     func hasError() -> Bool {
         return MercadoPagoCheckoutViewModel.error != nil
+    }
+
+    func applyDefaultDiscountOrClear() {
+        if let defaultDiscountConfiguration = search?.selectedDiscountConfiguration {
+            attemptToApplyDiscount(defaultDiscountConfiguration)
+        } else {
+            clearDiscount()
+        }
     }
 
     func attemptToApplyDiscount(_ discountConfiguration: PXDiscountConfiguration?) {
@@ -723,7 +732,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func populateCheckoutStore() {
-        PXCheckoutStore.sharedInstance.paymentData = self.paymentData
+        PXCheckoutStore.sharedInstance.paymentDatas = [self.paymentData]
+        if let splitAccountMoney = amountHelper.splitAccountMoney {
+            PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
+        }
         PXCheckoutStore.sharedInstance.checkoutPreference = self.checkoutPreference
     }
 
@@ -825,6 +837,7 @@ extension MercadoPagoCheckoutViewModel {
         self.cleanPaymentResult()
         self.resetInformation()
         self.resetGroupSelection()
+        self.applyDefaultDiscountOrClear()
         self.rootVC = true
         hookService.resetHooksToShow()
     }
@@ -873,11 +886,11 @@ extension MercadoPagoCheckoutViewModel {
 extension MercadoPagoCheckoutViewModel {
     func createPaymentFlow(paymentErrorHandler: PXPaymentErrorHandlerProtocol) -> PXPaymentFlow {
         guard let paymentFlow = paymentFlow else {
-            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, paymentData: paymentData, checkoutPreference: checkoutPreference, amountHelper: amountHelper)
+            let paymentFlow = PXPaymentFlow(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, paymentErrorHandler: paymentErrorHandler, navigationHandler: pxNavigationHandler, amountHelper: amountHelper, checkoutPreference: checkoutPreference, escEnabled: advancedConfig.escEnabled)
             self.paymentFlow = paymentFlow
             return paymentFlow
         }
-        paymentFlow.model.paymentData = paymentData
+        paymentFlow.model.amountHelper = amountHelper
         paymentFlow.model.checkoutPreference = checkoutPreference
         return paymentFlow
     }

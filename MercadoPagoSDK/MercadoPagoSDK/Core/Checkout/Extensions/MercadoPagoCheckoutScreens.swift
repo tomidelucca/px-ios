@@ -31,10 +31,8 @@ extension MercadoPagoCheckout {
             }
             if let discountConfiguration = strongSelf.viewModel.paymentConfigurationService.getDiscountConfigurationForPaymentMethod(paymentOptionSelected.getId()) {
                 strongSelf.viewModel.attemptToApplyDiscount(discountConfiguration)
-            } else if let defaultDiscountConfiguration = strongSelf.viewModel.search?.selectedDiscountConfiguration {
-                strongSelf.viewModel.attemptToApplyDiscount(defaultDiscountConfiguration)
             } else {
-                strongSelf.viewModel.clearDiscount()
+                strongSelf.viewModel.applyDefaultDiscountOrClear()
             }
             if let defaultPC = strongSelf.viewModel.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
                 strongSelf.viewModel.updateCheckoutModel(payerCost: defaultPC)
@@ -184,9 +182,6 @@ extension MercadoPagoCheckout {
     }
 
     func showPaymentResultScreen() {
-
-        _ = self.viewModel.saveOrDeleteESC()
-
         if self.viewModel.businessResult != nil {
             self.showBusinessResultScreen()
             return
@@ -226,7 +221,9 @@ extension MercadoPagoCheckout {
             return
         }
         let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData, amountHelper: self.viewModel.amountHelper)
-        let congratsViewController = PXResultViewController(viewModel: viewModel) { _ in}
+        let congratsViewController = PXResultViewController(viewModel: viewModel) { [weak self] (state: PaymentResult.CongratsState) in
+            self?.finish()
+        }
         self.viewModel.pxNavigationHandler.pushViewController(viewController: congratsViewController, animated: false)
 
     }

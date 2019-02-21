@@ -8,21 +8,22 @@
 import Foundation
 
 class PXSummaryAmount: NSObject, Codable {
-    let amountConfigurations: [String:PXAmountConfiguration]?
-    let discountConfigurations: [String:PXDiscountConfiguration]?
+    let amountConfigurations: [String: PXAmountConfiguration]?
+    let discountConfigurations: [String: PXDiscountConfiguration]?
     let defaultAmountConfigurationId: String
+
     var selectedAmountConfiguration: PXPaymentOptionConfiguration {
         get {
             return PXPaymentOptionConfiguration(id: defaultAmountConfigurationId, discountConfiguration: discountConfigurations?[defaultAmountConfigurationId], payerCostConfiguration: amountConfigurations?[defaultAmountConfigurationId])
         }
     }
-    
-    init(amountConfigurations: [String:PXAmountConfiguration]?, discountConfigurations: [String:PXDiscountConfiguration]?, defaultAmountConfigurationId: String) {
+
+    init(amountConfigurations: [String: PXAmountConfiguration]?, discountConfigurations: [String: PXDiscountConfiguration]?, defaultAmountConfigurationId: String) {
         self.amountConfigurations = amountConfigurations
         self.discountConfigurations = discountConfigurations
         self.defaultAmountConfigurationId = defaultAmountConfigurationId
     }
-    
+
     public enum PXSummaryAmountKeys: String, CodingKey {
         case amountConfigurations = "amount_configurations"
         case discountConfigurations = "discounts_configurations"
@@ -30,10 +31,10 @@ class PXSummaryAmount: NSObject, Codable {
     }
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSummaryAmountKeys.self)
-        let discountConfigurations: [String:PXDiscountConfiguration]? = try container.decodeIfPresent([String:PXDiscountConfiguration].self, forKey: .discountConfigurations)
-        let amountConfigurations: [String:PXAmountConfiguration]? = try container.decodeIfPresent([String:PXAmountConfiguration].self, forKey: .amountConfigurations)
+        let discountConfigurations: [String: PXDiscountConfiguration]? = try container.decodeIfPresent([String: PXDiscountConfiguration].self, forKey: .discountConfigurations)
+        let amountConfigurations: [String: PXAmountConfiguration]? = try container.decodeIfPresent([String: PXAmountConfiguration].self, forKey: .amountConfigurations)
         let defaultAmountConfigurationId: String? = try container.decodeIfPresent(String.self, forKey: .defaultAmountConfigurationId)
-        
+
         self.init(amountConfigurations: amountConfigurations, discountConfigurations: discountConfigurations, defaultAmountConfigurationId: defaultAmountConfigurationId!)
     }
     public func encode(to encoder: Encoder) throws {

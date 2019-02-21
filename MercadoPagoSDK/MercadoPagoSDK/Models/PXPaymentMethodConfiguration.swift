@@ -19,7 +19,7 @@ class PXPaymentMethodConfiguration: NSObject {
         self.selectedAmountConfiguration = selectedAmountConfiguration
         super.init()
     }
-    
+
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherConfiguration = object as? PXPaymentMethodConfiguration else {
             return false

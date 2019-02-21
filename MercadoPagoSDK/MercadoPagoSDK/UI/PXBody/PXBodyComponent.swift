@@ -10,7 +10,16 @@ import UIKit
 
 internal class PXBodyComponent: PXComponentizable {
 
-    let rejectedStatusDetailsWithBody = [PXPayment.StatusDetails.REJECTED_OTHER_REASON, PXPayment.StatusDetails.REJECTED_BY_BANK, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA, PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT, PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS, PXPayment.StatusDetails.REJECTED_HIGH_RISK, PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE, PXPayment.StatusDetails.REJECTED_CARD_DISABLED, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT]
+    let rejectedStatusDetailsWithBody = [PXPayment.StatusDetails.REJECTED_OTHER_REASON,
+                                         PXPayment.StatusDetails.REJECTED_BY_BANK,
+                                         PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA,
+                                         PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT,
+                                         PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
+                                         PXPayment.StatusDetails.REJECTED_HIGH_RISK,
+                                         PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE,
+                                         PXPayment.StatusDetails.REJECTED_CARD_DISABLED,
+                                         PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
+                                         PXPayment.StatusDetails.REJECTED_BY_REGULATIONS]
 
     let pendingStatusDetailsWithBody = [PXPayment.StatusDetails.PENDING_CONTINGENCY, PXPayment.StatusDetails.PENDING_REVIEW_MANUAL]
 
@@ -43,49 +52,54 @@ internal class PXBodyComponent: PXComponentizable {
         return paymentMethodImage
     }
 
-    func getPaymentMethodComponent() -> PXPaymentMethodComponent {
-        let pm = self.props.paymentResult.paymentData!.paymentMethod!
+    func getPaymentMethodComponents() -> [PXPaymentMethodComponent] {
+        var paymentMethodsComponents: [PXPaymentMethodComponent] = []
 
-        let image = getPaymentMethodIcon(paymentMethod: pm)
+        if let splitAccountMoney = props.paymentResult.splitAccountMoney, let secondPMComponent = getPaymentMethodComponent(paymentData: splitAccountMoney) {
+            paymentMethodsComponents.append(secondPMComponent)
+        }
+
+        if let paymentData = props.paymentResult.paymentData, let firstPMComponent = getPaymentMethodComponent(paymentData: paymentData) {
+            paymentMethodsComponents.append(firstPMComponent)
+        }
+
+        return paymentMethodsComponents
+    }
+
+    func getPaymentMethodComponent(paymentData: PXPaymentData) -> PXPaymentMethodComponent? {
+        guard let paymentMethod = paymentData.paymentMethod else {
+            return nil
+        }
+
+        let image = getPaymentMethodIcon(paymentMethod: paymentMethod)
         let currency = SiteManager.shared.getCurrency()
-        var amountTitle: NSMutableAttributedString = Utils.getAmountFormated(amount: self.props.amountHelper.amountToPay, forCurrency: currency).toAttributedString()
+        var amountTitle: NSMutableAttributedString =  "".toAttributedString()
         var subtitle: NSMutableAttributedString?
-        if let payerCost = self.props.paymentResult.paymentData?.payerCost {
+        if let payerCost = paymentData.payerCost {
             if payerCost.installments > 1 {
                 amountTitle = String(String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)).toAttributedString()
                 subtitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true).toAttributedString()
-            }
-        }
-
-        if self.props.amountHelper.discount != nil {
-            var amount = self.props.amountHelper.preferenceAmountWithCharges
-
-            if let payerCostTotalAmount = self.props.paymentResult.paymentData?.payerCost?.totalAmount {
-                amount = payerCostTotalAmount + self.props.amountHelper.amountOff
-            }
-
-            let preferenceAmountString = Utils.getStrikethroughAmount(amount: amount, forCurrency: currency)
-
-            if subtitle == nil {
-                subtitle = preferenceAmountString
             } else {
-                let discountStrikethroughFont = Utils.getFont(size: PXLayout.XXS_FONT)
-                preferenceAmountString.addAttribute(NSAttributedString.Key.font, value: discountStrikethroughFont, range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
-                preferenceAmountString.addAttribute(NSAttributedString.Key.foregroundColor, value: ThemeManager.shared.greyColor(), range: NSRange.init(location: 0, length: preferenceAmountString.string.count))
-                amountTitle.append("".getAttributedStringNewLine())
-                amountTitle.append(preferenceAmountString)
+                amountTitle = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency).toAttributedString()
+            }
+        } else {
+            // Caso account money
+            if  let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
+                amountTitle = Utils.getAmountFormated(amount: splitAccountMoneyAmount, forCurrency: currency).toAttributedString()
+            } else {
+                amountTitle = Utils.getAmountFormated(amount: props.amountHelper.amountToPay, forCurrency: currency).toAttributedString()
             }
         }
 
         var pmDescription: String = ""
-        let paymentMethodName = pm.name ?? ""
+        let paymentMethodName = paymentMethod.name ?? ""
 
-        let issuer = self.props.paymentResult.paymentData?.getIssuer()
+        let issuer = paymentData.getIssuer()
         let paymentMethodIssuerName = issuer?.name ?? ""
         var descriptionDetail: NSAttributedString?
 
-        if pm.isCard {
-            if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
+        if paymentMethod.isCard {
+            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
             }
             if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
@@ -158,6 +172,8 @@ internal class PXBodyComponent: PXComponentizable {
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_MAX_ATTEMPTS()
             case PXPayment.StatusDetails.REJECTED_HIGH_RISK:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_HIGH_RISK()
+            case PXPayment.StatusDetails.REJECTED_BY_REGULATIONS:
+                return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_BY_REGULATIONS()
             default:
                 return nil
             }

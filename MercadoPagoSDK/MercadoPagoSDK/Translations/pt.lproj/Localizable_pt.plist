@@ -95,6 +95,13 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Use um meio de pagamento diferente de cartão.</string>
 	</dict>
+	<key>error_body_description_rejected_by_regulations</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Você possui dados pendentes para atualizar. Para pagar com dinheiro em conta, você deve preencher os dados faltantes.</string>
+	</dict>
 	<key>error_body_action_text_</key>
 	<dict>
 		<key>comment</key>
@@ -416,6 +423,13 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<string></string>
 		<key>value</key>
 		<string>Selecione o parcelamento</string>
+	</dict>
+	<key>terms_and_conditions_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Termos e Condições</string>
 	</dict>
 </dict>
 </plist>

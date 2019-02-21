@@ -12,7 +12,16 @@ import Foundation
  Use this object in order to notify you own custom payment using `PXPaymentProcessor`.
  */
 @objcMembers
-open class PXGenericPayment: NSObject, PXResult {
+open class PXGenericPayment: NSObject, PXBasePayment {
+
+    public func getPaymentMethodId() -> String? {
+        return paymentMethodId
+    }
+
+    public func getPaymentMethodTypeId() -> String? {
+        return paymentMethodTypeId
+    }
+
     public func getPaymentId() -> String? {
         return paymentId
     }
@@ -46,16 +55,29 @@ open class PXGenericPayment: NSObject, PXResult {
      */
     public let statusDetail: String
 
+    /**
+     Payment method type id.
+     */
+    public let paymentMethodId: String?
+
+    /**
+     Payment method type id.
+     */
+    public let paymentMethodTypeId: String?
+
     // MARK: Init.
     /**
      - parameter status: Status of payment.
      - parameter statusDetail: Status detail of payment.
      - parameter paymentId: Id of payment.
      */
+    @available(*, deprecated: 4.7.0, message: "Use init with payment method id")
     @objc public init(status: String, statusDetail: String, paymentId: String? = nil) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentId = paymentId
+        self.paymentMethodId = nil
+        self.paymentMethodTypeId = nil
     }
 
     /// :nodoc:
@@ -68,5 +90,23 @@ open class PXGenericPayment: NSObject, PXResult {
         self.status = paymentStatusStrDefault
         self.statusDetail = statusDetail
         self.paymentId = receiptId
+        self.paymentMethodId = nil
+        self.paymentMethodTypeId = nil
+    }
+
+    // MARK: Init.
+    /**
+     - parameter status: Status of payment.
+     - parameter statusDetail: Status detail of payment.
+     - parameter paymentId: Id of payment.
+     - parameter paymentMethodId: Payment Method id.
+     - parameter paymentMethodTypeId: Payment Type Id.
+     */
+    @objc public init(status: String, statusDetail: String, paymentId: String? = nil, paymentMethodId: String?, paymentMethodTypeId: String?) {
+        self.status = status
+        self.statusDetail = statusDetail
+        self.paymentId = paymentId
+        self.paymentMethodId = paymentMethodId
+        self.paymentMethodTypeId = paymentMethodTypeId
     }
 }

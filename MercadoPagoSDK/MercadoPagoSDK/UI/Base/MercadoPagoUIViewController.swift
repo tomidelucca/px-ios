@@ -71,7 +71,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     }
 
     func getReserveSpace() -> CGFloat {
-        var totalReserveSpace: CGFloat = CGFloat(STATUS_BAR_HEIGTH)
+        var totalReserveSpace: CGFloat = PXLayout.getStatusBarHeight()
 
         if !shouldHideNavigationBar {
             totalReserveSpace += CGFloat(NAV_BAR_HEIGHT)

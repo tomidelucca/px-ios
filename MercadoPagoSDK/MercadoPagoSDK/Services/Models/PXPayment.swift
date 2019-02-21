@@ -11,7 +11,7 @@ import Foundation
 /**
  This is our Payment object. When we make the payment, we return this object in the checkout exit. More details in: `PXLifeCycleProtocol` finishCheckout method.
  */
-@objcMembers open class PXPayment: NSObject, Codable, PXResult {
+@objcMembers open class PXPayment: NSObject, Codable, PXBasePayment {
     /**
      * binaryMode
      */
@@ -369,6 +369,15 @@ extension PXPayment {
     @objc public func getStatusDetail() -> String {
         return statusDetail
     }
+
+    public func getPaymentMethodId() -> String? {
+        return paymentMethodId
+    }
+
+    public func getPaymentMethodTypeId() -> String? {
+        return paymentTypeId
+    }
+
 }
 
 /// :nodoc:
@@ -401,5 +410,6 @@ extension PXPayment {
         public static let REJECTED_CARD_DISABLED = "cc_rejected_card_disabled"
         public static let REJECTED_INSUFFICIENT_DATA = "rejected_insufficient_data"
         public static let REJECTED_BY_BANK = "rejected_by_bank"
+        public static let REJECTED_BY_REGULATIONS = "rejected_by_regulations"
     }
 }

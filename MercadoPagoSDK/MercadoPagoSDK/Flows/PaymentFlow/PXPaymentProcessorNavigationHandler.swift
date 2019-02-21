@@ -32,7 +32,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
     /// :nodoc:
     open func didFinishPayment(paymentStatus: PXGenericPayment.RemotePaymentStatus, statusDetails: String = "", paymentId: String? = nil) {
 
-        guard let paymentData = self.flow?.model.paymentData else {
+        guard let paymentData = self.flow?.model.amountHelper?.getPaymentData() else {
             return
         }
 
@@ -50,7 +50,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
         }
 
         // Set paymentPlugin image into payment method.
-        if self.flow?.model.paymentData?.paymentMethod?.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
+        if self.flow?.model.amountHelper?.getPaymentData().paymentMethod?.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
 
             // Defaults status details for paymentMethod plugin
             if paymentStatus == .APPROVED {
@@ -60,7 +60,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
             }
         }
 
-        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: statusDetailsStr, paymentData: paymentData, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
+        let paymentResult = PaymentResult(status: paymentStatusStrDefault, statusDetail: statusDetailsStr, paymentData: paymentData, splitAccountMoney: flow?.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
 
         flow?.model.paymentResult = paymentResult
         flow?.executeNextStep()
@@ -74,7 +74,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
      */
     open func didFinishPayment(status: String, statusDetail: String, paymentId: String? = nil) {
 
-        guard let paymentData = self.flow?.model.paymentData else {
+        guard let paymentData = self.flow?.model.amountHelper?.getPaymentData() else {
             return
         }
 
@@ -83,7 +83,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
             return
         }
 
-        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
+        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, splitAccountMoney: self.flow?.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: paymentId, statementDescription: nil)
 
         flow?.model.paymentResult = paymentResult
         flow?.executeNextStep()

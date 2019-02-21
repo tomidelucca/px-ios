@@ -13,7 +13,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
     var paymentResult: PaymentResult
     var instructionsInfo: PXInstructions?
     var preference: PXPaymentResultConfiguration
-    var callback: ((PaymentResult.CongratsState) -> Void)!
+    var callback: ((PaymentResult.CongratsState) -> Void)?
     let amountHelper: PXAmountHelper
 
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC, PXRejectedStatusDetail.CALL_FOR_AUTH, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER, PXRejectedStatusDetail.CARD_DISABLE, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT, PXRejectedStatusDetail.BAD_FILLED_DATE, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE, PXRejectedStatusDetail.BAD_FILLED_OTHER]
@@ -56,7 +56,7 @@ internal class PXResultViewModel: PXResultViewModelInterface {
 // MARK: Tracking
 extension PXResultViewModel {
     func getTrackingProperties() -> [String: Any] {
-        var properties: [String: Any] = amountHelper.paymentData.getPaymentDataForTracking()
+        var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
         properties["style"] = "generic"
         if let paymentId = paymentResult.paymentId {
             properties["payment_id"] = Int64(paymentId)

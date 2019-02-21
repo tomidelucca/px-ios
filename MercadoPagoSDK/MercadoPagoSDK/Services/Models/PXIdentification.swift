@@ -15,10 +15,10 @@ open class PXIdentification: NSObject, Codable {
 
     open var isComplete: Bool {
         get {
-            return number != "null" && type != "null" && number != "" && type != "" 
+            return number != "null" && type != "null" && number != "" && type != ""
         }
     }
-    
+
     public init(number: String?, type: String?) {
         self.type = type
         self.number = number

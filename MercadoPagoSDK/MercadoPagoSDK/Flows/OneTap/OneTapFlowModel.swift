@@ -28,6 +28,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var consumedDiscount: Bool = false
     var customerPaymentOptions: [CustomerPaymentMethod]?
     var paymentMethodPlugins: [PXPaymentMethodPlugin]?
+    var splitAccountMoney: PXPaymentData?
 
     // Payment flow
     var paymentFlow: PXPaymentFlow?
@@ -36,9 +37,9 @@ final internal class OneTapFlowModel: PXFlowModel {
     var chargeRules: [PXPaymentTypeChargeRule]?
 
     // In order to ensure data updated create new instance for every usage
-    private var amountHelper: PXAmountHelper {
+    internal var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService)
+            return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, consumedDiscount: consumedDiscount, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
         }
     }
 
@@ -108,8 +109,36 @@ internal extension OneTapFlowModel {
 
 // MARK: Update view models
 internal extension OneTapFlowModel {
-    func updateCheckoutModel(paymentData: PXPaymentData) {
+    func updateCheckoutModel(paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) {
         self.paymentData = paymentData
+
+        if splitAccountMoneyEnabled {
+            let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionSelected.getId())
+
+            // Set total amount to pay with card without discount
+            paymentData.transactionAmount = splitConfiguration?.primaryPaymentMethod?.amount
+
+            let accountMoneyPMs = search.paymentMethods.filter { (paymentMethod) -> Bool in
+                return paymentMethod.id == splitConfiguration?.secondaryPaymentMethod?.id
+            }
+            if let accountMoneyPM = accountMoneyPMs.first {
+                splitAccountMoney = PXPaymentData()
+                // Set total amount to pay with account money without discount
+                splitAccountMoney?.transactionAmount = splitConfiguration?.secondaryPaymentMethod?.amount
+                splitAccountMoney?.updatePaymentDataWith(paymentMethod: accountMoneyPM)
+
+            let campaign = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionSelected.getId())?.getDiscountConfiguration().campaign
+                if let discount = splitConfiguration?.primaryPaymentMethod?.discount, let campaign = campaign {
+                    paymentData.setDiscount(discount, withCampaign: campaign)
+                }
+                if let discount = splitConfiguration?.secondaryPaymentMethod?.discount, let campaign = campaign {
+                    splitAccountMoney?.setDiscount(discount, withCampaign: campaign)
+                }
+            }
+        } else {
+            splitAccountMoney = nil
+        }
+
         self.readyToPay = true
     }
 
@@ -207,7 +236,7 @@ internal extension OneTapFlowModel {
 
     func getTimeoutForOneTapReviewController() -> TimeInterval {
         if let paymentFlow = paymentFlow {
-            paymentFlow.model.paymentData = paymentData
+            paymentFlow.model.amountHelper = amountHelper
             let tokenTimeOut: TimeInterval = mercadoPagoServicesAdapter.getTimeOut()
             // Payment Flow timeout + tokenization TimeOut
             return paymentFlow.getPaymentTimeOut() + tokenTimeOut
