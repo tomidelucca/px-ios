@@ -105,7 +105,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
     }
 
     private func getSplitMessage(splitConfiguration: PXSplitConfiguration) -> NSMutableAttributedString {
-        let amount: String = Utils.getAttributedAmount(splitConfiguration.getSplitAmountToPay(), currency: SiteManager.shared.getCurrency()).string
+        let amount: String = Utils.getAmountFormated(amount: splitConfiguration.getSplitAmountToPay(), forCurrency: SiteManager.shared.getCurrency())
 
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
 

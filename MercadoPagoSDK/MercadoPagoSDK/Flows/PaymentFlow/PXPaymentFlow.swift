@@ -16,7 +16,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, amountHelper: PXAmountHelper?, checkoutPreference: PXCheckoutPreference?, escEnabled: Bool) {
+    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference?, escEnabled: Bool) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, escEnabled: escEnabled)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
@@ -28,6 +28,11 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
         self.model.amountHelper = amountHelper
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
+
+        if let discountToken = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(amountHelper.getPaymentData().token?.cardId)?.discountToken {
+            self.model.amountHelper?.getPaymentData().discount?.id = discountToken.stringValue
+            self.model.amountHelper?.getPaymentData().campaign?.id = discountToken
+        }
     }
 
     deinit {

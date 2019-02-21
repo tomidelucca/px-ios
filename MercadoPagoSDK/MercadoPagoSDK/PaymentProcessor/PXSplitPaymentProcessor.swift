@@ -44,5 +44,5 @@ import Foundation
      Method to inform if this payment processor supports split payment method payment.
      - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
      */
-    @objc func supportSplitPaymentMehtodPayment(checkoutStore: PXCheckoutStore) -> Bool
+    @objc func supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore) -> Bool
 }

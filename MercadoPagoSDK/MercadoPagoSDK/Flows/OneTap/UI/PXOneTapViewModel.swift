@@ -286,7 +286,7 @@ extension PXOneTapViewModel {
         var amount: String = ""
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
 
-        amount = Utils.getAttributedAmount(amountToPay, currency: SiteManager.shared.getCurrency()).string
+        amount = Utils.getAmountFormated(amount: amountToPay, forCurrency: SiteManager.shared.getCurrency())
         return NSAttributedString(string: amount, attributes: attributes)
     }
 }

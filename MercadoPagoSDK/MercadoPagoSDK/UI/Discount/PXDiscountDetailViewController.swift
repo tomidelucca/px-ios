@@ -87,6 +87,14 @@ extension PXDiscountDetailViewController {
         if let description = getDescription() {
             buildAndAddLabel(to: self.contentView, margin: PXLayout.XXS_MARGIN, with: description, height: 34, accessibilityIdentifier: "discount_detail_description_label")
         }
+
+        if let legalTerms = getLegalTerms() {
+            let legalTermsLabel = buildAndAddLabel(to: self.contentView, margin: PXLayout.XXS_MARGIN, with: legalTerms, accessibilityIdentifier: "discount_legal_terms_label")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+            legalTermsLabel.addGestureRecognizer(tap)
+            legalTermsLabel.isUserInteractionEnabled = true
+        }
+
         if !amountHelper.consumedDiscount {
             buildSeparatorLine(in: self.contentView, topMargin: PXLayout.M_MARGIN, sideMargin: PXLayout.M_MARGIN, height: 1)
 
@@ -103,7 +111,8 @@ extension PXDiscountDetailViewController {
         PXLayout.centerVertically(view: contentView).isActive = true
     }
 
-    func buildAndAddLabel(to view: PXComponentView, margin: CGFloat, with text: NSAttributedString, height: CGFloat? = nil, accessibilityIdentifier: String) {
+    @discardableResult
+    func buildAndAddLabel(to view: PXComponentView, margin: CGFloat, with text: NSAttributedString, height: CGFloat? = nil, accessibilityIdentifier: String) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -115,6 +124,7 @@ extension PXDiscountDetailViewController {
         }
         PXLayout.pinLeft(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinRight(view: label, withMargin: PXLayout.M_MARGIN).isActive = true
+        return label
     }
 
     func buildSeparatorLine(in view: PXComponentView, topMargin: CGFloat, sideMargin: CGFloat, height: CGFloat) {
@@ -178,6 +188,28 @@ extension PXDiscountDetailViewController {
         let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
         let string = NSAttributedString(string: "discount_detail_modal_footer".localized_beta, attributes: attributes)
         return string
+    }
+
+    func getLegalTerms() -> NSAttributedString? {
+        if amountHelper.campaign?.legalTermsUrl == nil {
+            return nil
+        }
+        let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.getAccentColor()]
+        let string = NSAttributedString(string: "terms_and_conditions_title".localized_beta, attributes: attributes)
+        return string
+    }
+}
+
+// MARK: Accions
+extension PXDiscountDetailViewController {
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        let SCREEN_TITLE = "terms_and_conditions_title".localized_beta
+
+        if let legalTermsURLString = amountHelper.campaign?.legalTermsUrl, let url = URL(string: legalTermsURLString) {
+            let webVC = WebViewController(url: url, navigationBarTitle: SCREEN_TITLE, forceAddNavBar: true)
+            webVC.title = SCREEN_TITLE
+            present(webVC, animated: true)
+        }
     }
 }
 

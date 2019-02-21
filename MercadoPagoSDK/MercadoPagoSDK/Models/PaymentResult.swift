@@ -11,7 +11,7 @@ import Foundation
 internal class PaymentResult {
 
     internal enum CongratsState: Int {
-        case approved = 0
+        case cancel_EXIT = 0
         case cancel_SELECT_OTHER = 1
         case cancel_RETRY = 2
         case cancel_RECOVER = 3

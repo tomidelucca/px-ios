@@ -23,7 +23,7 @@ internal class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
         return paymentProcessor.support()
     }
 
-    func supportSplitPaymentMehtodPayment(checkoutStore: PXCheckoutStore) -> Bool {
+    func supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore) -> Bool {
         return false
     }
 

@@ -25,6 +25,9 @@ internal final class PXHeaderRenderer: NSObject {
     //Text
     static let TITLE_FONT_SIZE: CGFloat = PXLayout.XXXL_FONT
 
+    //Close Button
+    let CLOSE_BUTTON_SIZE: CGFloat = 42
+
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
     func render(_ header: PXHeaderComponent ) -> PXHeaderView {
@@ -51,6 +54,22 @@ internal final class PXHeaderRenderer: NSObject {
         PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_HORIZONTAL_OFFSET).isActive = true
         PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_VERTICAL_OFFSET).isActive = true
 
+        //Close button
+        if let closeAction = header.props.closeAction {
+            let button = buildCloseButton()
+            headerView.closeButton = button
+            headerView.addSubview(button)
+
+            button.add(for: .touchUpInside, {
+                closeAction()
+            })
+
+            PXLayout.setHeight(owner: button, height: CLOSE_BUTTON_SIZE).isActive = true
+            PXLayout.setWidth(owner: button, width: CLOSE_BUTTON_SIZE).isActive = true
+            PXLayout.pinTop(view: button, to: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+            PXLayout.pinLeft(view: button, to: headerView, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        }
+        
         //Status Label
         headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
         PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView.statusLabel!.superview!).isActive = true
@@ -86,6 +105,16 @@ internal final class PXHeaderRenderer: NSObject {
         let imageView = PXAnimatedImageView(image: image, size: CGSize(width: BADGE_IMAGE_SIZE, height: BADGE_IMAGE_SIZE))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }
+    
+    func buildCloseButton() -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let image = ResourceManager.shared.getImage("close-button")
+        let margin: CGFloat = PXLayout.XS_MARGIN
+        button.contentEdgeInsets = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        button.setImage(image, for: .normal)
+        return button
     }
 
     func buildStatusLabel(with text: NSAttributedString?, in superView: UIView, onBottomOf upperView: UIView) -> UILabel {
@@ -124,4 +153,5 @@ internal final class PXHeaderView: PXComponentView {
     var badgeImage: PXAnimatedImageView?
     var statusLabel: UILabel?
     var messageLabel: UILabel?
+    var closeButton: UIButton?
 }

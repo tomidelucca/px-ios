@@ -95,6 +95,13 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Use a payment method other than a card.</string>
 	</dict>
+	<key>error_body_description_rejected_by_regulations</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>You have details pending update. In order to pay with account money, you must inform the missing details.</string>
+	</dict>
 	<key>error_body_action_text_</key>
 	<dict>
 		<key>comment</key>
@@ -269,6 +276,62 @@ Or if you prefer, you can choose another payment method.</string>
 		<string></string>
 		<key>value</key>
 		<string>%1$s OFF</string>
+	</dict>
+	<key>terms_and_conditions_title</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Terms and Conditions</string>
+	</dict>
+	<key>review_discount_terms_and_conditions</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Exclusive discount from Mercado Libre and Mercado Pago. View Conditions</string>
+	</dict>
+	<key>review_discount_terms_and_conditions_link</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>View Conditions</string>
+	</dict>
+	<key>discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>The discounts are not cumulative. We give you the highest one for this payment</string>
+	</dict>
+	<key>discount_detail_modal_disclaimer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Discount limit %1$s</string>
+	</dict>
+	<key>discount_end_date</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Valid until %1s.</string>
+	</dict>
+	<key>unique_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>The limit is available for one single payment.</string>
+	</dict>
+	<key>multiple_discount_detail_modal_footer</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>With each payment to this brand you will consume the discounts until you reach the limit.</string>
 	</dict>
 </dict>
 </plist>

@@ -43,7 +43,7 @@ final class PXDiscountTermsAndConditionView: PXTermsAndConditionView {
 
     override func handleTap(_ sender: UITapGestureRecognizer) {
         if let url = URL(string: self.getTyCURL()) {
-            delegate?.shouldOpenTermsCondition(SCREEN_TITLE.localized, screenName: SCREEN_NAME, url: url)
+            delegate?.shouldOpenTermsCondition(SCREEN_TITLE.localized, url: url)
         }
     }
 

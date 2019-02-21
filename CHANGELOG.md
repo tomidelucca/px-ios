@@ -1,3 +1,29 @@
+# v4.6.5
+🚀Private RC - 4.6.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Terms and Conditions tracking crash fix
+
+# v4.6.4
+🚀Private RC - 4.6.4 🚀
+MercadoPagoSDKV4 - Private Version
+- Discount obj-c support fix
+- Discount clear when changing payment method
+
+# v4.6.3
+🚀Private RC - 4.6.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Discount Terms and Conditions fix
+
+# v4.6.2
+🚀Private RC - 4.6.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Discount Token fix
+	
+# v4.6.1
+🚀Private RC - 4.6.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Tracking key hot fix
+	
 # v4.6.0
 🚀Private RC - 4.6.0 🚀
 MercadoPagoSDKV4 - Private Version
