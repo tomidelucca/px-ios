@@ -182,9 +182,6 @@ extension MercadoPagoCheckout {
     }
 
     func showPaymentResultScreen() {
-
-        _ = self.viewModel.saveOrDeleteESC()
-
         if self.viewModel.businessResult != nil {
             self.showBusinessResultScreen()
             return

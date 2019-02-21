@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PXPaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices)
+internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], paymentMethodSearchResult: PXPaymentMethodSearch?, chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool, serviceAdapter: MercadoPagoServicesAdapter, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices)
 internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?, apiException: ApiException?)
 
 internal protocol InitFlowProtocol: NSObjectProtocol {
@@ -39,7 +39,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
 
     var amountHelper: PXAmountHelper {
         get {
-            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount, paymentConfigurationService: self.properties.paymentConfigurationService)
+            return PXAmountHelper(preference: self.properties.checkoutPreference, paymentData: self.properties.paymentData, chargeRules: self.properties.chargeRules, consumedDiscount: self.properties.consumedDiscount, paymentConfigurationService: self.properties.paymentConfigurationService, splitAccountMoney: nil)
         }
     }
 
@@ -51,7 +51,7 @@ final class InitFlowModel: NSObject, PXFlowModel {
         super.init()
     }
 
-    func update(paymentPlugin: PXPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], chargeRules: [PXPaymentTypeChargeRule]?) {
+    func update(paymentPlugin: PXSplitPaymentProcessor?, paymentMethodPlugins: [PXPaymentMethodPlugin], chargeRules: [PXPaymentTypeChargeRule]?) {
         properties.paymentPlugin = paymentPlugin
         properties.paymentMethodPlugins = paymentMethodPlugins
         properties.chargeRules = chargeRules
@@ -124,7 +124,10 @@ extension InitFlowModel {
     }
 
     func populateCheckoutStore() {
-        PXCheckoutStore.sharedInstance.paymentData = self.properties.paymentData
+        PXCheckoutStore.sharedInstance.paymentDatas = [self.properties.paymentData]
+        if let splitAccountMoney = amountHelper.splitAccountMoney {
+            PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
+        }
         PXCheckoutStore.sharedInstance.checkoutPreference = self.properties.checkoutPreference
     }
 }

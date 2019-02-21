@@ -118,6 +118,10 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
 
 // MARK: Publics
 extension PXOneTapInstallmentInfoView {
+    func isExpanded() -> Bool {
+        return arrowImage.tag != colapsedTag
+    }
+
     func getActiveRowIndex() -> Int {
         return pagerView.currentIndex
     }
@@ -140,7 +144,7 @@ extension PXOneTapInstallmentInfoView {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleInstallments)))
     }
 
-    func setupChevron() {
+    private func setupChevron() {
         addSubview(arrowImage)
         arrowImage.contentMode = UIView.ContentMode.scaleAspectFit
         arrowImage.image = ResourceManager.shared.getImage("oneTapDownArrow")
@@ -156,7 +160,7 @@ extension PXOneTapInstallmentInfoView {
         }
     }
 
-    func setupFadeImages() {
+    private func setupFadeImages() {
         let leftImage = ResourceManager.shared.getImage("one-tap-installments-info-left")
         let leftImageView = UIImageView(image: leftImage)
         leftImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -184,7 +188,7 @@ extension PXOneTapInstallmentInfoView {
         animateArrow(alpha: 0, duration: duration)
     }
 
-    func animateArrow(alpha: CGFloat, duration: Double) {
+    private func animateArrow(alpha: CGFloat, duration: Double) {
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
         pxAnimator.addAnimation(animation: { [weak self] in
             self?.arrowImage.alpha = alpha

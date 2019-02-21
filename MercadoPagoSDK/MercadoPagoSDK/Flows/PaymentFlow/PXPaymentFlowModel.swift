@@ -9,9 +9,9 @@
 import Foundation
 
 internal final class PXPaymentFlowModel: NSObject {
-    var paymentData: PXPaymentData?
+    var amountHelper: PXAmountHelper?
     var checkoutPreference: PXCheckoutPreference?
-    let paymentPlugin: PXPaymentProcessor?
+    let paymentPlugin: PXSplitPaymentProcessor?
 
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter
 
@@ -19,9 +19,12 @@ internal final class PXPaymentFlowModel: NSObject {
     var instructionsInfo: PXInstructions?
     var businessResult: PXBusinessResult?
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
+    let escManager: MercadoPagoESC
+
+    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, escEnabled: Bool) {
         self.paymentPlugin = paymentPlugin
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter
+        self.escManager = MercadoPagoESCImplementation(enabled: escEnabled)
     }
 
     enum Steps: String {
@@ -89,19 +92,22 @@ internal final class PXPaymentFlowModel: NSObject {
         if !needToCreatePayment() {
             return false
         }
-       return hasPluginPaymentScreen()
+        return hasPluginPaymentScreen()
     }
 
     func isOfflinePayment() -> Bool {
-        guard let paymentTypeId = paymentData?.paymentMethod?.paymentTypeId else {
+        guard let paymentTypeId = amountHelper?.getPaymentData().paymentMethod?.paymentTypeId else {
             return false
         }
         return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId)
     }
 
     func assignToCheckoutStore() {
-        if let paymentData = paymentData {
-            PXCheckoutStore.sharedInstance.paymentData = paymentData
+        if let amountHelper = amountHelper {
+            PXCheckoutStore.sharedInstance.paymentDatas = [amountHelper.getPaymentData()]
+            if let splitAccountMoney = amountHelper.splitAccountMoney {
+                PXCheckoutStore.sharedInstance.paymentDatas.append(splitAccountMoney)
+            }
         }
         PXCheckoutStore.sharedInstance.checkoutPreference = checkoutPreference
     }
@@ -122,5 +128,28 @@ internal extension PXPaymentFlowModel {
         paymentPlugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
         let processorViewController = paymentPlugin.paymentProcessorViewController()
         return processorViewController != nil
+    }
+}
+
+// MARK: Manage ESC
+internal extension PXPaymentFlowModel {
+    func handleESCForPayment(status: String, statusDetails: String, errorPaymentType: String?) {
+        guard let token = amountHelper?.getPaymentData().getToken() else {
+            return
+        }
+        let isApprovedPayment: Bool = status == PXPaymentStatus.APPROVED.rawValue
+
+        if token.hasCardId() {
+            if !isApprovedPayment {
+                guard let errorPaymentType = errorPaymentType else {
+                    escManager.deleteESC(cardId: token.cardId)
+                    return
+                }
+                // If it has error Payment Type, check if the error was from a card
+                if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
+                    escManager.deleteESC(cardId: token.cardId)
+                }
+            }
+        }
     }
 }

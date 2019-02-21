@@ -21,12 +21,15 @@ internal class PaymentResult {
     let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue, PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue, PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue, PXRejectedStatusDetail.CARD_DISABLE.rawValue, PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue, PXRejectedStatusDetail.BAD_FILLED_DATE.rawValue, PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue, PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
 
     var paymentData: PXPaymentData?
+    var splitAccountMoney: PXPaymentData?
     var status: String
     var statusDetail: String
     var payerEmail: String?
     var paymentId: String?
     var statementDescription: String?
     var cardId: String?
+    var paymentMethodId: String?
+    var paymentMethodTypeId: String?
 
     init (payment: PXPayment, paymentData: PXPaymentData) {
         self.status = payment.status
@@ -38,14 +41,17 @@ internal class PaymentResult {
         self.cardId = payment.card?.id
     }
 
-    init (status: String, statusDetail: String, paymentData: PXPaymentData, payerEmail: String?, paymentId: String?, statementDescription: String?) {
+    init (status: String, statusDetail: String, paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, payerEmail: String?, paymentId: String?, statementDescription: String?, paymentMethodId: String? = nil, paymentMethodTypeId: String? = nil) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData
+        self.splitAccountMoney = splitAccountMoney
         self.payerEmail = payerEmail
         self.paymentId = paymentId
         self.statementDescription = statementDescription
         self.cardId = paymentData.token?.cardId
+        self.paymentMethodTypeId = paymentMethodTypeId
+        self.paymentMethodId = paymentMethodId
     }
 
     func isCallForAuth() -> Bool {

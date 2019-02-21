@@ -323,7 +323,7 @@ extension PXReviewViewController {
 
     private func getCFTComponentView() -> UIView? {
         if viewModel.hasPayerCostAddionalInfo() {
-            let cftView = PXCFTComponentView(withCFTValue: self.viewModel.amountHelper.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
+            let cftView = PXCFTComponentView(withCFTValue: self.viewModel.amountHelper.getPaymentData().payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
             return cftView
         }
         return nil
@@ -410,7 +410,7 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
         view.isUserInteractionEnabled = false
         trackEvent(path: TrackingPaths.Events.ReviewConfirm.getConfirmPath(), properties: viewModel.getConfirmEventProperties())
         self.hideBackButton()
-        self.callbackConfirm(self.viewModel.amountHelper.paymentData)
+        self.callbackConfirm(self.viewModel.amountHelper.getPaymentData())
     }
 
     func resetButton() {

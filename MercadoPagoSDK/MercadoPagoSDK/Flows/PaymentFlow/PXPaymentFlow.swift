@@ -10,30 +10,28 @@ import Foundation
 
 internal final class PXPaymentFlow: NSObject, PXFlow {
     let model: PXPaymentFlowModel
-    let amountHelper: PXAmountHelper
 
     weak var resultHandler: PXPaymentResultHandlerProtocol?
     weak var paymentErrorHandler: PXPaymentErrorHandlerProtocol?
 
     var pxNavigationHandler: PXNavigationHandler
 
-    init(paymentPlugin: PXPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, paymentData: PXPaymentData?, checkoutPreference: PXCheckoutPreference?, amountHelper: PXAmountHelper) {
-        model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+    init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference?, escEnabled: Bool) {
+        model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, escEnabled: escEnabled)
         self.paymentErrorHandler = paymentErrorHandler
         self.pxNavigationHandler = navigationHandler
-        self.model.paymentData = paymentData
+        self.model.amountHelper = amountHelper
         self.model.checkoutPreference = checkoutPreference
-        self.amountHelper = amountHelper
     }
 
-    func setData(paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
-        self.model.paymentData = paymentData
+    func setData(amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference, resultHandler: PXPaymentResultHandlerProtocol) {
+        self.model.amountHelper = amountHelper
         self.model.checkoutPreference = checkoutPreference
         self.resultHandler = resultHandler
 
-        if let discountToken = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(self.model.paymentData?.token?.cardId)?.discountToken {
-            self.model.paymentData?.discount?.id = discountToken.stringValue
-            self.model.paymentData?.campaign?.id = discountToken
+        if let discountToken = amountHelper.paymentConfigurationService.getAmountConfigurationForPaymentMethod(amountHelper.getPaymentData().token?.cardId)?.discountToken {
+            self.model.amountHelper?.getPaymentData().discount?.id = discountToken.stringValue
+            self.model.amountHelper?.getPaymentData().campaign?.id = discountToken
         }
     }
 
@@ -64,7 +62,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
 
     func getPaymentTimeOut() -> TimeInterval {
         let instructionTimeOut: TimeInterval = model.isOfflinePayment() ? 15 : 0
-        if let paymentPluginTimeOut = model.paymentPlugin?.paymentTimeOut?() {
+        if let paymentPluginTimeOut = model.paymentPlugin?.paymentTimeOut?(), paymentPluginTimeOut > 0 {
             return paymentPluginTimeOut + instructionTimeOut
         } else {
             return model.mercadoPagoServicesAdapter.getTimeOut() + instructionTimeOut

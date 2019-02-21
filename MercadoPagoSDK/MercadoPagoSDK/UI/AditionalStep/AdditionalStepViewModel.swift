@@ -220,7 +220,7 @@ internal class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         if let token = token as? PXCardInformation {
             properties["card_id"] =  token.getCardId()
         }
-        if let issuer = amountHelper.paymentData.issuer {
+        if let issuer = amountHelper.getPaymentData().issuer {
             properties["issuer_id"] = Int64(issuer.id)
         }
         var dic: [Any] = []

@@ -9,18 +9,21 @@ import UIKit
 
 final class PXCardSliderViewModel {
     let paymentMethodId: String
+    let paymentTypeId: String?
     let issuerId: String
     let cardUI: CardUI
-    let shouldShowArrow: Bool
+    var shouldShowArrow: Bool
     var accountMoneyBalance: Double?
-    var payerCost: [PXPayerCost] = [PXPayerCost]()
     var cardData: CardData?
     var selectedPayerCost: PXPayerCost?
+    var payerCost: [PXPayerCost] = [PXPayerCost]()
     var cardId: String?
-    var displayMessage: String?
+    var displayMessage: NSAttributedString?
+    var amountConfiguration: PXAmountConfiguration?
 
-    init(_ paymentMethodId: String, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool) {
+    init(_ paymentMethodId: String, _ paymentTypeId: String?, _ issuerId: String, _ cardUI: CardUI, _ cardData: CardData?, _ payerCost: [PXPayerCost], _ selectedPayerCost: PXPayerCost?, _ cardId: String? = nil, _ shouldShowArrow: Bool, amountConfiguration: PXAmountConfiguration?) {
         self.paymentMethodId = paymentMethodId
+        self.paymentTypeId = paymentTypeId
         self.issuerId = issuerId
         self.cardUI = cardUI
         self.cardData = cardData
@@ -28,12 +31,13 @@ final class PXCardSliderViewModel {
         self.selectedPayerCost = selectedPayerCost
         self.cardId = cardId
         self.shouldShowArrow = shouldShowArrow
+        self.amountConfiguration = amountConfiguration
     }
 }
 
 extension PXCardSliderViewModel: PaymentMethodOption {
     func getPaymentType() -> String {
-        return paymentMethodId
+        return paymentTypeId ?? ""
     }
 
     func getId() -> String {

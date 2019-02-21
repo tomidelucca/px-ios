@@ -37,7 +37,7 @@ open class PXDiscountConfiguration: NSObject, Codable {
         self.campaign = campaign
     }
 
-    public init(discount: PXDiscount?, campaign: PXCampaign?, isNotAvailable: Bool) {
+    internal init(discount: PXDiscount?, campaign: PXCampaign?, isNotAvailable: Bool) {
         self.discount = discount
         self.campaign = campaign
         self.isNotAvailable = isNotAvailable

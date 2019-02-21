@@ -11,7 +11,7 @@ import Foundation
 internal class PXServicesURLConfigs: NSObject {
     static var MP_TEST_ENV = "/beta"
     static var MP_PROD_ENV = "/v1"
-    static var MP_SELECTED_ENV = MP_PROD_ENV
+    static var MP_SELECTED_ENV = MP_TEST_ENV
     static var PX_SDK_VERSION: String?
     static var API_VERSION = "1.9"
     static let MP_API_BASE_URL_PROD: String =  "https://api.mercadopago.com"
@@ -36,4 +36,5 @@ internal class PXServicesURLConfigs: NSObject {
     static let MP_CUSTOMER_URI = "/customers?preference_id="
     static let MP_CAMPAIGNS_URI = "/campaigns/check_availability"
     static let MP_SUMMARY_AMOUNT_URI = "\(MP_SELECTED_ENV)/px_mobile_api/summary_amount"
+    static let MP_PAYMENTS_URI = MP_ENVIROMENT + PAYMENTS
 }

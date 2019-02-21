@@ -15,11 +15,14 @@ class PXOneTapHeaderView: PXComponentView {
     }
 
     private weak var delegate: PXOneTapHeaderProtocol?
-    private var merchantView: PXOneTapHeaderMerchantView?
     private var isShowingHorizontally: Bool = false
     private var verticalLayoutConstraints: [NSLayoutConstraint] = []
     private var horizontalLayoutConstraints: [NSLayoutConstraint] = []
+    private var merchantView: PXOneTapHeaderMerchantView?
     private var summaryView: PXOneTapSummaryView?
+    private var splitPaymentView: PXOneTapSplitPaymentView?
+    private var splitPaymentViewHeightConstraint: NSLayoutConstraint?
+    private let splitPaymentViewHeight: CGFloat = 55
 
     init(viewModel: PXOneTapHeaderViewModel, delegate: PXOneTapHeaderProtocol?) {
         self.model = viewModel
@@ -35,13 +38,62 @@ class PXOneTapHeaderView: PXComponentView {
     func updateModel(_ model: PXOneTapHeaderViewModel) {
         self.model = model
     }
+
+    func updateSplitPaymentView(splitConfiguration: PXSplitConfiguration?) {
+        if let newSplitConfiguration = splitConfiguration {
+            self.splitPaymentView?.update(splitConfiguration: newSplitConfiguration)
+        }
+    }
+
+    func hideSplitPaymentView(duration: Double = 0.5) {
+        self.layoutIfNeeded()
+        var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.layoutIfNeeded()
+
+            strongSelf.splitPaymentView?.alpha = 0
+            strongSelf.splitPaymentViewHeightConstraint?.constant = 0
+
+            strongSelf.layoutIfNeeded()
+        })
+
+        pxAnimator.animate()
+    }
+
+    func showSplitPaymentView(duration: Double = 0.5) {
+        self.layoutIfNeeded()
+        var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
+        pxAnimator.addAnimation(animation: { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.layoutIfNeeded()
+
+            strongSelf.splitPaymentView?.alpha = 1
+            strongSelf.splitPaymentViewHeightConstraint?.constant = strongSelf.splitPaymentViewHeight
+
+            strongSelf.layoutIfNeeded()
+        })
+
+        pxAnimator.animate()
+    }
 }
 
 // MARK: Privates.
 extension PXOneTapHeaderView {
 
-    private func shouldShowHorizontally(data: [OneTapHeaderSummaryData]) -> Bool {
-        return UIDevice.isSmallDevice() && data.count != 1 && !data[0].isTotal
+    private func shouldShowHorizontally(model: PXOneTapHeaderViewModel) -> Bool {
+        let data = model.data
+        if UIDevice.isSmallDevice() && model.splitConfiguration != nil {
+            return true
+        } else {
+            return UIDevice.isSmallDevice() && data.count != 1 && !data[0].isTotal
+        }
     }
 
     private func removeAnimations() {
@@ -55,7 +107,9 @@ extension PXOneTapHeaderView {
         removeAnimations()
 
         let animationDuration = 0.35
-        let shouldShowHorizontally = self.shouldShowHorizontally(data: newModel.data)
+        let shouldAnimateSplitPaymentView = (newModel.splitConfiguration != nil) != (oldModel.splitConfiguration != nil)
+        let shouldHideSplitPaymentView = newModel.splitConfiguration == nil
+        let shouldShowHorizontally = self.shouldShowHorizontally(model: newModel)
         let shouldAnimateSummary = newModel.data.count != oldModel.data.count
         let shouldHideSummary = newModel.data.count < oldModel.data.count
 
@@ -95,7 +149,15 @@ extension PXOneTapHeaderView {
 
                         let summaryRowViewFrame = summaryRowView.convert(summaryRowView.bounds, to: self)
                         let pinTopConstraint = PXLayout.pinTop(view: newRow, withMargin: summaryRowViewFrame.minY)
-                        pinTopConstraint.constant = shouldHideSummary ? pinTopConstraint.constant : pinTopConstraint.constant + animationDistance
+
+                        if !shouldHideSummary {
+                            if shouldAnimateSplitPaymentView, shouldHideSplitPaymentView {
+                                pinTopConstraint.constant += animationDistance + self.splitPaymentViewHeight
+                            } else {
+                                pinTopConstraint.constant += animationDistance
+                            }
+                        }
+
                         pinTopConstraint.isActive = true
                         pinTopConstraints.append(pinTopConstraint)
                     }
@@ -109,7 +171,21 @@ extension PXOneTapHeaderView {
             pxAnimator.addAnimation(animation: { [weak self] in
                 for (index, view) in animationRows.enumerated() {
                     let pinTopConstraint = pinTopConstraints[index]
-                    pinTopConstraint.constant = shouldHideSummary ? pinTopConstraint.constant + animationDistance : pinTopConstraint.constant - animationDistance
+
+                    if shouldHideSummary {
+                        pinTopConstraint.constant += animationDistance
+                    } else {
+                        if shouldAnimateSplitPaymentView {
+                            if shouldHideSplitPaymentView {
+                                pinTopConstraint.constant -= animationDistance
+                            } else {
+                                pinTopConstraint.constant -= animationDistance
+                            }
+                        } else {
+                            pinTopConstraint.constant -= animationDistance
+                        }
+                    }
+
                     self?.layoutIfNeeded()
                     view.alpha = shouldHideSummary ? 0 : 1
                 }
@@ -128,11 +204,25 @@ extension PXOneTapHeaderView {
         } else {
             summaryView?.update(newModel.data)
         }
+
+        if shouldAnimateSplitPaymentView {
+            if shouldHideSplitPaymentView {
+                self.layoutIfNeeded()
+                self.superview?.layoutIfNeeded()
+                self.hideSplitPaymentView(duration: animationDuration)
+            } else {
+                self.layoutIfNeeded()
+                self.superview?.layoutIfNeeded()
+                self.showSplitPaymentView(duration: animationDuration)
+            }
+        }
     }
 
     private func animateToVertical(duration: Double = 0) {
         self.isShowingHorizontally = false
         self.merchantView?.animateToVertical(duration: duration)
+        let margin = model.splitConfiguration != nil ? PXLayout.ZERO_MARGIN : PXLayout.M_MARGIN
+        self.merchantView?.updateContentViewLayout(margin: margin)
         var pxAnimator = PXAnimator(duration: duration, dampingRatio: 1)
         pxAnimator.addAnimation(animation: { [weak self] in
             guard let strongSelf = self else {
@@ -176,7 +266,7 @@ extension PXOneTapHeaderView {
 
     private func render() {
         removeAllSubviews()
-        self.pinContentViewToBottom()
+        self.removeMargins()
         backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
 
         let summaryView = PXOneTapSummaryView(data: model.data)
@@ -184,9 +274,22 @@ extension PXOneTapHeaderView {
 
         addSubview(summaryView)
         PXLayout.matchWidth(ofView: summaryView).isActive = true
-        PXLayout.pinBottom(view: summaryView).isActive = true
 
-        let showHorizontally = shouldShowHorizontally(data: model.data)
+        let splitPaymentView = PXOneTapSplitPaymentView(splitConfiguration: model.splitConfiguration) { (isOn, isUserSelection) in
+            self.delegate?.splitPaymentSwitchChangedValue(isOn: isOn, isUserSelection: isUserSelection)
+        }
+        self.splitPaymentView = splitPaymentView
+        self.addSubview(splitPaymentView)
+        PXLayout.matchWidth(ofView: splitPaymentView).isActive = true
+
+        let initialSplitPaymentViewHeight = model.splitConfiguration != nil ? self.splitPaymentViewHeight : 0
+        self.splitPaymentViewHeightConstraint = PXLayout.setHeight(owner: splitPaymentView, height: initialSplitPaymentViewHeight)
+        self.splitPaymentViewHeightConstraint?.isActive = true
+        PXLayout.centerHorizontally(view: splitPaymentView).isActive = true
+        PXLayout.pinBottom(view: splitPaymentView).isActive = true
+        PXLayout.put(view: splitPaymentView, onBottomOf: summaryView).isActive = true
+
+        let showHorizontally = shouldShowHorizontally(model: model)
         let merchantView = PXOneTapHeaderMerchantView(image: model.icon, title: model.title, showHorizontally: showHorizontally)
         self.merchantView = merchantView
         self.addSubview(merchantView)

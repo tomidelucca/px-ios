@@ -14,5 +14,5 @@
     @import MercadoPagoSDK;
 #endif
 
-@interface PaymentPluginViewController : UIViewController <PXPaymentProcessor>
+@interface PaymentPluginViewController : UIViewController <PXSplitPaymentProcessor>
 @end

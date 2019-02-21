@@ -33,7 +33,7 @@ final class PXSummaryFullComponentView: PXComponentView {
         super.init()
         self.frame = CGRect(x: 0, y: requiredHeight, width: width, height: 0)
         self.addDetailsViews(typeDetailDictionary: summary.details)
-        let payerCost = amountHelper.paymentData.payerCost
+        let payerCost = amountHelper.getPaymentData().payerCost
         if payerCost != nil && (payerCost?.installments)! > 1 {
             self.addSmallMargin()
             self.addLine()

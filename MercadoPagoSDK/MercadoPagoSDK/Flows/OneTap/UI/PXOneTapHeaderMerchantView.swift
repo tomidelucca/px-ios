@@ -99,10 +99,10 @@ class PXOneTapHeaderMerchantView: PXComponentView {
         }
     }
 
-    func updateContentViewLayout() {
+    func updateContentViewLayout(margin: CGFloat = PXLayout.M_MARGIN) {
         self.layoutIfNeeded()
         if UIDevice.isLargeDevice() || UIDevice.isExtraLargeDevice() {
-            self.pinContentViewToTop(margin: 24)
+            self.pinContentViewToTop(margin: margin)
         } else if !UIDevice.isSmallDevice() {
             self.pinContentViewToTop()
         }
@@ -117,8 +117,6 @@ class PXOneTapHeaderMerchantView: PXComponentView {
             }
 
             strongSelf.layoutIfNeeded()
-
-            strongSelf.updateContentViewLayout()
 
             for constraint in strongSelf.horizontalLayoutConstraints {
                 constraint.isActive = false

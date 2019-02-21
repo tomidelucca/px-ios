@@ -9,7 +9,7 @@
 import Foundation
 
 extension PXPaymentFlow {
-    internal func showPaymentProcessor(paymentProcessor: PXPaymentProcessor?) {
+    internal func showPaymentProcessor(paymentProcessor: PXSplitPaymentProcessor?) {
         guard let paymentProcessor = paymentProcessor else {
             return
         }

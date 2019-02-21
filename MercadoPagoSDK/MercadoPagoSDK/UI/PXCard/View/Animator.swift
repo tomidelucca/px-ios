@@ -7,7 +7,7 @@ class Animator {
     class func overlay(on view: CardView,
                        cardUI: CardUI,
                        views: [UIView],
-                       complete: @escaping ()->Void) {
+                       complete: @escaping () -> Void) {
 
         UIView.animate(withDuration: 0.1, delay: 0.3, options: .curveEaseOut, animations: {
             views.forEach({ $0.alpha = 0.3 })

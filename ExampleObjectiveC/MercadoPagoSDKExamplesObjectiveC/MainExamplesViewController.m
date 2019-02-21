@@ -41,8 +41,6 @@
     // Setear una preferencia hecha a mano
     //[self setCheckoutPref_CardsNotExcluded];
 
-    [self setCheckoutPref_WithId];
-
 /*
     DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
     
@@ -70,7 +68,7 @@
 
     [self setCheckoutPref_CreditCardNotExcluded];
 
-    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
+    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"APP_USR-ba2e6b8c-8b6d-4fc3-8a47-0ab241d0dba4" checkoutPreference:self.pref paymentConfiguration:[self getPaymentConfiguration]];
 
 
 //    self.checkoutBuilder = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" preferenceId:@"243962506-63f1b044-c8bf-4d34-a800-f257a46628b8"];
@@ -78,7 +76,10 @@
 
     [PXTracker setListener:self flowName:@"instore" flowDetails:dict];
 
-//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
+//    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-2590709739431780-102916-f3a297acb7f392333d80ba71b736a700__LA_LD__-181794596"];
+
+    [self.checkoutBuilder setPrivateKeyWithKey:@"APP_USR-6519316523937252-070516-964fafa7e2c91a2c740155fcb5474280__LA_LD__-261748045"];
+
 
     // AdvancedConfig
     PXAdvancedConfiguration* advancedConfig = [[PXAdvancedConfiguration alloc] init];
@@ -115,7 +116,7 @@
     [self.checkoutBuilder setAdvancedConfigurationWithConfig:advancedConfig];
 
     // Enable to test one tap
-    [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-1458038826212807-062020-ff9273c67bc567320eae1a07d1c2d5b5-246046416"];
+//    [self.checkoutBuilder setPrivateKeyWithKey:@"TEST-1458038826212807-062020-ff9273c67bc567320eae1a07d1c2d5b5-246046416"];
     // CDP color.
     // [self.checkoutComponents setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
 
@@ -174,7 +175,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
     PaymentPluginViewController *paymentProcessorPlugin = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-    self.paymentConfig = [[PXPaymentConfiguration alloc] initWithPaymentProcessor:paymentProcessorPlugin];
+    self.paymentConfig = [[PXPaymentConfiguration alloc] initWithSplitPaymentProcessor:paymentProcessorPlugin];
     [self addPaymentMethodPluginToPaymentConfig];
     [self addDiscount];
     [self addCharges];
@@ -207,10 +208,9 @@
 }
 
 -(void)setCheckoutPref_CreditCardNotExcluded {
-    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:90.0];
-    PXItem *item2 = [[PXItem alloc] initWithTitle:@"title" quantity:2 unitPrice:2.0];
+    PXItem *item = [[PXItem alloc] initWithTitle:@"title" quantity:1 unitPrice:3500.0];
 
-    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, nil];
 
     self.pref = [[PXCheckoutPreference alloc] initWithSiteId:@"MLA" payerEmail:@"sara@gmail.com" items:items];
 //    [self.pref addExcludedPaymentType:@"ticket"];

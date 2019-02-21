@@ -9,8 +9,9 @@
 import Foundation
 
 extension MercadoPagoCheckout: PXOneTapResultHandlerProtocol {
-    func finishOneTap(paymentData: PXPaymentData) {
+    func finishOneTap(paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?) {
         self.viewModel.updateCheckoutModel(paymentData: paymentData)
+        self.viewModel.splitAccountMoney = splitAccountMoney
         self.executeNextStep()
     }
 
@@ -18,9 +19,9 @@ extension MercadoPagoCheckout: PXOneTapResultHandlerProtocol {
         self.viewModel.prepareForNewSelection()
         self.executeNextStep()
     }
-    
-    func cancelOneTapForNewPaymentMethodSelection(){
-       
+
+    func cancelOneTapForNewPaymentMethodSelection() {
+
         self.viewModel.checkoutPreference.setCardId(cardId: "cards")
          self.viewModel.prepareForNewSelection()
         self.executeNextStep()
@@ -36,9 +37,10 @@ extension MercadoPagoCheckout: PXOneTapResultHandlerProtocol {
         self.executeNextStep()
     }
 
-    func finishOneTap(businessResult: PXBusinessResult, paymentData: PXPaymentData) {
+    func finishOneTap(businessResult: PXBusinessResult, paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?) {
         self.viewModel.businessResult = businessResult
         self.viewModel.paymentData = paymentData
+        self.viewModel.splitAccountMoney = splitAccountMoney
         self.executeNextStep()
     }
 }
