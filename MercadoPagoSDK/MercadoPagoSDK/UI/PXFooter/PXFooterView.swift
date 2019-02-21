@@ -9,12 +9,7 @@
 import Foundation
 
 final class PXFooterView: UIView {
-    var delegate: PXFooterTrackingProtocol?
+    weak var delegate: PXFooterTrackingProtocol?
     public var principalButton: PXAnimatedButton?
     public var linkButton: PXSecondaryButton?
-}
-
-protocol PXFooterTrackingProtocol: NSObjectProtocol {
-    func didTapPrimaryAction()
-    func didTapSecondaryAction()
 }

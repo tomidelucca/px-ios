@@ -108,6 +108,8 @@ class PXResultViewController: PXComponentContainerViewController {
         if isEmptySpaceOnScreen() {
             if shouldExpandHeader() {
                 expandHeader()
+                headerView?.isUserInteractionEnabled = true
+                
             } else {
                 expandBody()
             }
@@ -254,21 +256,5 @@ extension PXResultViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }
-}
-
-extension PXResultViewController: PXFooterTrackingProtocol {
-    func didTapPrimaryAction() {
-        trackEvent(path: viewModel.getFooterPrimaryActionTrackingPath())
-    }
-
-    func didTapSecondaryAction() {
-        trackEvent(path: viewModel.getFooterSecondaryActionTrackingPath())
-    }
-}
-
-extension PXResultViewController: PXHeaderTrackingProtocol {
-    func didTapCloseButton() {
-        trackEvent(path: viewModel.getHeaderCloseButtonTrackingPath())
     }
 }

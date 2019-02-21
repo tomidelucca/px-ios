@@ -30,7 +30,7 @@ internal final class PXHeaderRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
-    func render(_ header: PXHeaderComponent ) -> PXHeaderView {
+    func render(_ header: PXHeaderComponent) -> PXHeaderView {
         let headerView = PXHeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,17 +57,12 @@ internal final class PXHeaderRenderer: NSObject {
         //Close button
         if let closeAction = header.props.closeAction {
             let button = buildCloseButton()
-            button.add(for: .touchUpInside) {
-                headerView.delegate?.didTapCloseButton()
-            }
-
             headerView.closeButton = button
-            headerView.addSubview(button)
-
+            headerView.addSubviewToComponentView(button)
             button.add(for: .touchUpInside, {
+                headerView.delegate?.didTapCloseButton()
                 closeAction()
             })
-
             PXLayout.setHeight(owner: button, height: CLOSE_BUTTON_SIZE).isActive = true
             PXLayout.setWidth(owner: button, width: CLOSE_BUTTON_SIZE).isActive = true
             PXLayout.pinTop(view: button, to: headerView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
@@ -150,17 +145,4 @@ internal final class PXHeaderRenderer: NSObject {
         messageLabel.numberOfLines = 0
         return messageLabel
     }
-}
-
-internal final class PXHeaderView: PXComponentView {
-    var delegate: PXHeaderTrackingProtocol?
-    var circleImage: PXUIImageView?
-    var badgeImage: PXAnimatedImageView?
-    var statusLabel: UILabel?
-    var messageLabel: UILabel?
-    var closeButton: UIButton?
-}
-
-protocol PXHeaderTrackingProtocol: NSObjectProtocol {
-    func didTapCloseButton()
 }
