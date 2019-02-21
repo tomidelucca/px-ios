@@ -215,7 +215,11 @@ extension PXCardToken {
                     if len > max || len < min {
                         return "invalid_field".localized
                     } else {
-                        return nil
+                        if identificationType!.validate(identification: cardholder?.identification?.number ?? "") {
+                            return nil
+                        } else {
+                            return "invalid_field".localized
+                        }
                     }
                 } else {
                     return validateIdentificationNumber()

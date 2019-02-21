@@ -73,5 +73,15 @@ open class PXIdentificationType: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXIdentificationType] {
         return try JSONDecoder().decode([PXIdentificationType].self, from: data)
     }
+    
+    internal func validate(identification:String) -> Bool {
+        if id == "CPF" {
+            return BooleanValidator().validate(cpf: identification)
+        }
+        if id == "CNPJ" {
+            return BooleanValidator().validate(cpf: identification)
+        }
+        return true
+    }
 
 }
