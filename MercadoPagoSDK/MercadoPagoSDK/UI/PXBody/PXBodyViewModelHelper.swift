@@ -27,7 +27,9 @@ internal extension PXResultViewModel {
     }
 
     func executeBodyCallback() {
-        self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
+        if let callback = self.callback {
+            callback(PaymentResult.CongratsState.call_FOR_AUTH)
+        }
     }
 
     func getInstrucion() -> PXInstruction? {

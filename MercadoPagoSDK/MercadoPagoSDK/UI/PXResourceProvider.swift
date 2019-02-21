@@ -78,6 +78,11 @@ internal class PXResourceProvider {
         return key.localized_beta
     }
 
+    static internal func getDescriptionForErrorBodyForREJECTED_BY_REGULATIONS() -> String {
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_BY_REGULATIONS
+        return key.localized_beta
+    }
+
     static internal func getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(_ paymentMethodName: String?) -> String {
 
         if let paymentMethodName = paymentMethodName {
