@@ -9,9 +9,11 @@ import Foundation
 // MARK: Tracking
 extension MercadoPagoUIViewController {
 
-    func trackScreen(path: String, properties: [String: Any] = [:], treatBackAsAbort: Bool = false) {
-        self.treatBackAsAbort = treatBackAsAbort
-        screenPath = path
+    func trackScreen(path: String, properties: [String: Any] = [:], treatBackAsAbort: Bool = false, treatAsViewController: Bool = true) {
+        if treatAsViewController {
+            self.treatBackAsAbort = treatBackAsAbort
+            screenPath = path
+        }
         MPXTracker.sharedInstance.trackScreen(screenName: path, properties: properties)
     }
 
