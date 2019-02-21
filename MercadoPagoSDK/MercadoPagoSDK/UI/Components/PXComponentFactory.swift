@@ -8,6 +8,7 @@
 
 import Foundation
 import MLUI
+import Lottie
 
 struct PXComponentFactory {
 
@@ -53,6 +54,12 @@ struct PXComponentFactory {
 
         static func showPersistentMessage(message: String) {
             MLSnackbar.show(withTitle: message, type: .default(), duration: .indefinitely)
+        }
+    }
+
+    struct Lottie {
+        static func pulseAnimation() -> LOTAnimationView {
+            return LOTAnimationView(name: "pulse")
         }
     }
 }
