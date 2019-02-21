@@ -84,4 +84,16 @@ final class PXResultAddCardSuccessViewModel: PXResultViewModelInterface {
     func getTrackingPath() -> String {
         return ""
     }
+
+    func getFooterPrimaryActionTrackingPath() -> String {
+        return ""
+    }
+
+    func getFooterSecondaryActionTrackingPath() -> String {
+        return ""
+    }
+
+    func getHeaderCloseButtonTrackingPath() -> String {
+        return ""
+    }
 }

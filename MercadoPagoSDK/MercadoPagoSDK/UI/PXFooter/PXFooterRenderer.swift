@@ -20,6 +20,10 @@ final class PXFooterRenderer: NSObject {
 
         if let principalAction = footer.props.buttonAction {
             let principalButton = self.buildAnimatedButton(with: principalAction, color: footer.props.primaryColor)
+            principalButton.add(for: .touchUpInside) {
+                fooView.delegate?.didTapPrimaryAction()
+            }
+
             principalButton.layer.shadowRadius = 4
             fooView.principalButton = principalButton
             fooView.principalButton?.animationDelegate = footer.props.animationDelegate
@@ -31,8 +35,10 @@ final class PXFooterRenderer: NSObject {
             topView = principalButton
         }
         if let linkAction = footer.props.linkAction {
-
             let linkButton = self.buildLinkButton(with: linkAction, color: footer.props.primaryColor)
+            linkButton.add(for: .touchUpInside) {
+                fooView.delegate?.didTapSecondaryAction()
+            }
 
             fooView.linkButton = linkButton
             fooView.addSubview(linkButton)
