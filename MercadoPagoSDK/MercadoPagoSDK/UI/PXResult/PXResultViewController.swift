@@ -108,8 +108,6 @@ class PXResultViewController: PXComponentContainerViewController {
         if isEmptySpaceOnScreen() {
             if shouldExpandHeader() {
                 expandHeader()
-                headerView?.isUserInteractionEnabled = true
-                
             } else {
                 expandBody()
             }
