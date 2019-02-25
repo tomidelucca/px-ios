@@ -159,13 +159,6 @@ extension PXPaymentData {
      getRawAmount
      */
     public func getRawAmount() -> Double? {
-        guard let paymentMethod = paymentMethod else {
-            return nil
-        }
-        if paymentMethod.isCard &&
-            !paymentTypesWithoutInstallments.contains(paymentMethod.paymentTypeId) {
-            return payerCost?.totalAmount
-        }
         return transactionAmount
     }
 
