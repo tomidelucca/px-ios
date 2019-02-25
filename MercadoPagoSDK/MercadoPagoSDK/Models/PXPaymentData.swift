@@ -156,9 +156,9 @@ extension PXPaymentData {
     }
 
     /**
-     getTransactionAmount
+     getRawAmount
      */
-    public func getTransactionAmount() -> Double? {
+    public func getRawAmount() -> Double? {
         guard let paymentMethod = paymentMethod else {
             return nil
         }
