@@ -63,6 +63,19 @@ class PXPaymentConfigurationServices {
         return nil
     }
 
+    // Amount to pay without payer cost for Payment Method
+    func getAmountToPayWithoutPayerCostForPaymentMethod(_ id: String?) -> Double? {
+        guard let id = id else {
+            return nil
+        }
+        if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {
+            if let paymentOptionConfiguration = configuration.paymentOptionsConfigurations.first(where: {$0.id == configuration.selectedAmountConfiguration}) {
+                return paymentOptionConfiguration.amountConfiguration?.amount
+            }
+        }
+        return nil
+    }
+
     // Discount Info for Payment Method
     func getDiscountInfoForPaymentMethod(_ id: String) -> String? {
         if let configuration = configurations.first(where: {$0.paymentOptionID == id}) {

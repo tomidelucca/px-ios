@@ -63,7 +63,14 @@ internal struct PXAmountHelper {
         }
     }
 
-    var amountToPayWithoutPayerCost: Double {
+    func getAmountToPayWithoutPayerCost(_ paymentMethodId: String?) -> Double {
+        guard let paymentMethodId = paymentMethodId, let amountFromPaymentMethod = paymentConfigurationService.getAmountToPayWithoutPayerCostForPaymentMethod(paymentMethodId) else {
+            return amountToPayWithoutPayerCost
+        }
+        return amountFromPaymentMethod
+    }
+
+    private var amountToPayWithoutPayerCost: Double {
         get {
             if let couponAmount = paymentData.discount?.couponAmount {
                 return preferenceAmount - couponAmount + chargeRuleAmount
