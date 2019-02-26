@@ -1,3 +1,8 @@
+# v4.7.1
+🚀Private RC - 4.7.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Split Payments UI Switch (Minor Fix)
+
 # v4.7.0
 🚀Private RC - 4.7.0 🚀
 MercadoPagoSDKV4 - Private Version
