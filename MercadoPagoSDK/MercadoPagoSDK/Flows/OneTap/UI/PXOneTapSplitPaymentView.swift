@@ -72,10 +72,11 @@ class PXOneTapSplitPaymentView: PXComponentView {
         label.lineBreakMode = .byTruncatingTail
         self.splitMessageLabel = label
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
         self.addSubview(label)
         PXLayout.centerVertically(view: label).isActive = true
         PXLayout.pinLeft(view: label, withMargin: PXLayout.L_MARGIN).isActive = true
-        PXLayout.put(view: label, leftOf: splitSwitch, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        PXLayout.pinRight(view: label, to: splitSwitch, withMargin: PXLayout.XXXL_MARGIN).isActive = true
         PXLayout.pinTop(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinBottom(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
 
@@ -110,9 +111,13 @@ class PXOneTapSplitPaymentView: PXComponentView {
 
         let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
 
+        let messageAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
+
+        let messageAttributed = NSAttributedString(string: splitConfiguration.secondaryPaymentMethod?.message ?? "", attributes: messageAttributes)
+
         let amountAttributed = NSMutableAttributedString(string: amount, attributes: attributes)
         amountAttributed.append(" ".toAttributedString())
-        amountAttributed.append(splitConfiguration.secondaryPaymentMethod?.message?.toAttributedString() ?? "".toAttributedString())
+        amountAttributed.append(messageAttributed)
         return amountAttributed
     }
 

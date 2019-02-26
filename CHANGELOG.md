@@ -1,3 +1,18 @@
+# v4.7.1
+🚀Private RC - 4.7.1 🚀
+MercadoPagoSDKV4 - Private Version
+- Split Payments UI Switch (Minor Fix)
+
+# v4.7.0
+🚀Private RC - 4.7.0 🚀
+MercadoPagoSDKV4 - Private Version
+- Split Payment Method
+- CPF & CNPJ validator
+- Cross button in Congrats with tracking
+- Fix default installments bug
+- Fix bug with checkout preference
+- Fix additional step total row bug
+
 # v4.6.5
 🚀Private RC - 4.6.5 🚀
 MercadoPagoSDKV4 - Private Version
