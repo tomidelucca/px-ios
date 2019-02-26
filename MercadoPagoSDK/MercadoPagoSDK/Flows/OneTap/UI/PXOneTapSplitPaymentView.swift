@@ -72,10 +72,11 @@ class PXOneTapSplitPaymentView: PXComponentView {
         label.lineBreakMode = .byTruncatingTail
         self.splitMessageLabel = label
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
         self.addSubview(label)
         PXLayout.centerVertically(view: label).isActive = true
         PXLayout.pinLeft(view: label, withMargin: PXLayout.L_MARGIN).isActive = true
-        PXLayout.put(view: label, leftOf: splitSwitch, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        PXLayout.pinRight(view: label, to: splitSwitch, withMargin: PXLayout.XXXL_MARGIN).isActive = true
         PXLayout.pinTop(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinBottom(view: label, withMargin: PXLayout.S_MARGIN).isActive = true
 
