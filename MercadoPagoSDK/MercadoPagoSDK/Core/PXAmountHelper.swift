@@ -109,7 +109,7 @@ internal struct PXAmountHelper {
 
         // Set total card amount with charges without discount
         if paymentData.transactionAmount == nil || paymentData.transactionAmount == 0 {
-            self.paymentData.transactionAmount = preferenceAmountWithCharges
+            self.paymentData.transactionAmount = Decimal(preferenceAmountWithCharges)
         }
         return paymentData
     }
