@@ -1,3 +1,8 @@
+# v4.7.2
+🚀Private RC - 4.7.2 🚀
+MercadoPagoSDKV4 - Private Version
+- Split Payments Fix Switch size.
+
 # v4.7.1
 🚀Private RC - 4.7.1 🚀
 MercadoPagoSDKV4 - Private Version
