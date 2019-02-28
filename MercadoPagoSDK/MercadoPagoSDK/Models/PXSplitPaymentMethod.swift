@@ -9,7 +9,7 @@ import Foundation
 
 /// :nodoc:
 open class PXSplitPaymentMethod: NSObject, Codable {
-    open var amount: Decimal = 0
+    open var amount: Double = 0
     open var id: String = ""
     open var discount: PXDiscount?
     open var message: String?
@@ -24,7 +24,7 @@ open class PXSplitPaymentMethod: NSObject, Codable {
         }
     }
 
-    init(amount: Decimal, id: String, discount: PXDiscount?, message: String?, selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
+    init(amount: Double, id: String, discount: PXDiscount?, message: String?, selectedPayerCostIndex: Int?, payerCosts: [PXPayerCost]?) {
         self.amount = amount
         self.id = id
         self.discount = discount
@@ -44,7 +44,7 @@ open class PXSplitPaymentMethod: NSObject, Codable {
 
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostConfiguration.self)
-        let amount: Decimal = try container.decodeIfPresent(Decimal.self, forKey: .amount) ?? 0
+        let amount: Double = try container.decodeIfPresent(Double.self, forKey: .amount) ?? 0
         let id: String = try container.decodeIfPresent(String.self, forKey: .id) ?? ""
         let discount: PXDiscount? = try container.decodeIfPresent(PXDiscount.self, forKey: .discount)
         let message: String? = try container.decodeIfPresent(String.self, forKey: .message)
@@ -72,5 +72,11 @@ open class PXSplitPaymentMethod: NSObject, Codable {
     open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
+    }
+
+    internal func getAmountAsNsDecimalNumber() -> NSDecimalNumber {
+        let amountRounded: Double = Double(round(100 * amount) / 100)
+        let amountString = String(format: "%.2f", amountRounded)
+        return NSDecimalNumber(string: amountString)
     }
 }

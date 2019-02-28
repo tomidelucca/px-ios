@@ -13,7 +13,7 @@ internal extension PXSplitConfiguration {
         guard let amount = secondaryPaymentMethod?.amount else {
             return 0
         }
-        let amountDouble = NSDecimalNumber(decimal: amount).doubleValue
+        let amountDouble = amount
         if let discountAmountOff = secondaryPaymentMethod?.discount?.couponAmount {
             return amountDouble - discountAmountOff
         } else {

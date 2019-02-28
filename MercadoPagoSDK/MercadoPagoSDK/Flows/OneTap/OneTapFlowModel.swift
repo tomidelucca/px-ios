@@ -116,7 +116,7 @@ internal extension OneTapFlowModel {
             let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionSelected.getId())
 
             // Set total amount to pay with card without discount
-            paymentData.transactionAmount = splitConfiguration?.primaryPaymentMethod?.amount
+            paymentData.transactionAmount = splitConfiguration?.primaryPaymentMethod?.getAmountAsNsDecimalNumber()
 
             let accountMoneyPMs = search.paymentMethods.filter { (paymentMethod) -> Bool in
                 return paymentMethod.id == splitConfiguration?.secondaryPaymentMethod?.id
@@ -124,7 +124,7 @@ internal extension OneTapFlowModel {
             if let accountMoneyPM = accountMoneyPMs.first {
                 splitAccountMoney = PXPaymentData()
                 // Set total amount to pay with account money without discount
-                splitAccountMoney?.transactionAmount = splitConfiguration?.secondaryPaymentMethod?.amount
+                splitAccountMoney?.transactionAmount = splitConfiguration?.secondaryPaymentMethod?.getAmountAsNsDecimalNumber()
                 splitAccountMoney?.updatePaymentDataWith(paymentMethod: accountMoneyPM)
 
             let campaign = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionSelected.getId())?.getDiscountConfiguration().campaign
