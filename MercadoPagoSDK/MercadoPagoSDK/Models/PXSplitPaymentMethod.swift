@@ -75,8 +75,9 @@ open class PXSplitPaymentMethod: NSObject, Codable {
     }
 
     internal func getAmountAsNsDecimalNumber() -> NSDecimalNumber {
-        let amountRounded: Double = Double(round(100 * amount) / 100)
-        let amountString = String(format: "%.2f", amountRounded)
+        let decimalPlaces: Double = Double(SiteManager.shared.getCurrency().getDecimalPlacesOrDefault())
+        let amountRounded: Double = Double(round(pow(10, decimalPlaces) * Double(amount)) / pow(10, decimalPlaces))
+        let amountString = String(format: "%\(decimalPlaces/10)f", amountRounded)
         return NSDecimalNumber(string: amountString)
     }
 }
