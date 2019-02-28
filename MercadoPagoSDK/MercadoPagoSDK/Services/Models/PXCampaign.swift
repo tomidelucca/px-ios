@@ -82,7 +82,8 @@ open class PXCampaign: NSObject, Codable {
      - parameter maxCouponAmount: Campaign max coupon amount.
      - parameter endDate: Campaign end date.
      */
-    public init(id: Int64?, code: String?, maxRedeemPerUser: Int = 1, name: String?, maxCouponAmount: Double, endDate: Date) {
+   @objc
+    public init(id: Int64, code: String?, maxRedeemPerUser: Int = 1, name: String?, maxCouponAmount: Double, endDate: Date) {
         self.id = id
         self.code = code
         self.name = name
@@ -92,7 +93,8 @@ open class PXCampaign: NSObject, Codable {
     }
 
     /// :nodoc:
-    public init(id: Int64?, code: String?, name: String?, maxCouponAmount: Double) {
+    @objc
+    public init(id: Int64, code: String?, name: String?, maxCouponAmount: Double) {
         self.id = id
         self.code = code
         self.name = name
