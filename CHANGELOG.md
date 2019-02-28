@@ -1,3 +1,8 @@
+# v4.6.6
+🚀Private RC - 4.6.6 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix deserializing discount id as int instead of int64
+
 # v4.6.5
 🚀Private RC - 4.6.5 🚀
 MercadoPagoSDKV4 - Private Version

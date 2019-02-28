@@ -78,7 +78,7 @@ open class PXDiscount: NSObject, Codable {
         let couponAmount: Double = (try container.decodeIfPresent(Double.self, forKey: .couponAmount)) ?? 0
         var id = ""
         do {
-            let intId = try container.decodeIfPresent(Int64.self, forKey: .id)
+            let intId: Int64? = try container.decodeIfPresent(Int64.self, forKey: .id)
             id = intId?.stringValue ?? ""
         } catch {
             let stringId = try container.decodeIfPresent(String.self, forKey: .id)
