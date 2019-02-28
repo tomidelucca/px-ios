@@ -12,6 +12,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
     var splitConfiguration: PXSplitConfiguration?
     var splitPaymentSwitch: UISwitch?
     var splitMessageLabel: UILabel?
+    private let switchReduceSize: CGFloat = 0.70
 
     init(splitConfiguration: PXSplitConfiguration?, callback : @escaping ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)) {
         self.splitConfiguration = splitConfiguration
@@ -63,8 +64,9 @@ class PXOneTapSplitPaymentView: PXComponentView {
 
         splitSwitch.setOn(splitConfiguration?.splitEnabled ?? false, animated: false)
         splitSwitch.translatesAutoresizingMaskIntoConstraints = false
+        splitSwitch.transform = CGAffineTransform(scaleX: switchReduceSize, y: switchReduceSize)
         self.addSubview(splitSwitch)
-        PXLayout.pinRight(view: splitSwitch, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.pinRight(view: splitSwitch, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerVertically(view: splitSwitch).isActive = true
         splitSwitch.onTintColor = ThemeManager.shared.getAccentColor()
 
