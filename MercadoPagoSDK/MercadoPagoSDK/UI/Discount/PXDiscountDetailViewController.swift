@@ -148,7 +148,7 @@ extension PXDiscountDetailViewController {
     }
 
     func getTitle() -> NSAttributedString? {
-        if let maxCouponAmount = amountHelper.maxCouponAmount {
+        if let maxCouponAmount = amountHelper.maxCouponAmount, !amountHelper.consumedDiscount {
             let attributes = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
             let amountAttributedString = Utils.getAttributedAmount(withAttributes: attributes, amount: maxCouponAmount, currency: currency, negativeAmount: false)
             let string: String = ("discount_detail_modal_disclaimer".localized_beta as NSString).replacingOccurrences(of: "%1$s", with: amountAttributedString.string)
@@ -161,17 +161,17 @@ extension PXDiscountDetailViewController {
 
     func getDisclaimer() -> NSAttributedString? {
         let attributes = [NSAttributedString.Key.font: Utils.getLightFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
-         if amountHelper.campaign?.maxRedeemPerUser == 1 {
+        if amountHelper.consumedDiscount {
+            return NSAttributedString(string: "modal_content_consumed_discount".localized_beta, attributes: attributes)
+        } else if amountHelper.campaign?.maxRedeemPerUser == 1 {
             var message = "unique_discount_detail_modal_footer".localized_beta
             if let expirationDate = amountHelper.campaign?.endDate {
                 let messageDate = "discount_end_date".localized_beta
                 message.append(messageDate.replacingOccurrences(of: "%1s", with: Utils.getFormatedStringDate(expirationDate)))
             }
             return NSAttributedString(string: message, attributes: attributes)
-         } else if let maxRedeemPerUser = amountHelper.campaign?.maxRedeemPerUser, maxRedeemPerUser > 1 {
+        } else if let maxRedeemPerUser = amountHelper.campaign?.maxRedeemPerUser, maxRedeemPerUser > 1 {
             return NSAttributedString(string: "multiple_discount_detail_modal_footer".localized_beta, attributes: attributes)
-         } else if amountHelper.consumedDiscount {
-            return NSAttributedString(string: "modal_content_consumed_discount".localized_beta, attributes: attributes)
         }
         return nil
     }

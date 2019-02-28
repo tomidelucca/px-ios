@@ -2,6 +2,7 @@
 🚀Private RC - 4.7.3 🚀
 MercadoPagoSDKV4 - Private Version
 - Fix deserializing discount id as int instead of int64
+- Fix sold out discounts legal terms
 
 # v4.7.1
 🚀Private RC - 4.7.1 🚀
