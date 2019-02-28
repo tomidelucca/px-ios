@@ -14,7 +14,7 @@ import Foundation
 @objc
 open class PXCampaign: NSObject, Codable {
     /// :nodoc:
-    open var id: Int64!
+    open var id: Int64?
     /// :nodoc:
     open var code: String?
     /// :nodoc:
@@ -82,7 +82,7 @@ open class PXCampaign: NSObject, Codable {
      - parameter maxCouponAmount: Campaign max coupon amount.
      - parameter endDate: Campaign end date.
      */
-    @objc
+   @objc
     public init(id: Int64, code: String?, maxRedeemPerUser: Int = 1, name: String?, maxCouponAmount: Double, endDate: Date) {
         self.id = id
         self.code = code
@@ -102,7 +102,7 @@ open class PXCampaign: NSObject, Codable {
     }
 
     /// :nodoc:
-    public init(id: Int64, code: String?, name: String?, discountType: String?, value: Double?, endDate: Date?, minPaymentAmount: Double?, maxPaymentAmount: Double?, maxCouponAmount: Double?, totalAmountLimit: Double?, maxCoupons: Int64?, maxCouponsByCode: Int?, maxRedeemPerUser: Int?, siteId: String?, marketplace: String?, codeType: String?, maxUserAmountPerCampaign: Double?, labels: [String]?, paymentMethodsIds: [String]?, paymentTypesIds: [String]?, cardIssuersIds: [String]?, shippingModes: [String]?, clientId: Int64?, tags: [String]?, multipleCodeLimit: Int?, codeCount: Int?, couponAmount: Double?, collectors: [Int64]?, legalTermsUrl: String?) {
+    public init(id: Int64?, code: String?, name: String?, discountType: String?, value: Double?, endDate: Date?, minPaymentAmount: Double?, maxPaymentAmount: Double?, maxCouponAmount: Double?, totalAmountLimit: Double?, maxCoupons: Int64?, maxCouponsByCode: Int?, maxRedeemPerUser: Int?, siteId: String?, marketplace: String?, codeType: String?, maxUserAmountPerCampaign: Double?, labels: [String]?, paymentMethodsIds: [String]?, paymentTypesIds: [String]?, cardIssuersIds: [String]?, shippingModes: [String]?, clientId: Int64?, tags: [String]?, multipleCodeLimit: Int?, codeCount: Int?, couponAmount: Double?, collectors: [Int64]?, legalTermsUrl: String?) {
         self.id = id
         self.code = code
         self.name = name
@@ -132,7 +132,6 @@ open class PXCampaign: NSObject, Codable {
         self.couponAmount = couponAmount
         self.collectors = collectors
         self.legalTermsUrl = legalTermsUrl
-
     }
 
     /// :nodoc:
@@ -171,7 +170,7 @@ open class PXCampaign: NSObject, Codable {
     /// :nodoc:
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCampaignKeys.self)
-        let id: Int64 = try container.decode(Int64.self, forKey: .id)
+        let id: Int64? = try container.decodeIfPresent(Int64.self, forKey: .id)
         let code: String? = try container.decodeIfPresent(String.self, forKey: .code)
         let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
         let discountType: String? = try container.decodeIfPresent(String.self, forKey: .discountType)
@@ -267,6 +266,6 @@ extension PXCampaign {
     /// :nodoc:
     @objc
     public func getId() -> Int64 {
-        return id
+        return id ?? 0
     }
 }

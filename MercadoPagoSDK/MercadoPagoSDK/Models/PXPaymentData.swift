@@ -172,7 +172,7 @@ extension PXPaymentData {
 
 // MARK: Setters
 extension PXPaymentData {
-    internal func setDiscount(_ discount: PXDiscount, withCampaign campaign: PXCampaign) {
+    internal func setDiscount(_ discount: PXDiscount?, withCampaign campaign: PXCampaign) {
         self.discount = discount
         self.campaign = campaign
     }
