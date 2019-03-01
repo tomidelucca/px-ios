@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PXSplitPaymentProcessor.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 22/01/2019.
@@ -39,6 +39,12 @@ import Foundation
      Optional method to inform your Payment timeout. (This is the timeout of your payment backend). Define this value for a superb checkout animated progress button experience.
      */
     @objc optional func paymentTimeOut() -> Double
+
+    /**
+     Method to inform if this payment processor supports split payment method payment.         Optional method to skip Review and Confirm screen/step in checkout flow.
+     - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
+     */
+    @objc func supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore) -> Bool
 
     /**
      Optional method to skip Review and Confirm screen/step in checkout flow.

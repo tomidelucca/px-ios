@@ -57,6 +57,10 @@
     return true;
 }
 
+- (BOOL)shouldSkipUserConfirmation {
+    return true;
+}
+
 -(void)startPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBasePayment:(void (^)(id<PXBasePayment> _Nonnull))successWithBasePayment {
     PXGenericPayment* result = [[PXGenericPayment alloc] initWithStatus:@"approved" statusDetail:@"" paymentId: @""];
     successWithBasePayment(result);

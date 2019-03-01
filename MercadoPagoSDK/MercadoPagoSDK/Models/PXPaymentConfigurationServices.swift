@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PXPaymentConfigurationServices {
+internal class PXPaymentConfigurationServices {
 
     private var configurations: Set<PXPaymentMethodConfiguration> = []
     private var defaultDiscountConfiguration: PXDiscountConfiguration?

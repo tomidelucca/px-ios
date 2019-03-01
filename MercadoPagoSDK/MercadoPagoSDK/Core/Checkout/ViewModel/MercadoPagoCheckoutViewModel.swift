@@ -99,7 +99,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     let mpESCManager: MercadoPagoESC
 
-    //
+    // Discounts bussines service.
     var paymentConfigurationService = PXPaymentConfigurationServices()
 
     // Plugins payment method.

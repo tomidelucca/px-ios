@@ -218,6 +218,10 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
+        if let shouldSkipReviewConfirm = paymentPlugin?.shouldSkipUserConfirmation?(), shouldSkipReviewConfirm {
+            return false
+        }
+
         if self.initWithPaymentData && paymentData.isComplete() {
             initWithPaymentData = false
             return true
@@ -226,6 +230,7 @@ extension MercadoPagoCheckoutViewModel {
         if paymentData.isComplete() {
             return true
         }
+        
         return false
     }
 
