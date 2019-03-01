@@ -152,19 +152,6 @@ internal extension OneTapFlowModel {
             self.paymentData.cleanToken()
         }
     }
-
-    func saveEsc() {
-        guard let token = paymentData.token else {
-            return
-        }
-        if !token.cardId.isEmpty {
-            if let esc = token.esc {
-                mpESCManager.saveESC(cardId: token.cardId, esc: esc)
-            } else {
-                mpESCManager.deleteESC(cardId: token.cardId)
-            }
-        }
-    }
 }
 
 // MARK: Flow logic
@@ -229,8 +216,15 @@ internal extension OneTapFlowModel {
             return true
         }
         if let paymentFlow = paymentFlow, paymentMethod.isAccountMoney || hasSavedESC() {
+            if !paymentFlow.model.didESCChanagedRecently() {
+                return paymentFlow.hasPaymentPluginScreen()
+            } else {
+                return true
+            }
+        } else if let paymentFlow = paymentFlow, paymentFlow.model.didESCChanagedRecently() {
             return paymentFlow.hasPaymentPluginScreen()
         }
+
         return true
     }
 
