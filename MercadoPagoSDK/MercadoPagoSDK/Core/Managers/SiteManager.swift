@@ -37,7 +37,7 @@ internal class SiteManager {
         "MLV": ["language": "es", "currency": "VES", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
     ]
 
-    func setSite (siteId: String) {
+    func setSite(siteId: String) {
         self.siteId = siteId
 
         // TODO: Remove force
