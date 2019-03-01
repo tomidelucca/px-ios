@@ -90,7 +90,7 @@ extension AdditionalStepViewController {
         extendedLayoutIncludesOpaqueBars = true
         titleCellHeight = 44
 
-        if let bottomConstraintEnabled = getTableViewPinBottomContraint()?.isActive, viewModel.showFloatingTotalRow() && bottomConstraintEnabled {
+        if let bottomConstraintEnabled = getTableViewPinBottomContraint()?.isActive, viewModel.showFloatingTotalRow() && bottomConstraintEnabled && viewModel.advancedConfiguration.amountRowEnabled {
             getTableViewPinBottomContraint()?.isActive = false
             renderBottomTotalRow()
         } else {

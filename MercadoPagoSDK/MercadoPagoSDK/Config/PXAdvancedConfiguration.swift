@@ -38,6 +38,11 @@ open class PXAdvancedConfiguration: NSObject {
     open var bankDealsEnabled: Bool = true
 
     /**
+     Loyalty usage. - Use case: Show/hide bottom amount row.
+     */
+    open var amountRowEnabled: Bool = true
+
+    /**
      Enable to preset configurations to customize visualization on the 'Review and Confirm screen'
      */
     open var reviewConfirmConfiguration: PXReviewConfirmConfiguration = PXReviewConfirmConfiguration()
