@@ -2,6 +2,7 @@
 🚀Private RC - 4.7.4 🚀
 MercadoPagoSDKV4 - Private Version
 - Fix double rounding error
+- Fix ESC
 
 # v4.7.3
 🚀Private RC - 4.7.3 🚀
