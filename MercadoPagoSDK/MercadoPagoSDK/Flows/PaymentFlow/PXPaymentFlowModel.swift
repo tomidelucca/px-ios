@@ -151,12 +151,16 @@ internal extension PXPaymentFlowModel {
                     escManager.deleteESC(cardId: token.cardId)
                 }
             } else if let esc = token.esc {
+                // Check if ESC if re-saved or first time saved
+                if String.isNullOrEmpty(escManager.getESC(cardId: token.cardId)) {
+                    escChanagedRecently = true
+                }
                 escManager.saveESC(cardId: token.cardId, esc: esc)
             }
         }
     }
 
-    func didESCChanagedRecently() -> Bool {
+    func didESChanagedRecently() -> Bool {
         return escChanagedRecently
     }
 }
