@@ -226,7 +226,6 @@ extension MercadoPagoCheckoutViewModel {
         if paymentData.isComplete() {
             return true
         }
-        
         return false
     }
 
