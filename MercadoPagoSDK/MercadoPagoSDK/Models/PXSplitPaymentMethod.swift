@@ -73,11 +73,4 @@ open class PXSplitPaymentMethod: NSObject, Codable {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }
-
-    internal func getAmountAsNsDecimalNumber() -> NSDecimalNumber {
-        let decimalPlaces: Double = Double(SiteManager.shared.getCurrency().getDecimalPlacesOrDefault())
-        let amountRounded: Double = Double(round(pow(10, decimalPlaces) * Double(amount)) / pow(10, decimalPlaces))
-        let amountString = String(format: "%\(decimalPlaces/10)f", amountRounded)
-        return NSDecimalNumber(string: amountString)
-    }
 }

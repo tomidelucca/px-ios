@@ -131,6 +131,6 @@ extension PXDiscount {
     /// :nodoc:
     @objc
     public func getCouponAmount() -> NSDecimalNumber? {
-        return NSDecimalNumber(value: couponAmount)
+        return PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: couponAmount)
     }
 }
