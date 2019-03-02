@@ -41,7 +41,7 @@ import Foundation
     @objc optional func paymentTimeOut() -> Double
 
     /**
-     Method to inform if this payment processor supports split payment method payment.         Optional method to skip Review and Confirm screen/step in checkout flow.
+     Method to inform if this payment processor supports split payment method payment.
      - parameter checkoutStore: Checkout store reference -> `PXCheckoutStore`
      */
     @objc func supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore) -> Bool
