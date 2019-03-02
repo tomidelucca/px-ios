@@ -20,11 +20,6 @@
     [super viewDidLoad];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self makePayment];
-}
-
 - (void)makePayment {
     [self.paymentNavigationHandler showLoading];
 
@@ -50,15 +45,15 @@
 
 #pragma mark - Payment Plugin implementation.
 - (UIViewController * _Nullable)paymentProcessorViewController {
-    return nil;
+    return self;
 }
 
 - (BOOL)support {
-    return true;
+    return YES;
 }
 
 - (BOOL)shouldSkipUserConfirmation {
-    return true;
+    return YES;
 }
 
 -(void)startPaymentWithCheckoutStore:(PXCheckoutStore *)checkoutStore errorHandler:(id<PXPaymentProcessorErrorHandler>)errorHandler successWithBasePayment:(void (^)(id<PXBasePayment> _Nonnull))successWithBasePayment {
@@ -92,7 +87,11 @@
 }
 
 - (BOOL)supportSplitPaymentMethodPaymentWithCheckoutStore:(PXCheckoutStore * _Nonnull)checkoutStore {
-    return YES;
+    return NO;
+}
+
+- (IBAction)didTapOnPayButton {
+    [self makePayment];
 }
 
 @end

@@ -8,6 +8,7 @@
 import Foundation
 
 internal extension MercadoPagoCheckoutViewModel {
+
     func shouldShowHook(hookStep: PXHookStep) -> Bool {
 
         guard let hookSelected = hookService.getHookForStep(hookStep: hookStep) else {
