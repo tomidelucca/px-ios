@@ -20,6 +20,7 @@ internal final class PXPaymentFlowModel: NSObject {
     var businessResult: PXBusinessResult?
 
     let escManager: MercadoPagoESC
+    var escChanagedRecently: Bool = false
 
     init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, escEnabled: Bool) {
         self.paymentPlugin = paymentPlugin
@@ -149,7 +150,17 @@ internal extension PXPaymentFlowModel {
                 if let isCard = PXPaymentTypes(rawValue: errorPaymentType)?.isCard(), isCard {
                     escManager.deleteESC(cardId: token.cardId)
                 }
+            } else if let esc = token.esc {
+                // Check if ESC if re-saved or first time saved
+                if String.isNullOrEmpty(escManager.getESC(cardId: token.cardId)) {
+                    escChanagedRecently = true
+                }
+                escManager.saveESC(cardId: token.cardId, esc: esc)
             }
         }
+    }
+
+    func didESChanagedRecently() -> Bool {
+        return escChanagedRecently
     }
 }

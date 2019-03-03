@@ -1,3 +1,22 @@
+# v4.7.4
+🚀Private RC - 4.7.4 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix double rounding error
+- Fix ESC
+
+# v4.7.3
+🚀Private RC - 4.7.3 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix deserializing discount id as int instead of int64
+- Fix sold out discounts legal terms
+- Fix CFT with one installment in one tap
+- Fix double rounding error
+
+# v4.7.2
+🚀Private RC - 4.7.2 🚀 
+MercadoPagoSDKV4 - Private Version
+- Split Payments Fix Switch size.
+
 # v4.7.1
 🚀Private RC - 4.7.1 🚀
 MercadoPagoSDKV4 - Private Version

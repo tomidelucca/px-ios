@@ -116,7 +116,7 @@ internal extension OneTapFlowModel {
             let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionSelected.getId())
 
             // Set total amount to pay with card without discount
-            paymentData.transactionAmount = splitConfiguration?.primaryPaymentMethod?.amount
+            paymentData.transactionAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: splitConfiguration?.primaryPaymentMethod?.amount)
 
             let accountMoneyPMs = search.paymentMethods.filter { (paymentMethod) -> Bool in
                 return paymentMethod.id == splitConfiguration?.secondaryPaymentMethod?.id
@@ -124,7 +124,7 @@ internal extension OneTapFlowModel {
             if let accountMoneyPM = accountMoneyPMs.first {
                 splitAccountMoney = PXPaymentData()
                 // Set total amount to pay with account money without discount
-                splitAccountMoney?.transactionAmount = splitConfiguration?.secondaryPaymentMethod?.amount
+                splitAccountMoney?.transactionAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: splitConfiguration?.secondaryPaymentMethod?.amount)
                 splitAccountMoney?.updatePaymentDataWith(paymentMethod: accountMoneyPM)
 
             let campaign = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionSelected.getId())?.getDiscountConfiguration().campaign
@@ -150,19 +150,6 @@ internal extension OneTapFlowModel {
         if paymentOptionSelected.isCard() {
             self.paymentData.updatePaymentDataWith(payerCost: payerCost)
             self.paymentData.cleanToken()
-        }
-    }
-
-    func saveEsc() {
-        guard let token = paymentData.token else {
-            return
-        }
-        if !token.cardId.isEmpty {
-            if let esc = token.esc {
-                mpESCManager.saveESC(cardId: token.cardId, esc: esc)
-            } else {
-                mpESCManager.deleteESC(cardId: token.cardId)
-            }
         }
     }
 }
@@ -229,8 +216,15 @@ internal extension OneTapFlowModel {
             return true
         }
         if let paymentFlow = paymentFlow, paymentMethod.isAccountMoney || hasSavedESC() {
+            if !paymentFlow.model.didESChanagedRecently() {
+                return paymentFlow.hasPaymentPluginScreen()
+            } else {
+                return true
+            }
+        } else if let paymentFlow = paymentFlow, paymentFlow.model.didESChanagedRecently() {
             return paymentFlow.hasPaymentPluginScreen()
         }
+
         return true
     }
 

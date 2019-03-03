@@ -39,7 +39,7 @@ final class PXTotalRowBuilder: PXTotalRowComponent {
         }
 
         //////////////// DISCLAIMER ////////////////
-        if amountHelper.maxCouponAmount != nil {
+        if amountHelper.maxCouponAmount != nil, !amountHelper.consumedDiscount {
             let attributes = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT),
                               NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
 
