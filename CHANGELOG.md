@@ -1,3 +1,9 @@
+# v4.7.5
+🚀Private RC - 4.7.5 🚀
+MercadoPagoSDKV4 - Private Version
+- Fix split payments fail flow.
+- Fix payment flow after not saved ESC.
+
 # v4.7.4
 🚀Private RC - 4.7.4 🚀
 MercadoPagoSDKV4 - Private Version
