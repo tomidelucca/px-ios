@@ -215,14 +215,30 @@ internal extension OneTapFlowModel {
         guard let paymentMethod = paymentData.getPaymentMethod() else {
             return true
         }
-        if let paymentFlow = paymentFlow, paymentMethod.isAccountMoney || hasSavedESC() {
-            if !paymentFlow.model.didESChanagedRecently() {
-                return paymentFlow.hasPaymentPluginScreen()
-            } else {
-                return true
-            }
-        } else if let paymentFlow = paymentFlow, paymentFlow.model.didESChanagedRecently() {
-            return paymentFlow.hasPaymentPluginScreen()
+        
+        guard let paymentFlow = paymentFlow else {
+            //unsuported case, this should never happen
+            return true
+        }
+        
+        //if the user has defined its own payment processor screen, this screen will be shown instead of our loading screen
+        if paymentFlow.hasPaymentPluginScreen() {
+            return false
+        }
+        
+        //if paying with AM, we will always display the loading within the confirm button, therefore no loading screen will be required
+        if paymentMethod.isAccountMoney {
+            return false
+        }
+        
+        //credit or debit card cases
+        if hasSavedESC() {
+            return false
+        }
+        
+        //
+        if paymentFlow.model.didESChanagedRecently() {
+            return false
         }
 
         return true

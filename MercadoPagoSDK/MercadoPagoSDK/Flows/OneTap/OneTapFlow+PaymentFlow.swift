@@ -34,9 +34,9 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
         self.model.paymentResult = paymentResult
         self.model.instructionsInfo = instructionsInfo
         if self.model.needToShowLoading() {
-            self.executeNextStep()
-        } else {
             PXAnimatedButton.animateButtonWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
+        } else {
+            self.executeNextStep()
         }
     }
 
