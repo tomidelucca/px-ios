@@ -292,8 +292,8 @@ extension PXOneTapViewController: PXOneTapHeaderProtocol {
     func didTapSummary() {
         let discountViewController = PXDiscountDetailViewController(amountHelper: viewModel.amountHelper)
 
-        if viewModel.amountHelper.discount != nil {
-            PXComponentFactory.Modal.show(viewController: discountViewController, title: viewModel.amountHelper.discount?.getDiscountDescription()) {
+        if let discount = viewModel.amountHelper.discount {
+            PXComponentFactory.Modal.show(viewController: discountViewController, title: discount.getDiscountDescription()) {
 
                 if UIDevice.isSmallDevice() {
                     self.setupNavigationBar()
