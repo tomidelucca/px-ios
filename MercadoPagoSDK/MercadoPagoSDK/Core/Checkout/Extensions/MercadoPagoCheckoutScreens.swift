@@ -18,6 +18,10 @@ extension MercadoPagoCheckout {
                 return
             }
 
+            // Clean account money paymentData on PaymentVault selection.
+            // Because this flow doesn´t support split payments.
+            strongSelf.viewModel.splitAccountMoney = nil
+
             strongSelf.viewModel.updateCheckoutModel(paymentOptionSelected: paymentOptionSelected)
 
             if let payerCosts = strongSelf.viewModel.paymentConfigurationService.getPayerCostsForPaymentMethod(paymentOptionSelected.getId()) {
