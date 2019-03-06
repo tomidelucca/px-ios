@@ -21,6 +21,7 @@ import UIKit
     internal var transactionDetails: PXTransactionDetails?
     internal private(set) var discount: PXDiscount?
     internal private(set) var campaign: PXCampaign?
+    internal private(set) var consumedDiscount: Bool?
     private let paymentTypesWithoutInstallments = [PXPaymentTypes.PREPAID_CARD.rawValue]
 
     /// :nodoc:
@@ -178,9 +179,10 @@ extension PXPaymentData {
 
 // MARK: Setters
 extension PXPaymentData {
-    internal func setDiscount(_ discount: PXDiscount?, withCampaign campaign: PXCampaign) {
+    internal func setDiscount(_ discount: PXDiscount?, withCampaign campaign: PXCampaign, consumedDiscount: Bool) {
         self.discount = discount
         self.campaign = campaign
+        self.consumedDiscount = consumedDiscount
     }
 
     internal func updatePaymentDataWith(paymentMethod: PXPaymentMethod?) {
@@ -263,5 +265,6 @@ extension PXPaymentData {
     internal func clearDiscount() {
         self.discount = nil
         self.campaign = nil
+        self.consumedDiscount = nil
     }
 }

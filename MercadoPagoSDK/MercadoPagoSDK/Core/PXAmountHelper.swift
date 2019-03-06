@@ -13,17 +13,21 @@ internal struct PXAmountHelper {
     internal let preference: PXCheckoutPreference
     private let paymentData: PXPaymentData
     internal let chargeRules: [PXPaymentTypeChargeRule]?
-    internal let consumedDiscount: Bool
     internal let paymentConfigurationService: PXPaymentConfigurationServices
     internal var splitAccountMoney: PXPaymentData?
 
-    init (preference: PXCheckoutPreference, paymentData: PXPaymentData, chargeRules: [PXPaymentTypeChargeRule]?, consumedDiscount: Bool, paymentConfigurationService: PXPaymentConfigurationServices, splitAccountMoney: PXPaymentData?) {
+    init (preference: PXCheckoutPreference, paymentData: PXPaymentData, chargeRules: [PXPaymentTypeChargeRule]?, paymentConfigurationService: PXPaymentConfigurationServices, splitAccountMoney: PXPaymentData?) {
         self.preference = preference
         self.paymentData = paymentData
         self.chargeRules = chargeRules
-        self.consumedDiscount = consumedDiscount
         self.paymentConfigurationService = paymentConfigurationService
         self.splitAccountMoney = splitAccountMoney
+    }
+
+    internal var consumedDiscount: Bool {
+        get {
+            return paymentData.consumedDiscount ?? false
+        }
     }
 
     var discount: PXDiscount? {
